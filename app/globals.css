@@ -1,0 +1,278 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* User Provided Theme: #F1F6F9, #394867, #212A3E, #9BA4B5 */
+
+    /* Light Mode Base */
+    --background: 203 27% 96%;
+    /* #F1F6F9 */
+    --foreground: 221 31% 19%;
+    /* #212A3E - Dark Navy for text */
+
+    --card: 0 0% 100%;
+    /* Pure White to pop against 96% lightness bg */
+    --card-foreground: 221 31% 19%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 221 31% 19%;
+
+    --primary: 220 29% 31%;
+    /* #394867 - Medium Blue */
+    --primary-foreground: 203 27% 96%;
+
+    --secondary: 219 14% 66%;
+    /* #9BA4B5 - Cool Grey */
+    --secondary-foreground: 221 31% 19%;
+
+    --muted: 219 14% 66%;
+    /* #9BA4B5 */
+    --muted-foreground: 220 29% 31%;
+
+    --accent: 219 14% 66%;
+    --accent-foreground: 221 31% 19%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 219 14% 66%;
+    /* #9BA4B5 */
+    --input: 219 14% 66%;
+    --ring: 220 29% 31%;
+    /* Matches Primary */
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* User Provided Theme Dark Mode */
+    --background: 221 31% 19%;
+    /* #212A3E - Dark Navy derived from palette */
+    --foreground: 203 27% 96%;
+    /* #F1F6F9 - Lightest shade for text */
+
+    --card: 220 29% 31%;
+    /* #394867 - Medium Blue for cards */
+    --card-foreground: 203 27% 96%;
+
+    --popover: 220 29% 31%;
+    --popover-foreground: 203 27% 96%;
+
+    --primary: 219 14% 66%;
+    /* #9BA4B5 - Cool Grey for contrast */
+    --primary-foreground: 221 31% 19%;
+
+    --secondary: 220 29% 31%;
+    /* #394867 */
+    --secondary-foreground: 203 27% 96%;
+
+    --muted: 220 29% 31%;
+    --muted-foreground: 219 14% 66%;
+
+    --accent: 220 29% 31%;
+    --accent-foreground: 203 27% 96%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 29% 31%;
+    --input: 220 29% 31%;
+    --ring: 219 14% 66%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .gradient-bg {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hover-lift {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .parallax-element {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .typewriter {
+    overflow: hidden;
+    border-right: 3px solid rgb(59, 130, 246);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: 0.1em;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  }
+
+  .stagger-animation {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .stagger-animation:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  .stagger-animation:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .stagger-animation:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .stagger-animation:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+
+  .stagger-animation:nth-child(5) {
+    animation-delay: 0.5s;
+  }
+
+  .stagger-animation:nth-child(6) {
+    animation-delay: 0.6s;
+  }
+
+  .floating-elements::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    border-radius: 50%;
+    opacity: 0.1;
+    animation: particleFloat 6s ease-in-out infinite;
+  }
+
+  .floating-elements::after {
+    content: '';
+    position: absolute;
+    top: 60%;
+    right: 15%;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #ec4899, #f59e0b);
+    border-radius: 50%;
+    opacity: 0.1;
+    animation: particleFloat 8s ease-in-out infinite reverse;
+  }
+
+  .shimmer-effect {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+@layer utilities {
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 0.6s;
+  }
+
+  .animation-delay-800 {
+    animation-delay: 0.8s;
+  }
+
+  .animation-delay-1000 {
+    animation-delay: 1s;
+  }
+
+  /* Material Design Shadows */
+  .shadow-material-1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+  }
+
+  .shadow-material-2 {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+
+  /* Add this to your existing globals.css */
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+}

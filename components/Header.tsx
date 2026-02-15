@@ -15,8 +15,8 @@ import {
     AccordionTrigger,
 } from '@/components/ui/accordion'
 import {
-    Menu, ChevronDown, Code2, Scale, Calculator,
-    Phone, Building, ShoppingCart
+    Menu, ChevronDown, Code2,
+    Phone, ShoppingCart, Cloud
 } from 'lucide-react'
 import { ModeToggle } from '@/components/mode-toggle'
 import { useTheme } from 'next-themes'
@@ -30,11 +30,7 @@ const navigation = [
         href: '/services',
         dropdown: [
             { name: 'Web Development', href: '/services/web-development', icon: Code2 },
-            { name: 'Web Development', href: '/services/web-development', icon: Code2 },
-            { name: 'Legal Services', href: '/services/legal', icon: Scale },
-            { name: 'Financial Services', href: '/services/financial', icon: Calculator },
-            { name: 'Business Registration', href: '/services/business', icon: Building },
-            { name: 'Cloud Solutions', href: '/services/cloud-solutions', icon: Calculator },
+            { name: 'Cloud Solutions', href: '/services/cloud-solutions', icon: Cloud },
             { name: 'Digital Marketing', href: '/services/digital-marketing', icon: Phone },
         ]
     },
@@ -66,8 +62,8 @@ export default function Header({ user }: { user?: any }) {
     }
 
 
-    const logoSrc = mounted && resolvedTheme === 'dark' 
-        ? "/logo/ajpr-logo-white.png" 
+    const logoSrc = mounted && resolvedTheme === 'dark'
+        ? "/logo/ajpr-logo-white.png"
         : "/logo/ajpr-logo.png"
 
     return (
@@ -137,11 +133,11 @@ export default function Header({ user }: { user?: any }) {
 
                     <div className="flex items-center space-x-4">
                         <ModeToggle />
-                        
-                        <Button 
-                            variant="ghost" 
-                            size="icon" 
-                            className="relative" 
+
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="relative"
                             onClick={() => setIsCartOpen(true)}
                         >
                             <ShoppingCart className="h-5 w-5" />
@@ -156,13 +152,13 @@ export default function Header({ user }: { user?: any }) {
                                 <button className="flex items-center space-x-2 focus:outline-none">
                                     <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border overflow-hidden">
                                         {user.avatar_url ? (
-                                            <Image 
-                                                src={user.avatar_url} 
-                                                alt={user.name} 
-                                                width={40} 
-                                                height={40} 
+                                            <Image
+                                                src={user.avatar_url}
+                                                alt={user.name}
+                                                width={40}
+                                                height={40}
                                                 className="object-cover"
-                                            /> 
+                                            />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center text-slate-500 font-bold">
                                                 {user.name.charAt(0)}
@@ -177,8 +173,8 @@ export default function Header({ user }: { user?: any }) {
                                         <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{user.name}</p>
                                         <p className="text-xs text-slate-500 capitalize">{user.role}</p>
                                     </div>
-                                    <Link 
-                                        href={user.role === 'admin' ? '/dashboard/admin' : user.role === 'client' ? '/dashboard/client' : '/dashboard/developer'} 
+                                    <Link
+                                        href={user.role === 'admin' ? '/dashboard/admin' : user.role === 'client' ? '/dashboard/client' : '/dashboard/developer'}
                                         className="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600"
                                     >
                                         <code className="material-symbols-outlined text-lg mr-2">dashboard</code>
@@ -216,15 +212,15 @@ export default function Header({ user }: { user?: any }) {
                 {/* Mobile Navigation */}
                 <div className="lg:hidden flex items-center space-x-2">
                     <ModeToggle />
-                    
-                    <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="relative" 
+
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="relative"
                         onClick={() => setIsCartOpen(true)}
                     >
                         <ShoppingCart className="h-5 w-5" />
-                            {cart.length > 0 && (
+                        {cart.length > 0 && (
                             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                                 {cart.length}
                             </span>
@@ -299,20 +295,20 @@ export default function Header({ user }: { user?: any }) {
                                         </Link>
                                     )
                                 )}
-                                
+
                                 <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
                                     {user ? (
                                         <>
                                             <div className="flex items-center space-x-3 px-2 py-2">
                                                 <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border overflow-hidden">
                                                     {user.avatar_url ? (
-                                                        <Image 
-                                                            src={user.avatar_url} 
-                                                            alt={user.name} 
-                                                            width={40} 
-                                                            height={40} 
+                                                        <Image
+                                                            src={user.avatar_url}
+                                                            alt={user.name}
+                                                            width={40}
+                                                            height={40}
                                                             className="object-cover"
-                                                        /> 
+                                                        />
                                                     ) : (
                                                         <div className="w-full h-full flex items-center justify-center text-slate-500 font-bold text-lg">
                                                             {user.name.charAt(0)}
@@ -331,7 +327,7 @@ export default function Header({ user }: { user?: any }) {
                                             >
                                                 Dashboard
                                             </Link>
-                                            
+
                                             <form action="/auth/logout" onSubmit={async (e) => {
                                                 e.preventDefault();
                                                 const { logout } = await import('@/app/actions');

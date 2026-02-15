@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs"); // Import bcrypt
 // Read .env manually
 function getEnvValue(key) {
   try {
-    const envPath = path.resolve(process.cwd(), ".env");
+    const envPath = path.resolve(process.cwd(), ".env.local");
     const envContent = fs.readFileSync(envPath, "utf-8");
     const match = envContent.match(new RegExp(`${key}="?([^"\\n]+)"?`, "m"));
     return match ? match[1] : null;

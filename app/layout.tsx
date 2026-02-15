@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Manrope } from 'next/font/google'
+import { Toaster } from 'sonner'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import Header from '@/components/Header'
@@ -67,6 +68,7 @@ export default async function RootLayout({
               <Header user={user} />
               <main className="min-h-screen">
                 {children}
+                <Toaster />
                 <Analytics />
                 <SpeedInsights />
               </main>

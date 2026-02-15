@@ -67,7 +67,7 @@ export async function submitMessage(content: string, senderName: string, senderR
 
 // --- Developer Dashboard Actions ---
 
-import { updateTaskStatus, updateProjectHours } from "@/lib/db/queries";
+import { updateTaskStatus, updateProjectHours, createPortfolioItem, updatePortfolioItem, deletePortfolioItem } from "@/lib/db/queries";
 
 export async function updateTaskStatusAction(taskId: number, status: string) {
     try {
@@ -321,5 +321,43 @@ export async function createRazorpayOrder(amount: number) {
         }
         const errorMessage = error.message || error.description || (error.error && error.error.description) || "Unknown Razorpay Error";
         throw new Error("Failed to create Razorpay order: " + errorMessage);
+    }
+}
+
+// --- Portfolio Actions ---
+
+export async function createPortfolioItemAction(data: any) {
+    try {
+        await createPortfolioItem(data);
+        revalidatePath('/portfolio');
+        revalidatePath('/dashboard/admin/portfolio');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to create portfolio item", e);
+        return { success: false };
+    }
+}
+
+export async function updatePortfolioItemAction(id: number, data: any) {
+    try {
+        await updatePortfolioItem(id, data);
+        revalidatePath('/portfolio');
+        revalidatePath('/dashboard/admin/portfolio');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to update portfolio item", e);
+        return { success: false };
+    }
+}
+
+export async function deletePortfolioItemAction(id: number) {
+    try {
+        await deletePortfolioItem(id);
+        revalidatePath('/portfolio');
+        revalidatePath('/dashboard/admin/portfolio');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to delete portfolio item", e);
+        return { success: false };
     }
 }

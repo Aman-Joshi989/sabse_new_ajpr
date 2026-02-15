@@ -133,3 +133,47 @@ export async function assignDeveloper(clientId: number, developerId: number) {
     `;
   return { success: true };
 }
+
+// --- Portfolio Management ---
+
+export async function getPortfolioItems() {
+  return await sql`SELECT * FROM portfolio_items ORDER BY created_at DESC;`;
+}
+
+export async function getPortfolioItemById(id: number) {
+  const result = await sql`SELECT * FROM portfolio_items WHERE id = ${id}`;
+  return result[0];
+}
+
+export async function createPortfolioItem(data: any) {
+  const { title, url, category, tags, description, gradient, accent, year, featured, stats } = data;
+  await sql`
+    INSERT INTO portfolio_items (title, url, category, tags, description, gradient, accent, year, featured, stats)
+    VALUES (${title}, ${url}, ${category}, ${tags}, ${description}, ${gradient}, ${accent}, ${year}, ${featured}, ${JSON.stringify(stats)});
+  `;
+  return { success: true };
+}
+
+export async function updatePortfolioItem(id: number, data: any) {
+  const { title, url, category, tags, description, gradient, accent, year, featured, stats } = data;
+  await sql`
+    UPDATE portfolio_items 
+    SET title = ${title},
+        url = ${url},
+        category = ${category},
+        tags = ${tags},
+        description = ${description},
+        gradient = ${gradient},
+        accent = ${accent},
+        year = ${year},
+        featured = ${featured},
+        stats = ${JSON.stringify(stats)}
+    WHERE id = ${id};
+  `;
+  return { success: true };
+}
+
+export async function deletePortfolioItem(id: number) {
+  await sql`DELETE FROM portfolio_items WHERE id = ${id}`;
+  return { success: true };
+}

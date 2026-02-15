@@ -6,6 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import AdminClientRequestList from './_components/AdminClientRequestList'
 import AdminDeveloperList from './_components/AdminDeveloperList'
 import { FileText, Users, UserCog } from 'lucide-react'
+import Link from 'next/link'
 
 export default async function AdminDashboard() {
   const requests = await getClientRequests()
@@ -18,31 +19,36 @@ export default async function AdminDashboard() {
     <div className="p-8 space-y-8 bg-slate-50 dark:bg-slate-950 min-h-screen transition-colors duration-300">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Admin Dashboard</h1>
-         <div className="flex gap-4">
-            <div className="flex items-center gap-2 px-4 py-2 bg-[#8B5CF6] text-white rounded-full text-sm font-medium shadow-sm">
-                <FileText className="w-4 h-4" />
-                {requests.length} New Requests
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-[#06B6D4] text-white rounded-full text-sm font-medium shadow-sm">
-                <Users className="w-4 h-4" />
-                {clients.length} Clients
-            </div>
-             <div className="flex items-center gap-2 px-4 py-2 bg-[#F97316] text-white rounded-full text-sm font-medium shadow-sm">
-                <UserCog className="w-4 h-4" />
-                {developers.length} Developers
-            </div>
-         </div>
+        <div className="flex gap-4">
+          <div className="flex items-center gap-2 px-4 py-2 bg-[#8B5CF6] text-white rounded-full text-sm font-medium shadow-sm">
+            <FileText className="w-4 h-4" />
+            {requests.length} New Requests
+          </div>
+          <div className="flex items-center gap-2 px-4 py-2 bg-[#06B6D4] text-white rounded-full text-sm font-medium shadow-sm">
+            <Users className="w-4 h-4" />
+            {clients.length} Clients
+          </div>
+          <div className="flex items-center gap-2 px-4 py-2 bg-[#F97316] text-white rounded-full text-sm font-medium shadow-sm">
+            <UserCog className="w-4 h-4" />
+            {developers.length} Developers
+          </div>
+          <Button asChild>
+            <Link href="/dashboard/admin/portfolio">
+              Manage Portfolio
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-8 md:grid-cols-2">
         <div className="space-y-4">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-slate-200">New Client Requests</h2>
-            <AdminClientRequestList requests={requests} />
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-200">New Client Requests</h2>
+          <AdminClientRequestList requests={requests} />
         </div>
 
         <div className="space-y-4">
-           <h2 className="text-xl font-bold text-slate-900 dark:text-slate-200">Developer Management</h2>
-           <AdminDeveloperList developers={developers} clients={clients} />
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-200">Developer Management</h2>
+          <AdminDeveloperList developers={developers} clients={clients} />
         </div>
       </div>
     </div>

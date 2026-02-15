@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { ExternalLink, Github, ArrowUpRight, Sparkles, Code2, Palette, Zap, Globe, Monitor, Smartphone, Star, ChevronRight, Menu, X } from 'lucide-react'
+import { ArrowUpRight, Sparkles, Zap, Monitor, Star, Menu, X } from 'lucide-react'
+import { PortfolioCard } from './PortfolioCard'
 
 interface PortfolioClientProps {
   initialProjects: any[];
@@ -9,12 +10,15 @@ interface PortfolioClientProps {
 
 export default function PortfolioClient({ initialProjects }: PortfolioClientProps) {
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [touchedCard, setTouchedCard] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const [projects] = useState(initialProjects)
+  const [projects] = useState(() => {
+    const whitelist = ['tanishk', 'kumaun', 'dwaparyug'];
+    return initialProjects.filter((p: any) =>
+      whitelist.some(w => (p.title + (p.url || '')).toLowerCase().includes(w))
+    );
+  })
 
   const categories = ['All', ...Array.from(new Set(projects.map((p: any) => p.category))) as string[]]
 
@@ -34,7 +38,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
   }, [mobileMenuOpen])
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 overflow-hidden relative">
+    <section className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 dark:from-slate-950 dark:via-purple-950 dark:to-slate-900 overflow-hidden relative">
       {/* Animated Background Patterns */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full">
@@ -54,19 +58,19 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
       <div ref={containerRef} className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         {/* Header Section */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 mb-4 sm:mb-6">
-            <Sparkles className="w-4 h-4 text-purple-600" />
-            <span className="text-xs sm:text-sm text-purple-700 font-medium">Crafting Digital Experiences</span>
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 border border-purple-200 dark:border-purple-800 mb-4 sm:mb-6">
+            <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+            <span className="text-xs sm:text-sm text-purple-700 dark:text-purple-300 font-medium">Crafting Digital Experiences</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent animate-gradient bg-300% leading-tight">
             My Portfolio
           </h1>
 
-          <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4">
+          <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-300 max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4">
             Transforming ideas into powerful digital solutions. Each project is crafted with
-            <span className="text-purple-600 font-semibold"> cutting-edge technology</span> and
-            <span className="text-pink-600 font-semibold"> exceptional design</span>.
+            <span className="text-purple-600 dark:text-purple-400 font-semibold"> cutting-edge technology</span> and
+            <span className="text-pink-600 dark:text-pink-400 font-semibold"> exceptional design</span>.
           </p>
 
           {/* Stats Bar - Mobile Optimized */}
@@ -77,8 +81,8 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
               { label: 'Experience', value: '5Y+', icon: <Zap className="w-4 h-4 sm:w-5 sm:h-5" /> }
             ].map((stat, i) => (
               <div key={i} className="group text-center">
-                <div className="flex flex-col items-center gap-1 text-slate-500 group-hover:text-purple-600 transition-colors">
-                  <div className="p-2 bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg">
+                <div className="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                  <div className="p-2 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-lg">
                     {stat.icon}
                   </div>
                   <span className="text-xs sm:text-sm font-medium">{stat.label}</span>
@@ -97,10 +101,10 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
           <div className="sm:hidden mb-4">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="w-full flex items-center justify-between px-4 py-3 bg-white rounded-xl border border-purple-200"
+              className="w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-slate-900 rounded-xl border border-purple-200 dark:border-purple-800"
             >
-              <span className="text-slate-700 font-medium">Filter: {selectedCategory}</span>
-              <Menu className="w-5 h-5 text-purple-600" />
+              <span className="text-slate-700 dark:text-slate-200 font-medium">Filter: {selectedCategory}</span>
+              <Menu className="w-5 h-5 text-purple-600 dark:text-purple-400" />
             </button>
           </div>
 
@@ -144,7 +148,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full border transition-all duration-300 text-sm sm:text-base ${selectedCategory === category
                   ? 'bg-gradient-to-r from-purple-500 to-pink-500 border-transparent text-white scale-105'
-                  : 'border-purple-200 hover:border-purple-400 text-slate-600 hover:text-purple-600 bg-white hover:bg-purple-50'
+                  : 'border-purple-200 dark:border-purple-800 hover:border-purple-400 dark:hover:border-purple-500 text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-300 bg-white dark:bg-slate-900 hover:bg-purple-50 dark:hover:bg-purple-900/20'
                   }`}
               >
                 {category}
@@ -158,97 +162,19 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
           {filteredProjects.map((project: any, index: number) => (
             <div
               key={project.id}
-              className="group relative animate-fade-up touch-manipulation"
+              className="animate-fade-up"
               style={{ animationDelay: `${index * 0.1}s` }}
-              onMouseEnter={() => setHoveredProject(project.id)}
-              onMouseLeave={() => setHoveredProject(null)}
-              onTouchStart={() => setTouchedCard(project.id)}
-              onTouchEnd={() => setTouchedCard(null)}
             >
-              <div className={`relative bg-white rounded-2xl sm:rounded-3xl border-2 ${hoveredProject === project.id || touchedCard === project.id
-                ? 'border-purple-400'
-                : 'border-purple-100'
-                } transition-all duration-300 overflow-hidden hover:scale-[1.02] active:scale-[0.98]`}>
-
-                {/* Gradient Top Bar */}
-                <div className={`h-1.5 sm:h-2 bg-gradient-to-r ${project.gradient}`} />
-
-                {/* Featured Badge */}
-                {project.featured && (
-                  <div className="absolute top-4 right-4 z-10">
-                    <div className="px-2 sm:px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-xs font-semibold text-white flex items-center gap-1">
-                      <Star className="w-3 h-3" />
-                      <span className="hidden sm:inline">Featured</span>
-                    </div>
-                  </div>
-                )}
-
-                <div className="p-5 sm:p-6 lg:p-8">
-                  {/* Project Header */}
-                  <div className="mb-4 sm:mb-6">
-                    <div className="flex items-start justify-between mb-3 sm:mb-4">
-                      <div className={`w-10 h-10 sm:w-12 sm:h-12 ${project.accent} rounded-xl sm:rounded-2xl flex items-center justify-center`}>
-                        <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                      </div>
-                      <span className="text-xs sm:text-sm text-slate-500">{project.year}</span>
-                    </div>
-
-                    <h3 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-slate-800 group-hover:text-purple-600 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-purple-600 font-medium">{project.category}</p>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-sm sm:text-base text-slate-600 mb-4 sm:mb-6 line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
-                    {project.tags.map((tag: string, i: number) => (
-                      <span key={i} className="px-2 sm:px-3 py-1 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg text-xs text-purple-700 border border-purple-200">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Stats */}
-                  {project.stats && (
-                    <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6 py-3 sm:py-4 border-t border-purple-100">
-                      {Object.entries(project.stats).map(([key, value], i) => (
-                        <div key={i} className="text-center">
-                          <div className="text-base sm:text-lg font-bold text-purple-600">{String(value)}</div>
-                          <div className="text-xs text-slate-500 capitalize">{key}</div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-2 sm:gap-3">
-                    {project.url ? (
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-transform text-sm sm:text-base"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        View Live
-                      </a>
-                    ) : (
-                      <button className="flex-1 bg-slate-100 text-slate-400 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium flex items-center justify-center gap-2 cursor-not-allowed text-sm sm:text-base">
-                        <ExternalLink className="w-4 h-4" />
-                        Coming Soon
-                      </button>
-                    )}
-                    <button className="px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors border border-purple-200">
-                      <Github className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <PortfolioCard
+                image={project.image_url}
+                title={project.title}
+                subtitle={project.description}
+                category={project.category}
+                stats={project.stats ? Object.entries(project.stats).map(([label, value]) => ({ label, value: String(value) })) : []}
+                date={project.year}
+                href={project.url}
+                author="AJPR"
+              />
             </div>
           ))}
         </div>
@@ -256,7 +182,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
         {/* Call to Action - Mobile Optimized */}
         <div className="mt-16 sm:mt-20 lg:mt-24 text-center px-4">
           <div className="inline-flex flex-col items-center">
-            <p className="text-xl sm:text-2xl text-slate-700 mb-6 sm:mb-8">
+            <p className="text-xl sm:text-2xl text-slate-700 dark:text-slate-200 mb-6 sm:mb-8">
               Have a project in mind? Let's create something
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-bold"> amazing together</span>
             </p>

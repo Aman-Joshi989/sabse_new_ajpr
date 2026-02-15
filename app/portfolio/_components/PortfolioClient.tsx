@@ -124,8 +124,8 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                         setMobileMenuOpen(false)
                       }}
                       className={`w-full px-4 py-3 rounded-xl text-left transition-all ${selectedCategory === category
-                          ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-                          : 'bg-gray-50 text-slate-700 hover:bg-purple-50'
+                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                        : 'bg-gray-50 text-slate-700 hover:bg-purple-50'
                         }`}
                     >
                       {category}
@@ -143,8 +143,8 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full border transition-all duration-300 text-sm sm:text-base ${selectedCategory === category
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 border-transparent text-white scale-105'
-                    : 'border-purple-200 hover:border-purple-400 text-slate-600 hover:text-purple-600 bg-white hover:bg-purple-50'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 border-transparent text-white scale-105'
+                  : 'border-purple-200 hover:border-purple-400 text-slate-600 hover:text-purple-600 bg-white hover:bg-purple-50'
                   }`}
               >
                 {category}
@@ -166,8 +166,8 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
               onTouchEnd={() => setTouchedCard(null)}
             >
               <div className={`relative bg-white rounded-2xl sm:rounded-3xl border-2 ${hoveredProject === project.id || touchedCard === project.id
-                  ? 'border-purple-400'
-                  : 'border-purple-100'
+                ? 'border-purple-400'
+                : 'border-purple-100'
                 } transition-all duration-300 overflow-hidden hover:scale-[1.02] active:scale-[0.98]`}>
 
                 {/* Gradient Top Bar */}
@@ -218,7 +218,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                     <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6 py-3 sm:py-4 border-t border-purple-100">
                       {Object.entries(project.stats).map(([key, value], i) => (
                         <div key={i} className="text-center">
-                          <div className="text-base sm:text-lg font-bold text-purple-600">{value}</div>
+                          <div className="text-base sm:text-lg font-bold text-purple-600">{String(value)}</div>
                           <div className="text-xs text-slate-500 capitalize">{key}</div>
                         </div>
                       ))}

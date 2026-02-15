@@ -15,11 +15,11 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
   const containerRef = useRef<HTMLDivElement>(null)
 
   const [projects] = useState(initialProjects)
-  
+
   const categories = ['All', ...Array.from(new Set(projects.map((p: any) => p.category))) as string[]]
-  
-  const filteredProjects = selectedCategory === 'All' 
-    ? projects 
+
+  const filteredProjects = selectedCategory === 'All'
+    ? projects
     : projects.filter((p: any) => p.category === selectedCategory)
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-full blur-3xl opacity-30 animate-float-delayed" />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-yellow-200 to-orange-200 rounded-full blur-3xl opacity-30 animate-float-slow" />
         </div>
-        
+
         {/* Dot Pattern */}
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle, rgba(168, 85, 247, 0.1) 1px, transparent 1px)`,
@@ -58,14 +58,14 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
             <Sparkles className="w-4 h-4 text-purple-600" />
             <span className="text-xs sm:text-sm text-purple-700 font-medium">Crafting Digital Experiences</span>
           </div>
-          
+
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent animate-gradient bg-300% leading-tight">
             My Portfolio
           </h1>
-          
+
           <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4">
-            Transforming ideas into powerful digital solutions. Each project is crafted with 
-            <span className="text-purple-600 font-semibold"> cutting-edge technology</span> and 
+            Transforming ideas into powerful digital solutions. Each project is crafted with
+            <span className="text-purple-600 font-semibold"> cutting-edge technology</span> and
             <span className="text-pink-600 font-semibold"> exceptional design</span>.
           </p>
 
@@ -123,11 +123,10 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                         setSelectedCategory(category)
                         setMobileMenuOpen(false)
                       }}
-                      className={`w-full px-4 py-3 rounded-xl text-left transition-all ${
-                        selectedCategory === category
+                      className={`w-full px-4 py-3 rounded-xl text-left transition-all ${selectedCategory === category
                           ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
                           : 'bg-gray-50 text-slate-700 hover:bg-purple-50'
-                      }`}
+                        }`}
                     >
                       {category}
                     </button>
@@ -143,11 +142,10 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full border transition-all duration-300 text-sm sm:text-base ${
-                  selectedCategory === category
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full border transition-all duration-300 text-sm sm:text-base ${selectedCategory === category
                     ? 'bg-gradient-to-r from-purple-500 to-pink-500 border-transparent text-white scale-105'
                     : 'border-purple-200 hover:border-purple-400 text-slate-600 hover:text-purple-600 bg-white hover:bg-purple-50'
-                }`}
+                  }`}
               >
                 {category}
               </button>
@@ -167,15 +165,14 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
               onTouchStart={() => setTouchedCard(project.id)}
               onTouchEnd={() => setTouchedCard(null)}
             >
-              <div className={`relative bg-white rounded-2xl sm:rounded-3xl border-2 ${
-                hoveredProject === project.id || touchedCard === project.id 
-                  ? 'border-purple-400' 
+              <div className={`relative bg-white rounded-2xl sm:rounded-3xl border-2 ${hoveredProject === project.id || touchedCard === project.id
+                  ? 'border-purple-400'
                   : 'border-purple-100'
-              } transition-all duration-300 overflow-hidden hover:scale-[1.02] active:scale-[0.98]`}>
-                
+                } transition-all duration-300 overflow-hidden hover:scale-[1.02] active:scale-[0.98]`}>
+
                 {/* Gradient Top Bar */}
                 <div className={`h-1.5 sm:h-2 bg-gradient-to-r ${project.gradient}`} />
-                
+
                 {/* Featured Badge */}
                 {project.featured && (
                   <div className="absolute top-4 right-4 z-10">
@@ -195,7 +192,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                       </div>
                       <span className="text-xs sm:text-sm text-slate-500">{project.year}</span>
                     </div>
-                    
+
                     <h3 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-slate-800 group-hover:text-purple-600 transition-colors">
                       {project.title}
                     </h3>
@@ -209,7 +206,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
 
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
-                    {project.tags.map((tag, i) => (
+                    {project.tags.map((tag: string, i: number) => (
                       <span key={i} className="px-2 sm:px-3 py-1 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg text-xs text-purple-700 border border-purple-200">
                         {tag}
                       </span>
@@ -260,7 +257,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
         <div className="mt-16 sm:mt-20 lg:mt-24 text-center px-4">
           <div className="inline-flex flex-col items-center">
             <p className="text-xl sm:text-2xl text-slate-700 mb-6 sm:mb-8">
-              Have a project in mind? Let's create something 
+              Have a project in mind? Let's create something
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-bold"> amazing together</span>
             </p>
             <button className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full font-semibold text-base sm:text-lg text-white overflow-hidden hover:scale-105 active:scale-95 transition-transform">

@@ -9,9 +9,9 @@ import Link from 'next/link'
 const services = [
     {
         icon: Palette,
-        title: 'Digital Strategy & Design',
-        description: 'Transform your ideas into compelling digital experiences with our strategic design approach.',
-        features: ['UI/UX Design', 'Brand Strategy', 'User Research', 'Prototyping'],
+        title: 'Graphics & Digital Branding',
+        description: 'Elevate your brand with professional graphics, logo design, and a complete digital identity.',
+        features: ['Logo & Visual Identity', 'Digital Branding', 'UI/UX Design', 'Social Media Graphics'],
         color: 'bg-purple-50 border-purple-200 dark:bg-purple-950/20 dark:border-purple-800'
     },
     {

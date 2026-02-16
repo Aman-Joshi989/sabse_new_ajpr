@@ -26,6 +26,8 @@ const allServiceCategories = {
             'E-commerce Platforms',
             'Digital Marketing Solutions',
             'SEO & Performance Optimization',
+            'Graphics Design & Logo Branding',
+            'Digital Branding & Identity Strategy',
             'Cybersecurity Implementation'
         ]
     },

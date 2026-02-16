@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/accordion'
 import {
     Menu, ChevronDown, Code2,
-    Phone, ShoppingCart, Cloud
+    Phone, ShoppingCart, Cloud, Palette
 } from 'lucide-react'
 import { ModeToggle } from '@/components/mode-toggle'
 import { useTheme } from 'next-themes'
@@ -31,6 +31,7 @@ const navigation = [
         dropdown: [
             { name: 'Web Development', href: '/services/web-development', icon: Code2 },
             { name: 'Cloud Solutions', href: '/services/cloud-solutions', icon: Cloud },
+            { name: 'Graphics & Branding', href: '/services/graphics-branding', icon: Palette },
             { name: 'Digital Marketing', href: '/services/digital-marketing', icon: Phone },
         ]
     },

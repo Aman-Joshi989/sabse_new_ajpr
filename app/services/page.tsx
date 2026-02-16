@@ -15,15 +15,27 @@ const serviceData = [
     {
         icon: Code2,
         title: 'Custom Web Development',
+        slug: 'web-development',
         description: 'Build modern, responsive web apps with Next.js, React, and TypeScript.',
         features: ['Next.js 14', 'TypeScript', 'SEO Optimization', 'PWA'],
         gradient: 'from-blue-500 to-cyan-500',
-        price: '₹25,000+',
+        price: '₹34,999+',
         delivery: '2-4 weeks',
+    },
+    {
+        icon: Palette,
+        title: 'Graphics & Digital Branding',
+        slug: 'graphics-branding',
+        description: 'Professional visual identity and branding solutions to make your business stand out.',
+        features: ['Logo Design', 'Brand Identity', 'Social Media Kits', 'Marketing Collaterals'],
+        gradient: 'from-pink-500 to-rose-500',
+        price: '₹19,999+',
+        delivery: '1-2 weeks',
     },
     {
         icon: Zap,
         title: 'Cloud Solutions',
+        slug: 'cloud-solutions',
         description: 'Scalable cloud infrastructure, deployment automation, and server management.',
         features: ['AWS / Azure / GCP', 'CI/CD Pipelines', 'Docker & Kubernetes', 'Serverless Arch'],
         gradient: 'from-blue-500 to-cyan-500',
@@ -33,6 +45,7 @@ const serviceData = [
     {
         icon: Globe,
         title: 'Digital Marketing',
+        slug: 'digital-marketing',
         description: 'Data-driven strategies to grow your online presence and reach your target audience.',
         features: ['SEO & SEM', 'Social Media Marketing', 'Content Strategy', 'Analytics & Reporting'],
         gradient: 'from-blue-400 to-indigo-500',
@@ -42,6 +55,7 @@ const serviceData = [
     {
         icon: Scale,
         title: 'Legal & Court Services',
+        slug: 'legal',
         description: 'Expert handling of criminal, civil, labour, and SARFAESI cases.',
         features: ['Litigation', 'Documentation', 'Consultation', 'Compliance'],
         gradient: 'from-purple-500 to-pink-500',
@@ -51,24 +65,17 @@ const serviceData = [
     {
         icon: Calculator,
         title: 'Tax & Financial Services',
+        slug: 'financial',
         description: 'GST, Income Tax, TDS/TCS returns, audit, and financial planning.',
         features: ['GST Returns', 'ITR Filing', 'TDS Returns', 'Form 15CA'],
         gradient: 'from-green-500 to-emerald-500',
         price: '₹5,000+',
         delivery: '1 week',
     },
-    // {
-    //     icon: Users,
-    //     title: 'HR & Payroll Management',
-    //     description: 'Complete payroll, ESI/PF compliance, HR policies, and more.',
-    //     features: ['Payroll Setup', 'ECR Returns', 'Employee Documents', 'Compliance'],
-    //     gradient: 'from-orange-500 to-red-500',
-    //     price: '₹8,000+',
-    //     delivery: '1-2 weeks',
-    // },
     {
         icon: Briefcase,
         title: 'Company Registration',
+        slug: 'business',
         description: 'Company, LLP, GST, TAN, PAN, MSME, and legal entity setup.',
         features: ['Company ROC', 'GST & TAN', 'MSME Registration', 'DSC'],
         gradient: 'from-indigo-500 to-purple-500',
@@ -78,6 +85,7 @@ const serviceData = [
     {
         icon: FileText,
         title: 'Documentation Services',
+        slug: 'legal', // Matches sub-directory logic if needed, or stays separate
         description: 'Agreements, MoA/AoA, deed drafting, NOCs, and notary.',
         features: ['Agreements', 'MoA/AoA', 'Sale & Transfer Deeds', 'Notary'],
         gradient: 'from-teal-500 to-green-500',
@@ -87,10 +95,11 @@ const serviceData = [
     {
         icon: Shield,
         title: 'Aviation Security (BCAS)',
+        slug: 'contact', // No page found, go to contact
         description: 'AEP, E-Sahaj, security program clearance, and compliance.',
         features: ['AEP', 'E-Sahaj', 'Security Docs', 'Renewals'],
         gradient: 'from-rose-500 to-pink-500',
-        price: '₹15,000+',
+        price: '₹19,999+',
         delivery: '1-2 weeks',
     }
 ]
@@ -118,7 +127,12 @@ export default function ServicesPage() {
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {serviceData.map((s, i) => (
-                        <Card key={i} className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-transform hover:-translate-y-2 dark:bg-slate-900 ${isVisible ? 'opacity-100 animate-fade-up' : 'opacity-0'}`} style={{ animationDelay: `${i * 0.1}s` }}>
+                        <Card
+                            key={i}
+                            id={s.title.toLowerCase().replace(/ & /g, '-').replace(/\s+/g, '-')}
+                            className={`group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-transform hover:-translate-y-2 dark:bg-slate-900 ${isVisible ? 'opacity-100 animate-fade-up' : 'opacity-0'}`}
+                            style={{ animationDelay: `${i * 0.1}s` }}
+                        >
                             <CardHeader className="p-6 flex items-center">
                                 <div className={`p-4 rounded-full bg-gradient-to-r ${s.gradient} text-white mr-4`}>
                                     {React.createElement(s.icon, { className: 'h-6 w-6' })}
@@ -138,11 +152,18 @@ export default function ServicesPage() {
                                     <div className="text-sm text-slate-500">
                                         <span className="font-semibold">{s.price}</span> | {s.delivery}
                                     </div>
-                                    <Button size="sm" asChild>
-                                        <Link href="/contact">
-                                            <ArrowRight className="h-4 w-4 mr-1" /> Get Quote
-                                        </Link>
-                                    </Button>
+                                    <div className="flex gap-2">
+                                        <Button size="sm" variant="outline" className="flex-1" asChild>
+                                            <Link href={s.slug === 'contact' ? '/contact' : `/services/${s.slug}`}>
+                                                Details
+                                            </Link>
+                                        </Button>
+                                        <Button size="sm" className="flex-1" asChild>
+                                            <Link href="/contact">
+                                                <ArrowRight className="h-4 w-4 mr-1" /> Quote
+                                            </Link>
+                                        </Button>
+                                    </div>
                                 </div>
                             </CardContent>
                         </Card>

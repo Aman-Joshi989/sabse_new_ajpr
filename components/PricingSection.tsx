@@ -38,7 +38,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     name: 'STANDARD PACKAGE',
-    price: 15000,
+    price: 19999,
     description: 'Full Stack (No Admin)',
     isPopular: true,
     features: [
@@ -54,7 +54,7 @@ const pricingTiers: PricingTier[] = [
   },
   {
     name: 'PREMIUM PACKAGE',
-    price: 25000,
+    price: 34999,
     description: 'Full Stack + Admin Panel',
     features: [
       'Complete Full Stack Solution',
@@ -78,7 +78,7 @@ declare global {
 export default function PricingSection() {
   const { user } = useAuth()
   const { addToCart } = useCart()
-  
+
   const [isAddonsOpen, setIsAddonsOpen] = useState(false)
   const [selectedTier, setSelectedTier] = useState<PricingTier | null>(null)
   const [selectedAddons, setSelectedAddons] = useState<string[]>([])
@@ -90,8 +90,8 @@ export default function PricingSection() {
   }
 
   const toggleAddon = (addonId: string) => {
-    setSelectedAddons(prev => 
-      prev.includes(addonId) 
+    setSelectedAddons(prev =>
+      prev.includes(addonId)
         ? prev.filter(id => id !== addonId)
         : [...prev, addonId]
     )
@@ -150,8 +150,8 @@ export default function PricingSection() {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
           {pricingTiers.map((tier) => (
-            <Card 
-              key={tier.name} 
+            <Card
+              key={tier.name}
               className={`relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 
                 ${tier.isPopular ? 'border-primary shadow-lg scale-105 z-10' : 'border-slate-200 dark:border-slate-800'}`}
             >
@@ -160,7 +160,7 @@ export default function PricingSection() {
                   MOST POPULAR
                 </div>
               )}
-              
+
               <CardHeader>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">{tier.name}</h3>
                 <div className="flex items-baseline mt-2">
@@ -168,7 +168,7 @@ export default function PricingSection() {
                 </div>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">{tier.description}</p>
               </CardHeader>
-              
+
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   {tier.features.map((feature, i) => (
@@ -179,20 +179,20 @@ export default function PricingSection() {
                   ))}
                   {tier.notIncluded?.map((feature, i) => (
                     <div key={i} className="flex items-start text-sm text-slate-400 dark:text-slate-500 line-through">
-                        <XCircle className="w-4 h-4 text-red-400 mr-2 mt-0.5 shrink-0" />
-                        <span>{feature}</span>
+                      <XCircle className="w-4 h-4 text-red-400 mr-2 mt-0.5 shrink-0" />
+                      <span>{feature}</span>
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Timeline:</p>
-                    <p className="text-sm text-slate-700 dark:text-slate-300">{tier.timeline}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Timeline:</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-300">{tier.timeline}</p>
                 </div>
               </CardContent>
-              
+
               <CardFooter>
-                <Button 
+                <Button
                   className={`w-full ${tier.isPopular ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
                   onClick={() => handleSelectPlan(tier)}
                 >
@@ -212,7 +212,7 @@ export default function PricingSection() {
                 Add extra services to your {selectedTier?.name} to get the best results.
               </DialogDescription>
             </DialogHeader>
-            
+
             <div className="space-y-4 py-4">
               <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border">
                 <h4 className="font-bold text-sm mb-1">{selectedTier?.name}</h4>
@@ -221,29 +221,36 @@ export default function PricingSection() {
 
               <div className="space-y-3">
                 <h4 className="text-sm font-semibold">Recommended Add-ons</h4>
-                {addonsList.map((addon) => (
-                  <div key={addon.id} className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
-                    <Checkbox 
-                      id={addon.id} 
-                      checked={selectedAddons.includes(addon.id)}
-                      onCheckedChange={() => toggleAddon(addon.id)}
-                    />
-                    <div className="grid gap-1.5 leading-none flex-1">
-                      <label 
-                        htmlFor={addon.id} 
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                      >
-                        {addon.name}
-                      </label>
-                      <p className="text-xs text-muted-foreground">
-                        {addon.description}
-                      </p>
+                {addonsList
+                  .filter(addon => {
+                    if (addon.id === 'graphics-branding' && (selectedTier?.name === 'STANDARD PACKAGE' || selectedTier?.name === 'PREMIUM PACKAGE')) {
+                      return false
+                    }
+                    return true
+                  })
+                  .map((addon) => (
+                    <div key={addon.id} className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+                      <Checkbox
+                        id={addon.id}
+                        checked={selectedAddons.includes(addon.id)}
+                        onCheckedChange={() => toggleAddon(addon.id)}
+                      />
+                      <div className="grid gap-1.5 leading-none flex-1">
+                        <label
+                          htmlFor={addon.id}
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                        >
+                          {addon.name}
+                        </label>
+                        <p className="text-xs text-muted-foreground">
+                          {addon.description}
+                        </p>
+                      </div>
+                      <div className="font-semibold text-sm">
+                        +₹{addon.price.toLocaleString()}
+                      </div>
                     </div>
-                    <div className="font-semibold text-sm">
-                      +₹{addon.price.toLocaleString()}
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
 
               <div className="flex justify-between items-center pt-4 border-t">

@@ -75,7 +75,7 @@ export default function AboutPage() {
             </Badge>
 
             <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-8">
-              <span className="block text-foreground mb-4">Meet the Visionaries</span>
+              <span className="block text-foreground mb-4">Meet the Visionaries</span>{' '}
               <span className="text-transparent bg-gradient-to-r from-primary to-purple-600 bg-clip-text">
                 Behind Your Success
               </span>
@@ -180,7 +180,7 @@ export default function AboutPage() {
             <Card className="bg-gradient-to-r from-slate-900 to-slate-800 text-white shadow-2xl border-0 overflow-hidden relative">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
-              
+
               <CardContent className="p-8 md:p-12 relative z-10">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                   <div className="space-y-6 flex-1">
@@ -193,7 +193,7 @@ export default function AboutPage() {
                         Need a tailored solution for your specific business logic? We build scalable, high-performance applications with custom architecture designed to grow with your enterprise.
                       </p>
                     </div>
-                    
+
                     <div className="grid sm:grid-cols-2 gap-4">
                       {[
                         'Custom Microservices Architecture',
@@ -265,7 +265,7 @@ export default function AboutPage() {
                     'Domain & hosting charges',
                     'Paid plugins or third-party tools',
                     'Content writing',
-                    'Backend systems / admin panel'
+                    'Backend systems (Basic package only)'
                   ].map((item, i) => (
                     <li key={i} className="flex items-start text-slate-700 dark:text-slate-300 text-sm">
                       <XCircle className="w-4 h-4 text-red-500 mr-2 mt-0.5" />
@@ -358,13 +358,13 @@ export default function AboutPage() {
                 Partner With Us
               </span>
               <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
-                Ready to Join Our<br />
+                Ready to Join Our{' '}
                 <span className="text-blue-600 dark:text-blue-500">Success Story?</span>
               </h2>
             </div>
-            
+
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto">
-              Be the first to experience our dedicated support and cutting-edge solutions. 
+              Be the first to experience our dedicated support and cutting-edge solutions.
               Transform your digital vision today.
             </p>
 

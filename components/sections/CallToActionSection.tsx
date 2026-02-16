@@ -16,8 +16,8 @@ const contactMethods = [
         icon: Phone,
         title: 'Call Us',
         description: 'Direct consultation available',
-        action: 'tel:+919811139030',
-        label: '+91 82737 92119',
+        action: 'tel:+919997205257',
+        label: '+91 99972 05257',
         gradient: 'from-green-500 to-emerald-500'
     },
     {
@@ -32,7 +32,7 @@ const contactMethods = [
         icon: MessageCircle,
         title: 'WhatsApp',
         description: 'Quick chat & file sharing',
-        action: 'https://wa.me/919811139030',
+        action: 'https://wa.me/919997205257',
         label: 'Chat on WhatsApp',
         gradient: 'from-green-400 to-green-600'
     },
@@ -193,13 +193,13 @@ export default function CallToActionSection() {
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <Button size="lg" className="bg-white text-slate-900 hover:bg-blue-100 hover-lift" asChild>
-                                    <Link href="tel:+919811139030">
+                                    <Link href="tel:+919997205257">
                                         <Phone className="mr-2 h-5 w-5" />
                                         Call Now for Consultation
                                     </Link>
                                 </Button>
                                 <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white hover:text-slate-900 hover-lift" asChild>
-                                    <Link href="https://wa.me/919811139030">
+                                    <Link href="https://wa.me/919997205257">
                                         <MessageCircle className="mr-2 h-5 w-5" />
                                         WhatsApp Quick Chat
                                         <ArrowRight className="ml-2 h-5 w-5" />

@@ -41,7 +41,7 @@ export default function CTASection() {
                                 </div>
                                 <div className="flex items-center space-x-3 text-blue-100">
                                     <Phone className="h-5 w-5" />
-                                    <span>+91 82737 92119</span>
+                                    <span>+91 99972 05257</span>
                                 </div>
                             </div>
                         </div>

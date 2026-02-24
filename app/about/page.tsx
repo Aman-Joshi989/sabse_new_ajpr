@@ -1,447 +1,313 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import {
-    Users, Target, Award, MapPin, Calendar, Building,
-    Lightbulb, Heart, Zap, Globe, Star, TrendingUp,
-    Code2, Palette, Cloud, ArrowRight, CheckCircle,
-    Phone, Mail, Linkedin, Twitter, BookOpen, Trophy
+    ArrowRight,
+    Search,
+    Brain,
+    Rocket,
+    BarChart3,
+    Code2,
+    Database,
+    LineChart,
+    Settings,
+    Store,
+    Users,
+    UserCircle,
+    Building2,
+    CheckCircle2
 } from 'lucide-react'
 
-const teamMembers = [
+// Features Data
+const features = [
     {
-        name: 'Aman Joshi',
-        role: 'Co-Founder & CEO',
-        specialization: 'Technology Leadership & Strategy',
-        experience: '5+ years',
-        avatar: 'AJ',
-        gradient: 'from-blue-500 to-cyan-500',
-        description: 'Visionary leader with expertise in full-stack development and business strategy. Drives innovation and ensures client success through cutting-edge technology solutions.',
-        skills: ['Strategic Planning', 'Full-Stack Development', 'Team Leadership', 'Client Relations', 'Technology Architecture'],
-        achievements: ['Led 50+ successful projects', 'Built scalable tech solutions', 'Established AJPR World vision'],
-        email: 'amanjoshi0525@gmail.com',
-        phone: '+91 99972 05257'
+        icon: Rocket,
+        title: 'Speed with Structure',
+        description: 'Rapid deployment without compromising on scalable architecture and clean code.'
     },
     {
-        name: 'Priyank Rakholia',
-        role: 'Co-Founder & Business Development',
-        specialization: 'Business Growth & Client Relations',
-        experience: '4+ years',
-        avatar: 'PR',
-        gradient: 'from-purple-500 to-pink-500',
-        description: 'Dynamic business strategist focused on expanding market reach and building lasting client relationships. Expert in identifying growth opportunities and executing successful business plans.',
-        skills: ['Business Development', 'Strategic Partnerships', 'Market Analysis', 'Client Acquisition', 'Revenue Growth'],
-        achievements: ['Expanded client base by 300%', 'Established key partnerships', 'Drove business diversification'],
-        email: 'priyankrakholia17@gmail.com',
-        phone: '+91 98765 43211'
+        icon: Brain,
+        title: 'AI-First Thinking',
+        description: 'Integrating intelligent automation and LLMs to multiply your operational efficiency.'
     },
     {
-        name: 'Jatin Vaishnav',
-        role: 'SDE-3 (Senior Software Engineer)',
-        specialization: 'Advanced Software Development',
-        experience: '6+ years',
-        avatar: 'JV',
-        gradient: 'from-green-500 to-emerald-500',
-        description: 'Senior software engineer with deep expertise in modern web technologies, system architecture, and performance optimization. Leads technical innovation and mentors development teams.',
-        skills: ['Next.js/React', 'System Architecture', 'Performance Optimization', 'Code Review', 'Technical Mentoring'],
-        achievements: ['Architected scalable solutions', 'Reduced system latency by 60%', 'Led technical migrations'],
-        email: 'jatin@ajprworld.com',
-        phone: '+91 98765 43212'
+        icon: Database,
+        title: 'Deep Technical Expertise',
+        description: 'Enterprise-grade backend architectures and dynamic, high-performance web applications.'
     },
     {
-        name: ' Triveni Chandra Nainwal',
-        role: 'Account & Finance Manager',
-        specialization: 'Financial Management & Compliance',
-        experience: '15+ years',
-        avatar: 'TCN',
-        gradient: 'from-orange-500 to-red-500',
-        description: 'Expert financial professional ensuring fiscal responsibility and regulatory compliance. Manages all financial operations with precision and strategic insight.',
-        skills: ['Financial Planning', 'Tax Compliance', 'Budget Management', 'Regulatory Affairs', 'Risk Assessment'],
-        achievements: ['Streamlined financial processes', 'Ensured 100% compliance', 'Optimized operational costs'],
-        email: 'triveni.nainwal@gmail.com',
-        phone: '+91 9811139030'
+        icon: LineChart,
+        title: 'Growth-Focused Execution',
+        description: 'Every line of code and system built is optimized for conversions and measurable ROI.'
     }
 ]
 
-const companyValues = [
+// Target Audience Data
+const targetAudience = [
     {
-        icon: Lightbulb,
-        title: 'Innovation First',
-        description: 'We embrace cutting-edge technologies and creative solutions to solve complex business challenges.',
-        gradient: 'from-yellow-400 to-orange-500'
+        icon: Rocket,
+        title: 'Startups',
+        painPoint: 'Need to build an MVP quickly but require scalable architecture for future funding rounds.',
+        solution: 'We build rapid, scalable foundations that grow as fast as your user base.'
     },
     {
-        icon: Heart,
-        title: 'Client Success',
-        description: 'Your success is our success. We prioritize understanding and exceeding client expectations in every project.',
-        gradient: 'from-pink-400 to-red-500'
+        icon: Store,
+        title: 'Ecommerce Brands',
+        painPoint: 'Struggling with slow load times, poor conversion rates, and messy inventory systems.',
+        solution: 'We optimize performance and integrate seamless backend solutions for higher ROI.'
     },
     {
-        icon: Award,
-        title: 'Excellence Driven',
-        description: 'We maintain the highest standards in service delivery, code quality, and professional expertise.',
-        gradient: 'from-purple-400 to-indigo-500'
+        icon: Building2,
+        title: 'Agencies',
+        painPoint: 'Lacking deep technical expertise in-house to fulfill complex client demands.',
+        solution: 'We act as your dedicated tech partner, providing enterprise-grade execution.'
     },
     {
         icon: Users,
-        title: 'Team Collaboration',
-        description: 'We believe in the power of diverse perspectives and collaborative problem-solving approaches.',
-        gradient: 'from-blue-400 to-cyan-500'
+        title: 'SMEs',
+        painPoint: 'Burdened by manual processes and outdated digital infrastructures limiting growth.',
+        solution: 'We automate operations and modernize your tech stack to maximize efficiency.'
+    },
+    {
+        icon: UserCircle,
+        title: 'Personal Brands',
+        painPoint: 'Need a premium digital presence that actually converts audience into revenue.',
+        solution: 'We design high-converting platforms tailored to your unique authority.'
     }
 ]
 
-const milestones = [
-    {
-        year: '2025',
-        title: 'Company Founded',
-        description: 'AJPR World established with a vision to bridge technology and business success',
-        icon: Building,
-        stats: 'Founded with 2 co-Co-Founders'
-    },
-    {
-        year: '2025',
-        title: 'Service Expansion',
-        description: 'Expanded from tech services to comprehensive business solutions including legal and financial services',
-        icon: Globe,
-        stats: '7 service categories launched'
-    },
-    {
-        year: '2025',
-        title: 'Major Milestones',
-        description: 'Achieved significant growth in client base and service delivery excellence',
-        icon: Trophy,
-        stats: '50+ projects completed'
-    },
-    {
-        year: '2025',
-        title: 'Industry Recognition',
-        description: 'Recognized as a leading multi-service provider with 100% client satisfaction rate',
-        icon: Star,
-        stats: '100% client retention rate'
-    }
+// Services Summary Data
+const capabilities = [
+    { icon: Code2, label: 'Custom Web Apps' },
+    { icon: Brain, label: 'AI & Automation' },
+    { icon: Database, label: 'Backend Architecture' },
+    { icon: Search, label: 'Conversion Optimization' },
+    { icon: Settings, label: 'Growth Infrastructure' }
 ]
+
+// Animation Variants
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+    }
+}
+
+const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+        y: 0,
+        opacity: 1,
+        transition: { type: "spring" as const, stiffness: 100 }
+    }
+}
 
 export default function AboutPage() {
-    const [activeTeamMember, setActiveTeamMember] = useState(0)
-    const [isVisible, setIsVisible] = useState(false)
-    const sectionRef = useRef<HTMLElement>(null)
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setIsVisible(true)
-            },
-            { threshold: 0.1 }
-        )
-        if (sectionRef.current) observer.observe(sectionRef.current)
-        return () => observer.disconnect()
-    }, [])
+    const { scrollYProgress } = useScroll();
+    const yTransform = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
     return (
-        <div className="min-h-screen">
-            {/* Hero Section */}
-            <section className="py-32 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 relative overflow-hidden">
-                {/* Background Elements */}
-                <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full blur-3xl animate-float"></div>
-                    <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-pink-400 to-orange-600 rounded-full blur-3xl animate-float animation-delay-1000"></div>
-                </div>
+        <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-50 selection:bg-blue-500/30 font-sans">
+
+            {/* 1. HERO SECTION */}
+            <section className="relative pt-40 pb-32 overflow-hidden flex items-center min-h-[90vh]">
+                {/* Dark Modern Grid & Glow Background */}
+                <div className="absolute inset-0 bg-grid-slate-900/[0.03] dark:bg-grid-slate-100/[0.03] bg-[bottom_1px_center]" style={{ maskImage: 'linear-gradient(to bottom, transparent, black)' }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[120px] rounded-[100%] pointer-events-none opacity-50" />
 
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="max-w-4xl mx-auto text-center animate-fade-up">
-                        <Badge className="mb-8 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 dark:text-blue-600 px-6 py-3 text-lg">
-                            <Users className="w-5 h-5 mr-2" />
-                            About AJPR World
-                        </Badge>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="max-w-5xl mx-auto text-center"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.2, duration: 0.5 }}
+                            className="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-blue-900/50 bg-blue-100 dark:bg-blue-900/20 backdrop-blur-md mb-8"
+                        >
+                            <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+                            <span className="text-sm font-bold text-blue-700 dark:text-blue-300 uppercase tracking-widest">Technology & Growth Partner</span>
+                        </motion.div>
 
-                        <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-8">
-                            <span className="block text-slate-900 dark:text-white mb-4">Meet the Visionaries</span>
-                            <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">
-                                Behind Your Success
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 text-slate-900 dark:text-white leading-[1.1]">
+                            Building Systems That <br className="hidden md:block" />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
+                                Scale Businesses.
                             </span>
                         </h1>
 
-                        <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-4xl mx-auto leading-relaxed">
-                            We're a passionate team of innovators, creators, and problem-solvers dedicated to
-                            transforming your digital vision into reality with cutting-edge technology and expert services.
+                        <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed mb-12 font-medium">
+                            We design, develop, and automate powerful digital infrastructures that help modern businesses grow faster, operate smarter, and convert better.
                         </p>
-                    </div>
-                </div>
-            </section>
 
-            {/* Company Stats */}
-            <section ref={sectionRef} className="py-16 bg-white dark:bg-slate-900">
-                <div className="container mx-auto px-4">
-                    <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 ${isVisible ? 'animate-fade-up' : 'opacity-0'}`}>
-                        {[
-                            { icon: Calendar, value: '3+', label: 'Years of Excellence', color: 'text-blue-600', description: 'Serving clients since 2025' },
-                            { icon: Users, value: '4', label: 'Expert Team Members', color: 'text-green-600', description: 'Dedicated professionals' },
-                            { icon: Award, value: '50+', label: 'Projects Delivered', color: 'text-purple-600', description: 'Across all service categories' },
-                            { icon: Star, value: '100%', label: 'Client Satisfaction', color: 'text-yellow-600', description: 'Perfect retention rate' }
-                        ].map((stat, index) => {
-                            const IconComponent = stat.icon
-                            return (
-                                <Card key={index} className="text-center p-8 hover-lift group bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 border-0 shadow-lg hover:shadow-xl">
-                                    <CardContent className="space-y-4 p-0">
-                                        <div className="mx-auto w-fit p-4 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-2xl group-hover:scale-110 transition-transform duration-300">
-                                            <IconComponent className={`h-10 w-10 ${stat.color}`} />
-                                        </div>
-                                        <div>
-                                            <div className="text-4xl font-bold text-slate-900 dark:text-white mb-2">
-                                                {stat.value}
-                                            </div>
-                                            <div className="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                                                {stat.label}
-                                            </div>
-                                            <div className="text-sm text-slate-500 dark:text-slate-400">
-                                                {stat.description}
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            )
-                        })}
-                    </div>
-                </div>
-            </section>
-
-            {/* Team Section */}
-            <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
-                <div className="container mx-auto px-4">
-                    <div className={`text-center space-y-6 mb-20 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-200' : 'opacity-0'}`}>
-                        <h2 className="text-4xl md:text-5xl font-bold">Our Leadership Team</h2>
-                        <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-                            Meet the experienced professionals who drive AJPR World's success and innovation across all service domains.
-                        </p>
-                    </div>
-
-                    {/* Team Grid */}
-                    <div className="grid lg:grid-cols-2 gap-12 items-start mb-20">
-                        {/* Team Members Grid */}
-                        <div className={`grid grid-cols-2 gap-6 transition-all duration-1000 ${isVisible ? 'animate-fade-left animation-delay-400' : 'opacity-0'}`}>
-                            {teamMembers.map((member, index) => (
-                                <Card
-                                    key={index}
-                                    className={`group cursor-pointer hover-lift transition-all duration-300 ${activeTeamMember === index ? 'ring-2 ring-blue-500 shadow-2xl scale-105' : 'shadow-lg hover:shadow-xl'
-                                        }`}
-                                    onClick={() => setActiveTeamMember(index)}
-                                >
-                                    <CardContent className="p-6 text-center">
-                                        <div className={`w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r ${member.gradient} text-white flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                                            {member.avatar}
-                                        </div>
-                                        <h4 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">{member.name}</h4>
-                                        <p className="text-blue-600 dark:text-blue-400 text-sm font-semibold mb-2">{member.role}</p>
-                                        <Badge variant="outline" className="text-xs">
-                                            {member.experience}
-                                        </Badge>
-                                    </CardContent>
-                                </Card>
-                            ))}
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <Button size="lg" className="rounded-full h-14 px-8 text-lg bg-blue-600 hover:bg-blue-700 text-white shadow-[0_0_40px_-10px_rgba(37,99,235,0.5)] transition-all hover:scale-105" asChild>
+                                <Link href="/contact">Work With Us</Link>
+                            </Button>
+                            <Button size="lg" variant="outline" className="rounded-full h-14 px-8 text-lg border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm transition-all text-slate-900 dark:text-white" asChild>
+                                <Link href="/portfolio">See Our Work <ArrowRight className="ml-2 w-5 h-5 text-slate-900 dark:text-white" /></Link>
+                            </Button>
                         </div>
 
-                        {/* Active Member Details */}
-                        <div className={`transition-all duration-1000 ${isVisible ? 'animate-fade-right animation-delay-600' : 'opacity-0'}`}>
-                            <Card className="p-8 bg-gradient-to-br from-white to-blue-50 dark:from-slate-800 dark:to-blue-900 border-0 shadow-2xl">
-                                <CardContent className="p-0">
-                                    <div key={activeTeamMember} className="animate-scale-in">
-                                        <div className="flex items-center space-x-4 mb-6">
-                                            <div className={`w-24 h-24 rounded-full bg-gradient-to-r ${teamMembers[activeTeamMember].gradient} text-white flex items-center justify-center text-2xl font-bold shadow-lg`}>
-                                                {teamMembers[activeTeamMember].avatar}
-                                            </div>
-                                            <div>
-                                                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{teamMembers[activeTeamMember].name}</h3>
-                                                <p className="text-blue-600 dark:text-blue-400 font-semibold text-lg">{teamMembers[activeTeamMember].role}</p>
-                                                <Badge className="mt-2 bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                                                    {teamMembers[activeTeamMember].experience}
-                                                </Badge>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-6">
-                                            <div>
-                                                <h4 className="font-semibold mb-3 text-slate-700 dark:text-slate-300 text-lg">Specialization:</h4>
-                                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
-                                                    {teamMembers[activeTeamMember].specialization}
-                                                </p>
-                                            </div>
-
-                                            <div>
-                                                <h4 className="font-semibold mb-3 text-slate-700 dark:text-slate-300 text-lg">About:</h4>
-                                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                                    {teamMembers[activeTeamMember].description}
-                                                </p>
-                                            </div>
-
-                                            <div>
-                                                <h4 className="font-semibold mb-3 text-slate-700 dark:text-slate-300 text-lg">Core Skills:</h4>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {teamMembers[activeTeamMember].skills.map((skill, idx) => (
-                                                        <Badge key={idx} variant="secondary" className="text-xs">
-                                                            {skill}
-                                                        </Badge>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            <div>
-                                                <h4 className="font-semibold mb-3 text-slate-700 dark:text-slate-300 text-lg">Key Achievements:</h4>
-                                                <ul className="space-y-2">
-                                                    {teamMembers[activeTeamMember].achievements.map((achievement, idx) => (
-                                                        <li key={idx} className="flex items-start">
-                                                            <CheckCircle className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                                                            <span className="text-slate-600 dark:text-slate-400">{achievement}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-
-                                            <div className="flex space-x-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                                                <Button size="sm" variant="outline" asChild>
-                                                    <Link href={`mailto:${teamMembers[activeTeamMember].email}`}>
-                                                        <Mail className="w-4 h-4 mr-2" />
-                                                        Email
-                                                    </Link>
-                                                </Button>
-                                                <Button size="sm" variant="outline" asChild>
-                                                    <Link href={`tel:${teamMembers[activeTeamMember].phone}`}>
-                                                        <Phone className="w-4 h-4 mr-2" />
-                                                        Call
-                                                    </Link>
-                                                </Button>
-                                            </div>
-                                        </div>
+                        {/* Capabilities Strip */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6, duration: 0.8 }}
+                            className="mt-20 pt-10 border-t border-slate-200 dark:border-slate-800/50"
+                        >
+                            <p className="text-sm text-slate-500 dark:text-slate-500 uppercase tracking-widest font-bold mb-6">Execution Expertise</p>
+                            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+                                {capabilities.map((item, idx) => (
+                                    <div key={idx} className="flex items-center text-slate-700 dark:text-slate-300 bg-white/50 dark:bg-slate-900/50 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-800">
+                                        <item.icon className="w-4 h-4 mr-2 text-blue-500" />
+                                        <span className="text-sm font-medium">{item.label}</span>
                                     </div>
-                                </CardContent>
-                            </Card>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* 2. OUR STORY (Visionary Focus) */}
+            <section className="py-24 relative z-20 bg-slate-100/50 dark:bg-slate-900/20 border-y border-slate-200 dark:border-slate-800/50">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h2 className="text-3xl md:text-5xl font-black mb-8 text-slate-900 dark:text-white tracking-tight">Systematic Growth. <br />Zero Inefficiencies.</h2>
+                        <div className="space-y-6 text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
+                            <p>
+                                <strong className="text-slate-900 dark:text-white">AJPR WORLD</strong> was founded with a singular vision: to eliminate operational chaos in modern businesses by building powerful, automated digital systems.
+                            </p>
+                            <p>
+                                We don't believe in vanity metrics or generic templates. Driven by an execution-first mindset, we engineer custom solutions that bridge the gap between complex technology and tangible business ROI.
+                            </p>
+                            <p className="text-blue-600 dark:text-blue-400 font-bold">
+                                We are your long-term execution machine.
+                            </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Company Values */}
-            <section className="py-24 bg-white dark:bg-slate-900">
-                <div className="container mx-auto px-4">
-                    <div className={`text-center space-y-6 mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-800' : 'opacity-0'}`}>
-                        <h2 className="text-4xl md:text-5xl font-bold">Our Core Values</h2>
-                        <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-                            These fundamental principles guide every decision we make and define our company culture.
-                        </p>
+            {/* 3. WHAT MAKES US DIFFERENT */}
+            <section className="py-32 relative">
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <div className="text-center mb-20">
+                        <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-6 text-slate-900 dark:text-white">The Execution Blueprint.</h2>
+                        <p className="text-xl text-slate-600 dark:text-slate-400">Why ambitious brands choose us as their growth infrastructure partner.</p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {companyValues.map((value, index) => {
-                            const IconComponent = value.icon
-                            return (
-                                <Card key={index} className={`group hover-lift p-8 text-center bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 ${isVisible ? 'animate-fade-up' : 'opacity-0'}`} style={{ animationDelay: `${1 + (index * 0.1)}s` }}>
-                                    <CardContent className="p-0 space-y-4">
-                                        <div className={`mx-auto w-fit p-4 rounded-2xl bg-gradient-to-r ${value.gradient} text-white group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                                            <IconComponent className="h-10 w-10" />
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="grid md:grid-cols-2 gap-6"
+                    >
+                        {features.map((feature, i) => (
+                            <motion.div key={i} variants={itemVariants}>
+                                <Card className="h-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border-slate-200 dark:border-slate-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-colors duration-300">
+                                    <CardContent className="p-8">
+                                        <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6">
+                                            <feature.icon className="w-6 h-6 text-blue-500" />
                                         </div>
-                                        <h4 className="text-xl font-bold text-slate-900 dark:text-white">{value.title}</h4>
-                                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                                            {value.description}
+                                        <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">{feature.title}</h3>
+                                        <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                                            {feature.description}
                                         </p>
                                     </CardContent>
                                 </Card>
-                            )
-                        })}
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* 4. MISSION & VISION */}
+            <section className="py-24 bg-gradient-to-b from-slate-100 to-slate-50 dark:from-slate-900 dark:to-[#030712] relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/5 blur-[120px] rounded-full pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-600/5 blur-[120px] rounded-full pointer-events-none" />
+
+                <div className="container mx-auto px-4 max-w-5xl relative z-10">
+                    <div className="grid md:grid-cols-2 gap-12">
+                        <div className="p-10 rounded-3xl bg-white/50 dark:bg-slate-800/20 border border-slate-200 dark:border-slate-700/50 backdrop-blur-sm">
+                            <h3 className="text-sm font-bold tracking-widest text-blue-600 dark:text-blue-500 uppercase mb-4">Our Mission</h3>
+                            <p className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight">
+                                To build scalable digital infrastructures that empower businesses to grow without operational chaos.
+                            </p>
+                        </div>
+                        <div className="p-10 rounded-3xl bg-white/50 dark:bg-slate-800/20 border border-slate-200 dark:border-slate-700/50 backdrop-blur-sm">
+                            <h3 className="text-sm font-bold tracking-widest text-indigo-600 dark:text-indigo-500 uppercase mb-4">Our Vision</h3>
+                            <p className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight">
+                                To become a global technology growth partner for ambitious, forward-thinking brands.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Company Timeline */}
-            <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
-                <div className="container mx-auto px-4">
-                    {/* Heading */}
-                    <div
-                        className={`text-center space-y-6 mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-1000' : 'opacity-0'
-                            }`}
-                    >
-                        <h2 className="text-4xl md:text-5xl font-bold">Our Journey</h2>
-                        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-                            From humble beginnings to industry recognition - here's our story of growth, innovation, and success.
-                        </p>
+            {/* 5. WHO WE HELP */}
+            <section className="py-32 relative">
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <div className="text-center mb-20">
+                        <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-6 text-slate-900 dark:text-white">Who We Empower.</h2>
+                        <p className="text-xl text-slate-600 dark:text-slate-400">Transforming challenges into automated growth engines.</p>
                     </div>
 
-                    <div className="relative max-w-5xl mx-auto">
-                        {/* Timeline Line */}
-                        <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-500 rounded-full hidden md:block"></div>
-
-                        {milestones.map((milestone, index) => {
-                            const IconComponent = milestone.icon
-                            const isEven = index % 2 === 0
-                            return (
-                                <div
-                                    key={index}
-                                    className={`relative flex flex-col md:flex-row items-center mb-16 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'
-                                        } ${isVisible ? 'animate-fade-up' : 'opacity-0'}`}
-                                    style={{ animationDelay: `${1.2 + index * 0.2}s` }}
-                                >
-                                    {/* Timeline Node */}
-                                    <div className="absolute md:static left-1/2 md:left-auto transform -translate-x-1/2 md:translate-x-0 mb-6 md:mb-0">
-                                        <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white z-10 shadow-2xl mx-auto md:mx-0">
-                                            <IconComponent className="h-6 w-6 md:h-8 md:w-8" />
+                    <div className="space-y-6 max-w-4xl mx-auto">
+                        {targetAudience.map((audience, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="group p-6 md:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all duration-300"
+                            >
+                                <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+                                    <div className="w-14 h-14 shrink-0 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 group-hover:border-blue-300 dark:group-hover:border-blue-500/30 transition-all">
+                                        <audience.icon className="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{audience.title}</h3>
+                                        <div className="space-y-1">
+                                            <p className="text-slate-600 dark:text-slate-500 text-sm font-medium"><span className="text-rose-600 dark:text-rose-400/80">Pain:</span> {audience.painPoint}</p>
+                                            <p className="text-slate-700 dark:text-slate-300 font-medium"><span className="text-emerald-600 dark:text-emerald-400/80">Solution:</span> {audience.solution}</p>
                                         </div>
                                     </div>
-
-                                    {/* Content */}
-                                    <div
-                                        className={`w-full md:w-5/12 ${isEven ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'
-                                            }`}
-                                    >
-                                        <Card className="p-6 md:p-8 hover-lift bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-xl">
-                                            <CardContent className="p-0">
-                                                <Badge className="mb-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white">
-                                                    {milestone.year}
-                                                </Badge>
-                                                <h4 className="text-xl md:text-2xl font-bold mb-3 text-slate-900 dark:text-white">
-                                                    {milestone.title}
-                                                </h4>
-                                                <p className="text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
-                                                    {milestone.description}
-                                                </p>
-                                                <div className="text-sm md:text-base text-blue-600 dark:text-blue-400 font-semibold">
-                                                    {milestone.stats}
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                    </div>
                                 </div>
-                            )
-                        })}
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
 
+            {/* 6. FOUNDER SPOTLIGHT REMOVED */}
 
-            {/* CTA Section */}
-            <section className="py-24 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-                <div className="container mx-auto px-4 text-center">
-                    <div className="max-w-4xl mx-auto animate-fade-up">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                            Ready to Join Our Success Story?
-                        </h2>
-                        <p className="text-xl text-blue-100 mb-10 leading-relaxed">
-                            Whether you're looking for cutting-edge technology solutions, expert legal guidance,
-                            or comprehensive business support, our team is ready to help you achieve your goals.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                            <Button size="lg" variant="secondary" className="hover-lift px-12 py-4 text-lg" asChild>
-                                <Link href="/contact">
-                                    <Users className="mr-2 h-6 w-6" />
-                                    Work With Our Team
-                                </Link>
+            {/* 7. CTA SECTION */}
+            <section className="py-32 px-4 container mx-auto">
+                <div className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl">
+                    <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-blue-600/20 blur-[100px] rounded-full pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-purple-600/20 blur-[100px] rounded-full pointer-events-none" />
+
+                    <div className="relative z-10 max-w-3xl mx-auto">
+                        <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">Ready to Scale the Smart Way?</h2>
+                        <p className="text-xl text-slate-600 dark:text-slate-400 mb-10 font-medium leading-relaxed">Stop letting technical limitations dictate your growth speed. Let's build a digital infrastructure that accelerates your business.</p>
+
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
+                            <Button size="lg" className="rounded-full h-14 px-10 bg-blue-600 text-white hover:bg-blue-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 hover:scale-105 transition-all shadow-xl font-bold text-lg" asChild>
+                                <Link href="/contact">Book a Strategy Call</Link>
                             </Button>
-                            <Button size="lg" variant="outline" className="border-white/20 text-black hover:bg-white hover:text-blue-600 hover-lift px-12 py-4 text-lg" asChild>
-                                <Link href="/services">
-                                    <ArrowRight className="mr-2 h-6 w-6" />
-                                    Explore Our Services
-                                </Link>
+                            <Button size="lg" variant="outline" className="rounded-full h-14 px-10 text-lg border-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-900 dark:text-white bg-transparent transition-all" asChild>
+                                <Link href="/services">Start Your Project</Link>
                             </Button>
                         </div>
                     </div>

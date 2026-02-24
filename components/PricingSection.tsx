@@ -142,9 +142,9 @@ export default function PricingSection() {
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl font-bold mb-4 text-slate-900 dark:text-white">Transparent Pricing</h2>
+          <h2 className="text-4xl font-bold mb-4 text-slate-900 dark:text-white">Engineering Tiers</h2>
           <p className="text-lg text-slate-600 dark:text-slate-300">
-            Choose the perfect package for your business needs. No hidden costs.
+            Choose the foundation that best applies to your current growth stage. We provide custom quotes based on exact specifications.
           </p>
         </div>
 
@@ -164,7 +164,7 @@ export default function PricingSection() {
               <CardHeader>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">{tier.name}</h3>
                 <div className="flex items-baseline mt-2">
-                  <span className="text-3xl font-bold text-slate-900 dark:text-white">₹{tier.price.toLocaleString()}</span>
+                  <span className="text-xl font-bold text-blue-600 dark:text-blue-400">Custom Quote</span>
                 </div>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">{tier.description}</p>
               </CardHeader>
@@ -193,10 +193,10 @@ export default function PricingSection() {
 
               <CardFooter>
                 <Button
-                  className={`w-full ${tier.isPopular ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
-                  onClick={() => handleSelectPlan(tier)}
+                  className={`w-full ${tier.isPopular ? 'bg-blue-600 hover:bg-blue-700 text-white' : ''}`}
+                  asChild
                 >
-                  Select Plan
+                  <Link href="/contact">Get a Quote</Link>
                 </Button>
               </CardFooter>
             </Card>

@@ -58,7 +58,7 @@ ${form.buildingText}
 
 CURRENT BLOCKERS:
 ${form.blockersText}
-    `.trim()
+        `.trim()
 
         try {
             const res = await fetch("/api/contact", {
@@ -95,13 +95,13 @@ ${form.blockersText}
     }
 
     return (
-        <div className="min-h-screen bg-[#0B0F19] text-slate-300 font-sans selection:bg-blue-600/30">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-800 dark:text-slate-300 font-sans selection:bg-blue-600/30 transition-colors duration-300">
 
             {/* Background Ambience */}
             <div className="fixed inset-0 pointer-events-none z-0">
-                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[150px] mix-blend-screen" />
-                <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[150px] mix-blend-screen" />
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] opacity-20" />
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 dark:bg-blue-600/5 rounded-full blur-[150px] mix-blend-multiply dark:mix-blend-screen transition-colors duration-300" />
+                <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-indigo-500/10 dark:bg-indigo-600/5 rounded-full blur-[150px] mix-blend-multiply dark:mix-blend-screen transition-colors duration-300" />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] opacity-50 dark:opacity-20 transition-opacity" />
             </div>
 
             <div className="container mx-auto px-4 lg:px-8 py-24 md:py-32 relative z-10">
@@ -112,32 +112,32 @@ ${form.blockersText}
 
                         {/* 1. Hero Section */}
                         <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="space-y-8">
-                            <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black tracking-tighter text-white leading-[1.05]">
+                            <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.05]">
                                 Let's Engineer <br />What's Next.
                             </motion.h1>
-                            <motion.p variants={fadeInUp} className="text-xl md:text-2xl text-slate-400 font-medium leading-relaxed max-w-lg">
+                            <motion.p variants={fadeInUp} className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-lg">
                                 We partner with ambitious founders and growth-focused businesses to build scalable digital systems and product-driven infrastructure.
                             </motion.p>
                             <motion.div variants={fadeInUp}>
-                                <Button onClick={scrollToForm} size="lg" className="h-14 px-8 text-lg rounded-none bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all shadow-[0_0_40px_-10px_rgba(37,99,235,0.5)] border border-blue-500/50 hover:scale-[1.02]">
+                                <Button onClick={scrollToForm} size="lg" className="h-14 px-8 text-lg rounded-none bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all shadow-[0_0_40px_-10px_rgba(37,99,235,0.4)] border border-blue-500/50 hover:scale-[1.02]">
                                     Apply for Partnership <ArrowRight className="ml-3 w-5 h-5" />
                                 </Button>
                             </motion.div>
                         </motion.div>
 
                         {/* 2. Exclusivity Section */}
-                        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-6 max-w-lg relative pl-8 border-l-2 border-blue-900/50">
-                            <motion.h2 variants={fadeInUp} className="text-3xl font-black text-white tracking-tight">We're Selective by Design.</motion.h2>
-                            <motion.div variants={fadeInUp} className="space-y-4 text-slate-400 text-lg font-medium leading-relaxed">
+                        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-6 max-w-lg relative pl-8 border-l-2 border-blue-500/30 dark:border-blue-900/50">
+                            <motion.h2 variants={fadeInUp} className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">We're Selective by Design.</motion.h2>
+                            <motion.div variants={fadeInUp} className="space-y-4 text-slate-700 dark:text-slate-400 text-lg font-medium leading-relaxed">
                                 <p>AJPR WORLD works with a limited number of partners at a time.</p>
                                 <p>We focus on long-term execution, scalable architecture, and measurable impact.</p>
-                                <p className="text-blue-400/80">If you're looking for quick fixes or low-cost builds — we're probably not the right fit.</p>
+                                <p className="text-blue-600 dark:text-blue-400/80 font-bold">If you're looking for quick fixes or low-cost builds — we're probably not the right fit.</p>
                             </motion.div>
                         </motion.div>
 
                         {/* 3. Ideal Partner Section */}
                         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-8 max-w-lg">
-                            <motion.h2 variants={fadeInUp} className="text-3xl font-black text-white tracking-tight">Who We Work Best With</motion.h2>
+                            <motion.h2 variants={fadeInUp} className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Who We Work Best With</motion.h2>
                             <motion.ul variants={fadeInUp} className="space-y-5">
                                 {[
                                     "Funded or Revenue-Generating Startups",
@@ -145,8 +145,8 @@ ${form.blockersText}
                                     "Agencies needing long-term tech partner",
                                     "Businesses ready to invest in scalable systems"
                                 ].map((item, i) => (
-                                    <li key={i} className="flex items-start text-lg font-medium text-slate-300">
-                                        <CheckCircle2 className="w-6 h-6 mr-4 text-blue-500 shrink-0 opacity-80" />
+                                    <li key={i} className="flex items-start text-lg font-medium text-slate-700 dark:text-slate-300">
+                                        <CheckCircle2 className="w-6 h-6 mr-4 text-blue-600 dark:text-blue-500 shrink-0 opacity-80" />
                                         {item}
                                     </li>
                                 ))}
@@ -154,9 +154,9 @@ ${form.blockersText}
                         </motion.div>
 
                         {/* 5. What Happens Next Section */}
-                        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-8 max-w-lg pt-12 border-t border-slate-800/50">
-                            <motion.h2 variants={fadeInUp} className="text-3xl font-black text-white tracking-tight">What Happens After You Apply</motion.h2>
-                            <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-600/0 before:via-blue-600/50 before:to-slate-800/0">
+                        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-8 max-w-lg pt-12 border-t border-slate-200 dark:border-slate-800/50">
+                            <motion.h2 variants={fadeInUp} className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">What Happens After You Apply</motion.h2>
+                            <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-600/0 before:via-blue-500/30 dark:before:via-blue-600/50 before:to-transparent">
                                 {[
                                     { step: 1, title: "Review & Qualification" },
                                     { step: 2, title: "Strategy Discussion" },
@@ -164,11 +164,11 @@ ${form.blockersText}
                                     { step: 4, title: "Execution Partnership" }
                                 ].map((s, i) => (
                                     <motion.div variants={fadeInUp} key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                                        <div className="flex items-center justify-center w-10 h-10 rounded-none border border-slate-700 bg-[#0B0F19] text-blue-400 font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 shadow-[0_0_0_4px_#0B0F19]">
+                                        <div className="flex items-center justify-center w-10 h-10 rounded-none border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0B0F19] text-blue-600 dark:text-blue-400 font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 shadow-[0_0_0_4px_#f8fafc] dark:shadow-[0_0_0_4px_#0B0F19]">
                                             0{s.step}
                                         </div>
-                                        <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded bg-white/[0.02] border border-white/5 backdrop-blur-sm">
-                                            <h3 className="font-bold text-white tracking-wide">{s.title}</h3>
+                                        <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 shadow-sm dark:shadow-none backdrop-blur-sm">
+                                            <h3 className="font-bold text-slate-900 dark:text-white tracking-wide">{s.title}</h3>
                                         </div>
                                     </motion.div>
                                 ))}
@@ -183,40 +183,40 @@ ${form.blockersText}
                             initial={{ opacity: 0, x: 40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                            className="p-8 md:p-12 lg:p-16 rounded-none bg-white/[0.02] border border-white/10 shadow-2xl backdrop-blur-xl relative"
+                            className="p-8 md:p-12 lg:p-16 rounded-none bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl backdrop-blur-xl relative"
                         >
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-600" />
 
-                            <h2 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight">Apply to Work With Us</h2>
-                            <p className="text-slate-400 font-medium mb-12">All fields are required to help us prepare for our discussion.</p>
+                            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Apply to Work With Us</h2>
+                            <p className="text-slate-600 dark:text-slate-400 font-medium mb-12">All fields are required to help us prepare for our discussion.</p>
 
                             <form onSubmit={handleSubmit} className="space-y-8">
                                 <div className="grid md:grid-cols-2 gap-8">
                                     <div className="space-y-3">
-                                        <Label htmlFor="fullName" className="text-slate-300 font-medium text-sm tracking-wide uppercase">Full Name</Label>
-                                        <Input id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required className="h-14 bg-[#0B0F19]/50 border-white/10 text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="John Doe" />
+                                        <Label htmlFor="fullName" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Full Name</Label>
+                                        <Input id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="John Doe" />
                                     </div>
                                     <div className="space-y-3">
-                                        <Label htmlFor="workEmail" className="text-slate-300 font-medium text-sm tracking-wide uppercase">Work Email</Label>
-                                        <Input id="workEmail" name="workEmail" type="email" value={form.workEmail} onChange={handleChange} required className="h-14 bg-[#0B0F19]/50 border-white/10 text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="john@company.com" />
+                                        <Label htmlFor="workEmail" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Work Email</Label>
+                                        <Input id="workEmail" name="workEmail" type="email" value={form.workEmail} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="john@company.com" />
                                     </div>
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-8">
                                     <div className="space-y-3">
-                                        <Label htmlFor="companyName" className="text-slate-300 font-medium text-sm tracking-wide uppercase">Company Name</Label>
-                                        <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} required className="h-14 bg-[#0B0F19]/50 border-white/10 text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="Acme Corp" />
+                                        <Label htmlFor="companyName" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Company Name</Label>
+                                        <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="Acme Corp" />
                                     </div>
                                     <div className="space-y-3">
-                                        <Label htmlFor="websiteUrl" className="text-slate-300 font-medium text-sm tracking-wide uppercase">Website / Product URL</Label>
-                                        <Input id="websiteUrl" name="websiteUrl" type="url" value={form.websiteUrl} onChange={handleChange} required className="h-14 bg-[#0B0F19]/50 border-white/10 text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="https://..." />
+                                        <Label htmlFor="websiteUrl" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Website / Product URL</Label>
+                                        <Input id="websiteUrl" name="websiteUrl" type="url" value={form.websiteUrl} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="https://..." />
                                     </div>
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-8">
                                     <div className="space-y-3 flex flex-col">
-                                        <Label htmlFor="monthlyRevenue" className="text-slate-300 font-medium text-sm tracking-wide uppercase">Current Monthly Revenue</Label>
-                                        <select id="monthlyRevenue" name="monthlyRevenue" value={form.monthlyRevenue} onChange={handleChange} required className="h-14 px-3 bg-[#0B0F19]/50 border border-white/10 text-white rounded-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
+                                        <Label htmlFor="monthlyRevenue" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Current Monthly Revenue</Label>
+                                        <select id="monthlyRevenue" name="monthlyRevenue" value={form.monthlyRevenue} onChange={handleChange} required className="h-14 px-3 bg-slate-50 dark:bg-[#0B0F19]/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
                                             <option value="" disabled>Select Revenue Level</option>
                                             <option value="Pre-revenue">Pre-revenue / Seed</option>
                                             <option value="$0 - $10k">$0 - $10k / mo</option>
@@ -226,8 +226,8 @@ ${form.blockersText}
                                         </select>
                                     </div>
                                     <div className="space-y-3 flex flex-col">
-                                        <Label htmlFor="budgetRange" className="text-slate-300 font-medium text-sm tracking-wide uppercase">Project Budget Range</Label>
-                                        <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={handleChange} required className="h-14 px-3 bg-[#0B0F19]/50 border border-white/10 text-white rounded-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
+                                        <Label htmlFor="budgetRange" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Project Budget Range</Label>
+                                        <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={handleChange} required className="h-14 px-3 bg-slate-50 dark:bg-[#0B0F19]/50 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
                                             <option value="" disabled>Select Budget Range</option>
                                             <option value="1L - 3L">₹1L – ₹3L INR</option>
                                             <option value="3L - 10L">₹3L – ₹10L INR</option>
@@ -238,29 +238,29 @@ ${form.blockersText}
                                 </div>
 
                                 <div className="space-y-3 flex flex-col">
-                                    <Label htmlFor="buildingText" className="text-slate-300 font-medium text-sm tracking-wide uppercase">What are you building?</Label>
-                                    <Textarea id="buildingText" name="buildingText" value={form.buildingText} onChange={handleChange} required placeholder="Tell us about the product, platform, or system you want to engineer..." rows={4} className="resize-none bg-[#0B0F19]/50 border-white/10 text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
+                                    <Label htmlFor="buildingText" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What are you building?</Label>
+                                    <Textarea id="buildingText" name="buildingText" value={form.buildingText} onChange={handleChange} required placeholder="Tell us about the product, platform, or system you want to engineer..." rows={4} className="resize-none bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
                                 </div>
 
                                 <div className="space-y-3 flex flex-col">
-                                    <Label htmlFor="blockersText" className="text-slate-300 font-medium text-sm tracking-wide uppercase">What's blocking your growth right now?</Label>
-                                    <Textarea id="blockersText" name="blockersText" value={form.blockersText} onChange={handleChange} required placeholder="Tech debt? Outdated systems? Lack of automation?" rows={4} className="resize-none bg-[#0B0F19]/50 border-white/10 text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
+                                    <Label htmlFor="blockersText" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What's blocking your growth right now?</Label>
+                                    <Textarea id="blockersText" name="blockersText" value={form.blockersText} onChange={handleChange} required placeholder="Tech debt? Outdated systems? Lack of automation?" rows={4} className="resize-none bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
                                 </div>
 
                                 <div className="pt-6">
                                     <Button type="submit" size="lg" disabled={submitting} className="w-full h-16 text-lg bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-none transition-colors border border-blue-500/50">
                                         {submitting ? 'Submitting Application...' : 'Submit Application'}
                                     </Button>
-                                    <p className="text-sm font-medium text-slate-500 text-center mt-4">Applications are reviewed within 48 hours.</p>
+                                    <p className="text-sm font-medium text-slate-500 dark:text-slate-500 text-center mt-4">Applications are reviewed within 48 hours.</p>
                                 </div>
 
                                 {status === 'success' && (
-                                    <div className="p-4 bg-green-500/10 border border-green-500/30 text-green-400 font-bold text-center">
+                                    <div className="p-4 bg-green-500/10 border border-green-500/30 text-green-600 dark:text-green-400 font-bold text-center">
                                         {feedbackMsg}
                                     </div>
                                 )}
                                 {status === 'error' && (
-                                    <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-center">
+                                    <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 font-bold text-center">
                                         {feedbackMsg}
                                     </div>
                                 )}
@@ -272,13 +272,13 @@ ${form.blockersText}
                 </div>
 
                 {/* 6. Authority Strip */}
-                <div className="mt-32 pt-8 border-t border-slate-800/50 flex flex-col md:flex-row items-center justify-between text-slate-500 font-bold text-sm tracking-widest uppercase gap-4">
+                <div className="mt-32 pt-8 border-t border-slate-200 dark:border-slate-800/50 flex flex-col md:flex-row items-center justify-between text-slate-500 dark:text-slate-500 font-bold text-sm tracking-widest uppercase gap-4">
                     <div className="flex items-center gap-2">
-                        Built in India. <Globe className="w-4 h-4 ml-2 mr-2 opacity-50 text-blue-500" /> Partnering Globally.
+                        Built in India. <Globe className="w-4 h-4 ml-2 mr-2 opacity-50 text-blue-600 dark:text-blue-500" /> Partnering Globally.
                     </div>
                     <div className="flex items-center gap-6">
-                        <a href="mailto:contact@ajprworld.com" className="hover:text-blue-400 transition-colors">contact@ajprworld.com</a>
-                        <a href="#" className="hover:text-blue-400 transition-colors flex items-center gap-2"><Linkedin className="w-4 h-4" /> LinkedIn</a>
+                        <a href="mailto:contact@ajprworld.com" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-slate-600 dark:text-slate-500">contact@ajprworld.com</a>
+                        <a href="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-2 text-slate-600 dark:text-slate-500"><Linkedin className="w-4 h-4" /> LinkedIn</a>
                     </div>
                 </div>
             </div>

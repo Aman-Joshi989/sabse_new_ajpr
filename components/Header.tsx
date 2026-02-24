@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -42,18 +42,35 @@ const navigation = [
 
 export default function Header({ user }: { user?: any }) {
     const [scrolled, setScrolled] = useState(false)
+    const [isVisible, setIsVisible] = useState(true)
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
     const [mounted, setMounted] = useState(false)
     const pathname = usePathname()
     const { resolvedTheme } = useTheme()
     const { cart, setIsCartOpen } = useCart()
+    const lastScrollY = useRef(0)
 
     useEffect(() => {
         setMounted(true)
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50)
+            const currentScrollY = window.scrollY
+            setScrolled(currentScrollY > 50)
+
+            if (currentScrollY > 50) {
+                if (currentScrollY > lastScrollY.current) {
+                    // Scrolling down the page -> hide navbar
+                    setIsVisible(false)
+                } else {
+                    // Scrolling up the page -> show navbar
+                    setIsVisible(true)
+                }
+            } else {
+                // Always show at the top
+                setIsVisible(true)
+            }
+            lastScrollY.current = currentScrollY
         }
-        window.addEventListener('scroll', handleScroll)
+        window.addEventListener('scroll', handleScroll, { passive: true })
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
@@ -72,7 +89,7 @@ export default function Header({ user }: { user?: any }) {
             className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled
                 ? 'bg-background/95 backdrop-blur-lg shadow-lg'
                 : 'bg-background/80 backdrop-blur-sm'
-                } border-b border-border/50`}
+                } border-b border-border/50 ${!isVisible ? '-translate-y-full' : 'translate-y-0'}`}
         >
             <div className="container flex h-20 items-center justify-between">
                 {/* Logo */}

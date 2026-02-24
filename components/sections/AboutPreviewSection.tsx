@@ -11,44 +11,7 @@ import {
     Code2, Palette, Cloud, ArrowRight, CheckCircle
 } from 'lucide-react'
 
-const teamMembers = [
-    {
-        name: 'Aman Joshi',
-        role: 'Co-Founder & Lead Developer',
-        expertise: 'Full-Stack Development, System Architecture',
-        experience: '5+ years',
-        avatar: 'AJ',
-        gradient: 'from-blue-500 to-cyan-500',
-        skills: ['Next.js', 'Node.js', 'AWS', 'TypeScript']
-    },
-    {
-        name: 'Priya Sharma',
-        role: 'Senior UI/UX Designer',
-        expertise: 'Design Systems, User Experience',
-        experience: '6+ years',
-        avatar: 'PS',
-        gradient: 'from-purple-500 to-pink-500',
-        skills: ['Figma', 'Design Systems', 'User Research', 'Prototyping']
-    },
-    {
-        name: 'Rohit Kumar',
-        role: 'DevOps Engineer',
-        expertise: 'Cloud Infrastructure, Automation',
-        experience: '4+ years',
-        avatar: 'RK',
-        gradient: 'from-green-500 to-emerald-500',
-        skills: ['Docker', 'Kubernetes', 'AWS', 'Terraform']
-    },
-    {
-        name: 'Sneha Gupta',
-        role: 'AI/ML Specialist',
-        expertise: 'Machine Learning, Data Science',
-        experience: '15+ years',
-        avatar: 'SG',
-        gradient: 'from-orange-500 to-red-500',
-        skills: ['Python', 'TensorFlow', 'OpenAI', 'Data Science']
-    }
-]
+// Team members removed as per user request
 
 const companyValues = [
     {
@@ -143,9 +106,9 @@ export default function AboutPreviewSection() {
                     </Badge>
 
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-                        <span className="block text-slate-900 dark:text-white mb-2">Meet the Team</span>
+                        <span className="block text-slate-900 dark:text-white mb-2">About Our</span>
                         <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">
-                            Behind Your Success
+                            Company
                         </span>
                     </h2>
 
@@ -156,10 +119,9 @@ export default function AboutPreviewSection() {
                 </div>
 
                 {/* Company Stats */}
-                <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-200' : 'opacity-0'}`}>
+                <div className={`grid grid-cols-2 md:grid-cols-3 gap-8 mb-20 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-200' : 'opacity-0'}`}>
                     {[
                         { icon: Calendar, value: '3+', label: 'Years of Excellence', color: 'text-blue-600' },
-                        { icon: Users, value: '10+', label: 'Expert Team Members', color: 'text-green-600' },
                         { icon: Award, value: '50+', label: 'Projects Delivered', color: 'text-purple-600' },
                         { icon: Star, value: '4.9', label: 'Client Satisfaction', color: 'text-yellow-600' }
                     ].map((stat, index) => {
@@ -184,72 +146,7 @@ export default function AboutPreviewSection() {
                     })}
                 </div>
 
-                {/* Team Section */}
-                <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
-                    {/* Team Members Grid */}
-                    <div className={`transition-all duration-1000 ${isVisible ? 'animate-fade-left animation-delay-400' : 'opacity-0'}`}>
-                        <h3 className="text-3xl font-bold mb-8 text-slate-900 dark:text-white">Our Expert Team</h3>
-                        <div className="grid grid-cols-2 gap-6">
-                            {teamMembers.map((member, index) => (
-                                <Card
-                                    key={index}
-                                    className={`group cursor-pointer hover-lift transition-all duration-300 ${activeTeamMember === index ? 'ring-2 ring-blue-500 shadow-xl' : 'shadow-lg'
-                                        }`}
-                                    onClick={() => setActiveTeamMember(index)}
-                                >
-                                    <CardContent className="p-6 text-center">
-                                        <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${member.gradient} text-white flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform duration-300`}>
-                                            {member.avatar}
-                                        </div>
-                                        <h4 className="font-bold text-lg mb-1">{member.name}</h4>
-                                        <p className="text-blue-600 dark:text-blue-400 text-sm font-medium mb-2">{member.role}</p>
-                                        <Badge variant="outline" className="text-xs">
-                                            {member.experience}
-                                        </Badge>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    </div>
 
-                    {/* Active Team Member Details */}
-                    <div className={`transition-all duration-1000 ${isVisible ? 'animate-fade-right animation-delay-600' : 'opacity-0'}`}>
-                        <Card className="p-8 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-800 dark:to-blue-900 border-0 shadow-xl">
-                            <CardContent className="p-0">
-                                <div className="flex items-center space-x-4 mb-6">
-                                    <div className={`w-20 h-20 rounded-full bg-gradient-to-r ${teamMembers[activeTeamMember].gradient} text-white flex items-center justify-center text-2xl font-bold`}>
-                                        {teamMembers[activeTeamMember].avatar}
-                                    </div>
-                                    <div>
-                                        <h3 className="text-2xl font-bold">{teamMembers[activeTeamMember].name}</h3>
-                                        <p className="text-blue-600 dark:text-blue-400 font-medium">{teamMembers[activeTeamMember].role}</p>
-                                        <Badge className="mt-2 bg-green-100 text-green-800">
-                                            {teamMembers[activeTeamMember].experience}
-                                        </Badge>
-                                    </div>
-                                </div>
-
-                                <div className="mb-6">
-                                    <h4 className="font-semibold mb-3 text-slate-700 dark:text-slate-300">Expertise:</h4>
-                                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                        {teamMembers[activeTeamMember].expertise}
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <h4 className="font-semibold mb-3 text-slate-700 dark:text-slate-300">Core Skills:</h4>
-                                    <div className="flex flex-wrap gap-2">
-                                        {teamMembers[activeTeamMember].skills.map((skill, idx) => (
-                                            <Badge key={idx} variant="secondary" className="text-xs">
-                                                {skill}
-                                            </Badge>
-                                        ))}
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </div>
 
                 {/* Company Values */}
                 <div className={`mb-20 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-800' : 'opacity-0'}`}>

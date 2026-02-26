@@ -59,7 +59,7 @@ export default async function RootLayout({
       <body className={`${inter.variable} ${manrope.variable} font-sans`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >

@@ -91,10 +91,10 @@ export default function Header({ user }: { user?: any }) {
                 : 'bg-background/80 backdrop-blur-sm'
                 } border-b border-border/50 ${!isVisible ? '-translate-y-full' : 'translate-y-0'}`}
         >
-            <div className="container flex h-20 items-center justify-between">
+            <div className="container flex h-16 items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center space-x-3 group">
-                    <div className="relative w-32 h-12 group-hover:scale-105 transition-transform duration-300">
+                    <div className="relative w-28 h-10 group-hover:scale-105 transition-transform duration-300">
                         <Image
                             src={logoSrc}
                             alt="AJPR World Logo"
@@ -127,19 +127,19 @@ export default function Header({ user }: { user?: any }) {
                             </Link>
 
                             {item.dropdown && activeDropdown === item.name && (
-                                <div className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 py-2 animate-fade-down">
+                                <div className="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 py-2 animate-fade-down before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
                                     {item.dropdown.map((subItem) => {
                                         const IconComponent = subItem.icon
                                         return (
                                             <Link
                                                 key={subItem.name}
                                                 href={subItem.href}
-                                                className={`flex items-center px-4 py-3 transition-colors ${isActive(subItem.href)
+                                                className={`flex items-center px-4 py-2 transition-colors text-sm ${isActive(subItem.href)
                                                     ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/20'
                                                     : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20'
                                                     }`}
                                             >
-                                                <IconComponent className="w-5 h-5 mr-3 text-blue-600" />
+                                                <IconComponent className="w-4 h-4 mr-2 text-blue-600" />
                                                 <div className="font-medium">{subItem.name}</div>
                                             </Link>
                                         )

@@ -12,8 +12,8 @@ export async function POST(req: Request) {
         }
 
         await sql`
-      INSERT INTO messages (name, email, phone, message)
-      VALUES (${name}, ${email}, ${phone}, ${message})
+      INSERT INTO contact_submissions (name, email, message)
+      VALUES (${name}, ${email}, ${message})
     `;
 
         return NextResponse.json({ success: true });

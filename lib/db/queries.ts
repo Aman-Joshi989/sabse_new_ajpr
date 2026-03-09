@@ -109,6 +109,12 @@ export async function getClientRequests() {
   `;
 }
 
+export async function getContactSubmissions() {
+  return await sql`
+    SELECT * FROM contact_submissions ORDER BY created_at DESC;
+  `;
+}
+
 export async function getDevelopers() {
   return await sql`SELECT * FROM users WHERE role = 'developer';`;
 }

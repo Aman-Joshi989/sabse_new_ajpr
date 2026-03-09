@@ -32,11 +32,18 @@ export default async function AdminDashboard() {
             <UserCog className="w-4 h-4" />
             {developers.length} Developers
           </div>
-          <Button asChild>
-            <Link href="/dashboard/admin/portfolio">
-              Manage Portfolio
-            </Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button asChild variant="outline">
+              <Link href="/dashboard/admin/contact-submissions">
+                Contact Submissions
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link href="/dashboard/admin/portfolio">
+                Manage Portfolio
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
 

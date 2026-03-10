@@ -162,7 +162,7 @@ export default function HomePage() {
         )}
       </AnimatePresence>
 
-      <div className="w-[80%] mx-auto min-h-screen">
+      <div className="w-full px-4 sm:px-0 sm:w-[80%] mx-auto min-h-screen">
 
         {/* 1. HERO SECTION */}
         <section className="relative min-h-[85vh] flex flex-col justify-center pt-20 pb-20 overflow-hidden">

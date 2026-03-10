@@ -137,14 +137,14 @@ export default function HomePage() {
 
               <div className="flex-1 flex items-start sm:items-center gap-2 sm:gap-3 w-full">
                 <span className="text-xl sm:text-2xl drop-shadow-md hidden sm:block">🚀</span>
-                <p className="text-[10px] sm:text-sm font-medium text-white dark:text-slate-900 leading-snug">
+                <p className="text-xs sm:text-sm font-medium text-white dark:text-slate-900 leading-snug">
                   <strong className="text-amber-400 dark:text-amber-600 font-black mr-1 block sm:inline">LaunchPad Pro:</strong>
                   Complete Startup Growth Kit built for scale.
                 </p>
               </div>
 
               <div className="shrink-0 flex items-center w-full sm:w-auto mt-1 sm:mt-0">
-                <Button size="sm" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold shadow-lg h-7 sm:h-9 px-3 sm:px-6 text-[10px] sm:text-sm" asChild>
+                <Button size="sm" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold shadow-lg h-8 sm:h-9 px-3 sm:px-6 text-xs sm:text-sm" asChild>
                   <Link href="/startup-growth-kit">Explore Now</Link>
                 </Button>
               </div>
@@ -154,7 +154,7 @@ export default function HomePage() {
                 className="absolute top-2 sm:top-1/2 sm:-translate-y-1/2 right-2 sm:right-3 w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center text-slate-400 hover:text-white dark:text-slate-500 dark:hover:text-slate-900 bg-slate-800/50 dark:bg-slate-200/50 hover:bg-slate-800 dark:hover:bg-slate-200 rounded-full transition-colors"
                 aria-label="Close banner"
               >
-                <X className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={2.5} />
+                <X className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
               </button>
 
             </div>

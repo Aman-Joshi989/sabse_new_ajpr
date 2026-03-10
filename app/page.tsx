@@ -127,30 +127,36 @@ export default function HomePage() {
       <AnimatePresence>
         {isBannerVisible && (
           <motion.div
-            initial={{ y: 150, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 150, opacity: 0, transition: { duration: 0.3 } }}
+            initial={{ y: 150, x: "-50%", opacity: 0 }}
+            animate={{ y: 0, x: "-50%", opacity: 1 }}
+            exit={{ y: 150, x: "-50%", opacity: 0, transition: { duration: 0.3 } }}
             transition={{ delay: 1.5, duration: 0.8, type: "spring" }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-2xl"
+            className="fixed bottom-4 sm:bottom-6 left-1/2 z-[100] w-[95%] max-w-3xl"
           >
-            <div className="bg-slate-900/95 dark:bg-[#e2e8f0]/95 backdrop-blur-md border border-slate-700 dark:border-white/50 p-4 sm:px-6 pr-12 sm:pr-16 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4 relative">
-              <button
-                onClick={() => setIsBannerVisible(false)}
-                className="absolute top-2 right-2 sm:top-1/2 sm:-translate-y-1/2 sm:right-3 p-1.5 text-slate-400 hover:text-white dark:text-slate-500 dark:hover:text-slate-900 transition-colors rounded-full hover:bg-slate-800 dark:hover:bg-slate-200"
-                aria-label="Close banner"
-              >
-                <X className="w-5 h-5" />
-              </button>
-              <div className="flex items-center gap-3 w-full sm:w-auto">
-                <span className="text-2xl drop-shadow-md hidden sm:block">🚀</span>
-                <p className="text-sm font-medium text-white dark:text-slate-900 text-left leading-tight pr-6 sm:pr-0 w-full">
-                  <strong className="text-amber-400 dark:text-amber-600 font-black block sm:inline mr-1 text-base sm:text-sm">LaunchPad Pro:</strong>
+            <div className="bg-slate-900 dark:bg-slate-50 border border-slate-700 dark:border-slate-300 p-2.5 sm:p-4 rounded-xl shadow-2xl flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-4 relative pr-8 sm:pr-14">
+
+              <div className="flex-1 flex items-start sm:items-center gap-2 sm:gap-3 w-full">
+                <span className="text-xl sm:text-2xl drop-shadow-md hidden sm:block">🚀</span>
+                <p className="text-[10px] sm:text-sm font-medium text-white dark:text-slate-900 leading-snug">
+                  <strong className="text-amber-400 dark:text-amber-600 font-black mr-1 block sm:inline">LaunchPad Pro:</strong>
                   Complete Startup Growth Kit built for scale.
                 </p>
               </div>
-              <Button size="sm" className="shrink-0 w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold px-6 h-10 shadow-lg shadow-blue-500/20" asChild>
-                <Link href="/startup-growth-kit">Explore Now</Link>
-              </Button>
+
+              <div className="shrink-0 flex items-center w-full sm:w-auto mt-1 sm:mt-0">
+                <Button size="sm" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold shadow-lg h-7 sm:h-9 px-3 sm:px-6 text-[10px] sm:text-sm" asChild>
+                  <Link href="/startup-growth-kit">Explore Now</Link>
+                </Button>
+              </div>
+
+              <button
+                onClick={() => setIsBannerVisible(false)}
+                className="absolute top-2 sm:top-1/2 sm:-translate-y-1/2 right-2 sm:right-3 w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center text-slate-400 hover:text-white dark:text-slate-500 dark:hover:text-slate-900 bg-slate-800/50 dark:bg-slate-200/50 hover:bg-slate-800 dark:hover:bg-slate-200 rounded-full transition-colors"
+                aria-label="Close banner"
+              >
+                <X className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={2.5} />
+              </button>
+
             </div>
           </motion.div>
         )}

@@ -67,8 +67,17 @@ module.exports = {
                 "particle-float": "particleFloat 6s ease-in-out infinite",
                 "reveal": "reveal 0.8s ease-out forwards",
                 "shimmer": "shimmer 2s linear infinite",
+                "meteor-effect": "meteor 5s linear infinite",
             },
             keyframes: {
+                meteor: {
+                  "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+                  "70%": { opacity: "1" },
+                  "100%": {
+                    transform: "rotate(215deg) translateX(-500px)",
+                    opacity: "0",
+                  },
+                },
                 fadeUp: {
                     "0%": { opacity: "0", transform: "translateY(30px)" },
                     "100%": { opacity: "1", transform: "translateY(0)" },

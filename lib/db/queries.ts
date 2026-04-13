@@ -183,3 +183,31 @@ export async function deletePortfolioItem(id: number) {
   await sql`DELETE FROM portfolio_items WHERE id = ${id}`;
   return { success: true };
 }
+
+// --- Blogs ---
+
+export async function getBlogs() {
+  return await sql`
+    SELECT id, slug, title, excerpt, author, cover_image, created_at, published 
+    FROM blog_posts 
+    WHERE published = true 
+    ORDER BY created_at DESC;
+  `;
+}
+
+export async function getBlogBySlug(slug: string) {
+  const result = await sql`
+    SELECT * FROM blog_posts 
+    WHERE slug = ${slug} AND published = true;
+  `;
+  return result[0];
+}
+
+export async function createBlog(data: any) {
+  const { slug, title, excerpt, content, author, cover_image } = data;
+  await sql`
+    INSERT INTO blog_posts (slug, title, excerpt, content, author, cover_image)
+    VALUES (${slug}, ${title}, ${excerpt}, ${content}, ${author}, ${cover_image});
+  `;
+  return { success: true };
+}

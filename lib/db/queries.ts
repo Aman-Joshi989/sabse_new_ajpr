@@ -187,8 +187,9 @@ export async function deletePortfolioItem(id: number) {
 // --- Blogs ---
 
 export async function getBlogs() {
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
   return await sql`
-    SELECT id, slug, title, excerpt, author, cover_image, created_at, published 
+    SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published 
     FROM blog_posts 
     WHERE published = true 
     ORDER BY created_at DESC;
@@ -196,6 +197,7 @@ export async function getBlogs() {
 }
 
 export async function getBlogBySlug(slug: string) {
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
   const result = await sql`
     SELECT * FROM blog_posts 
     WHERE slug = ${slug} AND published = true;
@@ -204,10 +206,108 @@ export async function getBlogBySlug(slug: string) {
 }
 
 export async function createBlog(data: any) {
-  const { slug, title, excerpt, content, author, cover_image } = data;
+  const { slug, title, excerpt, content, category, author, cover_image, published } = data;
+  
+  // Quick safety check/migration for category column if it doesn't exist
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+
   await sql`
-    INSERT INTO blog_posts (slug, title, excerpt, content, author, cover_image)
-    VALUES (${slug}, ${title}, ${excerpt}, ${content}, ${author}, ${cover_image});
+    INSERT INTO blog_posts (slug, title, excerpt, content, category, author, cover_image, published)
+    VALUES (${slug}, ${title}, ${excerpt}, ${content}, ${category}, ${author}, ${cover_image}, ${published ?? true});
   `;
+  return { success: true };
+}
+
+export async function getAllBlogs() {
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+  return await sql`
+    SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published 
+    FROM blog_posts 
+    ORDER BY created_at DESC;
+  `;
+}
+
+export async function getBlogById(id: number) {
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+  const result = await sql`
+    SELECT * FROM blog_posts WHERE id = ${id};
+  `;
+  return result[0];
+}
+
+export async function updateBlog(id: number, data: any) {
+  const { slug, title, excerpt, content, category, author, cover_image, published } = data;
+  
+  // Quick safety check/migration for category column if it doesn't exist
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+
+  await sql`
+    UPDATE blog_posts 
+    SET slug = ${slug}, title = ${title}, excerpt = ${excerpt}, content = ${content}, 
+        category = ${category}, author = ${author}, cover_image = ${cover_image}, published = ${published}
+    WHERE id = ${id};
+  `;
+  return { success: true };
+}
+
+export async function deleteBlog(id: number) {
+  await sql`DELETE FROM blog_posts WHERE id = ${id};`;
+  return { success: true };
+}
+
+// --- Services / Products ---
+
+export async function getAllServices() {
+  return await sql`
+    SELECT * FROM services 
+    ORDER BY created_at DESC;
+  `;
+}
+
+export async function getPublishedServices() {
+  return await sql`
+    SELECT * FROM services 
+    WHERE published = true
+    ORDER BY created_at DESC;
+  `;
+}
+
+export async function getServiceBySlug(slug: string) {
+  const result = await sql`
+    SELECT * FROM services WHERE slug = ${slug} AND published = true;
+  `;
+  return result[0];
+}
+
+export async function getServiceById(id: number) {
+  const result = await sql`
+    SELECT * FROM services WHERE id = ${id};
+  `;
+  return result[0];
+}
+
+export async function createService(data: any) {
+  const { sku, title, slug, category, description, features, price, price_type, delivery_time, icon_name, gradient, published } = data;
+  await sql`
+    INSERT INTO services (sku, title, slug, category, description, features, price, price_type, delivery_time, icon_name, gradient, published)
+    VALUES (${sku}, ${title}, ${slug}, ${category}, ${description}, ${JSON.stringify(features)}::jsonb, ${price}, ${price_type}, ${delivery_time}, ${icon_name}, ${gradient}, ${published ?? true});
+  `;
+  return { success: true };
+}
+
+export async function updateService(id: number, data: any) {
+  const { sku, title, slug, category, description, features, price, price_type, delivery_time, icon_name, gradient, published } = data;
+  await sql`
+    UPDATE services 
+    SET sku = ${sku}, title = ${title}, slug = ${slug}, category = ${category}, description = ${description}, 
+        features = ${JSON.stringify(features)}::jsonb, price = ${price}, price_type = ${price_type}, 
+        delivery_time = ${delivery_time}, icon_name = ${icon_name}, gradient = ${gradient}, published = ${published}
+    WHERE id = ${id};
+  `;
+  return { success: true };
+}
+
+export async function deleteService(id: number) {
+  await sql`DELETE FROM services WHERE id = ${id};`;
   return { success: true };
 }

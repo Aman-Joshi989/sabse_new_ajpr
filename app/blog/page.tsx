@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { getBlogs } from '@/lib/db/queries';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { CalendarIcon, ArrowRightIcon } from 'lucide-react';
-import { Meteors } from '@/components/magic-ui/Meteors';
-import { MotionStaggerContainer, MotionFadeItem } from '@/components/magic-ui/MotionFadeIn';
+import { Card, CardContent } from '@/components/ui/card';
+import { ArrowRight } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
 
 type BlogPost = {
   id: number;
@@ -17,103 +17,112 @@ type BlogPost = {
 };
 
 export default async function BlogIndexPage() {
-  const blogs = await getBlogs() as BlogPost[];
+  const allBlogs = await getBlogs() as BlogPost[];
+  
+  const featuredPost = allBlogs.length > 0 ? allBlogs[0] : null;
+  const moreNews = allBlogs.length > 1 ? allBlogs.slice(1) : [];
 
   return (
-    <div className="relative min-h-screen bg-background overflow-hidden pb-20">
-      {/* Magic UI Background Decorators */}
-      <Meteors number={25} />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[40rem] bg-gradient-to-b from-primary/10 to-transparent -z-10 blur-3xl opacity-50" />
-      <div className="pointer-events-none absolute -top-40 -right-40 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] -z-10" />
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-24 pb-20 selection:bg-blue-200 dark:selection:bg-blue-900 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        
+        {/* Header Title */}
+        <header className="border-b border-slate-200 dark:border-slate-800 pb-6 pt-8">
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-slate-50 flex items-center gap-4">
+                <span className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-lg">G</span>
+                AJPR The Keyword
+            </h1>
+        </header>
 
-      {/* Hero Section */}
-      <MotionStaggerContainer className="mx-auto max-w-5xl px-6 pt-32 pb-16 text-center">
-        <MotionFadeItem>
-          <h1 className="text-5xl font-extrabold tracking-tight md:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/90 to-foreground/60 drop-shadow-sm mb-6">
-            The AJPR Daily
-          </h1>
-        </MotionFadeItem>
-        <MotionFadeItem>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground leading-relaxed">
-            Daily insights into cutting-edge software development, business growth strategies, and enterprise-grade tech architecture.
-          </p>
-        </MotionFadeItem>
-      </MotionStaggerContainer>
+        {blogsEmptyState(allBlogs)}
 
-      {/* Blog Grid */}
-      <div className="mx-auto max-w-6xl px-6">
-        {blogs.length === 0 ? (
-          <div className="text-center py-20 border border-dashed rounded-2xl border-white/10 bg-white/5 backdrop-blur-sm">
-            <h3 className="text-xl font-semibold mb-2">No posts yet</h3>
-            <p className="text-muted-foreground">Check back tomorrow for our first daily blog!</p>
-          </div>
-        ) : (
-          <MotionStaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogs.map((blog) => (
-              <MotionFadeItem key={blog.id}>
-                <Link href={`/blog/${blog.slug}`} className="group block focus:outline-none h-full">
-                  <Card className="h-full bg-background/40 backdrop-blur-2xl border-white/10 overflow-hidden transition-all duration-700 hover:-translate-y-3 hover:shadow-[0_20px_40px_rgba(59,130,246,0.15)] hover:border-primary/50 flex flex-col group/card relative">
-                    
-                    {/* Magic Glow Effect on Hover */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-                    {/* Image Container with Hover Zoom */}
-                    <div className="relative h-56 w-full overflow-hidden bg-muted/30">
-                      {blog.cover_image ? (
-                        <div className="w-full h-full relative">
-                          <img 
-                            src={blog.cover_image} 
-                            alt={blog.title}
-                            className="object-cover w-full h-full transition-transform duration-1000 group-hover/card:scale-110"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+        {/* Featured Post */}
+        {featuredPost && (
+            <section className="relative group">
+                <Link href={`/blog/${featuredPost.slug}`} className="block overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:shadow-md">
+                    <div className="grid md:grid-cols-2 gap-0">
+                        {featuredPost.cover_image && (
+                            <div className="relative h-64 md:h-auto overflow-hidden">
+                                <img 
+                                    src={featuredPost.cover_image} 
+                                    alt={featuredPost.title}
+                                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                                />
+                            </div>
+                        )}
+                        <div className="p-8 md:p-12 flex flex-col justify-center space-y-6">
+                            <div className="flex items-center gap-3 text-sm text-blue-600 dark:text-blue-400 font-semibold uppercase tracking-wider">
+                                <span>Featured</span>
+                                <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+                                <time>{new Date(featuredPost.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
+                            </div>
+                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-50 leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                {featuredPost.title}
+                            </h2>
+                            <p className="text-lg text-slate-600 dark:text-slate-400 line-clamp-3">
+                                {featuredPost.excerpt}
+                            </p>
+                            <div className="pt-4 flex items-center text-blue-600 dark:text-blue-400 font-medium group-hover:translate-x-2 transition-transform w-max">
+                                Read article <ArrowRight className="ml-2 w-4 h-4" />
+                            </div>
                         </div>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20">
-                          <span className="text-primary/50 font-bold text-4xl opacity-20">AJPR</span>
-                        </div>
-                      )}
-                      
-                      {/* Floating Date Badge */}
-                      <div className="absolute top-4 right-4 bg-background/60 backdrop-blur-xl border border-white/10 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 text-foreground/90 shadow-sm transition-transform duration-500 group-hover/card:scale-105 group-hover/card:border-primary/50">
-                        <CalendarIcon className="w-3.5 h-3.5" />
-                        {new Date(blog.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                      </div>
                     </div>
-
-                    <CardHeader className="pt-6 pb-3 relative z-10">
-                      <h2 className="text-2xl font-bold tracking-tight line-clamp-2 leading-tight group-hover/card:text-primary transition-colors duration-500">
-                        {blog.title}
-                      </h2>
-                    </CardHeader>
-                    
-                    <CardContent className="flex-grow relative z-10">
-                      <p className="text-muted-foreground line-clamp-3 leading-relaxed text-sm">
-                        {blog.excerpt}
-                      </p>
-                    </CardContent>
-
-                    <CardFooter className="pt-0 pb-6 border-t border-white/5 mt-4 flex items-center justify-between relative z-10">
-                      <div className="flex items-center gap-2">
-                         <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-primary to-blue-500 flex items-center justify-center text-[10px] font-bold text-white shadow-inner">
-                           {blog.author.charAt(0)}
-                         </div>
-                         <span className="text-xs font-semibold text-muted-foreground group-hover/card:text-foreground transition-colors duration-500">
-                           {blog.author}
-                         </span>
-                      </div>
-                      <div className="text-primary flex items-center text-sm font-semibold transform transition-all duration-500 opacity-0 -translate-x-4 group-hover/card:opacity-100 group-hover/card:translate-x-0">
-                        Read Article <ArrowRightIcon className="w-4 h-4 ml-1 transform group-hover/card:translate-x-1 transition-transform" />
-                      </div>
-                    </CardFooter>
-
-                  </Card>
                 </Link>
-              </MotionFadeItem>
-            ))}
-          </MotionStaggerContainer>
+            </section>
         )}
+
+        {/* More News Grid */}
+        {moreNews.length > 0 && (
+            <section className="space-y-8">
+                <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50">More news</h3>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {moreNews.map((blog) => (
+                        <Link key={blog.id} href={`/blog/${blog.slug}`} className="group block h-full">
+                            <Card className="h-full bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col rounded-xl">
+                                {blog.cover_image && (
+                                    <div className="relative h-48 w-full overflow-hidden">
+                                        <img 
+                                            src={blog.cover_image} 
+                                            alt={blog.title}
+                                            className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                    </div>
+                                )}
+                                <CardContent className="p-6 flex flex-col flex-grow">
+                                    <div className="text-xs text-blue-600 dark:text-blue-400 font-semibold mb-3 tracking-wider uppercase">
+                                        {new Date(blog.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                    </div>
+                                    <h4 className="text-xl font-bold text-slate-900 dark:text-slate-50 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                                        {blog.title}
+                                    </h4>
+                                    <p className="text-slate-600 dark:text-slate-400 text-sm line-clamp-3 mb-6 flex-grow">
+                                        {blog.excerpt}
+                                    </p>
+                                    <div className="mt-auto flex items-center justify-between">
+                                        <span className="text-xs font-medium text-slate-500">By {blog.author}</span>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    ))}
+                </div>
+            </section>
+        )}
+
       </div>
     </div>
   );
+}
+
+function blogsEmptyState(blogs: BlogPost[]) {
+    if (blogs.length > 0) return null;
+    return (
+        <div className="text-center py-32 border border-dashed rounded-2xl border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
+            <h3 className="text-2xl font-bold mb-2 text-slate-900 dark:text-slate-50">No stories yet</h3>
+            <p className="text-slate-500">Check back later for our latest updates and news.</p>
+        </div>
+    )
 }

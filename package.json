@@ -37,6 +37,7 @@
     "nodemailer": "^8.0.1",
     "pg": "^8.20.0",
     "puppeteer": "^24.37.3",
+    "radix-ui": "^1.4.3",
     "razorpay": "^2.9.6",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",

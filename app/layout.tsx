@@ -58,14 +58,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4763505713036204"
-          crossOrigin="anonymous"
-        ></script>
-      </head>
-      <body className={`${inter.variable} ${manrope.variable} font-sans`}>
+      <body className={`${inter.variable} ${manrope.variable} font-sans`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -77,11 +70,11 @@ export default async function RootLayout({
               <Header user={user} />
               <main className="min-h-screen">
                 {children}
-                <Toaster />
-                <Analytics />
-                <SpeedInsights />
               </main>
               <Footer />
+              <Toaster />
+              <Analytics />
+              <SpeedInsights />
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>

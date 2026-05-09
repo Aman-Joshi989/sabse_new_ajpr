@@ -55,20 +55,6 @@ export default function Header({ user }: { user?: any }) {
         const handleScroll = () => {
             const currentScrollY = window.scrollY
             setScrolled(currentScrollY > 50)
-
-            if (currentScrollY > 50) {
-                if (currentScrollY > lastScrollY.current) {
-                    // Scrolling down the page -> hide navbar
-                    setIsVisible(false)
-                } else {
-                    // Scrolling up the page -> show navbar
-                    setIsVisible(true)
-                }
-            } else {
-                // Always show at the top
-                setIsVisible(true)
-            }
-            lastScrollY.current = currentScrollY
         }
         window.addEventListener('scroll', handleScroll, { passive: true })
         return () => window.removeEventListener('scroll', handleScroll)
@@ -86,10 +72,10 @@ export default function Header({ user }: { user?: any }) {
 
     return (
         <header
-            className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled
-                ? 'bg-background/95 backdrop-blur-lg shadow-lg'
-                : 'bg-background/80 backdrop-blur-sm'
-                } border-b border-border/50 ${!isVisible ? '-translate-y-full' : 'translate-y-0'}`}
+            className={`sticky top-0 z-50 w-full transition-all duration-500 ease-in-out ${scrolled
+                ? 'bg-white/85 dark:bg-[#030712]/85 backdrop-blur-lg shadow-md border-b border-slate-200/50 dark:border-slate-800/50 py-1'
+                : 'bg-transparent backdrop-blur-none border-b border-transparent py-4'
+                }`}
         >
             <div className="container flex h-16 items-center justify-between">
                 {/* Logo */}

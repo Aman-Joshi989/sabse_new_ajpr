@@ -361,3 +361,83 @@ export async function deletePortfolioItemAction(id: number) {
         return { success: false };
     }
 }
+
+// --- Blog Actions ---
+import { createBlog, updateBlog, deleteBlog } from "@/lib/db/queries";
+
+export async function createBlogPostAction(data: any) {
+    try {
+        await createBlog(data);
+        revalidatePath('/blog');
+        revalidatePath('/dashboard/admin/blog');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to create blog post", e);
+        return { success: false };
+    }
+}
+
+export async function updateBlogPostAction(id: number, data: any) {
+    try {
+        await updateBlog(id, data);
+        revalidatePath('/blog');
+        revalidatePath(`/blog/${data.slug}`);
+        revalidatePath('/dashboard/admin/blog');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to update blog post", e);
+        return { success: false };
+    }
+}
+
+export async function deleteBlogPostAction(id: number) {
+    try {
+        await deleteBlog(id);
+        revalidatePath('/blog');
+        revalidatePath('/dashboard/admin/blog');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to delete blog post", e);
+        return { success: false };
+    }
+}
+
+// --- Service Actions ---
+import { createService, updateService, deleteService } from "@/lib/db/queries";
+
+export async function createServiceAction(data: any) {
+    try {
+        await createService(data);
+        revalidatePath('/services');
+        revalidatePath('/dashboard/admin/services');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to create service", e);
+        return { success: false };
+    }
+}
+
+export async function updateServiceAction(id: number, data: any) {
+    try {
+        await updateService(id, data);
+        revalidatePath('/services');
+        revalidatePath(`/services/${data.slug}`);
+        revalidatePath('/dashboard/admin/services');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to update service", e);
+        return { success: false };
+    }
+}
+
+export async function deleteServiceAction(id: number) {
+    try {
+        await deleteService(id);
+        revalidatePath('/services');
+        revalidatePath('/dashboard/admin/services');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to delete service", e);
+        return { success: false };
+    }
+}

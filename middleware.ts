@@ -20,6 +20,13 @@ export async function middleware(request: NextRequest) {
             const payload = await decrypt(sessionCookie);
             const role = payload.user.role;
 
+            if (request.nextUrl.pathname === '/dashboard') {
+                if (role === 'admin') return NextResponse.redirect(new URL('/dashboard/admin', request.url));
+                if (role === 'client') return NextResponse.redirect(new URL('/dashboard/client', request.url));
+                if (role === 'developer') return NextResponse.redirect(new URL('/dashboard/developer', request.url));
+                return NextResponse.redirect(new URL('/login', request.url));
+            }
+
             // Strict Role-Based Access Control
             if (request.nextUrl.pathname.startsWith('/dashboard/client') && role !== 'client') {
                 return NextResponse.redirect(new URL('/dashboard/developer', request.url));

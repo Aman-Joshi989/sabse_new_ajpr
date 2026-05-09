@@ -127,15 +127,6 @@ export default function AboutPage() {
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="max-w-5xl mx-auto text-center"
                         >
-                            <motion.div
-                                initial={{ scale: 0.8, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ delay: 0.2, duration: 0.5 }}
-                                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-blue-900/50 bg-blue-100 dark:bg-blue-900/20 backdrop-blur-md mb-8"
-                            >
-                                <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
-                                <span className="text-sm font-bold text-blue-700 dark:text-blue-300 uppercase tracking-widest">Technology & Growth Partner</span>
-                            </motion.div>
 
                             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-8 text-slate-900 dark:text-white leading-[1.1]">
                                 Building Systems That <br className="hidden md:block" />

@@ -308,6 +308,48 @@ export async function updateService(id: number, data: any) {
 }
 
 export async function deleteService(id: number) {
-  await sql`DELETE FROM services WHERE id = ${id};`;
+  await sql`DELETE FROM services WHERE id = ${id}`;
+  return { success: true };
+}
+
+// --- Affiliate Links ---
+
+export async function initAffiliatesTable() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS affiliate_links (
+      id SERIAL PRIMARY KEY,
+      slug VARCHAR(255) UNIQUE NOT NULL,
+      target_url TEXT NOT NULL,
+      product_name VARCHAR(255),
+      clicks INTEGER DEFAULT 0,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+}
+
+export async function getAffiliateLink(slug: string) {
+  await initAffiliatesTable();
+  const result = await sql`
+    SELECT * FROM affiliate_links WHERE slug = ${slug};
+  `;
+  return result[0];
+}
+
+export async function recordAffiliateClick(slug: string) {
+  await sql`
+    UPDATE affiliate_links 
+    SET clicks = clicks + 1 
+    WHERE slug = ${slug};
+  `;
+}
+
+export async function createAffiliateLink(data: { slug: string, target_url: string, product_name: string }) {
+  await initAffiliatesTable();
+  await sql`
+    INSERT INTO affiliate_links (slug, target_url, product_name)
+    VALUES (${data.slug}, ${data.target_url}, ${data.product_name})
+    ON CONFLICT (slug) DO UPDATE 
+    SET target_url = EXCLUDED.target_url, product_name = EXCLUDED.product_name;
+  `;
   return { success: true };
 }

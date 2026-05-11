@@ -8,6 +8,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { TrustBadges } from '@/components/ui/TrustBadges'
 
 const fadeInUp: any = {
   hidden: { opacity: 0, y: 40 },
@@ -263,6 +264,10 @@ export default function HomePage() {
                 <Button size="lg" variant="outline" className="h-12 px-8 text-base rounded-none border border-slate-300 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 bg-white dark:bg-[#030712] text-slate-900 dark:text-white font-bold transition-transform hover:scale-[1.05]" asChild>
                   <Link href="/portfolio">View Our Architecture</Link>
                 </Button>
+              </motion.div>
+              
+              <motion.div variants={fadeInUp} className="flex justify-center mt-6">
+                <TrustBadges />
               </motion.div>
 
               {/* Interactive Terminal placed inside Hero */}

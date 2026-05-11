@@ -1,10 +1,39 @@
-import { getServiceBySlug } from '@/lib/db/queries'
+import { getServiceBySlug, getPublishedServices } from '@/lib/db/queries'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, CheckCircle2, Star, Shield, Clock, Zap, Target } from 'lucide-react'
+import { FAQSchema } from '@/components/schema/FAQSchema'
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema'
+import { ServiceSchema } from '@/components/schema/ServiceSchema'
+import { TrustBadges } from '@/components/ui/TrustBadges'
+import { RelatedContent } from '@/components/RelatedContent'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+    const service = await getServiceBySlug(params.slug)
+    
+    if (!service) {
+        return {
+            title: 'Service Not Found | AJPR World'
+        }
+    }
+
+    return {
+        title: `${service.title} | AJPR World Services`,
+        description: service.description,
+        openGraph: {
+            title: `${service.title} | AJPR World`,
+            description: service.description,
+            type: 'website',
+        },
+        alternates: {
+            canonical: `https://ajprworld.com/services/${service.slug}`,
+        }
+    }
+}
 
 export default async function ServiceDetailsPage({ params }: { params: { slug: string } }) {
     const service = await getServiceBySlug(params.slug)
@@ -24,8 +53,55 @@ export default async function ServiceDetailsPage({ params }: { params: { slug: s
         displayPrice = `₹${parseFloat(service.price).toLocaleString()}`;
     }
 
+    // Generate dynamic FAQs for SEO based on service data
+    const dynamicFaqs = [
+        {
+            question: `What is ${service.title}?`,
+            answer: service.description
+        },
+        {
+            question: `How long does it take to deliver ${service.title}?`,
+            answer: `The estimated delivery time for ${service.title} is ${service.delivery_time || 'customized based on your specific requirements'}.`
+        },
+        {
+            question: `What is the cost of ${service.title}?`,
+            answer: `The pricing for ${service.title} is ${displayPrice}. Contact us for a detailed quote.`
+        }
+    ];
+
+    if (featuresList && featuresList.length > 0) {
+        dynamicFaqs.push({
+            question: `What features are included in ${service.title}?`,
+            answer: `Key features include: ${featuresList.join(', ')}.`
+        });
+    }
+
+    const breadcrumbs = [
+        { name: 'Home', item: 'https://ajprworld.com' },
+        { name: 'Services', item: 'https://ajprworld.com/services' },
+        { name: service.title, item: `https://ajprworld.com/services/${service.slug}` }
+    ];
+
+    const allServices = await getPublishedServices();
+    const relatedItems = allServices
+        .filter((s: any) => s.slug !== service.slug)
+        .slice(0, 3)
+        .map((s: any) => ({
+            title: s.title,
+            url: `/services/${s.slug}`,
+            excerpt: s.description || 'Learn more about our services.'
+        }));
+
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-300 font-sans pb-24">
+            <BreadcrumbSchema items={breadcrumbs} />
+            <FAQSchema faqs={dynamicFaqs} />
+            <ServiceSchema 
+                name={service.title}
+                description={service.description}
+                providerName="AJPR World"
+                url={`https://ajprworld.com/services/${service.slug}`}
+            />
             {/* Hero Section */}
             <div className={`w-full bg-gradient-to-br ${service.gradient || 'from-blue-600 to-indigo-800'} pt-32 pb-20 px-4 text-white`}>
                 <div className="w-[80%] mx-auto">
@@ -130,9 +206,13 @@ export default async function ServiceDetailsPage({ params }: { params: { slug: s
                             <p className="text-center text-xs text-slate-500 mt-4">
                                 No credit card required. We will discuss your exact needs before proceeding.
                             </p>
+                            <TrustBadges />
                         </div>
                     </div>
                 </div>
+
+                {/* Semantic Internal Linking Silo */}
+                <RelatedContent title="Other Services You May Need" items={relatedItems} />
             </div>
         </div>
     )

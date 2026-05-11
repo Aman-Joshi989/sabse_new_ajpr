@@ -37,6 +37,8 @@ export async function login(prevState: any, formData: FormData) {
             redirect('/dashboard/client');
         } else if (user.role === 'developer') {
             redirect('/dashboard/developer');
+        } else if (user.role === 'admin') {
+            redirect('/dashboard/admin');
         } else {
             redirect('/'); // Fallback
         }

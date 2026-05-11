@@ -1,8 +1,12 @@
-import { getBlogBySlug } from '@/lib/db/queries';
+import { getBlogBySlug, getBlogs } from '@/lib/db/queries';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Metadata } from 'next';
+import { ArticleSchema } from '@/components/schema/ArticleSchema';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
+import { RelatedContent } from '@/components/RelatedContent';
+import { AffiliateDisclosure } from '@/components/ui/AffiliateDisclosure';
 
 type BlogPost = {
   id: number;
@@ -29,6 +33,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: blog.excerpt,
       images: blog.cover_image ? [{ url: blog.cover_image }] : [],
     },
+    alternates: {
+      canonical: `https://ajprworld.com/blog/${resolvedParams.slug}`,
+    },
   };
 }
 
@@ -44,9 +51,33 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const wordCount = blog.content.split(/\s+/).length;
   const readingTime = Math.ceil(wordCount / 200);
 
+  const allBlogs = await getBlogs();
+  const relatedItems = allBlogs
+    .filter((b: any) => b.slug !== resolvedParams.slug)
+    .slice(0, 3)
+    .map((b: any) => ({
+      title: b.title,
+      url: `/blog/${b.slug}`,
+      excerpt: b.excerpt || 'Read this article to learn more.'
+    }));
+
+  const breadcrumbs = [
+    { name: 'Home', item: 'https://ajprworld.com' },
+    { name: 'Blog', item: 'https://ajprworld.com/blog' },
+    { name: blog.title, item: `https://ajprworld.com/blog/${blog.slug}` }
+  ];
+
   return (
     <article className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-      
+      <BreadcrumbSchema items={breadcrumbs} />
+      <ArticleSchema 
+        title={blog.title}
+        description={blog.excerpt}
+        authorName={blog.author}
+        datePublished={new Date(blog.created_at).toISOString()}
+        image={blog.cover_image}
+        url={`https://ajprworld.com/blog/${blog.slug}`}
+      />
       {/* Navigation */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8 border-b border-slate-200 dark:border-slate-800">
         <Link 
@@ -94,7 +125,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* Main Content */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
-        <div className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed font-medium mb-12">
+        
+        {/* Affiliate Disclosure - Required by FTC */}
+        <AffiliateDisclosure />
+
+        <div className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed font-medium mb-12 mt-8">
             {blog.excerpt}
         </div>
         
@@ -110,6 +145,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             Share Article
           </button>
         </div>
+
+        {/* Semantic Internal Linking Silo */}
+        <RelatedContent title="Related Articles" items={relatedItems} />
       </div>
     </article>
   );

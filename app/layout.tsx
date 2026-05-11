@@ -8,6 +8,7 @@ import Footer from '@/components/Footer'
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from 'next/script';
+import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -75,6 +76,7 @@ export default async function RootLayout({
               <Toaster />
               <Analytics />
               <SpeedInsights />
+              <OrganizationSchema />
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>

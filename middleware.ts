@@ -56,6 +56,8 @@ export async function middleware(request: NextRequest) {
                         return NextResponse.redirect(new URL('/dashboard/client', request.url));
                     } else if (payload.user.role === 'developer') {
                         return NextResponse.redirect(new URL('/dashboard/developer', request.url));
+                    } else if (payload.user.role === 'admin') {
+                        return NextResponse.redirect(new URL('/dashboard/admin', request.url));
                     }
                 }
             } catch (error) {

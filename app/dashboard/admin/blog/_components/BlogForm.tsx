@@ -28,6 +28,8 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
             category: formData.get('category') || 'Uncategorized',
             author: formData.get('author') || 'Admin',
             cover_image: formData.get('cover_image'),
+            amazon_asin: formData.get('amazon_asin'),
+            affiliate_product_slug: formData.get('affiliate_product_slug'),
             published: published
         }
 
@@ -89,6 +91,22 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
             <div className="space-y-2">
                 <Label htmlFor="cover_image">Cover Image URL</Label>
                 <Input id="cover_image" name="cover_image" defaultValue={initialData?.cover_image} />
+            </div>
+
+            <div className="bg-blue-50/50 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-100 dark:border-blue-800 space-y-4">
+                <h3 className="text-sm font-semibold text-blue-800 dark:text-blue-300">Automated Affiliate Engine (Optional)</h3>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="amazon_asin">Amazon ASIN (e.g., B08N5WRWNW)</Label>
+                        <Input id="amazon_asin" name="amazon_asin" defaultValue={initialData?.amazon_asin} placeholder="Leave blank if none" />
+                        <p className="text-xs text-slate-500">Auto-generates an Amazon product card.</p>
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="affiliate_product_slug">Custom Affiliate Slug</Label>
+                        <Input id="affiliate_product_slug" name="affiliate_product_slug" defaultValue={initialData?.affiliate_product_slug} placeholder="Leave blank if none" />
+                        <p className="text-xs text-slate-500">Links to a custom product in the DB.</p>
+                    </div>
+                </div>
             </div>
 
             <div className="flex items-center space-x-2">

@@ -188,8 +188,10 @@ export async function deletePortfolioItem(id: number) {
 
 export async function getBlogs() {
   await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
   return await sql`
-    SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published 
+    SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published, affiliate_product_slug, amazon_asin 
     FROM blog_posts 
     WHERE published = true 
     ORDER BY created_at DESC;
@@ -198,6 +200,8 @@ export async function getBlogs() {
 
 export async function getBlogBySlug(slug: string) {
   await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
   const result = await sql`
     SELECT * FROM blog_posts 
     WHERE slug = ${slug} AND published = true;
@@ -206,22 +210,25 @@ export async function getBlogBySlug(slug: string) {
 }
 
 export async function createBlog(data: any) {
-  const { slug, title, excerpt, content, category, author, cover_image, published } = data;
+  const { slug, title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin } = data;
   
-  // Quick safety check/migration for category column if it doesn't exist
   await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
 
   await sql`
-    INSERT INTO blog_posts (slug, title, excerpt, content, category, author, cover_image, published)
-    VALUES (${slug}, ${title}, ${excerpt}, ${content}, ${category}, ${author}, ${cover_image}, ${published ?? true});
+    INSERT INTO blog_posts (slug, title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin)
+    VALUES (${slug}, ${title}, ${excerpt}, ${content}, ${category}, ${author}, ${cover_image}, ${published ?? true}, ${affiliate_product_slug ?? null}, ${amazon_asin ?? null});
   `;
   return { success: true };
 }
 
 export async function getAllBlogs() {
   await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
   return await sql`
-    SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published 
+    SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published, affiliate_product_slug, amazon_asin 
     FROM blog_posts 
     ORDER BY created_at DESC;
   `;
@@ -236,15 +243,17 @@ export async function getBlogById(id: number) {
 }
 
 export async function updateBlog(id: number, data: any) {
-  const { slug, title, excerpt, content, category, author, cover_image, published } = data;
+  const { slug, title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin } = data;
   
-  // Quick safety check/migration for category column if it doesn't exist
   await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
+  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
 
   await sql`
     UPDATE blog_posts 
     SET slug = ${slug}, title = ${title}, excerpt = ${excerpt}, content = ${content}, 
-        category = ${category}, author = ${author}, cover_image = ${cover_image}, published = ${published}
+        category = ${category}, author = ${author}, cover_image = ${cover_image}, published = ${published},
+        affiliate_product_slug = ${affiliate_product_slug ?? null}, amazon_asin = ${amazon_asin ?? null}
     WHERE id = ${id};
   `;
   return { success: true };

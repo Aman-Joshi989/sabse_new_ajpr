@@ -1,4 +1,4 @@
-import { getBlogBySlug, getBlogs } from '@/lib/db/queries';
+import { getBlogBySlug, getBlogs, getAffiliateLink } from '@/lib/db/queries';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeftIcon } from 'lucide-react';
@@ -7,6 +7,7 @@ import { ArticleSchema } from '@/components/schema/ArticleSchema';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { RelatedContent } from '@/components/RelatedContent';
 import { AffiliateDisclosure } from '@/components/ui/AffiliateDisclosure';
+import { AffiliateProductCard } from '@/components/AffiliateProductCard';
 
 type BlogPost = {
   id: number;
@@ -18,6 +19,8 @@ type BlogPost = {
   cover_image: string | null;
   created_at: Date;
   published: boolean;
+  affiliate_product_slug?: string | null;
+  amazon_asin?: string | null;
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -60,6 +63,37 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       url: `/blog/${b.slug}`,
       excerpt: b.excerpt || 'Read this article to learn more.'
     }));
+
+  let affiliateData = null;
+  if (blog.amazon_asin) {
+    // Algorithmic Amazon Data (Can be replaced with real PA-API later)
+    affiliateData = {
+      title: "Recommended Amazon Product",
+      description: "Buy this highly-rated product directly from Amazon.",
+      price: "Check Price on Amazon",
+      rating: 4.8,
+      imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80",
+      ctaUrl: `/amzn/${blog.amazon_asin}`,
+      ctaText: "View on Amazon",
+      pros: ["High Quality", "Prime Shipping", "Amazon Guarantee"],
+      cons: ["Prices may vary"]
+    };
+  } else if (blog.affiliate_product_slug) {
+    const dbLink = await getAffiliateLink(blog.affiliate_product_slug);
+    if (dbLink) {
+      affiliateData = {
+        title: dbLink.title,
+        description: dbLink.description || "Highly recommended product.",
+        price: "Check Price",
+        rating: 4.9,
+        imageUrl: dbLink.image_url || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80",
+        ctaUrl: `/go/${dbLink.slug}`,
+        ctaText: "Get it Now",
+        pros: ["Top Pick", "Tested & Verified"],
+        cons: []
+      };
+    }
+  }
 
   const breadcrumbs = [
     { name: 'Home', item: 'https://ajprworld.com' },
@@ -138,6 +172,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n\n/g, '<br/><br/>') }}
         />
         
+        {/* Auto-Rendered Affiliate Product Card */}
+        {affiliateData && (
+          <div className="my-16">
+            <h3 className="text-2xl font-bold mb-6 text-slate-900 dark:text-slate-50 border-b border-slate-200 dark:border-slate-800 pb-2">
+              Our Top Recommendation
+            </h3>
+            <AffiliateProductCard 
+              productName={affiliateData.title}
+              rating={affiliateData.rating}
+              pros={affiliateData.pros}
+              cons={affiliateData.cons}
+              affiliateSlug={blog.affiliate_product_slug ?? undefined}
+              ctaUrl={affiliateData.ctaUrl}
+              buttonText={affiliateData.ctaText || affiliateData.price}
+              image={affiliateData.imageUrl}
+            />
+          </div>
+        )}
+
         {/* Footer Actions */}
         <div className="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
           <p className="text-slate-500 font-medium text-sm">Thanks for reading!</p>

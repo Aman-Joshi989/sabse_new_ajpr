@@ -7,7 +7,8 @@ interface AffiliateProductCardProps {
   rating: number; // e.g., 4.5
   pros: string[];
   cons?: string[];
-  affiliateSlug: string; // The slug for /go/[slug]
+  affiliateSlug?: string; // The slug for /go/[slug]
+  ctaUrl?: string; // Direct URL to override affiliateSlug
   buttonText?: string;
   badgeText?: string;
 }
@@ -19,6 +20,7 @@ export const AffiliateProductCard = ({
   pros,
   cons,
   affiliateSlug,
+  ctaUrl,
   buttonText = 'Check Price on Amazon',
   badgeText = 'Top Pick'
 }: AffiliateProductCardProps) => {
@@ -88,7 +90,7 @@ export const AffiliateProductCard = ({
           </div>
 
           <Link 
-            href={`/go/${affiliateSlug}`} 
+            href={ctaUrl || `/go/${affiliateSlug}`} 
             target="_blank" 
             rel="sponsored nofollow"
             className="w-full md:w-auto inline-flex items-center justify-center bg-amber-400 hover:bg-amber-500 text-slate-900 font-black px-8 py-4 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-lg"

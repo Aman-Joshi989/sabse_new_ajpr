@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import * as Icons from 'lucide-react'
 import { ArrowLeft, CheckCircle2, Star, Shield, Clock, Zap, Target } from 'lucide-react'
 import { FAQSchema } from '@/components/schema/FAQSchema'
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema'
@@ -12,8 +13,25 @@ import { RelatedContent } from '@/components/RelatedContent'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const service = await getServiceBySlug(params.slug)
+function getServiceGradient(gradient: string) {
+    const map: Record<string, string> = {
+        'from-violet-500 to-indigo-600': 'from-[#5B21B6] via-[#4F46E5] to-[#1E1B4B]',
+        'from-blue-500 to-cyan-500': 'from-[#1D4ED8] via-[#06B6D4] to-[#0F172A]',
+        'from-blue-400 to-indigo-500': 'from-[#2563EB] via-[#6366F1] to-[#0F172A]',
+        'from-blue-600 to-indigo-800': 'from-[#1E3A8A] via-[#2563EB] to-[#0F172A]',
+        'from-purple-600 to-blue-600': 'from-[#7E22CE] via-[#3B82F6] to-[#0F172A]',
+        'from-green-500 to-emerald-500': 'from-[#047857] via-[#10B981] to-[#064E3B]',
+        'from-purple-500 to-pink-500': 'from-[#6D28D9] via-[#EC4899] to-[#500724]',
+        'from-orange-500 to-red-500': 'from-[#C2410C] via-[#EF4444] to-[#450A0A]',
+        'from-indigo-500 to-purple-500': 'from-[#4338CA] via-[#8B5CF6] to-[#2E1065]',
+        'from-red-500 to-pink-500': 'from-[#B91C1C] via-[#EC4899] to-[#500724]'
+    };
+    return map[gradient] || 'from-[#1E3A8A] via-[#2563EB] to-[#0F172A]';
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params
+    const service = await getServiceBySlug(slug)
     
     if (!service) {
         return {
@@ -35,12 +53,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
 }
 
-export default async function ServiceDetailsPage({ params }: { params: { slug: string } }) {
-    const service = await getServiceBySlug(params.slug)
+export default async function ServiceDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params
+    const service = await getServiceBySlug(slug)
 
     if (!service) {
         notFound()
     }
+
+    const BannerIcon = service.icon_name && (Icons as any)[service.icon_name] 
+        ? (Icons as any)[service.icon_name] 
+        : Target;
 
     const featuresList = typeof service.features === 'string' ? JSON.parse(service.features) : (service.features || [])
 
@@ -102,9 +125,13 @@ export default async function ServiceDetailsPage({ params }: { params: { slug: s
                 providerName="AJPR World"
                 url={`https://ajprworld.com/services/${service.slug}`}
             />
-            {/* Hero Section */}
-            <div className={`w-full bg-gradient-to-br ${service.gradient || 'from-blue-600 to-indigo-800'} pt-32 pb-20 px-4 text-white`}>
-                <div className="w-[80%] mx-auto">
+            <div className={`w-full bg-gradient-to-br ${getServiceGradient(service.gradient)} pt-32 pb-20 px-4 text-white relative overflow-hidden`}>
+                {/* Background ambient glowing details */}
+                <div className="absolute top-0 right-0 w-[45%] h-[80%] bg-white/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute -bottom-20 left-10 w-[30%] h-[60%] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,white,transparent)] pointer-events-none"></div>
+
+                <div className="w-[80%] mx-auto relative z-10">
                     <Button variant="ghost" className="text-white hover:bg-white/20 mb-8" asChild>
                         <Link href="/services">
                             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Services
@@ -115,14 +142,14 @@ export default async function ServiceDetailsPage({ params }: { params: { slug: s
                             <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-sm font-medium mb-6">
                                 {service.category} • SKU: {service.sku}
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
+                            <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tight drop-shadow-sm">
                                 {service.title}
                             </h1>
                             <p className="text-lg md:text-xl text-white/90 font-medium mb-8 max-w-xl leading-relaxed">
                                 {service.description}
                             </p>
                             <div className="flex flex-wrap gap-4 items-center">
-                                <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 font-bold text-base h-14 px-8" asChild>
+                                <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 font-bold text-base h-14 px-8 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all" asChild>
                                     <Link href="/contact">Get Started Today</Link>
                                 </Button>
                                 <div className="text-white/80 font-medium text-sm flex items-center gap-2">
@@ -132,10 +159,10 @@ export default async function ServiceDetailsPage({ params }: { params: { slug: s
                         </div>
                         <div className="hidden md:flex justify-center">
                             {/* Abstract visual representation of the service */}
-                            <div className="relative w-72 h-72">
-                                <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl rounded-full animate-pulse"></div>
-                                <div className="absolute inset-4 bg-white/20 backdrop-blur-2xl rounded-full flex items-center justify-center">
-                                    <Target className="w-32 h-32 text-white/80" strokeWidth={1} />
+                            <div className="relative w-72 h-72 group">
+                                <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl rounded-full animate-pulse group-hover:scale-105 transition-transform duration-700"></div>
+                                <div className="absolute inset-4 bg-white/20 backdrop-blur-2xl rounded-full flex items-center justify-center border border-white/10 shadow-2xl group-hover:rotate-12 transition-transform duration-700">
+                                    <BannerIcon className="w-32 h-32 text-white/80" strokeWidth={1} />
                                 </div>
                             </div>
                         </div>

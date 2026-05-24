@@ -34,20 +34,38 @@ export default function WebDevelopmentPage() {
                 </p>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     {[
-                        'UI/UX Design & Prototyping',
-                        'Custom Web Applications',
-                        'Progressive Web Apps (PWA)',
-                        'API & Microservices',
-                        'E-commerce Development',
-                        'Performance Optimization'
-                    ].map((service, i) => (
+                        {
+                            title: 'UI/UX Design & Prototyping',
+                            description: 'Craft intuitive, user-centric, and high-fidelity wireframes and designs. We focus on modern typography, clean layouts, custom color theories, and seamless user flows to convert visitors into loyal clients.'
+                        },
+                        {
+                            title: 'Custom Web Applications',
+                            description: 'Build robust, highly scalable, and secure web applications customized to your business logic. We leverage state-of-the-art frameworks like Next.js and React to deliver dynamic and resilient digital products.'
+                        },
+                        {
+                            title: 'Progressive Web Apps (PWA)',
+                            description: 'Deliver native app-like speed and engagement directly in the browser. Our PWAs support reliable offline capabilities, push notifications, and fast loading states on both desktop and mobile screens.'
+                        },
+                        {
+                            title: 'API & Microservices',
+                            description: 'Architect secure, performant, and high-throughput API endpoints and modular microservices. We ensure seamless integrations with payment gateways, CRMs, databases, and third-party SaaS ecosystems.'
+                        },
+                        {
+                            title: 'E-commerce Development',
+                            description: 'Design dynamic, high-converting digital storefronts. We integrate secure checkouts, automated inventory management, intelligent searching, and responsive shopping carts built for maximum sales.'
+                        },
+                        {
+                            title: 'Performance Optimization',
+                            description: 'Optimize page speeds, boost Core Web Vitals, minimize code bundles, and tune database queries. We guarantee lightning-fast load times to maximize user retention and search engine rankings.'
+                        }
+                    ].map((item, i) => (
                         <Card key={i} className="hover-lift">
                             <CardHeader>
                                 <CheckCircle className="w-6 h-6 text-green-500 mb-2" />
-                                <CardTitle className="text-xl font-semibold">{service}</CardTitle>
+                                <CardTitle className="text-xl font-semibold">{item.title}</CardTitle>
                             </CardHeader>
-                            <CardContent className="text-slate-600 dark:text-slate-300">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at accumsan nisi, a fermentum nisl.
+                            <CardContent className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                {item.description}
                             </CardContent>
                         </Card>
                     ))}

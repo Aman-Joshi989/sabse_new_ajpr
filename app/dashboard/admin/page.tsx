@@ -5,7 +5,7 @@ import AdminClientRequestList from './_components/AdminClientRequestList'
 import AdminDeveloperList from './_components/AdminDeveloperList'
 import { 
   FileText, Users, UserCog, Database, 
-  LayoutTemplate, Inbox, Search, Bell, Settings 
+  LayoutTemplate, Inbox, Search, Bell, Settings, Globe
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -45,7 +45,9 @@ export default async function AdminDashboard() {
 
         <div className="flex items-center gap-4 text-[#5F6368] dark:text-[#9AA0A6]">
           <Bell className="w-5 h-5 cursor-pointer hover:text-[#202124] dark:hover:text-white" />
-          <Settings className="w-5 h-5 cursor-pointer hover:text-[#202124] dark:hover:text-white" />
+          <Link href="/dashboard/admin/seo">
+            <Settings className="w-5 h-5 cursor-pointer hover:text-[#202124] dark:hover:text-white" />
+          </Link>
           <div className="w-8 h-8 rounded-full bg-[#1A73E8] text-white flex items-center justify-center font-medium text-sm ml-2">
             A
           </div>
@@ -61,7 +63,7 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Quick Access (Google Cloud "Shortcuts" Style) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
           <Link href="/dashboard/admin/services" className="group">
             <Card className="h-full border border-[#DADCE0] dark:border-[#3C4043] shadow-none bg-white dark:bg-[#292A2D] hover:shadow-sm transition-all rounded-lg overflow-hidden">
               <CardContent className="p-4 flex flex-col items-center justify-center text-center gap-3">
@@ -102,6 +104,17 @@ export default async function AdminDashboard() {
                   <Inbox className="w-5 h-5 text-[#F9AB00] dark:text-[#FDE293]" />
                 </div>
                 <span className="text-sm font-medium text-[#3C4043] dark:text-[#E8EAED]">Contact Inbox</span>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link href="/dashboard/admin/seo" className="group">
+            <Card className="h-full border border-[#DADCE0] dark:border-[#3C4043] shadow-none bg-white dark:bg-[#292A2D] hover:shadow-sm transition-all rounded-lg overflow-hidden">
+              <CardContent className="p-4 flex flex-col items-center justify-center text-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#F3E8FF] dark:bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Globe className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                </div>
+                <span className="text-sm font-medium text-[#3C4043] dark:text-[#E8EAED]">SEO & Geo Settings</span>
               </CardContent>
             </Card>
           </Link>

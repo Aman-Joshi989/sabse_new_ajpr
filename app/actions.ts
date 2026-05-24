@@ -443,3 +443,17 @@ export async function deleteServiceAction(id: number) {
         return { success: false };
     }
 }
+
+import { updateSiteSettings } from "@/lib/db/queries";
+
+export async function updateSiteSettingsAction(data: any) {
+    try {
+        await updateSiteSettings(data);
+        revalidatePath('/');
+        revalidatePath('/dashboard/admin/seo');
+        return { success: true };
+    } catch (e) {
+        console.error("Failed to update site settings", e);
+        return { success: false };
+    }
+}

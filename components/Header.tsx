@@ -14,41 +14,51 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from '@/components/ui/accordion'
+import * as Icons from 'lucide-react'
 import {
-    Menu, ChevronDown, Code2,
-    Phone, ShoppingCart, Cloud, Palette
+    Menu, ChevronDown, ShoppingCart
 } from 'lucide-react'
 import { ModeToggle } from '@/components/mode-toggle'
 import { useTheme } from 'next-themes'
 import { useCart } from '@/components/providers/CartProvider'
 import CartDrawer from '@/components/CartDrawer'
 
-const navigation = [
-    { name: 'Home', href: '/' },
-    {
-        name: 'Services',
-        href: '/services',
-        dropdown: [
-            { name: 'Web Development', href: '/services/web-development', icon: Code2 },
-            { name: 'Cloud Solutions', href: '/services/cloud-solutions', icon: Cloud },
-            { name: 'Graphics & Branding', href: '/services/graphics-branding', icon: Palette },
-            { name: 'Digital Marketing', href: '/services/digital-marketing', icon: Phone },
-        ]
-    },
-    { name: 'About', href: '/about' },
-    { name: 'Portfolio', href: '/portfolio' },
-    { name: 'Contact', href: '/contact' },
-]
-
-export default function Header({ user }: { user?: any }) {
+export default function Header({ user, services }: { user?: any; services?: any[] }) {
     const [scrolled, setScrolled] = useState(false)
     const [isVisible, setIsVisible] = useState(true)
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
     const [mounted, setMounted] = useState(false)
     const pathname = usePathname()
+
     const { resolvedTheme } = useTheme()
     const { cart, setIsCartOpen } = useCart()
     const lastScrollY = useRef(0)
+
+    // Map dynamic services to dropdown items
+    const dynamicServices = services && services.length > 0
+        ? services.map(s => ({
+            name: s.title,
+            href: `/services/${s.slug}`,
+            icon_name: s.icon_name || 'Briefcase'
+        }))
+        : [
+            { name: 'Web Development', href: '/services/web-development', icon_name: 'Code2' },
+            { name: 'Cloud Solutions', href: '/services/cloud-solutions', icon_name: 'Cloud' },
+            { name: 'Graphics & Branding', href: '/services/graphics-branding', icon_name: 'Palette' },
+            { name: 'Digital Marketing', href: '/services/digital-marketing', icon_name: 'Phone' }
+        ];
+
+    const navigation = [
+        { name: 'Home', href: '/' },
+        {
+            name: 'Services',
+            href: '/services',
+            dropdown: dynamicServices
+        },
+        { name: 'About', href: '/about' },
+        { name: 'Portfolio', href: '/portfolio' },
+        { name: 'Contact', href: '/contact' },
+    ]
 
     useEffect(() => {
         setMounted(true)
@@ -69,6 +79,11 @@ export default function Header({ user }: { user?: any }) {
     const logoSrc = mounted && resolvedTheme === 'dark'
         ? "/logo/ajpr-logo-white.png"
         : "/logo/ajpr-logo.png"
+
+    // Hide global header on dashboard and login routes
+    if (pathname.startsWith('/dashboard') || pathname === '/login') {
+        return null;
+    }
 
     return (
         <header
@@ -115,7 +130,9 @@ export default function Header({ user }: { user?: any }) {
                             {item.dropdown && activeDropdown === item.name && (
                                 <div className="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 py-2 animate-fade-down before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
                                     {item.dropdown.map((subItem) => {
-                                        const IconComponent = subItem.icon
+                                        const IconComponent = subItem.icon_name 
+                                            ? (Icons as any)[subItem.icon_name] || Icons.Briefcase 
+                                            : (subItem as any).icon || Icons.Briefcase
                                         return (
                                             <Link
                                                 key={subItem.name}
@@ -267,7 +284,9 @@ export default function Header({ user }: { user?: any }) {
                                                 <AccordionContent>
                                                     <div className="ml-2 space-y-2">
                                                         {item.dropdown.map((subItem) => {
-                                                            const IconComponent = subItem.icon
+                                                            const IconComponent = subItem.icon_name 
+                                                                ? (Icons as any)[subItem.icon_name] || Icons.Briefcase 
+                                                                : (subItem as any).icon || Icons.Briefcase
                                                             return (
                                                                 <Link
                                                                     key={subItem.name}

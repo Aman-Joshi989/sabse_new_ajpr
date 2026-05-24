@@ -68,6 +68,12 @@ ${form.blockersText}
                     name: form.fullName,
                     email: form.workEmail,
                     phone: "", // Keeping schema happy
+                    companyName: form.companyName,
+                    websiteUrl: form.websiteUrl,
+                    monthlyRevenue: form.monthlyRevenue,
+                    budgetRange: form.budgetRange,
+                    buildingText: form.buildingText,
+                    blockersText: form.blockersText,
                     message: structuredMessage
                 }),
             })
@@ -175,22 +181,22 @@ ${form.blockersText}
                                     <div className="grid md:grid-cols-2 gap-8">
                                         <div className="space-y-3">
                                             <Label htmlFor="fullName" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Full Name</Label>
-                                            <Input id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="John Doe" />
+                                            <Input id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. Aman Joshi" />
                                         </div>
                                         <div className="space-y-3">
                                             <Label htmlFor="workEmail" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Work Email</Label>
-                                            <Input id="workEmail" name="workEmail" type="email" value={form.workEmail} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="john@company.com" />
+                                            <Input id="workEmail" name="workEmail" type="email" value={form.workEmail} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. you@ajprworld.com" />
                                         </div>
                                     </div>
 
                                     <div className="grid md:grid-cols-2 gap-8">
                                         <div className="space-y-3">
                                             <Label htmlFor="companyName" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Company Name</Label>
-                                            <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="Acme Corp" />
+                                            <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. AJPR World" />
                                         </div>
                                         <div className="space-y-3">
                                             <Label htmlFor="websiteUrl" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Website / Product URL</Label>
-                                            <Input id="websiteUrl" name="websiteUrl" type="url" value={form.websiteUrl} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="https://..." />
+                                            <Input id="websiteUrl" name="websiteUrl" type="url" value={form.websiteUrl} onChange={handleChange} required className="h-14 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. https://ajprworld.com" />
                                         </div>
                                     </div>
 
@@ -220,12 +226,12 @@ ${form.blockersText}
 
                                     <div className="space-y-3 flex flex-col">
                                         <Label htmlFor="buildingText" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What are you building?</Label>
-                                        <Textarea id="buildingText" name="buildingText" value={form.buildingText} onChange={handleChange} required placeholder="Tell us about the product, platform, or system you want to engineer..." rows={4} className="resize-none bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
+                                        <Textarea id="buildingText" name="buildingText" value={form.buildingText} onChange={handleChange} required placeholder="e.g. We want to design an AI-powered SaaS automation portal and connect it to AJPR World's custom API infrastructure..." rows={4} className="resize-none bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
                                     </div>
 
                                     <div className="space-y-3 flex flex-col">
                                         <Label htmlFor="blockersText" className="text-slate-700 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What's blocking your growth right now?</Label>
-                                        <Textarea id="blockersText" name="blockersText" value={form.blockersText} onChange={handleChange} required placeholder="Tech debt? Outdated systems? Lack of automation?" rows={4} className="resize-none bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
+                                        <Textarea id="blockersText" name="blockersText" value={form.blockersText} onChange={handleChange} required placeholder="e.g. Tech debt and outdated legacy databases are bottlenecking checkout transactions, and we need to scale our system using AJPR World's engineering services." rows={4} className="resize-none bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-none focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
                                     </div>
 
                                     <div className="pt-6">

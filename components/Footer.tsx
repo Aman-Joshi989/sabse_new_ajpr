@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Linkedin, Twitter, Instagram, Facebook, Youtube } from 'lucide-react';
 import { useTheme } from 'next-themes'
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 const footerLinks = {
     services: [
@@ -25,6 +26,7 @@ const footerLinks = {
 };
 
 export default function Footer() {
+    const pathname = usePathname()
     const { resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
 
@@ -35,6 +37,11 @@ export default function Footer() {
     const logoSrc = mounted && resolvedTheme === 'dark'
         ? "/logo/ajpr-logo-white.png"
         : "/logo/ajpr-logo.png"
+
+    // Hide global footer on dashboard and login routes
+    if (pathname.startsWith('/dashboard') || pathname === '/login') {
+        return null;
+    }
 
     return (
         <footer className="bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 py-16 border-t border-slate-100 dark:border-slate-800 font-sans transition-colors duration-300">

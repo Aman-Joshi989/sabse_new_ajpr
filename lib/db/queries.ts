@@ -110,6 +110,15 @@ export async function getClientRequests() {
 }
 
 export async function getContactSubmissions() {
+  // Safe dynamic migration to ensure all granular fields are supported
+  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS company_name TEXT;`;
+  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS website_url TEXT;`;
+  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS monthly_revenue TEXT;`;
+  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS budget_range TEXT;`;
+  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS building_text TEXT;`;
+  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS blockers_text TEXT;`;
+  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS phone TEXT;`;
+
   return await sql`
     SELECT * FROM contact_submissions ORDER BY created_at DESC;
   `;
@@ -360,5 +369,72 @@ export async function createAffiliateLink(data: { slug: string, target_url: stri
     ON CONFLICT (slug) DO UPDATE 
     SET target_url = EXCLUDED.target_url, product_name = EXCLUDED.product_name;
   `;
+  return { success: true };
+}
+
+// --- SEO & GEO Settings ---
+
+export async function initSiteSettingsTable() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS site_settings (
+      id INT PRIMARY KEY,
+      seo_title VARCHAR(255) DEFAULT 'AJPR World – Your Partner for Legal, Tech & Business Growth',
+      seo_description TEXT DEFAULT 'AJPR World delivers complete business solutions including web development, legal services, GST filing, company registration, and financial consulting. We help startups and businesses grow with reliable, end-to-end support.',
+      seo_keywords TEXT DEFAULT 'Best Software, business solutions, web development, legal services, GST returns, company registration, financial consulting, India, business consulting India',
+      canonical_url VARCHAR(255) DEFAULT 'https://ajprworld.com',
+      geo_region VARCHAR(100) DEFAULT 'IN-DL',
+      geo_placename VARCHAR(255) DEFAULT 'New Delhi',
+      geo_position VARCHAR(100) DEFAULT '28.6139;77.2090',
+      geo_icbm VARCHAR(100) DEFAULT '28.6139, 77.2090',
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+}
+
+export async function getSiteSettings() {
+  await initSiteSettingsTable();
+  const result = await sql`SELECT * FROM site_settings WHERE id = 1;`;
+  
+  if (result.length === 0) {
+    // Insert default settings row
+    await sql`
+      INSERT INTO site_settings (id, seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm) 
+      VALUES (
+        1, 
+        'AJPR World – Your Partner for Legal, Tech & Business Growth',
+        'AJPR World delivers complete business solutions including web development, legal services, GST filing, company registration, and financial consulting. We help startups and businesses grow with reliable, end-to-end support.',
+        'Best Software, business solutions, web development, legal services, GST returns, company registration, financial consulting, India, business consulting India',
+        'https://ajprworld.com',
+        'IN-DL',
+        'New Delhi',
+        '28.6139;77.2090',
+        '28.6139, 77.2090'
+      );
+    `;
+    const newSettings = await sql`SELECT * FROM site_settings WHERE id = 1;`;
+    return newSettings[0];
+  }
+  
+  return result[0];
+}
+
+export async function updateSiteSettings(data: any) {
+  await initSiteSettingsTable();
+  const { seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm } = data;
+  
+  await sql`
+    UPDATE site_settings 
+    SET seo_title = ${seo_title},
+        seo_description = ${seo_description},
+        seo_keywords = ${seo_keywords},
+        canonical_url = ${canonical_url},
+        geo_region = ${geo_region},
+        geo_placename = ${geo_placename},
+        geo_position = ${geo_position},
+        geo_icbm = ${geo_icbm},
+        updated_at = CURRENT_TIMESTAMP
+    WHERE id = 1;
+  `;
+  
   return { success: true };
 }

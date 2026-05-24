@@ -3,7 +3,7 @@ import EditPortfolioClient from './_components/EditPortfolioClient'
 
 export const dynamic = 'force-dynamic';
 
-export default async function EditPortfolioPage({ params }: { params: { id: string } }) {
+export default async function EditPortfolioPage({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = await params;
     const project = await getPortfolioItemById(Number(resolvedParams.id));
 

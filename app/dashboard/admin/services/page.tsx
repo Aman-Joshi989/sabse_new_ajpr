@@ -4,6 +4,22 @@ import { Button } from '@/components/ui/button'
 import { Plus, Pencil, Tag, Package, ExternalLink } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 
+function getServiceGradient(gradient: string) {
+    const map: Record<string, string> = {
+        'from-violet-500 to-indigo-600': 'from-violet-500 to-indigo-600',
+        'from-blue-500 to-cyan-500': 'from-blue-500 to-cyan-500',
+        'from-blue-400 to-indigo-500': 'from-blue-400 to-indigo-500',
+        'from-blue-600 to-indigo-800': 'from-blue-600 to-indigo-800',
+        'from-purple-600 to-blue-600': 'from-purple-600 to-blue-600',
+        'from-green-500 to-emerald-500': 'from-green-500 to-emerald-500',
+        'from-purple-500 to-pink-500': 'from-purple-500 to-pink-500',
+        'from-orange-500 to-red-500': 'from-orange-500 to-red-500',
+        'from-indigo-500 to-purple-500': 'from-indigo-500 to-purple-500',
+        'from-red-500 to-pink-500': 'from-red-500 to-pink-500'
+    };
+    return map[gradient] || 'from-slate-500 to-slate-800';
+}
+
 export default async function AdminServicesPage() {
     const services = await getAllServices()
 
@@ -25,7 +41,7 @@ export default async function AdminServicesPage() {
                 {services.map((service: any) => (
                     <div key={service.id} className="flex items-center justify-between p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl shadow-sm hover:shadow-md transition-all">
                         <div className="flex items-center gap-4">
-                            <div className={`p-3 rounded-lg bg-gradient-to-br ${service.gradient || 'from-slate-500 to-slate-800'} text-white`}>
+                            <div className={`p-3 rounded-lg bg-gradient-to-br ${getServiceGradient(service.gradient)} text-white`}>
                                 <Package className="w-5 h-5" />
                             </div>
                             <div>

@@ -5,8 +5,9 @@ import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-export default async function EditServicePage({ params }: { params: { id: string } }) {
-    const service = await getServiceById(parseInt(params.id))
+export default async function EditServicePage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params
+    const service = await getServiceById(parseInt(id))
 
     if (!service) {
         notFound()

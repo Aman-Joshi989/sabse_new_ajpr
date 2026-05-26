@@ -121,9 +121,17 @@ export default function CallToActionSection() {
                                     <h3 className="text-xl font-bold mb-2">{method.title}</h3>
                                     <p className="text-blue-200 text-sm mb-4">{method.description}</p>
                                     <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white hover:text-slate-900" asChild>
-                                        <Link href={method.action}>
-                                            {method.label}
-                                        </Link>
+                                        <a href={method.action} target={method.action.startsWith('http') ? '_blank' : undefined} rel={method.action.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                                            {method.title === 'Email Us' ? (
+                                                <>
+                                                    <span dangerouslySetInnerHTML={{ __html: '<!--email_off-->' }} />
+                                                    {method.label}
+                                                    <span dangerouslySetInnerHTML={{ __html: '<!--/email_off-->' }} />
+                                                </>
+                                            ) : (
+                                                method.label
+                                            )}
+                                        </a>
                                     </Button>
                                 </CardContent>
                             </Card>

@@ -107,6 +107,7 @@ export default async function RootLayout({
                 src="https://analytics.ahrefs.com/analytics.js"
                 data-key="NBGEPf0K5JrRzkOhDpu04A"
                 strategy="afterInteractive"
+                async
               />
             </CartProvider>
           </AuthProvider>

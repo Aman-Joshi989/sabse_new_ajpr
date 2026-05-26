@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import EmailLink from '@/components/EmailLink';
 
 const fadeInUp: any = {
     hidden: { opacity: 0, y: 30 },
@@ -285,9 +286,7 @@ ${form.blockersText}
                             Built in India. <Globe className="w-4 h-4 ml-2 mr-2 opacity-50 text-blue-600 dark:text-blue-500" /> Partnering Globally.
                         </div>
                         <div className="flex items-center gap-6">
-                            <span dangerouslySetInnerHTML={{ __html: '<!--email_off-->' }} />
-                            <a href="mailto:sales@ajprworld.com" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-slate-600 dark:text-slate-500">sales@ajprworld.com</a>
-                            <span dangerouslySetInnerHTML={{ __html: '<!--/email_off-->' }} />
+                            <EmailLink className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-slate-600 dark:text-slate-500 font-bold" />
                             <a href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-2 text-slate-600 dark:text-slate-500"><Linkedin className="w-4 h-4" /> LinkedIn</a>
                         </div>
                     </div>

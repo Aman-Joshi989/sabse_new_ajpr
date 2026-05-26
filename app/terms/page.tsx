@@ -95,7 +95,9 @@ export default function TermsPage() {
                             <h2 className="text-slate-900 dark:text-white">10. Contact Information</h2>
                             <p>
                                 If you have any questions or require clarification regarding these Terms of Service, please contact us:
+                                <span dangerouslySetInnerHTML={{ __html: '<!--email_off-->' }} />
                                 <a href="mailto:admin@ajprworld.com" className="text-blue-600 hover:underline"> admin@ajprworld.com</a>
+                                <span dangerouslySetInnerHTML={{ __html: '<!--/email_off-->' }} />
                             </p>
 
                             <p className="text-sm text-gray-500 mt-8">Last updated: May 26, 2026</p>

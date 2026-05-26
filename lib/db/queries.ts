@@ -1,6 +1,15 @@
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(process.env.DATABASE_URL!);
+// Lazy-initialize the database client to prevent top-level build-time crashes when DATABASE_URL is undefined
+const sql = (strings: TemplateStringsArray, ...values: any[]) => {
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    console.warn("WARNING: DATABASE_URL is not defined in this environment. Returning a safe empty fallback.");
+    return Promise.resolve([] as any);
+  }
+  const client = neon(url);
+  return client(strings, ...values);
+};
 
 // --- Projects & Financials ---
 export async function getProjectDetails() {

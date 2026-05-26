@@ -96,7 +96,7 @@ export default function TermsPage() {
                             <p>
                                 If you have any questions or require clarification regarding these Terms of Service, please contact us:
                                 <span dangerouslySetInnerHTML={{ __html: '<!--email_off-->' }} />
-                                <a href="mailto:admin@ajprworld.com" className="text-blue-600 hover:underline"> admin@ajprworld.com</a>
+                                <a href="mailto:sales@ajprworld.com" className="text-blue-600 hover:underline"> sales@ajprworld.com</a>
                                 <span dangerouslySetInnerHTML={{ __html: '<!--/email_off-->' }} />
                             </p>
 

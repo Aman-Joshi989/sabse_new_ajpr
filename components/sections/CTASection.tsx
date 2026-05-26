@@ -35,10 +35,12 @@ export default function CTASection() {
                             </div>
 
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-8 border-t border-blue-500/30">
-                                <div className="flex items-center space-x-3 text-blue-100">
+                                <a href="mailto:sales@ajprworld.com" className="flex items-center space-x-3 text-blue-100 hover:text-white transition-colors">
                                     <Mail className="h-5 w-5" />
-                                    <span>ajprworld@gmail.com</span>
-                                </div>
+                                    <span dangerouslySetInnerHTML={{ __html: '<!--email_off-->' }} />
+                                    <span>sales@ajprworld.com</span>
+                                    <span dangerouslySetInnerHTML={{ __html: '<!--/email_off-->' }} />
+                                </a>
                                 <div className="flex items-center space-x-3 text-blue-100">
                                     <Phone className="h-5 w-5" />
                                     <span>+91 99972 05257</span>

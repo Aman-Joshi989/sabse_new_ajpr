@@ -286,7 +286,7 @@ ${form.blockersText}
                         </div>
                         <div className="flex items-center gap-6">
                             <span dangerouslySetInnerHTML={{ __html: '<!--email_off-->' }} />
-                            <a href="mailto:admin@ajprworld.com" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-slate-600 dark:text-slate-500">admin@ajprworld.com</a>
+                            <a href="mailto:sales@ajprworld.com" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-slate-600 dark:text-slate-500">sales@ajprworld.com</a>
                             <span dangerouslySetInnerHTML={{ __html: '<!--/email_off-->' }} />
                             <a href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-2 text-slate-600 dark:text-slate-500"><Linkedin className="w-4 h-4" /> LinkedIn</a>
                         </div>

@@ -74,7 +74,7 @@ export default function PrivacyPage() {
                             <p>
                                 If you have questions, concerns, or requests regarding this Privacy Policy, please reach out to us at:
                                 <span dangerouslySetInnerHTML={{ __html: '<!--email_off-->' }} />
-                                <a href="mailto:admin@ajprworld.com" className="text-blue-600 hover:underline"> admin@ajprworld.com</a>
+                                <a href="mailto:sales@ajprworld.com" className="text-blue-600 hover:underline"> sales@ajprworld.com</a>
                                 <span dangerouslySetInnerHTML={{ __html: '<!--/email_off-->' }} />
                             </p>
 

@@ -378,9 +378,9 @@ export async function initSiteSettingsTable() {
   await sql`
     CREATE TABLE IF NOT EXISTS site_settings (
       id INT PRIMARY KEY,
-      seo_title VARCHAR(255) DEFAULT 'AJPR World – Your Partner for Legal, Tech & Business Growth',
-      seo_description TEXT DEFAULT 'AJPR World delivers complete business solutions including web development, legal services, GST filing, company registration, and financial consulting. We help startups and businesses grow with reliable, end-to-end support.',
-      seo_keywords TEXT DEFAULT 'Best Software, business solutions, web development, legal services, GST returns, company registration, financial consulting, India, business consulting India',
+      seo_title VARCHAR(255) DEFAULT 'AJPR World – Premium Tech, Custom Software & Creative Branding',
+      seo_description TEXT DEFAULT 'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding. We help startups and businesses grow with state-of-the-art tech support.',
+      seo_keywords TEXT DEFAULT 'Best Software, tech solutions, web development, custom software, UI/UX design, cloud deployment, digital branding, premium websites, AJPR World',
       canonical_url VARCHAR(255) DEFAULT 'https://ajprworld.com',
       geo_region VARCHAR(100) DEFAULT 'IN-DL',
       geo_placename VARCHAR(255) DEFAULT 'New Delhi',
@@ -401,9 +401,9 @@ export async function getSiteSettings() {
       INSERT INTO site_settings (id, seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm) 
       VALUES (
         1, 
-        'AJPR World – Your Partner for Legal, Tech & Business Growth',
-        'AJPR World delivers complete business solutions including web development, legal services, GST filing, company registration, and financial consulting. We help startups and businesses grow with reliable, end-to-end support.',
-        'Best Software, business solutions, web development, legal services, GST returns, company registration, financial consulting, India, business consulting India',
+        'AJPR World – Premium Tech, Custom Software & Creative Branding',
+        'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding. We help startups and businesses grow with state-of-the-art tech support.',
+        'Best Software, tech solutions, web development, custom software, UI/UX design, cloud deployment, digital branding, premium websites, AJPR World',
         'https://ajprworld.com',
         'IN-DL',
         'New Delhi',

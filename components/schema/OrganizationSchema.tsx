@@ -7,7 +7,7 @@ export const OrganizationSchema = () => {
     name: 'AJPR World',
     url: 'https://ajprworld.com',
     logo: 'https://ajprworld.com/logo.png', // Ensure this URL points to the actual logo
-    description: 'AJPR World delivers complete business solutions including web development, legal services, GST filing, company registration, and financial consulting.',
+    description: 'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding.',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+91-1234567890', // TODO: Update with actual phone number

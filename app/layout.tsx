@@ -19,13 +19,13 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await getSiteSettings();
     return {
-      title: settings?.seo_title || 'AJPR World – Your Partner for Legal, Tech & Business Growth',
-      description: settings?.seo_description || 'AJPR World delivers complete business solutions including web development, legal services, GST filing, company registration, and financial consulting.',
-      keywords: settings?.seo_keywords || 'Best Software, business solutions, web development, legal services, GST returns',
+      title: settings?.seo_title || 'AJPR World – Premium Tech, Custom Software & Creative Branding',
+      description: settings?.seo_description || 'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding.',
+      keywords: settings?.seo_keywords || 'Best Software, tech solutions, web development, custom software, UI/UX design, cloud deployment, digital branding',
       alternates: { canonical: settings?.canonical_url || 'https://ajprworld.com' },
       openGraph: {
-        title: settings?.seo_title || 'AJPR World - Complete Business Solutions',
-        description: settings?.seo_description || 'Your one-stop partner for business success: tech, legal & financial services.',
+        title: settings?.seo_title || 'AJPR World - Premium Tech & Software Solutions',
+        description: settings?.seo_description || 'Your premium partner for tech, custom software & creative branding.',
         url: settings?.canonical_url || 'https://ajprworld.com',
         siteName: 'AJPR World',
         images: [
@@ -41,8 +41,8 @@ export async function generateMetadata(): Promise<Metadata> {
       },
       twitter: {
         card: 'summary_large_image',
-        title: settings?.seo_title || 'AJPR World - Complete Business Solutions',
-        description: settings?.seo_description || 'Legal, Tech & Financial Services for your business growth.',
+        title: settings?.seo_title || 'AJPR World - Premium Tech & Software Solutions',
+        description: settings?.seo_description || 'Premium web development, custom software engineering & creative branding for business growth.',
         images: ['https://ajprworld.com/og-image.jpg'],
         creator: '@ajprworld',
       },
@@ -56,8 +56,8 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch (error) {
     console.error("Failed to generate metadata dynamically:", error);
     return {
-      title: 'AJPR World – Your Partner for Legal, Tech & Business Growth',
-      description: 'AJPR World delivers complete business solutions including web development, legal services, GST filing, company registration, and financial consulting.',
+      title: 'AJPR World – Premium Tech, Custom Software & Creative Branding',
+      description: 'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding.',
     };
   }
 }

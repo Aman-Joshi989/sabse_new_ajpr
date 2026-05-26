@@ -9,73 +9,73 @@ export default function TermsPage() {
 
                             <p>
                                 Welcome to <strong>AJPR World</strong>! These Terms of Service ("Terms") govern your access to 
-                                and use of our website, applications, services, and digital solutions. By using our platform or hiring 
-                                AJPR World for web development, legal, GST, company registration, or consulting services, you agree 
-                                to be bound by these Terms.
+                                and use of our website, applications, products, and tech services. By using our platform or hiring 
+                                AJPR World for custom web development, software engineering, UI/UX design, or digital solutions, 
+                                you agree to be bound by these Terms.
                             </p>
 
                             <h2 className="text-slate-900 dark:text-white">1. Services and Scope of Work</h2>
                             <p>
-                                AJPR World delivers comprehensive business solutions across several domains:
+                                AJPR World delivers custom digital and technology solutions:
                             </p>
                             <ul>
-                                <li><strong>Tech Solutions:</strong> Custom web development, software engineering, cloud architecture, and maintenance.</li>
-                                <li><strong>Legal & Company Services:</strong> Business registrations, startup company formation, intellectual property filings, and corporate legal drafting.</li>
-                                <li><strong>Financial & Tax Services:</strong> GST filing, accounting, tax planning, and general business consulting.</li>
+                                <li><strong>Web Development:</strong> Design, development, and hosting configuration of high-end websites, e-commerce stores, and custom web applications.</li>
+                                <li><strong>Software Engineering:</strong> Front-end and back-end application engineering, database design, and cloud deployments.</li>
+                                <li><strong>Design & Branding:</strong> Premium user interface (UI) and user experience (UX) design, graphic assets, and digital branding layouts.</li>
                             </ul>
                             <p>
-                                Specific service scopes, timelines, deliverables, and service-level agreements (SLAs) will be detailed in individual service orders or client proposals.
+                                Specific timelines, project requirements, features, and milestones will be detailed in individual proposals, project scopes, or client agreements.
                             </p>
 
                             <h2 className="text-slate-900 dark:text-white">2. User Accounts and Security</h2>
                             <p>
-                                To access certain services or dashboard features, you may be required to register for an account. 
+                                To access certain dashboard features, custom client portals, or premium digital products, you may be required to register for an account. 
                                 You agree to provide accurate, complete, and current information. You are entirely responsible for 
                                 maintaining the confidentiality of your account credentials and for all activities that occur under your account.
                             </p>
 
                             <h2 className="text-slate-900 dark:text-white">3. Payments, Fees, and Refunds</h2>
                             <p>
-                                Payment terms are governed by the billing frequency and terms chosen at checkout or outlined in client agreements:
+                                Fees and billing arrangements are governed by the specific billing frequency, invoices, or terms chosen at checkout:
                             </p>
                             <ul>
-                                <li><strong>Pricing:</strong> All fees are stated in Indian Rupees (INR) unless otherwise indicated. Prices for services are subject to change, but we will notify you before any subscription changes take effect.</li>
-                                <li><strong>Payments:</strong> We utilize secure third-party payment gateways (such as Razorpay) to process transactions safely.</li>
-                                <li><strong>Refund Policy:</strong> Due to the customizable nature of digital products, professional consulting, and legal/government filing services, all sales are generally final once work has commenced or filings have been submitted. Refund requests for unrendered work will be evaluated on a case-by-case basis.</li>
+                                <li><strong>Pricing:</strong> All fees are stated in Indian Rupees (INR) unless otherwise indicated. Prices for design or development packages are subject to change, but we will notify you before any subscription changes take effect.</li>
+                                <li><strong>Payments:</strong> We utilize secure third-party payment gateways (such as Razorpay) to process online transactions safely.</li>
+                                <li><strong>Refund Policy:</strong> Due to the customized nature of software development, digital designs, and custom programming services, all payments are non-refundable once development or design work has officially commenced.</li>
                             </ul>
 
-                            <h2 className="text-slate-900 dark:text-white">4. Intellectual Property Rights</h2>
+                            <h2 className="text-slate-900 dark:text-white">4. Intellectual Property and Code Ownership</h2>
                             <p>
-                                Unless otherwise specified in a formal written contract:
+                                Unless otherwise specified in a custom written contract:
                             </p>
                             <ul>
-                                <li><strong>Our Property:</strong> All content, source code, UI designs, brand logos, patents, trademarks, and educational materials displayed on AJPR World are the exclusive property of AJPR World.</li>
-                                <li><strong>Client Deliverables:</strong> Upon full and final payment of all outstanding invoices, ownership of custom software, custom graphic assets, or specific legal documents drafted exclusively for you will be transferred to you, subject to AJPR World retaining a non-exclusive license to use generic libraries or patterns.</li>
+                                <li><strong>AJPR World IP:</strong> All content, pre-existing software, generic templates, source code frameworks, brand logos, and assets displayed on our platform remain the exclusive property of AJPR World.</li>
+                                <li><strong>Client Deliverables:</strong> Upon full and final payment of all outstanding invoices, ownership of the custom code, custom graphics, and UI layouts built exclusively for your project will be transferred to you. AJPR World retains a non-exclusive license to use generic, non-proprietary code snippets, libraries, or patterns for other projects.</li>
                             </ul>
 
                             <h2 className="text-slate-900 dark:text-white">5. Acceptable Use and Restrictions</h2>
                             <p>
-                                You agree not to use our platform or services to:
+                                You agree not to use our platform, code, or services to:
                             </p>
                             <ul>
-                                <li>Violate any local, state, national, or international laws, including tax and intellectual property laws.</li>
-                                <li>Upload or distribute malware, spyware, or other malicious software code.</li>
-                                <li>Attempt to gain unauthorized access to our servers, user accounts, database systems, or networks.</li>
-                                <li>Re-sell, distribute, or sub-license AJPR World services without prior written permission.</li>
+                                <li>Violate any local, state, national, or international intellectual property or software compliance laws.</li>
+                                <li>Upload, distribute, or inject malware, spyware, viruses, or other malicious code.</li>
+                                <li>Attempt to hack, bypass security, or gain unauthorized access to our servers, databases, or user credentials.</li>
+                                <li>Re-sell, distribute, or sub-license custom AJPR World assets or SaaS applications without explicit prior written authorization.</li>
                             </ul>
 
                             <h2 className="text-slate-900 dark:text-white">6. Disclaimer of Warranties</h2>
                             <p>
-                                Our platform, software, and consulting services are provided on an <strong>"as is"</strong> and <strong>"as available"</strong> basis 
-                                without warranty of any kind, whether express or implied. While we strive to maintain high accuracy in tax computations 
-                                and legal filings, you acknowledge that government regulations are subject to change and we are not liable for external regulatory changes.
+                                Our platform, custom websites, software products, and tech consulting are provided on an <strong>"as is"</strong> and <strong>"as available"</strong> basis 
+                                without warranty of any kind, whether express or implied. We do not warrant that the software will be completely uninterrupted, 
+                                free from temporary bugs, or compatible with all future third-party software updates, though we strive for maximum reliability.
                             </p>
 
                             <h2 className="text-slate-900 dark:text-white">7. Limitation of Liability</h2>
                             <p>
                                 To the maximum extent permitted by applicable law, AJPR World, its directors, employees, or partners shall 
                                 not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, 
-                                revenue, data, or business opportunities, arising out of or related to your use of our services.
+                                revenue, data, or business opportunities arising from your use of or inability to use our software and websites.
                             </p>
 
                             <h2 className="text-slate-900 dark:text-white">8. Governing Law and Jurisdiction</h2>
@@ -87,9 +87,9 @@ export default function TermsPage() {
 
                             <h2 className="text-slate-900 dark:text-white">9. Termination</h2>
                             <p>
-                                We reserve the right to suspend or terminate your account or refuse service at our sole discretion, with or 
-                                without notice, if we believe you have breached these Terms or engaged in behavior that threatens the security 
-                                or integrity of our platform.
+                                We reserve the right to suspend or terminate your account or custom developer support at our sole discretion, 
+                                if we believe you have breached these Terms, failed to complete agreed project payments, or engaged in behavior 
+                                that threatens the security or integrity of our tech ecosystem.
                             </p>
 
                             <h2 className="text-slate-900 dark:text-white">10. Contact Information</h2>

@@ -5,6 +5,7 @@ import { ArrowLeftIcon } from 'lucide-react';
 import { Metadata } from 'next';
 import { ArticleSchema } from '@/components/schema/ArticleSchema';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
+import { FAQSchema } from '@/components/schema/FAQSchema';
 import { RelatedContent } from '@/components/RelatedContent';
 import { AffiliateDisclosure } from '@/components/ui/AffiliateDisclosure';
 import { AffiliateProductCard } from '@/components/AffiliateProductCard';
@@ -23,18 +24,61 @@ type BlogPost = {
   amazon_asin?: string | null;
 };
 
+function cleanMetaDescription(desc: string, maxLen = 155): string {
+  if (!desc) return '';
+  const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLen) return clean;
+  const sliced = clean.slice(0, maxLen - 3);
+  const lastSpace = sliced.lastIndexOf(' ');
+  if (lastSpace > maxLen * 0.7) {
+      return clean.slice(0, lastSpace).trim() + '...';
+  }
+  return sliced.trim() + '...';
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const blog = await getBlogBySlug(resolvedParams.slug) as BlogPost | undefined;
   if (!blog) return { title: 'Post Not Found' };
 
+  const safeDesc = cleanMetaDescription(blog.excerpt || '');
+
   return {
     title: `${blog.title} | AJPR The Keyword`,
-    description: blog.excerpt,
+    description: safeDesc,
     openGraph: {
-      title: blog.title,
-      description: blog.excerpt,
-      images: blog.cover_image ? [{ url: blog.cover_image }] : [],
+      title: `${blog.title} | AJPR The Keyword`,
+      description: safeDesc,
+      url: `https://ajprworld.com/blog/${resolvedParams.slug}`,
+      siteName: 'AJPR World',
+      locale: 'en_US',
+      type: 'article',
+      publishedTime: new Date(blog.created_at).toISOString(),
+      authors: [blog.author || 'AJPR World'],
+      images: blog.cover_image 
+        ? [
+            {
+              url: blog.cover_image,
+              width: 1200,
+              height: 630,
+              alt: blog.title,
+            }
+          ]
+        : [
+            {
+              url: 'https://ajprworld.com/og-image.jpg',
+              width: 1200,
+              height: 630,
+              alt: blog.title,
+            }
+          ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${blog.title} | AJPR The Keyword`,
+      description: safeDesc,
+      creator: '@ajprworld',
+      images: blog.cover_image ? [blog.cover_image] : ['https://ajprworld.com/og-image.jpg']
     },
     alternates: {
       canonical: `https://ajprworld.com/blog/${resolvedParams.slug}`,
@@ -101,6 +145,28 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     { name: blog.title, item: `https://ajprworld.com/blog/${blog.slug}` }
   ];
 
+  // Specific FAQs for GEO blog post to optimize for RAG citation
+  const geoFaqs = [
+    {
+      question: "What is the difference between SEO and GEO?",
+      answer: "Traditional SEO focuses on keywords and ranking pages in standard search engine results pages. GEO (Generative Engine Optimization) optimizes content structure, entity data, and authoritative citations so AI search systems like ChatGPT, Gemini, and Perplexity understand and cite your brand as the primary source."
+    },
+    {
+      question: "What are the most important ranking factors for AI Search Engines?",
+      answer: "Based on GEO research, the most critical retrieval factors include semantic relevance, authority signals, structured data schemas, source diversity, content freshness, and the inclusion of unique citable data such as statistics and expert quotes."
+    },
+    {
+      question: "How can my business get cited in ChatGPT, Perplexity, and Gemini search?",
+      answer: "To maximize AI citations, you must publish clear definitions of core concepts, provide original data with references, include structured tables, implement FAQ sections with schema markup, and ensure your website is fast and crawlable for AI user-agents."
+    },
+    {
+      question: "Is traditional SEO still important in the age of AI?",
+      answer: "Yes, traditional SEO provides the foundational domain authority, technical crawling readiness, and page structure that generative engines use to select reliable sources for their context window during RAG (Retrieval-Augmented Generation)."
+    }
+  ];
+
+  const isGeoBlog = blog.slug === 'what-is-geo-generative-engine-optimization';
+
   return (
     <article className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <BreadcrumbSchema items={breadcrumbs} />
@@ -112,6 +178,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         image={blog.cover_image}
         url={`https://ajprworld.com/blog/${blog.slug}`}
       />
+      {isGeoBlog && <FAQSchema faqs={geoFaqs} />}
       {/* Navigation */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8 border-b border-slate-200 dark:border-slate-800">
         <Link 
@@ -163,9 +230,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         {/* Affiliate Disclosure - Required by FTC */}
         <AffiliateDisclosure />
 
-        <div className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed font-medium mb-12 mt-8">
+        <div className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed font-medium mb-12 mt-8 text-left">
             {blog.excerpt}
         </div>
+
+        {/* Citable TL;DR Executive Summary (Optimized for AI RAG Citation) */}
+        {isGeoBlog && (
+          <div className="p-8 mb-12 bg-blue-50/50 dark:bg-blue-950/20 border-2 border-blue-500/20 rounded-2xl relative overflow-hidden backdrop-blur-sm text-left">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
+            <h3 className="text-lg font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4 flex items-center">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 mr-2.5 animate-pulse" />
+              Executive Summary (TL;DR)
+            </h3>
+            <p className="text-base text-slate-700 dark:text-slate-300 font-semibold leading-relaxed mb-0">
+              Generative Engine Optimization (GEO) is defined as the strategic process of optimizing content so AI-powered retrieval systems (like Perplexity, ChatGPT, and Gemini AI Overviews) parse, prioritize, and cite your digital brand as an authoritative reference in their responses. Key components include structured FAQ data, semantic RAG formatting, citable statistics, and strong entity authority.
+            </p>
+          </div>
+        )}
         
         <div 
           className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 prose-img:rounded-xl max-w-none text-slate-800 dark:text-slate-200"

@@ -7,25 +7,7 @@ import { useTheme } from 'next-themes'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
-const footerLinks = {
-    services: [
-        { name: 'Web Development', href: '/services/web-development' },
-        { name: 'Cloud Solutions', href: '/services/cloud-solutions' },
-        { name: 'Graphics & Branding', href: '/services/graphics-branding' },
-        { name: 'Digital Marketing', href: '/services/digital-marketing' },
-    ],
-    company: [
-        { name: 'About Us', href: '/about' },
-        { name: 'Careers', href: '/careers' },
-        { name: 'Contact', href: '/contact' },
-    ],
-    resources: [
-        { name: 'Portfolio', href: '/portfolio' },
-        { name: 'Blog', href: '/blog' },
-    ]
-};
-
-export default function Footer() {
+export default function Footer({ services, blogs }: { services?: any[]; blogs?: any[] }) {
     const pathname = usePathname()
     const { resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
@@ -33,6 +15,30 @@ export default function Footer() {
     useEffect(() => {
         setMounted(true)
     }, [])
+
+    const activeServices = services && services.length > 0
+        ? services.slice(0, 6).map((s: any) => ({ name: s.title, href: `/services/${s.slug}` }))
+        : [
+            { name: 'Custom Web Dev', href: '/services/custom-web-development-ai-solutions' },
+            { name: 'AI Chatbot Dev', href: '/services/ai-chatbot-development' },
+            { name: 'AI Automation', href: '/services/business-ai-automation' },
+            { name: 'AI Voice Agents', href: '/services/ai-voice-agent-development' },
+            { name: 'Digital Marketing', href: '/services/ai-digital-marketing-services' },
+            { name: 'Performance Marketing', href: '/services/performance-marketing' },
+        ];
+
+    const activeBlogs = blogs && blogs.length > 0
+        ? blogs.slice(0, 3).map((b: any) => ({ name: b.title, href: `/blog/${b.slug}` }))
+        : [
+            { name: 'What is GEO (AI Search)?', href: '/blog/what-is-geo-generative-engine-optimization' }
+        ];
+
+    const companyLinks = [
+        { name: 'About Us', href: '/about' },
+        { name: 'Careers', href: '/careers' },
+        { name: 'Contact', href: '/contact' },
+        { name: 'Portfolio', href: '/portfolio' },
+    ];
 
     const logoSrc = mounted && resolvedTheme === 'dark'
         ? "/logo/ajpr-logo-white.png"
@@ -68,7 +74,7 @@ export default function Footer() {
                         <div className="space-y-4">
                             <h4 className="font-medium text-slate-900 dark:text-white">Services</h4>
                             <ul className="space-y-3 text-sm">
-                                {footerLinks.services.map((link) => (
+                                {activeServices.map((link) => (
                                     <li key={link.name}>
                                         <Link href={link.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                             {link.name}
@@ -82,7 +88,7 @@ export default function Footer() {
                         <div className="space-y-4">
                             <h4 className="font-medium text-slate-900 dark:text-white">Company</h4>
                             <ul className="space-y-3 text-sm">
-                                {footerLinks.company.map((link) => (
+                                {companyLinks.map((link) => (
                                     <li key={link.name}>
                                         <Link href={link.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                             {link.name}
@@ -94,11 +100,16 @@ export default function Footer() {
 
                         {/* Column 3 */}
                         <div className="space-y-4">
-                            <h4 className="font-medium text-slate-900 dark:text-white">Resources</h4>
+                            <h4 className="font-medium text-slate-900 dark:text-white">Trending Insights</h4>
                             <ul className="space-y-3 text-sm">
-                                {footerLinks.resources.map((link) => (
+                                <li>
+                                    <Link href="/blog" className="hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">
+                                        Blog Archive
+                                    </Link>
+                                </li>
+                                {activeBlogs.map((link) => (
                                     <li key={link.name}>
-                                        <Link href={link.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                        <Link href={link.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-2">
                                             {link.name}
                                         </Link>
                                     </li>

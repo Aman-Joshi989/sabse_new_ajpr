@@ -29,6 +29,18 @@ function getServiceGradient(gradient: string) {
     return map[gradient] || 'from-[#1E3A8A] via-[#2563EB] to-[#0F172A]';
 }
 
+function cleanMetaDescription(desc: string, maxLen = 155): string {
+    if (!desc) return '';
+    const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+    if (clean.length <= maxLen) return clean;
+    const sliced = clean.slice(0, maxLen - 3);
+    const lastSpace = sliced.lastIndexOf(' ');
+    if (lastSpace > maxLen * 0.7) {
+        return clean.slice(0, lastSpace).trim() + '...';
+    }
+    return sliced.trim() + '...';
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params
     const service = await getServiceBySlug(slug)
@@ -39,13 +51,33 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         }
     }
 
+    const safeDesc = cleanMetaDescription(service.description || '');
+
     return {
         title: `${service.title} | AJPR World Services`,
-        description: service.description,
+        description: safeDesc,
         openGraph: {
-            title: `${service.title} | AJPR World`,
-            description: service.description,
+            title: `${service.title} | AJPR World Services`,
+            description: safeDesc,
+            url: `https://ajprworld.com/services/${service.slug}`,
+            siteName: 'AJPR World',
+            locale: 'en_US',
             type: 'website',
+            images: [
+                {
+                    url: 'https://ajprworld.com/og-image.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: `${service.title} - AJPR World`,
+                }
+            ]
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${service.title} | AJPR World Services`,
+            description: safeDesc,
+            creator: '@ajprworld',
+            images: ['https://ajprworld.com/og-image.jpg']
         },
         alternates: {
             canonical: `https://ajprworld.com/services/${service.slug}`,
@@ -108,7 +140,7 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
     const allServices = await getPublishedServices();
     const relatedItems = allServices
         .filter((s: any) => s.slug !== service.slug)
-        .slice(0, 3)
+        .slice(0, 6)
         .map((s: any) => ({
             title: s.title,
             url: `/services/${s.slug}`,

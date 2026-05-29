@@ -355,7 +355,6 @@ export async function initAffiliatesTable() {
 }
 
 export async function getAffiliateLink(slug: string) {
-  await initAffiliatesTable();
   const result = await sql`
     SELECT * FROM affiliate_links WHERE slug = ${slug};
   `;
@@ -388,7 +387,7 @@ export async function initSiteSettingsTable() {
     CREATE TABLE IF NOT EXISTS site_settings (
       id INT PRIMARY KEY,
       seo_title VARCHAR(255) DEFAULT 'AJPR World – Premium Tech, Custom Software & Creative Branding',
-      seo_description TEXT DEFAULT 'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding. We help startups and businesses grow with state-of-the-art tech support.',
+      seo_description TEXT DEFAULT 'AJPR World delivers premium web development, custom software engineering, UI/UX design, and AI solutions to scale your business with state-of-the-art tech.',
       seo_keywords TEXT DEFAULT 'Best Software, tech solutions, web development, custom software, UI/UX design, cloud deployment, digital branding, premium websites, AJPR World',
       canonical_url VARCHAR(255) DEFAULT 'https://ajprworld.com',
       geo_region VARCHAR(100) DEFAULT 'IN-DL',
@@ -401,7 +400,6 @@ export async function initSiteSettingsTable() {
 }
 
 export async function getSiteSettings() {
-  await initSiteSettingsTable();
   const result = await sql`SELECT * FROM site_settings WHERE id = 1;`;
   
   if (result.length === 0) {
@@ -411,7 +409,7 @@ export async function getSiteSettings() {
       VALUES (
         1, 
         'AJPR World – Premium Tech, Custom Software & Creative Branding',
-        'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding. We help startups and businesses grow with state-of-the-art tech support.',
+        'AJPR World delivers premium web development, custom software engineering, UI/UX design, and AI solutions to scale your business with state-of-the-art tech.',
         'Best Software, tech solutions, web development, custom software, UI/UX design, cloud deployment, digital branding, premium websites, AJPR World',
         'https://ajprworld.com',
         'IN-DL',

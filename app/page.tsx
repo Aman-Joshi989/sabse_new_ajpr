@@ -360,6 +360,98 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* 3.5 CORE ENGINEERING & AI SERVICES */}
+        <section id="solutions" className="py-24 relative overflow-hidden border-t border-slate-200 dark:border-slate-800/50">
+          {/* Subtle gradient highlights */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-blue-500/5 dark:bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
+          <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
+            <div className="mb-20 text-center max-w-3xl mx-auto">
+              <Badge className="bg-blue-600 text-white border-none font-black tracking-widest px-4 py-1.5 uppercase text-xs mb-6 hover:bg-blue-700">
+                Specialized Services
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">
+                Enterprise AI & Tech Capabilities
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
+                Deploying state-of-the-art architectures, custom intelligent models, and scaling infrastructures. Select a specialization to explore our detailed workflows.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Custom Web Development & AI Solutions",
+                  desc: "Engineering next-generation web applications, high-performance API architectures, and data-driven systems powered by Next.js and secure cloud stacks.",
+                  href: "/services/custom-web-development-ai-solutions",
+                  gradient: "from-blue-600 to-cyan-500",
+                  tag: "Custom Systems"
+                },
+                {
+                  title: "AI Chatbot Development",
+                  desc: "Creating advanced LLM-powered virtual assistants with custom system prompts, vector search integrations, and flawless contextual retention capabilities.",
+                  href: "/services/ai-chatbot-development",
+                  gradient: "from-purple-600 to-blue-600",
+                  tag: "Conversational AI"
+                },
+                {
+                  title: "Business AI Automation",
+                  desc: "Streamlining operational friction by orchestrating intelligent autonomous workflows, legacy DB integrations, and automatic pipeline automation.",
+                  href: "/services/business-ai-automation",
+                  gradient: "from-green-500 to-emerald-500",
+                  tag: "Operational Velocity"
+                },
+                {
+                  title: "AI Voice Agent Development",
+                  desc: "Developing bidirectional, ultra-low-latency real-time voice agents optimized with advanced auditory and text-to-speech models for maximum engagement.",
+                  href: "/services/ai-voice-agent-development",
+                  gradient: "from-orange-500 to-red-500",
+                  tag: "Voice AI & TTS"
+                },
+                {
+                  title: "SaaS Product Development",
+                  desc: "Building commercial-grade multi-tenant software-as-a-service platforms equipped with robust subscription tiers, payment gateways, and advanced telemetry.",
+                  href: "/services/saas-product-development",
+                  gradient: "from-violet-500 to-indigo-600",
+                  tag: "SaaS Architecture"
+                },
+                {
+                  title: "AI-Powered Digital Marketing",
+                  desc: "Fusing mathematical optimization with content generation to maximize online search engine reach, conversion funnels, and organic brand authority.",
+                  href: "/services/ai-digital-marketing-services",
+                  gradient: "from-indigo-500 to-purple-500",
+                  tag: "AI SEO & Growth"
+                },
+                {
+                  title: "Performance Marketing",
+                  desc: "Optimizing ROI through rigorous campaign telemetry, visual asset design, and highly targeted behavioral marketing strategies built for scale.",
+                  href: "/services/performance-marketing",
+                  gradient: "from-red-500 to-pink-500",
+                  tag: "Paid Acquisition"
+                }
+              ].map((service, index) => (
+                <Link href={service.href} key={index} className="group flex flex-col justify-between p-8 bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 dark:hover:border-blue-500/30 rounded-2xl hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                  {/* Hover ambient color glow */}
+                  <div className={`absolute -right-16 -top-16 w-36 h-36 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 blur-2xl rounded-full transition-opacity duration-500`} />
+                  <div className="space-y-4 relative z-10">
+                    <Badge variant="outline" className="dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px]">
+                      {service.tag}
+                    </Badge>
+                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                      {service.desc}
+                    </p>
+                  </div>
+                  <div className="mt-8 flex items-center text-sm font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-1.5 transition-transform">
+                    Explore Solution Details <ArrowRight className="w-4 h-4 ml-1.5" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* 4. CASE STUDIES (Placeholder realistic structure) */}
         <section className="py-24 md:py-32 border-y border-slate-200 dark:border-slate-800/50">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
@@ -479,6 +571,48 @@ export default function HomePage() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 5.5 FEATURED SEO & GEO INTELLIGENCE */}
+        <section className="py-24 relative overflow-hidden border-t border-slate-200 dark:border-slate-800/50 bg-slate-100/50 dark:bg-white/[0.01]">
+          <div className="container mx-auto px-4 lg:px-8 max-w-5xl relative z-10">
+            <div className="grid md:grid-cols-12 gap-12 items-center">
+              <div className="md:col-span-7 space-y-6 text-left">
+                <Badge className="bg-emerald-500 text-white border-none font-black tracking-widest px-4 py-1.5 uppercase text-xs">
+                  AI Search Optimization
+                </Badge>
+                <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                  What is Generative Engine Optimization (GEO)?
+                </h2>
+                <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
+                  AI engines like ChatGPT, Gemini, and Perplexity are reshaping how information is retrieved online. Traditional SEO is no longer enough. Learn how to optimize your digital brand for AI citations and semantic RAG indexing.
+                </p>
+                <div className="pt-2">
+                  <Button size="lg" className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-extrabold h-12 px-6 rounded-none hover:scale-[1.02] transition-transform" asChild>
+                    <Link href="/blog/what-is-geo-generative-engine-optimization">
+                      Read Full Article <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+              <div className="md:col-span-5 text-left">
+                <div className="p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl rounded-2xl relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
+                  <h3 className="font-extrabold text-slate-900 dark:text-white mb-4">Core GEO Strategies Covered:</h3>
+                  <ul className="space-y-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2 shrink-0" /> Semantic RAG Alignment</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2 shrink-0" /> Structured Schema Implementation</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2 shrink-0" /> Citation & Entity Authority</li>
+                    <li className="flex items-center"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2 shrink-0" /> Content Comprehensiveness</li>
+                  </ul>
+                  <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+                    <span>Category: <strong>AI SEO</strong></span>
+                    <span>Read Time: <strong>5 mins</strong></span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

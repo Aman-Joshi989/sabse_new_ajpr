@@ -40,11 +40,10 @@ export async function generateMetadata(): Promise<Metadata> {
       title: settings?.seo_title || 'AJPR World – Premium Tech, Custom Software & Creative Branding',
       description: seoDesc,
       keywords: settings?.seo_keywords || 'Best Software, tech solutions, web development, custom software, UI/UX design, cloud deployment, digital branding',
-      alternates: { canonical: settings?.canonical_url || 'https://ajprworld.com' },
       openGraph: {
         title: settings?.seo_title || 'AJPR World - Premium Tech & Software Solutions',
         description: ogDesc,
-        url: settings?.canonical_url || 'https://ajprworld.com',
+        url: 'https://ajprworld.com',
         siteName: 'AJPR World',
         images: [
           {

@@ -141,7 +141,7 @@ export default async function RootLayout({
                 data-key="NBGEPf0K5JrRzkOhDpu04A"
                 data-api="https://analytics.ahrefs.com/api/event"
                 data-error="https://analytics.ahrefs.com/api/error"
-                strategy="afterInteractive"
+                strategy="lazyOnload"
                 async
               />
             </CartProvider>

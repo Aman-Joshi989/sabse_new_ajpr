@@ -2,9 +2,8 @@ import { getBlogs } from '@/lib/db/queries';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeftIcon, Github, Linkedin, Twitter } from 'lucide-react';
-import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
-import Script from 'next/script';
 import { Metadata } from 'next';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 
 export const dynamic = 'force-dynamic';
 
@@ -56,11 +55,9 @@ export default async function AuthorProfilePage({ params }: { params: Promise<{ 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-32 pb-24">
       <BreadcrumbSchema items={breadcrumbs} />
-      <Script
-        id={`person-schema-${decodedName}`}
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-        strategy="lazyOnload"
       />
 
       <div className="max-w-4xl mx-auto px-4">

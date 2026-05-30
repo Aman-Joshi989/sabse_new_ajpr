@@ -245,34 +245,34 @@ export default function HomePage() {
           </div>
 
           <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center">
-            <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-4xl mx-auto space-y-6">
-              <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.05]">
+            <div className="max-w-4xl mx-auto space-y-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.05] animate-fade-up">
                 Engineering Scalable <br className="hidden md:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300">
                   Digital Systems.
                 </span>
-              </motion.h1>
+              </h1>
 
-              <motion.p variants={fadeInUp} className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-medium max-w-2xl mx-auto">
+              <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-medium max-w-2xl mx-auto animate-fade-up [animation-delay:200ms]">
                 We architect AI-first product infrastructure and complex web platforms for scaling companies. We transform operational bottlenecks into high-performance digital engines.
-              </motion.p>
+              </p>
 
-              <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 animate-fade-up [animation-delay:400ms]">
                 <Button size="lg" className="h-12 px-8 text-base rounded-none bg-blue-600 hover:bg-blue-500 text-white font-bold transition-transform shadow-[0_0_30px_-10px_rgba(37,99,235,0.4)] border border-blue-500/50 hover:scale-[1.05]" asChild>
                   <Link href="/contact">Book Strategy Call <ArrowRight className="ml-2 w-4 h-4" /></Link>
                 </Button>
                 <Button size="lg" variant="outline" className="h-12 px-8 text-base rounded-none border border-slate-300 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 bg-white dark:bg-[#030712] text-slate-900 dark:text-white font-bold transition-transform hover:scale-[1.05]" asChild>
                   <Link href="/portfolio">View Our Architecture</Link>
                 </Button>
-              </motion.div>
+              </div>
               
-              <motion.div variants={fadeInUp} className="flex justify-center mt-6">
+              <div className="flex justify-center mt-6 animate-fade-up [animation-delay:600ms]">
                 <TrustBadges />
-              </motion.div>
+              </div>
 
               {/* Interactive Terminal placed inside Hero */}
               <TerminalSimulator />
-            </motion.div>
+            </div>
           </div>
         </section>
 

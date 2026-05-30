@@ -187,6 +187,7 @@ export default function Header({ user, services }: { user?: any; services?: any[
                             size="icon"
                             className="relative"
                             onClick={() => setIsCartOpen(true)}
+                            aria-label="Open Shopping Cart"
                         >
                             <ShoppingCart className="h-5 w-5" />
                             {cart.length > 0 && (
@@ -197,7 +198,7 @@ export default function Header({ user, services }: { user?: any; services?: any[
                         </Button>
                         {user ? (
                             <div className="relative group">
-                                <button className="flex items-center space-x-2 focus:outline-none">
+                                <button className="flex items-center space-x-2 focus:outline-none" aria-label="User Account Menu">
                                     <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border overflow-hidden">
                                         {user.avatar_url ? (
                                             <Image
@@ -266,6 +267,7 @@ export default function Header({ user, services }: { user?: any; services?: any[
                         size="icon"
                         className="relative"
                         onClick={() => setIsCartOpen(true)}
+                        aria-label="Open Shopping Cart"
                     >
                         <ShoppingCart className="h-5 w-5" />
                         {cart.length > 0 && (
@@ -276,7 +278,7 @@ export default function Header({ user, services }: { user?: any; services?: any[
                     </Button>
                     <Sheet>
                         <SheetTrigger asChild>
-                            <Button variant="outline" size="icon">
+                            <Button variant="outline" size="icon" aria-label="Open Mobile Menu">
                                 <Menu className="h-5 w-5" />
                             </Button>
                         </SheetTrigger>

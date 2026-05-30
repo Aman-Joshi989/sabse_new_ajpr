@@ -72,7 +72,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                     <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
                         {/* Column 1 */}
                         <div className="space-y-4">
-                            <h4 className="font-medium text-slate-900 dark:text-white">Services</h4>
+                            <h3 className="font-medium text-slate-900 dark:text-white">Services</h3>
                             <ul className="space-y-3 text-sm">
                                 {activeServices.map((link) => (
                                     <li key={link.name}>
@@ -86,7 +86,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                         {/* Column 2 */}
                         <div className="space-y-4">
-                            <h4 className="font-medium text-slate-900 dark:text-white">Company</h4>
+                            <h3 className="font-medium text-slate-900 dark:text-white">Company</h3>
                             <ul className="space-y-3 text-sm">
                                 {companyLinks.map((link) => (
                                     <li key={link.name}>
@@ -100,7 +100,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                         {/* Column 3 */}
                         <div className="space-y-4">
-                            <h4 className="font-medium text-slate-900 dark:text-white">Trending Insights</h4>
+                            <h3 className="font-medium text-slate-900 dark:text-white">Trending Insights</h3>
                             <ul className="space-y-3 text-sm">
                                 <li>
                                     <Link href="/blog" className="hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">

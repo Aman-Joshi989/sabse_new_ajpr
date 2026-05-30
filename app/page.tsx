@@ -169,21 +169,11 @@ export default function HomePage() {
         <section className="relative min-h-[85vh] flex flex-col justify-center pt-20 pb-20 overflow-hidden">
           {/* Animated Dynamic Gradients */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.15, 0.25, 0.15],
-              }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-blue-600/20 dark:bg-blue-600/30 blur-[120px] rounded-full mix-blend-screen"
+            <div
+              className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-blue-600/20 dark:bg-blue-600/30 blur-[120px] rounded-full mix-blend-screen animate-pulse-glow"
             />
-            <motion.div
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.1, 0.2, 0.1],
-              }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute top-[40%] -right-[10%] w-[500px] h-[500px] bg-cyan-600/10 dark:bg-cyan-500/20 blur-[120px] rounded-full mix-blend-screen"
+            <div
+              className="absolute top-[40%] -right-[10%] w-[500px] h-[500px] bg-cyan-600/10 dark:bg-cyan-500/20 blur-[120px] rounded-full mix-blend-screen animate-pulse-glow-alt"
             />
           </div>
 

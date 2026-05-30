@@ -91,7 +91,7 @@ const TerminalSimulator = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`text-xs md:text-sm font-mono transition-colors ${activeTab === tab ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
+              className={`text-xs md:text-sm font-mono transition-colors ${activeTab === tab ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-400 hover:text-slate-950 dark:hover:text-slate-200'}`}
             >
               {tab}
             </button>
@@ -263,7 +263,7 @@ export default function HomePage() {
         {/* 2. TRUST STRIP */}
         <section className="py-8 border-y border-slate-200 dark:border-slate-800/50 bg-white/50 dark:bg-white/[0.01] backdrop-blur-sm overflow-hidden relative">
           <div className="container mx-auto px-4 text-center">
-            <div className="flex flex-wrap justify-center items-center gap-x-6 md:gap-x-8 gap-y-4 text-xs md:text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <div className="flex flex-wrap justify-center items-center gap-x-6 md:gap-x-8 gap-y-4 text-xs md:text-sm font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">
               <span className="cursor-default hover:text-blue-500 transition-colors">React & Next.js</span>
               <span className="w-1.5 h-1.5 rounded-full bg-blue-600/50 animate-pulse" />
               <span className="cursor-default hover:text-blue-500 transition-colors">PostgreSQL</span>
@@ -564,7 +564,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4 lg:px-8 max-w-5xl relative z-10">
             <div className="grid md:grid-cols-12 gap-12 items-center">
               <div className="md:col-span-7 space-y-6 text-left">
-                <Badge className="bg-emerald-500 text-white border-none font-black tracking-widest px-4 py-1.5 uppercase text-xs">
+                <Badge className="bg-emerald-700 dark:bg-emerald-800 text-white border-none font-black tracking-widest px-4 py-1.5 uppercase text-xs">
                   AI Search Optimization
                 </Badge>
                 <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">

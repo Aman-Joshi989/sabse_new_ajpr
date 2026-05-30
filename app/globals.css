@@ -275,4 +275,90 @@
     -webkit-line-clamp: 2;
     line-clamp: 2;
   }
+
+  /* GPU-Accelerated Compositor Animations */
+  @keyframes floatSlow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(10deg); }
+  }
+
+  @keyframes floatMedium {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(40px) rotate(-15deg); }
+  }
+
+  @keyframes floatFast {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.5; }
+  }
+
+  @keyframes pulseGlowAlt {
+    0%, 100% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.3); opacity: 0.4; }
+  }
+
+  @keyframes blinkCircle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  @keyframes drawPath {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  .animate-float-slow {
+    animation: floatSlow 8s ease-in-out infinite;
+  }
+
+  .animate-float-medium {
+    animation: floatMedium 10s ease-in-out infinite;
+  }
+
+  .animate-float-fast {
+    animation: floatFast 7s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 8s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow-alt {
+    animation: pulseGlowAlt 10s ease-in-out infinite;
+  }
+
+  .animate-blink-1 {
+    animation: blinkCircle 3s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  .animate-blink-2 {
+    animation: blinkCircle 4s ease-in-out infinite 1s;
+    transform-origin: center;
+  }
+
+  .animate-blink-3 {
+    animation: blinkCircle 2.5s ease-in-out infinite 0.5s;
+    transform-origin: center;
+  }
+
+  .animate-blink-4 {
+    animation: blinkCircle 3.5s ease-in-out infinite 2s;
+    transform-origin: center;
+  }
+
+  .animate-draw-path-slow {
+    stroke-dasharray: 1000;
+    animation: drawPath 25s linear infinite;
+  }
+
+  .animate-draw-path-medium {
+    stroke-dasharray: 1000;
+    animation: drawPath 35s linear infinite;
+  }
 }

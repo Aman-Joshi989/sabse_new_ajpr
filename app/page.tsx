@@ -206,42 +206,36 @@ export default function HomePage() {
                 </linearGradient>
               </defs>
 
-              <motion.path
+              <path
                 d="M -200 600 Q 200 300 600 500 T 1600 300"
                 stroke="url(#glowLine1)"
                 strokeWidth="2"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", repeatType: "reverse" }}
+                className="animate-draw-path-slow"
               />
-              <motion.path
+              <path
                 d="M -100 200 C 300 50 500 600 900 500 S 1300 100 1600 200"
                 stroke="url(#glowLine2)"
                 strokeWidth="3"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", repeatType: "reverse", delay: 1 }}
+                className="animate-draw-path-medium"
               />
-              <motion.path
+              <path
                 d="M 100 800 C 400 400 800 900 1200 300 S 1500 800 1800 600"
                 stroke="url(#glowLine1)"
                 strokeWidth="1.5"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 10, repeat: Infinity, ease: "linear", repeatType: "reverse", delay: 2 }}
+                className="animate-draw-path-slow"
               />
             </svg>
 
             {/* Floating UI Elements */}
-            <motion.div animate={{ y: [0, -30, 0], rotate: [0, 10, -10, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[20%] left-[10%] hidden lg:block opacity-30 dark:opacity-40">
+            <div className="absolute top-[20%] left-[10%] hidden lg:block opacity-30 dark:opacity-40 animate-float-slow">
               <Database className="w-16 h-16 text-blue-500" />
-            </motion.div>
-            <motion.div animate={{ y: [0, 40, 0], rotate: [0, -15, 5, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-[25%] right-[10%] hidden lg:block opacity-30 dark:opacity-40">
+            </div>
+            <div className="absolute bottom-[25%] right-[10%] hidden lg:block opacity-30 dark:opacity-40 animate-float-medium">
               <Cpu className="w-24 h-24 text-cyan-500" />
-            </motion.div>
-            <motion.div animate={{ y: [0, -20, 0], rotate: [0, 5, -5, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-[35%] right-[15%] hidden xl:block opacity-30 dark:opacity-40">
+            </div>
+            <div className="absolute top-[35%] right-[15%] hidden xl:block opacity-30 dark:opacity-40 animate-float-fast">
               <GitMerge className="w-12 h-12 text-purple-500" />
-            </motion.div>
+            </div>
           </div>
 
           <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center">
@@ -621,21 +615,11 @@ export default function HomePage() {
         <section className="py-32 relative border-t border-slate-200 dark:border-slate-800/50 text-center overflow-hidden">
           {/* Animated Dynamic Blur Blobs (About Page Style) */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-1/2 left-1/4 -translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[120px] rounded-[100%] mix-blend-screen"
+            <div
+              className="absolute top-1/2 left-1/4 -translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur-[120px] rounded-[100%] mix-blend-screen animate-pulse-glow"
             />
-            <motion.div
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.2, 0.4, 0.2],
-              }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute top-1/2 right-1/4 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-purple-600/20 blur-[120px] rounded-full mix-blend-screen"
+            <div
+              className="absolute top-1/2 right-1/4 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-purple-600/20 blur-[120px] rounded-full mix-blend-screen animate-pulse-glow-alt"
             />
           </div>
           <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none mix-blend-overlay" />
@@ -649,12 +633,12 @@ export default function HomePage() {
                   <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.8" />
                 </linearGradient>
               </defs>
-              <motion.circle cx="20%" cy="30%" r="4" fill="#3b82f6" animate={{ opacity: [0.2, 1, 0.2], scale: [1, 1.5, 1] }} transition={{ duration: 3, repeat: Infinity }} />
-              <motion.circle cx="80%" cy="70%" r="4" fill="#06b6d4" animate={{ opacity: [0.2, 1, 0.2], scale: [1, 1.5, 1] }} transition={{ duration: 4, repeat: Infinity, delay: 1 }} />
-              <motion.circle cx="30%" cy="80%" r="3" fill="#8b5cf6" animate={{ opacity: [0.2, 1, 0.2], scale: [1, 1.5, 1] }} transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }} />
-              <motion.circle cx="70%" cy="20%" r="5" fill="#3b82f6" animate={{ opacity: [0.2, 1, 0.2], scale: [1, 1.5, 1] }} transition={{ duration: 3.5, repeat: Infinity, delay: 2 }} />
-              <motion.path d="M 200 180 L 700 120 L 800 420 L 300 480 Z" stroke="url(#netGradient)" strokeWidth="1" strokeDasharray="5 5" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 5, repeat: Infinity, repeatType: "reverse" }} />
-              <motion.path d="M 200 180 L 800 420" stroke="url(#netGradient)" strokeWidth="0.5" strokeDasharray="2 4" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", delay: 1 }} />
+              <circle cx="20%" cy="30%" r="4" fill="#3b82f6" className="animate-blink-1" />
+              <circle cx="80%" cy="70%" r="4" fill="#06b6d4" className="animate-blink-2" />
+              <circle cx="30%" cy="80%" r="3" fill="#8b5cf6" className="animate-blink-3" />
+              <circle cx="70%" cy="20%" r="5" fill="#3b82f6" className="animate-blink-4" />
+              <path d="M 200 180 L 700 120 L 800 420 L 300 480 Z" stroke="url(#netGradient)" strokeWidth="1" strokeDasharray="5 5" className="animate-draw-path-slow" />
+              <path d="M 200 180 L 800 420" stroke="url(#netGradient)" strokeWidth="0.5" strokeDasharray="2 4" className="animate-draw-path-medium" />
             </svg>
           </div>
 

@@ -5,7 +5,7 @@ import AdminClientRequestList from './_components/AdminClientRequestList'
 import AdminDeveloperList from './_components/AdminDeveloperList'
 import { 
   FileText, Users, UserCog, Database, 
-  LayoutTemplate, Inbox, Search, Bell, Settings, Globe
+  LayoutTemplate, Inbox, Search, Bell, Settings, Globe, Activity
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -63,7 +63,7 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Quick Access (Google Cloud "Shortcuts" Style) */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
           <Link href="/dashboard/admin/services" className="group">
             <Card className="h-full border border-[#DADCE0] dark:border-[#3C4043] shadow-none bg-white dark:bg-[#292A2D] hover:shadow-sm transition-all rounded-lg overflow-hidden">
               <CardContent className="p-4 flex flex-col items-center justify-center text-center gap-3">
@@ -115,6 +115,17 @@ export default async function AdminDashboard() {
                   <Globe className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                 </div>
                 <span className="text-sm font-medium text-[#3C4043] dark:text-[#E8EAED]">SEO & Geo Settings</span>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link href="/dashboard/admin/seo-tracker" className="group">
+            <Card className="h-full border border-[#DADCE0] dark:border-[#3C4043] shadow-none bg-white dark:bg-[#292A2D] hover:shadow-sm transition-all rounded-lg overflow-hidden">
+              <CardContent className="p-4 flex flex-col items-center justify-center text-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Activity className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <span className="text-sm font-medium text-[#3C4043] dark:text-[#E8EAED]">SEO & GEO Tracker</span>
               </CardContent>
             </Card>
           </Link>

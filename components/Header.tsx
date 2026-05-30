@@ -14,10 +14,36 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from '@/components/ui/accordion'
-import * as Icons from 'lucide-react'
 import {
-    Menu, ChevronDown, ShoppingCart
+  Briefcase,
+  Code2,
+  Cloud,
+  Palette,
+  Phone,
+  Layers,
+  Lock,
+  Cpu,
+  Scale,
+  TrendingUp,
+  ShieldCheck,
+  Menu,
+  ChevronDown,
+  ShoppingCart
 } from 'lucide-react'
+
+const iconRegistry: Record<string, any> = {
+  Briefcase,
+  Code2,
+  Cloud,
+  Palette,
+  Phone,
+  Layers,
+  Lock,
+  Cpu,
+  Scale,
+  TrendingUp,
+  ShieldCheck
+}
 import { ModeToggle } from '@/components/mode-toggle'
 import { useTheme } from 'next-themes'
 import { useCart } from '@/components/providers/CartProvider'
@@ -132,8 +158,8 @@ export default function Header({ user, services }: { user?: any; services?: any[
                                 <div className="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 py-2 animate-fade-down before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
                                     {item.dropdown.map((subItem) => {
                                         const IconComponent = subItem.icon_name 
-                                            ? (Icons as any)[subItem.icon_name] || Icons.Briefcase 
-                                            : (subItem as any).icon || Icons.Briefcase
+                                            ? iconRegistry[subItem.icon_name] || Briefcase 
+                                            : (subItem as any).icon || Briefcase
                                         return (
                                             <Link
                                                 key={subItem.name}
@@ -286,8 +312,8 @@ export default function Header({ user, services }: { user?: any; services?: any[
                                                     <div className="ml-2 space-y-2">
                                                         {item.dropdown.map((subItem) => {
                                                             const IconComponent = subItem.icon_name 
-                                                                ? (Icons as any)[subItem.icon_name] || Icons.Briefcase 
-                                                                : (subItem as any).icon || Icons.Briefcase
+                                                                ? iconRegistry[subItem.icon_name] || Briefcase 
+                                                                : (subItem as any).icon || Briefcase
                                                             return (
                                                                 <Link
                                                                     key={subItem.name}

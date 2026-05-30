@@ -132,8 +132,10 @@ export default async function RootLayout({
               <OrganizationSchema />
               <Script
                 id="ahrefs-analytics"
-                src="https://analytics.ahrefs.com/analytics.js"
+                src="/analytics/ahrefs.js"
                 data-key="NBGEPf0K5JrRzkOhDpu04A"
+                data-api="https://analytics.ahrefs.com/api/event"
+                data-error="https://analytics.ahrefs.com/api/error"
                 strategy="afterInteractive"
                 async
               />

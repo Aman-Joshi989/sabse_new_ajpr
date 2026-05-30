@@ -1,5 +1,3 @@
-import Script from 'next/script';
-
 interface BreadcrumbItem {
   name: string;
   item: string; // The URL
@@ -22,11 +20,10 @@ export const BreadcrumbSchema = ({ items }: BreadcrumbSchemaProps) => {
   };
 
   return (
-    <Script
+    <script
       id="breadcrumb-schema"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      strategy="lazyOnload"
     />
   );
 };

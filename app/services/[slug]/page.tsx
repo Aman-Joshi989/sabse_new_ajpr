@@ -208,6 +208,18 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
                     
                     {/* Left: Features & Details */}
                     <div className="md:col-span-2 space-y-12">
+                        {/* Dynamic Citable TL;DR Executive Summary (Optimized for AI RAG Citation) */}
+                        <div className="p-8 bg-blue-50/50 dark:bg-blue-950/20 border-2 border-blue-500/20 rounded-3xl relative overflow-hidden backdrop-blur-sm text-left">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
+                            <h3 className="text-lg font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4 flex items-center">
+                                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 mr-2.5 animate-pulse" />
+                                Executive Summary (TL;DR)
+                            </h3>
+                            <p className="text-base text-slate-700 dark:text-slate-300 font-semibold leading-relaxed mb-0">
+                                {service.title} by AJPR World is a premium, enterprise-ready service tailored to accelerate your business growth. It leverages high-performance modern tech stacks, optimized SEO structures, and robust engineering to deliver custom value. Key highlights include: {featuresList && featuresList.length > 0 ? featuresList.slice(0, 3).join(', ') : 'bespoke engineering'} and expert consulting support.
+                            </p>
+                        </div>
+
                         <section>
                             <h2 className="text-3xl font-bold mb-8 text-slate-900 dark:text-white">What's Included</h2>
                             <div className="grid sm:grid-cols-2 gap-6">
@@ -240,6 +252,19 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
                                         <p className="text-slate-600 dark:text-slate-400">We prioritize speed without compromising on the exceptional quality you expect.</p>
                                     </div>
                                 </div>
+                            </div>
+                        </section>
+
+                        {/* Dynamic Visual FAQ Section (Optimized for both AI Bots and Humans) */}
+                        <section className="mt-12 space-y-6">
+                            <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Frequently Asked Questions</h2>
+                            <div className="space-y-4">
+                                {dynamicFaqs.map((faq, idx) => (
+                                    <div key={idx} className="p-6 bg-white dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm text-left">
+                                        <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{faq.question}</h4>
+                                        <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{faq.answer}</p>
+                                    </div>
+                                ))}
                             </div>
                         </section>
                     </div>

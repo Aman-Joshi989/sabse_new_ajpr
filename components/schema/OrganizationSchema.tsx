@@ -1,5 +1,3 @@
-import Script from 'next/script';
-
 export const OrganizationSchema = () => {
   const schema = {
     '@context': 'https://schema.org',
@@ -23,11 +21,10 @@ export const OrganizationSchema = () => {
   };
 
   return (
-    <Script
+    <script
       id="organization-schema"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      strategy="lazyOnload"
     />
   );
 };

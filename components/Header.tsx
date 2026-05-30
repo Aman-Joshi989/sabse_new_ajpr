@@ -95,11 +95,12 @@ export default function Header({ user, services }: { user?: any; services?: any[
             <div className="container flex h-16 items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center space-x-3 group">
-                    <div className="relative w-28 h-10 group-hover:scale-105 transition-transform duration-300">
+                    <div className="group-hover:scale-105 transition-transform duration-300">
                         <Image
                             src={logoSrc}
                             alt="AJPR World Logo"
-                            fill
+                            width={112}
+                            height={40}
                             className="object-contain"
                             priority
                             key={logoSrc} // Force re-render on src change

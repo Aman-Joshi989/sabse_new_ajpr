@@ -56,7 +56,7 @@ async function setup() {
         const projects = [
             {
                 title: 'Tarot Tanishk',
-                url: 'https://tarottanishk.com',
+                url: 'https://www.tarottanishk.com/',
                 category: 'Spiritual & Wellness',
                 tags: ['Wix', 'JavaScript', 'CSS'],
                 description: 'A mystical tarot reading platform with immersive user experience and spiritual guidance.',
@@ -92,7 +92,7 @@ async function setup() {
             },
             {
                 title: 'Dwaparyug',
-                url: 'https://dwaparyug.org',
+                url: 'https://www.dwaparyug.org',
                 category: 'Cultural & Heritage',
                 tags: ['Next.js', 'Neondb', 'Node.js', 'Tailwind CSS', 'Prisma'],
                 description: 'A cultural heritage platform preserving ancient wisdom and traditions for modern audiences.',

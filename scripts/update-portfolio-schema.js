@@ -34,12 +34,12 @@ async function updateSchema() {
         // Update specific projects with thumbnails
         const updates = [
             {
-                url: 'https://tarottanishk.com',
-                image: 'https://image.thum.io/get/width/800/crop/600/https://tarottanishk.com'
+                url: 'https://www.tarottanishk.com/',
+                image: 'https://image.thum.io/get/width/800/crop/600/https://www.tarottanishk.com/'
             },
             {
-                url: 'https://dwaparyug.org',
-                image: 'https://image.thum.io/get/width/800/crop/600/https://dwaparyug.org'
+                url: 'https://www.dwaparyug.org',
+                image: 'https://image.thum.io/get/width/800/crop/600/https://www.dwaparyug.org'
             },
             {
                 url: 'https://www.kunainital.ac.in/',

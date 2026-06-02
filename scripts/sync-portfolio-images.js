@@ -29,12 +29,12 @@ async function run() {
     const projects = [
         {
             name: 'tanishk',
-            url: 'https://tarottanishk.com',
+            url: 'https://www.tarottanishk.com/',
             image: '/images/portfolio/tanishk.png'
         },
         {
             name: 'dwaparyug',
-            url: 'https://dwaparyug.org',
+            url: 'https://www.dwaparyug.org',
             image: '/images/portfolio/dwaparyug.png'
         },
         {

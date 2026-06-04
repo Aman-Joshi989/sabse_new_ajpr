@@ -142,11 +142,11 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                     {/* Right Side: Socials */}
                     <div className="flex items-center gap-6 text-slate-400 dark:text-slate-500">
-                        <Link href="https://x.com/AjprWorld" target="_blank" rel="nofollow" className="hover:text-blue-500 transition-colors">
+                        <Link href="/go/twitter" target="_blank" rel="nofollow" className="hover:text-blue-500 transition-colors">
                             <Twitter className="w-5 h-5" />
                             <span className="sr-only">Twitter</span>
                         </Link>
-                        <Link href="https://www.instagram.com/ajprworld/" target="_blank" rel="nofollow" className="hover:text-pink-600 transition-colors">
+                        <Link href="/go/instagram" target="_blank" rel="nofollow" className="hover:text-pink-600 transition-colors">
                             <Instagram className="w-5 h-5" />
                             <span className="sr-only">Instagram</span>
                         </Link>
@@ -154,7 +154,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             <Facebook className="w-5 h-5" />
                             <span className="sr-only">Facebook</span>
                         </Link>
-                        <Link href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="nofollow" className="hover:text-blue-600 transition-colors">
+                        <Link href="/go/linkedin" target="_blank" rel="nofollow" className="hover:text-blue-600 transition-colors">
                             <Linkedin className="w-5 h-5" />
                             <span className="sr-only">LinkedIn</span>
                         </Link>

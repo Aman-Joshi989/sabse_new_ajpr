@@ -22,7 +22,7 @@ export default function robots(): MetadataRoute.Robots {
   const rules = aiUserAgents.map((agent) => ({
     userAgent: agent,
     allow: '/',
-    disallow: ['/dashboard/', '/api/', '/login', '/_next/'],
+    disallow: ['/dashboard/', '/api/', '/_next/'],
   }))
 
   return {

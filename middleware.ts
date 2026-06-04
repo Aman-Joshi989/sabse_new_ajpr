@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
     if (!isLocal && (host.startsWith('www.') || proto === 'http')) {
         const nonWwwHost = host.replace(/^www\./, '');
         const newUrl = new URL(request.nextUrl.pathname + request.nextUrl.search, `https://${nonWwwHost}`);
-        return NextResponse.redirect(newUrl, 301);
+        return NextResponse.redirect(newUrl, { status: 301 });
     }
 
     const requestHeaders = new Headers(request.headers);

@@ -38,6 +38,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         { name: 'Careers', href: '/careers' },
         { name: 'Contact', href: '/contact' },
         { name: 'Portfolio', href: '/portfolio' },
+        { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
     ];
 
     const logoSrc = mounted && resolvedTheme === 'dark'

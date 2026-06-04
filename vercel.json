@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "destination": "https://ajprworld.com/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.ajprworld.com"
+        }
+      ],
+      "statusCode": 301
+    }
+  ]
+}

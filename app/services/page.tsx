@@ -36,7 +36,7 @@ export default async function ServicesPage() {
                 <section className="pt-32 pb-24">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16 animate-fade-in">
-                            <h2 className="text-3xl md:text-5xl font-black mb-4">Our Services</h2>
+                            <h1 className="text-3xl md:text-5xl font-black mb-4">Our Services</h1>
                             <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium">
                                 Engineering scalable digital systems, robust cloud infrastructure, and data-driven growth strategies.
                             </p>

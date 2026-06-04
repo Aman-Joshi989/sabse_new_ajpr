@@ -142,23 +142,23 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                     {/* Right Side: Socials */}
                     <div className="flex items-center gap-6 text-slate-400 dark:text-slate-500">
-                        <Link href="https://x.com/AjprWorld" target="_blank" className="hover:text-blue-500 transition-colors">
+                        <Link href="https://x.com/AjprWorld" target="_blank" rel="nofollow" className="hover:text-blue-500 transition-colors">
                             <Twitter className="w-5 h-5" />
                             <span className="sr-only">Twitter</span>
                         </Link>
-                        <Link href="https://www.instagram.com/ajprworld/" target="_blank" className="hover:text-pink-600 transition-colors">
+                        <Link href="https://www.instagram.com/ajprworld/" target="_blank" rel="nofollow" className="hover:text-pink-600 transition-colors">
                             <Instagram className="w-5 h-5" />
                             <span className="sr-only">Instagram</span>
                         </Link>
-                        <Link href="https://facebook.com" className="hover:text-blue-700 transition-colors">
+                        <Link href="https://facebook.com" target="_blank" rel="nofollow" className="hover:text-blue-700 transition-colors">
                             <Facebook className="w-5 h-5" />
                             <span className="sr-only">Facebook</span>
                         </Link>
-                        <Link href="https://www.linkedin.com/company/ajpr-world" target="_blank" className="hover:text-blue-600 transition-colors">
+                        <Link href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="nofollow" className="hover:text-blue-600 transition-colors">
                             <Linkedin className="w-5 h-5" />
                             <span className="sr-only">LinkedIn</span>
                         </Link>
-                        <Link href="https://youtube.com" className="hover:text-red-600 transition-colors">
+                        <Link href="https://youtube.com" target="_blank" rel="nofollow" className="hover:text-red-600 transition-colors">
                             <Youtube className="w-5 h-5" />
                             <span className="sr-only">YouTube</span>
                         </Link>

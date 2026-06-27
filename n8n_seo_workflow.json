@@ -336,7 +336,10 @@
       "position": [
         1350,
         340
-      ]
+      ],
+      "settings": {
+        "onError": "continueRegularOutput"
+      }
     },
     {
       "parameters": {
@@ -415,7 +418,10 @@
       "position": [
         1350,
         100
-      ]
+      ],
+      "settings": {
+        "onError": "continueRegularOutput"
+      }
     },
     {
       "parameters": {
@@ -610,7 +616,10 @@
       "position": [
         2670,
         -120
-      ]
+      ],
+      "settings": {
+        "onError": "continueRegularOutput"
+      }
     },
     {
       "parameters": {
@@ -687,11 +696,11 @@
     },
     {
       "parameters": {
-        "model": "gpt-4o-mini",
+        "model": "gpt-4o",
         "options": {}
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddb",
-      "name": "OpenAI Chat Model (GPT-4o-mini, Writer)",
+      "name": "OpenAI Chat Model (GPT-4o, Writer)",
       "type": "n8n-nodes-base.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
@@ -745,11 +754,11 @@
     },
     {
       "parameters": {
-        "model": "gpt-4o-mini",
+        "model": "gpt-4o",
         "options": {}
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddf",
-      "name": "OpenAI Chat Model (GPT-4o-mini, Humanizer)",
+      "name": "OpenAI Chat Model (GPT-4o, Humanizer)",
       "type": "n8n-nodes-base.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
@@ -924,6 +933,45 @@
       "position": [
         4850,
         0
+      ]
+    },
+    {
+      "parameters": {
+        "channel": "#seo-blog-alerts",
+        "text": "=New Blog Post Published! 🚀\n\n*Business*: {{ $('Structure Business Profile').item.json.businessName }}\n*Title*: {{ $('Final SEO Audit Pass').item.json.output.split('\\n')[0].replace(/^#+\\s*/, '').trim() }}\n*URL*: https://ajprworld.com/blog/{{ $json.slug }}"
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dea",
+      "name": "Slack Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [
+        5310,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "={{ $env.GOOGLE_SHEETS_DOCUMENT_ID }}",
+        "sheetName": "Sheet1",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Business Name": "={{ $('Structure Business Profile').item.json.businessName }}",
+            "Date": "={{ $now.toISO() }}",
+            "Primary Keyword": "={{ JSON.parse($('Keyword Research Agent').item.json.output.replace(/```json\\n?/g, '').replace(/```/g, '').trim()).recommendedPrimaryKeyword }}",
+            "Blog Title": "={{ $('Final SEO Audit Pass').item.json.output.split('\\n')[0].replace(/^#+\\s*/, '').trim() }}",
+            "Live URL": "=https://ajprworld.com/blog/{{ $('Blog Poster').item.json.slug }}"
+          }
+        }
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6deb",
+      "name": "Log Execution to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        5530,
+        -80
       ]
     }
   ],
@@ -1172,7 +1220,7 @@
         ]
       ]
     },
-    "OpenAI Chat Model (GPT-4o-mini, Writer)": {
+    "OpenAI Chat Model (GPT-4o, Writer)": {
       "ai_languageModel": [
         [
           {
@@ -1216,7 +1264,7 @@
         ]
       ]
     },
-    "OpenAI Chat Model (GPT-4o-mini, Humanizer)": {
+    "OpenAI Chat Model (GPT-4o, Humanizer)": {
       "ai_languageModel": [
         [
           {
@@ -1325,6 +1373,28 @@
         [
           {
             "node": "Blog Poster",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Blog Poster": {
+      "main": [
+        [
+          {
+            "node": "Slack Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack Notification": {
+      "main": [
+        [
+          {
+            "node": "Log Execution to Google Sheets",
             "type": "main",
             "index": 0
           }

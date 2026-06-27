@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-const url = process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_hwWgGF9ex3ko@ep-billowing-bonus-adwcp218-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require';
+const url = process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_5QXuaV4efjtN@ep-billowing-bonus-adwcp218-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require';
 
 const client = new Client({ connectionString: url });
 

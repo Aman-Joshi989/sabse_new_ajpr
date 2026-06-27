@@ -15,8 +15,8 @@ export async function GET(
     // Construct the actual Amazon Affiliate link
     const amazonUrl = `https://www.amazon.in/dp/${asin}?tag=${trackingId}`;
 
-    // Issue a 302 Temporary Redirect to protect SEO
-    return NextResponse.redirect(amazonUrl, { status: 302 });
+    // Issue a 301 Permanent Redirect to protect SEO and avoid temporary redirect warnings
+    return NextResponse.redirect(amazonUrl, { status: 301 });
 
   } catch (error) {
     console.error('Amazon redirect error:', error);

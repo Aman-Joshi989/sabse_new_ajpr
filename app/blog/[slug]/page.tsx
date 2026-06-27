@@ -36,18 +36,52 @@ function cleanMetaDescription(desc: string, maxLen = 155): string {
   return sliced.trim() + '...';
 }
 
+function getSeoTitle(title: string): string {
+  const fullBrand = ' | AJPR The Keyword';
+  const shortBrand = ' | AJPR';
+  const maxLen = 60;
+
+  if ((title + fullBrand).length <= maxLen) {
+    return title + fullBrand;
+  }
+
+  let baseTitle = title;
+  if (title.includes(':')) {
+    const parts = title.split(':');
+    baseTitle = parts[0].trim();
+  }
+
+  if ((baseTitle + fullBrand).length <= maxLen) {
+    return baseTitle + fullBrand;
+  }
+
+  if ((baseTitle + shortBrand).length <= maxLen) {
+    return baseTitle + shortBrand;
+  }
+
+  const allowedLen = maxLen - shortBrand.length - 3;
+  const sliced = baseTitle.slice(0, allowedLen);
+  const lastSpace = sliced.lastIndexOf(' ');
+  const truncated = lastSpace > allowedLen * 0.7 
+    ? sliced.slice(0, lastSpace).trim() 
+    : sliced.trim();
+
+  return `${truncated}...${shortBrand}`;
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const blog = await getBlogBySlug(resolvedParams.slug) as BlogPost | undefined;
   if (!blog) return { title: 'Post Not Found' };
 
   const safeDesc = cleanMetaDescription(blog.excerpt || '');
+  const seoTitle = getSeoTitle(blog.title);
 
   return {
-    title: `${blog.title} | AJPR The Keyword`,
+    title: seoTitle,
     description: safeDesc,
     openGraph: {
-      title: `${blog.title} | AJPR The Keyword`,
+      title: seoTitle,
       description: safeDesc,
       url: `https://ajprworld.com/blog/${resolvedParams.slug}`,
       siteName: 'AJPR World',
@@ -75,7 +109,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${blog.title} | AJPR The Keyword`,
+      title: seoTitle,
       description: safeDesc,
       creator: '@ajprworld',
       images: blog.cover_image ? [blog.cover_image] : ['https://ajprworld.com/og-image.jpg']
@@ -250,7 +284,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         
         <div 
           className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 prose-img:rounded-xl max-w-none text-slate-800 dark:text-slate-200"
-          dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n\n/g, '<br/><br/>') }}
+          dangerouslySetInnerHTML={{ 
+            __html: blog.content
+              .replace(/<h1[^>]*>/gi, '<h2>')
+              .replace(/<\/h1>/gi, '</h2>')
+              .replace(/\n\n/g, '<br/><br/>') 
+          }}
         />
         
         {/* Auto-Rendered Affiliate Product Card */}

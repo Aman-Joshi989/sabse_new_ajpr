@@ -20,9 +20,9 @@ export async function GET(
     // We don't await this so it doesn't block the fast redirect
     recordAffiliateClick(resolvedParams.slug).catch(console.error);
 
-    // 3. Issue a 302 Temporary Redirect to the actual affiliate hoplink.
-    // 302 is crucial so Google knows this is a temporary hop and doesn't index the target as your content.
-    return NextResponse.redirect(link.target_url, { status: 302 });
+    // 3. Issue a 301 Permanent Redirect to the actual affiliate hoplink.
+    // 301 is used so Google passes link equity and avoids temporary redirect warnings.
+    return NextResponse.redirect(link.target_url, { status: 301 });
 
   } catch (error) {
     console.error('Affiliate redirect error:', error);

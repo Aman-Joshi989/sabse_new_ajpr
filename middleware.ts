@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
     const isLocal = host.includes('localhost') || host.includes('127.0.0.1');
     const proto = request.headers.get('x-forwarded-proto') || 'https';
 
-    if (!isLocal && (host.startsWith('www.') || proto === 'http')) {
+    if (host && !isLocal && (host.startsWith('www.') || proto === 'http')) {
         const nonWwwHost = host.replace(/^www\./, '');
         const newUrl = new URL(request.nextUrl.pathname + request.nextUrl.search, `https://${nonWwwHost}`);
         return NextResponse.redirect(newUrl, { status: 301 });

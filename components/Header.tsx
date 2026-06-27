@@ -244,7 +244,7 @@ export default function Header({ user, services }: { user?: any; services?: any[
                             </div>
                         ) : (
                             <div className="flex items-center gap-4">
-                                <Link href="/login" rel="nofollow" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600">
+                                <Link href="/login" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600">
                                     Log In
                                 </Link>
                                 <Button
@@ -393,7 +393,6 @@ export default function Header({ user, services }: { user?: any; services?: any[
                                     ) : (
                                         <Link
                                             href="/login"
-                                            rel="nofollow"
                                             className="flex items-center text-lg font-medium transition-colors hover:text-blue-600"
                                         >
                                             Log In

@@ -44,6 +44,7 @@ export async function updateSession(request: NextRequest) {
 
     // Refresh session expiration if needed (simplified for now)
     const parsed = await decrypt(session);
+    if (!parsed) return;
     parsed.expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // +1 day
 
     const res = NextResponse.next();

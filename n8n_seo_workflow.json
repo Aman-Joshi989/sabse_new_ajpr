@@ -1,0 +1,1339 @@
+{
+  "name": "AJPR SEO Content Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "seo-brief",
+        "formTitle": "SEO & Blog Content Automation Brief",
+        "formDescription": "Enter your business details to kick off the automated competitor research, keyword validation, and SEO blog generation pipeline.",
+        "responseMode": "lastNode",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Business Name",
+              "fieldType": "string",
+              "required": true
+            },
+            {
+              "fieldLabel": "Website URL",
+              "fieldType": "string",
+              "required": true
+            },
+            {
+              "fieldLabel": "Industry / Niche",
+              "fieldType": "string",
+              "required": true
+            },
+            {
+              "fieldLabel": "Business Type",
+              "fieldType": "dropdown",
+              "required": true,
+              "options": {
+                "values": [
+                  {
+                    "name": "B2B",
+                    "value": "B2B"
+                  },
+                  {
+                    "name": "B2C",
+                    "value": "B2C"
+                  },
+                  {
+                    "name": "Both B2B and B2C",
+                    "value": "Both B2B and B2C"
+                  },
+                  {
+                    "name": "D2C",
+                    "value": "D2C"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Products or Services You Offer",
+              "fieldType": "string",
+              "required": true,
+              "multiline": true
+            },
+            {
+              "fieldLabel": "Target Audience",
+              "fieldType": "string",
+              "required": true,
+              "multiline": true
+            },
+            {
+              "fieldLabel": "Top 3 Competitors",
+              "fieldType": "string",
+              "required": true,
+              "multiline": true
+            },
+            {
+              "fieldLabel": "Geographic Focus",
+              "fieldType": "dropdown",
+              "required": true,
+              "options": {
+                "values": [
+                  {
+                    "name": "Local",
+                    "value": "Local"
+                  },
+                  {
+                    "name": "National",
+                    "value": "National"
+                  },
+                  {
+                    "name": "International",
+                    "value": "International"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "City or Region if Local",
+              "fieldType": "string"
+            },
+            {
+              "fieldLabel": "Brand Tone of Voice",
+              "fieldType": "dropdown",
+              "required": true,
+              "options": {
+                "values": [
+                  {
+                    "name": "Professional",
+                    "value": "Professional"
+                  },
+                  {
+                    "name": "Friendly",
+                    "value": "Friendly"
+                  },
+                  {
+                    "name": "Expert/Technical",
+                    "value": "Expert/Technical"
+                  },
+                  {
+                    "name": "Bold",
+                    "value": "Bold"
+                  },
+                  {
+                    "name": "Casual",
+                    "value": "Casual"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Target Keywords (optional)",
+              "fieldType": "string",
+              "multiline": true
+            },
+            {
+              "fieldLabel": "What Makes You Different (USP)",
+              "fieldType": "string",
+              "required": true,
+              "multiline": true
+            },
+            {
+              "fieldLabel": "Blog Topic Preference (optional)",
+              "fieldType": "string"
+            }
+          ]
+        }
+      },
+      "id": "e30cf88c-7f55-46f9-bb20-2b10214a6dc6",
+      "name": "SEO Brief Form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2,
+      "position": [
+        250,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "workflowStatus",
+              "type": "string",
+              "stringValue": "initializing"
+            },
+            {
+              "name": "sessionId",
+              "type": "string",
+              "stringValue": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dc7",
+      "name": "Initialize Workflow",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        470,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "businessName",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Business Name'] }}"
+            },
+            {
+              "name": "websiteUrl",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Website URL'] }}"
+            },
+            {
+              "name": "niche",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Industry / Niche'] }}"
+            },
+            {
+              "name": "businessType",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Business Type'] }}"
+            },
+            {
+              "name": "services",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Products or Services You Offer'] }}"
+            },
+            {
+              "name": "targetAudience",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Target Audience'] }}"
+            },
+            {
+              "name": "competitors",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Top 3 Competitors'] }}"
+            },
+            {
+              "name": "geoFocus",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Geographic Focus'] }}"
+            },
+            {
+              "name": "city",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['City or Region if Local'] }}"
+            },
+            {
+              "name": "tone",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Brand Tone of Voice'] }}"
+            },
+            {
+              "name": "targetKeywords",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Target Keywords (optional)'] }}"
+            },
+            {
+              "name": "usp",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['What Makes You Different (USP)'] }}"
+            },
+            {
+              "name": "blogTopic",
+              "type": "string",
+              "stringValue": "={{ $('SEO Brief Form').item.json['Blog Topic Preference (optional)'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dc8",
+      "name": "Sanitize User Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        690,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "businessProfile",
+              "type": "string",
+              "stringValue": "=Business Name: {{ $json.businessName }}\nWebsite: {{ $json.websiteUrl }}\nNiche: {{ $json.niche }}\nBusiness Type: {{ $json.businessType }}\nServices: {{ $json.services }}\nTarget Audience: {{ $json.targetAudience }}\nCompetitors: {{ $json.competitors }}\nGeographic Focus: {{ $json.geoFocus }}\nCity/Region: {{ $json.city }}\nTone: {{ $json.tone }}\nExisting Keywords: {{ $json.targetKeywords }}\nUSP: {{ $json.usp }}\nBlog Topic: {{ $json.blogTopic }}"
+            },
+            {
+              "name": "websiteUrl",
+              "type": "string",
+              "stringValue": "={{ $json.websiteUrl }}"
+            },
+            {
+              "name": "niche",
+              "type": "string",
+              "stringValue": "={{ $json.niche }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dc9",
+      "name": "Structure Business Profile",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        910,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.blogTopic }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dca",
+      "name": "Manual or Auto Topic",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1130,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/apify~website-content-crawler/run-sync-get-dataset-items",
+        "sendQueryParameters": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "={{ $env.APIFY_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"startUrls\": [{ \"url\": \"{{ $json.websiteUrl }}\" }],\n  \"maxCrawlPages\": 1,\n  \"crawlerType\": \"playwright:firefox\"\n}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dcb",
+      "name": "Apify Website Crawler",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1350,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "seconds"
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dcc",
+      "name": "Processing Crawl Data",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1570,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here is the crawled website content:\n{{ $input.first().json.metadata.title }} \n{{ $input.first().json.metadata.description }} \n{{ $input.first().json.text?.slice(0, 2000) }}\n\nHere is the business profile:\n{{ $('Structure Business Profile').item.json.businessProfile }}\n\nAnalyze the above and produce a clean structured business summary as JSON with these exact keys:\n{\n  \"summary\": \"\",\n  \"services\": [],\n  \"audience\": \"\",\n  \"tone\": \"\",\n  \"differentiators\": [],\n  \"existingTopics\": [],\n  \"seoSignals\": []\n}\n\nReturn only valid JSON. No explanation. No markdown.",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dce",
+      "name": "Website Content Summarizer",
+      "type": "n8n-nodes-base.advancedAgent",
+      "typeVersion": 2,
+      "position": [
+        1790,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dcd",
+      "name": "OpenAI Chat Model (GPT-4o-mini)",
+      "type": "n8n-nodes-base.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1790,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://serpapi.com/search.json",
+        "sendQueryParameters": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $('Structure Business Profile').item.json.niche }} top competitors"
+            },
+            {
+              "name": "num",
+              "value": "10"
+            },
+            {
+              "name": "engine",
+              "value": "google"
+            },
+            {
+              "name": "api_key",
+              "value": "={{ $env.SERPAPI_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dcf",
+      "name": "SerpApi Competitor Research",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1350,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "competitorData",
+              "type": "string",
+              "stringValue": "={{ JSON.stringify($json.organic_results) }}"
+            },
+            {
+              "name": "formattingStatus",
+              "type": "string",
+              "stringValue": "formatted"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd0",
+      "name": "Formatting Competitor Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        1570,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://news.google.com/rss/search",
+        "sendQueryParameters": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $('Structure Business Profile').item.json.niche }}"
+            },
+            {
+              "name": "hl",
+              "value": "en-US"
+            },
+            {
+              "name": "gl",
+              "value": "US"
+            },
+            {
+              "name": "ceid",
+              "value": "US:en"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd1",
+      "name": "Google News RSS Feed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1350,
+        -140
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "position",
+        "options": {
+          "includeUnpairedItems": true
+        }
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd2",
+      "name": "Merge Keyword and Competitor Data",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1790,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "keywordMatrixStatus",
+              "type": "string",
+              "stringValue": "analyzing"
+            },
+            {
+              "name": "totalSources",
+              "type": "number",
+              "numberValue": 3
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd3",
+      "name": "Preparing Keyword Matrix",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        2010,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a senior SEO keyword researcher with 10 years of experience.\n\nBusiness Profile:\n{{ $('Structure Business Profile').item.json.businessProfile }}\n\nCompetitor Data from Google:\n{{ $('Formatting Competitor Data').item.json.competitorData }}\n\nYour task:\n1. Identify 20 high-potential keywords for this business based on the profile and competitor data\n2. For each keyword provide: search intent (informational/commercial/transactional), estimated difficulty (low/medium/high), best content type, and reason why it suits this business\n3. Filter down to the BEST 10 final keywords\n4. Include at least 3 long-tail keywords optimized for voice search and AEO (Answer Engine Optimization)\n5. Include at least 2 keywords with local or entity signals suitable for GEO (Generative Engine Optimization)\n6. Choose one as the recommended primary keyword — the one with the best opportunity\n\nOutput ONLY valid JSON. No explanation. No markdown code blocks. Just the JSON:\n{\n  \"top10Keywords\": [\n    {\n      \"keyword\": \"\",\n      \"intent\": \"\",\n      \"difficulty\": \"\",\n      \"contentType\": \"\",\n      \"reason\": \"\",\n      \"isLongTail\": false,\n      \"isGEO\": false\n    }\n  ],\n  \"recommendedPrimaryKeyword\": \"\",\n  \"clusterGroups\": {\n    \"group1\": [],\n    \"group2\": []\n  }\n}",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd5",
+      "name": "Keyword Research Agent",
+      "type": "n8n-nodes-base.advancedAgent",
+      "typeVersion": 2,
+      "position": [
+        2230,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd4",
+      "name": "OpenAI Chat Model (GPT-4o-mini, Temp 0.3)",
+      "type": "n8n-nodes-base.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        2230,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.output }}",
+              "operation": "contains",
+              "value2": "recommendedPrimaryKeyword"
+            }
+          ]
+        }
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd6",
+      "name": "Keyword Quality Gate",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2450,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://serpapi.com/search.json",
+        "sendQueryParameters": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ JSON.parse($('Keyword Research Agent').item.json.output.replace(/```json\\n?/g, '').replace(/```/g, '').trim()).recommendedPrimaryKeyword }}"
+            },
+            {
+              "name": "num",
+              "value": "5"
+            },
+            {
+              "name": "engine",
+              "value": "google"
+            },
+            {
+              "name": "api_key",
+              "value": "={{ $env.SERPAPI_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd7",
+      "name": "SerpApi Top Articles Research",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2670,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a professional SEO blog outline architect.\n\nPrimary Keyword: {{ JSON.parse($('Keyword Research Agent').item.json.output.replace(/```json\\n?/g, '').replace(/```/g, '').trim()).recommendedPrimaryKeyword }}\n\nBusiness Profile:\n{{ $('Structure Business Profile').item.json.businessProfile }}\n\nTop Ranking Competitor Articles for this keyword:\n{{ JSON.stringify($json.organic_results) }}\n\nYour task:\nCreate a complete, highly detailed SEO blog outline that will outrank these competitor articles.\n\nInclude:\n- A compelling, keyword-optimized title (H1)\n- A strong meta description under 160 characters\n- A hook introduction paragraph outline\n- At least 6 H2 sections with supporting H3 sub-points where relevant\n- A detailed FAQ section with 5 questions and answer outlines (for AEO)\n- A strong conclusion with a clear CTA\n- Estimated word count\n\nOutput ONLY valid JSON. No explanation. No markdown:\n{\n  \"title\": \"\",\n  \"metaDescription\": \"\",\n  \"introduction\": \"\",\n  \"h2Sections\": [\n    {\n      \"heading\": \"\",\n      \"keyPoints\": [],\n      \"h3Subsections\": []\n    }\n  ],\n  \"faqSection\": [\n    { \"question\": \"\", \"answerOutline\": \"\" }\n  ],\n  \"conclusion\": \"\",\n  \"cta\": \"\",\n  \"estimatedWordCount\": 0\n}",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd9",
+      "name": "Blog Outline Agent",
+      "type": "n8n-nodes-base.advancedAgent",
+      "typeVersion": 2,
+      "position": [
+        2950,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd8",
+      "name": "OpenAI Chat Model (GPT-4o-mini, Temp 0.4)",
+      "type": "n8n-nodes-base.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        2950,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "blogBlueprint",
+              "type": "string",
+              "stringValue": "={{ $json.output || $('SEO Brief Form').item.json['Blog Topic Preference (optional)'] }}"
+            },
+            {
+              "name": "blueprintStatus",
+              "type": "string",
+              "stringValue": "assembled"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dda",
+      "name": "Assembling Blog Blueprint",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        3200,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a professional SEO content writer and subject matter expert.\n\nBlog Outline:\n{{ $('Assembling Blog Blueprint').item.json.blogBlueprint }}\n\nBusiness Profile:\n{{ $('Structure Business Profile').item.json.businessProfile }}\n\nBlog Topic: {{ $('SEO Brief Form').item.json['Blog Topic Preference (optional)'] }}\n\nYour task:\nWrite a complete, detailed, high-quality SEO blog post following the outline above.\n\nRules:\n- Write in the brand tone specified in the business profile\n- Use the primary keyword naturally in the title, first paragraph, at least two H2s, and the conclusion\n- Use secondary keywords and LSI terms throughout\n- Write at minimum 1500 words — ideally 2000+\n- Every H2 section should have at least 3 solid paragraphs\n- The FAQ section must have 5 questions with complete, direct answers (optimized for featured snippets)\n- Include a strong introduction with a hook that addresses the reader's pain point\n- End with a clear call to action directing readers to the business website or service\n- Write like a real human expert — no robotic phrases, no filler content, no AI clichés\n- Do not use phrases like \"In conclusion\", \"In today's digital world\", \"It is important to note\"\n\nWrite the full blog post now.",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddc",
+      "name": "SEO Blog Writer Agent",
+      "type": "n8n-nodes-base.advancedAgent",
+      "typeVersion": 2,
+      "position": [
+        3420,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddb",
+      "name": "OpenAI Chat Model (GPT-4o-mini, Writer)",
+      "type": "n8n-nodes-base.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        3420,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a senior SEO editor specializing in AEO (Answer Engine Optimization) and GEO (Generative Engine Optimization).\n\nHere is the blog post to optimize:\n{{ $json.output }}\n\nBusiness Profile:\n{{ $('Structure Business Profile').item.json.businessProfile }}\n\nYour task — make the following improvements:\n\nSEO Optimization:\n- Ensure the primary keyword appears in the first 100 words\n- Ensure keyword density is between 1% and 2% — not keyword stuffed\n- Add or improve internal linking suggestions (note as [INTERNAL LINK: topic])\n- Ensure all H2 and H3 headings are optimized with relevant keywords\n- Add a proper meta title and meta description at the top if missing\n\nAEO Optimization (for Google Featured Snippets and AI answer boxes):\n- Reformat FAQ answers to be direct, concise, and start with the question keyword\n- Add at least 2 \"definition-style\" paragraphs that directly answer a question in 2-3 sentences\n- Add a \"Quick Answer\" box at the top after the introduction\n\nGEO Optimization (for ChatGPT, Perplexity, Google SGE):\n- Add entity mentions — specific brand names, location names, people, statistics\n- Add at least 3 factual statements with numbers or percentages\n- Add a \"Sources and References\" section at the bottom with placeholder links\n\nReturn the complete improved blog post. Keep all original content — only enhance and add.",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dde",
+      "name": "SEO Editor / AEO / GEO Optimizer",
+      "type": "n8n-nodes-base.advancedAgent",
+      "typeVersion": 2,
+      "position": [
+        3670,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddd",
+      "name": "OpenAI Chat Model (GPT-4o-mini, Editor)",
+      "type": "n8n-nodes-base.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        3670,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert content humanizer. Your job is to make AI-written content sound completely human.\n\nHere is the blog post:\n{{ $json.output }}\n\nYour task:\nRewrite the entire blog post to sound like it was written by a real expert human author.\n\nSpecific instructions:\n- Vary sentence length dramatically — short punchy sentences followed by longer explanatory ones\n- Use natural transitions between paragraphs instead of mechanical ones\n- Add occasional first-person observations where natural (\"In my experience...\", \"What I find interesting is...\")\n- Use contractions naturally (don't, it's, you'll, we've)\n- Replace any passive voice with active voice wherever possible\n- Remove any phrases that sound AI-generated: \"In today's fast-paced world\", \"It is worth noting\", \"Furthermore\", \"Moreover\", \"It is crucial to\", \"In conclusion\"\n- Add a touch of personality and opinion in appropriate places\n- Keep every SEO keyword exactly as written — do not change keywords\n- Keep all headings, structure, FAQ, and CTA exactly as they are\n- Keep the full word count — do not shorten the post\n\nReturn the complete humanized blog post.",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de0",
+      "name": "Humanizer Agent",
+      "type": "n8n-nodes-base.advancedAgent",
+      "typeVersion": 2,
+      "position": [
+        3920,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddf",
+      "name": "OpenAI Chat Model (GPT-4o-mini, Humanizer)",
+      "type": "n8n-nodes-base.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        3920,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a senior SEO auditor performing a final quality check before publication.\n\nHere is the blog post:\n{{ $json.output }}\n\nPerform a complete audit and fix any issues found:\n\nChecklist:\n1. Title (H1) — is it under 60 characters? Does it contain the primary keyword? Fix if not.\n2. Meta description — is it under 160 characters? Does it have a call to action? Fix if not.\n3. Introduction — does it hook the reader and contain the primary keyword in the first 100 words? Fix if not.\n4. Headings — are H2s and H3s using keywords naturally? Fix weak headings.\n5. FAQ — are all 5 questions answered directly and concisely? Fix vague answers.\n6. CTA — is the call to action specific and compelling? Fix if generic.\n7. Word count — is it at least 1500 words? If the post is too short, expand the thinnest section.\n8. Readability — are there any paragraphs longer than 5 sentences? Break them up.\n\nReturn the final, publication-ready blog post with all issues fixed.\nDo not add any commentary or audit notes — return only the clean blog post.",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de2",
+      "name": "Final SEO Audit Pass",
+      "type": "n8n-nodes-base.advancedAgent",
+      "typeVersion": 2,
+      "position": [
+        4170,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de1",
+      "name": "OpenAI Chat Model (GPT-4o-mini, Auditor)",
+      "type": "n8n-nodes-base.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        4170,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ajprworld.com/api/blog",
+        "sendHeaders": true,
+        "headers": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $env.AJPR_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "keypair",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{ $('Final SEO Audit Pass').item.json.output.split('\\n')[0].replace(/^#+\\s*/, '').trim() }}"
+            },
+            {
+              "name": "content",
+              "value": "={{ $('Final SEO Audit Pass').item.json.output }}"
+            },
+            {
+              "name": "cover_image",
+              "value": "={{ $('Generate an Image').item.json.data[0].url }}"
+            },
+            {
+              "name": "published",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de3",
+      "name": "Blog Poster",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        5090,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a data visualization specialist.\n\nHere is a blog post:\n{{ $json.output }}\n\nExtract the most visually interesting data points from this blog post for use in an infographic or featured image.\n\nReturn a JSON object:\n{\n  \"blogTitle\": \"\",\n  \"mainTopic\": \"\",\n  \"keyStats\": [],\n  \"topTakeaways\": [],\n  \"visualTheme\": \"\",\n  \"colorMoodSuggestion\": \"\"\n}\n\nKeep it concise. This will be used to generate an AI image prompt.",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de5",
+      "name": "Infographic Data Extractor",
+      "type": "n8n-nodes-base.advancedAgent",
+      "typeVersion": 2,
+      "position": [
+        4170,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de4",
+      "name": "OpenAI Chat Model (GPT-4o-mini, Extractor)",
+      "type": "n8n-nodes-base.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        4170,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a professional DALL-E image prompt writer.\n\nHere is data extracted from a blog post:\n{{ $json.output }}\n\nWrite a single, detailed DALL-E image generation prompt for the blog's featured image.\n\nRequirements:\n- The image should be editorial and professional\n- No text, words, or letters in the image\n- Style: clean, modern, flat illustration or photorealistic depending on the topic\n- The image should visually represent the blog topic\n- Mention specific colors, composition, mood, and elements\n- Keep the prompt under 200 words\n\nReturn only the image prompt. Nothing else.",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de7",
+      "name": "Prompt Writer",
+      "type": "n8n-nodes-base.advancedAgent",
+      "typeVersion": 2,
+      "position": [
+        4390,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de6",
+      "name": "OpenAI Chat Model (GPT-4o-mini, Prompt Writer)",
+      "type": "n8n-nodes-base.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        4390,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "generate",
+        "prompt": "={{ $json.output }}",
+        "model": "dall-e-3",
+        "size": "1792x1024",
+        "quality": "standard",
+        "responseFormat": "url"
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de8",
+      "name": "Generate an Image",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        4610,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "position",
+        "options": {
+          "includeUnpairedItems": true
+        }
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de9",
+      "name": "Combine Blog Content and Image",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        4850,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "SEO Brief Form": {
+      "main": [
+        [
+          {
+            "node": "Initialize Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initialize Workflow": {
+      "main": [
+        [
+          {
+            "node": "Sanitize User Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sanitize User Input": {
+      "main": [
+        [
+          {
+            "node": "Structure Business Profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structure Business Profile": {
+      "main": [
+        [
+          {
+            "node": "Manual or Auto Topic",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "SerpApi Competitor Research",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google News RSS Feed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual or Auto Topic": {
+      "main": [
+        [
+          {
+            "node": "Assembling Blog Blueprint",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Apify Website Crawler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify Website Crawler": {
+      "main": [
+        [
+          {
+            "node": "Processing Crawl Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processing Crawl Data": {
+      "main": [
+        [
+          {
+            "node": "Website Content Summarizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o-mini)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Website Content Summarizer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpApi Competitor Research": {
+      "main": [
+        [
+          {
+            "node": "Formatting Competitor Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google News RSS Feed": {
+      "main": [
+        [
+          {
+            "node": "Merge Keyword and Competitor Data",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Formatting Competitor Data": {
+      "main": [
+        [
+          {
+            "node": "Merge Keyword and Competitor Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Keyword and Competitor Data": {
+      "main": [
+        [
+          {
+            "node": "Preparing Keyword Matrix",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparing Keyword Matrix": {
+      "main": [
+        [
+          {
+            "node": "Keyword Research Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o-mini, Temp 0.3)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Keyword Research Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keyword Research Agent": {
+      "main": [
+        [
+          {
+            "node": "Keyword Quality Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keyword Quality Gate": {
+      "main": [
+        [
+          {
+            "node": "SerpApi Top Articles Research",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Keyword Research Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpApi Top Articles Research": {
+      "main": [
+        [
+          {
+            "node": "Blog Outline Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o-mini, Temp 0.4)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Blog Outline Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Blog Outline Agent": {
+      "main": [
+        [
+          {
+            "node": "Assembling Blog Blueprint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assembling Blog Blueprint": {
+      "main": [
+        [
+          {
+            "node": "SEO Blog Writer Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o-mini, Writer)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "SEO Blog Writer Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEO Blog Writer Agent": {
+      "main": [
+        [
+          {
+            "node": "SEO Editor / AEO / GEO Optimizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o-mini, Editor)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "SEO Editor / AEO / GEO Optimizer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SEO Editor / AEO / GEO Optimizer": {
+      "main": [
+        [
+          {
+            "node": "Humanizer Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o-mini, Humanizer)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Humanizer Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Humanizer Agent": {
+      "main": [
+        [
+          {
+            "node": "Final SEO Audit Pass",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Infographic Data Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o-mini, Auditor)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Final SEO Audit Pass",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final SEO Audit Pass": {
+      "main": [
+        [
+          {
+            "node": "Combine Blog Content and Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o-mini, Extractor)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Infographic Data Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Infographic Data Extractor": {
+      "main": [
+        [
+          {
+            "node": "Prompt Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o-mini, Prompt Writer)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prompt Writer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Writer": {
+      "main": [
+        [
+          {
+            "node": "Generate an Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an Image": {
+      "main": [
+        [
+          {
+            "node": "Combine Blog Content and Image",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Combine Blog Content and Image": {
+      "main": [
+        [
+          {
+            "node": "Blog Poster",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

@@ -9,6 +9,7 @@ import { FAQSchema } from '@/components/schema/FAQSchema';
 import { RelatedContent } from '@/components/RelatedContent';
 import { AffiliateDisclosure } from '@/components/ui/AffiliateDisclosure';
 import { AffiliateProductCard } from '@/components/AffiliateProductCard';
+import ShareButton from '@/components/ui/ShareButton';
 
 type BlogPost = {
   id: number;
@@ -314,9 +315,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         {/* Footer Actions */}
         <div className="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
           <p className="text-slate-500 font-medium text-sm">Thanks for reading!</p>
-          <button className="text-sm font-semibold border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 px-6 py-2 rounded-full transition-colors text-slate-900 dark:text-slate-50">
-            Share Article
-          </button>
+          <ShareButton title={blog.title} />
         </div>
 
         {/* Semantic Internal Linking Silo */}

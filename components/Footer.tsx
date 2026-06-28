@@ -39,6 +39,9 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         { name: 'Contact', href: '/contact' },
         { name: 'Portfolio', href: '/portfolio' },
         { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
+        { name: 'Aman Joshi (CEO)', href: '/aman-joshi' },
+        { name: 'AI Chat Playground', href: '/chat-agents' },
+        { name: 'Swarm Simulator', href: '/demo-ruflo' },
     ];
 
     const logoSrc = mounted && resolvedTheme === 'dark'

@@ -340,6 +340,31 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           </div>
         </section>
 
+        {/* 2.6 SWARM DAEMON & INTERACTIVE AGENT DEMOS SECTION */}
+        <section className="py-24 relative overflow-hidden border-b border-slate-200 dark:border-slate-800/50 bg-slate-100/30 dark:bg-slate-900/10">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(59,130,246,0.04),transparent)] pointer-events-none" />
+          <div className="container mx-auto px-4 relative z-10 max-w-5xl text-center">
+            <Badge className="bg-blue-600 text-white border-none font-black tracking-widest px-4 py-1.5 uppercase text-xs mb-6 hover:bg-blue-700">
+              Live Swarm Engine
+            </Badge>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tighter leading-[1.1]">
+              Witness Multi-Agent <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Orchestration Swarms</span>
+            </h2>
+            <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 font-medium mb-10 max-w-2xl mx-auto">
+              Interact with specialized, concurrent AI agent teams (Architect, Coder, Tester, Security) running live workflows.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button size="lg" className="h-14 px-8 text-base rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all hover:scale-[1.02] shadow-xl shadow-blue-500/10" asChild>
+                <Link href="/chat-agents">Talk to Agent Swarms &rarr;</Link>
+              </Button>
+              <Button size="lg" variant="outline" className="h-14 px-8 text-base rounded-xl border-slate-300 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 bg-white dark:bg-[#030712] text-slate-900 dark:text-white font-bold transition-all hover:scale-[1.02]" asChild>
+                <Link href="/demo-ruflo">Launch Swarm Simulator</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* 3. CORE VALUE PROPOSITIONS */}
         <section className="py-24 md:py-32 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">

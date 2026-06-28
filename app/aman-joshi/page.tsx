@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
@@ -36,6 +37,7 @@ export default async function AmanJoshiPage() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Aman Joshi',
+    image: 'https://ajprworld.com/images/aman-joshi.jpg',
     url: 'https://ajprworld.com/aman-joshi',
     jobTitle: 'Founder & Systems Architect',
     address: {
@@ -177,8 +179,15 @@ export default async function AmanJoshiPage() {
             </div>
 
             <div className="w-56 h-56 md:w-64 md:h-64 rounded-[2rem] bg-gradient-to-br from-blue-600 to-indigo-600 p-1 flex items-center justify-center shadow-2xl shrink-0 overflow-hidden relative group">
-              <div className="absolute inset-0 bg-[#0B0F19] m-0.5 rounded-[1.9rem] flex items-center justify-center">
-                <span className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-indigo-400">AJ</span>
+              <div className="absolute inset-0 bg-[#0B0F19] m-0.5 rounded-[1.9rem] flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="/images/aman-joshi.jpg" 
+                  alt="Aman Joshi" 
+                  width={256} 
+                  height={256} 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority
+                />
               </div>
             </div>
           </div>

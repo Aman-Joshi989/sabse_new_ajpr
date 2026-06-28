@@ -5,8 +5,17 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, BookOpen, Clock, Tag } from 'lucide-react';
 import React from 'react';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'AJPR The Keyword – Systems, Automation & Growth Blog | AJPR World',
+  description: 'Insightful articles about modern systems engineering, local SEO automation, and AI swarm orchestration.',
+  alternates: {
+    canonical: 'https://ajprworld.com/blog',
+  }
+}
 
 type BlogPost = {
   id: number;

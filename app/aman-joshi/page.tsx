@@ -44,8 +44,8 @@ export default async function AmanJoshiPage() {
     },
     description: 'Aman Joshi is a systems architect and tech entrepreneur specializing in high-concurrency web engines and AI-driven automation systems.',
     sameAs: [
-      'https://www.linkedin.com/in/amanjoshi', // Fallback URLs
-      'https://github.com/amanjoshi'
+      'https://www.linkedin.com/in/aman-joshi-/',
+      'https://github.com/Aman-Joshi989'
     ]
   }
 
@@ -82,10 +82,10 @@ export default async function AmanJoshiPage() {
                 <Link href="/contact">Book Strategy Session</Link>
               </Button>
               <div className="flex gap-2">
-                <a href="#" className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <a href="https://www.linkedin.com/in/aman-joshi-/" target="_blank" rel="noopener noreferrer" className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                   <Linkedin className="w-5 h-5 text-slate-600 dark:text-slate-300" />
                 </a>
-                <a href="#" className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <a href="https://github.com/Aman-Joshi989" target="_blank" rel="noopener noreferrer" className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                   <Github className="w-5 h-5 text-slate-600 dark:text-slate-300" />
                 </a>
               </div>

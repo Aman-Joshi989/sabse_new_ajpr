@@ -143,11 +143,11 @@ export default function Header({ user, services }: { user?: any; services?: any[
                 </Link>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden lg:flex items-center space-x-8">
+                <nav className="hidden lg:flex items-center space-x-8 h-full">
                     {navigation.map((item) => (
                         <div
                             key={item.name}
-                            className="relative group"
+                            className="relative group h-full flex items-center"
                             onMouseEnter={() => item.dropdown && setActiveDropdown(item.name)}
                             onMouseLeave={() => setActiveDropdown(null)}
                         >

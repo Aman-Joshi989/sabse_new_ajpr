@@ -10,44 +10,12 @@ import {
     ArrowRight, Zap, Users, Award, Globe,
     Building
 } from 'lucide-react'
-
-const contactMethods = [
-    {
-        icon: Phone,
-        title: 'Call Us',
-        description: 'Direct consultation available',
-        action: 'tel:+919997205257',
-        label: '+91 99972 05257',
-        gradient: 'from-green-500 to-emerald-500'
-    },
-    {
-        icon: Mail,
-        title: 'Email Us',
-        description: 'Send your requirements',
-        action: 'mailto:sales@ajprworld.com',
-        label: 'sales@ajprworld.com',
-        gradient: 'from-blue-500 to-cyan-500'
-    },
-    {
-        icon: MessageCircle,
-        title: 'WhatsApp',
-        description: 'Quick chat & file sharing',
-        action: 'https://wa.me/919997205257',
-        label: 'Chat on WhatsApp',
-        gradient: 'from-green-400 to-green-600'
-    },
-    {
-        icon: MapPin,
-        title: 'Visit Office',
-        description: 'Meet us in person',
-        action: '#location',
-        label: 'Ballabgarh, Faridabad',
-        gradient: 'from-purple-500 to-pink-500'
-    }
-]
+import { getSiteSettingsAction } from '@/app/actions'
 
 export default function CallToActionSection() {
     const [isVisible, setIsVisible] = useState(false)
+    const [email, setEmail] = useState('sales@ajprworld.com')
+    const [phone, setPhone] = useState('+91 99972 05257')
     const sectionRef = useRef<HTMLElement>(null)
 
     useEffect(() => {
@@ -64,8 +32,56 @@ export default function CallToActionSection() {
             observer.observe(sectionRef.current)
         }
 
+        async function fetchSettings() {
+            try {
+                const res = await getSiteSettingsAction()
+                if (res.success && res.settings) {
+                    if (res.settings.contact_email) setEmail(res.settings.contact_email);
+                    if (res.settings.contact_phone) setPhone(res.settings.contact_phone);
+                }
+            } catch (e) {
+                console.error("Failed to load settings in CallToActionSection:", e)
+            }
+        }
+        fetchSettings()
+
         return () => observer.disconnect()
     }, [])
+
+    const dynamicMethods = [
+        {
+            icon: Phone,
+            title: 'Call Us',
+            description: 'Direct consultation available',
+            action: `tel:${phone.replace(/\s+/g, '')}`,
+            label: phone,
+            gradient: 'from-green-500 to-emerald-500'
+        },
+        {
+            icon: Mail,
+            title: 'Email Us',
+            description: 'Send your requirements',
+            action: `mailto:${email}`,
+            label: email,
+            gradient: 'from-blue-500 to-cyan-500'
+        },
+        {
+            icon: MessageCircle,
+            title: 'WhatsApp',
+            description: 'Quick chat & file sharing',
+            action: `https://wa.me/${phone.replace(/[^0-9]/g, '')}`,
+            label: 'Chat on WhatsApp',
+            gradient: 'from-green-400 to-green-600'
+        },
+        {
+            icon: MapPin,
+            title: 'Visit Office',
+            description: 'Meet us in person',
+            action: '#location',
+            label: 'Ballabgarh, Faridabad',
+            gradient: 'from-purple-500 to-pink-500'
+        }
+    ]
 
     return (
         <section
@@ -86,14 +102,14 @@ export default function CallToActionSection() {
                         <Zap className="w-5 h-5 mr-2" />
                         Ready to Get Started?
                     </Badge>
-
+ 
                     <h2 className="text-4xl md:text-6xl font-bold leading-tight">
                         <span className="block mb-4">Contact for Work Outsource</span>
                         <span className="block text-3xl md:text-5xl text-blue-300">
                             वर्कआउटसोर्स के लिए संपर्क करें
                         </span>
                     </h2>
-
+ 
                     <div className="max-w-4xl mx-auto space-y-6">
                         <p className="text-xl md:text-2xl text-blue-100 leading-relaxed">
                             Please contact us for <strong>GST / TDS / Income Tax Returns</strong>, Day-to-Day Accounting,
@@ -107,10 +123,10 @@ export default function CallToActionSection() {
                         </p>
                     </div>
                 </div>
-
+ 
                 {/* Contact Methods Grid */}
                 <div className={`grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-200' : 'opacity-0'}`}>
-                    {contactMethods.map((method, index) => {
+                    {dynamicMethods.map((method, index) => {
                         const IconComponent = method.icon
                         return (
                             <Card key={index} className="bg-white/10 backdrop-blur-sm border-white/20 hover-lift group">
@@ -120,7 +136,7 @@ export default function CallToActionSection() {
                                     </div>
                                     <h3 className="text-xl font-bold mb-2">{method.title}</h3>
                                     <p className="text-blue-200 text-sm mb-4">{method.description}</p>
-                                    <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white hover:text-slate-900" asChild>
+                                    <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white hover:text-slate-900 w-full" asChild>
                                         <a href={method.action} target={method.action.startsWith('http') ? '_blank' : undefined} rel={method.action.startsWith('http') ? 'noopener noreferrer' : undefined}>
                                             {method.title === 'Email Us' ? (
                                                 <>

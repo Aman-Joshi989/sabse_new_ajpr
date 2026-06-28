@@ -444,7 +444,7 @@ export async function deleteServiceAction(id: number) {
     }
 }
 
-import { updateSiteSettings } from "@/lib/db/queries";
+import { updateSiteSettings, getSiteSettings } from "@/lib/db/queries";
 
 export async function updateSiteSettingsAction(data: any) {
     try {
@@ -455,5 +455,15 @@ export async function updateSiteSettingsAction(data: any) {
     } catch (e) {
         console.error("Failed to update site settings", e);
         return { success: false };
+    }
+}
+
+export async function getSiteSettingsAction() {
+    try {
+        const settings = await getSiteSettings();
+        return { success: true, settings };
+    } catch (e) {
+        console.error("Failed to get site settings", e);
+        return { success: false, settings: null };
     }
 }

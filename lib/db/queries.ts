@@ -397,15 +397,18 @@ export async function initSiteSettingsTable() {
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS contact_email VARCHAR(255) DEFAULT 'ajprworld@gmail.com';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(100) DEFAULT '+91 9997205257';`;
 }
 
 export async function getSiteSettings() {
+  await initSiteSettingsTable();
   const result = await sql`SELECT * FROM site_settings WHERE id = 1;`;
   
   if (result.length === 0) {
     // Insert default settings row
     await sql`
-      INSERT INTO site_settings (id, seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm) 
+      INSERT INTO site_settings (id, seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm, contact_email, contact_phone) 
       VALUES (
         1, 
         'AJPR World – Premium Tech, Custom Software & Creative Branding',
@@ -415,7 +418,9 @@ export async function getSiteSettings() {
         'IN-DL',
         'New Delhi',
         '28.6139;77.2090',
-        '28.6139, 77.2090'
+        '28.6139, 77.2090',
+        'ajprworld@gmail.com',
+        '+91 9997205257'
       );
     `;
     const newSettings = await sql`SELECT * FROM site_settings WHERE id = 1;`;
@@ -427,7 +432,7 @@ export async function getSiteSettings() {
 
 export async function updateSiteSettings(data: any) {
   await initSiteSettingsTable();
-  const { seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm } = data;
+  const { seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm, contact_email, contact_phone } = data;
   
   await sql`
     UPDATE site_settings 
@@ -439,6 +444,8 @@ export async function updateSiteSettings(data: any) {
         geo_placename = ${geo_placename},
         geo_position = ${geo_position},
         geo_icbm = ${geo_icbm},
+        contact_email = ${contact_email},
+        contact_phone = ${contact_phone},
         updated_at = CURRENT_TIMESTAMP
     WHERE id = 1;
   `;

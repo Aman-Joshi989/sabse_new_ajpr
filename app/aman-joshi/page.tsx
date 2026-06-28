@@ -14,11 +14,19 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   const founderName = settings?.founder_name || 'Aman Joshi';
   const founderTitle = settings?.founder_title || 'Founder & Systems Architect';
+  const description = settings?.founder_bio || 'Aman Joshi is a systems architect, tech entrepreneur, and the founder of AJPR World, engineering high-concurrency digital platforms and business automation systems.';
   return {
     title: `${founderName} - ${founderTitle} of AJPR World`,
-    description: settings?.founder_bio || 'Aman Joshi is a systems architect, tech entrepreneur, and the founder of AJPR World, engineering high-concurrency digital platforms and business automation systems.',
+    description,
     alternates: {
       canonical: 'https://ajprworld.com/aman-joshi',
+    },
+    openGraph: {
+      title: `${founderName} - ${founderTitle} of AJPR World`,
+      description,
+      url: 'https://ajprworld.com/aman-joshi',
+      type: 'profile',
+      images: ['https://ajprworld.com/og-image.jpg']
     }
   }
 }

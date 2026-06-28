@@ -17,7 +17,7 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Aman Joshi - Systems Architect, Full-Stack Developer & Founder',
-    description: 'Aman Joshi is a systems architect, full-stack engineer, and founder of AJPR World. Alumnus of IIT Guwahati in Data Science, specializing in scalable automation and backend infrastructure.',
+    description: 'Aman Joshi is a systems architect and founder of AJPR World, engineering high-concurrency digital platforms and custom business automation systems.',
     alternates: {
       canonical: 'https://ajprworld.com/aman-joshi',
     }
@@ -68,7 +68,7 @@ export default async function AmanJoshiPage() {
       '@type': 'EducationalOrganization',
       name: 'Indian Institute of Technology, Guwahati'
     },
-    description: 'Aman Joshi is a systems architect and founder of AJPR World, specializing in enterprise automation, backend scalability, and AI-driven data pipelines.',
+    description: 'Aman Joshi is a systems architect & founder of AJPR World, engineering high-concurrency digital platforms and custom business automation systems.',
     sameAs: [
       'https://www.linkedin.com/in/aman-joshi-/',
       'https://github.com/Aman-Joshi989'

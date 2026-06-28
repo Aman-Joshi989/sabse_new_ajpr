@@ -97,6 +97,8 @@ export default async function RootLayout({
   const headersList = await headers();
   const pathname = headersList.get('x-pathname') || '';
   const isExcludedRoute = pathname === '/login' || pathname.startsWith('/dashboard');
+  const isFullScreenRoute = pathname === '/chat-agents' || pathname === '/demo-ruflo';
+  const hideFooter = isExcludedRoute || isFullScreenRoute;
 
   let services: any[] = [];
   let blogs: any[] = [];
@@ -130,7 +132,7 @@ export default async function RootLayout({
               <main className="min-h-screen">
                 {children}
               </main>
-              <Footer services={services} blogs={blogs} />
+              {!hideFooter && <Footer services={services} blogs={blogs} />}
               <Toaster />
               <Analytics />
               <SpeedInsights />

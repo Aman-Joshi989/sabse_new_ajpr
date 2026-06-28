@@ -1,6 +1,7 @@
 import { getBlogBySlug, getBlogs, getAffiliateLink } from '@/lib/db/queries';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Metadata } from 'next';
 import { ArticleSchema } from '@/components/schema/ArticleSchema';
@@ -249,11 +250,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {/* Cover Image */}
       {blog.cover_image && (
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-          <div className="aspect-[21/9] w-full rounded-2xl overflow-hidden shadow-md">
-            <img 
+          <div className="aspect-[21/9] w-full rounded-2xl overflow-hidden shadow-md relative">
+            <Image 
               src={blog.cover_image} 
               alt={blog.title} 
-              className="object-cover w-full h-full"
+              fill
+              sizes="(max-width: 1200px) 100vw, 1200px"
+              className="object-cover"
+              priority
             />
           </div>
         </div>

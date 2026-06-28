@@ -278,6 +278,31 @@ export default function ChatPlayground() {
             ))}
           </div>
         </div>
+
+        {/* Swarm User Guide */}
+        <div className="flex flex-col gap-2 border-t border-slate-950 pt-5">
+          <span className="text-[10px] font-bold text-slate-550 uppercase tracking-widest flex items-center gap-1.5 mb-1">
+            <HelpCircle className="w-3.5 h-3.5 text-blue-500" /> Swarm Guide & Uses
+          </span>
+          <div className="text-[11px] text-slate-450 space-y-3.5 leading-relaxed bg-slate-950/20 border border-slate-900/60 p-4 rounded-xl">
+            <div>
+              <span className="font-bold text-slate-300 block mb-1">💡 What is this Swarm?</span>
+              An automated workspace where specialized AI agents coordinate to design, write, audit, and test code dynamically based on your request.
+            </div>
+            <div>
+              <span className="font-bold text-slate-300 block mb-1">🔧 How to operate:</span>
+              <ol className="list-decimal pl-4 space-y-1">
+                <li>Select a **Topology** to define collaboration paths.</li>
+                <li>Configure **Active Workers** to choose required specialist nodes.</li>
+                <li>Type a custom prompt or select a **Preset Prompt** below.</li>
+              </ol>
+            </div>
+            <div>
+              <span className="font-bold text-slate-300 block mb-1">🚀 Business Value:</span>
+              Provides rapid, secure prototyping by running architectural design, coding drafts, security checks, and test-suite validation concurrently.
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Main Panel */}

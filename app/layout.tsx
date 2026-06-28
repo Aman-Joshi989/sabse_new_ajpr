@@ -9,6 +9,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from 'next/script';
 import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
+import { LocalBusinessSchema } from '@/components/schema/LocalBusinessSchema';
 import { getSiteSettings, getPublishedServices, getBlogs } from '@/lib/db/queries';
 import { headers } from 'next/headers';
 
@@ -134,6 +135,7 @@ export default async function RootLayout({
               <Analytics />
               <SpeedInsights />
               <OrganizationSchema />
+              <LocalBusinessSchema />
               <Script
                 id="ahrefs-analytics"
                 src="/analytics/ahrefs.js"

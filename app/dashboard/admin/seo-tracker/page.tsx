@@ -260,26 +260,7 @@ export default function AdminSeoTracker() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#202124] text-[#202124] dark:text-[#E8EAED] font-sans pb-16">
-      
-      {/* Top App Bar */}
-      <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-3 bg-white dark:bg-[#202124] border-b border-[#DADCE0] dark:border-[#3C4043] shadow-sm">
-        <div className="flex items-center gap-4">
-          <Link href="/dashboard/admin" className="text-[#5F6368] dark:text-[#9AA0A6] hover:text-[#202124] dark:hover:text-white transition-colors">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-          <div className="text-xl font-medium tracking-tight text-[#5F6368] dark:text-[#E8EAED]">
-            Admin <span className="text-[#202124] dark:text-white font-normal">Console</span>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-2 text-xs font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 px-4 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-800">
-          <Activity className="w-3.5 h-3.5 mr-1 animate-pulse" />
-          GEO Tracker Operational
-        </div>
-      </div>
-
-      <div className="p-6 max-w-7xl mx-auto space-y-8">
+    <div className="space-y-8">
         
         {/* Navigation Tabs */}
         <div className="flex border-b border-[#DADCE0] dark:border-[#3C4043]">
@@ -992,6 +973,5 @@ export default function AdminSeoTracker() {
         )}
 
       </div>
-    </div>
   );
 }

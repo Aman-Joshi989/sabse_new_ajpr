@@ -81,6 +81,14 @@ export default function Header({ user, services }: { user?: any; services?: any[
             href: '/services',
             dropdown: dynamicServices
         },
+        {
+            name: 'Demos',
+            href: '#',
+            dropdown: [
+                { name: 'Swarm Simulator', href: '/demo-ruflo', icon_name: 'Cpu' },
+                { name: 'AI Chat Playground', href: '/chat-agents', icon_name: 'Code2' }
+            ]
+        },
         { name: 'About', href: '/about' },
         { name: 'Portfolio', href: '/portfolio' },
         { name: 'Contact', href: '/contact' },

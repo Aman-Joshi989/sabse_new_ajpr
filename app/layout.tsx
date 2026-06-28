@@ -12,6 +12,7 @@ import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { LocalBusinessSchema } from '@/components/schema/LocalBusinessSchema';
 import { getSiteSettings, getPublishedServices, getBlogs } from '@/lib/db/queries';
 import { headers } from 'next/headers';
+import LayoutClientEffect from '@/components/LayoutClientEffect';
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -128,6 +129,7 @@ export default async function RootLayout({
         >
           <AuthProvider user={user}>
             <CartProvider>
+              <LayoutClientEffect />
               <Header user={user} services={services} />
               <main className={isFullScreenRoute ? '' : 'min-h-screen'}>
                 {children}

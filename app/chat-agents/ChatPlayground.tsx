@@ -364,7 +364,7 @@ export default function ChatPlayground() {
                   </div>
 
                   {msg.thoughts && (
-                    <div className="bg-[#111625]/60 border border-purple-500/10 rounded-xl p-4 max-w-2xl shadow-sm relative overflow-hidden">
+                    <div className="bg-[#111625]/60 border border-purple-500/10 rounded-xl p-4 w-full max-w-full lg:max-w-2xl shadow-sm relative overflow-hidden">
                       <div className="absolute top-0 left-0 w-1 h-full bg-purple-500/40" />
                       <div className="flex items-center gap-1.5 text-purple-400 font-bold text-[9px] uppercase tracking-widest mb-1.5">
                         <TerminalSquare className="w-3.5 h-3.5" /> Swarm Cogitation
@@ -387,7 +387,7 @@ export default function ChatPlayground() {
                             const lang = lines[0] || 'code'
                             const codeContent = lines.slice(1).join('\n')
                             return (
-                              <div key={bIdx} className="rounded-xl overflow-hidden border border-slate-800/80 bg-[#070b15]/60 font-mono text-xs my-3 max-w-2xl">
+                              <div key={bIdx} className="rounded-xl overflow-hidden border border-slate-800/80 bg-[#070b15]/60 font-mono text-xs my-3 w-full max-w-full lg:max-w-2xl">
                                 <div className="flex items-center justify-between px-4 py-2 border-b border-slate-800/80 bg-slate-950/60">
                                   <span className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">{lang}</span>
                                   <div className="flex space-x-1.5">
@@ -426,7 +426,7 @@ export default function ChatPlayground() {
                   <span className="font-bold text-slate-400">{typingAgent || 'Swarm'} is thinking...</span>
                 </div>
                 {typingThoughts && (
-                  <div className="bg-[#111625]/60 border border-purple-500/10 rounded-xl p-4 max-w-2xl shadow-sm relative overflow-hidden animate-pulse">
+                  <div className="bg-[#111625]/60 border border-purple-500/10 rounded-xl p-4 w-full max-w-full lg:max-w-2xl shadow-sm relative overflow-hidden animate-pulse">
                     <div className="absolute top-0 left-0 w-1 h-full bg-purple-500/40" />
                     <div className="flex items-center gap-1.5 text-purple-400 font-bold text-[9px] uppercase tracking-widest mb-1.5">
                       <Terminal className="w-3.5 h-3.5" /> Swarm Cogitation

@@ -129,7 +129,7 @@ export default async function RootLayout({
           <AuthProvider user={user}>
             <CartProvider>
               <Header user={user} services={services} />
-              <main className="min-h-screen">
+              <main className={isFullScreenRoute ? '' : 'min-h-screen'}>
                 {children}
               </main>
               {!hideFooter && <Footer services={services} blogs={blogs} />}

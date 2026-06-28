@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Cpu, Send, User, Bot, HelpCircle, Layers, CheckCircle2, 
-  ChevronRight, MessageSquare, Terminal, Eye, Sparkles, TerminalSquare, ShieldCheck, Zap
+  ChevronRight, MessageSquare, Terminal, Eye, Sparkles, TerminalSquare, ShieldCheck, Zap, Settings, PanelLeftOpen, X
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -56,12 +56,13 @@ export default function ChatPlayground() {
   const [isTyping, setIsTyping] = useState(false)
   const [typingThoughts, setTypingThoughts] = useState<string | null>(null)
   const [typingAgent, setTypingAgent] = useState<string | null>(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   
-  const chatEndRef = useRef<HTMLDivElement>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
     }
   }, [messages, isTyping, typingThoughts])
 
@@ -199,7 +200,7 @@ export default function ChatPlayground() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#070b15] text-slate-100 flex flex-col lg:flex-row relative overflow-hidden font-sans">
+    <div className="h-[calc(100vh-64px)] bg-[#070b15] text-slate-100 flex flex-col lg:flex-row relative overflow-hidden font-sans">
       <BreadcrumbSchema items={breadcrumbItems} />
 
       {/* Cyberpunk Grid & Background Glows */}
@@ -207,12 +208,19 @@ export default function ChatPlayground() {
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-blue-600/10 to-indigo-600/5 rounded-full blur-[140px] pointer-events-none z-0 animate-pulse-glow" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-purple-600/5 to-pink-600/5 rounded-full blur-[140px] pointer-events-none z-0 animate-pulse-glow-alt" />
 
-      {/* Sidebar Panel */}
-      <div className="w-full lg:w-85 border-b lg:border-b-0 lg:border-r border-slate-900/80 bg-slate-950/40 backdrop-blur-2xl p-6 lg:p-8 flex flex-col gap-8 relative z-10 shrink-0">
+      {/* Sidebar Panel — hidden on mobile, toggleable */}
+      <div className={`${
+        sidebarOpen ? 'flex' : 'hidden'
+      } lg:flex w-full lg:w-85 border-b lg:border-b-0 lg:border-r border-slate-900/80 bg-slate-950/40 backdrop-blur-2xl p-6 lg:p-8 flex-col gap-8 relative z-20 shrink-0 lg:overflow-y-auto lg:max-h-full max-h-[60vh] overflow-y-auto`}>
         <div>
-          <Link href="/" className="inline-flex items-center text-slate-500 hover:text-blue-400 transition-colors text-xs font-semibold uppercase tracking-wider gap-1.5 mb-6 group">
-            <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Home
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link href="/" className="inline-flex items-center text-slate-500 hover:text-blue-400 transition-colors text-xs font-semibold uppercase tracking-wider gap-1.5 group">
+              <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Home
+            </Link>
+            <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-slate-500 hover:text-white transition-colors p-1">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
           <h2 className="text-2xl font-black tracking-tight text-white flex items-center gap-2">
             <Cpu className="w-6 h-6 text-blue-500" /> Swarm Engine
           </h2>
@@ -306,7 +314,7 @@ export default function ChatPlayground() {
       </div>
 
       {/* Main Panel */}
-      <div className="flex-1 flex flex-col h-[calc(100vh-60px)] lg:h-screen relative z-10 bg-slate-950/20 backdrop-blur-3xl">
+      <div className="flex-1 flex flex-col min-h-0 relative z-10 bg-slate-950/20 backdrop-blur-3xl">
         
         {/* Workspace Header */}
         <div className="border-b border-slate-900/80 px-6 py-4 flex items-center justify-between bg-slate-950/40 backdrop-blur-md">
@@ -322,13 +330,20 @@ export default function ChatPlayground() {
               </div>
             </div>
           </div>
-          <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono text-[9px] font-bold px-2 py-0.5 tracking-wider">
+          <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono text-[9px] font-bold px-2 py-0.5 tracking-wider hidden sm:inline-flex">
             CONNECTED
           </Badge>
+          <button
+            onClick={() => setSidebarOpen(prev => !prev)}
+            className="lg:hidden text-slate-400 hover:text-white transition-colors p-2 rounded-lg border border-slate-800 hover:border-slate-700 bg-slate-900/40"
+            aria-label="Toggle swarm settings"
+          >
+            <Settings className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Chat Feed */}
-        <div className="flex-1 overflow-y-auto p-6 lg:p-8 flex flex-col gap-8 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+        <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-6 lg:p-8 flex flex-col gap-8 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
           {messages.map((msg) => {
             const isUser = msg.role === 'user'
             return (
@@ -422,7 +437,7 @@ export default function ChatPlayground() {
               </div>
             </motion.div>
           )}
-          <div ref={chatEndRef} />
+
         </div>
 
         {/* Input Bar */}

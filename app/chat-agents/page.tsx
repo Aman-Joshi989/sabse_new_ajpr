@@ -9,7 +9,8 @@ export const metadata: Metadata = {
     title: 'RuFlo AI Chat Playground – Talk to Agent Swarms | AJPR World',
     description: 'Interact with specialized AI agents (Coder, Tester, Architect, Security Analyst) in our live chat playground.',
     url: 'https://ajprworld.com/chat-agents',
-    type: 'website'
+    type: 'website',
+    images: ['https://ajprworld.com/og-image.jpg']
   }
 }
 

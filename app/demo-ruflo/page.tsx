@@ -9,7 +9,8 @@ export const metadata: Metadata = {
     title: 'RuFlo V3 Swarm Simulator – AI Agent Orchestration | AJPR World',
     description: 'Visualize and interact with the RuFlo V3 multi-agent swarm in real-time.',
     url: 'https://ajprworld.com/demo-ruflo',
-    type: 'website'
+    type: 'website',
+    images: ['https://ajprworld.com/og-image.jpg']
   }
 }
 

@@ -211,7 +211,7 @@ export default function ChatPlayground() {
       {/* Sidebar Panel — hidden on mobile, toggleable */}
       <div className={`${
         sidebarOpen ? 'flex' : 'hidden'
-      } lg:flex w-full lg:w-85 border-b lg:border-b-0 lg:border-r border-slate-900/80 bg-slate-950/40 backdrop-blur-2xl p-6 lg:p-8 flex-col gap-8 relative z-20 shrink-0 lg:overflow-y-auto lg:max-h-full max-h-[60vh] overflow-y-auto`}>
+      } lg:flex w-full lg:w-96 border-b lg:border-b-0 lg:border-r border-slate-900/80 bg-slate-950/40 backdrop-blur-2xl p-6 lg:p-8 flex-col gap-8 relative z-20 shrink-0 lg:overflow-y-auto lg:max-h-full max-h-[60vh] overflow-y-auto`}>
         <div>
           <div className="flex items-center justify-between mb-4">
             <Link href="/" className="inline-flex items-center text-slate-500 hover:text-blue-400 transition-colors text-xs font-semibold uppercase tracking-wider gap-1.5 group">

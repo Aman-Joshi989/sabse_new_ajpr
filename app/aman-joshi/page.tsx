@@ -9,7 +9,7 @@ import {
   Cpu, Database, Code2, ShieldAlert, Award, FileText, CheckCircle2,
   Briefcase, GraduationCap, Sparkles, Zap, ShieldCheck
 } from 'lucide-react'
-import { getPortfolioItems } from '@/lib/db/queries'
+import { getPortfolioItems, getSiteSettings } from '@/lib/db/queries'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -26,28 +26,39 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AmanJoshiPage() {
   let projects: any[] = []
+  let settings: any = null
   try {
-    projects = await getPortfolioItems()
+    const [fetchedProjects, fetchedSettings] = await Promise.all([
+      getPortfolioItems(),
+      getSiteSettings()
+    ])
+    projects = fetchedProjects || []
+    settings = fetchedSettings || null
   } catch (e) {
-    console.error("Failed to load projects for Aman Joshi profile:", e)
+    console.error("Failed to load projects/settings for Aman Joshi profile:", e)
   }
+
+  const contactEmail = settings?.contact_email || 'amanjoshi254@gmail.com'
+  const contactPhone = settings?.contact_phone || '+91 9997205257'
+  const founderName = settings?.founder_name || 'Aman Joshi'
+  const founderTitle = settings?.founder_title || 'Founder & Systems Architect'
 
   // Schema for Aman Joshi
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Aman Joshi',
+    name: founderName,
     image: 'https://ajprworld.com/images/aman-joshi.jpg',
     url: 'https://ajprworld.com/aman-joshi',
-    jobTitle: 'Founder & Systems Architect',
+    jobTitle: founderTitle,
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Haldwani',
       addressRegion: 'Uttarakhand',
       addressCountry: 'IN'
     },
-    email: 'amanjoshi254@gmail.com',
-    telephone: '+919997205257',
+    email: contactEmail,
+    telephone: contactPhone,
     worksFor: {
       '@type': 'Organization',
       name: 'AJPR World',
@@ -148,10 +159,10 @@ export default async function AmanJoshiPage() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
             <div className="space-y-6 text-center lg:text-left">
               <Badge className="bg-blue-600 text-white border-none font-black tracking-widest px-4 py-1.5 uppercase text-xs">
-                Systems Architect & Founder
+                {founderTitle}
               </Badge>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.05]">
-                Aman Joshi
+                {founderName}
               </h1>
               <p className="text-xl font-semibold text-slate-700 dark:text-slate-300">
                 Specializing in Enterprise Automation & High-Concurrency Systems
@@ -159,8 +170,8 @@ export default async function AmanJoshiPage() {
               
               <div className="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-3 text-sm text-slate-500 font-medium">
                 <span className="flex items-center"><MapPin className="w-4 h-4 mr-2 text-blue-500" /> Haldwani, Uttarakhand, India</span>
-                <span className="flex items-center"><Mail className="w-4 h-4 mr-2 text-blue-500" /> amanjoshi254@gmail.com</span>
-                <span className="flex items-center"><Phone className="w-4 h-4 mr-2 text-blue-500" /> +91 9997205257</span>
+                <span className="flex items-center"><Mail className="w-4 h-4 mr-2 text-blue-500" /> {contactEmail}</span>
+                <span className="flex items-center"><Phone className="w-4 h-4 mr-2 text-blue-500" /> {contactPhone}</span>
               </div>
 
               <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-2">

@@ -399,6 +399,8 @@ export async function initSiteSettingsTable() {
   `;
   await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS contact_email VARCHAR(255) DEFAULT 'ajprworld@gmail.com';`;
   await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(100) DEFAULT '+91 9997205257';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_name VARCHAR(255) DEFAULT 'Aman Joshi';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_title VARCHAR(255) DEFAULT 'Founder & Systems Architect';`;
 }
 
 export async function getSiteSettings() {
@@ -408,7 +410,7 @@ export async function getSiteSettings() {
   if (result.length === 0) {
     // Insert default settings row
     await sql`
-      INSERT INTO site_settings (id, seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm, contact_email, contact_phone) 
+      INSERT INTO site_settings (id, seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm, contact_email, contact_phone, founder_name, founder_title) 
       VALUES (
         1, 
         'AJPR World – Premium Tech, Custom Software & Creative Branding',
@@ -420,7 +422,9 @@ export async function getSiteSettings() {
         '28.6139;77.2090',
         '28.6139, 77.2090',
         'ajprworld@gmail.com',
-        '+91 9997205257'
+        '+91 9997205257',
+        'Aman Joshi',
+        'Founder & Systems Architect'
       );
     `;
     const newSettings = await sql`SELECT * FROM site_settings WHERE id = 1;`;
@@ -432,7 +436,7 @@ export async function getSiteSettings() {
 
 export async function updateSiteSettings(data: any) {
   await initSiteSettingsTable();
-  const { seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm, contact_email, contact_phone } = data;
+  const { seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm, contact_email, contact_phone, founder_name, founder_title } = data;
   
   await sql`
     UPDATE site_settings 
@@ -446,9 +450,10 @@ export async function updateSiteSettings(data: any) {
         geo_icbm = ${geo_icbm},
         contact_email = ${contact_email},
         contact_phone = ${contact_phone},
+        founder_name = ${founder_name},
+        founder_title = ${founder_title},
         updated_at = CURRENT_TIMESTAMP
     WHERE id = 1;
   `;
-  
   return { success: true };
 }

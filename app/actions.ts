@@ -450,6 +450,8 @@ export async function updateSiteSettingsAction(data: any) {
     try {
         await updateSiteSettings(data);
         revalidatePath('/');
+        revalidatePath('/about');
+        revalidatePath('/aman-joshi');
         revalidatePath('/dashboard/admin/seo');
         return { success: true };
     } catch (e) {

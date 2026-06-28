@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Globe, Search, MapPin, Save, ArrowLeft, Loader2, Navigation, Mail } from 'lucide-react';
+import { Globe, Search, MapPin, Save, ArrowLeft, Loader2, Navigation, Mail, User } from 'lucide-react';
 import { updateSiteSettingsAction } from '@/app/actions';
 import { toast } from 'sonner';
 import Link from 'next/link';
@@ -23,7 +23,9 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
         geo_position: initialSettings?.geo_position || '',
         geo_icbm: initialSettings?.geo_icbm || '',
         contact_email: initialSettings?.contact_email || 'ajprworld@gmail.com',
-        contact_phone: initialSettings?.contact_phone || '+91 9997205257'
+        contact_phone: initialSettings?.contact_phone || '+91 9997205257',
+        founder_name: initialSettings?.founder_name || 'Aman Joshi',
+        founder_title: initialSettings?.founder_title || 'Founder & Systems Architect'
     });
 
     const [saving, setSaving] = useState(false);
@@ -260,6 +262,46 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
                                 placeholder="+91 9997205257"
                             />
                             <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Primary telephone number for user call triggers and WhatsApp links.</p>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* 4. Founder Branding Card */}
+                <Card className="bg-white dark:bg-[#292A2D] border border-[#DADCE0] dark:border-[#3C4043] shadow-none rounded-lg lg:col-span-2">
+                    <CardHeader className="border-b border-[#DADCE0] dark:border-[#3C4043]">
+                        <CardTitle className="text-lg font-medium text-[#202124] dark:text-white flex items-center gap-2">
+                            <User className="w-5 h-5 text-blue-600 dark:text-[#8AB4F8]" />
+                            Founder Branding & Leadership
+                        </CardTitle>
+                        <CardDescription className="text-xs text-[#5F6368] dark:text-[#9AA0A6]">
+                            Dynamically update the executive name, roles, and titles rendered across the About and Biography pages.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-6 grid sm:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Founder / CEO Name</label>
+                            <Input 
+                                name="founder_name" 
+                                value={form.founder_name} 
+                                onChange={handleChange} 
+                                required 
+                                className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
+                                placeholder="Aman Joshi"
+                            />
+                            <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Dynamic name displayed in About Page executive highlights and biography routes.</p>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Founder Title / Capacity</label>
+                            <Input 
+                                name="founder_title" 
+                                value={form.founder_title} 
+                                onChange={handleChange} 
+                                required 
+                                className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
+                                placeholder="Founder & Systems Architect"
+                            />
+                            <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Official description or role capacity (e.g. Founder & Systems Architect).</p>
                         </div>
                     </CardContent>
                 </Card>

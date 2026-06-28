@@ -196,7 +196,7 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
                   We are your long-term execution machine.
                 </p>
                 <div className="pt-4 text-sm text-slate-500 font-bold">
-                  Led by <Link href="/aman-joshi" className="text-blue-600 dark:text-blue-400 underline hover:text-blue-500 hover:scale-[1.01] inline-block transition-all">Aman Joshi, Founder & Systems Architect</Link>.
+                  Led by <Link href="/aman-joshi" className="text-blue-600 dark:text-blue-400 underline hover:text-blue-500 hover:scale-[1.01] inline-block transition-all">{settings?.founder_name || 'Aman Joshi'}, {settings?.founder_title || 'Founder & Systems Architect'}</Link>.
                 </div>
               </div>
             </div>

@@ -195,7 +195,7 @@ export default function ChatPlayground() {
 
   const breadcrumbItems = [
     { name: 'Home', item: 'https://ajprworld.com' },
-    { name: 'Demos', item: 'https://ajprworld.com/demo-cpu' },
+    { name: 'Demos', item: 'https://ajprworld.com/demo-ruflo' },
     { name: 'RuFlo AI Chat Playground', item: 'https://ajprworld.com/chat-agents' }
   ]
 

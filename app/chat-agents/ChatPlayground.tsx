@@ -221,9 +221,9 @@ export default function ChatPlayground() {
               <X className="w-5 h-5" />
             </button>
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-white flex items-center gap-2">
-            <Cpu className="w-6 h-6 text-blue-500" /> Swarm Engine
-          </h2>
+          <h1 className="text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            <Cpu className="w-6 h-6 text-blue-500" /> RuFlo AI Swarm Engine
+          </h1>
           <p className="text-slate-400 text-xs mt-2 leading-relaxed">
             Configure multi-agent communication topologies and toggle coordinator nodes.
           </p>

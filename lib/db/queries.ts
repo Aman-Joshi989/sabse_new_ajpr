@@ -401,6 +401,16 @@ export async function initSiteSettingsTable() {
   await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(100) DEFAULT '+91 9997205257';`;
   await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_name VARCHAR(255) DEFAULT 'Aman Joshi';`;
   await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_title VARCHAR(255) DEFAULT 'Founder & Systems Architect';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_bio TEXT DEFAULT 'I partner with high-growth startups and established brands to build robust digital infrastructures, automate complex backend workloads, and integrate secure enterprise-grade systems.';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_badge VARCHAR(255) DEFAULT 'Founder Profile';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_linkedin VARCHAR(255) DEFAULT 'https://www.linkedin.com/in/aman-joshi-/';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_github VARCHAR(255) DEFAULT 'https://github.com/Aman-Joshi989';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp1_title VARCHAR(255) DEFAULT 'Systems Architecting';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp1_desc TEXT DEFAULT 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp2_title VARCHAR(255) DEFAULT 'Business Automation';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp2_desc TEXT DEFAULT 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp3_title VARCHAR(255) DEFAULT 'Execution Execution';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp3_desc TEXT DEFAULT 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.';`;
 }
 
 export async function getSiteSettings() {
@@ -410,7 +420,15 @@ export async function getSiteSettings() {
   if (result.length === 0) {
     // Insert default settings row
     await sql`
-      INSERT INTO site_settings (id, seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm, contact_email, contact_phone, founder_name, founder_title) 
+      INSERT INTO site_settings (
+        id, seo_title, seo_description, seo_keywords, canonical_url, 
+        geo_region, geo_placename, geo_position, geo_icbm, 
+        contact_email, contact_phone, founder_name, founder_title,
+        founder_bio, founder_badge, founder_linkedin, founder_github,
+        founder_exp1_title, founder_exp1_desc,
+        founder_exp2_title, founder_exp2_desc,
+        founder_exp3_title, founder_exp3_desc
+      ) 
       VALUES (
         1, 
         'AJPR World – Premium Tech, Custom Software & Creative Branding',
@@ -424,7 +442,17 @@ export async function getSiteSettings() {
         'ajprworld@gmail.com',
         '+91 9997205257',
         'Aman Joshi',
-        'Founder & Systems Architect'
+        'Founder & Systems Architect',
+        'I partner with high-growth startups and established brands to build robust digital infrastructures, automate complex backend workloads, and integrate secure enterprise-grade systems.',
+        'Founder Profile',
+        'https://www.linkedin.com/in/aman-joshi-/',
+        'https://github.com/Aman-Joshi989',
+        'Systems Architecting',
+        'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.',
+        'Business Automation',
+        'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
+        'Execution Execution',
+        'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.'
       );
     `;
     const newSettings = await sql`SELECT * FROM site_settings WHERE id = 1;`;
@@ -436,7 +464,15 @@ export async function getSiteSettings() {
 
 export async function updateSiteSettings(data: any) {
   await initSiteSettingsTable();
-  const { seo_title, seo_description, seo_keywords, canonical_url, geo_region, geo_placename, geo_position, geo_icbm, contact_email, contact_phone, founder_name, founder_title } = data;
+  const { 
+    seo_title, seo_description, seo_keywords, canonical_url, 
+    geo_region, geo_placename, geo_position, geo_icbm, 
+    contact_email, contact_phone, founder_name, founder_title,
+    founder_bio, founder_badge, founder_linkedin, founder_github,
+    founder_exp1_title, founder_exp1_desc,
+    founder_exp2_title, founder_exp2_desc,
+    founder_exp3_title, founder_exp3_desc
+  } = data;
   
   await sql`
     UPDATE site_settings 
@@ -452,6 +488,16 @@ export async function updateSiteSettings(data: any) {
         contact_phone = ${contact_phone},
         founder_name = ${founder_name},
         founder_title = ${founder_title},
+        founder_bio = ${founder_bio},
+        founder_badge = ${founder_badge},
+        founder_linkedin = ${founder_linkedin},
+        founder_github = ${founder_github},
+        founder_exp1_title = ${founder_exp1_title},
+        founder_exp1_desc = ${founder_exp1_desc},
+        founder_exp2_title = ${founder_exp2_title},
+        founder_exp2_desc = ${founder_exp2_desc},
+        founder_exp3_title = ${founder_exp3_title},
+        founder_exp3_desc = ${founder_exp3_desc},
         updated_at = CURRENT_TIMESTAMP
     WHERE id = 1;
   `;

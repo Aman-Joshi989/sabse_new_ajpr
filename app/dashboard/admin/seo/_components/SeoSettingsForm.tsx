@@ -25,7 +25,17 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
         contact_email: initialSettings?.contact_email || 'ajprworld@gmail.com',
         contact_phone: initialSettings?.contact_phone || '+91 9997205257',
         founder_name: initialSettings?.founder_name || 'Aman Joshi',
-        founder_title: initialSettings?.founder_title || 'Founder & Systems Architect'
+        founder_title: initialSettings?.founder_title || 'Founder & Systems Architect',
+        founder_bio: initialSettings?.founder_bio || 'I partner with high-growth startups and established brands to build robust digital infrastructures, automate complex backend workloads, and integrate secure enterprise-grade systems.',
+        founder_badge: initialSettings?.founder_badge || 'Founder Profile',
+        founder_linkedin: initialSettings?.founder_linkedin || 'https://www.linkedin.com/in/aman-joshi-/',
+        founder_github: initialSettings?.founder_github || 'https://github.com/Aman-Joshi989',
+        founder_exp1_title: initialSettings?.founder_exp1_title || 'Systems Architecting',
+        founder_exp1_desc: initialSettings?.founder_exp1_desc || 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.',
+        founder_exp2_title: initialSettings?.founder_exp2_title || 'Business Automation',
+        founder_exp2_desc: initialSettings?.founder_exp2_desc || 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
+        founder_exp3_title: initialSettings?.founder_exp3_title || 'Execution Execution',
+        founder_exp3_desc: initialSettings?.founder_exp3_desc || 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.'
     });
 
     const [saving, setSaving] = useState(false);
@@ -302,6 +312,151 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
                                 placeholder="Founder & Systems Architect"
                             />
                             <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Official description or role capacity (e.g. Founder & Systems Architect).</p>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Founder Badge Label</label>
+                            <Input 
+                                name="founder_badge" 
+                                value={form.founder_badge} 
+                                onChange={handleChange} 
+                                required 
+                                className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
+                                placeholder="Founder Profile"
+                            />
+                            <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Brief uppercase badge rendered above name (e.g. Founder Profile).</p>
+                        </div>
+
+                        <div className="space-y-2 sm:col-span-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Founder Biography Introduction</label>
+                            <Textarea 
+                                name="founder_bio" 
+                                value={form.founder_bio} 
+                                onChange={handleChange} 
+                                required 
+                                rows={4}
+                                className="bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600 resize-none p-3 text-sm" 
+                                placeholder="Write dynamic founder biography summary..."
+                            />
+                            <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Introductory bio block displayed on biography and about pages.</p>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">LinkedIn URL</label>
+                            <Input 
+                                name="founder_linkedin" 
+                                type="url"
+                                value={form.founder_linkedin} 
+                                onChange={handleChange} 
+                                required 
+                                className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
+                                placeholder="https://www.linkedin.com/in/amanjoshi-"
+                            />
+                            <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Absolute URL to founder LinkedIn profile.</p>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">GitHub URL</label>
+                            <Input 
+                                name="founder_github" 
+                                type="url"
+                                value={form.founder_github} 
+                                onChange={handleChange} 
+                                required 
+                                className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
+                                placeholder="https://github.com/amanjoshi"
+                            />
+                            <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Absolute URL to founder GitHub profile.</p>
+                        </div>
+
+                        {/* Card 1 Expertise */}
+                        <div className="border-t border-[#DADCE0] dark:border-[#3C4043] pt-6 sm:col-span-2 space-y-4">
+                            <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Expertise Block 1</h4>
+                            <div className="grid sm:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Expertise 1 Title</label>
+                                    <Input 
+                                        name="founder_exp1_title" 
+                                        value={form.founder_exp1_title} 
+                                        onChange={handleChange} 
+                                        required 
+                                        className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
+                                        placeholder="Systems Architecting"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Expertise 1 Description</label>
+                                    <Textarea 
+                                        name="founder_exp1_desc" 
+                                        value={form.founder_exp1_desc} 
+                                        onChange={handleChange} 
+                                        required 
+                                        rows={2}
+                                        className="bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600 resize-none p-3 text-sm" 
+                                        placeholder="Describe systems expertise..."
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Card 2 Expertise */}
+                        <div className="border-t border-[#DADCE0] dark:border-[#3C4043] pt-6 sm:col-span-2 space-y-4">
+                            <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Expertise Block 2</h4>
+                            <div className="grid sm:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Expertise 2 Title</label>
+                                    <Input 
+                                        name="founder_exp2_title" 
+                                        value={form.founder_exp2_title} 
+                                        onChange={handleChange} 
+                                        required 
+                                        className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
+                                        placeholder="Business Automation"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Expertise 2 Description</label>
+                                    <Textarea 
+                                        name="founder_exp2_desc" 
+                                        value={form.founder_exp2_desc} 
+                                        onChange={handleChange} 
+                                        required 
+                                        rows={2}
+                                        className="bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600 resize-none p-3 text-sm" 
+                                        placeholder="Describe automation expertise..."
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Card 3 Expertise */}
+                        <div className="border-t border-[#DADCE0] dark:border-[#3C4043] pt-6 sm:col-span-2 space-y-4">
+                            <h4 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Expertise Block 3</h4>
+                            <div className="grid sm:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Expertise 3 Title</label>
+                                    <Input 
+                                        name="founder_exp3_title" 
+                                        value={form.founder_exp3_title} 
+                                        onChange={handleChange} 
+                                        required 
+                                        className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
+                                        placeholder="Execution Execution"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Expertise 3 Description</label>
+                                    <Textarea 
+                                        name="founder_exp3_desc" 
+                                        value={form.founder_exp3_desc} 
+                                        onChange={handleChange} 
+                                        required 
+                                        rows={2}
+                                        className="bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600 resize-none p-3 text-sm" 
+                                        placeholder="Describe execution expertise..."
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </CardContent>
                 </Card>

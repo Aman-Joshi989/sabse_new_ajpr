@@ -12,6 +12,8 @@ import { AffiliateDisclosure } from '@/components/ui/AffiliateDisclosure';
 import { AffiliateProductCard } from '@/components/AffiliateProductCard';
 import ShareButton from '@/components/ui/ShareButton';
 
+export const dynamic = 'force-dynamic';
+
 type BlogPost = {
   id: number;
   slug: string;

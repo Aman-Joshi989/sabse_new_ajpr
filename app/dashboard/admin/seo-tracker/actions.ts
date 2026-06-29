@@ -1,6 +1,6 @@
 'use server';
 
-import { createBlog } from '@/lib/db/queries';
+import { createBlog, getBlogs } from '@/lib/db/queries';
 import { revalidatePath } from 'next/cache';
 
 // Helper to make OpenAI API calls
@@ -217,6 +217,9 @@ Produce a clean structured business summary as JSON with these keys:
                 const { brief, profileSummary, competitorArticles, trends } = data;
 
                 try {
+                    const existingBlogs = await getBlogs();
+                    const existingTitles = existingBlogs.map((b: any) => b.title);
+
                     const prompt = `You are a senior SEO keyword researcher.
 Business Profile Summary: ${JSON.stringify(profileSummary)}
 Competitors Search Data: ${JSON.stringify(competitorArticles)}
@@ -224,6 +227,9 @@ News Trends: ${JSON.stringify(trends)}
 
 Identify 10 high-potential keywords for this business. Pick one as the recommended primary keyword.
 Include long-tail voice search terms (AEO) and local entities (GEO).
+
+CRITICAL: Do NOT recommend a primary keyword that targets the same topics or matches the titles of these already-published blogs:
+${existingTitles.length > 0 ? existingTitles.map((t: any) => `- ${t}`).join('\n') : 'None'}
 
 Output ONLY JSON matching:
 {
@@ -281,7 +287,12 @@ Output ONLY JSON matching:
                 const { primaryKeyword, keywordArticles, brief } = data;
 
                 try {
+                    const topicInstruction = brief.blogTopic 
+                        ? `Focus the outline on this specific requested topic/headline: "${brief.blogTopic}". Shape the H2 headings and content structure to fully address this topic while incorporating the primary keyword.`
+                        : `Determine a highly engaging, specific, and professional topic title based on the primary keyword and competitors.`;
+
                     const prompt = `Create a complete detailed SEO blog outline for the primary keyword: "${primaryKeyword}".
+${topicInstruction}
 Top Competitor Articles: ${JSON.stringify(keywordArticles)}
 Brand Voice: ${brief.tone}
 

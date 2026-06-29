@@ -164,7 +164,9 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "keepOnlySet": false
+        }
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dc7",
       "name": "Initialize Workflow",
@@ -182,67 +184,67 @@
             {
               "name": "businessName",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Business Name'] }}"
+              "stringValue": "={{ $json['Business Name'] }}"
             },
             {
               "name": "websiteUrl",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Website URL'] }}"
+              "stringValue": "={{ $json['Website URL'] }}"
             },
             {
               "name": "niche",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Industry / Niche'] }}"
+              "stringValue": "={{ $json['Industry / Niche'] }}"
             },
             {
               "name": "businessType",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Business Type'] }}"
+              "stringValue": "={{ $json['Business Type'] }}"
             },
             {
               "name": "services",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Products or Services You Offer'] }}"
+              "stringValue": "={{ $json['Products or Services You Offer'] }}"
             },
             {
               "name": "targetAudience",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Target Audience'] }}"
+              "stringValue": "={{ $json['Target Audience'] }}"
             },
             {
               "name": "competitors",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Top 3 Competitors'] }}"
+              "stringValue": "={{ $json['Top 3 Competitors'] }}"
             },
             {
               "name": "geoFocus",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Geographic Focus'] }}"
+              "stringValue": "={{ $json['Geographic Focus'] }}"
             },
             {
               "name": "city",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['City or Region if Local'] }}"
+              "stringValue": "={{ $json['City or Region if Local'] || '' }}"
             },
             {
               "name": "tone",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Brand Tone of Voice'] }}"
+              "stringValue": "={{ $json['Brand Tone of Voice'] }}"
             },
             {
               "name": "targetKeywords",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Target Keywords (optional)'] }}"
+              "stringValue": "={{ $json['Target Keywords (optional)'] || '' }}"
             },
             {
               "name": "usp",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['What Makes You Different (USP)'] }}"
+              "stringValue": "={{ $json['What Makes You Different (USP)'] }}"
             },
             {
               "name": "blogTopic",
               "type": "string",
-              "stringValue": "={{ $('SEO Brief Form').item.json['Blog Topic Preference (optional)'] }}"
+              "stringValue": "={{ $json['Blog Topic Preference (optional)'] || '' }}"
             }
           ]
         },
@@ -659,7 +661,7 @@
             {
               "name": "blogBlueprint",
               "type": "string",
-              "stringValue": "={{ $json.output || $('SEO Brief Form').item.json['Blog Topic Preference (optional)'] }}"
+              "stringValue": "={{ $json.output || $('Sanitize User Input').item.json.blogTopic }}"
             },
             {
               "name": "blueprintStatus",
@@ -682,7 +684,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a professional SEO content writer and subject matter expert.\n\nBlog Outline:\n{{ $('Assembling Blog Blueprint').item.json.blogBlueprint }}\n\nBusiness Profile:\n{{ $('Structure Business Profile').item.json.businessProfile }}\n\nBlog Topic: {{ $('SEO Brief Form').item.json['Blog Topic Preference (optional)'] }}\n\nYour task:\nWrite a complete, detailed, high-quality SEO blog post following the outline above.\n\nRules:\n- Write in the brand tone specified in the business profile\n- Use the primary keyword naturally in the title, first paragraph, at least two H2s, and the conclusion\n- Use secondary keywords and LSI terms throughout\n- Write at minimum 1500 words — ideally 2000+\n- Every H2 section should have at least 3 solid paragraphs\n- The FAQ section must have 5 questions with complete, direct answers (optimized for featured snippets)\n- Include a strong introduction with a hook that addresses the reader's pain point\n- End with a clear call to action directing readers to the business website or service\n- Write like a real human expert — no robotic phrases, no filler content, no AI clichés\n- Do not use phrases like \"In conclusion\", \"In today's digital world\", \"It is important to note\"\n\nWrite the full blog post now.",
+        "text": "=You are a professional SEO content writer and subject matter expert.\n\nBlog Outline:\n{{ $('Assembling Blog Blueprint').item.json.blogBlueprint }}\n\nBusiness Profile:\n{{ $('Structure Business Profile').item.json.businessProfile }}\n\nBlog Topic: {{ $('Sanitize User Input').item.json.blogTopic }}\n\nYour task:\nWrite a complete, detailed, high-quality SEO blog post following the outline above.\n\nRules:\n- Write in the brand tone specified in the business profile\n- Use the primary keyword naturally in the title, first paragraph, at least two H2s, and the conclusion\n- Use secondary keywords and LSI terms throughout\n- Write at minimum 1500 words — ideally 2000+\n- Every H2 section should have at least 3 solid paragraphs\n- The FAQ section must have 5 questions with complete, direct answers (optimized for featured snippets)\n- Include a strong introduction with a hook that addresses the reader's pain point\n- End with a clear call to action directing readers to the business website or service\n- Write like a real human expert — no robotic phrases, no filler content, no AI clichés\n- Do not use phrases like \"In conclusion\", \"In today's digital world\", \"It is important to note\"\n\nWrite the full blog post now.",
         "options": {}
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddc",
@@ -973,9 +975,123 @@
         5530,
         -80
       ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dec",
+      "name": "Daily Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        250,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "Business Name",
+              "type": "string",
+              "stringValue": "AJPR World"
+            },
+            {
+              "name": "Website URL",
+              "type": "string",
+              "stringValue": "https://ajprworld.com"
+            },
+            {
+              "name": "Industry / Niche",
+              "type": "string",
+              "stringValue": "AI Automation, Web Development, Systems Architecture, Generative Engine Optimization"
+            },
+            {
+              "name": "Business Type",
+              "type": "string",
+              "stringValue": "B2B"
+            },
+            {
+              "name": "Products or Services You Offer",
+              "type": "string",
+              "stringValue": "Custom software development, business AI automation pipelines, n8n workflows, GEO/SEO citation optimization, multi-agent AI swarms"
+            },
+            {
+              "name": "Target Audience",
+              "type": "string",
+              "stringValue": "High-growth startups, B2B companies, and enterprises looking to scale operations and organic search presence"
+            },
+            {
+              "name": "Top 3 Competitors",
+              "type": "string",
+              "stringValue": "Traditional Software Agencies, Generic SEO Consultancies"
+            },
+            {
+              "name": "Geographic Focus",
+              "type": "string",
+              "stringValue": "International"
+            },
+            {
+              "name": "Brand Tone of Voice",
+              "type": "string",
+              "stringValue": "Expert/Technical"
+            },
+            {
+              "name": "What Makes You Different (USP)",
+              "type": "string",
+              "stringValue": "We build premium, custom-engineered digital systems and autonomous agent workflows designed for scalability and real business ROI, not templates."
+            },
+            {
+              "name": "Blog Topic Preference (optional)",
+              "type": "string",
+              "stringValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dee",
+      "name": "Default Business Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        470,
+        60
+      ]
     }
   ],
   "connections": {
+    "Daily Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Default Business Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Business Config": {
+      "main": [
+        [
+          {
+            "node": "Initialize Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "SEO Brief Form": {
       "main": [
         [

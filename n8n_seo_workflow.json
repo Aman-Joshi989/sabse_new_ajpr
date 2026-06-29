@@ -365,7 +365,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dce",
       "name": "Website Content Summarizer",
-      "type": "n8n-nodes-base.advancedAgent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
         1790,
@@ -379,7 +379,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dcd",
       "name": "OpenAI Chat Model (GPT-4o-mini)",
-      "type": "n8n-nodes-base.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
         1790,
@@ -540,7 +540,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd5",
       "name": "Keyword Research Agent",
-      "type": "n8n-nodes-base.advancedAgent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
         2230,
@@ -556,7 +556,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd4",
       "name": "OpenAI Chat Model (GPT-4o-mini, Temp 0.3)",
-      "type": "n8n-nodes-base.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
         2230,
@@ -631,7 +631,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd9",
       "name": "Blog Outline Agent",
-      "type": "n8n-nodes-base.advancedAgent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
         2950,
@@ -647,7 +647,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dd8",
       "name": "OpenAI Chat Model (GPT-4o-mini, Temp 0.4)",
-      "type": "n8n-nodes-base.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
         2950,
@@ -689,7 +689,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddc",
       "name": "SEO Blog Writer Agent",
-      "type": "n8n-nodes-base.advancedAgent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
         3420,
@@ -703,7 +703,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddb",
       "name": "OpenAI Chat Model (GPT-4o, Writer)",
-      "type": "n8n-nodes-base.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
         3420,
@@ -718,7 +718,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6dde",
       "name": "SEO Editor / AEO / GEO Optimizer",
-      "type": "n8n-nodes-base.advancedAgent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
         3670,
@@ -732,7 +732,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddd",
       "name": "OpenAI Chat Model (GPT-4o-mini, Editor)",
-      "type": "n8n-nodes-base.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
         3670,
@@ -747,7 +747,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de0",
       "name": "Humanizer Agent",
-      "type": "n8n-nodes-base.advancedAgent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
         3920,
@@ -761,7 +761,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6ddf",
       "name": "OpenAI Chat Model (GPT-4o, Humanizer)",
-      "type": "n8n-nodes-base.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
         3920,
@@ -776,7 +776,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de2",
       "name": "Final SEO Audit Pass",
-      "type": "n8n-nodes-base.advancedAgent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
         4170,
@@ -790,7 +790,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de1",
       "name": "OpenAI Chat Model (GPT-4o-mini, Auditor)",
-      "type": "n8n-nodes-base.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
         4170,
@@ -851,7 +851,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de5",
       "name": "Infographic Data Extractor",
-      "type": "n8n-nodes-base.advancedAgent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
         4170,
@@ -865,7 +865,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de4",
       "name": "OpenAI Chat Model (GPT-4o-mini, Extractor)",
-      "type": "n8n-nodes-base.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
         4170,
@@ -880,7 +880,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de7",
       "name": "Prompt Writer",
-      "type": "n8n-nodes-base.advancedAgent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
         4390,
@@ -894,7 +894,7 @@
       },
       "id": "b30cf88c-7f55-46f9-bb20-2b10214a6de6",
       "name": "OpenAI Chat Model (GPT-4o-mini, Prompt Writer)",
-      "type": "n8n-nodes-base.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1,
       "position": [
         4390,

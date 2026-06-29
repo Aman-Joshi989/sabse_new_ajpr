@@ -58,7 +58,7 @@ export default async function AmanJoshiPage() {
   const exp1Desc = settings?.founder_exp1_desc || 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.'
   const exp2Title = settings?.founder_exp2_title || 'Business Automation'
   const exp2Desc = settings?.founder_exp2_desc || 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.'
-  const exp3Title = settings?.founder_exp3_title || 'Execution Execution'
+  const exp3Title = settings?.founder_exp3_title || 'Execution Excellence'
   const exp3Desc = settings?.founder_exp3_desc || 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.'
 
   // Schema for Aman Joshi

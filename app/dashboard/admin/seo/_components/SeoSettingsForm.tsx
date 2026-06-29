@@ -34,7 +34,7 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
         founder_exp1_desc: initialSettings?.founder_exp1_desc || 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.',
         founder_exp2_title: initialSettings?.founder_exp2_title || 'Business Automation',
         founder_exp2_desc: initialSettings?.founder_exp2_desc || 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
-        founder_exp3_title: initialSettings?.founder_exp3_title || 'Execution Execution',
+        founder_exp3_title: initialSettings?.founder_exp3_title || 'Execution Excellence',
         founder_exp3_desc: initialSettings?.founder_exp3_desc || 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.'
     });
 
@@ -441,7 +441,7 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
                                         onChange={handleChange} 
                                         required 
                                         className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
-                                        placeholder="Execution Execution"
+                                        placeholder="Execution Excellence"
                                     />
                                 </div>
                                 <div className="space-y-2">

@@ -409,7 +409,7 @@ export async function initSiteSettingsTable() {
   await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp1_desc TEXT DEFAULT 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.';`;
   await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp2_title VARCHAR(255) DEFAULT 'Business Automation';`;
   await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp2_desc TEXT DEFAULT 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp3_title VARCHAR(255) DEFAULT 'Execution Execution';`;
+  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp3_title VARCHAR(255) DEFAULT 'Execution Excellence';`;
   await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp3_desc TEXT DEFAULT 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.';`;
 }
 
@@ -451,7 +451,7 @@ export async function getSiteSettings() {
         'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.',
         'Business Automation',
         'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
-        'Execution Execution',
+        'Execution Excellence',
         'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.'
       );
     `;

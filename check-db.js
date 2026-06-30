@@ -4,7 +4,7 @@ const url = 'postgresql://neondb_owner:npg_5QXuaV4efjtN@ep-billowing-bonus-adwcp
 const client = new Client({ connectionString: url });
 
 client.connect()
-    .then(() => client.query("SELECT id, slug, title, cover_image, created_at FROM blog_posts ORDER BY id DESC LIMIT 5"))
+    .then(() => client.query("SELECT id, slug, title, LENGTH(content) as content_len FROM blog_posts ORDER BY id DESC LIMIT 5"))
     .then(res => {
         console.log(JSON.stringify(res.rows, null, 2));
         return client.end();

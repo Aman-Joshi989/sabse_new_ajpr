@@ -48,7 +48,7 @@ function parseMarkdownToHtml(markdown: string): string {
   html = html.replace(/^\*\s+(.*?)$/gm, '<li class="ml-6 list-disc mb-2 text-slate-800 dark:text-slate-200 text-left">$1</li>');
 
   // Wrap list items in <ul>
-  html = html.replace(/(<li.*?>.*?<\/li>\n?)+/gs, (match) => {
+  html = html.replace(/(<li.*?>[\s\S]*?<\/li>\n?)+/g, (match) => {
     return `<ul class="my-6 space-y-2 list-disc pl-5">\n${match}</ul>\n`;
   });
 

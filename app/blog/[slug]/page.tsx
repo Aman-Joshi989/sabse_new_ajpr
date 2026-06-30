@@ -28,6 +28,47 @@ type BlogPost = {
   amazon_asin?: string | null;
 };
 
+function parseMarkdownToHtml(markdown: string): string {
+  if (!markdown) return '';
+  
+  let html = markdown.replace(/\r\n/g, '\n');
+
+  // 1. Headings (## and ###)
+  html = html.replace(/^### (.*?)$/gm, '<h3 class="text-2xl font-bold mt-8 mb-4 text-slate-900 dark:text-slate-100 text-left">$1</h3>');
+  html = html.replace(/^## (.*?)$/gm, '<h2 class="text-3xl font-bold mt-10 mb-4 border-b border-slate-200 dark:border-slate-800 pb-2 text-slate-900 dark:text-slate-50 text-left">$1</h2>');
+  html = html.replace(/^# (.*?)$/gm, '<h1 class="text-4xl font-extrabold mt-12 mb-6 text-slate-900 dark:text-slate-50 text-left">$1</h1>');
+
+  // 2. Bold (**text**)
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // 3. Horizontal Rules (---)
+  html = html.replace(/^---$/gm, '<hr class="my-8 border-slate-200 dark:border-slate-800" />');
+
+  // 4. Bullet Lists (* items)
+  html = html.replace(/^\*\s+(.*?)$/gm, '<li class="ml-6 list-disc mb-2 text-slate-800 dark:text-slate-200 text-left">$1</li>');
+
+  // Wrap list items in <ul>
+  html = html.replace(/(<li.*?>.*?<\/li>\n?)+/gs, (match) => {
+    return `<ul class="my-6 space-y-2 list-disc pl-5">\n${match}</ul>\n`;
+  });
+
+  // 5. Links ([text](url))
+  html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline">$1</a>');
+
+  // 6. Paragraphs
+  const blocks = html.split(/\n\s*\n/);
+  const parsedBlocks = blocks.map(block => {
+    const trimmed = block.trim();
+    if (!trimmed) return '';
+    if (trimmed.startsWith('<h') || trimmed.startsWith('<li') || trimmed.startsWith('<hr') || trimmed.startsWith('<ul') || trimmed.startsWith('<ol')) {
+      return trimmed;
+    }
+    return `<p class="leading-relaxed mb-6 text-slate-800 dark:text-slate-200 text-left">${trimmed.replace(/\n/g, '<br />')}</p>`;
+  });
+  
+  return parsedBlocks.join('\n');
+}
+
 function cleanMetaDescription(desc: string, maxLen = 155): string {
   if (!desc) return '';
   const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
@@ -292,10 +333,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div 
           className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 prose-img:rounded-xl max-w-none text-slate-800 dark:text-slate-200"
           dangerouslySetInnerHTML={{ 
-            __html: blog.content
-              .replace(/<h1[^>]*>/gi, '<h2>')
-              .replace(/<\/h1>/gi, '</h2>')
-              .replace(/\n\n/g, '<br/><br/>') 
+            __html: parseMarkdownToHtml(blog.content)
           }}
         />
         

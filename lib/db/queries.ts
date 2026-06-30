@@ -254,7 +254,7 @@ export async function createBlog(data: any) {
     INSERT INTO blog_posts (slug, title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin)
     VALUES (${slug}, ${title}, ${excerpt}, ${content}, ${category}, ${author}, ${cover_image}, ${published ?? true}, ${affiliate_product_slug ?? null}, ${amazon_asin ?? null});
   `;
-  return { success: true };
+  return { success: true, slug };
 }
 
 export async function getAllBlogs() {

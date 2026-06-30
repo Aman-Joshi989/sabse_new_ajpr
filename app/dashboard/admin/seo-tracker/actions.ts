@@ -319,21 +319,22 @@ Output ONLY JSON matching:
                     return { success: true, outline: JSON.parse(rawJson) };
                 } catch (err: any) {
                     console.error('Outline agent failed, using fallback:', err.message);
+                    const topicTitle = brief.blogTopic || `The Complete Guide to ${primaryKeyword}: Strategies for Scaling`;
                     return {
                         success: true,
                         outline: {
-                            title: `The Complete Guide to ${primaryKeyword}: Strategies for Scaling`,
-                            metaDescription: `Learn how to master ${primaryKeyword} to outperform competitors, improve customer acquisition, and scale operations.`,
-                            introduction: `Hook: Why traditional strategies are failing in ${brief.niche} and why ${primaryKeyword} is the new paradigm.`,
+                            title: topicTitle,
+                            metaDescription: `Learn how to master ${topicTitle} to outperform competitors, improve customer acquisition, and scale operations.`,
+                            introduction: `Hook: Why traditional strategies are failing and why "${topicTitle}" is the new paradigm.`,
                             h2Sections: [
-                                { heading: `Understanding the Impact of ${primaryKeyword}`, keyPoints: [`Defining search intents`, `Why entity optimization matters`] },
-                                { heading: `Key Pillars for Outranking Competitors`, keyPoints: [`Bespoke MVP software builds`, `Leveraging localized GEO indexes`] }
+                                { heading: `Understanding the Impact of ${topicTitle}`, keyPoints: [`Core concepts and definitions`, `Why this matters for modern growth`] },
+                                { heading: `Strategic Pillars for Outranking Competitors`, keyPoints: [`Bespoke MVP software builds`, `Leveraging localized SEO & GEO indexes`] }
                             ],
                             faqSection: [
-                                { question: `What is the timeline to rank for ${primaryKeyword}?`, answerOutline: `Within 3 to 6 months depending on local site authority.` }
+                                { question: `What is the timeline to see results with ${topicTitle}?`, answerOutline: `Usually within 3 to 6 months depending on authority and crawl optimization.` }
                             ],
-                            conclusion: `Final thoughts: Combining tech stack optimization and semantic content delivery.`,
-                            cta: `Visit ${brief.businessName} at ${brief.websiteUrl} for custom MVP builds.`
+                            conclusion: `Final thoughts: Combining strategic implementation of "${topicTitle}" with semantic content delivery.`,
+                            cta: `Visit ${brief.businessName} at ${brief.websiteUrl} for custom MVP builds and automation.`
                         }
                     };
                 }
@@ -550,7 +551,7 @@ Return ONLY the prompt string.`;
                 const excerpt = outline.metaDescription || 'Read our latest automated blog post.';
 
                 // Save to Database
-                await createBlog({
+                const publishResult = await createBlog({
                     slug: resolvedSlug,
                     title,
                     excerpt,
@@ -566,7 +567,7 @@ Return ONLY the prompt string.`;
 
                 return {
                     success: true,
-                    slug: resolvedSlug,
+                    slug: publishResult.slug || resolvedSlug,
                     title,
                     coverImage: imageUrl,
                     wordCount: finalContent.split(/\s+/).length

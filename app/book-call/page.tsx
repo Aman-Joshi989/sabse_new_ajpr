@@ -11,6 +11,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import Script from 'next/script'
+import { createRazorpayOrder } from '@/app/actions'
 
 const timeSlots = [
     '09:30 AM',
@@ -51,34 +53,78 @@ export default function BookCallPage() {
         const formattedDate = selectedDate.toISOString().split('T')[0]
 
         try {
-            const res = await fetch("/api/bookings", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
+            // 1. Create a Razorpay Order on the backend (₹599)
+            const order = await createRazorpayOrder(599)
+            if (!order || !order.id) {
+                throw new Error("Failed to initialize booking payment order.")
+            }
+
+            // 2. Configure and Open Razorpay Checkout modal
+            const options = {
+                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_live_T6n6pGcQIKZ9gO",
+                amount: order.amount,
+                currency: order.currency,
+                name: "AJPR World",
+                description: "30-Minute Strategy Call Fee",
+                order_id: order.id,
+                handler: async function (response: any) {
+                    try {
+                        // 3. Submit booking with cryptographic payment tokens for verification
+                        const res = await fetch("/api/bookings", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                name: form.fullName,
+                                email: form.workEmail,
+                                companyName: form.companyName,
+                                websiteUrl: form.websiteUrl,
+                                bookingDate: formattedDate,
+                                bookingTime: activeTimeSlot,
+                                topic: form.topic,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature
+                            }),
+                        })
+
+                        const data = await res.json()
+
+                        if (res.ok && data.success) {
+                            setStatus('success')
+                            setStep('success')
+                        } else {
+                            setStatus('error')
+                            setFeedbackMsg(data.error || "Booking recording failed. Please email aman@ajprworld.com with your payment ID.")
+                        }
+                    } catch (err) {
+                        console.error("Booking verification error:", err)
+                        setStatus('error')
+                        setFeedbackMsg("Verification network failure. Please email aman@ajprworld.com with your payment ID.")
+                    } finally {
+                        setSubmitting(false)
+                    }
+                },
+                prefill: {
                     name: form.fullName,
                     email: form.workEmail,
-                    companyName: form.companyName,
-                    websiteUrl: form.websiteUrl,
-                    bookingDate: formattedDate,
-                    bookingTime: activeTimeSlot,
-                    topic: form.topic
-                }),
-            })
-
-            const data = await res.json()
-
-            if (res.ok && data.success) {
-                setStatus('success')
-                setStep('success')
-            } else {
-                setStatus('error')
-                setFeedbackMsg(data.error || "Booking failed. Please select another slot or try again.")
+                },
+                theme: {
+                    color: "#2563EB"
+                },
+                modal: {
+                    ondismiss: function () {
+                        setSubmitting(false)
+                    }
+                }
             }
-        } catch (err) {
-            console.error("Booking error:", err)
+
+            const rzp = new (window as any).Razorpay(options)
+            rzp.open()
+
+        } catch (err: any) {
+            console.error("Payment initialization error:", err)
             setStatus('error')
-            setFeedbackMsg("Network error. Please try again.")
-        } finally {
+            setFeedbackMsg(err.message || "Failed to initiate payment. Please try again.")
             setSubmitting(false)
         }
     }
@@ -377,7 +423,7 @@ export default function BookCallPage() {
 
                                         <div className="pt-2">
                                             <Button type="submit" disabled={submitting} className="w-full h-12 text-sm font-bold bg-blue-600 hover:bg-blue-500 text-white rounded-lg">
-                                                {submitting ? 'Scheduling Meeting...' : 'Schedule Event'}
+                                                {submitting ? 'Processing Payment...' : 'Pay & Book Strategy Call (₹599)'}
                                             </Button>
                                         </div>
 
@@ -456,6 +502,7 @@ export default function BookCallPage() {
                 </div>
 
             </div>
+            <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
         </div>
     )
 }

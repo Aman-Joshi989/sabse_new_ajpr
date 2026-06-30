@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { neon } from "@neondatabase/serverless";
 import { getSession } from "@/lib/auth";
 import nodemailer from "nodemailer";
+import crypto from "crypto";
 
 function generateGoogleMeetLink() {
     const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -21,11 +22,29 @@ export async function POST(req: Request) {
             websiteUrl, 
             bookingDate, 
             bookingTime, 
-            topic 
+            topic,
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature
         } = await req.json();
 
         if (!name || !email || !bookingDate || !bookingTime) {
             return NextResponse.json({ error: "Name, email, date, and time slot are required" }, { status: 400 });
+        }
+
+        // 🔒 Cryptographic Token Payment Validation
+        if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+            return NextResponse.json({ error: "Payment verification details are required to book a session" }, { status: 400 });
+        }
+
+        const text = razorpay_order_id + "|" + razorpay_payment_id;
+        const generatedSignature = crypto
+            .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+            .update(text)
+            .digest("hex");
+
+        if (generatedSignature !== razorpay_signature) {
+            return NextResponse.json({ error: "Cryptographic signature validation failed. Payment is invalid." }, { status: 400 });
         }
 
         // Run safe check migrations to create bookings table if not exists
@@ -41,9 +60,15 @@ export async function POST(req: Request) {
                 topic TEXT,
                 status VARCHAR(20) DEFAULT 'Pending',
                 meet_link TEXT,
+                payment_id TEXT,
+                payment_status VARCHAR(20) DEFAULT 'Unpaid',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `;
+
+        // Apply migrations for existing tables safely
+        await sql`ALTER TABLE bookings ADD COLUMN IF NOT EXISTS payment_id TEXT;`;
+        await sql`ALTER TABLE bookings ADD COLUMN IF NOT EXISTS payment_status VARCHAR(20) DEFAULT 'Unpaid';`;
 
         await sql`
             INSERT INTO bookings (
@@ -53,7 +78,9 @@ export async function POST(req: Request) {
                 website_url, 
                 booking_date, 
                 booking_time, 
-                topic
+                topic,
+                payment_id,
+                payment_status
             ) VALUES (
                 ${name}, 
                 ${email}, 
@@ -61,7 +88,9 @@ export async function POST(req: Request) {
                 ${websiteUrl || ''}, 
                 ${bookingDate}, 
                 ${bookingTime}, 
-                ${topic || ''}
+                ${topic || ''},
+                ${razorpay_payment_id},
+                'Paid'
             )
         `;
 
@@ -94,14 +123,19 @@ export async function GET(req: Request) {
                 topic TEXT,
                 status VARCHAR(20) DEFAULT 'Pending',
                 meet_link TEXT,
+                payment_id TEXT,
+                payment_status VARCHAR(20) DEFAULT 'Unpaid',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `;
 
+        await sql`ALTER TABLE bookings ADD COLUMN IF NOT EXISTS payment_id TEXT;`;
+        await sql`ALTER TABLE bookings ADD COLUMN IF NOT EXISTS payment_status VARCHAR(20) DEFAULT 'Unpaid';`;
+
         const list = await sql`
             SELECT id, name, email, company_name, website_url, 
                    TO_CHAR(booking_date, 'YYYY-MM-DD') as booking_date, 
-                   booking_time, topic, status, meet_link, created_at
+                   booking_time, topic, status, meet_link, payment_id, payment_status, created_at
             FROM bookings 
             ORDER BY booking_date DESC, booking_time ASC
         `;
@@ -130,6 +164,8 @@ export async function PATCH(req: Request) {
 
         // Run safe migrations to add new columns if missing
         await sql`ALTER TABLE bookings ADD COLUMN IF NOT EXISTS meet_link TEXT;`;
+        await sql`ALTER TABLE bookings ADD COLUMN IF NOT EXISTS payment_id TEXT;`;
+        await sql`ALTER TABLE bookings ADD COLUMN IF NOT EXISTS payment_status VARCHAR(20) DEFAULT 'Unpaid';`;
 
         let meetLink = '';
         if (status === 'Confirmed') {

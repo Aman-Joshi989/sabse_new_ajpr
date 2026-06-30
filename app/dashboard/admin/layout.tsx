@@ -22,6 +22,7 @@ export default function AdminLayout({
     { name: 'Services', href: '/dashboard/admin/services', icon: Database },
     { name: 'Blog', href: '/dashboard/admin/blog', icon: FileText },
     { name: 'Portfolio', href: '/dashboard/admin/portfolio', icon: LayoutTemplate },
+    { name: 'Bookings', href: '/dashboard/admin/bookings', icon: Users },
     { name: 'Inbox', href: '/dashboard/admin/contact-submissions', icon: Inbox },
     { name: 'SEO & Geo', href: '/dashboard/admin/seo', icon: Globe },
     { name: 'SEO Tracker', href: '/dashboard/admin/seo-tracker', icon: Activity },

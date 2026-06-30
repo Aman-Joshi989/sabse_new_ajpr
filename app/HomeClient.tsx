@@ -280,7 +280,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 animate-fade-up [animation-delay:400ms]">
                 <Button size="lg" className="h-12 px-8 text-base rounded-none bg-blue-600 hover:bg-blue-500 text-white font-bold transition-transform shadow-[0_0_30px_-10px_rgba(37,99,235,0.4)] border border-blue-500/50 hover:scale-[1.05]" asChild>
-                  <Link href="/contact">Book Strategy Call <ArrowRight className="ml-2 w-4 h-4" /></Link>
+                  <Link href="/book-call">Book Strategy Call <ArrowRight className="ml-2 w-4 h-4" /></Link>
                 </Button>
                 <Button size="lg" variant="outline" className="h-12 px-8 text-base rounded-none border border-slate-300 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 bg-white dark:bg-[#030712] text-slate-900 dark:text-white font-bold transition-transform hover:scale-[1.05]" asChild>
                   <Link href="/portfolio">View Our Architecture</Link>

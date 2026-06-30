@@ -116,7 +116,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                 <Link href="#case-studies">View Case Studies</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-800 h-12 px-8 rounded-full text-base font-bold bg-white dark:bg-slate-900 text-slate-900 dark:text-white" asChild>
-                <Link href="/contact">Book Strategy Call <ArrowUpRight className="ml-2 w-4 h-4 text-slate-900 dark:text-slate-400" /></Link>
+                <Link href="/book-call">Book Strategy Call <ArrowUpRight className="ml-2 w-4 h-4 text-slate-900 dark:text-slate-400" /></Link>
               </Button>
             </motion.div>
           </motion.div>
@@ -327,7 +327,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                   <Link href="/contact">Apply for Partnership</Link>
                 </Button>
                 <Button size="lg" variant="outline" className="border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 bg-slate-50/50 dark:bg-slate-900/50 backdrop-blur-sm h-16 px-10 rounded-full text-lg font-bold text-slate-900 dark:text-white transition-all" asChild>
-                  <Link href="/contact">Schedule Strategy Call</Link>
+                  <Link href="/book-call">Schedule Strategy Call</Link>
                 </Button>
               </div>
             </div>

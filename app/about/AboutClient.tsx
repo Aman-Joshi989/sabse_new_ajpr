@@ -308,7 +308,7 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
 
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Button size="lg" className="rounded-full h-14 px-10 bg-blue-600 text-white hover:bg-blue-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 hover:scale-105 transition-all shadow-xl font-bold text-lg" asChild>
-                  <Link href="/contact">Book a Strategy Call</Link>
+                  <Link href="/book-call">Book a Strategy Call</Link>
                 </Button>
                 <Button size="lg" variant="outline" className="rounded-full h-14 px-10 text-lg border-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-900 dark:text-white bg-transparent transition-all" asChild>
                   <Link href="/services">Start Your Project</Link>

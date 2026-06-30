@@ -228,11 +228,25 @@ export async function getBlogBySlug(slug: string) {
 }
 
 export async function createBlog(data: any) {
-  const { slug, title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin } = data;
+  const { title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin } = data;
+  let slug = data.slug;
   
   await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
   await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
   await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
+
+  // Prevent slug collision
+  let slugExists = true;
+  let attempts = 0;
+  while (slugExists && attempts < 5) {
+    const check = await sql`SELECT id FROM blog_posts WHERE slug = ${slug}`;
+    if (check.length > 0) {
+      slug = `${data.slug}-${Math.floor(100 + Math.random() * 900)}`;
+      attempts++;
+    } else {
+      slugExists = false;
+    }
+  }
 
   await sql`
     INSERT INTO blog_posts (slug, title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin)

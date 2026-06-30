@@ -515,17 +515,7 @@ Return ONLY the prompt string.`;
                     'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?q=80&w=1600&auto=format&fit=crop'
                 ];
 
-                const getFallbackImage = (text: string) => {
-                    const str = text || '';
-                    let hash = 0;
-                    for (let i = 0; i < str.length; i++) {
-                        hash = str.charCodeAt(i) + ((hash << 5) - hash);
-                    }
-                    const index = Math.abs(hash) % fallbackImages.length;
-                    return fallbackImages[index];
-                };
-
-                const fallbackUrl = getFallbackImage(imagePrompt);
+                const fallbackUrl = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
 
                 if (!apiKey) {
                     return {

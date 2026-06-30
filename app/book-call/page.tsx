@@ -53,8 +53,17 @@ export default function BookCallPage() {
         const formattedDate = selectedDate.toISOString().split('T')[0]
 
         try {
-            // 1. Create a Razorpay Order on the backend (₹599)
-            const order = await createRazorpayOrder(599)
+            // 1. Create a Razorpay Order on the backend (₹599) passing booking details as notes metadata
+            const notes = {
+                name: form.fullName,
+                email: form.workEmail,
+                companyName: form.companyName || '',
+                websiteUrl: form.websiteUrl || '',
+                bookingDate: formattedDate,
+                bookingTime: activeTimeSlot,
+                topic: form.topic || ''
+            }
+            const order = await createRazorpayOrder(599, notes)
             if (!order || !order.id) {
                 throw new Error("Failed to initialize booking payment order.")
             }

@@ -282,7 +282,7 @@ export async function assignDeveloperAction(clientId: number, developerId: numbe
 
 // --- Razorpay Payment Actions ---
 
-export async function createRazorpayOrder(amount: number) {
+export async function createRazorpayOrder(amount: number, notes?: any) {
     console.log("createRazorpayOrder called with amount:", amount, "Type:", typeof amount);
     console.log("Initializing Razorpay with:", {
         key_id_present: !!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
@@ -308,6 +308,7 @@ export async function createRazorpayOrder(amount: number) {
             amount: Math.round(amount * 100), // Ensure integer
             currency: "INR",
             receipt: "receipt_" + Math.random().toString(36).substring(7),
+            notes: notes || {},
         };
 
         console.log("Creating Razorpay order with options:", JSON.stringify(options));

@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { runPipelineStepAction } from '@/app/dashboard/admin/seo-tracker/actions';
 import { getBlogs } from '@/lib/db/queries';
 
+export const dynamic = 'force-dynamic';
+export const maxDuration = 300; // Allows up to 5 minutes execution time on Vercel Pro
+
 async function executeDailyBlogPipeline(req: NextRequest) {
   // 1. Authenticate using AJPR_API_KEY
   const apiKey = process.env.AJPR_API_KEY;
@@ -26,8 +29,13 @@ async function executeDailyBlogPipeline(req: NextRequest) {
 
   try {
     // 2. Fetch existing blogs to avoid duplicate topics
-    const existingBlogs = await getBlogs();
-    const existingTitles = existingBlogs.map((b: any) => b.title);
+    let existingTitles: string[] = [];
+    try {
+      const existingBlogs = await getBlogs();
+      existingTitles = (existingBlogs || []).map((b: any) => b.title);
+    } catch (dbErr: any) {
+      console.warn('[Cron Warning] Database fetch for existing titles failed, proceeding with empty list:', dbErr.message);
+    }
 
     // 3. Define default brief parameters for AJPR World
     const brief = {
@@ -47,45 +55,67 @@ async function executeDailyBlogPipeline(req: NextRequest) {
     };
 
     // 4. Call OpenAI to generate a brand new unique topic
+    let suggestedTopic = '';
     const openAiKey = process.env.OPENAI_API_KEY;
-    if (!openAiKey) {
-      throw new Error('OPENAI_API_KEY is not configured on the server.');
-    }
 
-    const messages = [
-      {
-        role: 'system',
-        content: 'You are a creative SEO content strategist. Generate a single highly specific, relevant, and search-optimized blog headline for AJPR World. The topic must focus on tech MVP development, AI-driven automation systems, startup scaling, or Generative Engine Optimization (GEO). Do NOT generate duplicate topics.'
-      },
-      {
-        role: 'user',
-        content: `Here are the titles of existing articles we have already published:
+    try {
+      if (!openAiKey) {
+        throw new Error('OPENAI_API_KEY is not configured on the server.');
+      }
+
+      const messages = [
+        {
+          role: 'system',
+          content: 'You are a creative SEO content strategist. Generate a single highly specific, relevant, and search-optimized blog headline for AJPR World. The topic must focus on tech MVP development, AI-driven automation systems, startup scaling, or Generative Engine Optimization (GEO). Do NOT generate duplicate topics.'
+        },
+        {
+          role: 'user',
+          content: `Here are the titles of existing articles we have already published:
 ${existingTitles.length > 0 ? existingTitles.map((t: any) => `- ${t}`).join('\n') : 'None'}
 
 Please suggest ONE brand new, highly compelling blog topic headline (output only the plain title, no quotes, introduction, or explanation):`
+        }
+      ];
+
+      const openAiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${openAiKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          messages,
+          temperature: 0.8
+        })
+      });
+
+      if (!openAiResponse.ok) {
+        const errorText = await openAiResponse.text();
+        throw new Error(`OpenAI topic generation failed: ${errorText}`);
       }
-    ];
 
-    const openAiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${openAiKey}`
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages,
-        temperature: 0.8
-      })
-    });
-
-    if (!openAiResponse.ok) {
-      const errorText = await openAiResponse.text();
-      throw new Error(`OpenAI topic generation failed: ${errorText}`);
+      const openAiData = await openAiResponse.json();
+      suggestedTopic = openAiData.choices[0].message.content.trim().replace(/^"(.*)"$/, '$1');
+    } catch (err: any) {
+      console.warn('[Cron Warning] OpenAI topic generation failed, using fallback:', err.message);
+      const fallbackTopics = [
+        "Building Scalable AI Agent Workflows for B2B Startups",
+        "Generative Engine Optimization (GEO): The Next Frontier of SEO",
+        "How to Build a Custom MVP Software System in 4 Weeks",
+        "Top 5 AI Automation Strategies for Modern SaaS Platforms",
+        "Why Startups Need a Solid Systems Architecture Before Scaling",
+        "The Deployment Framework: Engineering Predictable Product Launches",
+        "Accelerating B2B Growth with Custom Web Integration Solutions",
+        "Leveraging AI Content Automation for SEO Dominance"
+      ];
+      // Select a random topic from fallbacks that isn't already published
+      const unusedFallbacks = fallbackTopics.filter(topic => !existingTitles.includes(topic));
+      suggestedTopic = unusedFallbacks.length > 0 
+        ? unusedFallbacks[Math.floor(Math.random() * unusedFallbacks.length)]
+        : fallbackTopics[Math.floor(Math.random() * fallbackTopics.length)];
     }
 
-    const openAiData = await openAiResponse.json();
-    const suggestedTopic = openAiData.choices[0].message.content.trim().replace(/^"(.*)"$/, '$1');
     brief.blogTopic = suggestedTopic;
     console.log(`[Cron] Selected Daily Topic: "${suggestedTopic}"`);
 

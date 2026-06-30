@@ -360,8 +360,17 @@ Return ONLY the markdown body text starting with the title as an H1.`;
                 } catch (err: any) {
                     console.error('Writer agent failed, using fallback:', err.message);
                     
-                    const sectionsText = outline.h2Sections.map((sec: any) => {
-                        return `## ${sec.heading}\n\nOptimizing your technical footprint starts with understanding structural indexes. In the **${brief.niche}** landscape, companies must build responsive assets that cater directly to search engines and user queries.\n\n* **Authority Score:** Compounding links and brand trust.\n* **Fast Pre-rendering:** Maximizing crawler index hits.\n\nBy prioritizing these elements, you establish long-term authority in your niche.`;
+                    const sectionsText = outline.h2Sections.map((sec: any, idx: number) => {
+                        const heading = sec.heading;
+                        const kw = sec.keywords || ['Growth', 'Systems', 'Scaling'];
+                        
+                        if (idx === 0) {
+                            return `## ${heading}\n\nTo master ${heading}, modern organizations must prioritize structured engineering workflows and seamless system integrations. By leveraging robust frameworks in the **${brief.niche}** space, you establish domain authority and resolve indexing bottlenecks early.\n\nKey areas to optimize include:\n\n* **${kw[0] || 'Infrastructure'}:** Building highly available backend components that scale with consumer demand.\n* **${kw[1] || 'Performance'}:** Shaving milliseconds off response times to satisfy generative retrieval engines.\n* **${kw[2] || 'Analysis'}:** Using advanced logging tools to trace user journeys and search queries.`;
+                        } else if (idx === 1) {
+                            return `## ${heading}\n\nStaying ahead of competitors in the **${brief.niche}** sector requires a focus on sustainable growth and architectural excellence. Instead of relying on manual processes, leading engineering teams use automated pipelines to deploy microservices.\n\nActionable strategies for outranking rivals:\n\n* **${kw[0] || 'Quality'}:** Continuously monitoring system health and fixing bugs before they reach production.\n* **${kw[1] || 'Integration'}:** Syncing cross-functional data across platforms using webhooks.\n* **${kw[2] || 'Execution'}:** Deploying specialized AI agents to handle tedious content distribution tasks.`;
+                        } else {
+                            return `## ${heading}\n\nAchieving long-term success in **${brief.niche}** depends on continuous iteration and adapting to the latest standards. As search technology shifts toward conversational queries, businesses must align their technical architectures to be fully discoverable.\n\nSummary points:\n\n* **${kw[0] || 'Adaptability'}:** Keeping systems modular to quickly adopt new software protocols.\n* **${kw[1] || 'Citations'}:** Crafting structured schemas that AI retrieval models can parse and reference.\n* **${kw[2] || 'Scalability'}:** Building elastic server environments that handle sudden spikes in traffic.`;
+                        }
                     }).join('\n\n');
 
                     const fallbackContent = `# ${outline.title}

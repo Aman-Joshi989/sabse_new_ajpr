@@ -111,9 +111,11 @@ Please suggest ONE brand new, highly compelling blog topic headline (output only
       ];
       // Select a random topic from fallbacks that isn't already published
       const unusedFallbacks = fallbackTopics.filter(topic => !existingTitles.includes(topic));
-      suggestedTopic = unusedFallbacks.length > 0 
+      const baseTopic = unusedFallbacks.length > 0 
         ? unusedFallbacks[Math.floor(Math.random() * unusedFallbacks.length)]
         : fallbackTopics[Math.floor(Math.random() * fallbackTopics.length)];
+      // Append a small random suffix to guarantee uniqueness in case of database collision
+      suggestedTopic = `${baseTopic} - Edition ${Math.floor(100 + Math.random() * 900)}`;
     }
 
     brief.blogTopic = suggestedTopic;

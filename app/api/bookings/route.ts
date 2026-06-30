@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { neon } from "@neondatabase/serverless";
+import { getSession } from "@/lib/auth";
 
 export async function POST(req: Request) {
     const sql = neon(process.env.DATABASE_URL!);
@@ -62,6 +63,12 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
+    // 🔒 SECURITY CHECK: Ensure user is authenticated as admin
+    const session = await getSession();
+    if (!session || session.user?.role !== 'admin') {
+        return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
+    }
+
     const sql = neon(process.env.DATABASE_URL!);
     try {
         // Run safe migration
@@ -96,6 +103,12 @@ export async function GET(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+    // 🔒 SECURITY CHECK: Ensure user is authenticated as admin
+    const session = await getSession();
+    if (!session || session.user?.role !== 'admin') {
+        return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
+    }
+
     const sql = neon(process.env.DATABASE_URL!);
     try {
         const { id, status } = await req.json();
@@ -118,6 +131,12 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
+    // 🔒 SECURITY CHECK: Ensure user is authenticated as admin
+    const session = await getSession();
+    if (!session || session.user?.role !== 'admin') {
+        return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
+    }
+
     const sql = neon(process.env.DATABASE_URL!);
     try {
         const { id } = await req.json();

@@ -498,10 +498,39 @@ Return ONLY the prompt string.`;
                 const { imagePrompt } = data;
                 const apiKey = process.env.OPENAI_API_KEY;
 
+                const fallbackImages = [
+                    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1527474305487-b87b222841cc?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop',
+                    'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?q=80&w=1600&auto=format&fit=crop'
+                ];
+
+                const getFallbackImage = (text: string) => {
+                    const str = text || '';
+                    let hash = 0;
+                    for (let i = 0; i < str.length; i++) {
+                        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+                    }
+                    const index = Math.abs(hash) % fallbackImages.length;
+                    return fallbackImages[index];
+                };
+
+                const fallbackUrl = getFallbackImage(imagePrompt);
+
                 if (!apiKey) {
                     return {
                         success: true,
-                        imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop'
+                        imageUrl: fallbackUrl
                     };
                 }
 
@@ -528,7 +557,7 @@ Return ONLY the prompt string.`;
                     console.error('DALL-E image generation failed, returning fallback image:', err.message);
                     return {
                         success: true,
-                        imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop'
+                        imageUrl: fallbackUrl
                     };
                 }
             }

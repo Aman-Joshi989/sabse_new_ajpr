@@ -82,7 +82,7 @@ function cleanMetaDescription(desc: string, maxLen = 155): string {
 }
 
 function getSeoTitle(title: string): string {
-  const fullBrand = ' | AJPR The Keyword';
+  const fullBrand = ' | AJPR World Blog';
   const shortBrand = ' | AJPR';
   const maxLen = 60;
 
@@ -258,14 +258,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         url={`https://ajprworld.com/blog/${blog.slug}`}
       />
       {isGeoBlog && <FAQSchema faqs={geoFaqs} />}
-      {/* Navigation */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8 border-b border-slate-200 dark:border-slate-800">
         <Link 
           href="/blog" 
           className="inline-flex items-center text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors uppercase tracking-wider"
         >
           <ArrowLeftIcon className="w-4 h-4 mr-2" />
-          AJPR The Keyword
+          AJPR World Blog
         </Link>
       </div>
 

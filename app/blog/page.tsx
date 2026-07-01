@@ -10,7 +10,7 @@ import { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'AJPR The Keyword – Systems, Automation & Growth Blog | AJPR World',
+  title: 'AJPR World Blog – Systems, Automation & Growth',
   description: 'Insightful articles about modern systems engineering, local SEO automation, and AI swarm orchestration.',
   alternates: {
     canonical: 'https://ajprworld.com/blog',
@@ -75,8 +75,8 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
         <header className="border-b border-slate-200 dark:border-slate-800/80 pb-6 pt-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-                  <span className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white text-xl font-bold shadow-md shadow-blue-500/20">K</span>
-                  AJPR The Keyword
+                  <span className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white text-xl font-bold shadow-md shadow-blue-500/20">B</span>
+                  AJPR World Blog
               </h1>
               <p className="text-slate-500 dark:text-slate-450 text-sm mt-2 font-medium">
                 Insightful articles about modern systems engineering, local AEO, and AI swarm orchestration.

@@ -152,12 +152,19 @@ async function generateImageForTopic(topic: string): Promise<string> {
 
 async function executeDailyBlogPipeline(req: NextRequest) {
   const apiKey = process.env.AJPR_API_KEY;
-  if (!apiKey) return NextResponse.json({ error: 'AJPR_API_KEY not configured.' }, { status: 500 });
+  const cronSecret = process.env.CRON_SECRET;
 
   const queryKey = req.nextUrl.searchParams.get('key');
   const authHeader = req.headers.get('Authorization') || req.headers.get('x-api-key');
   const providedKey = (queryKey || authHeader?.replace('Bearer ', '') || '').trim();
-  if (providedKey !== apiKey) return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
+
+  const isAuthorized = 
+    (apiKey && providedKey === apiKey) || 
+    (cronSecret && providedKey === cronSecret);
+
+  if (!isAuthorized) {
+    return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
+  }
 
   try {
     let existingTitles: string[] = [];

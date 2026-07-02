@@ -1,15 +1,23 @@
 import { neon } from "@neondatabase/serverless";
 import { unstable_noStore as noStore } from "next/cache";
 
-// Lazy-initialize the database client to prevent top-level build-time crashes when DATABASE_URL is undefined
+// Instantiate Neon client once globally to reuse TCP/TLS keep-alive connections
+let cachedClient: any = null;
+const getClient = () => {
+  if (cachedClient) return cachedClient;
+  const url = process.env.DATABASE_URL;
+  if (!url) return null;
+  cachedClient = neon(url);
+  return cachedClient;
+};
+
 const sql = (strings: TemplateStringsArray, ...values: any[]) => {
   noStore();
-  const url = process.env.DATABASE_URL;
-  if (!url) {
+  const client = getClient();
+  if (!client) {
     console.warn("WARNING: DATABASE_URL is not defined in this environment. Returning a safe empty fallback.");
     return Promise.resolve([] as any);
   }
-  const client = neon(url);
   return client(strings, ...values);
 };
 

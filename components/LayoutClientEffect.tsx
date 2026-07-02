@@ -7,7 +7,7 @@ export default function LayoutClientEffect() {
   const pathname = usePathname()
   
   useEffect(() => {
-    const isFullScreen = pathname === '/chat-agents' || pathname === '/demo-ruflo'
+    const isFullScreen = pathname === '/chat-agents'
     
     const htmlEl = document.documentElement
     const bodyEl = document.body

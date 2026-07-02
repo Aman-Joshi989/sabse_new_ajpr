@@ -98,7 +98,7 @@ export default async function RootLayout({
   const headersList = await headers();
   const pathname = headersList.get('x-pathname') || '';
   const isExcludedRoute = pathname === '/login' || pathname.startsWith('/dashboard');
-  const isFullScreenRoute = pathname === '/chat-agents' || pathname === '/demo-ruflo';
+  const isFullScreenRoute = pathname === '/chat-agents';
   const hideFooter = isExcludedRoute || isFullScreenRoute;
 
   let services: any[] = [];

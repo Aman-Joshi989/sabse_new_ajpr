@@ -52,8 +52,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
     if (
         pathname.startsWith('/dashboard') || 
         pathname === '/login' || 
-        pathname === '/chat-agents' || 
-        pathname === '/demo-ruflo'
+        pathname === '/chat-agents'
     ) {
         return null;
     }

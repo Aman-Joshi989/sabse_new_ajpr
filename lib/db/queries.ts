@@ -15,6 +15,20 @@ const sql = (strings: TemplateStringsArray, ...values: any[]) => {
 
 let dbInitialized = false;
 
+// Memory cache for read-heavy layout queries (TTL: 60 seconds)
+let layoutCache: {
+  publishedServices?: { data: any, timestamp: number },
+  blogs?: { data: any, timestamp: number },
+  siteSettings?: { data: any, timestamp: number },
+  portfolioItems?: { data: any, timestamp: number }
+} = {};
+
+const CACHE_TTL_MS = 60000; // 60 seconds
+
+export function invalidateLayoutCache() {
+  layoutCache = {};
+}
+
 export async function ensureDbInitialized() {
   if (dbInitialized) return;
   const url = process.env.DATABASE_URL;
@@ -212,7 +226,13 @@ export async function assignDeveloper(clientId: number, developerId: number) {
 // --- Portfolio Management ---
 
 export async function getPortfolioItems() {
-  return await sql`SELECT * FROM portfolio_items ORDER BY created_at DESC;`;
+  const now = Date.now();
+  if (layoutCache.portfolioItems && (now - layoutCache.portfolioItems.timestamp < CACHE_TTL_MS)) {
+    return layoutCache.portfolioItems.data;
+  }
+  const data = await sql`SELECT * FROM portfolio_items ORDER BY created_at DESC;`;
+  layoutCache.portfolioItems = { data, timestamp: now };
+  return data;
 }
 
 export async function getPortfolioItemById(id: number) {
@@ -221,6 +241,7 @@ export async function getPortfolioItemById(id: number) {
 }
 
 export async function createPortfolioItem(data: any) {
+  invalidateLayoutCache();
   const { title, url, category, tags, description, gradient, accent, year, featured, stats } = data;
   await sql`
     INSERT INTO portfolio_items (title, url, category, tags, description, gradient, accent, year, featured, stats)
@@ -230,6 +251,7 @@ export async function createPortfolioItem(data: any) {
 }
 
 export async function updatePortfolioItem(id: number, data: any) {
+  invalidateLayoutCache();
   const { title, url, category, tags, description, gradient, accent, year, featured, stats } = data;
   await sql`
     UPDATE portfolio_items 
@@ -249,6 +271,7 @@ export async function updatePortfolioItem(id: number, data: any) {
 }
 
 export async function deletePortfolioItem(id: number) {
+  invalidateLayoutCache();
   await sql`DELETE FROM portfolio_items WHERE id = ${id}`;
   return { success: true };
 }
@@ -257,12 +280,18 @@ export async function deletePortfolioItem(id: number) {
 
 export async function getBlogs() {
   await ensureDbInitialized();
-  return await sql`
+  const now = Date.now();
+  if (layoutCache.blogs && (now - layoutCache.blogs.timestamp < CACHE_TTL_MS)) {
+    return layoutCache.blogs.data;
+  }
+  const data = await sql`
     SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published, affiliate_product_slug, amazon_asin 
     FROM blog_posts 
     WHERE published = true 
     ORDER BY created_at DESC;
   `;
+  layoutCache.blogs = { data, timestamp: now };
+  return data;
 }
 
 export async function getBlogBySlug(slug: string) {
@@ -276,6 +305,7 @@ export async function getBlogBySlug(slug: string) {
 
 export async function createBlog(data: any) {
   await ensureDbInitialized();
+  invalidateLayoutCache();
   const { title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin } = data;
   let slug = data.slug;
 
@@ -318,6 +348,7 @@ export async function getBlogById(id: number) {
 
 export async function updateBlog(id: number, data: any) {
   await ensureDbInitialized();
+  invalidateLayoutCache();
   const { slug, title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin } = data;
 
   await sql`
@@ -331,6 +362,7 @@ export async function updateBlog(id: number, data: any) {
 }
 
 export async function deleteBlog(id: number) {
+  invalidateLayoutCache();
   await sql`DELETE FROM blog_posts WHERE id = ${id};`;
   return { success: true };
 }
@@ -345,11 +377,17 @@ export async function getAllServices() {
 }
 
 export async function getPublishedServices() {
-  return await sql`
+  const now = Date.now();
+  if (layoutCache.publishedServices && (now - layoutCache.publishedServices.timestamp < CACHE_TTL_MS)) {
+    return layoutCache.publishedServices.data;
+  }
+  const data = await sql`
     SELECT * FROM services 
     WHERE published = true
     ORDER BY created_at DESC;
   `;
+  layoutCache.publishedServices = { data, timestamp: now };
+  return data;
 }
 
 export async function getServiceBySlug(slug: string) {
@@ -367,6 +405,7 @@ export async function getServiceById(id: number) {
 }
 
 export async function createService(data: any) {
+  invalidateLayoutCache();
   const { sku, title, slug, category, description, features, price, price_type, delivery_time, icon_name, gradient, published } = data;
   await sql`
     INSERT INTO services (sku, title, slug, category, description, features, price, price_type, delivery_time, icon_name, gradient, published)
@@ -376,6 +415,7 @@ export async function createService(data: any) {
 }
 
 export async function updateService(id: number, data: any) {
+  invalidateLayoutCache();
   const { sku, title, slug, category, description, features, price, price_type, delivery_time, icon_name, gradient, published } = data;
   await sql`
     UPDATE services 
@@ -388,6 +428,7 @@ export async function updateService(id: number, data: any) {
 }
 
 export async function deleteService(id: number) {
+  invalidateLayoutCache();
   await sql`DELETE FROM services WHERE id = ${id}`;
   return { success: true };
 }
@@ -455,8 +496,13 @@ export async function initSiteSettingsTable() {
 
 export async function getSiteSettings() {
   await ensureDbInitialized();
+  const now = Date.now();
+  if (layoutCache.siteSettings && (now - layoutCache.siteSettings.timestamp < CACHE_TTL_MS)) {
+    return layoutCache.siteSettings.data;
+  }
   const result = await sql`SELECT * FROM site_settings WHERE id = 1;`;
   
+  let settings;
   if (result.length === 0) {
     // Insert default settings row
     await sql`
@@ -496,14 +542,18 @@ export async function getSiteSettings() {
       );
     `;
     const newSettings = await sql`SELECT * FROM site_settings WHERE id = 1;`;
-    return newSettings[0];
+    settings = newSettings[0];
+  } else {
+    settings = result[0];
   }
   
-  return result[0];
+  layoutCache.siteSettings = { data: settings, timestamp: now };
+  return settings;
 }
 
 export async function updateSiteSettings(data: any) {
   await initSiteSettingsTable();
+  invalidateLayoutCache();
   const { 
     seo_title, seo_description, seo_keywords, canonical_url, 
     geo_region, geo_placename, geo_position, geo_icbm, 

@@ -16,6 +16,13 @@ export async function generateMetadata({ params }: { params: Promise<{ name: str
     description: `Read articles by ${decodedName}, an expert at AJPR World.`,
     alternates: {
       canonical: `https://ajprworld.com/authors/${resolvedParams.name}`,
+    },
+    openGraph: {
+      title: `${decodedName} - Author Profile | AJPR World`,
+      description: `Read articles by ${decodedName}, an expert at AJPR World.`,
+      url: `https://ajprworld.com/authors/${resolvedParams.name}`,
+      type: 'profile',
+      images: ['https://ajprworld.com/og-image.jpg']
     }
   };
 }

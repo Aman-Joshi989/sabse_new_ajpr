@@ -251,7 +251,7 @@ export default function BookCallPage() {
                         
                         <div className="space-y-2">
                             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Aman Joshi</p>
-                            <h2 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight">30-Minute Strategy Session</h2>
+                            <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight">30-Minute Strategy Session</h1>
                         </div>
 
                         <div className="space-y-3.5 text-sm text-slate-600 dark:text-slate-400 font-medium">

@@ -16,6 +16,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: `A highly structured, factual comparison evaluating performance, SEO capabilities, and architecture.`,
     alternates: {
       canonical: `https://ajprworld.com/resources/compare/${resolvedParams.slug}`,
+    },
+    openGraph: {
+      title: `${title} | AJPR Resources`,
+      description: `A highly structured, factual comparison evaluating performance, SEO capabilities, and architecture.`,
+      url: `https://ajprworld.com/resources/compare/${resolvedParams.slug}`,
+      type: 'website',
+      images: ['https://ajprworld.com/og-image.jpg']
     }
   };
 }

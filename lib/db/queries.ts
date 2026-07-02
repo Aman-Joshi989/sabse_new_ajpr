@@ -13,6 +13,62 @@ const sql = (strings: TemplateStringsArray, ...values: any[]) => {
   return client(strings, ...values);
 };
 
+let dbInitialized = false;
+
+export async function ensureDbInitialized() {
+  if (dbInitialized) return;
+  const url = process.env.DATABASE_URL;
+  if (!url) return;
+
+  try {
+    // 1. Ensure site_settings table exists
+    await initSiteSettingsTable();
+
+    // 2. Ensure contact_submissions columns exist
+    await sql`
+      ALTER TABLE contact_submissions 
+        ADD COLUMN IF NOT EXISTS company_name TEXT,
+        ADD COLUMN IF NOT EXISTS website_url TEXT,
+        ADD COLUMN IF NOT EXISTS monthly_revenue TEXT,
+        ADD COLUMN IF NOT EXISTS budget_range TEXT,
+        ADD COLUMN IF NOT EXISTS building_text TEXT,
+        ADD COLUMN IF NOT EXISTS blockers_text TEXT,
+        ADD COLUMN IF NOT EXISTS phone TEXT;
+    `;
+
+    // 3. Ensure blog_posts columns exist
+    await sql`
+      ALTER TABLE blog_posts 
+        ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology',
+        ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255),
+        ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);
+    `;
+
+    // 4. Ensure site_settings columns exist
+    await sql`
+      ALTER TABLE site_settings 
+        ADD COLUMN IF NOT EXISTS contact_email VARCHAR(255) DEFAULT 'ajprworld@gmail.com',
+        ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(100) DEFAULT '+91 9997205257',
+        ADD COLUMN IF NOT EXISTS founder_name VARCHAR(255) DEFAULT 'Aman Joshi',
+        ADD COLUMN IF NOT EXISTS founder_title VARCHAR(255) DEFAULT 'Founder & Systems Architect',
+        ADD COLUMN IF NOT EXISTS founder_bio TEXT DEFAULT 'I partner with high-growth startups and established brands to build robust digital infrastructures, automate complex backend workloads, and integrate secure enterprise-grade systems.',
+        ADD COLUMN IF NOT EXISTS founder_badge VARCHAR(255) DEFAULT 'Founder Profile',
+        ADD COLUMN IF NOT EXISTS founder_linkedin VARCHAR(255) DEFAULT 'https://www.linkedin.com/in/aman-joshi-/',
+        ADD COLUMN IF NOT EXISTS founder_github VARCHAR(255) DEFAULT 'https://github.com/Aman-Joshi989',
+        ADD COLUMN IF NOT EXISTS founder_exp1_title VARCHAR(255) DEFAULT 'Systems Architecting',
+        ADD COLUMN IF NOT EXISTS founder_exp1_desc TEXT DEFAULT 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.',
+        ADD COLUMN IF NOT EXISTS founder_exp2_title VARCHAR(255) DEFAULT 'Business Automation',
+        ADD COLUMN IF NOT EXISTS founder_exp2_desc TEXT DEFAULT 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
+        ADD COLUMN IF NOT EXISTS founder_exp3_title VARCHAR(255) DEFAULT 'Execution Excellence',
+        ADD COLUMN IF NOT EXISTS founder_exp3_desc TEXT DEFAULT 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.';
+    `;
+
+    dbInitialized = true;
+  } catch (err) {
+    console.error("Database lazy-initialization migration failed:", err);
+  }
+}
+
 // --- Projects & Financials ---
 export async function getProjectDetails() {
   const result = await sql`
@@ -121,14 +177,7 @@ export async function getClientRequests() {
 }
 
 export async function getContactSubmissions() {
-  // Safe dynamic migration to ensure all granular fields are supported
-  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS company_name TEXT;`;
-  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS website_url TEXT;`;
-  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS monthly_revenue TEXT;`;
-  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS budget_range TEXT;`;
-  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS building_text TEXT;`;
-  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS blockers_text TEXT;`;
-  await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS phone TEXT;`;
+  await ensureDbInitialized();
 
   return await sql`
     SELECT * FROM contact_submissions ORDER BY created_at DESC;
@@ -207,9 +256,7 @@ export async function deletePortfolioItem(id: number) {
 // --- Blogs ---
 
 export async function getBlogs() {
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
+  await ensureDbInitialized();
   return await sql`
     SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published, affiliate_product_slug, amazon_asin 
     FROM blog_posts 
@@ -219,9 +266,7 @@ export async function getBlogs() {
 }
 
 export async function getBlogBySlug(slug: string) {
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
+  await ensureDbInitialized();
   const result = await sql`
     SELECT * FROM blog_posts 
     WHERE slug = ${slug} AND published = true;
@@ -230,12 +275,9 @@ export async function getBlogBySlug(slug: string) {
 }
 
 export async function createBlog(data: any) {
+  await ensureDbInitialized();
   const { title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin } = data;
   let slug = data.slug;
-  
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
 
   // Prevent slug collision
   let slugExists = true;
@@ -258,9 +300,7 @@ export async function createBlog(data: any) {
 }
 
 export async function getAllBlogs() {
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
+  await ensureDbInitialized();
   return await sql`
     SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published, affiliate_product_slug, amazon_asin 
     FROM blog_posts 
@@ -269,7 +309,7 @@ export async function getAllBlogs() {
 }
 
 export async function getBlogById(id: number) {
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
+  await ensureDbInitialized();
   const result = await sql`
     SELECT * FROM blog_posts WHERE id = ${id};
   `;
@@ -277,11 +317,8 @@ export async function getBlogById(id: number) {
 }
 
 export async function updateBlog(id: number, data: any) {
+  await ensureDbInitialized();
   const { slug, title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin } = data;
-  
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology';`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255);`;
-  await sql`ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);`;
 
   await sql`
     UPDATE blog_posts 
@@ -399,6 +436,7 @@ export async function createAffiliateLink(data: { slug: string, target_url: stri
 // --- SEO & GEO Settings ---
 
 export async function initSiteSettingsTable() {
+  // Retained as a simple wrapper to satisfy references, but actual schema check is consolidated in ensureDbInitialized()
   await sql`
     CREATE TABLE IF NOT EXISTS site_settings (
       id INT PRIMARY KEY,
@@ -413,24 +451,10 @@ export async function initSiteSettingsTable() {
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS contact_email VARCHAR(255) DEFAULT 'ajprworld@gmail.com';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(100) DEFAULT '+91 9997205257';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_name VARCHAR(255) DEFAULT 'Aman Joshi';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_title VARCHAR(255) DEFAULT 'Founder & Systems Architect';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_bio TEXT DEFAULT 'I partner with high-growth startups and established brands to build robust digital infrastructures, automate complex backend workloads, and integrate secure enterprise-grade systems.';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_badge VARCHAR(255) DEFAULT 'Founder Profile';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_linkedin VARCHAR(255) DEFAULT 'https://www.linkedin.com/in/aman-joshi-/';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_github VARCHAR(255) DEFAULT 'https://github.com/Aman-Joshi989';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp1_title VARCHAR(255) DEFAULT 'Systems Architecting';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp1_desc TEXT DEFAULT 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp2_title VARCHAR(255) DEFAULT 'Business Automation';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp2_desc TEXT DEFAULT 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp3_title VARCHAR(255) DEFAULT 'Execution Excellence';`;
-  await sql`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS founder_exp3_desc TEXT DEFAULT 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.';`;
 }
 
 export async function getSiteSettings() {
-  await initSiteSettingsTable();
+  await ensureDbInitialized();
   const result = await sql`SELECT * FROM site_settings WHERE id = 1;`;
   
   if (result.length === 0) {

@@ -14,6 +14,13 @@ export const metadata: Metadata = {
   description: 'Insightful articles about modern systems engineering, local SEO automation, and AI swarm orchestration.',
   alternates: {
     canonical: 'https://ajprworld.com/blog',
+  },
+  openGraph: {
+    title: 'AJPR World Blog – Systems, Automation & Growth',
+    description: 'Insightful articles about modern systems engineering, local SEO automation, and AI swarm orchestration.',
+    url: 'https://ajprworld.com/blog',
+    type: 'website',
+    images: ['https://ajprworld.com/og-image.jpg']
   }
 }
 

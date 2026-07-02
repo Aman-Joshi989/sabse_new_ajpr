@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   description: 'Explore our definitive guides, semantic comparisons, and glossaries designed to provide authoritative answers.',
   alternates: {
     canonical: 'https://ajprworld.com/resources',
+  },
+  openGraph: {
+    title: 'Knowledge Hub & Resources | AJPR World',
+    description: 'Explore our definitive guides, semantic comparisons, and glossaries designed to provide authoritative answers.',
+    url: 'https://ajprworld.com/resources',
+    type: 'website',
+    images: ['https://ajprworld.com/og-image.jpg']
   }
 };
 

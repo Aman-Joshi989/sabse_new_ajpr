@@ -21,14 +21,9 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Name and email are required" }, { status: 400 });
         }
 
-        // Run safe check migrations locally to make sure destination fields exist
-        await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS company_name TEXT;`;
-        await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS website_url TEXT;`;
-        await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS monthly_revenue TEXT;`;
-        await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS budget_range TEXT;`;
-        await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS building_text TEXT;`;
-        await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS blockers_text TEXT;`;
-        await sql`ALTER TABLE contact_submissions ADD COLUMN IF NOT EXISTS phone TEXT;`;
+        // Ensure database schema is initialized (handles contact_submissions columns)
+        const { ensureDbInitialized } = require("@/lib/db/queries");
+        await ensureDbInitialized();
 
         await sql`
             INSERT INTO contact_submissions (

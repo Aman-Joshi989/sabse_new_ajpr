@@ -256,7 +256,7 @@ export default function SwarmSimulator() {
                 <CardTitle className="text-xl font-bold flex items-center gap-2 text-slate-900 dark:text-white">
                   <Layers className="w-5 h-5 text-blue-500" /> Select Mission
                 </CardTitle>
-                <CardDescription className="text-slate-500 dark:text-slate-405 font-medium">
+                <CardDescription className="text-slate-500 dark:text-slate-400 font-medium">
                   Select a workflow to test multi-agent concurrent scaling.
                 </CardDescription>
               </CardHeader>
@@ -274,7 +274,7 @@ export default function SwarmSimulator() {
                     } ${isRunning ? 'opacity-50 cursor-not-allowed' : ''}`}
                     disabled={isRunning}
                   >
-                    <h3 className="font-bold text-slate-905 dark:text-white text-base leading-tight">{task.title}</h3>
+                    <h3 className="font-bold text-slate-900 dark:text-white text-base leading-tight">{task.title}</h3>
                     <p className="text-slate-500 dark:text-slate-400 text-xs mt-1.5 leading-relaxed font-medium">{task.desc}</p>
                   </button>
                 ))}
@@ -287,29 +287,29 @@ export default function SwarmSimulator() {
                 <CardTitle className="text-xl font-bold flex items-center gap-2 text-slate-900 dark:text-white">
                   <Activity className="w-5 h-5 text-emerald-500" /> Swarm Telemetry
                 </CardTitle>
-                <CardDescription className="text-slate-500 dark:text-slate-405 font-medium">
+                <CardDescription className="text-slate-500 dark:text-slate-400 font-medium">
                   Real-time synchronization logs and execution metrics.
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-6 pt-0 grid grid-cols-2 gap-4">
-                <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-850/80 p-4 rounded-xl">
+                <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800/80 p-4 rounded-xl">
                   <span className="text-xs text-slate-500 dark:text-slate-400 block mb-1 font-bold">Active Node</span>
                   <span className="text-base font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping inline-block" />
                     {metrics.activeAgent}
                   </span>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-850/80 p-4 rounded-xl">
+                <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800/80 p-4 rounded-xl">
                   <span className="text-xs text-slate-500 dark:text-slate-400 block mb-1 font-bold">Consensus Rounds</span>
                   <span className="text-xl font-mono font-bold text-slate-900 dark:text-white">{metrics.rounds}</span>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-850/80 p-4 rounded-xl">
+                <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800/80 p-4 rounded-xl">
                   <span className="text-xs text-slate-500 dark:text-slate-400 block mb-1 font-bold">Messages Sent</span>
                   <span className="text-xl font-mono font-bold text-slate-900 dark:text-white">{metrics.messages}</span>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-850/80 p-4 rounded-xl">
+                <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800/80 p-4 rounded-xl">
                   <span className="text-xs text-slate-500 dark:text-slate-400 block mb-1 font-bold">Swarm Cost</span>
-                  <span className="text-xl font-mono font-bold text-emerald-600 dark:text-emerald-450">${metrics.cost}</span>
+                  <span className="text-xl font-mono font-bold text-emerald-600 dark:text-emerald-400">${metrics.cost}</span>
                 </div>
               </CardContent>
             </Card>
@@ -322,7 +322,7 @@ export default function SwarmSimulator() {
                 <CardTitle className="text-xl font-bold flex items-center gap-2 text-slate-900 dark:text-white">
                   <Cpu className="w-5 h-5 text-purple-500" /> Node Topology Diagram
                 </CardTitle>
-                <CardDescription className="text-slate-500 dark:text-slate-405 font-medium">
+                <CardDescription className="text-slate-500 dark:text-slate-400 font-medium">
                   Watch node relationships activate as communication passes between workers.
                 </CardDescription>
               </CardHeader>
@@ -334,10 +334,10 @@ export default function SwarmSimulator() {
                     <line x1="250" y1="175" x2="380" y2="175" />
                     <line x1="250" y1="175" x2="250" y2="290" />
                     <line x1="250" y1="175" x2="120" y2="175" />
-                    <line x1="250" y1="60" x2="380" y2="175" className="stroke-slate-100 dark:stroke-slate-850 stroke-[1.5]" />
-                    <line x1="380" y1="175" x2="250" y2="290" className="stroke-slate-100 dark:stroke-slate-850 stroke-[1.5]" />
-                    <line x1="250" y1="290" x2="120" y2="175" className="stroke-slate-100 dark:stroke-slate-850 stroke-[1.5]" />
-                    <line x1="120" y1="175" x2="250" y2="60" className="stroke-slate-100 dark:stroke-slate-850 stroke-[1.5]" />
+                    <line x1="250" y1="60" x2="380" y2="175" className="stroke-slate-100 dark:stroke-slate-800 stroke-[1.5]" />
+                    <line x1="380" y1="175" x2="250" y2="290" className="stroke-slate-100 dark:stroke-slate-800 stroke-[1.5]" />
+                    <line x1="250" y1="290" x2="120" y2="175" className="stroke-slate-100 dark:stroke-slate-800 stroke-[1.5]" />
+                    <line x1="120" y1="175" x2="250" y2="60" className="stroke-slate-100 dark:stroke-slate-800 stroke-[1.5]" />
                   </g>
 
                   {/* Node: Swarm Coordinator */}
@@ -365,7 +365,7 @@ export default function SwarmSimulator() {
                         metrics.activeAgent === 'Architect' ? 'stroke-purple-500 filter drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]' : 'stroke-slate-200 dark:stroke-slate-800'
                       }`}
                     />
-                    <text x="250" y="63" textAnchor="middle" className="fill-slate-700 dark:fill-slate-350 text-[9px] font-bold">
+                    <text x="250" y="63" textAnchor="middle" className="fill-slate-700 dark:fill-slate-300 text-[9px] font-bold">
                       Architect
                     </text>
                   </g>
@@ -380,7 +380,7 @@ export default function SwarmSimulator() {
                         metrics.activeAgent === 'Coder' ? 'stroke-emerald-500 filter drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'stroke-slate-200 dark:stroke-slate-800'
                       }`}
                     />
-                    <text x="380" y="178" textAnchor="middle" className="fill-slate-700 dark:fill-slate-350 text-[9px] font-bold">
+                    <text x="380" y="178" textAnchor="middle" className="fill-slate-700 dark:fill-slate-300 text-[9px] font-bold">
                       Coder
                     </text>
                   </g>
@@ -395,7 +395,7 @@ export default function SwarmSimulator() {
                         metrics.activeAgent === 'Tester' ? 'stroke-amber-500 filter drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]' : 'stroke-slate-200 dark:stroke-slate-800'
                       }`}
                     />
-                    <text x="250" y="293" textAnchor="middle" className="fill-slate-700 dark:fill-slate-350 text-[9px] font-bold">
+                    <text x="250" y="293" textAnchor="middle" className="fill-slate-700 dark:fill-slate-300 text-[9px] font-bold">
                       Tester
                     </text>
                   </g>
@@ -410,7 +410,7 @@ export default function SwarmSimulator() {
                         metrics.activeAgent === 'Reviewer' ? 'stroke-cyan-500 filter drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]' : 'stroke-slate-200 dark:stroke-slate-800'
                       }`}
                     />
-                    <text x="120" y="178" textAnchor="middle" className="fill-slate-700 dark:fill-slate-350 text-[9px] font-bold">
+                    <text x="120" y="178" textAnchor="middle" className="fill-slate-700 dark:fill-slate-300 text-[9px] font-bold">
                       Reviewer
                     </text>
                   </g>
@@ -465,15 +465,15 @@ export default function SwarmSimulator() {
                 <span
                   className={`font-bold shrink-0 ${
                     log.source === 'Coordinator'
-                      ? 'text-blue-405'
+                      ? 'text-blue-400'
                       : log.source === 'Architect'
                       ? 'text-purple-400'
                       : log.source === 'Coder'
                       ? 'text-emerald-400'
                       : log.source === 'Tester'
-                      ? 'text-amber-450'
+                      ? 'text-amber-500'
                       : log.source === 'Reviewer'
-                      ? 'text-cyan-405'
+                      ? 'text-cyan-400'
                       : 'text-yellow-500'
                   }`}
                 >

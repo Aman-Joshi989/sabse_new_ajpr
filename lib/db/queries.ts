@@ -11,7 +11,18 @@ const getClient = () => {
   return cachedClient;
 };
 
+// Standard sql — does NOT call noStore(), allowing Next.js response caching (ISR)
 const sql = (strings: TemplateStringsArray, ...values: any[]) => {
+  const client = getClient();
+  if (!client) {
+    console.warn("WARNING: DATABASE_URL is not defined in this environment. Returning a safe empty fallback.");
+    return Promise.resolve([] as any);
+  }
+  return client(strings, ...values);
+};
+
+// Dynamic sql — calls noStore() to force fresh data on every request (for mutations, admin pages)
+const dynamicSql = (strings: TemplateStringsArray, ...values: any[]) => {
   noStore();
   const client = getClient();
   if (!client) {
@@ -93,7 +104,7 @@ export async function ensureDbInitialized() {
 
 // --- Projects & Financials ---
 export async function getProjectDetails() {
-  const result = await sql`
+  const result = await dynamicSql`
     SELECT * FROM projects LIMIT 1;
   `;
   return result[0];
@@ -101,7 +112,7 @@ export async function getProjectDetails() {
 
 // --- Milestones ---
 export async function getMilestones(projectId: number) {
-  return await sql`
+  return await dynamicSql`
     SELECT * FROM milestones WHERE project_id = ${projectId} ORDER BY id ASC;
   `;
 }
@@ -110,25 +121,25 @@ export async function getMilestones(projectId: number) {
 export async function getTasks(projectId: number) {
   // Use a string literal specific to this simple use case or an enum in real apps
   // But here we just fetch all and group on client or separate queries
-  return await sql`
+  return await dynamicSql`
     SELECT * FROM tasks WHERE project_id = ${projectId} ORDER BY id ASC;
   `;
 }
 
 // --- Users ---
 export async function getUsers() {
-  return await sql`SELECT * FROM users;`;
+  return await dynamicSql`SELECT * FROM users;`;
 }
 
 export async function getUserByEmail(email: string) {
-  const result = await sql`SELECT * FROM users WHERE email = ${email}`;
+  const result = await dynamicSql`SELECT * FROM users WHERE email = ${email}`;
   return result[0];
 }
 
 // --- Chat ---
 export async function getMessages() {
   // CONSTRAINT: Only fetch messages from the last 24 hours
-  return await sql`
+  return await dynamicSql`
     SELECT * FROM messages 
     WHERE created_at > NOW() - INTERVAL '24 hours' 
     ORDER BY created_at ASC;
@@ -137,7 +148,7 @@ export async function getMessages() {
 
 export async function sendMessage(content: string, senderName: string, senderRole: 'client' | 'developer') {
   // 1. Insert new message
-  await sql`
+  await dynamicSql`
     INSERT INTO messages (content, sender_name, sender_role) 
     VALUES (${content}, ${senderName}, ${senderRole});
   `;
@@ -145,7 +156,7 @@ export async function sendMessage(content: string, senderName: string, senderRol
   // 2. Cleanup old messages (Maintenance)
   // This ensures we don't just 'hide' them but actually remove them as requested
   // Doing it on write is a simple way to keep it clean without external cron
-  await sql`
+  await dynamicSql`
     DELETE FROM messages WHERE created_at <= NOW() - INTERVAL '24 hours';
   `;
 }
@@ -153,7 +164,7 @@ export async function sendMessage(content: string, senderName: string, senderRol
 
 export async function updateTaskStatus(taskId: number, status: string) {
   // Update the task status
-  await sql`
+  await dynamicSql`
     UPDATE tasks SET status = ${status} WHERE id = ${taskId};
   `;
 
@@ -163,7 +174,7 @@ export async function updateTaskStatus(taskId: number, status: string) {
 }
 
 export async function updateProjectHours(projectId: number, hoursToAdd: number) {
-  await sql`
+  await dynamicSql`
     UPDATE projects 
     SET hours_used = hours_used + ${hoursToAdd},
         progress_percent = LEAST(100, progress_percent + 1) -- Tiny increment for visual feedback
@@ -185,7 +196,7 @@ export async function createClientRequest(data: any) {
   // Content: JSON string of { name, email, phone, cart }
 
   const content = JSON.stringify(data);
-  await sql`
+  await dynamicSql`
     INSERT INTO messages (content, sender_name, sender_role) 
     VALUES (${content}, ${data.name}, 'guest_request');
   `;
@@ -193,7 +204,7 @@ export async function createClientRequest(data: any) {
 }
 
 export async function getClientRequests() {
-  return await sql`
+  return await dynamicSql`
     SELECT * FROM messages WHERE sender_role = 'guest_request' ORDER BY created_at DESC;
   `;
 }
@@ -201,20 +212,20 @@ export async function getClientRequests() {
 export async function getContactSubmissions() {
   await ensureDbInitialized();
 
-  return await sql`
+  return await dynamicSql`
     SELECT * FROM contact_submissions ORDER BY created_at DESC;
   `;
 }
 
 export async function getDevelopers() {
-  return await sql`SELECT * FROM users WHERE role = 'developer';`;
+  return await dynamicSql`SELECT * FROM users WHERE role = 'developer';`;
 }
 
 export async function createClientProfile(clientData: any) {
   const { name, email, password } = clientData;
   // Insert into users
   // Note: Password should be hashed. logic should be in actions.ts, queries just saves.
-  await sql`
+  await dynamicSql`
         INSERT INTO users (name, email, password, role)
         VALUES (${name}, ${email}, ${password}, 'client');
     `;
@@ -224,7 +235,7 @@ export async function createClientProfile(clientData: any) {
 export async function assignDeveloper(clientId: number, developerId: number) {
   // 1. Create a project linking them? Or update user table?
   // Assuming 'projects' table links client_id and developer_id
-  await sql`
+  await dynamicSql`
         INSERT INTO projects (name, client_id, developer_id, status, progress_percent, hours_used, total_hours)
         VALUES ('New Project', ${clientId}, ${developerId}, 'ongoing', 0, 0, 100);
     `;
@@ -244,7 +255,7 @@ export async function getPortfolioItems() {
 }
 
 export async function getPortfolioItemById(id: number) {
-  const result = await sql`SELECT * FROM portfolio_items WHERE id = ${id}`;
+  const result = await dynamicSql`SELECT * FROM portfolio_items WHERE id = ${id}`;
   return result[0];
 }
 
@@ -339,7 +350,7 @@ export async function createBlog(data: any) {
 
 export async function getAllBlogs() {
   await ensureDbInitialized();
-  return await sql`
+  return await dynamicSql`
     SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published, affiliate_product_slug, amazon_asin 
     FROM blog_posts 
     ORDER BY created_at DESC;
@@ -348,7 +359,7 @@ export async function getAllBlogs() {
 
 export async function getBlogById(id: number) {
   await ensureDbInitialized();
-  const result = await sql`
+  const result = await dynamicSql`
     SELECT * FROM blog_posts WHERE id = ${id};
   `;
   return result[0];
@@ -378,7 +389,7 @@ export async function deleteBlog(id: number) {
 // --- Services / Products ---
 
 export async function getAllServices() {
-  return await sql`
+  return await dynamicSql`
     SELECT * FROM services 
     ORDER BY created_at DESC;
   `;
@@ -406,7 +417,7 @@ export async function getServiceBySlug(slug: string) {
 }
 
 export async function getServiceById(id: number) {
-  const result = await sql`
+  const result = await dynamicSql`
     SELECT * FROM services WHERE id = ${id};
   `;
   return result[0];
@@ -464,7 +475,7 @@ export async function getAffiliateLink(slug: string) {
 }
 
 export async function recordAffiliateClick(slug: string) {
-  await sql`
+  await dynamicSql`
     UPDATE affiliate_links 
     SET clicks = clicks + 1 
     WHERE slug = ${slug};

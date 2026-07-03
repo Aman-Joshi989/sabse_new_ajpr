@@ -11,8 +11,10 @@ import Script from 'next/script';
 import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { LocalBusinessSchema } from '@/components/schema/LocalBusinessSchema';
 import { getSiteSettings, getPublishedServices, getBlogs } from '@/lib/db/queries';
-import { headers } from 'next/headers';
 import LayoutClientEffect from '@/components/LayoutClientEffect';
+
+// Enable ISR: cache layout data for 60s, revalidate in background
+export const revalidate = 60;
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -94,23 +96,14 @@ export default async function RootLayout({
   const session = await getSession();
   const user = session?.user;
 
-  // Extract current pathname from custom request headers
-  const headersList = await headers();
-  const pathname = headersList.get('x-pathname') || '';
-  const isExcludedRoute = pathname === '/login' || pathname.startsWith('/dashboard');
-  const isFullScreenRoute = pathname === '/chat-agents';
-  const hideFooter = isExcludedRoute || isFullScreenRoute;
-
   let services: any[] = [];
   let blogs: any[] = [];
 
-  if (!isExcludedRoute) {
-    try {
-      services = await getPublishedServices();
-      blogs = await getBlogs();
-    } catch (e) {
-      console.error("Failed to fetch dynamic content in layout:", e);
-    }
+  try {
+    services = await getPublishedServices();
+    blogs = await getBlogs();
+  } catch (e) {
+    console.error("Failed to fetch dynamic content in layout:", e);
   }
 
   return (
@@ -131,10 +124,10 @@ export default async function RootLayout({
             <CartProvider>
               <LayoutClientEffect />
               <Header user={user} services={services} />
-              <main className={isFullScreenRoute ? '' : 'min-h-screen'}>
+              <main className='min-h-screen'>
                 {children}
               </main>
-              {!hideFooter && <Footer services={services} blogs={blogs} />}
+              <Footer services={services} blogs={blogs} />
               <Toaster />
               <Analytics />
               <SpeedInsights />

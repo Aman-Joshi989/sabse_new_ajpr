@@ -48,8 +48,9 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { useTheme } from 'next-themes'
 import { useCart } from '@/components/providers/CartProvider'
 import CartDrawer from '@/components/CartDrawer'
+import { useAuth } from '@/components/providers/AuthProvider'
 
-export default function Header({ user, services }: { user?: any; services?: any[] }) {
+export default function Header({ services }: { services?: any[] }) {
     const [scrolled, setScrolled] = useState(false)
     const [isVisible, setIsVisible] = useState(true)
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -58,6 +59,7 @@ export default function Header({ user, services }: { user?: any; services?: any[
 
     const { resolvedTheme } = useTheme()
     const { cart, setIsCartOpen } = useCart()
+    const { user, isLoading } = useAuth()
     const lastScrollY = useRef(0)
 
     // Map dynamic services to dropdown items
@@ -204,7 +206,9 @@ export default function Header({ user, services }: { user?: any; services?: any[
                                 </span>
                             )}
                         </Button>
-                        {user ? (
+                        {isLoading ? (
+                            <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
+                        ) : user ? (
                             <div className="relative group">
                                 <button className="flex items-center space-x-2 focus:outline-none" aria-label="User Account Menu">
                                     <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border overflow-hidden">
@@ -357,7 +361,15 @@ export default function Header({ user, services }: { user?: any; services?: any[
                                 )}
 
                                 <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
-                                    {user ? (
+                                    {isLoading ? (
+                                        <div className="flex items-center space-x-3 px-2 py-2">
+                                            <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
+                                            <div className="space-y-2">
+                                                <div className="h-4 w-24 bg-slate-200 dark:bg-slate-800 animate-pulse rounded" />
+                                                <div className="h-3 w-16 bg-slate-200 dark:bg-slate-800 animate-pulse rounded" />
+                                            </div>
+                                        </div>
+                                    ) : user ? (
                                         <>
                                             <div className="flex items-center space-x-3 px-2 py-2">
                                                 <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border overflow-hidden">

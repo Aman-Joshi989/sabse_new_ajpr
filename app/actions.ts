@@ -8,6 +8,17 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import nodemailer from 'nodemailer';
 
+import { getSession } from "@/lib/auth";
+
+export async function getSessionAction() {
+    try {
+        const session = await getSession();
+        return session;
+    } catch (e) {
+        return null;
+    }
+}
+
 import Razorpay from 'razorpay';
 
 export async function login(prevState: any, formData: FormData) {

@@ -95,12 +95,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Fetch dynamic services from Neon database
     const services = await getPublishedServices()
     if (Array.isArray(services)) {
-      servicePages = services.map((service: any) => ({
+      // Standard service pages
+      const baseServices: MetadataRoute.Sitemap = services.map((service: any) => ({
         url: `${baseUrl}/services/${service.slug}`,
         lastModified: service.created_at ? new Date(service.created_at) : new Date(),
-        changeFrequency: 'weekly',
+        changeFrequency: 'weekly' as const,
         priority: 0.8,
-      }))
+      }));
+      
+      // Programmatic local SEO pages
+      const targetCities = ['new-york', 'london', 'san-francisco', 'singapore', 'dubai'];
+      const localServices: MetadataRoute.Sitemap = services.flatMap((service: any) => 
+        targetCities.map(city => ({
+          url: `${baseUrl}/services/${service.slug}/${city}`,
+          lastModified: service.created_at ? new Date(service.created_at) : new Date(),
+          changeFrequency: 'weekly' as const,
+          priority: 0.6,
+        }))
+      );
+      
+      servicePages = [...baseServices, ...localServices];
     }
   } catch (error) {
     console.error('Error fetching services for sitemap:', error)

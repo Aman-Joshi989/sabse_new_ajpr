@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'
 import { getPortfolioItems, getSiteSettings } from '@/lib/db/queries'
 import { Metadata } from 'next'
+import { cleanMetaDescription } from '@/app/layout'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,7 +15,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   const founderName = settings?.founder_name || 'Aman Joshi';
   const founderTitle = settings?.founder_title || 'Founder & Systems Architect';
-  const description = settings?.founder_bio || 'Aman Joshi is a systems architect, tech entrepreneur, and the founder of AJPR World, engineering high-concurrency digital platforms and business automation systems.';
+  const rawDescription = settings?.founder_bio || 'Aman Joshi is a systems architect, tech entrepreneur, and the founder of AJPR World, engineering high-concurrency digital platforms and business automation systems.';
+  
+  // Truncate to recommended ~155 characters for SEO
+  const description = cleanMetaDescription(rawDescription, 155);
+  
   return {
     title: `${founderName} - ${founderTitle} of AJPR World`,
     description,

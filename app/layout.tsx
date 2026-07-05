@@ -83,7 +83,6 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-import { getSession } from '@/lib/auth';
 
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import { CartProvider } from '@/components/providers/CartProvider'
@@ -93,8 +92,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await getSession();
-  const user = session?.user;
 
   let services: any[] = [];
   let blogs: any[] = [];
@@ -120,10 +117,10 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider user={user}>
+          <AuthProvider>
             <CartProvider>
               <LayoutClientEffect />
-              <Header user={user} services={services} />
+              <Header services={services} />
               <main className='min-h-screen'>
                 {children}
               </main>

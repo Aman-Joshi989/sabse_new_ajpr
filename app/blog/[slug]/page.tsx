@@ -34,9 +34,9 @@ function parseMarkdownToHtml(markdown: string): string {
   let html = markdown.replace(/\r\n/g, '\n');
 
   // 1. Headings (## and ###)
-  html = html.replace(/^### (.*?)$/gm, '<h3 class="text-2xl font-bold mt-8 mb-4 text-slate-900 dark:text-slate-100 text-left">$1</h3>');
-  html = html.replace(/^## (.*?)$/gm, '<h2 class="text-3xl font-bold mt-10 mb-4 border-b border-slate-200 dark:border-slate-800 pb-2 text-slate-900 dark:text-slate-50 text-left">$1</h2>');
-  html = html.replace(/^# (.*?)$/gm, '<h1 class="text-4xl font-extrabold mt-12 mb-6 text-slate-900 dark:text-slate-50 text-left">$1</h1>');
+  html = html.replace(/^### (.*?)$/gm, '<h4 class="text-xl font-bold mt-6 mb-3 text-slate-900 dark:text-slate-100 text-left">$1</h4>');
+  html = html.replace(/^## (.*?)$/gm, '<h3 class="text-2xl font-bold mt-8 mb-4 text-slate-900 dark:text-slate-100 text-left">$1</h3>');
+  html = html.replace(/^# (.*?)$/gm, '<h2 class="text-3xl font-bold mt-10 mb-4 border-b border-slate-200 dark:border-slate-800 pb-2 text-slate-900 dark:text-slate-50 text-left">$1</h2>');
 
   // 2. Bold (**text**)
   html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');

@@ -34,12 +34,10 @@ const floatingElements = [
 
 export default function HeroSection() {
     const [currentService, setCurrentService] = useState(0)
-    const [isVisible, setIsVisible] = useState(false)
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
     const heroRef = useRef<HTMLElement>(null)
 
     useEffect(() => {
-        setIsVisible(true)
         const interval = setInterval(() => {
             setCurrentService((prev) => (prev + 1) % allServices.length)
         }, 2500)
@@ -105,7 +103,7 @@ export default function HeroSection() {
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className={`max-w-6xl mx-auto text-center transition-all duration-1500 ${isVisible ? 'animate-fade-up' : 'opacity-0'}`}>
+                <div className="max-w-6xl mx-auto text-center transition-all duration-1500 animate-fade-up">
                     {/* Startup Badge with Glow Effect */}
                     <div className="mb-8">
                         <Badge className="relative bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 px-8 py-3 text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 shimmer-effect hover:scale-105">
@@ -140,7 +138,7 @@ export default function HeroSection() {
                     </div>
 
                     {/* Enhanced Subtitle */}
-                    <div className={`space-y-6 mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-400' : 'opacity-0'}`}>
+                    <div className="space-y-6 mb-16 transition-all duration-1000 animate-fade-up animation-delay-400">
                         <p className="text-xl md:text-3xl text-slate-600 dark:text-slate-300 max-w-5xl mx-auto leading-relaxed font-medium">
                             From cutting-edge <span className="font-bold text-blue-600 hover:scale-105 transition-transform duration-300 inline-block cursor-pointer">web development</span> to comprehensive
                             <span className="font-bold text-purple-600 hover:scale-105 transition-transform duration-300 inline-block cursor-pointer"> legal & financial services</span>,
@@ -159,7 +157,7 @@ export default function HeroSection() {
                     </div>
 
                     {/* Enhanced CTA Buttons */}
-                    <div className={`flex flex-col sm:flex-row gap-6 justify-center mb-20 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-600' : 'opacity-0'}`}>
+                    <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20 transition-all duration-1000 animate-fade-up animation-delay-600">
                         <Button
                             size="lg"
                             className="relative group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-6 text-xl rounded-full shadow-2xl hover:shadow-blue-500/25 overflow-hidden"
@@ -187,7 +185,7 @@ export default function HeroSection() {
                     </div>
 
                     {/* Interactive Service Categories */}
-                    <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-800' : 'opacity-0'}`}>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-1000 animate-fade-up animation-delay-800">
                         {[
                             { icon: Code2, label: 'Tech Solutions', count: '15+ Services', color: 'from-blue-500 to-cyan-500', hoverColor: 'hover:from-blue-600 hover:to-cyan-600' },
                             { icon: Scale, label: 'Legal Services', count: '20+ Services', color: 'from-purple-500 to-pink-500', hoverColor: 'hover:from-purple-600 hover:to-pink-600' },
@@ -216,7 +214,7 @@ export default function HeroSection() {
                     </div>
 
                     {/* Trust Indicators */}
-                    <div className={`mt-20 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-1000' : 'opacity-0'}`}>
+                    <div className="mt-20 transition-all duration-1000 animate-fade-up animation-delay-1000">
                         <div className="flex flex-wrap justify-center items-center gap-8 text-slate-500 dark:text-slate-400">
                             <div className="flex items-center group cursor-pointer">
                                 <Award className="w-6 h-6 mr-3 text-yellow-500 group-hover:animate-bounce-gentle" />

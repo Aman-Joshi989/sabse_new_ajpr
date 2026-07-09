@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
@@ -36,6 +36,17 @@ export default function HeroSection() {
     const [currentService, setCurrentService] = useState(0)
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
     const heroRef = useRef<HTMLElement>(null)
+    const requestRef = useRef<number>()
+
+    // Memoize random particles to prevent them from recalculating on every render
+    const particles = useMemo(() => {
+        return [...Array(50)].map(() => ({
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${3 + Math.random() * 4}s`
+        }))
+    }, [])
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -46,10 +57,18 @@ export default function HeroSection() {
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY })
+            if (requestRef.current) {
+                cancelAnimationFrame(requestRef.current)
+            }
+            requestRef.current = requestAnimationFrame(() => {
+                setMousePosition({ x: e.clientX, y: e.clientY })
+            })
         }
-        window.addEventListener('mousemove', handleMouseMove)
-        return () => window.removeEventListener('mousemove', handleMouseMove)
+        window.addEventListener('mousemove', handleMouseMove, { passive: true })
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove)
+            if (requestRef.current) cancelAnimationFrame(requestRef.current)
+        }
     }, [])
 
     return (
@@ -64,17 +83,11 @@ export default function HeroSection() {
                 <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-r from-purple-400/25 to-pink-500/25 rounded-full blur-3xl animate-float animation-delay-1000"></div>
                 <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-r from-green-400/20 to-emerald-500/20 rounded-full blur-3xl animate-float animation-delay-600"></div>
 
-                {/* Floating Particles */}
-                {[...Array(50)].map((_, i) => (
+                {particles.map((style, i) => (
                     <div
                         key={i}
                         className="absolute w-2 h-2 bg-blue-400/20 rounded-full animate-float"
-                        style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
-                            animationDelay: `${Math.random() * 5}s`,
-                            animationDuration: `${3 + Math.random() * 4}s`
-                        }}
+                        style={style}
                     />
                 ))}
             </div>

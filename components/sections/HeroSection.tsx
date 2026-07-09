@@ -116,7 +116,7 @@ export default function HeroSection() {
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="max-w-6xl mx-auto text-center transition-all duration-1500 animate-fade-up">
+                <div className="max-w-6xl mx-auto text-center transition-all duration-1500">
                     {/* Startup Badge with Glow Effect */}
                     <div className="mb-8">
                         <Badge className="relative bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 px-8 py-3 text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 shimmer-effect hover:scale-105">
@@ -132,7 +132,7 @@ export default function HeroSection() {
                     {/* Main Heading with Typewriter Effect */}
                     <div className="space-y-6 mb-12">
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-tight">
-                            <span className="block text-slate-900 dark:text-white mb-4 animate-fade-down">
+                            <span className="block text-slate-900 dark:text-white mb-4">
                                 Your One-Stop Solution for
                             </span>
                             <div className="relative h-24 md:h-32 overflow-hidden">
@@ -151,7 +151,7 @@ export default function HeroSection() {
                     </div>
 
                     {/* Enhanced Subtitle */}
-                    <div className="space-y-6 mb-16 transition-all duration-1000 animate-fade-up animation-delay-400">
+                    <div className="space-y-6 mb-16 transition-all duration-1000">
                         <p className="text-xl md:text-3xl text-slate-600 dark:text-slate-300 max-w-5xl mx-auto leading-relaxed font-medium">
                             From cutting-edge <span className="font-bold text-blue-600 hover:scale-105 transition-transform duration-300 inline-block cursor-pointer">web development</span> to comprehensive
                             <span className="font-bold text-purple-600 hover:scale-105 transition-transform duration-300 inline-block cursor-pointer"> legal & financial services</span>,

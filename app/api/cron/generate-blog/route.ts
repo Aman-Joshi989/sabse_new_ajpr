@@ -150,6 +150,22 @@ async function generateImageForTopic(topic: string): Promise<string> {
   }
 }
 
+async function fetchTrendingHeadlines(): Promise<string> {
+  try {
+    const res = await fetch('https://news.google.com/rss/search?q=AI+startup+OR+OpenAI+OR+technology+OR+SaaS&hl=en-US&gl=US&ceid=US:en', { next: { revalidate: 3600 } });
+    if (!res.ok) return '';
+    const xml = await res.text();
+    // Use regex to extract titles safely without needing an external XML parser
+    const titles = Array.from(xml.matchAll(/<title>(.*?)<\/title>/g)).map(m => m[1]);
+    // Skip the first title which is usually the main feed title
+    const headlines = titles.slice(1, 15).map(t => t.replace(/ - [^-]+$/, '').trim());
+    return headlines.join('\n');
+  } catch (err) {
+    console.error('[Cron] Failed to fetch trending news:', err);
+    return '';
+  }
+}
+
 async function executeDailyBlogPipeline(req: NextRequest) {
   const apiKey = process.env.AJPR_API_KEY;
   const cronSecret = process.env.CRON_SECRET;
@@ -180,14 +196,19 @@ async function executeDailyBlogPipeline(req: NextRequest) {
         ? existingTitles.slice(-20).map(t => `- ${t}`).join('\n')
         : 'None yet';
 
+      const trendingHeadlines = await fetchTrendingHeadlines();
+      const contextText = trendingHeadlines 
+        ? `Here are the top trending tech news headlines today:\n${trendingHeadlines}\n\nUse one of these trending topics as inspiration to write something highly relevant right now.` 
+        : `Focus on AI MVP development, GEO/AEO optimization, startup scaling, technical SEO, or AI automation.`;
+
       topic = (await callGPT([
         {
           role: 'system',
-          content: 'You are a creative SEO content strategist for AJPR World, an India-based B2B startup tech company. Generate ONE highly specific, compelling blog headline about AI MVP development, GEO/AEO optimization, startup scaling, technical SEO, or AI automation. Output ONLY the plain headline, no quotes, no explanation.',
+          content: 'You are a creative SEO content strategist for AJPR World, an India-based B2B startup tech company. Your goal is to write blog topics that ride the wave of trending tech news to maximize traffic. Output ONLY the plain headline, no quotes, no explanation.',
         },
         {
           role: 'user',
-          content: `Already published (do NOT repeat these topics):\n${existingList}\n\nGenerate ONE brand new unique blog headline:`,
+          content: `${contextText}\n\nAlready published (do NOT repeat these topics):\n${existingList}\n\nGenerate ONE brand new unique, click-worthy blog headline based on current trends:`,
         },
       ])).trim().replace(/^["']|["']$/g, '');
     } catch (e: any) {

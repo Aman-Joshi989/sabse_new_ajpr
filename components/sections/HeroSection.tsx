@@ -36,7 +36,7 @@ export default function HeroSection() {
     const [currentService, setCurrentService] = useState(0)
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
     const heroRef = useRef<HTMLElement>(null)
-    const requestRef = useRef<number>()
+    const requestRef = useRef<number | null>(null)
 
     // Memoize random particles to prevent them from recalculating on every render
     const particles = useMemo(() => {

@@ -5,7 +5,7 @@ import { ArrowLeftIcon, Github, Linkedin, Twitter } from 'lucide-react';
 import { Metadata } from 'next';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export async function generateMetadata({ params }: { params: Promise<{ name: string }> }): Promise<Metadata> {
   const resolvedParams = await params;

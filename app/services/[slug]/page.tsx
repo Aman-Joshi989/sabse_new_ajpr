@@ -11,7 +11,7 @@ import { ServiceSchema } from '@/components/schema/ServiceSchema'
 import { TrustBadges } from '@/components/ui/TrustBadges'
 import { RelatedContent } from '@/components/RelatedContent'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 function getServiceGradient(gradient: string) {
     const map: Record<string, string> = {
@@ -29,16 +29,67 @@ function getServiceGradient(gradient: string) {
     return map[gradient] || 'from-[#1E3A8A] via-[#2563EB] to-[#0F172A]';
 }
 
-function cleanMetaDescription(desc: string, maxLen = 155): string {
-    if (!desc) return '';
-    const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-    if (clean.length <= maxLen) return clean;
-    const sliced = clean.slice(0, maxLen - 3);
+function getRobustMetaDescription(desc: string, featuresStr: string, minLen = 110, maxLen = 155): string {
+    let text = (desc || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+    
+    if (text.length < minLen && featuresStr) {
+        try {
+            const features = typeof featuresStr === 'string' ? JSON.parse(featuresStr) : featuresStr;
+            if (Array.isArray(features) && features.length > 0) {
+                const featuresText = 'Key features include: ' + features.join(', ') + '.';
+                if (text.length > 0 && !text.endsWith('.')) {
+                    text = text + '. ' + featuresText;
+                } else if (text.length > 0) {
+                    text = text + ' ' + featuresText;
+                } else {
+                    text = featuresText;
+                }
+            }
+        } catch(e) {}
+    }
+
+    if (text.length <= maxLen && text.length >= minLen) return text;
+    
+    const sliced = text.slice(0, maxLen - 3);
     const lastSpace = sliced.lastIndexOf(' ');
     if (lastSpace > maxLen * 0.7) {
-        return clean.slice(0, lastSpace).trim() + '...';
+        return text.slice(0, lastSpace).trim() + '...';
     }
     return sliced.trim() + '...';
+}
+
+function getSeoTitle(baseTitle: string, location?: string): string {
+  const fullBrand = ' | AJPR World Services';
+  const shortBrand = ' | AJPR';
+  const maxLen = 60;
+
+  const titleWithLocation = location ? `${baseTitle} in ${location}` : baseTitle;
+
+  if ((titleWithLocation + fullBrand).length <= maxLen) {
+    return titleWithLocation + fullBrand;
+  }
+
+  if ((titleWithLocation + shortBrand).length <= maxLen) {
+    return titleWithLocation + shortBrand;
+  }
+  
+  if (location) {
+     const suffix = ` in ${location}${shortBrand}`;
+     if (suffix.length >= maxLen) {
+        return `${titleWithLocation.slice(0, maxLen - shortBrand.length - 3)}...${shortBrand}`;
+     }
+     const allowedLen = maxLen - suffix.length - 3;
+     const sliced = baseTitle.slice(0, allowedLen);
+     const lastSpace = sliced.lastIndexOf(' ');
+     const truncated = lastSpace > allowedLen * 0.7 ? sliced.slice(0, lastSpace).trim() : sliced.trim();
+     return `${truncated}...${suffix}`;
+  }
+
+  const allowedLen = maxLen - shortBrand.length - 3;
+  const sliced = baseTitle.slice(0, allowedLen);
+  const lastSpace = sliced.lastIndexOf(' ');
+  const truncated = lastSpace > allowedLen * 0.7 ? sliced.slice(0, lastSpace).trim() : sliced.trim();
+  return `${truncated}...${shortBrand}`;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -51,13 +102,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         }
     }
 
-    const safeDesc = cleanMetaDescription(service.description || '');
+    const safeDesc = getRobustMetaDescription(service.description || '', service.features || '');
+    const seoTitle = getSeoTitle(service.title);
 
     return {
-        title: `${service.title} | AJPR World Services`,
+        title: seoTitle,
         description: safeDesc,
         openGraph: {
-            title: `${service.title} | AJPR World Services`,
+            title: seoTitle,
             description: safeDesc,
             url: `https://ajprworld.com/services/${service.slug}`,
             siteName: 'AJPR World',
@@ -74,7 +126,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${service.title} | AJPR World Services`,
+            title: seoTitle,
             description: safeDesc,
             creator: '@ajprworld',
             images: ['https://ajprworld.com/og-image.jpg']
@@ -292,6 +344,22 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
                             </p>
                             <TrustBadges />
                         </div>
+                    </div>
+                </div>
+
+                {/* Global Service Areas (SEO Internal Linking to fix orphan pages) */}
+                <div className="mt-16 mb-16">
+                    <h2 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Global Service Areas</h2>
+                    <div className="flex flex-wrap gap-3">
+                        {['new-york', 'london', 'san-francisco', 'singapore', 'dubai'].map(city => (
+                            <Link 
+                                key={city} 
+                                href={`/services/${service.slug}/${city}`}
+                                className="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-full text-sm font-medium hover:border-blue-500 hover:text-blue-600 transition-colors"
+                            >
+                                {service.title} in {city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                            </Link>
+                        ))}
                     </div>
                 </div>
 

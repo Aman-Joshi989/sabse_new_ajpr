@@ -1,7 +1,7 @@
 import { getPublishedServices, getBlogs, getSiteSettings } from '@/lib/db/queries'
 import HomeClient from './HomeClient'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export default async function HomePage() {
   let services: any[] = []

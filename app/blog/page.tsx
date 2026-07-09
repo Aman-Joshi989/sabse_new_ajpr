@@ -7,7 +7,7 @@ import { ArrowRight, BookOpen, Clock, Tag } from 'lucide-react';
 import React from 'react';
 import { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export const metadata: Metadata = {
   title: 'AJPR World Blog – Systems, Automation & Growth',

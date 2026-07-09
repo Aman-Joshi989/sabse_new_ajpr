@@ -12,7 +12,7 @@ import { AffiliateDisclosure } from '@/components/ui/AffiliateDisclosure';
 import { AffiliateProductCard } from '@/components/AffiliateProductCard';
 import ShareButton from '@/components/ui/ShareButton';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 type BlogPost = {
   id: number;
@@ -69,14 +69,33 @@ function parseMarkdownToHtml(markdown: string): string {
   return parsedBlocks.join('\n');
 }
 
-function cleanMetaDescription(desc: string, maxLen = 155): string {
-  if (!desc) return '';
-  const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-  if (clean.length <= maxLen) return clean;
-  const sliced = clean.slice(0, maxLen - 3);
+function getRobustMetaDescription(excerpt: string, content: string, minLen = 110, maxLen = 155): string {
+  let desc = (excerpt || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  
+  if (desc.length < minLen && content) {
+      // Strip markdown/html from content to use as fallback text
+      const cleanContent = content
+          .replace(/[#*`_]/g, '')
+          .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+          .replace(/<[^>]*>/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+      
+      if (desc.length > 0 && !desc.endsWith('.')) {
+          desc = desc + '. ' + cleanContent;
+      } else if (desc.length > 0) {
+          desc = desc + ' ' + cleanContent;
+      } else {
+          desc = cleanContent;
+      }
+  }
+
+  if (desc.length <= maxLen && desc.length >= minLen) return desc;
+  
+  const sliced = desc.slice(0, maxLen - 3);
   const lastSpace = sliced.lastIndexOf(' ');
   if (lastSpace > maxLen * 0.7) {
-      return clean.slice(0, lastSpace).trim() + '...';
+      return desc.slice(0, lastSpace).trim() + '...';
   }
   return sliced.trim() + '...';
 }
@@ -119,7 +138,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const blog = await getBlogBySlug(resolvedParams.slug) as BlogPost | undefined;
   if (!blog) return { title: 'Post Not Found' };
 
-  const safeDesc = cleanMetaDescription(blog.excerpt || '');
+  const safeDesc = getRobustMetaDescription(blog.excerpt || '', blog.content || '');
   const seoTitle = getSeoTitle(blog.title);
 
   return {

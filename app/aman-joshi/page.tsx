@@ -9,7 +9,7 @@ import { getPortfolioItems, getSiteSettings } from '@/lib/db/queries'
 import { Metadata } from 'next'
 import { cleanMetaDescription } from '@/app/layout'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();

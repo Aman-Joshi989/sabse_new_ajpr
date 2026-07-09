@@ -25,7 +25,7 @@ const iconMap: Record<string, any> = {
     'Package': Package
 }
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export default async function ServicesPage() {
     const services = await getPublishedServices()

@@ -2,7 +2,7 @@ import { getPublishedServices, getSiteSettings } from '@/lib/db/queries'
 import AboutClient from './AboutClient'
 import { Metadata } from 'next'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export const metadata: Metadata = {
   title: 'About Us – Premium Software Development & Digital Systems | AJPR World',

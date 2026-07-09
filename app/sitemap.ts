@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getPublishedServices, getBlogs } from '@/lib/db/queries'
+import { getPublishedServices, getBlogs, getGlossaryTerms } from '@/lib/db/queries'
 
 export const dynamic = 'force-dynamic'
 
@@ -34,6 +34,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/glossary`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
@@ -135,5 +141,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error fetching blogs for sitemap:', error)
   }
 
-  return [...staticPages, ...servicePages, ...blogPages]
+  let glossaryPages: MetadataRoute.Sitemap = []
+  try {
+    const terms = await getGlossaryTerms()
+    if (Array.isArray(terms)) {
+      glossaryPages = terms.map((term: any) => ({
+        url: `${baseUrl}/glossary/${term.slug}`,
+        lastModified: term.created_at ? new Date(term.created_at) : new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      }))
+    }
+  } catch (error) {
+    console.error('Error fetching glossary terms for sitemap:', error)
+  }
+
+  return [...staticPages, ...servicePages, ...blogPages, ...glossaryPages]
 }

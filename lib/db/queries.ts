@@ -612,3 +612,33 @@ export async function updateSiteSettings(data: any) {
   `;
   return { success: true };
 }
+
+// ---------------------------------------------------------------------------
+// GLOSSARY QUERIES
+// ---------------------------------------------------------------------------
+
+export async function getGlossaryTerms() {
+  const result = await sql`SELECT * FROM glossary_terms WHERE published = true ORDER BY term ASC;`;
+  return result;
+}
+
+export async function getGlossaryTermBySlug(slug: string) {
+  const result = await sql`SELECT * FROM glossary_terms WHERE slug = ${slug} AND published = true LIMIT 1;`;
+  return result.length ? result[0] : null;
+}
+
+export async function createGlossaryTerm(data: any) {
+  const { slug, term, definition, detailed_explanation, related_terms } = data;
+  const result = await dynamicSql`
+    INSERT INTO glossary_terms (slug, term, definition, detailed_explanation, related_terms)
+    VALUES (${slug}, ${term}, ${definition}, ${detailed_explanation}, ${JSON.stringify(related_terms || [])})
+    ON CONFLICT (slug) DO UPDATE SET 
+      term = EXCLUDED.term,
+      definition = EXCLUDED.definition,
+      detailed_explanation = EXCLUDED.detailed_explanation,
+      related_terms = EXCLUDED.related_terms,
+      updated_at = CURRENT_TIMESTAMP
+    RETURNING *;
+  `;
+  return result[0];
+}

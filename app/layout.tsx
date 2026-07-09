@@ -12,6 +12,7 @@ import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { LocalBusinessSchema } from '@/components/schema/LocalBusinessSchema';
 import { getSiteSettings, getPublishedServices, getBlogs } from '@/lib/db/queries';
 import LayoutClientEffect from '@/components/LayoutClientEffect';
+import FontLoader from '@/components/FontLoader';
 
 // Enable ISR: cache layout data for 60s, revalidate in background
 export const revalidate = 60;
@@ -108,7 +109,7 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+        <FontLoader />
       </head>
       <body className={`${inter.variable} ${manrope.variable} font-sans`} suppressHydrationWarning>
         <ThemeProvider

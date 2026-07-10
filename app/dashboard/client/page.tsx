@@ -8,14 +8,41 @@ import ChatWidget from "@/components/dashboard/client/ChatWidget";
 import React from "react";
 import { getProjectDetails, getMilestones, getMessages } from "@/lib/db/queries";
 
+import { getSession } from "@/lib/auth";
+import { Briefcase } from "lucide-react";
+
 export const dynamic = 'force-dynamic';
 
 export default async function ClientDashboard() {
-  const project = await getProjectDetails();
+  const session = await getSession();
+  const userId = session?.user?.id;
+  
+  if (!userId) {
+    return <div className="p-12 text-center text-slate-500">Authentication Required</div>;
+  }
+
+  const project = await getProjectDetails(userId);
   const milestones = project ? await getMilestones(project.id) : [];
   const initialMessages = await getMessages();
 
-  if (!project) return <div>Loading...</div>;
+  if (!project) {
+    return (
+      <div className="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark font-display text-[#0f172a] dark:text-white">
+        <Sidebar />
+        <main className="flex-1 flex flex-col items-center justify-center p-8 bg-slate-50 dark:bg-slate-950">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center max-w-lg shadow-sm">
+            <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Briefcase className="w-8 h-8" />
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">Welcome to your Workspace</h2>
+            <p className="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+              We are currently provisioning your dedicated project environment. Once your account manager assigns a project, your full dashboard will appear here.
+            </p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark font-display text-[#0f172a] dark:text-white transition-colors duration-200">

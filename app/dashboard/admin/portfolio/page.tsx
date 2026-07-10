@@ -11,9 +11,12 @@ export default async function AdminPortfolio() {
     const projects = await getPortfolioItems();
 
     return (
-        <div className="p-8 space-y-6">
+        <div className="space-y-6">
             <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Manage Portfolio</h1>
+                <div>
+                    <h1 className="text-2xl font-normal text-[#202124] dark:text-white mb-2">Manage Portfolio</h1>
+                    <p className="text-sm text-[#5F6368] dark:text-[#9AA0A6]">Showcase your completed projects and case studies.</p>
+                </div>
                 <Button asChild>
                     <Link href="/dashboard/admin/portfolio/new">
                         <Plus className="w-4 h-4 mr-2" /> Add Project

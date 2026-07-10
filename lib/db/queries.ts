@@ -96,6 +96,12 @@ export async function ensureDbInitialized() {
         ADD COLUMN IF NOT EXISTS founder_exp3_desc TEXT DEFAULT 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.';
     `;
 
+    // 5. Ensure projects has client_id
+    await sql`
+      ALTER TABLE projects 
+        ADD COLUMN IF NOT EXISTS client_id INTEGER;
+    `;
+
     dbInitialized = true;
   } catch (err) {
     console.error("Database lazy-initialization migration failed:", err);
@@ -103,9 +109,37 @@ export async function ensureDbInitialized() {
 }
 
 // --- Projects & Financials ---
-export async function getProjectDetails() {
+export async function getProjectDetails(clientId?: number) {
+  if (clientId) {
+    const result = await dynamicSql`
+      SELECT * FROM projects WHERE client_id = ${clientId} LIMIT 1;
+    `;
+    return result[0] || null;
+  }
   const result = await dynamicSql`
     SELECT * FROM projects LIMIT 1;
+  `;
+  return result[0];
+}
+
+export async function getAllProjects() {
+  return await dynamicSql`
+    SELECT * FROM projects ORDER BY id DESC;
+  `;
+}
+
+export async function createProject(data: { title: string, client_id?: number }) {
+  const result = await dynamicSql`
+    INSERT INTO projects (title, status, progress_percent, hours_used, total_hours, total_value, pending_value, deadline, client_id)
+    VALUES (${data.title}, 'Not Started', 0, 0, 100, 0, 0, CURRENT_DATE + INTERVAL '30 days', ${data.client_id || null})
+    RETURNING *;
+  `;
+  return result[0];
+}
+
+export async function assignProjectToClient(projectId: number, clientId: number) {
+  const result = await dynamicSql`
+    UPDATE projects SET client_id = ${clientId} WHERE id = ${projectId} RETURNING *;
   `;
   return result[0];
 }

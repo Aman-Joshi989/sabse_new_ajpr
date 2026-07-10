@@ -27,8 +27,12 @@ export default function DeleteBlogButton({ id }: { id: number }) {
     }
 
     return (
-        <Button variant="destructive" size="sm" onClick={handleDelete} disabled={loading}>
+        <button 
+            onClick={handleDelete} 
+            disabled={loading}
+            className="text-[#EA4335] hover:text-[#C5221F] dark:text-[#F28B82] dark:hover:text-[#F6AEA9] transition-colors p-2 hover:bg-[#FCE8E6] dark:hover:bg-[#EA4335]/20 rounded-full disabled:opacity-50"
+        >
             <Trash2 className="w-4 h-4" />
-        </Button>
+        </button>
     )
 }

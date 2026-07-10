@@ -27,8 +27,8 @@ export default async function AdminServicesPage() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Manage Services / Products</h1>
-                    <p className="text-slate-500">Manage your catalog, SKUs, and pricing.</p>
+                    <h1 className="text-2xl font-normal text-[#202124] dark:text-white mb-2">Manage Services / Products</h1>
+                    <p className="text-sm text-[#5F6368] dark:text-[#9AA0A6]">Manage your catalog, SKUs, and pricing.</p>
                 </div>
                 <Button asChild>
                     <Link href="/dashboard/admin/services/create">

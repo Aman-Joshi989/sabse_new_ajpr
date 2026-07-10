@@ -21,12 +21,11 @@ export default async function ContactSubmissionsPage() {
     }
 
     return (
-        <div className="p-8 space-y-8 bg-[#F8F9FA] dark:bg-[#202124] min-h-screen text-[#202124] dark:text-[#E8EAED] transition-colors duration-300">
-            {/* Header Banner */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-[#DADCE0] dark:border-[#3C4043]">
+        <div className="space-y-6">
+            <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Contact Submissions</h1>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Review granular inbound inquiries and selective partnership applications.</p>
+                    <h1 className="text-2xl font-normal text-[#202124] dark:text-white mb-2">Contact Submissions</h1>
+                    <p className="text-sm text-[#5F6368] dark:text-[#9AA0A6]">Review granular inbound inquiries and selective partnership applications.</p>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium shadow-sm hover:bg-blue-500 transition-colors">
                     <Mail className="w-4 h-4" />

@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     const clientId = process.env.GOOGLE_CLIENT_ID;
     
     // Fallback if missing keys in dev mode to prevent crashes, though the flow will fail
@@ -11,8 +11,8 @@ export async function GET() {
         );
     }
 
-    // Always use localhost:3000 for local dev if NEXT_PUBLIC_BASE_URL is not set
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    // Dynamically infer the base URL from the incoming request
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || req.nextUrl.origin;
     const redirectUri = `${baseUrl}/api/auth/google/callback`;
     
     const scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';

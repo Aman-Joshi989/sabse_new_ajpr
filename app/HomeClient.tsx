@@ -149,7 +149,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         </section>
 
         {/* 3. CORE VALUE PROPOSITIONS */}
-        <section className="py-24 md:py-32 relative">
+        <section className="py-16 md:py-20 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <div className="mb-20 max-w-3xl">
               <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">Built for scale, <br className="hidden md:block"/>not just presence.</h2>
@@ -190,7 +190,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         </section>
 
         {/* 4. LIVE SWARM ENGINE DEMO */}
-        <section className="py-24 relative overflow-hidden border-y border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0a0f1c]">
+        <section className="py-16 relative overflow-hidden border-y border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0a0f1c]">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]"></div>
           <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center">
             <Badge className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-300 border-none font-bold tracking-widest px-4 py-1.5 uppercase text-xs mb-8 rounded-full">
@@ -214,7 +214,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         </section>
 
         {/* 5. CORE ENGINEERING & AI SERVICES */}
-        <section id="solutions" className="py-24 md:py-32 relative">
+        <section id="solutions" className="py-16 md:py-20 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
             <div className="mb-20 text-center max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">
@@ -253,7 +253,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         </section>
 
         {/* 6. PORTFOLIO CASE STUDIES */}
-        <section className="py-24 md:py-32 border-y border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0a0f1c]">
+        <section className="py-16 md:py-20 border-y border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0a0f1c]">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
               <div className="max-w-2xl">
@@ -317,7 +317,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         </section>
 
         {/* 7. HOW WE WORK */}
-        <section className="py-24 md:py-32 relative">
+        <section className="py-16 md:py-20 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
             <div className="text-center mb-24">
               <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6">The Deployment Framework</h2>
@@ -362,7 +362,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
 
         {/* 8. LATEST BLOG POSTS SECTION */}
         {blogs && blogs.length > 0 && (
-          <section className="py-24 border-y border-slate-200 dark:border-slate-800/80 bg-slate-50/50 dark:bg-[#0a0f1c]/50">
+          <section className="py-16 border-y border-slate-200 dark:border-slate-800/80 bg-slate-50/50 dark:bg-[#0a0f1c]/50">
             <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
               <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-6">
                 <div>
@@ -400,7 +400,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         )}
 
         {/* 9. FINAL CTA SECTION */}
-        <section className="py-32 relative text-center overflow-hidden bg-white dark:bg-[#030712]">
+        <section className="py-20 relative text-center overflow-hidden bg-white dark:bg-[#030712]">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-500/5 dark:bg-blue-500/10 blur-[120px] rounded-full pointer-events-none"></div>
 

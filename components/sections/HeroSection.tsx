@@ -54,10 +54,10 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     {/* Main Heading (SEO Preserved) */}
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-8 animate-fade-up [animation-delay:200ms]">
                         Engineering Scalable <br className="hidden md:block" />
-                        <div className="relative inline-block h-[1.2em] w-full max-w-[800px] mx-auto mt-2 overflow-hidden align-bottom">
+                        <div className="relative flex justify-center w-full max-w-[800px] mx-auto mt-2 overflow-hidden align-bottom min-h-[1.5em] md:min-h-[1.3em]">
                             <span
                                 key={currentService}
-                                className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300"
+                                className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300 pb-4"
                                 style={{ animation: 'slideUpFade 0.5s ease-out forwards' }}
                             >
                                 {displayServices[currentService]}.

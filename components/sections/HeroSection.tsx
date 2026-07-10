@@ -6,33 +6,38 @@ import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import {
     ArrowRight, Zap, Lightbulb, Target, Globe, Play,
-    Code2, Scale, Calculator, Smartphone, Briefcase, Star,
+    Code2, Database, Smartphone, Briefcase, Star,
     Sparkles, Rocket, TrendingUp, Users, Award
 } from 'lucide-react'
-
-const allServices = [
+const defaultServices = [
     "Web Development",
-    "GST Returns",
     "Mobile Apps",
-    "Legal Documentation",
     "Digital Solutions",
-    "Company Registration",
     "UI/UX Design",
-    "Tax Compliance",
     "Cloud Solutions",
-    "Court Cases"
+    "Custom Software",
+    "SaaS Architecture",
+    "AI Integration"
 ]
 
 const floatingElements = [
     { icon: Code2, position: { top: '10%', left: '10%' }, delay: 0 },
-    { icon: Scale, position: { top: '20%', right: '15%' }, delay: 1 },
-    { icon: Calculator, position: { top: '60%', left: '8%' }, delay: 2 },
+    { icon: Zap, position: { top: '20%', right: '15%' }, delay: 1 },
+    { icon: Database, position: { top: '60%', left: '8%' }, delay: 2 },
     { icon: Smartphone, position: { top: '70%', right: '10%' }, delay: 0.5 },
     { icon: Briefcase, position: { top: '40%', left: '5%' }, delay: 1.5 },
     { icon: Globe, position: { top: '15%', right: '8%' }, delay: 2.5 }
 ]
 
-export default function HeroSection() {
+interface HeroSectionProps {
+    services?: any[]
+}
+
+export default function HeroSection({ services = [] }: HeroSectionProps) {
+    const displayServices = services && services.length > 0 
+        ? services.map(s => s.title) 
+        : defaultServices;
+
     const [currentService, setCurrentService] = useState(0)
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
     const heroRef = useRef<HTMLElement>(null)
@@ -50,10 +55,10 @@ export default function HeroSection() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentService((prev) => (prev + 1) % allServices.length)
+            setCurrentService((prev) => (prev + 1) % displayServices.length)
         }, 2500)
         return () => clearInterval(interval)
-    }, [])
+    }, [displayServices.length])
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -144,7 +149,7 @@ export default function HeroSection() {
                                         animation: 'gradientShift 3s ease-in-out infinite, scaleIn 0.5s ease-out'
                                     }}
                                 >
-                                    {allServices[currentService]}
+                                    {displayServices[currentService]}
                                 </span>
                             </div>
                         </h1>
@@ -154,11 +159,11 @@ export default function HeroSection() {
                     <div className="space-y-6 mb-16 transition-all duration-1000">
                         <p className="text-xl md:text-3xl text-slate-600 dark:text-slate-300 max-w-5xl mx-auto leading-relaxed font-medium">
                             From cutting-edge <span className="font-bold text-blue-600 hover:scale-105 transition-transform duration-300 inline-block cursor-pointer">web development</span> to comprehensive
-                            <span className="font-bold text-purple-600 hover:scale-105 transition-transform duration-300 inline-block cursor-pointer"> legal & financial services</span>,
-                            we're the versatile startup that grows with your business needs.
+                            <span className="font-bold text-purple-600 hover:scale-105 transition-transform duration-300 inline-block cursor-pointer"> custom software solutions</span>,
+                            we're the versatile product engineering startup that scales with your growth.
                         </p>
                         <div className="flex flex-wrap justify-center gap-4 text-lg">
-                            {['🚀 Tech Solutions', '⚖️ Legal Services', '💼 Business Support', '📊 Financial Management'].map((tag, index) => (
+                            {['🚀 Web Development', '🤖 AI Integration', '☁️ Cloud Architecture', '📱 Custom SaaS Apps'].map((tag, index) => (
                                 <span
                                     key={index}
                                     className="px-6 py-3 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 font-medium"
@@ -201,9 +206,9 @@ export default function HeroSection() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-1000 animate-fade-up animation-delay-800">
                         {[
                             { icon: Code2, label: 'Tech Solutions', count: '15+ Services', color: 'from-blue-500 to-cyan-500', hoverColor: 'hover:from-blue-600 hover:to-cyan-600' },
-                            { icon: Scale, label: 'Legal Services', count: '20+ Services', color: 'from-purple-500 to-pink-500', hoverColor: 'hover:from-purple-600 hover:to-pink-600' },
-                            { icon: Calculator, label: 'Financial & Tax', count: '18+ Services', color: 'from-green-500 to-emerald-500', hoverColor: 'hover:from-green-600 hover:to-emerald-600' },
-                            { icon: Globe, label: 'Business Support', count: '25+ Services', color: 'from-orange-500 to-red-500', hoverColor: 'hover:from-orange-600 hover:to-red-600' }
+                            { icon: Sparkles, label: 'AI & Automation', count: '12+ Solutions', color: 'from-purple-500 to-pink-500', hoverColor: 'hover:from-purple-600 hover:to-pink-600' },
+                            { icon: Database, label: 'SaaS Architecture', count: '10+ Solutions', color: 'from-green-500 to-emerald-500', hoverColor: 'hover:from-green-600 hover:to-emerald-600' },
+                            { icon: Globe, label: 'Digital Growth', count: '15+ Strategies', color: 'from-orange-500 to-red-500', hoverColor: 'hover:from-orange-600 hover:to-red-600' }
                         ].map((category, index) => {
                             const IconComponent = category.icon
                             return (

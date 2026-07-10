@@ -27,7 +27,13 @@ const GLOSSARY_TERMS = [
   'Headless CMS', 'Continuous Integration and Continuous Deployment (CI/CD)',
   'B2B SaaS', 'React Server Components (RSC)', 'Webhooks',
   'Graph Database', 'Natural Language Processing (NLP)', 'Tokenization',
-  'Embeddings', 'Prompt Engineering'
+  'Embeddings', 'Prompt Engineering',
+  
+  // Newly Added Terms for Tech, SaaS, and Digital Services
+  'Intellectual Property (IP)', 'Startup Incubation',
+  'Private Limited Company',
+  'Search Engine Optimization (SEO)', 'Software as a Service (SaaS)',
+  'Product Market Fit', 'User Experience (UX)', 'User Interface (UI)'
 ];
 
 function slugify(text: string) {

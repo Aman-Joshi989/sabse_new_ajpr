@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { TrustBadges } from '@/components/ui/TrustBadges'
+import HeroSection from '@/components/sections/HeroSection'
 
 const fadeInUp: any = {
   hidden: { opacity: 0, y: 40 },
@@ -203,99 +204,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
       <div className="w-full px-4 sm:px-0 sm:w-[80%] mx-auto min-h-screen">
 
         {/* 1. HERO SECTION */}
-        <section className="relative min-h-[85vh] flex flex-col justify-center pt-20 pb-20 overflow-hidden">
-          {/* Animated Dynamic Gradients */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div
-              className="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-blue-600/20 dark:bg-blue-600/30 blur-[120px] rounded-full mix-blend-screen animate-pulse-glow"
-            />
-            <div
-              className="absolute top-[40%] -right-[10%] w-[500px] h-[500px] bg-cyan-600/10 dark:bg-cyan-500/20 blur-[120px] rounded-full mix-blend-screen animate-pulse-glow-alt"
-            />
-          </div>
-
-          {/* Animated SVG Data Circuits and Grid */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,#000_10%,transparent_100%)] pointer-events-none" />
-
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {/* Animated SVG Tech Paths */}
-            <svg className="absolute w-full h-full opacity-60 dark:opacity-80 mix-blend-overlay" viewBox="0 0 1440 800" fill="none" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="glowLine1" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#2563eb" stopOpacity="0" />
-                  <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#2563eb" stopOpacity="0" />
-                </linearGradient>
-                <linearGradient id="glowLine2" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0" />
-                  <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-
-              <path
-                d="M -200 600 Q 200 300 600 500 T 1600 300"
-                stroke="url(#glowLine1)"
-                strokeWidth="2"
-                className="animate-draw-path-slow"
-              />
-              <path
-                d="M -100 200 C 300 50 500 600 900 500 S 1300 100 1600 200"
-                stroke="url(#glowLine2)"
-                strokeWidth="3"
-                className="animate-draw-path-medium"
-              />
-              <path
-                d="M 100 800 C 400 400 800 900 1200 300 S 1500 800 1800 600"
-                stroke="url(#glowLine1)"
-                strokeWidth="1.5"
-                className="animate-draw-path-slow"
-              />
-            </svg>
-
-            {/* Floating UI Elements */}
-            <div className="absolute top-[20%] left-[10%] hidden lg:block opacity-30 dark:opacity-40 animate-float-slow">
-              <Database className="w-16 h-16 text-blue-500" />
-            </div>
-            <div className="absolute bottom-[25%] right-[10%] hidden lg:block opacity-30 dark:opacity-40 animate-float-medium">
-              <Cpu className="w-24 h-24 text-cyan-500" />
-            </div>
-            <div className="absolute top-[35%] right-[15%] hidden xl:block opacity-30 dark:opacity-40 animate-float-fast">
-              <GitMerge className="w-12 h-12 text-purple-500" />
-            </div>
-          </div>
-
-          <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center">
-            <div className="max-w-4xl mx-auto space-y-6">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.05] animate-fade-up">
-                Engineering Scalable <br className="hidden md:block" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300">
-                  Digital Systems.
-                </span>
-              </h1>
-
-              <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-medium max-w-2xl mx-auto animate-fade-up [animation-delay:200ms]">
-                We architect AI-first product infrastructure and complex web platforms for scaling companies. We transform operational bottlenecks into high-performance digital engines.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 animate-fade-up [animation-delay:400ms]">
-                <Button size="lg" className="h-12 px-8 text-base rounded-none bg-blue-600 hover:bg-blue-500 text-white font-bold transition-transform shadow-[0_0_30px_-10px_rgba(37,99,235,0.4)] border border-blue-500/50 hover:scale-[1.05]" asChild>
-                  <Link href="/book-call">Book Strategy Call <ArrowRight className="ml-2 w-4 h-4" /></Link>
-                </Button>
-                <Button size="lg" variant="outline" className="h-12 px-8 text-base rounded-none border border-slate-300 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 bg-white dark:bg-[#030712] text-slate-900 dark:text-white font-bold transition-transform hover:scale-[1.05]" asChild>
-                  <Link href="/portfolio">View Our Architecture</Link>
-                </Button>
-              </div>
-              
-              <div className="flex justify-center mt-6 animate-fade-up [animation-delay:600ms]">
-                <TrustBadges />
-              </div>
-
-              {/* Interactive Terminal placed inside Hero */}
-              <TerminalSimulator />
-            </div>
-          </div>
-        </section>
+        <HeroSection services={displayServices} />
 
         {/* 2. TRUST STRIP */}
         <section className="py-8 border-y border-slate-200 dark:border-slate-800/50 bg-white/50 dark:bg-white/[0.01] backdrop-blur-sm overflow-hidden relative">

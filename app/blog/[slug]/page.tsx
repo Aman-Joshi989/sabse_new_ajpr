@@ -55,6 +55,16 @@ function parseMarkdownToHtml(markdown: string): string {
   // 5. Links ([text](url))
   html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline">$1</a>');
 
+  const SEO_KEYWORD_LINKS: Record<string, string> = {
+    'web development': '/services/custom-web-development-ai-solutions',
+    'custom software': '/services/custom-web-development-ai-solutions',
+    'cloud architecture': '/services/business-ai-automation',
+    'search engine optimization': '/services/ai-digital-marketing-services',
+    'generative engine optimization': '/blog/what-is-geo-generative-engine-optimization',
+    'saas': '/services/saas-product-development',
+    'ui/ux': '/services/custom-web-development-ai-solutions'
+  };
+
   // 6. Paragraphs
   const blocks = html.split(/\n\s*\n/);
   const parsedBlocks = blocks.map(block => {
@@ -63,7 +73,16 @@ function parseMarkdownToHtml(markdown: string): string {
     if (trimmed.startsWith('<h') || trimmed.startsWith('<li') || trimmed.startsWith('<hr') || trimmed.startsWith('<ul') || trimmed.startsWith('<ol')) {
       return trimmed;
     }
-    return `<p class="leading-relaxed mb-6 text-slate-800 dark:text-slate-200 text-left">${trimmed.replace(/\n/g, '<br />')}</p>`;
+    
+    let pContent = trimmed.replace(/\n/g, '<br />');
+    
+    // Auto-link SEO keywords (only if not already inside an HTML tag to prevent breaking hrefs)
+    Object.entries(SEO_KEYWORD_LINKS).forEach(([keyword, url]) => {
+      const regex = new RegExp(`\\b(${keyword})\\b(?![^<]*>)`, 'i');
+      pContent = pContent.replace(regex, `<a href="${url}" class="text-blue-600 dark:text-blue-400 hover:underline font-semibold">$1</a>`);
+    });
+
+    return `<p class="leading-relaxed mb-6 text-slate-800 dark:text-slate-200 text-left">${pContent}</p>`;
   });
   
   return parsedBlocks.join('\n');

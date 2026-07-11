@@ -1,10 +1,11 @@
-import { getServiceBySlug, getPublishedServices } from '@/lib/db/queries'
+import { getServiceBySlug, getPublishedServices, getSiteSettings } from '@/lib/db/queries'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import * as Icons from 'lucide-react'
 import { ArrowLeft, CheckCircle2, Star, Shield, Clock, Zap, Target } from 'lucide-react'
+import { AddToCartButton } from '@/components/AddToCartButton'
 import { FAQSchema } from '@/components/schema/FAQSchema'
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema'
 import { ServiceSchema } from '@/components/schema/ServiceSchema'
@@ -140,6 +141,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function ServiceDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params
     const service = await getServiceBySlug(slug)
+    const siteSettings = await getSiteSettings()
 
     if (!service) {
         notFound()
@@ -151,13 +153,18 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
 
     const featuresList = typeof service.features === 'string' ? JSON.parse(service.features) : (service.features || [])
 
+    // GLOBAL PRICING MULTIPLIER
+    // Fetched dynamically from admin site settings
+    const GLOBAL_PRICE_MULTIPLIER = siteSettings?.global_price_multiplier ? parseFloat(siteSettings.global_price_multiplier) : 1.0;
+    const finalPrice = Math.round(parseFloat(service.price) * GLOBAL_PRICE_MULTIPLIER);
+
     let displayPrice = '';
     if (service.price_type === 'custom') {
         displayPrice = 'Custom Quote';
     } else if (service.price_type === 'starting_at') {
-        displayPrice = `Starting at ₹${parseFloat(service.price).toLocaleString()}`;
+        displayPrice = `Starting at ₹${finalPrice.toLocaleString()}`;
     } else {
-        displayPrice = `₹${parseFloat(service.price).toLocaleString()}`;
+        displayPrice = `₹${finalPrice.toLocaleString()}`;
     }
 
     // Generate dynamic FAQs for SEO based on service data
@@ -336,9 +343,18 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
                                 </div>
                             </div>
 
-                            <Button className="w-full h-14 text-lg font-bold bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" asChild>
-                                <Link href="/contact">Request a Quote</Link>
-                            </Button>
+                            {service.price_type === 'custom' ? (
+                                <Button className="w-full h-14 text-lg font-bold bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" asChild>
+                                    <Link href="/contact">Request a Quote</Link>
+                                </Button>
+                            ) : (
+                                <AddToCartButton service={{
+                                    id: service.id || service.slug,
+                                    title: service.title,
+                                    price: finalPrice,
+                                    description: service.description
+                                }} />
+                            )}
                             <p className="text-center text-xs text-slate-500 mt-4">
                                 No credit card required. We will discuss your exact needs before proceeding.
                             </p>

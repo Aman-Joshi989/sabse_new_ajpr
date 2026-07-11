@@ -138,6 +138,7 @@ export default async function RootLayout({
                 strategy="lazyOnload"
                 async
               />
+              <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>

@@ -104,7 +104,6 @@ export async function logHoursAction(projectId: number, hours: number) {
         return { success: false };
     }
 }
-import { createClientRequest } from "@/lib/db/queries";
 
 // --- Email Integration ---
 
@@ -247,10 +246,25 @@ export async function sendOrderEmail(data: any) {
 
 
 
+import { createClientRequest, createPayment } from "@/lib/db/queries";
+
 export async function submitOrderRequest(data: any) {
     try {
         // Save to DB
         await createClientRequest(data);
+
+        // Also save to payments table
+        await createPayment({
+            client_name: data.name,
+            client_email: data.email,
+            client_phone: data.phone,
+            amount: data.advanceAmount || data.total,
+            payment_status: data.paymentStatus || 'completed',
+            payment_method: 'razorpay',
+            payment_id: data.paymentId || 'N/A',
+            payment_type: data.paymentType || 'advance',
+            order_details: data.cart
+        });
 
         // Send Email for ALL orders (Guest or Logged-in) if payment is successful
         // We assume submitOrderRequest is called after successful payment or for a valid request

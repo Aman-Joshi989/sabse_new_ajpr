@@ -49,6 +49,7 @@ import { useTheme } from 'next-themes'
 import { useCart } from '@/components/providers/CartProvider'
 import CartDrawer from '@/components/CartDrawer'
 import { useAuth } from '@/components/providers/AuthProvider'
+import { logout } from '@/app/actions'
 
 export default function Header({ services }: { services?: any[] }) {
     const [scrolled, setScrolled] = useState(false)
@@ -241,12 +242,7 @@ export default function Header({ services }: { services?: any[] }) {
                                         <code className="material-symbols-outlined text-lg mr-2">dashboard</code>
                                         Dashboard
                                     </Link>
-                                    <form action="/auth/logout" onSubmit={async (e) => {
-                                        e.preventDefault();
-                                        // Dynamic import to avoid server action in client component issues if not handled
-                                        const { logout } = await import('@/app/actions');
-                                        await logout();
-                                    }}>
+                                    <form action={logout}>
                                         <button className="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 text-left">
                                             <code className="material-symbols-outlined text-lg mr-2">logout</code>
                                             Sign Out
@@ -400,11 +396,7 @@ export default function Header({ services }: { services?: any[] }) {
                                                 Dashboard
                                             </Link>
 
-                                            <form action="/auth/logout" onSubmit={async (e) => {
-                                                e.preventDefault();
-                                                const { logout } = await import('@/app/actions');
-                                                await logout();
-                                            }}>
+                                            <form action={logout}>
                                                 <button className="w-full flex items-center text-lg font-medium text-red-600 hover:text-red-700 text-left">
                                                     Sign Out
                                                 </button>

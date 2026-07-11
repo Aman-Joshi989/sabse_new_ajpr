@@ -37,7 +37,9 @@ export default function CartDrawer() {
     isCartOpen, 
     setIsCartOpen, 
     clearCart,
-    addToCart
+    addToCart,
+    paymentType,
+    setPaymentType
   } = useCart()
   const { user } = useAuth()
   const router = useRouter()
@@ -88,7 +90,7 @@ export default function CartDrawer() {
               amount: order.amount,
               currency: order.currency,
               name: "AJPR World",
-              description: "Service Advance Payment (50%)",
+              description: paymentType === 'full' ? "Full Service Payment (100%)" : "Service Advance Payment (50%)",
               order_id: order.id,
               handler: async function (response: any) {
                   // 2. On Success, Submit Order Request to Backend
@@ -103,6 +105,7 @@ export default function CartDrawer() {
                           advanceAmount: payableTotal, // Explicitly pass the calculated advance
                           paymentStatus: 'paid',
                           paymentId: response.razorpay_payment_id,
+                          paymentType: paymentType, // Pass the type (advance or full)
                           isGuest: isGuest
                       })
 
@@ -271,10 +274,27 @@ export default function CartDrawer() {
                   <span className="font-bold text-slate-700 dark:text-slate-300">₹{cartTotal.toLocaleString()}</span>
                 </div>
                 
-                <div className="space-y-1 py-3 border-y dark:border-slate-800">
-                    <div className="flex justify-between items-center text-sm text-slate-600 dark:text-slate-400">
-                      <span>Package Advance (50%)</span>
-                      <span>₹{(packageTotal * 0.5).toLocaleString()}</span>
+                <div className="space-y-3 py-3 border-y dark:border-slate-800">
+                    <div className="flex gap-4">
+                        <label className={`flex-1 flex flex-col p-3 border rounded-xl cursor-pointer transition-colors ${paymentType === 'advance' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/50'}`}>
+                            <div className="flex items-center gap-2 mb-1">
+                                <input type="radio" checked={paymentType === 'advance'} onChange={() => setPaymentType('advance')} className="w-4 h-4 text-blue-600" />
+                                <span className="font-bold text-sm text-slate-900 dark:text-white">50% Advance</span>
+                            </div>
+                            <span className="text-xs text-slate-500 pl-6">Pay half now, rest later</span>
+                        </label>
+                        <label className={`flex-1 flex flex-col p-3 border rounded-xl cursor-pointer transition-colors ${paymentType === 'full' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/50'}`}>
+                            <div className="flex items-center gap-2 mb-1">
+                                <input type="radio" checked={paymentType === 'full'} onChange={() => setPaymentType('full')} className="w-4 h-4 text-blue-600" />
+                                <span className="font-bold text-sm text-slate-900 dark:text-white">100% Full Payment</span>
+                            </div>
+                            <span className="text-xs text-slate-500 pl-6">Clear all dues upfront</span>
+                        </label>
+                    </div>
+
+                    <div className="flex justify-between items-center text-sm text-slate-600 dark:text-slate-400 mt-4">
+                      <span>Package Payment</span>
+                      <span>₹{(paymentType === 'full' ? packageTotal : packageTotal * 0.5).toLocaleString()}</span>
                     </div>
                     {addonTotal > 0 && (
                         <div className="flex justify-between items-center text-sm text-slate-600 dark:text-slate-400">
@@ -287,13 +307,15 @@ export default function CartDrawer() {
                 <div className="flex justify-between items-center pt-2">
                   <div className="flex flex-col">
                     <span className="font-bold text-lg text-slate-900 dark:text-white pr-2">Net Payable Now</span>
-                    <span className="text-[10px] text-blue-600 font-bold uppercase tracking-wider">Adv. Payment</span>
+                    <span className="text-[10px] text-blue-600 font-bold uppercase tracking-wider">{paymentType === 'full' ? 'Full Payment' : 'Adv. Payment'}</span>
                   </div>
                   <span className="text-2xl font-black text-blue-600">₹{payableTotal.toLocaleString()}</span>
                 </div>
-                <p className="text-[10px] text-slate-500 mt-2">
-                    Balance amount of ₹{(packageTotal * 0.5).toLocaleString()} will be due as per project milestones.
-                </p>
+                {paymentType === 'advance' && (
+                  <p className="text-[10px] text-slate-500 mt-2">
+                      Balance amount of ₹{(packageTotal * 0.5).toLocaleString()} will be due as per project milestones.
+                  </p>
+                )}
             </div>
             
             <Button 
@@ -301,7 +323,7 @@ export default function CartDrawer() {
               onClick={proceedToCheckout} 
               disabled={loading}
             >
-              {loading ? 'Initiating Secure Payment...' : 'Pay Advance Now'}
+              {loading ? 'Initiating Secure Payment...' : (paymentType === 'full' ? 'Pay Full Amount Now' : 'Pay Advance Now')}
             </Button>
           </div>
         )}

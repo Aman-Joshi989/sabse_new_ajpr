@@ -57,37 +57,43 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
       title: "Custom Web Development",
       description: "Engineering next-generation web applications, high-performance API architectures, and data-driven systems.",
       slug: "custom-web-development-ai-solutions",
-      category: "Systems"
+      category: "Systems",
+      keywords: ["React", "Next.js", "Node.js", "API Design"]
     },
     {
       title: "AI Chatbot Development",
       description: "Creating advanced LLM-powered virtual assistants with vector search integrations and flawless contextual retention.",
       slug: "ai-chatbot-development",
-      category: "AI"
+      category: "AI",
+      keywords: ["LLM", "Vector DB", "RAG", "Automation"]
     },
     {
       title: "Business Automation",
       description: "Streamlining operational friction by orchestrating intelligent autonomous workflows and pipeline automation.",
       slug: "business-ai-automation",
-      category: "Operations"
+      category: "Operations",
+      keywords: ["Workflow", "CI/CD", "Zapier", "Scripting"]
     },
     {
       title: "SaaS Architecture",
       description: "Building commercial-grade multi-tenant software-as-a-service platforms equipped with robust subscription tiers.",
       slug: "saas-product-development",
-      category: "Architecture"
+      category: "Architecture",
+      keywords: ["Multi-tenant", "Stripe", "Auth", "Scalable"]
     },
     {
       title: "Digital Growth SEO",
       description: "Fusing mathematical optimization with content generation to maximize online search engine reach.",
       slug: "ai-digital-marketing-services",
-      category: "Growth"
+      category: "Growth",
+      keywords: ["Technical SEO", "Core Web Vitals", "Content"]
     },
     {
       title: "Cloud Infrastructure",
       description: "Deploying highly available, auto-scaling cloud architectures on AWS, GCP, and Vercel networks.",
       slug: "cloud-solutions",
-      category: "Cloud"
+      category: "Cloud",
+      keywords: ["AWS", "GCP", "Docker", "Kubernetes"]
     }
   ];
 
@@ -189,65 +195,88 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           </div>
         </section>
 
-        {/* 4. LIVE SWARM ENGINE DEMO */}
-        <section className="py-16 relative overflow-hidden border-y border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0a0f1c]">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-          <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center">
-            <Badge className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-300 border-none font-bold tracking-widest px-4 py-1.5 uppercase text-xs mb-8 rounded-full">
-              Live AI Orchestration
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-tight">
-              Witness Multi-Agent Swarms
-            </h2>
-            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium mb-10 max-w-2xl mx-auto">
-              Interact with specialized, concurrent AI agent teams (Architect, Coder, Tester) running live automated workflows.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" className="h-12 px-8 text-base rounded-md bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-semibold transition-all shadow-lg" asChild>
-                <Link href="/chat-agents">Talk to Agent Swarms &rarr;</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="h-12 px-8 text-base rounded-md border-slate-200 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-900 font-semibold transition-all" asChild>
-                <Link href="/demo-ruflo">Launch Simulator</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+
 
         {/* 5. CORE ENGINEERING & AI SERVICES */}
-        <section id="solutions" className="py-16 md:py-20 relative">
+        <section id="solutions" className="py-24 relative bg-slate-50/50 dark:bg-[#050914] border-y border-slate-200 dark:border-slate-800/80">
+          {/* Decorative background elements */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent dark:from-blue-900/10 pointer-events-none"></div>
+          
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
-            <div className="mb-20 text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">
-                Engineering Capabilities
-              </h2>
-              <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
-                Deploying state-of-the-art architectures, custom intelligent models, and scaling infrastructures.
-              </p>
+            <div className="mb-16 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
+              <div className="max-w-3xl">
+                <Badge variant="outline" className="mb-6 border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+                  Our Expertise
+                </Badge>
+                <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6 leading-[1.1]">
+                  Engineering Capabilities
+                </h2>
+                <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-2xl">
+                  Deploying state-of-the-art architectures, custom intelligent models, and scaling infrastructures to drive your business forward.
+                </p>
+              </div>
+              <div className="hidden md:block shrink-0">
+                 <Button variant="outline" className="h-12 px-6 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0a0f1c] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold" asChild>
+                    <Link href="/services">View All Solutions</Link>
+                 </Button>
+              </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {displayServices.map((service: any, index: number) => {
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {displayServices.slice(0, 3).map((service: any, index: number) => {
                 const href = service.slug ? `/services/${service.slug}` : '#';
                 const tag = service.category || "Solution";
                 return (
-                  <Link href={href} key={index} className="group flex flex-col justify-between p-8 bg-white dark:bg-[#030712] border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-500 rounded-2xl hover:shadow-lg transition-all duration-300">
-                    <div className="space-y-4">
-                      <Badge variant="outline" className="border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-500 font-bold uppercase tracking-wider text-[10px] rounded-md">
-                        {tag}
-                      </Badge>
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 transition-colors">
-                        {service.title}
-                      </h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                        {service.description || service.desc}
-                      </p>
-                    </div>
-                    <div className="mt-8 flex items-center text-sm font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
-                      Explore Solution <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
+                  <MouseGlowCard key={index} className="h-full bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800/80 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-500">
+                    <Link href={href} className="flex flex-col h-full p-8 md:p-10 relative z-10 group/link">
+                      <div className="flex-grow space-y-6">
+                        <div className="flex items-center justify-between">
+                          <Badge variant="outline" className="border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 font-bold uppercase tracking-wider text-[10px] rounded-full px-3 py-1">
+                            {tag}
+                          </Badge>
+                          <div className="w-12 h-12 rounded-full bg-slate-50 dark:bg-slate-900 flex items-center justify-center border border-slate-100 dark:border-slate-800 group-hover/link:bg-blue-600 group-hover/link:border-blue-600 transition-all duration-300 shadow-sm">
+                            <ArrowRight className="w-5 h-5 text-slate-400 group-hover/link:text-white transition-colors group-hover/link:-rotate-45" />
+                          </div>
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 group-hover/link:text-blue-600 dark:group-hover/link:text-blue-400 transition-colors">
+                            {service.title}
+                          </h3>
+                          <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium line-clamp-4">
+                            {service.description || service.desc}
+                          </p>
+                          {service.keywords && service.keywords.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mt-5">
+                              {service.keywords.map((keyword: string, idx: number) => (
+                                <span key={idx} className="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 dark:bg-slate-800/50 px-2.5 py-1 rounded-md transition-colors group-hover/link:bg-blue-50 dark:group-hover/link:bg-blue-900/20 group-hover/link:text-blue-600 dark:group-hover/link:text-blue-400">
+                                  {keyword}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      
+                      <div className="mt-10 pt-6 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
+                        <span className="text-sm font-bold text-slate-900 dark:text-white group-hover/link:text-blue-600 dark:group-hover/link:text-blue-400 transition-colors">
+                          Explore Solution
+                        </span>
+                        <div className="flex space-x-1.5">
+                           <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 group-hover/link:bg-blue-400 transition-colors delay-75"></span>
+                           <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 group-hover/link:bg-blue-500 transition-colors delay-150"></span>
+                           <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 group-hover/link:bg-blue-600 transition-colors delay-300"></span>
+                        </div>
+                      </div>
+                    </Link>
+                  </MouseGlowCard>
                 );
               })}
+            </div>
+            
+            <div className="mt-12 text-center md:hidden">
+                 <Button variant="outline" className="h-12 w-full px-6 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0a0f1c] text-slate-700 dark:text-slate-300 font-semibold" asChild>
+                    <Link href="/services">View All Solutions</Link>
+                 </Button>
             </div>
           </div>
         </section>
@@ -360,44 +389,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           </div>
         </section>
 
-        {/* 8. LATEST BLOG POSTS SECTION */}
-        {blogs && blogs.length > 0 && (
-          <section className="py-16 border-y border-slate-200 dark:border-slate-800/80 bg-slate-50/50 dark:bg-[#0a0f1c]/50">
-            <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-              <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-6">
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-4">
-                    Engineering Log
-                  </h2>
-                  <p className="text-slate-600 dark:text-slate-400 font-medium max-w-xl">Deep dives into architecture, SEO mechanics, and startup growth strategies.</p>
-                </div>
-                <Button variant="outline" className="h-10 px-6 rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:bg-[#030712] transition-colors" asChild>
-                  <Link href="/blog">View All Entries</Link>
-                </Button>
-              </div>
-              <div className="grid md:grid-cols-3 gap-6">
-                {blogs.slice(0, 3).map((blog: any) => (
-                  <div key={blog.id} className="bg-white dark:bg-[#030712] border border-slate-200 dark:border-slate-800 p-8 rounded-2xl hover:border-slate-300 dark:hover:border-slate-600 transition-colors flex flex-col justify-between">
-                    <div>
-                      <Badge className="mb-6 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border-none rounded-md px-2.5 py-1">
-                        {blog.author || 'Architecture'}
-                      </Badge>
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 line-clamp-2">
-                        {blog.title}
-                      </h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-8 leading-relaxed">
-                        {blog.description || blog.seo_description || 'Explore the latest insights from our digital engineering experts.'}
-                      </p>
-                    </div>
-                    <Link href={`/blog/${blog.slug}`} className="text-sm font-bold text-slate-900 dark:text-white hover:text-blue-600 transition-colors flex items-center">
-                      Read Entry <ArrowRight className="w-4 h-4 ml-1.5" />
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+
 
         {/* 9. FINAL CTA SECTION */}
         <section className="py-20 relative text-center overflow-hidden bg-white dark:bg-[#030712]">

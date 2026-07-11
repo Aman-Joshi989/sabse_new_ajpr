@@ -93,13 +93,32 @@ export async function ensureDbInitialized() {
         ADD COLUMN IF NOT EXISTS founder_exp2_title VARCHAR(255) DEFAULT 'Business Automation',
         ADD COLUMN IF NOT EXISTS founder_exp2_desc TEXT DEFAULT 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
         ADD COLUMN IF NOT EXISTS founder_exp3_title VARCHAR(255) DEFAULT 'Execution Excellence',
-        ADD COLUMN IF NOT EXISTS founder_exp3_desc TEXT DEFAULT 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.';
+        ADD COLUMN IF NOT EXISTS founder_exp3_desc TEXT DEFAULT 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.',
+        ADD COLUMN IF NOT EXISTS global_price_multiplier NUMERIC DEFAULT 1.3334;
     `;
 
     // 5. Ensure projects has client_id
     await sql`
       ALTER TABLE projects 
         ADD COLUMN IF NOT EXISTS client_id INTEGER;
+    `;
+
+    // 6. Ensure payments table exists
+    await sql`
+      CREATE TABLE IF NOT EXISTS payments (
+        id SERIAL PRIMARY KEY,
+        client_name VARCHAR(255) NOT NULL,
+        client_email VARCHAR(255) NOT NULL,
+        client_phone VARCHAR(50),
+        amount NUMERIC NOT NULL,
+        currency VARCHAR(10) DEFAULT 'INR',
+        payment_status VARCHAR(50) DEFAULT 'completed',
+        payment_method VARCHAR(50) NOT NULL,
+        payment_id VARCHAR(255),
+        payment_type VARCHAR(50) DEFAULT 'advance',
+        order_details JSONB,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
     `;
 
     dbInitialized = true;
@@ -249,6 +268,26 @@ export async function getContactSubmissions() {
   return await dynamicSql`
     SELECT * FROM contact_submissions ORDER BY created_at DESC;
   `;
+}
+
+// --- Payments ---
+export async function getPayments() {
+  await ensureDbInitialized();
+  return await dynamicSql`
+    SELECT * FROM payments ORDER BY created_at DESC;
+  `;
+}
+
+export async function createPayment(data: any) {
+  await ensureDbInitialized();
+  const { client_name, client_email, client_phone, amount, currency, payment_status, payment_method, payment_id, payment_type, order_details } = data;
+  
+  const result = await dynamicSql`
+    INSERT INTO payments (client_name, client_email, client_phone, amount, currency, payment_status, payment_method, payment_id, payment_type, order_details)
+    VALUES (${client_name}, ${client_email}, ${client_phone}, ${amount}, ${currency || 'INR'}, ${payment_status || 'completed'}, ${payment_method}, ${payment_id}, ${payment_type || 'advance'}, ${JSON.stringify(order_details)}::jsonb)
+    RETURNING *;
+  `;
+  return result[0];
 }
 
 export async function getDevelopers() {
@@ -566,7 +605,8 @@ export async function getSiteSettings() {
         founder_bio, founder_badge, founder_linkedin, founder_github,
         founder_exp1_title, founder_exp1_desc,
         founder_exp2_title, founder_exp2_desc,
-        founder_exp3_title, founder_exp3_desc
+        founder_exp3_title, founder_exp3_desc,
+        global_price_multiplier
       ) 
       VALUES (
         1, 
@@ -591,7 +631,8 @@ export async function getSiteSettings() {
         'Business Automation',
         'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
         'Execution Excellence',
-        'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.'
+        'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.',
+        1.3334
       );
     `;
     const newSettings = await sql`SELECT * FROM site_settings WHERE id = 1;`;
@@ -614,7 +655,8 @@ export async function updateSiteSettings(data: any) {
     founder_bio, founder_badge, founder_linkedin, founder_github,
     founder_exp1_title, founder_exp1_desc,
     founder_exp2_title, founder_exp2_desc,
-    founder_exp3_title, founder_exp3_desc
+    founder_exp3_title, founder_exp3_desc,
+    global_price_multiplier
   } = data;
   
   await sql`
@@ -641,6 +683,7 @@ export async function updateSiteSettings(data: any) {
         founder_exp2_desc = ${founder_exp2_desc},
         founder_exp3_title = ${founder_exp3_title},
         founder_exp3_desc = ${founder_exp3_desc},
+        global_price_multiplier = ${global_price_multiplier},
         updated_at = CURRENT_TIMESTAMP
     WHERE id = 1;
   `;

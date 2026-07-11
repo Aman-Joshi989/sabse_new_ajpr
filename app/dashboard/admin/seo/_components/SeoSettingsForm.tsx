@@ -35,7 +35,8 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
         founder_exp2_title: initialSettings?.founder_exp2_title || 'Business Automation',
         founder_exp2_desc: initialSettings?.founder_exp2_desc || 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
         founder_exp3_title: initialSettings?.founder_exp3_title || 'Execution Excellence',
-        founder_exp3_desc: initialSettings?.founder_exp3_desc || 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.'
+        founder_exp3_desc: initialSettings?.founder_exp3_desc || 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.',
+        global_price_multiplier: initialSettings?.global_price_multiplier || 1.3334
     });
 
     const [saving, setSaving] = useState(false);
@@ -457,6 +458,35 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
                                     />
                                 </div>
                             </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* 5. Pricing Configuration Card */}
+                <Card className="bg-white dark:bg-[#292A2D] border border-[#DADCE0] dark:border-[#3C4043] shadow-none rounded-lg lg:col-span-2">
+                    <CardHeader className="border-b border-[#DADCE0] dark:border-[#3C4043]">
+                        <CardTitle className="text-lg font-medium text-[#202124] dark:text-white flex items-center gap-2">
+                            <Globe className="w-5 h-5 text-emerald-600 dark:text-[#81C995]" />
+                            Global Pricing Configuration
+                        </CardTitle>
+                        <CardDescription className="text-xs text-[#5F6368] dark:text-[#9AA0A6]">
+                            Dynamically scale all service prices across the platform. E.g., setting to 1.2 will automatically increase all base prices by 20%.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-6">
+                        <div className="space-y-2 max-w-sm">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Global Price Multiplier</label>
+                            <Input 
+                                name="global_price_multiplier" 
+                                type="number"
+                                step="0.0001"
+                                value={form.global_price_multiplier} 
+                                onChange={handleChange} 
+                                required 
+                                className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
+                                placeholder="1.0"
+                            />
+                            <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Default is 1.0 (Base Price). Increase this value to globally raise prices.</p>
                         </div>
                     </CardContent>
                 </Card>

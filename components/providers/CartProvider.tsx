@@ -24,6 +24,8 @@ interface CartContextType {
   payableTotal: number
   isCartOpen: boolean
   setIsCartOpen: (isOpen: boolean) => void
+  paymentType: 'advance' | 'full'
+  setPaymentType: (type: 'advance' | 'full') => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -31,6 +33,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([])
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [paymentType, setPaymentType] = useState<'advance' | 'full'>('advance')
   
   // Load cart from local storage on mount
   useEffect(() => {
@@ -51,8 +54,18 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addToCart = (item: Omit<CartItem, 'id'>) => {
     // Check if package already exists, only one package allowed
-    if (item.type === 'package' && cart.some(i => i.type === 'package')) {
-      return
+    if (item.type === 'package') {
+      const existingPackageIndex = cart.findIndex(i => i.type === 'package')
+      if (existingPackageIndex !== -1) {
+        // Replace the existing package with the new one and open cart
+        setCart((prev) => {
+          const newCart = [...prev]
+          newCart[existingPackageIndex] = { ...item, id: prev[existingPackageIndex].id }
+          return newCart
+        })
+        setIsCartOpen(true)
+        return
+      }
     }
 
     const newItem = { ...item, id: uuidv4() }
@@ -85,8 +98,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     .filter(item => item.type === 'addon')
     .reduce((total, item) => total + (item.price * item.quantity), 0)
 
-  // 50% of package + 100% of addons
-  const payableTotal = (packageTotal * 0.5) + addonTotal
+  // Calculate payable total based on paymentType
+  const payableTotal = paymentType === 'full' 
+    ? packageTotal + addonTotal 
+    : (packageTotal * 0.5) + addonTotal
 
   return (
     <CartContext.Provider value={{
@@ -100,7 +115,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       addonTotal,
       payableTotal,
       isCartOpen,
-      setIsCartOpen
+      setIsCartOpen,
+      paymentType,
+      setPaymentType
     }}>
       {children}
     </CartContext.Provider>

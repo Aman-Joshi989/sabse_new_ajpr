@@ -10,15 +10,17 @@ import { Metadata } from 'next';
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export const metadata: Metadata = {
-  title: 'AJPR World Blog – Systems, Automation & Growth',
-  description: 'Insightful articles about modern systems engineering, local SEO automation, and AI swarm orchestration.',
+  title: 'AJPR World Blog | Custom Software, AI Automation & SEO Insights',
+  description: 'Expert insights and strategies on custom software engineering, web development, AI automation, and local SEO to accelerate your digital growth.',
+  keywords: 'AJPR World blog, custom software development, web development insights, AI automation strategies, local SEO, digital marketing, systems architecture, digital growth, UI/UX design trends, enterprise tech, scalable startups',
   alternates: {
     canonical: 'https://ajprworld.com/blog',
   },
   openGraph: {
-    title: 'AJPR World Blog – Systems, Automation & Growth',
-    description: 'Insightful articles about modern systems engineering, local SEO automation, and AI swarm orchestration.',
+    title: 'AJPR World Blog | Software & Growth Insights',
+    description: 'Expert insights on custom software engineering, AI automation, and local SEO to accelerate your digital growth.',
     url: 'https://ajprworld.com/blog',
+    siteName: 'AJPR World',
     type: 'website',
     images: ['https://ajprworld.com/og-image.jpg']
   }
@@ -74,22 +76,47 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
   const featuredPost = filteredBlogs.length > 0 ? filteredBlogs[0] : null;
   const moreNews = filteredBlogs.length > 1 ? filteredBlogs.slice(1) : [];
 
+  const blogSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'AJPR World Blog',
+    description: 'Expert insights on custom software engineering, web development, AI automation, and SEO by AJPR World.',
+    url: 'https://ajprworld.com/blog',
+    publisher: {
+      '@type': 'Organization',
+      name: 'AJPR World',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://ajprworld.com/images/aman-joshi-profile.png'
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#030712] pt-24 pb-20 selection:bg-blue-200 dark:selection:bg-blue-900 transition-colors duration-300 font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
-        {/* Header Title */}
-        <header className="border-b border-slate-200 dark:border-slate-800/80 pb-6 pt-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-                  <span className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white text-xl font-bold shadow-md shadow-blue-500/20">B</span>
-                  AJPR World Blog
+        {/* Header Hero */}
+        <div className="relative py-16 md:py-24 rounded-[3rem] bg-gradient-to-br from-slate-100 to-white dark:from-slate-900 dark:to-[#090D1A] border border-slate-200/50 dark:border-slate-800/50 shadow-sm overflow-hidden mb-12 flex flex-col items-center text-center px-4 group">
+            <div className="absolute top-0 right-0 -mt-20 -mr-20 w-[400px] h-[400px] bg-blue-600/10 dark:bg-blue-600/20 blur-[100px] rounded-full pointer-events-none group-hover:bg-blue-600/20 transition-all duration-700" />
+            <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-[400px] h-[400px] bg-indigo-600/10 dark:bg-indigo-600/20 blur-[100px] rounded-full pointer-events-none group-hover:bg-indigo-600/20 transition-all duration-700" />
+            
+            <div className="relative z-10 max-w-3xl flex flex-col items-center">
+              <Badge className="mb-8 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border-none font-black tracking-widest px-4 py-1.5 uppercase text-[10px] shadow-sm">
+                Engineering & Growth Insights
+              </Badge>
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-8 text-slate-900 dark:text-white leading-[1.05]">
+                The <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Growth</span> Journal.
               </h1>
-              <p className="text-slate-500 dark:text-slate-450 text-sm mt-2 font-medium">
-                Insightful articles about modern systems engineering, local AEO, and AI swarm orchestration.
+              <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium max-w-2xl leading-relaxed">
+                Actionable tactics on custom web development, AI automation frameworks, and dominating local search rankings. Built for startups and scaling brands.
               </p>
             </div>
-        </header>
+        </div>
 
         {/* Category Filters */}
         <div className="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800/80 pb-6">

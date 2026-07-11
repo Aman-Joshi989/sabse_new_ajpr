@@ -52,12 +52,31 @@ const FALLBACK_IMAGES = [
   'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1600&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1496065187959-7f07b8353c55?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1505238680356-66780bb8b368?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1517433670267-08bbd4be890f?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1530893609608-32a9af3aa95c?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1484417894907-623942c8ee29?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1600&auto=format&fit=crop'
 ];
 
 function pickFallbackImage(seed: string): string {
+  // Try to generate a more random index that doesn't just rely on string character summing
   let hash = 0;
   for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) | 0;
-  return FALLBACK_IMAGES[Math.abs(hash) % FALLBACK_IMAGES.length];
+  // Mix it up with current day so repeated topics on different days get different images (optional, but good for testing)
+  const dayHash = new Date().getDate();
+  return FALLBACK_IMAGES[Math.abs(hash + dayHash) % FALLBACK_IMAGES.length];
 }
 
 const TOPIC_POOLS: string[] = [
@@ -135,19 +154,9 @@ Return ONLY the markdown starting with # H1 title.`,
 }
 
 async function generateImageForTopic(topic: string): Promise<string> {
-  try {
-    const imagePromptText = await callGPT([
-      { role: 'system', content: 'Write DALL-E 3 image prompts. Return ONLY the prompt, under 100 words, no explanation.' },
-      {
-        role: 'user',
-        content: `Create a DALL-E image prompt for a blog about: "${topic}". Style: modern flat vector illustration or editorial photography, professional, vibrant colors. CRITICAL: absolutely NO text, NO letters, NO words anywhere in the image.`,
-      },
-    ]);
-    return await generateDalleImage(imagePromptText.trim());
-  } catch (err: any) {
-    console.warn('[Cron] Image generation failed, using seeded fallback:', err.message);
-    return pickFallbackImage(topic);
-  }
+  // Bypassing DALL-E generation to save API costs. 
+  // Using the expanded free fallback image pool instead.
+  return pickFallbackImage(topic);
 }
 
 async function fetchTrendingHeadlines(): Promise<string> {

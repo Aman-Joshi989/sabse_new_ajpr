@@ -1,5 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import profilePic from '../../public/images/aman-joshi-profile.png'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { 
@@ -31,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       url: 'https://ajprworld.com/aman-joshi',
       type: 'profile',
-      images: ['https://ajprworld.com/og-image.jpg']
+      images: ['https://ajprworld.com/images/aman-joshi-profile.png']
     }
   }
 }
@@ -71,7 +73,7 @@ export default async function AmanJoshiPage() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: founderName,
-    image: 'https://ajprworld.com/images/aman-joshi.jpg',
+    image: 'https://ajprworld.com/images/aman-joshi-profile.png',
     url: 'https://ajprworld.com/aman-joshi',
     jobTitle: founderTitle,
     email: contactEmail,
@@ -132,9 +134,18 @@ export default async function AmanJoshiPage() {
           </div>
 
           <div className="lg:col-span-4 flex justify-center relative z-10">
-            <div className="w-64 h-64 md:w-80 md:h-80 rounded-[2.5rem] bg-gradient-to-br from-blue-600 to-indigo-600 p-1 flex items-center justify-center shadow-2xl relative overflow-hidden group">
-              <div className="absolute inset-0 bg-[#0B0F19] m-0.5 rounded-[2.4rem] flex items-center justify-center">
-                <span className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-indigo-400">AJ</span>
+            <div className="w-64 h-64 md:w-80 md:h-80 rounded-[2.5rem] bg-gradient-to-br from-blue-600 to-indigo-600 p-1 shadow-2xl relative overflow-hidden group hover:shadow-blue-500/40 hover:-translate-y-2 transition-all duration-500">
+              <div className="absolute inset-0 bg-slate-100 dark:bg-[#0B0F19] m-0.5 rounded-[2.4rem] overflow-hidden">
+                <Image 
+                  src={profilePic}
+                  alt={founderName}
+                  fill
+                  className="object-cover object-top scale-110 group-hover:scale-105 transition-transform duration-700"
+                  priority
+                  quality={100}
+                  placeholder="blur"
+                  sizes="(max-width: 768px) 256px, 320px"
+                />
               </div>
             </div>
           </div>

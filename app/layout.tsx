@@ -98,8 +98,12 @@ export default async function RootLayout({
   let blogs: any[] = [];
 
   try {
-    services = await getPublishedServices();
-    blogs = await getBlogs();
+    const [fetchedServices, fetchedBlogs] = await Promise.all([
+      getPublishedServices(),
+      getBlogs()
+    ]);
+    services = fetchedServices || [];
+    blogs = fetchedBlogs || [];
   } catch (e) {
     console.error("Failed to fetch dynamic content in layout:", e);
   }
@@ -138,7 +142,7 @@ export default async function RootLayout({
                 strategy="lazyOnload"
                 async
               />
-              <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
+              <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>

@@ -90,15 +90,15 @@ export default function SwarmSimulator() {
     activeAgent: 'Coordinator'
   })
   
-  const terminalEndRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
+  // Force scroll to top on mount to override browser scroll restoration
   useEffect(() => {
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' })
-    }
-  }, [logs])
+    window.scrollTo(0, 0);
+  }, []);
 
-  const handleStartSimulation = () => {
+  const handleStartSimulation = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     if (isRunning) return
     setIsRunning(true)
     setLogs([])
@@ -112,7 +112,8 @@ export default function SwarmSimulator() {
     })
   }
 
-  const handleStopSimulation = () => {
+  const handleStopSimulation = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     setIsRunning(false)
     setActiveStep(-1)
   }
@@ -225,19 +226,21 @@ export default function SwarmSimulator() {
           </div>
           <div className="flex items-center gap-3">
             <Button
+              type="button"
               size="lg"
-              className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 shadow-md shadow-blue-600/15 flex items-center gap-2 rounded-xl"
+              className={`bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 shadow-md shadow-blue-600/15 flex items-center gap-2 rounded-xl transition-all ${isRunning ? 'opacity-50 pointer-events-none cursor-not-allowed' : ''}`}
               onClick={handleStartSimulation}
-              disabled={isRunning}
+              aria-disabled={isRunning}
             >
-              <Play className="w-4 h-4 fill-current" /> Run Swarm
+              <Play className="w-4 h-4 fill-current" /> Execute Swarm
             </Button>
             <Button
+              type="button"
               size="lg"
               variant="outline"
-              className="border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-300 font-bold px-6 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900"
+              className={`border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-300 font-bold px-6 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-all ${!isRunning ? 'opacity-50 pointer-events-none cursor-not-allowed' : ''}`}
               onClick={handleStopSimulation}
-              disabled={!isRunning}
+              aria-disabled={!isRunning}
             >
               <Square className="w-4 h-4" /> Stop
             </Button>
@@ -452,44 +455,51 @@ export default function SwarmSimulator() {
               <span>UTF-8</span>
             </div>
           </div>
-          <CardContent className="p-6 font-mono text-xs md:text-sm text-slate-300 leading-relaxed min-h-[250px] max-h-[400px] overflow-y-auto flex flex-col gap-2.5">
+          <CardContent className="p-0">
+            <div ref={scrollContainerRef} className="p-6 font-mono text-xs md:text-sm text-slate-300 leading-relaxed h-[400px] overflow-y-auto flex flex-col-reverse gap-2.5">
             {logs.length === 0 && (
-              <div className="text-slate-500 flex flex-col items-center justify-center py-16 gap-3">
+              <div className="text-slate-500 flex flex-col items-center justify-center py-16 gap-3 h-full">
                 <Activity className="w-8 h-8 opacity-40 animate-pulse" />
-                <p className="font-medium text-slate-400">Click "Run Swarm" to initiate agent execution pipeline.</p>
+                <p className="font-medium text-slate-400">Click "Execute Swarm" to initiate agent execution pipeline.</p>
               </div>
             )}
-            {logs.map((log, idx) => (
-              <div key={idx} className="flex gap-4">
-                <span className="text-slate-600 select-none">{log.timestamp}</span>
-                <span
-                  className={`font-bold shrink-0 ${
-                    log.source === 'Coordinator'
-                      ? 'text-blue-400'
-                      : log.source === 'Architect'
-                      ? 'text-purple-400'
-                      : log.source === 'Coder'
-                      ? 'text-emerald-400'
-                      : log.source === 'Tester'
-                      ? 'text-amber-500'
-                      : log.source === 'Reviewer'
-                      ? 'text-cyan-400'
-                      : 'text-yellow-500'
-                  }`}
-                >
-                  [{log.source}]
-                </span>
-                
-                {log.type === 'code' ? (
-                  <div className="w-full bg-[#0a0f1f]/80 p-4 rounded-xl border border-slate-900 mt-2 font-mono text-slate-300 select-all overflow-x-auto whitespace-pre">
-                    <code>{log.message}</code>
+            
+            {/* Reverse the array so that flex-col-reverse naturally places the oldest at the top and newest at the bottom */}
+            {logs.length > 0 && (
+              <div className="flex flex-col gap-2.5">
+                {logs.map((log, idx) => (
+                  <div key={idx} className="flex gap-4">
+                    <span className="text-slate-600 select-none">{log.timestamp}</span>
+                    <span
+                      className={`font-bold shrink-0 ${
+                        log.source === 'Coordinator'
+                          ? 'text-blue-400'
+                          : log.source === 'Architect'
+                          ? 'text-purple-400'
+                          : log.source === 'Coder'
+                          ? 'text-emerald-400'
+                          : log.source === 'Tester'
+                          ? 'text-amber-500'
+                          : log.source === 'Reviewer'
+                          ? 'text-cyan-400'
+                          : 'text-yellow-500'
+                      }`}
+                    >
+                      [{log.source}]
+                    </span>
+                    
+                    {log.type === 'code' ? (
+                      <div className="w-full bg-[#0a0f1f]/80 p-4 rounded-xl border border-slate-900 mt-2 font-mono text-slate-300 select-all overflow-x-auto whitespace-pre">
+                        <code>{log.message}</code>
+                      </div>
+                    ) : (
+                      <span>{log.message}</span>
+                    )}
                   </div>
-                ) : (
-                  <span>{log.message}</span>
-                )}
+                ))}
               </div>
-            ))}
-            <div ref={terminalEndRef} />
+            )}
+            </div>
           </CardContent>
         </Card>
 

@@ -1,4 +1,4 @@
-import { StateGraph, START, END, MemorySaver } from "@langchain/langgraph";
+import { StateGraph, START, END, MemorySaver, Annotation } from "@langchain/langgraph";
 import { SystemMessage, HumanMessage } from "@langchain/core/messages";
 import { createLLM } from "./llm-client";
 import { webScraperTool } from "./tools/web-scraper";
@@ -6,64 +6,46 @@ import { injectSEOMetadataTool } from "./tools/file-editor";
 import { z } from "zod";
 
 // --- 1. Define State ---
-export interface SEOCrewState {
-  targetTopic: string;
-  targetUrl: string; // The competitor URL to analyze
-  targetFile: string; // Local .tsx file to inject SEO into
-  
-  // Phase 1: Research
-  keywords: string[];
-  searchIntent: string;
-  
-  // Phase 2: Competitor Analysis
-  competitorInsights: string;
-  
-  // Phase 3: Copywriting
-  finalSeoTitle: string;
-  finalSeoDescription: string;
-  
-  // Execution status
-  status: string;
-}
-
-const graphState = {
-  targetTopic: {
-    value: (x: string, y: string) => y ?? x,
+export const GraphAnnotation = Annotation.Root({
+  targetTopic: Annotation<string>({
+    reducer: (x, y) => y ?? x,
     default: () => "",
-  },
-  targetUrl: {
-    value: (x: string, y: string) => y ?? x,
+  }),
+  targetUrl: Annotation<string>({
+    reducer: (x, y) => y ?? x,
     default: () => "",
-  },
-  targetFile: {
-    value: (x: string, y: string) => y ?? x,
+  }),
+  targetFile: Annotation<string>({
+    reducer: (x, y) => y ?? x,
     default: () => "",
-  },
-  keywords: {
-    value: (x: string[], y: string[]) => y ?? x,
+  }),
+  keywords: Annotation<string[]>({
+    reducer: (x, y) => y ?? x,
     default: () => [],
-  },
-  searchIntent: {
-    value: (x: string, y: string) => y ?? x,
+  }),
+  searchIntent: Annotation<string>({
+    reducer: (x, y) => y ?? x,
     default: () => "",
-  },
-  competitorInsights: {
-    value: (x: string, y: string) => y ?? x,
+  }),
+  competitorInsights: Annotation<string>({
+    reducer: (x, y) => y ?? x,
     default: () => "",
-  },
-  finalSeoTitle: {
-    value: (x: string, y: string) => y ?? x,
+  }),
+  finalSeoTitle: Annotation<string>({
+    reducer: (x, y) => y ?? x,
     default: () => "",
-  },
-  finalSeoDescription: {
-    value: (x: string, y: string) => y ?? x,
+  }),
+  finalSeoDescription: Annotation<string>({
+    reducer: (x, y) => y ?? x,
     default: () => "",
-  },
-  status: {
-    value: (x: string, y: string) => y ?? x,
+  }),
+  status: Annotation<string>({
+    reducer: (x, y) => y ?? x,
     default: () => "started",
-  },
-};
+  }),
+});
+
+export type SEOCrewState = typeof GraphAnnotation.State;
 
 // --- 2. Define Nodes (Agents) ---
 
@@ -160,7 +142,7 @@ async function copywriterNode(state: SEOCrewState) {
 // --- 3. Build the Graph ---
 
 export const createSEOCrew = () => {
-  const workflow = new StateGraph({ channels: graphState })
+  const workflow = new StateGraph(GraphAnnotation)
     .addNode("researcher", researcherNode)
     .addNode("analyst", analystNode)
     .addNode("copywriter", copywriterNode)

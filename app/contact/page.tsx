@@ -9,23 +9,6 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import EmailLink from '@/components/EmailLink';
 
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: `Contact AJPR World | Book a Strategy Session with Our Experts`,
-  description: `Ready to scale? Contact our engineering and legal teams to discuss custom software development, AI swarm orchestration, and compliance consulting.`,
-  alternates: {
-    canonical: 'https://ajprworld.com/contact',
-  },
-  openGraph: {
-    title: `Contact AJPR World | Book a Strategy Session with Our Experts`,
-    description: `Ready to scale? Contact our engineering and legal teams to discuss custom software development, AI swarm orchestration, and compliance consulting.`,
-    url: 'https://ajprworld.com/contact',
-    type: 'website',
-    images: ['https://ajprworld.com/og-image.jpg']
-  }
-};
-
 
 const fadeInUp: any = {
     hidden: { opacity: 0, y: 30 },

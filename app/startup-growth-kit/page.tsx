@@ -6,24 +6,6 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import {
-
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: `LaunchPad Pro: All-In-One Startup Growth Kit | AJPR World`,
-  description: `Accelerate your launch with the LaunchPad Pro Startup Growth Kit. Get the essential digital infrastructure, software, and tools to scale your business instantly.`,
-  alternates: {
-    canonical: 'https://ajprworld.com/startup-growth-kit',
-  },
-  openGraph: {
-    title: `LaunchPad Pro: All-In-One Startup Growth Kit | AJPR World`,
-    description: `Accelerate your launch with the LaunchPad Pro Startup Growth Kit. Get the essential digital infrastructure, software, and tools to scale your business instantly.`,
-    url: 'https://ajprworld.com/startup-growth-kit',
-    type: 'website',
-    images: ['https://ajprworld.com/og-image.jpg']
-  }
-};
-
   Globe, Shield, Smartphone, Palette, Briefcase, Calculator,
   Zap, Code2, Users, CheckCircle, ArrowRight, Video, UserCog, Laptop
 } from 'lucide-react'

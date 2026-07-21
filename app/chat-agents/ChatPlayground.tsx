@@ -58,12 +58,11 @@ export default function ChatPlayground() {
   const [typingAgent, setTypingAgent] = useState<string | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   
+  const messagesEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, isTyping, typingThoughts])
 
   const toggleAgent = (key: 'architect' | 'coder' | 'tester' | 'security') => {
@@ -96,14 +95,26 @@ export default function ChatPlayground() {
       }
     ])
 
+    const promptLC = userPrompt.toLowerCase();
+    const isSecurity = promptLC.includes('sql') || promptLC.includes('inject') || promptLC.includes('rate limit');
+    const isTesting = promptLC.includes('test') || promptLC.includes('playwright');
+    
     // State array for workflow execution based on toggled agents
     const steps: { agent: string; thoughts: string; content: string; color: string; glowColor: string; avatar: React.ReactNode }[] = []
 
     if (activeAgents.architect) {
       steps.push({
         agent: 'Architect Agent',
-        thoughts: 'We need to design a modular, scalable architecture. Storing design specifications in memory namespace "swarm_collaboration". Focus on PostgreSQL table schema design.',
-        content: `### System Architecture Proposed:\n\n* **Tables**: \`users\`, \`subscriptions\`, \`billing_invoices\`.\n* **Relations**: One-to-many relationship from \`users\` to \`billing_invoices\`. One-to-one mapping for \`subscriptions\`.\n* **Database Provider**: Neon serverless Postgres for instant scale.`,
+        thoughts: isSecurity 
+          ? 'Analyzing attack vectors. Designing robust middleware rate-limiting architecture.' 
+          : isTesting 
+          ? 'Designing E2E testing framework architecture using Playwright.' 
+          : 'We need to design a modular, scalable architecture. Focus on database schema and API structure.',
+        content: isSecurity
+          ? `### Security Architecture Proposed:\n\n* **Layer 1**: Cloudflare WAF for IP reputation.\n* **Layer 2**: Redis token-bucket rate limiting (100 req/min).\n* **Layer 3**: ORM parameterized queries for zero SQL injection.`
+          : isTesting
+          ? `### Testing Strategy:\n\n* **Tooling**: Playwright for cross-browser E2E.\n* **Coverage**: Target signup flow, login flow, and dashboard hydration.\n* **CI/CD**: GitHub Actions pipeline integration.`
+          : `### System Architecture Proposed:\n\n* **Tables**: \`users\`, \`subscriptions\`.\n* **Relations**: One-to-one mapping for \`subscriptions\`.\n* **Database Provider**: Neon serverless Postgres for instant scale.`,
         color: 'text-purple-400 border-purple-500/20 bg-purple-500/5',
         glowColor: 'shadow-[0_0_15px_rgba(168,85,247,0.1)]',
         avatar: <Layers className="w-5 h-5 text-purple-400" />
@@ -113,8 +124,12 @@ export default function ChatPlayground() {
     if (activeAgents.coder) {
       steps.push({
         agent: 'Coder Agent',
-        thoughts: 'Implementing prisma client models based on the schema design stored by Architect. Optimizing column type mappings and indexing constraints.',
-        content: `### Database Models (Prisma Schema):\n\n\`\`\`prisma\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  name      String?\n  createdAt DateTime @default(now())\n  subscription Subscription?\n}\n\`\`\``,
+        thoughts: 'Implementing required code blocks based on Architect specifications. Synthesizing optimal typescript logic.',
+        content: isSecurity
+          ? `### Rate Limiting Middleware (Redis):\n\n\`\`\`typescript\nimport { Redis } from '@upstash/redis'\nimport { NextRequest, NextResponse } from 'next/server'\n\nconst redis = new Redis({\n  url: process.env.UPSTASH_URL!,\n  token: process.env.UPSTASH_TOKEN!\n})\n\nexport async function middleware(req: NextRequest) {\n  const ip = req.ip ?? '127.0.0.1'\n  // Rate limit check logic here\n  return NextResponse.next()\n}\n\`\`\``
+          : isTesting
+          ? `### Playwright Signup Test:\n\n\`\`\`typescript\nimport { test, expect } from '@playwright/test'\n\ntest('User can sign up', async ({ page }) => {\n  await page.goto('/signup');\n  await page.fill('input[name="email"]', 'test@ajprworld.com');\n  await page.fill('input[name="password"]', 'SecurePass123!');\n  await page.click('button[type="submit"]');\n  await expect(page).toHaveURL('/dashboard');\n});\n\`\`\``
+          : `### Database Models (Prisma Schema):\n\n\`\`\`prisma\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  name      String?\n  createdAt DateTime @default(now())\n  subscription Subscription?\n}\n\`\`\``,
         color: 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5',
         glowColor: 'shadow-[0_0_15px_rgba(16,185,129,0.1)]',
         avatar: <Bot className="w-5 h-5 text-emerald-400" />
@@ -124,8 +139,10 @@ export default function ChatPlayground() {
     if (activeAgents.security) {
       steps.push({
         agent: 'Security Agent',
-        thoughts: 'Reviewing SQL design and database configurations. Checking for indexing performance gaps and data isolation rules. Validating uuid integrity.',
-        content: `### Security Audit Result: PASS\n\n* **PII Protection**: Encryption recommended for sensitive billing details.\n* **Vulnerabilities**: Verified zero raw SQL entrypoints. Input queries use parameterized commands natively via Prisma.`,
+        thoughts: 'Reviewing code implementation. Checking for OWASP Top 10 vulnerabilities.',
+        content: isSecurity
+          ? `### Audit Result: PASS\n\n* **Rate Limiting**: Redis implementation verified.\n* **SQLi**: Parameterized ORM queries confirmed safe.`
+          : `### Audit Result: PASS\n\n* **PII Protection**: Encryption recommended for sensitive billing details.\n* **Vulnerabilities**: Verified zero raw SQL entrypoints. Input queries use parameterized commands natively via Prisma.`,
         color: 'text-cyan-400 border-cyan-500/20 bg-cyan-500/5',
         glowColor: 'shadow-[0_0_15px_rgba(6,182,212,0.1)]',
         avatar: <Eye className="w-5 h-5 text-cyan-400" />
@@ -135,8 +152,10 @@ export default function ChatPlayground() {
     if (activeAgents.tester) {
       steps.push({
         agent: 'Tester Agent',
-        thoughts: 'Creating unit tests to validate the Prisma client connection and model integrity constraints.',
-        content: `### Test Suite Mock-up:\n\n\`\`\`typescript\ntest('should create user record', async () => {\n  const user = await db.user.create({\n    data: { email: 'test@ajprworld.com' }\n  });\n  expect(user.id).toBeDefined();\n});\n\`\`\``,
+        thoughts: 'Creating unit tests to validate edge cases.',
+        content: isSecurity
+          ? `### Edge Case Validation:\n\n\`\`\`typescript\ntest('should block 101st request', async () => {\n  // Simulate 100 requests\n  const res = await hitEndpoint();\n  expect(res.status).toBe(429);\n});\n\`\`\``
+          : `### Test Suite Mock-up:\n\n\`\`\`typescript\ntest('should create user record', async () => {\n  const user = await db.user.create({\n    data: { email: 'test@ajprworld.com' }\n  });\n  expect(user.id).toBeDefined();\n});\n\`\`\``,
         color: 'text-amber-400 border-amber-500/20 bg-amber-500/5',
         glowColor: 'shadow-[0_0_15px_rgba(245,158,11,0.1)]',
         avatar: <CheckCircle2 className="w-5 h-5 text-amber-400" />
@@ -349,8 +368,9 @@ export default function ChatPlayground() {
             return (
               <motion.div
                 key={msg.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                 className={`flex gap-4 max-w-4xl ${isUser ? 'ml-auto flex-row-reverse' : ''}`}
               >
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border transition-all ${msg.color} ${msg.glowColor}`}>
@@ -414,8 +434,9 @@ export default function ChatPlayground() {
 
           {isTyping && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
               className="flex gap-4 max-w-4xl"
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border text-purple-400 border-purple-500/20 bg-purple-500/5 animate-pulse shadow-[0_0_15px_rgba(168,85,247,0.1)]">
@@ -437,6 +458,7 @@ export default function ChatPlayground() {
               </div>
             </motion.div>
           )}
+          <div ref={messagesEndRef} className="h-1" />
 
         </div>
 
@@ -448,7 +470,7 @@ export default function ChatPlayground() {
             {PRESETS.map((p, idx) => (
               <button
                 key={idx}
-                onClick={() => setInput(p.replace(/[^a-zA-Z0-9\s]/g, '').trim())}
+                onClick={() => setInput(p)}
                 className="text-[10px] border border-slate-900 hover:border-slate-800 bg-slate-900/20 text-slate-400 hover:text-slate-200 px-4 py-2 rounded-full transition-all duration-300 font-bold uppercase tracking-wider max-w-xs truncate"
                 disabled={isTyping}
               >

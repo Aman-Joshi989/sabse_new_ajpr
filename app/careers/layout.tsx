@@ -1,14 +1,13 @@
 import { Metadata } from 'next'
+import { seoOverrides } from '@/lib/seo-overrides'
 
 export const metadata: Metadata = {
-  title: 'Careers – Build the Future of Autonomous Systems | AJPR World',
-  description: 'Join our team of systems engineers, automation specialists, and legal professionals. Discover active job openings at AJPR World.',
+  ...seoOverrides['/careers'],
   alternates: {
     canonical: 'https://ajprworld.com/careers',
   },
   openGraph: {
-    title: 'Careers – Build the Future of Autonomous Systems | AJPR World',
-    description: 'Join our team of systems engineers, automation specialists, and legal professionals. Discover active job openings at AJPR World.',
+    ...seoOverrides['/careers'],
     url: 'https://ajprworld.com/careers',
     type: 'website',
     images: ['https://ajprworld.com/og-image.jpg']

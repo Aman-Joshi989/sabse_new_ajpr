@@ -1,16 +1,15 @@
 import { Metadata } from 'next'
 import SwarmSimulator from './SwarmSimulator'
+import { seoOverrides } from '@/lib/seo-overrides'
 
 export const metadata: Metadata = {
-  title: 'RuFlo V3 Swarm Simulator – AI Agent Orchestration | AJPR World',
-  description: 'Visualize and interact with the RuFlo V3 multi-agent swarm in real-time. Witness Raft consensus, collaborative code writing, and security auditing live.',
+  ...seoOverrides['/demo-ruflo'],
   keywords: 'RuFlo, AI agents, agent swarm, swarm simulator, multi-agent system, AI coding assistant, AJPR World',
   alternates: {
     canonical: 'https://ajprworld.com/demo-ruflo',
   },
   openGraph: {
-    title: 'RuFlo V3 Swarm Simulator – AI Agent Orchestration | AJPR World',
-    description: 'Visualize and interact with the RuFlo V3 multi-agent swarm in real-time.',
+    ...seoOverrides['/demo-ruflo'],
     url: 'https://ajprworld.com/demo-ruflo',
     type: 'website',
     images: ['https://ajprworld.com/og-image.jpg']

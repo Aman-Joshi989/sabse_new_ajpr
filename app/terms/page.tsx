@@ -1,4 +1,19 @@
 import EmailLink from '@/components/EmailLink';
+import { Metadata } from 'next'
+import { seoOverrides } from '@/lib/seo-overrides'
+
+export const metadata: Metadata = {
+  ...seoOverrides['/terms'],
+  alternates: {
+    canonical: 'https://ajprworld.com/terms',
+  },
+  openGraph: {
+    ...seoOverrides['/terms'],
+    url: 'https://ajprworld.com/terms',
+    type: 'website',
+    images: ['https://ajprworld.com/og-image.jpg']
+  }
+}
 
 export default function TermsPage() {
     return (

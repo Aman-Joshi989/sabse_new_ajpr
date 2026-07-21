@@ -14,6 +14,24 @@ import { Label } from '@/components/ui/label'
 import Script from 'next/script'
 import { createRazorpayOrder } from '@/app/actions'
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: `Book a 30-Minute Strategy Session | AJPR World`,
+  description: `Schedule a 30-minute discovery call to discuss your business goals, software needs, and AI automation requirements with the AJPR World team.`,
+  alternates: {
+    canonical: 'https://ajprworld.com/book-call',
+  },
+  openGraph: {
+    title: `Book a 30-Minute Strategy Session | AJPR World`,
+    description: `Schedule a 30-minute discovery call to discuss your business goals, software needs, and AI automation requirements with the AJPR World team.`,
+    url: 'https://ajprworld.com/book-call',
+    type: 'website',
+    images: ['https://ajprworld.com/og-image.jpg']
+  }
+};
+
+
 const timeSlots = [
     '09:30 AM',
     '11:00 AM',

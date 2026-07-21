@@ -9,6 +9,24 @@ import {
 import React from 'react'
 import { getPublishedServices } from '@/lib/db/queries'
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: `Premium Technology Services | Software, AI & DevOps | AJPR World`,
+  description: `We engineer growth. Explore our premium services including custom web development, SaaS product engineering, AI voice agents, and technical SEO.`,
+  alternates: {
+    canonical: 'https://ajprworld.com/services',
+  },
+  openGraph: {
+    title: `Premium Technology Services | Software, AI & DevOps | AJPR World`,
+    description: `We engineer growth. Explore our premium services including custom web development, SaaS product engineering, AI voice agents, and technical SEO.`,
+    url: 'https://ajprworld.com/services',
+    type: 'website',
+    images: ['https://ajprworld.com/og-image.jpg']
+  }
+};
+
+
 // Mapping string names from DB to Lucide icons
 const iconMap: Record<string, any> = {
     'Code2': Code2,

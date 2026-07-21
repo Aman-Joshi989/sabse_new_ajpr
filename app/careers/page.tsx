@@ -7,6 +7,24 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { 
+
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: `Careers at AJPR World | Build Autonomous AI & Software Systems`,
+  description: `Join AJPR World's elite team of systems engineers, AI automation specialists, and legal professionals. Discover our active openings and build the future.`,
+  alternates: {
+    canonical: 'https://ajprworld.com/careers',
+  },
+  openGraph: {
+    title: `Careers at AJPR World | Build Autonomous AI & Software Systems`,
+    description: `Join AJPR World's elite team of systems engineers, AI automation specialists, and legal professionals. Discover our active openings and build the future.`,
+    url: 'https://ajprworld.com/careers',
+    type: 'website',
+    images: ['https://ajprworld.com/og-image.jpg']
+  }
+};
+
   Briefcase, MapPin, Clock, ArrowRight, Sparkles, 
   Users, Target, Trophy, Laptop, ShieldCheck, Heart 
 } from 'lucide-react'

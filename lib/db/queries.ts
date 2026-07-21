@@ -1,5 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { unstable_noStore as noStore } from "next/cache";
+import { submitToIndexNow } from "../indexnow";
 
 // Instantiate Neon client once globally to reuse TCP/TLS keep-alive connections
 let cachedClient: any = null;
@@ -50,81 +51,84 @@ export function invalidateLayoutCache() {
 
 export async function ensureDbInitialized() {
   if (dbInitialized) return;
+  dbInitialized = true; // Mark immediately to prevent concurrent triggers
   const url = process.env.DATABASE_URL;
   if (!url) return;
 
-  try {
-    // 1. Ensure site_settings table exists
-    await initSiteSettingsTable();
+  // Run in background without blocking the request (improves TTFB)
+  (async () => {
+    try {
+      // 1. Ensure site_settings table exists
+      await initSiteSettingsTable();
 
-    // 2. Ensure contact_submissions columns exist
-    await sql`
-      ALTER TABLE contact_submissions 
-        ADD COLUMN IF NOT EXISTS company_name TEXT,
-        ADD COLUMN IF NOT EXISTS website_url TEXT,
-        ADD COLUMN IF NOT EXISTS monthly_revenue TEXT,
-        ADD COLUMN IF NOT EXISTS budget_range TEXT,
-        ADD COLUMN IF NOT EXISTS building_text TEXT,
-        ADD COLUMN IF NOT EXISTS blockers_text TEXT,
-        ADD COLUMN IF NOT EXISTS phone TEXT;
-    `;
+      // 2. Ensure contact_submissions columns exist
+      await sql`
+        ALTER TABLE contact_submissions 
+          ADD COLUMN IF NOT EXISTS company_name TEXT,
+          ADD COLUMN IF NOT EXISTS website_url TEXT,
+          ADD COLUMN IF NOT EXISTS monthly_revenue TEXT,
+          ADD COLUMN IF NOT EXISTS budget_range TEXT,
+          ADD COLUMN IF NOT EXISTS building_text TEXT,
+          ADD COLUMN IF NOT EXISTS blockers_text TEXT,
+          ADD COLUMN IF NOT EXISTS phone TEXT;
+      `;
 
-    // 3. Ensure blog_posts columns exist
-    await sql`
-      ALTER TABLE blog_posts 
-        ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology',
-        ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255),
-        ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);
-    `;
+      // 3. Ensure blog_posts columns exist
+      await sql`
+        ALTER TABLE blog_posts 
+          ADD COLUMN IF NOT EXISTS category VARCHAR(255) DEFAULT 'Technology',
+          ADD COLUMN IF NOT EXISTS affiliate_product_slug VARCHAR(255),
+          ADD COLUMN IF NOT EXISTS amazon_asin VARCHAR(50);
+      `;
 
-    // 4. Ensure site_settings columns exist
-    await sql`
-      ALTER TABLE site_settings 
-        ADD COLUMN IF NOT EXISTS contact_email VARCHAR(255) DEFAULT 'ajprworld@gmail.com',
-        ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(100) DEFAULT '+91 9997205257',
-        ADD COLUMN IF NOT EXISTS founder_name VARCHAR(255) DEFAULT 'Aman Joshi',
-        ADD COLUMN IF NOT EXISTS founder_title VARCHAR(255) DEFAULT 'Founder & Systems Architect',
-        ADD COLUMN IF NOT EXISTS founder_bio TEXT DEFAULT 'I partner with high-growth startups and established brands to build robust digital infrastructures, automate complex backend workloads, and integrate secure enterprise-grade systems.',
-        ADD COLUMN IF NOT EXISTS founder_badge VARCHAR(255) DEFAULT 'Founder Profile',
-        ADD COLUMN IF NOT EXISTS founder_linkedin VARCHAR(255) DEFAULT 'https://www.linkedin.com/in/aman-joshi-/',
-        ADD COLUMN IF NOT EXISTS founder_github VARCHAR(255) DEFAULT 'https://github.com/Aman-Joshi989',
-        ADD COLUMN IF NOT EXISTS founder_exp1_title VARCHAR(255) DEFAULT 'Systems Architecting',
-        ADD COLUMN IF NOT EXISTS founder_exp1_desc TEXT DEFAULT 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.',
-        ADD COLUMN IF NOT EXISTS founder_exp2_title VARCHAR(255) DEFAULT 'Business Automation',
-        ADD COLUMN IF NOT EXISTS founder_exp2_desc TEXT DEFAULT 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
-        ADD COLUMN IF NOT EXISTS founder_exp3_title VARCHAR(255) DEFAULT 'Execution Excellence',
-        ADD COLUMN IF NOT EXISTS founder_exp3_desc TEXT DEFAULT 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.',
-        ADD COLUMN IF NOT EXISTS global_price_multiplier NUMERIC DEFAULT 1.3334;
-    `;
+      // 4. Ensure site_settings columns exist
+      await sql`
+        ALTER TABLE site_settings 
+          ADD COLUMN IF NOT EXISTS contact_email VARCHAR(255) DEFAULT 'ajprworld@gmail.com',
+          ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(100) DEFAULT '+91 9997205257',
+          ADD COLUMN IF NOT EXISTS founder_name VARCHAR(255) DEFAULT 'Aman Joshi',
+          ADD COLUMN IF NOT EXISTS founder_title VARCHAR(255) DEFAULT 'Founder & Systems Architect',
+          ADD COLUMN IF NOT EXISTS founder_bio TEXT DEFAULT 'I partner with high-growth startups and established brands to build robust digital infrastructures, automate complex backend workloads, and integrate secure enterprise-grade systems.',
+          ADD COLUMN IF NOT EXISTS founder_badge VARCHAR(255) DEFAULT 'Founder Profile',
+          ADD COLUMN IF NOT EXISTS founder_linkedin VARCHAR(255) DEFAULT 'https://www.linkedin.com/in/aman-joshi-/',
+          ADD COLUMN IF NOT EXISTS founder_github VARCHAR(255) DEFAULT 'https://github.com/Aman-Joshi989',
+          ADD COLUMN IF NOT EXISTS founder_exp1_title VARCHAR(255) DEFAULT 'Systems Architecting',
+          ADD COLUMN IF NOT EXISTS founder_exp1_desc TEXT DEFAULT 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.',
+          ADD COLUMN IF NOT EXISTS founder_exp2_title VARCHAR(255) DEFAULT 'Business Automation',
+          ADD COLUMN IF NOT EXISTS founder_exp2_desc TEXT DEFAULT 'Eliminating manual business overhead by scripting custom autonomous workflows, database triggers, and third-party API orchestrations.',
+          ADD COLUMN IF NOT EXISTS founder_exp3_title VARCHAR(255) DEFAULT 'Execution Excellence',
+          ADD COLUMN IF NOT EXISTS founder_exp3_desc TEXT DEFAULT 'Maintaining rigorous, tech-debt-free clean code guidelines using typescript and modern frameworks to ensure perfect product delivery.',
+          ADD COLUMN IF NOT EXISTS global_price_multiplier NUMERIC DEFAULT 1.3334;
+      `;
 
-    // 5. Ensure projects has client_id
-    await sql`
-      ALTER TABLE projects 
-        ADD COLUMN IF NOT EXISTS client_id INTEGER;
-    `;
+      // 5. Ensure projects has client_id
+      await sql`
+        ALTER TABLE projects 
+          ADD COLUMN IF NOT EXISTS client_id INTEGER;
+      `;
 
-    // 6. Ensure payments table exists
-    await sql`
-      CREATE TABLE IF NOT EXISTS payments (
-        id SERIAL PRIMARY KEY,
-        client_name VARCHAR(255) NOT NULL,
-        client_email VARCHAR(255) NOT NULL,
-        client_phone VARCHAR(50),
-        amount NUMERIC NOT NULL,
-        currency VARCHAR(10) DEFAULT 'INR',
-        payment_status VARCHAR(50) DEFAULT 'completed',
-        payment_method VARCHAR(50) NOT NULL,
-        payment_id VARCHAR(255),
-        payment_type VARCHAR(50) DEFAULT 'advance',
-        order_details JSONB,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    `;
-
-    dbInitialized = true;
-  } catch (err) {
-    console.error("Database lazy-initialization migration failed:", err);
-  }
+      // 6. Ensure payments table exists
+      await sql`
+        CREATE TABLE IF NOT EXISTS payments (
+          id SERIAL PRIMARY KEY,
+          client_name VARCHAR(255) NOT NULL,
+          client_email VARCHAR(255) NOT NULL,
+          client_phone VARCHAR(50),
+          amount NUMERIC NOT NULL,
+          currency VARCHAR(10) DEFAULT 'INR',
+          payment_status VARCHAR(50) DEFAULT 'completed',
+          payment_method VARCHAR(50) NOT NULL,
+          payment_id VARCHAR(255),
+          payment_type VARCHAR(50) DEFAULT 'advance',
+          order_details JSONB,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+    } catch (err) {
+      console.error("Database lazy-initialization migration failed:", err);
+      dbInitialized = false;
+    }
+  })();
 }
 
 // --- Projects & Financials ---
@@ -339,6 +343,7 @@ export async function createPortfolioItem(data: any) {
     INSERT INTO portfolio_items (title, url, category, tags, description, gradient, accent, year, featured, stats)
     VALUES (${title}, ${url}, ${category}, ${tags}, ${description}, ${gradient}, ${accent}, ${year}, ${featured}, ${JSON.stringify(stats)});
   `;
+  submitToIndexNow('portfolio');
   return { success: true };
 }
 
@@ -359,12 +364,14 @@ export async function updatePortfolioItem(id: number, data: any) {
         stats = ${JSON.stringify(stats)}
     WHERE id = ${id};
   `;
+  submitToIndexNow('portfolio');
   return { success: true };
 }
 
 export async function deletePortfolioItem(id: number) {
   invalidateLayoutCache();
   await sql`DELETE FROM portfolio_items WHERE id = ${id}`;
+  submitToIndexNow('portfolio');
   return { success: true };
 }
 
@@ -418,6 +425,7 @@ export async function createBlog(data: any) {
     INSERT INTO blog_posts (slug, title, excerpt, content, category, author, cover_image, published, affiliate_product_slug, amazon_asin)
     VALUES (${slug}, ${title}, ${excerpt}, ${content}, ${category}, ${author}, ${cover_image}, ${published ?? true}, ${affiliate_product_slug ?? null}, ${amazon_asin ?? null});
   `;
+  if (published ?? true) submitToIndexNow(`blog/${slug}`);
   return { success: true, slug };
 }
 
@@ -450,12 +458,16 @@ export async function updateBlog(id: number, data: any) {
         affiliate_product_slug = ${affiliate_product_slug ?? null}, amazon_asin = ${amazon_asin ?? null}
     WHERE id = ${id};
   `;
+  if (published ?? true) submitToIndexNow(`blog/${slug}`);
   return { success: true };
 }
 
 export async function deleteBlog(id: number) {
   invalidateLayoutCache();
+  // Fetch slug before deleting to ping IndexNow
+  const blog = await getBlogById(id);
   await sql`DELETE FROM blog_posts WHERE id = ${id};`;
+  if (blog?.slug) submitToIndexNow(`blog/${blog.slug}`);
   return { success: true };
 }
 
@@ -503,6 +515,7 @@ export async function createService(data: any) {
     INSERT INTO services (sku, title, slug, category, description, features, price, price_type, delivery_time, icon_name, gradient, published)
     VALUES (${sku}, ${title}, ${slug}, ${category}, ${description}, ${JSON.stringify(features)}::jsonb, ${price}, ${price_type}, ${delivery_time}, ${icon_name}, ${gradient}, ${published ?? true});
   `;
+  if (published ?? true) submitToIndexNow(`services/${slug}`);
   return { success: true };
 }
 
@@ -516,12 +529,15 @@ export async function updateService(id: number, data: any) {
         delivery_time = ${delivery_time}, icon_name = ${icon_name}, gradient = ${gradient}, published = ${published}
     WHERE id = ${id};
   `;
+  if (published ?? true) submitToIndexNow(`services/${slug}`);
   return { success: true };
 }
 
 export async function deleteService(id: number) {
   invalidateLayoutCache();
+  const service = await getServiceById(id);
   await sql`DELETE FROM services WHERE id = ${id}`;
+  if (service?.slug) submitToIndexNow(`services/${service.slug}`);
   return { success: true };
 }
 

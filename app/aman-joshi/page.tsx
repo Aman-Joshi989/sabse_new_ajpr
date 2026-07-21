@@ -10,10 +10,28 @@ import {
 import { getPortfolioItems, getSiteSettings } from '@/lib/db/queries'
 import { Metadata } from 'next'
 import { cleanMetaDescription } from '@/app/layout'
-
+import { seoOverrides } from '@/lib/seo-overrides'
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export async function generateMetadata(): Promise<Metadata> {
+  const override = seoOverrides['/aman-joshi'];
+  if (override) {
+    return {
+      title: override.title,
+      description: override.description,
+      alternates: {
+        canonical: 'https://ajprworld.com/aman-joshi',
+      },
+      openGraph: {
+        title: override.title,
+        description: override.description,
+        url: 'https://ajprworld.com/aman-joshi',
+        type: 'website',
+        images: ['https://ajprworld.com/og-image.jpg']
+      }
+    };
+  }
+
   const settings = await getSiteSettings();
   const founderName = settings?.founder_name || 'Aman Joshi';
   const founderTitle = settings?.founder_title || 'Founder & Systems Architect';

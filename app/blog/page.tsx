@@ -6,19 +6,18 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowRight, BookOpen, Clock, Tag } from 'lucide-react';
 import React from 'react';
 import { Metadata } from 'next';
+import { seoOverrides } from '@/lib/seo-overrides';
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export const metadata: Metadata = {
-  title: 'AJPR World Blog | Custom Software, AI Automation & SEO Insights',
-  description: 'Expert insights and strategies on custom software engineering, web development, AI automation, and local SEO to accelerate your digital growth.',
+  ...seoOverrides['/blog'],
   keywords: 'AJPR World blog, custom software development, web development insights, AI automation strategies, local SEO, digital marketing, systems architecture, digital growth, UI/UX design trends, enterprise tech, scalable startups',
   alternates: {
     canonical: 'https://ajprworld.com/blog',
   },
   openGraph: {
-    title: 'AJPR World Blog | Software & Growth Insights',
-    description: 'Expert insights on custom software engineering, AI automation, and local SEO to accelerate your digital growth.',
+    ...seoOverrides['/blog'],
     url: 'https://ajprworld.com/blog',
     siteName: 'AJPR World',
     type: 'website',

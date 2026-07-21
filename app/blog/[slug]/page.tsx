@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Metadata } from 'next';
+import { seoOverrides } from '@/lib/seo-overrides';
 import { ArticleSchema } from '@/components/schema/ArticleSchema';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { FAQSchema } from '@/components/schema/FAQSchema';
@@ -154,6 +155,23 @@ function getSeoTitle(title: string): string {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
+  
+  const override = seoOverrides[`/blog/${resolvedParams.slug}`];
+  if (override) {
+      return {
+          title: override.title,
+          description: override.description,
+          openGraph: {
+              title: override.title,
+              description: override.description,
+              url: `https://ajprworld.com/blog/${resolvedParams.slug}`,
+              siteName: 'AJPR World',
+              locale: 'en_US',
+              type: 'article',
+          }
+      };
+  }
+
   const blog = await getBlogBySlug(resolvedParams.slug) as BlogPost | undefined;
   if (!blog) return { title: 'Post Not Found' };
 

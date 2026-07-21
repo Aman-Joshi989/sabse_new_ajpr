@@ -1,4 +1,19 @@
 import EmailLink from '@/components/EmailLink';
+import { Metadata } from 'next'
+import { seoOverrides } from '@/lib/seo-overrides'
+
+export const metadata: Metadata = {
+  ...seoOverrides['/privacy'],
+  alternates: {
+    canonical: 'https://ajprworld.com/privacy',
+  },
+  openGraph: {
+    ...seoOverrides['/privacy'],
+    url: 'https://ajprworld.com/privacy',
+    type: 'website',
+    images: ['https://ajprworld.com/og-image.jpg']
+  }
+}
 
 export default function PrivacyPage() {
     return (

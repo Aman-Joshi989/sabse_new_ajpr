@@ -1,6 +1,7 @@
 import { getServiceBySlug, getPublishedServices, getSiteSettings } from '@/lib/db/queries'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import { seoOverrides } from '@/lib/seo-overrides'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import * as Icons from 'lucide-react'
@@ -95,6 +96,23 @@ function getSeoTitle(baseTitle: string, location?: string): string {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params
+    
+    const override = seoOverrides[`/services/${slug}`];
+    if (override) {
+        return {
+            title: override.title,
+            description: override.description,
+            openGraph: {
+                title: override.title,
+                description: override.description,
+                url: `https://ajprworld.com/services/${slug}`,
+                siteName: 'AJPR World',
+                locale: 'en_US',
+                type: 'website',
+            }
+        };
+    }
+
     const service = await getServiceBySlug(slug)
     
     if (!service) {

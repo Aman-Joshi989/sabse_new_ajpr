@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 import { 
   FileText, Users, UserCog, Database, LayoutTemplate, 
-  Inbox, Search, Bell, Settings, Globe, Activity, Menu, X, ArrowLeft, CreditCard
+  Inbox, Search, Bell, Settings, Globe, Activity, Menu, X, ArrowLeft, CreditCard, Zap
 } from 'lucide-react'
 
 export default function AdminLayout({
@@ -32,6 +32,8 @@ export default function AdminLayout({
     { name: 'AI SEO Manager', href: '/dashboard/admin/ai-seo', icon: Search },
     { name: 'Keyword Research', href: '/dashboard/admin/keyword-research', icon: Activity },
     { name: 'Backlink Research', href: '/dashboard/admin/backlink-research', icon: Search },
+    { name: '🔥 Outrank Competitor', href: '/dashboard/admin/outrank', icon: Zap },
+    { name: '📱 Social Media & Leads', href: '/dashboard/admin/social-media', icon: Users },
   ]
 
   const isActive = (href: string) => {

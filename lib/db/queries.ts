@@ -134,6 +134,20 @@ export async function ensureDbInitialized() {
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
       `;
+
+      // 8. Ensure social_leads table exists for autonomous lead agent
+      await sql`
+        CREATE TABLE IF NOT EXISTS social_leads (
+          id SERIAL PRIMARY KEY,
+          niche VARCHAR(255),
+          platform_url TEXT,
+          content TEXT,
+          reason TEXT,
+          draft_dm TEXT,
+          status VARCHAR(50) DEFAULT 'new',
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
     } catch (err) {
       console.error("Database lazy-initialization migration failed:", err);
       dbInitialized = false;
@@ -758,4 +772,31 @@ export async function getAllSeoMetadata() {
   return await dynamicSql`
     SELECT * FROM seo_metadata ORDER BY route ASC;
   `;
+}
+
+// ---------------------------------------------------------------------------
+// SOCIAL LEADS QUERIES
+// ---------------------------------------------------------------------------
+
+export async function saveSocialLead(data: any) {
+  const { niche, platform_url, content, reason, draft_dm } = data;
+  const result = await dynamicSql`
+    INSERT INTO social_leads (niche, platform_url, content, reason, draft_dm, status)
+    VALUES (${niche}, ${platform_url}, ${content}, ${reason}, ${draft_dm}, 'new')
+    RETURNING *;
+  `;
+  return result[0];
+}
+
+export async function getSocialLeads() {
+  return await dynamicSql`
+    SELECT * FROM social_leads ORDER BY created_at DESC LIMIT 50;
+  `;
+}
+
+export async function updateSocialLeadStatus(id: number, status: string) {
+  await dynamicSql`
+    UPDATE social_leads SET status = ${status} WHERE id = ${id};
+  `;
+  return { success: true };
 }

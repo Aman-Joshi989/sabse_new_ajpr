@@ -4,16 +4,16 @@ async function run() {
   const args = process.argv.slice(2);
   
   if (args.length < 2) {
-    console.error("Usage: npx tsx scripts/run_seo_agents.ts <Topic> <Target_TSX_File> [Competitor_URL]");
-    console.error("Example: npx tsx scripts/run_seo_agents.ts 'custom software development' 'app/services/page.tsx' 'https://competitor.com'");
+    console.error("Usage: npx tsx scripts/run_seo_agents.ts <Topic> <Target_Route> [Competitor_URL]");
+    console.error("Example: npx tsx scripts/run_seo_agents.ts 'custom software development' '/services' 'https://competitor.com'");
     process.exit(1);
   }
 
-  const [topic, targetFile, targetUrl = ""] = args;
+  const [topic, targetRoute, targetUrl = ""] = args;
 
   console.log(`\n🚀 Starting SEO Agent Crew`);
   console.log(`Topic: ${topic}`);
-  console.log(`Target Local File: ${targetFile}`);
+  console.log(`Target Route: ${targetRoute}`);
   if (targetUrl) console.log(`Competitor URL: ${targetUrl}`);
   console.log("--------------------------------------------------\n");
 
@@ -22,7 +22,7 @@ async function run() {
   try {
     const initialState = {
       targetTopic: topic,
-      targetFile: targetFile,
+      targetRoute: targetRoute,
       targetUrl: targetUrl
     };
 

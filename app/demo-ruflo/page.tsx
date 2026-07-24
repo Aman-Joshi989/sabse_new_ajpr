@@ -1,21 +1,21 @@
 import { Metadata } from 'next'
 import SwarmSimulator from './SwarmSimulator'
-import { seoOverrides } from '@/lib/seo-overrides'
-
-export const metadata: Metadata = {
-  ...seoOverrides['/demo-ruflo'],
-  keywords: 'RuFlo, AI agents, agent swarm, swarm simulator, multi-agent system, AI coding assistant, AJPR World',
-  alternates: {
-    canonical: 'https://ajprworld.com/demo-ruflo',
-  },
-  openGraph: {
-    ...seoOverrides['/demo-ruflo'],
-    url: 'https://ajprworld.com/demo-ruflo',
-    type: 'website',
-    images: ['https://ajprworld.com/og-image.jpg']
-  }
-}
+import { getSeoMetadata } from "@/lib/db/queries";
 
 export default function Page() {
   return <SwarmSimulator />
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+
+      const seo = await getSeoMetadata('/demo-ruflo');
+      return {
+        title: seo?.title,
+        description: seo?.description,
+        openGraph: {
+          title: seo?.title,
+          description: seo?.description,
+          url: `https://ajprworld.com${'/demo-ruflo'}`,
+        }
+      };
 }

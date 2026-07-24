@@ -1,21 +1,9 @@
 import { getPublishedServices, getSiteSettings } from '@/lib/db/queries'
 import AboutClient from './AboutClient'
 import { Metadata } from 'next'
-import { seoOverrides } from '@/lib/seo-overrides'
-export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
+import { getSeoMetadata } from "@/lib/db/queries";
 
-export const metadata: Metadata = {
-  ...seoOverrides['/about'],
-  alternates: {
-    canonical: 'https://ajprworld.com/about',
-  },
-  openGraph: {
-    ...seoOverrides['/about'],
-    url: 'https://ajprworld.com/about',
-    type: 'website',
-    images: ['https://ajprworld.com/og-image.jpg']
-  }
-}
+export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export default async function AboutPage() {
   let services: any[] = []
@@ -38,4 +26,18 @@ export default async function AboutPage() {
       settings={settings} 
     />
   )
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+
+      const seo = await getSeoMetadata('/about');
+      return {
+        title: seo?.title,
+        description: seo?.description,
+        openGraph: {
+          title: seo?.title,
+          description: seo?.description,
+          url: `https://ajprworld.com${'/about'}`,
+        }
+      };
 }

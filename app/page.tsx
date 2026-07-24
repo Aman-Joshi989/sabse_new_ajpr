@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { getPublishedServices, getBlogs, getSiteSettings } from '@/lib/db/queries'
-import { seoOverrides } from '@/lib/seo-overrides'
 import type { Metadata } from 'next'
+import { getSeoMetadata } from "@/lib/db/queries";
 
 const HomeClient = dynamic(() => import('./HomeClient'), {
   loading: () => <div className="min-h-screen bg-slate-50 dark:bg-[#030712] animate-pulse"></div>,
@@ -9,14 +9,6 @@ const HomeClient = dynamic(() => import('./HomeClient'), {
 
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
-
-export const metadata: Metadata = {
-  ...seoOverrides['/'],
-  openGraph: {
-    ...seoOverrides['/'],
-    url: 'https://ajprworld.com/',
-  }
-}
 
 export default async function HomePage() {
   let services: any[] = []
@@ -45,4 +37,18 @@ export default async function HomePage() {
       settings={settings} 
     />
   )
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+
+      const seo = await getSeoMetadata('/');
+      return {
+        title: seo?.title,
+        description: seo?.description,
+        openGraph: {
+          title: seo?.title,
+          description: seo?.description,
+          url: `https://ajprworld.com${'/'}`,
+        }
+      };
 }

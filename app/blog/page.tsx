@@ -6,25 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowRight, BookOpen, Clock, Tag } from 'lucide-react';
 import React from 'react';
 import { Metadata } from 'next';
-import { seoOverrides } from '@/lib/seo-overrides';
+import { getSeoMetadata } from "@/lib/db/queries";
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
-
-export const metadata: Metadata = {
-  ...seoOverrides['/blog'],
-  keywords: 'AJPR World blog, custom software development, web development insights, AI automation strategies, local SEO, digital marketing, systems architecture, digital growth, UI/UX design trends, enterprise tech, scalable startups',
-  alternates: {
-    canonical: 'https://ajprworld.com/blog',
-  },
-  openGraph: {
-    ...seoOverrides['/blog'],
-    url: 'https://ajprworld.com/blog',
-    siteName: 'AJPR World',
-    type: 'website',
-    images: ['https://ajprworld.com/og-image.jpg']
-  }
-}
-
 type BlogPost = {
   id: number;
   slug: string;
@@ -237,4 +221,18 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
       </div>
     </div>
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+
+      const seo = await getSeoMetadata('/blog');
+      return {
+        title: seo?.title,
+        description: seo?.description,
+        openGraph: {
+          title: seo?.title,
+          description: seo?.description,
+          url: `https://ajprworld.com${'/blog'}`,
+        }
+      };
 }

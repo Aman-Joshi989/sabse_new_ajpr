@@ -10,11 +10,12 @@ import {
 import { getPortfolioItems, getSiteSettings } from '@/lib/db/queries'
 import { Metadata } from 'next'
 import { cleanMetaDescription } from '@/app/layout'
-import { seoOverrides } from '@/lib/seo-overrides'
+import { getSeoMetadata } from "@/lib/db/queries";
+
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 export async function generateMetadata(): Promise<Metadata> {
-  const override = seoOverrides['/aman-joshi'];
+  const override = await getSeoMetadata('/aman-joshi');
   if (override) {
     return {
       title: override.title,

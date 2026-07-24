@@ -1,18 +1,5 @@
 import { Metadata } from 'next'
-import { seoOverrides } from '@/lib/seo-overrides'
-
-export const metadata: Metadata = {
-  ...seoOverrides['/book-call'],
-  alternates: {
-    canonical: 'https://ajprworld.com/book-call',
-  },
-  openGraph: {
-    ...seoOverrides['/book-call'],
-    url: 'https://ajprworld.com/book-call',
-    type: 'website',
-    images: ['https://ajprworld.com/og-image.jpg']
-  }
-}
+import { getSeoMetadata } from "@/lib/db/queries";
 
 export default function BookCallLayout({
   children,
@@ -20,4 +7,18 @@ export default function BookCallLayout({
   children: React.ReactNode
 }) {
   return <>{children}</>
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+
+      const seo = await getSeoMetadata('/book-call');
+      return {
+        title: seo?.title,
+        description: seo?.description,
+        openGraph: {
+          title: seo?.title,
+          description: seo?.description,
+          url: `https://ajprworld.com${'/book-call'}`,
+        }
+      };
 }

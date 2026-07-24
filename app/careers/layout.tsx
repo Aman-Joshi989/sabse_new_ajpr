@@ -1,19 +1,20 @@
 import { Metadata } from 'next'
-import { seoOverrides } from '@/lib/seo-overrides'
-
-export const metadata: Metadata = {
-  ...seoOverrides['/careers'],
-  alternates: {
-    canonical: 'https://ajprworld.com/careers',
-  },
-  openGraph: {
-    ...seoOverrides['/careers'],
-    url: 'https://ajprworld.com/careers',
-    type: 'website',
-    images: ['https://ajprworld.com/og-image.jpg']
-  }
-}
+import { getSeoMetadata } from "@/lib/db/queries";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return children
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+
+      const seo = await getSeoMetadata('/careers');
+      return {
+        title: seo?.title,
+        description: seo?.description,
+        openGraph: {
+          title: seo?.title,
+          description: seo?.description,
+          url: `https://ajprworld.com${'/careers'}`,
+        }
+      };
 }

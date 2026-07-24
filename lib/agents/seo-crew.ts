@@ -2,7 +2,7 @@ import { StateGraph, START, END, MemorySaver, Annotation } from "@langchain/lang
 import { SystemMessage, HumanMessage } from "@langchain/core/messages";
 import { createLLM } from "./llm-client";
 import { webScraperTool } from "./tools/web-scraper";
-import { injectSEOMetadataTool } from "./tools/file-editor";
+import { upsertSEOMetadataTool } from "./tools/db-editor";
 import { z } from "zod";
 
 // --- 1. Define State ---
@@ -15,7 +15,7 @@ export const GraphAnnotation = Annotation.Root({
     reducer: (x, y) => y ?? x,
     default: () => "",
   }),
-  targetFile: Annotation<string>({
+  targetRoute: Annotation<string>({
     reducer: (x, y) => y ?? x,
     default: () => "",
   }),
@@ -106,7 +106,7 @@ async function analystNode(state: SEOCrewState) {
  * Agent 3: The SEO Copywriter & Optimizer
  */
 async function copywriterNode(state: SEOCrewState) {
-  console.log("✍️ [Copywriter] Generating SEO copy for:", state.targetFile);
+  console.log("✍️ [Copywriter] Generating SEO copy for:", state.targetRoute);
   const llm = createLLM(0.7).withStructuredOutput(z.object({
     title: z.string(),
     description: z.string()
@@ -123,11 +123,10 @@ async function copywriterNode(state: SEOCrewState) {
   const response = await llm.invoke([new SystemMessage(prompt)]);
   
   console.log("🚀 [Optimizer] Injecting generated SEO into codebase...");
-  const injectionResult = await injectSEOMetadataTool.invoke({
-      filePath: state.targetFile,
+  const injectionResult = await upsertSEOMetadataTool.invoke({
+      route: state.targetRoute,
       title: response.title,
-      description: response.description,
-      url: `https://ajprworld.com/${state.targetFile.replace('app/', '').replace('/page.tsx', '')}`
+      description: response.description
   });
   
   console.log(injectionResult);

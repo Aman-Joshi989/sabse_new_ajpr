@@ -124,6 +124,16 @@ export async function ensureDbInitialized() {
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
       `;
+
+      // 7. Ensure seo_metadata table exists for dynamic AI SEO updates
+      await sql`
+        CREATE TABLE IF NOT EXISTS seo_metadata (
+          route VARCHAR(255) PRIMARY KEY,
+          title VARCHAR(255) NOT NULL,
+          description TEXT NOT NULL,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
     } catch (err) {
       console.error("Database lazy-initialization migration failed:", err);
       dbInitialized = false;
@@ -734,4 +744,18 @@ export async function createGlossaryTerm(data: any) {
     RETURNING *;
   `;
   return result[0];
+}
+
+export async function getSeoMetadata(route: string) {
+  // Use standard sql (cached) for fast layout reads
+  const result = await sql`
+    SELECT * FROM seo_metadata WHERE route = ${route} LIMIT 1;
+  `;
+  return result[0] || null;
+}
+
+export async function getAllSeoMetadata() {
+  return await dynamicSql`
+    SELECT * FROM seo_metadata ORDER BY route ASC;
+  `;
 }

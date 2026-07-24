@@ -27,8 +27,9 @@ export default function AdminLayout({
     { name: 'Bookings', href: '/dashboard/admin/bookings', icon: Users },
     { name: 'Inbox', href: '/dashboard/admin/contact-submissions', icon: Inbox },
     { name: 'Payments', href: '/dashboard/admin/payments', icon: CreditCard },
-    { name: 'SEO & Geo', href: '/dashboard/admin/seo', icon: Globe },
+    { name: 'SEO Settings', href: '/dashboard/admin/seo', icon: Globe },
     { name: 'SEO Tracker', href: '/dashboard/admin/seo-tracker', icon: Activity },
+    { name: 'AI SEO Manager', href: '/dashboard/admin/ai-seo', icon: Search },
   ]
 
   const isActive = (href: string) => {

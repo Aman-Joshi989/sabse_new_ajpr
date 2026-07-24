@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Metadata } from 'next';
-import { seoOverrides } from '@/lib/seo-overrides';
 import { ArticleSchema } from '@/components/schema/ArticleSchema';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { FAQSchema } from '@/components/schema/FAQSchema';
@@ -12,6 +11,7 @@ import { RelatedContent } from '@/components/RelatedContent';
 import { AffiliateDisclosure } from '@/components/ui/AffiliateDisclosure';
 import { AffiliateProductCard } from '@/components/AffiliateProductCard';
 import ShareButton from '@/components/ui/ShareButton';
+import { getSeoMetadata } from "@/lib/db/queries";
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
@@ -156,7 +156,7 @@ function getSeoTitle(title: string): string {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   
-  const override = seoOverrides[`/blog/${resolvedParams.slug}`];
+  const override = await getSeoMetadata(`/blog/${resolvedParams.slug}`);
   if (override) {
       return {
           title: override.title,

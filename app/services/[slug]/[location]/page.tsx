@@ -1,7 +1,6 @@
 import { getServiceBySlug, getPublishedServices } from '@/lib/db/queries'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { seoOverrides } from '@/lib/seo-overrides'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import * as Icons from 'lucide-react'
@@ -11,6 +10,7 @@ import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema'
 import { ServiceSchema } from '@/components/schema/ServiceSchema'
 import { TrustBadges } from '@/components/ui/TrustBadges'
 import { RelatedContent } from '@/components/RelatedContent'
+import { getSeoMetadata } from "@/lib/db/queries";
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
@@ -96,7 +96,7 @@ function getSeoTitle(baseTitle: string, location?: string): string {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string, location: string }> }): Promise<Metadata> {
     const { slug, location } = await params
     
-    const override = seoOverrides[`/services/${slug}/${location}`];
+    const override = await getSeoMetadata(`/services/${slug}/${location}`);
     if (override) {
         return {
             title: override.title,

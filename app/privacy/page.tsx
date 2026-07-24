@@ -1,19 +1,6 @@
 import EmailLink from '@/components/EmailLink';
 import { Metadata } from 'next'
-import { seoOverrides } from '@/lib/seo-overrides'
-
-export const metadata: Metadata = {
-  ...seoOverrides['/privacy'],
-  alternates: {
-    canonical: 'https://ajprworld.com/privacy',
-  },
-  openGraph: {
-    ...seoOverrides['/privacy'],
-    url: 'https://ajprworld.com/privacy',
-    type: 'website',
-    images: ['https://ajprworld.com/og-image.jpg']
-  }
-}
+import { getSeoMetadata } from "@/lib/db/queries";
 
 export default function PrivacyPage() {
     return (
@@ -100,4 +87,18 @@ export default function PrivacyPage() {
             </div>
         </div>
     )
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+
+      const seo = await getSeoMetadata('/privacy');
+      return {
+        title: seo?.title,
+        description: seo?.description,
+        openGraph: {
+          title: seo?.title,
+          description: seo?.description,
+          url: `https://ajprworld.com${'/privacy'}`,
+        }
+      };
 }

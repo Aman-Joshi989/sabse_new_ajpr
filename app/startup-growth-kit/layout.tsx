@@ -1,18 +1,5 @@
 import { Metadata } from 'next'
-import { seoOverrides } from '@/lib/seo-overrides'
-
-export const metadata: Metadata = {
-  ...seoOverrides['/startup-growth-kit'],
-  alternates: {
-    canonical: 'https://ajprworld.com/startup-growth-kit',
-  },
-  openGraph: {
-    ...seoOverrides['/startup-growth-kit'],
-    url: 'https://ajprworld.com/startup-growth-kit',
-    type: 'website',
-    images: ['https://ajprworld.com/og-image.jpg']
-  }
-}
+import { getSeoMetadata } from "@/lib/db/queries";
 
 export default function StartupGrowthKitLayout({
   children,
@@ -20,4 +7,18 @@ export default function StartupGrowthKitLayout({
   children: React.ReactNode
 }) {
   return <>{children}</>
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+
+      const seo = await getSeoMetadata('/startup-growth-kit');
+      return {
+        title: seo?.title,
+        description: seo?.description,
+        openGraph: {
+          title: seo?.title,
+          description: seo?.description,
+          url: `https://ajprworld.com${'/startup-growth-kit'}`,
+        }
+      };
 }

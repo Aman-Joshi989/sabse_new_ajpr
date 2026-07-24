@@ -30,6 +30,7 @@ export default function AdminLayout({
     { name: 'SEO Settings', href: '/dashboard/admin/seo', icon: Globe },
     { name: 'SEO Tracker', href: '/dashboard/admin/seo-tracker', icon: Activity },
     { name: 'AI SEO Manager', href: '/dashboard/admin/ai-seo', icon: Search },
+    { name: 'Keyword Research', href: '/dashboard/admin/keyword-research', icon: Activity },
   ]
 
   const isActive = (href: string) => {

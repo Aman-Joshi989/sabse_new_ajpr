@@ -32,7 +32,8 @@ export default function AiSeoTable({ initialData }: { initialData: any[] }) {
       });
 
       if (!res.ok) {
-        throw new Error('Failed to run agent. Check your AGENT_SECRET.');
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.details || 'Failed to run agent.');
       }
 
       const result = await res.json();

@@ -44,7 +44,7 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("[API] SEO Agent failed:", error);
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: error.message || "Internal Server Error" },
       { status: 500 }
     );
   }

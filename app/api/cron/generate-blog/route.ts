@@ -358,6 +358,30 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
     const wordCount = (blogTitle + ' ' + blogContent).split(/\s+/).length;
     console.log(`[Cron] Published: "${blogTitle}" (${wordCount} words)`);
 
+    // --- AYRSHARE AUTO-POST TRIGGER ---
+    const apiKey = process.env.AYRSHARE_API_KEY;
+    if (apiKey) {
+      try {
+        console.log('[Cron] Auto-posting to social media via Ayrshare...');
+        const socialPost = `New article on the blog! 🚀\n\n${blogTitle}\n\nRead the full guide here: https://ajprworld.com/blog/${slug}\n\n#AI #Startup #Tech`;
+        await fetch('https://app.ayrshare.com/api/post', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            post: socialPost,
+            platforms: ['twitter', 'linkedin', 'facebook', 'instagram'],
+          })
+        });
+        console.log('[Cron] Social post sent successfully');
+      } catch (e) {
+        console.error('[Cron] Failed to auto-post to social media:', e);
+      }
+    }
+    // ----------------------------------
+
     return NextResponse.json({
       success: true,
       message: 'Daily blog post successfully generated and published!',

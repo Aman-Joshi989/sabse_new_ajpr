@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Users, Loader2, Target, CheckCircle2, TrendingUp, Search, Linkedin, Twitter, Youtube, Instagram, MessageCircle, Bot, Inbox, Check, Settings2, BarChart3, ArrowUpRight } from 'lucide-react';
+import { Users, Loader2, Target, CheckCircle2, TrendingUp, Search, Linkedin, Twitter, Youtube, Instagram, MessageCircle, Bot, Inbox, Check, Settings2, BarChart3, ArrowUpRight, Send } from 'lucide-react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -21,6 +21,12 @@ export default function SocialMediaPage() {
 
   const [ayrshareStats, setAyrshareStats] = useState<any>(null);
   const [loadingAyrshare, setLoadingAyrshare] = useState(true);
+
+  // Auto-Publish State
+  const [postContent, setPostContent] = useState('');
+  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(['twitter', 'linkedin', 'facebook']);
+  const [publishing, setPublishing] = useState(false);
+  const [publishResult, setPublishResult] = useState<{ success: boolean; message: string } | null>(null);
 
   const fetchLeads = async () => {
     try {
@@ -140,8 +146,42 @@ export default function SocialMediaPage() {
     { name: 'Instagram', likes: 1200, comments: 600, shares: 100 },
   ];
 
+  const handleAutoPublish = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!postContent) return;
+    setPublishing(true);
+    setPublishResult(null);
+    try {
+      const res = await fetch('/api/ayrshare/post', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          post: postContent,
+          platforms: selectedPlatforms
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setPublishResult({ success: true, message: 'Successfully published to selected networks!' });
+        setPostContent('');
+      } else {
+        setPublishResult({ success: false, message: data.error || 'Failed to publish' });
+      }
+    } catch (e: any) {
+      setPublishResult({ success: false, message: e.message || 'Error occurred' });
+    } finally {
+      setPublishing(false);
+    }
+  };
+
+  const togglePlatform = (platform: string) => {
+    setSelectedPlatforms(prev => 
+      prev.includes(platform) ? prev.filter(p => p !== platform) : [...prev, platform]
+    );
+  };
+
   return (
-    <div className="max-w-7xl mx-auto space-y-8 pb-20">
+    <div className="p-8 max-w-7xl mx-auto space-y-10">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
@@ -349,6 +389,77 @@ export default function SocialMediaPage() {
           </div>
 
         </div>
+      </div>
+
+      {/* Auto-Publish Studio */}
+      <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-6 shadow-sm overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-50 dark:bg-purple-900/10 rounded-bl-full -mr-10 -mt-10 pointer-events-none"></div>
+        <div className="mb-6 relative z-10">
+          <h2 className="text-xl font-bold flex items-center gap-2">
+            <Send className="w-5 h-5 text-purple-500" />
+            Auto-Publish Studio
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 max-w-3xl">
+            Write a single post and blast it to all your connected social networks instantly. Ayrshare handles the formatting and API limits.
+          </p>
+        </div>
+
+        <form onSubmit={handleAutoPublish} className="space-y-6 relative z-10">
+          <div>
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+              Select Networks
+            </label>
+            <div className="flex flex-wrap gap-3">
+              {['twitter', 'linkedin', 'facebook', 'instagram', 'youtube'].map((platform) => (
+                <button
+                  key={platform}
+                  type="button"
+                  onClick={() => togglePlatform(platform)}
+                  className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors flex items-center gap-2 capitalize ${
+                    selectedPlatforms.includes(platform) 
+                      ? 'bg-purple-50 border-purple-200 text-purple-700 dark:bg-purple-900/30 dark:border-purple-800 dark:text-purple-300' 
+                      : 'bg-white border-[#DADCE0] text-gray-600 hover:bg-gray-50 dark:bg-[#202124] dark:border-[#3C4043] dark:text-gray-400'
+                  }`}
+                >
+                  <div className={`w-3 h-3 rounded-full ${selectedPlatforms.includes(platform) ? 'bg-purple-500' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
+                  {platform}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+              Post Content
+            </label>
+            <textarea
+              rows={4}
+              value={postContent}
+              onChange={(e) => setPostContent(e.target.value)}
+              placeholder="What do you want to share with your audience?"
+              className="w-full bg-gray-50 dark:bg-[#202124] border border-[#DADCE0] dark:border-[#3C4043] rounded-lg p-4 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+              disabled={publishing}
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div>
+              {publishResult && (
+                <p className={`text-sm font-medium ${publishResult.success ? 'text-emerald-600' : 'text-red-600'}`}>
+                  {publishResult.message}
+                </p>
+              )}
+            </div>
+            <Button 
+              type="submit" 
+              disabled={publishing || !postContent || selectedPlatforms.length === 0}
+              className="bg-purple-600 hover:bg-purple-700 text-white font-bold shadow-lg"
+            >
+              {publishing ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Send className="w-5 h-5 mr-2" />}
+              {publishing ? "Publishing..." : "Blast to All Networks"}
+            </Button>
+          </div>
+        </form>
       </div>
 
       {/* Leads and Sniper Section */}

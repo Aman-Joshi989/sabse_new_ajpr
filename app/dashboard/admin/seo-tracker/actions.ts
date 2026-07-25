@@ -2,6 +2,7 @@
 
 import { createBlog, getBlogs } from '@/lib/db/queries';
 import { revalidatePath } from 'next/cache';
+import { syndicateBlogToSocials } from '@/lib/social/auto-publish';
 
 // Helper to make OpenAI API calls
 async function callOpenAI(messages: any[], responseFormat?: 'json_object') {
@@ -589,6 +590,17 @@ Return ONLY the prompt string.`;
                     cover_image: imageUrl,
                     published: true
                 });
+
+                // Auto-post to Social Media in the background
+                if (publishResult.success) {
+                    syndicateBlogToSocials({
+                        title: title,
+                        slug: publishResult.slug || resolvedSlug,
+                        excerpt: excerpt,
+                        coverImage: imageUrl,
+                        source: 'ai-autonomous'
+                    }).catch(console.error);
+                }
 
                 revalidatePath('/blog');
                 revalidatePath('/dashboard/admin/blog');

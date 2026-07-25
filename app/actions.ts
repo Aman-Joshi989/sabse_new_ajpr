@@ -392,10 +392,23 @@ export async function deletePortfolioItemAction(id: number) {
 
 // --- Blog Actions ---
 import { createBlog, updateBlog, deleteBlog } from "@/lib/db/queries";
+import { syndicateBlogToSocials } from "@/lib/social/auto-publish";
 
 export async function createBlogPostAction(data: any) {
     try {
-        await createBlog(data);
+        const result = await createBlog(data);
+        
+        // Auto-post to Social Media in the background (fire and forget)
+        if (result.success && data.published !== false) {
+            syndicateBlogToSocials({
+                title: data.title,
+                slug: data.slug || result.slug,
+                excerpt: data.excerpt,
+                coverImage: data.cover_image,
+                source: 'manual'
+            }).catch(console.error);
+        }
+
         revalidatePath('/blog');
         revalidatePath('/dashboard/admin/blog');
         return { success: true };

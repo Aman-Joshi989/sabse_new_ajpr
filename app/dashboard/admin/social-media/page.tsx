@@ -14,6 +14,9 @@ export default function SocialMediaPage() {
   const [report, setReport] = useState<string | null>(null);
   const [savedLeads, setSavedLeads] = useState<any[]>([]);
   const [loadingLeads, setLoadingLeads] = useState(true);
+  
+  const [linkedInStats, setLinkedInStats] = useState<{ connected: boolean; followers: number | null }>({ connected: false, followers: null });
+  const [loadingStats, setLoadingStats] = useState(true);
 
   const fetchLeads = async () => {
     try {
@@ -31,7 +34,22 @@ export default function SocialMediaPage() {
 
   useEffect(() => {
     fetchLeads();
+    fetchLinkedInStats();
   }, []);
+
+  const fetchLinkedInStats = async () => {
+    try {
+      const res = await fetch('/api/agents/social-leads/analytics');
+      if (res.ok) {
+        const data = await res.json();
+        setLinkedInStats(data);
+      }
+    } catch (e) {
+      console.error("Failed to fetch analytics");
+    } finally {
+      setLoadingStats(false);
+    }
+  };
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,7 +131,24 @@ export default function SocialMediaPage() {
           <div className="flex justify-between items-start">
             <div>
               <p className="text-sm font-bold text-gray-500">LinkedIn</p>
-              <h3 className="text-2xl font-bold mt-1">1,240</h3>
+              {loadingStats ? (
+                <div className="flex items-center gap-2 mt-1 text-sm text-gray-400">
+                  <Loader2 className="w-4 h-4 animate-spin" /> Loading...
+                </div>
+              ) : linkedInStats.connected ? (
+                <h3 className="text-2xl font-bold mt-1">
+                  {linkedInStats.followers !== null ? linkedInStats.followers.toLocaleString() : 'Error'}
+                </h3>
+              ) : (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="mt-2 text-xs h-7 border-blue-200 text-blue-600 hover:bg-blue-50"
+                  onClick={() => window.location.href = '/api/auth/linkedin'}
+                >
+                  Connect Account
+                </Button>
+              )}
             </div>
             <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
               <Linkedin className="w-6 h-6 text-blue-600" />

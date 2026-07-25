@@ -148,6 +148,17 @@ export async function ensureDbInitialized() {
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
       `;
+
+      // 9. Ensure social_tokens table exists for OAuth connections
+      await sql`
+        CREATE TABLE IF NOT EXISTS social_tokens (
+          id SERIAL PRIMARY KEY,
+          platform VARCHAR(50) UNIQUE NOT NULL,
+          access_token TEXT NOT NULL,
+          expires_at TIMESTAMP,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
     } catch (err) {
       console.error("Database lazy-initialization migration failed:", err);
       dbInitialized = false;
@@ -795,8 +806,50 @@ export async function getSocialLeads() {
 }
 
 export async function updateSocialLeadStatus(id: number, status: string) {
-  await dynamicSql`
-    UPDATE social_leads SET status = ${status} WHERE id = ${id};
-  `;
-  return { success: true };
+    try {
+        await sql`
+            UPDATE social_leads
+            SET status = ${status}
+            WHERE id = ${id}
+        `;
+    } catch (error) {
+        console.error('Error updating social lead status:', error);
+        throw error;
+    }
+}
+
+// --- Social Tokens (OAuth) Queries ---
+
+export async function saveSocialToken(platform: string, access_token: string, expires_in_seconds?: number) {
+    try {
+        const expires_at = expires_in_seconds 
+            ? new Date(Date.now() + expires_in_seconds * 1000).toISOString()
+            : null;
+            
+        await sql`
+            INSERT INTO social_tokens (platform, access_token, expires_at)
+            VALUES (${platform}, ${access_token}, ${expires_at})
+            ON CONFLICT (platform) DO UPDATE 
+            SET access_token = EXCLUDED.access_token,
+                expires_at = EXCLUDED.expires_at,
+                created_at = CURRENT_TIMESTAMP
+        `;
+    } catch (error) {
+        console.error('Error saving social token:', error);
+        throw error;
+    }
+}
+
+export async function getSocialToken(platform: string) {
+    try {
+        const result = await sql`
+            SELECT access_token, expires_at FROM social_tokens 
+            WHERE platform = ${platform}
+            LIMIT 1
+        `;
+        return result[0] || null;
+    } catch (error) {
+        console.error('Error fetching social token:', error);
+        throw error;
+    }
 }

@@ -3,10 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Users, Loader2, Target, CheckCircle2, TrendingUp, Search, Linkedin, Twitter, Youtube, Instagram, MessageCircle, Bot, Inbox, Check } from 'lucide-react';
+import { Users, Loader2, Target, CheckCircle2, TrendingUp, Search, Linkedin, Twitter, Youtube, Instagram, MessageCircle, Bot, Inbox, Check, Settings2, BarChart3, ArrowUpRight } from 'lucide-react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar } from 'recharts';
 
 export default function SocialMediaPage() {
   const [targetNiche, setTargetNiche] = useState('');
@@ -105,73 +106,191 @@ export default function SocialMediaPage() {
     }
   };
 
+  const mockGrowthData = [
+    { name: 'Mon', followers: 1240 },
+    { name: 'Tue', followers: 1245 },
+    { name: 'Wed', followers: 1258 },
+    { name: 'Thu', followers: 1262 },
+    { name: 'Fri', followers: 1280 },
+    { name: 'Sat', followers: 1310 },
+    { name: 'Sun', followers: 1342 },
+  ];
+
+  const mockEngagementData = [
+    { name: 'Twitter', likes: 400, comments: 240, shares: 140 },
+    { name: 'LinkedIn', likes: 800, comments: 400, shares: 200 },
+    { name: 'Instagram', likes: 1200, comments: 600, shares: 100 },
+  ];
+
   return (
-    <div className="max-w-6xl mx-auto space-y-8 pb-20">
+    <div className="max-w-7xl mx-auto space-y-8 pb-20">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <Users className="text-blue-500 w-8 h-8" /> 
-            Social Media & Lead Generation
+            <BarChart3 className="text-blue-500 w-8 h-8" /> 
+            Advanced Social Media Hub
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-            Track your cross-platform audience growth and automatically hunt for high-intent B2B leads.
+            Track real-time analytics, auto-publish content, and hunt for B2B leads autonomously.
           </p>
         </div>
-        <div className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-4 py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 flex items-center gap-2 text-sm font-medium">
-          <Bot className="w-4 h-4" />
-          Autonomous Agent: Active
+        <div className="flex gap-3">
+          <Button variant="outline" className="border-[#DADCE0] dark:border-[#3C4043] flex items-center gap-2">
+            <Settings2 className="w-4 h-4" /> Aggregator Settings
+          </Button>
+          <div className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-4 py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 flex items-center gap-2 text-sm font-medium shadow-sm">
+            <Bot className="w-4 h-4" />
+            Autonomous Agent: Active
+          </div>
         </div>
       </div>
 
-      {/* Analytics Mock Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* LinkedIn */}
-        <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-6 shadow-sm">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-sm font-bold text-gray-500">LinkedIn</p>
-              {loadingStats ? (
-                <div className="flex items-center gap-2 mt-1 text-sm text-gray-400">
-                  <Loader2 className="w-4 h-4 animate-spin" /> Loading...
-                </div>
-              ) : linkedInStats.connected ? (
-                <h3 className="text-2xl font-bold mt-1">
-                  {linkedInStats.followers !== null ? linkedInStats.followers.toLocaleString() : 'Error'}
-                </h3>
-              ) : (
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="mt-2 text-xs h-7 border-blue-200 text-blue-600 hover:bg-blue-50"
-                  onClick={() => window.location.href = '/api/auth/linkedin'}
-                >
-                  Connect Account
-                </Button>
-              )}
-            </div>
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <Linkedin className="w-6 h-6 text-blue-600" />
-            </div>
-          </div>
-        </div>
-
-        {/* Twitter */}
-        <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-6 shadow-sm">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-sm font-bold text-gray-500">Twitter / X</p>
-              <h3 className="text-2xl font-bold mt-1">850</h3>
-            </div>
-            <div className="p-2 bg-sky-50 dark:bg-sky-900/20 rounded-lg">
-              <Twitter className="w-6 h-6 text-sky-500" />
-            </div>
-          </div>
-        </div>
+      {/* Advanced Analytics Dashboard */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* Just 2 boxes for brevity, assume the others exist */}
+        {/* Total Audience Growth (Large Chart) */}
+        <div className="lg:col-span-2 bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-6 shadow-sm">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h2 className="text-lg font-bold">Total Audience Growth</h2>
+              <p className="text-sm text-gray-500">Cross-platform follower trajectory</p>
+            </div>
+            <div className="flex items-center gap-2 text-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-full text-sm font-bold">
+              <TrendingUp className="w-4 h-4" /> +8.2%
+            </div>
+          </div>
+          <div className="h-[250px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={mockGrowthData}>
+                <defs>
+                  <linearGradient id="colorFollowers" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#6b7280', fontSize: 12}} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{fill: '#6b7280', fontSize: 12}} />
+                <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
+                <Area type="monotone" dataKey="followers" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorFollowers)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Engagement Breakdown (Bar Chart) */}
+        <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-6 shadow-sm">
+          <div className="mb-6">
+            <h2 className="text-lg font-bold">Engagement Breakdown</h2>
+            <p className="text-sm text-gray-500">Likes, Comments & Shares</p>
+          </div>
+          <div className="h-[250px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={mockEngagementData} layout="vertical" margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e5e7eb" />
+                <XAxis type="number" hide />
+                <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{fill: '#6b7280', fontSize: 12}} width={70} />
+                <Tooltip cursor={{fill: '#f3f4f6'}} contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
+                <Bar dataKey="likes" stackId="a" fill="#3b82f6" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="comments" stackId="a" fill="#8b5cf6" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="shares" stackId="a" fill="#10b981" radius={[0, 4, 4, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
 
+      {/* Network Connections */}
+      <div>
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">Linked Networks</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          {/* LinkedIn (Real DB connection) */}
+          <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-5 shadow-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 dark:bg-blue-900/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+            <div className="relative z-10 flex justify-between items-start">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Linkedin className="w-5 h-5 text-blue-600" />
+                  <p className="font-bold text-gray-700 dark:text-gray-200">LinkedIn</p>
+                </div>
+                {loadingStats ? (
+                  <div className="flex items-center gap-2 mt-1 text-sm text-gray-400">
+                    <Loader2 className="w-4 h-4 animate-spin" /> Loading API...
+                  </div>
+                ) : linkedInStats.connected ? (
+                  <div>
+                    <h3 className="text-3xl font-black text-gray-900 dark:text-white mt-1">
+                      {linkedInStats.followers !== null ? linkedInStats.followers.toLocaleString() : 'Error'}
+                    </h3>
+                    <p className="text-xs text-gray-500 mt-1 flex items-center gap-1"><ArrowUpRight className="w-3 h-3 text-emerald-500" /> live via oauth</p>
+                  </div>
+                ) : (
+                  <Button 
+                    size="sm" 
+                    className="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-bold w-full"
+                    onClick={() => window.location.href = '/api/auth/linkedin'}
+                  >
+                    Connect via API
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Twitter (Mocking Ayrshare Unified connection) */}
+          <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-5 shadow-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-sky-50 dark:bg-sky-900/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+            <div className="relative z-10 flex justify-between items-start">
+              <div className="w-full">
+                <div className="flex items-center gap-2 mb-2">
+                  <Twitter className="w-5 h-5 text-sky-500" />
+                  <p className="font-bold text-gray-700 dark:text-gray-200">Twitter / X</p>
+                </div>
+                <Button size="sm" variant="outline" className="mt-3 w-full border-sky-200 text-sky-600 hover:bg-sky-50">
+                  Connect via Ayrshare
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* YouTube (Mocking Ayrshare Unified connection) */}
+          <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-5 shadow-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-red-50 dark:bg-red-900/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+            <div className="relative z-10 flex justify-between items-start">
+              <div className="w-full">
+                <div className="flex items-center gap-2 mb-2">
+                  <Youtube className="w-5 h-5 text-red-500" />
+                  <p className="font-bold text-gray-700 dark:text-gray-200">YouTube</p>
+                </div>
+                <Button size="sm" variant="outline" className="mt-3 w-full border-red-200 text-red-600 hover:bg-red-50">
+                  Connect via Ayrshare
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Instagram (Mocking Ayrshare Unified connection) */}
+          <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-5 shadow-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-pink-50 dark:bg-pink-900/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+            <div className="relative z-10 flex justify-between items-start">
+              <div className="w-full">
+                <div className="flex items-center gap-2 mb-2">
+                  <Instagram className="w-5 h-5 text-pink-500" />
+                  <p className="font-bold text-gray-700 dark:text-gray-200">Instagram</p>
+                </div>
+                <Button size="sm" variant="outline" className="mt-3 w-full border-pink-200 text-pink-600 hover:bg-pink-50">
+                  Connect via Ayrshare
+                </Button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Leads and Sniper Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Left Col: Manual Trigger */}

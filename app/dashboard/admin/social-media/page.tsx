@@ -19,6 +19,9 @@ export default function SocialMediaPage() {
   const [linkedInStats, setLinkedInStats] = useState<{ connected: boolean; followers: number | null }>({ connected: false, followers: null });
   const [loadingStats, setLoadingStats] = useState(true);
 
+  const [ayrshareStats, setAyrshareStats] = useState<any>(null);
+  const [loadingAyrshare, setLoadingAyrshare] = useState(true);
+
   const fetchLeads = async () => {
     try {
       const res = await fetch('/api/agents/social-leads/db');
@@ -36,7 +39,22 @@ export default function SocialMediaPage() {
   useEffect(() => {
     fetchLeads();
     fetchLinkedInStats();
+    fetchAyrshareStats();
   }, []);
+
+  const fetchAyrshareStats = async () => {
+    try {
+      const res = await fetch('/api/ayrshare/analytics');
+      if (res.ok) {
+        const data = await res.json();
+        setAyrshareStats(data);
+      }
+    } catch (e) {
+      console.error("Failed to fetch ayrshare stats");
+    } finally {
+      setLoadingAyrshare(false);
+    }
+  };
 
   const fetchLinkedInStats = async () => {
     try {
@@ -136,7 +154,11 @@ export default function SocialMediaPage() {
           </p>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" className="border-[#DADCE0] dark:border-[#3C4043] flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            className="border-[#DADCE0] dark:border-[#3C4043] flex items-center gap-2"
+            onClick={() => window.open('https://app.ayrshare.com/', '_blank')}
+          >
             <Settings2 className="w-4 h-4" /> Aggregator Settings
           </Button>
           <div className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 px-4 py-2 rounded-lg border border-emerald-200 dark:border-emerald-800 flex items-center gap-2 text-sm font-medium shadow-sm">
@@ -239,7 +261,7 @@ export default function SocialMediaPage() {
             </div>
           </div>
 
-          {/* Twitter (Mocking Ayrshare Unified connection) */}
+          {/* Twitter */}
           <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-5 shadow-sm relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-24 h-24 bg-sky-50 dark:bg-sky-900/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
             <div className="relative z-10 flex justify-between items-start">
@@ -248,14 +270,27 @@ export default function SocialMediaPage() {
                   <Twitter className="w-5 h-5 text-sky-500" />
                   <p className="font-bold text-gray-700 dark:text-gray-200">Twitter / X</p>
                 </div>
-                <Button size="sm" variant="outline" className="mt-3 w-full border-sky-200 text-sky-600 hover:bg-sky-50">
-                  Connect via Ayrshare
-                </Button>
+                {loadingAyrshare ? (
+                  <div className="flex items-center gap-2 mt-1 text-sm text-gray-400">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  </div>
+                ) : ayrshareStats?.platforms?.twitter?.connected ? (
+                  <div>
+                    <h3 className="text-3xl font-black text-gray-900 dark:text-white mt-1">
+                      {ayrshareStats.platforms.twitter.followers !== null ? ayrshareStats.platforms.twitter.followers.toLocaleString() : 'N/A'}
+                    </h3>
+                    <p className="text-xs text-gray-500 mt-1 flex items-center gap-1"><ArrowUpRight className="w-3 h-3 text-emerald-500" /> live via ayrshare</p>
+                  </div>
+                ) : (
+                  <Button size="sm" variant="outline" className="mt-3 w-full border-sky-200 text-sky-600 hover:bg-sky-50" onClick={() => window.open('https://app.ayrshare.com/', '_blank')}>
+                    Connect via Ayrshare
+                  </Button>
+                )}
               </div>
             </div>
           </div>
 
-          {/* YouTube (Mocking Ayrshare Unified connection) */}
+          {/* YouTube */}
           <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-5 shadow-sm relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-24 h-24 bg-red-50 dark:bg-red-900/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
             <div className="relative z-10 flex justify-between items-start">
@@ -264,14 +299,27 @@ export default function SocialMediaPage() {
                   <Youtube className="w-5 h-5 text-red-500" />
                   <p className="font-bold text-gray-700 dark:text-gray-200">YouTube</p>
                 </div>
-                <Button size="sm" variant="outline" className="mt-3 w-full border-red-200 text-red-600 hover:bg-red-50">
-                  Connect via Ayrshare
-                </Button>
+                {loadingAyrshare ? (
+                  <div className="flex items-center gap-2 mt-1 text-sm text-gray-400">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  </div>
+                ) : ayrshareStats?.platforms?.youtube?.connected ? (
+                  <div>
+                    <h3 className="text-3xl font-black text-gray-900 dark:text-white mt-1">
+                      {ayrshareStats.platforms.youtube.followers !== null ? ayrshareStats.platforms.youtube.followers.toLocaleString() : 'N/A'}
+                    </h3>
+                    <p className="text-xs text-gray-500 mt-1 flex items-center gap-1"><ArrowUpRight className="w-3 h-3 text-emerald-500" /> live via ayrshare</p>
+                  </div>
+                ) : (
+                  <Button size="sm" variant="outline" className="mt-3 w-full border-red-200 text-red-600 hover:bg-red-50" onClick={() => window.open('https://app.ayrshare.com/', '_blank')}>
+                    Connect via Ayrshare
+                  </Button>
+                )}
               </div>
             </div>
           </div>
 
-          {/* Instagram (Mocking Ayrshare Unified connection) */}
+          {/* Instagram */}
           <div className="bg-white dark:bg-[#292A2D] rounded-xl border border-[#DADCE0] dark:border-[#3C4043] p-5 shadow-sm relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-24 h-24 bg-pink-50 dark:bg-pink-900/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
             <div className="relative z-10 flex justify-between items-start">
@@ -280,9 +328,22 @@ export default function SocialMediaPage() {
                   <Instagram className="w-5 h-5 text-pink-500" />
                   <p className="font-bold text-gray-700 dark:text-gray-200">Instagram</p>
                 </div>
-                <Button size="sm" variant="outline" className="mt-3 w-full border-pink-200 text-pink-600 hover:bg-pink-50">
-                  Connect via Ayrshare
-                </Button>
+                {loadingAyrshare ? (
+                  <div className="flex items-center gap-2 mt-1 text-sm text-gray-400">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  </div>
+                ) : ayrshareStats?.platforms?.instagram?.connected ? (
+                  <div>
+                    <h3 className="text-3xl font-black text-gray-900 dark:text-white mt-1">
+                      {ayrshareStats.platforms.instagram.followers !== null ? ayrshareStats.platforms.instagram.followers.toLocaleString() : 'N/A'}
+                    </h3>
+                    <p className="text-xs text-gray-500 mt-1 flex items-center gap-1"><ArrowUpRight className="w-3 h-3 text-emerald-500" /> live via ayrshare</p>
+                  </div>
+                ) : (
+                  <Button size="sm" variant="outline" className="mt-3 w-full border-pink-200 text-pink-600 hover:bg-pink-50" onClick={() => window.open('https://app.ayrshare.com/', '_blank')}>
+                    Connect via Ayrshare
+                  </Button>
+                )}
               </div>
             </div>
           </div>

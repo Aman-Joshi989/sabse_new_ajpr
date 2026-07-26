@@ -12,6 +12,8 @@ import { AffiliateDisclosure } from '@/components/ui/AffiliateDisclosure';
 import { AffiliateProductCard } from '@/components/AffiliateProductCard';
 import ShareButton from '@/components/ui/ShareButton';
 import { getSeoMetadata } from "@/lib/db/queries";
+import { TableOfContents } from '@/components/TableOfContents';
+import { ExitIntentPopup } from '@/components/ExitIntentPopup';
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
@@ -35,6 +37,7 @@ function parseMarkdownToHtml(markdown: string): string {
   let html = markdown.replace(/\r\n/g, '\n');
 
   // 1. Headings (## and ###)
+  // Note: ID attributes will be added by TableOfContents component dynamically, or we could add them here
   html = html.replace(/^### (.*?)$/gm, '<h4 class="text-xl font-bold mt-6 mb-3 text-slate-900 dark:text-slate-100 text-left">$1</h4>');
   html = html.replace(/^## (.*?)$/gm, '<h3 class="text-2xl font-bold mt-8 mb-4 text-slate-900 dark:text-slate-100 text-left">$1</h3>');
   html = html.replace(/^# (.*?)$/gm, '<h2 class="text-3xl font-bold mt-10 mb-4 border-b border-slate-200 dark:border-slate-800 pb-2 text-slate-900 dark:text-slate-50 text-left">$1</h2>');
@@ -361,65 +364,77 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       )}
 
-      {/* Main Content */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
-        
-        {/* Affiliate Disclosure - Required by FTC */}
-        <AffiliateDisclosure />
+      {/* Main Content Layout with Sidebar */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* Main Article Column */}
+          <div className="lg:col-span-8">
+            {/* Affiliate Disclosure - Required by FTC */}
+            <AffiliateDisclosure />
 
-        <div className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed font-medium mb-12 mt-8 text-left">
-            {blog.excerpt}
-        </div>
+            <div className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed font-medium mb-12 mt-8 text-left">
+                {blog.excerpt}
+            </div>
 
-        {/* Citable TL;DR Executive Summary (Optimized for AI RAG Citation) */}
-        {isGeoBlog && (
-          <div className="p-8 mb-12 bg-blue-50/50 dark:bg-blue-950/20 border-2 border-blue-500/20 rounded-2xl relative overflow-hidden backdrop-blur-sm text-left">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
-            <h3 className="text-lg font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4 flex items-center">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 mr-2.5 animate-pulse" />
-              Executive Summary (TL;DR)
-            </h3>
-            <p className="text-base text-slate-700 dark:text-slate-300 font-semibold leading-relaxed mb-0">
-              Generative Engine Optimization (GEO) is defined as the strategic process of optimizing content so AI-powered retrieval systems (like Perplexity, ChatGPT, and Gemini AI Overviews) parse, prioritize, and cite your digital brand as an authoritative reference in their responses. Key components include structured FAQ data, semantic RAG formatting, citable statistics, and strong entity authority.
-            </p>
-          </div>
-        )}
-        
-        <div 
-          className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 prose-img:rounded-xl max-w-none text-slate-800 dark:text-slate-200"
-          dangerouslySetInnerHTML={{ 
-            __html: parseMarkdownToHtml(blog.content)
-          }}
-        />
-        
-        {/* Auto-Rendered Affiliate Product Card */}
-        {affiliateData && (
-          <div className="my-16">
-            <h3 className="text-2xl font-bold mb-6 text-slate-900 dark:text-slate-50 border-b border-slate-200 dark:border-slate-800 pb-2">
-              Our Top Recommendation
-            </h3>
-            <AffiliateProductCard 
-              productName={affiliateData.title}
-              rating={affiliateData.rating}
-              pros={affiliateData.pros}
-              cons={affiliateData.cons}
-              affiliateSlug={blog.affiliate_product_slug ?? undefined}
-              ctaUrl={affiliateData.ctaUrl}
-              buttonText={affiliateData.ctaText || affiliateData.price}
-              image={affiliateData.imageUrl}
+            {/* Citable TL;DR Executive Summary (Optimized for AI RAG Citation) */}
+            {isGeoBlog && (
+              <div className="p-8 mb-12 bg-blue-50/50 dark:bg-blue-950/20 border-2 border-blue-500/20 rounded-2xl relative overflow-hidden backdrop-blur-sm text-left">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
+                <h3 className="text-lg font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4 flex items-center">
+                  <span className="w-2.5 h-2.5 rounded-full bg-blue-500 mr-2.5 animate-pulse" />
+                  Executive Summary (TL;DR)
+                </h3>
+                <p className="text-base text-slate-700 dark:text-slate-300 font-semibold leading-relaxed mb-0">
+                  Generative Engine Optimization (GEO) is defined as the strategic process of optimizing content so AI-powered retrieval systems (like Perplexity, ChatGPT, and Gemini AI Overviews) parse, prioritize, and cite your digital brand as an authoritative reference in their responses. Key components include structured FAQ data, semantic RAG formatting, citable statistics, and strong entity authority.
+                </p>
+              </div>
+            )}
+            
+            <div 
+              className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 prose-img:rounded-xl max-w-none text-slate-800 dark:text-slate-200"
+              dangerouslySetInnerHTML={{ 
+                __html: parseMarkdownToHtml(blog.content)
+              }}
             />
+            
+            {/* Auto-Rendered Affiliate Product Card */}
+            {affiliateData && (
+              <div className="my-16">
+                <h3 className="text-2xl font-bold mb-6 text-slate-900 dark:text-slate-50 border-b border-slate-200 dark:border-slate-800 pb-2">
+                  Our Top Recommendation
+                </h3>
+                <AffiliateProductCard 
+                  productName={affiliateData.title}
+                  rating={affiliateData.rating}
+                  pros={affiliateData.pros}
+                  cons={affiliateData.cons}
+                  affiliateSlug={blog.affiliate_product_slug ?? undefined}
+                  ctaUrl={affiliateData.ctaUrl}
+                  buttonText={affiliateData.ctaText || affiliateData.price}
+                  image={affiliateData.imageUrl}
+                />
+              </div>
+            )}
+
+            {/* Footer Actions */}
+            <div className="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+              <p className="text-slate-500 font-medium text-sm">Thanks for reading!</p>
+              <ShareButton title={blog.title} />
+            </div>
+
+            {/* Semantic Internal Linking Silo */}
+            <RelatedContent title="Related Articles" items={relatedItems} />
           </div>
-        )}
 
-        {/* Footer Actions */}
-        <div className="mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
-          <p className="text-slate-500 font-medium text-sm">Thanks for reading!</p>
-          <ShareButton title={blog.title} />
+          {/* Sidebar Column (Table of Contents) */}
+          <aside className="hidden lg:block lg:col-span-4">
+            <TableOfContents content={blog.content} />
+          </aside>
         </div>
-
-        {/* Semantic Internal Linking Silo */}
-        <RelatedContent title="Related Articles" items={relatedItems} />
       </div>
+      
+      <ExitIntentPopup />
     </article>
   );
 }

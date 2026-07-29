@@ -14,6 +14,7 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [published, setPublished] = useState(initialData?.published ?? true)
+    const [autoPublishSocial, setAutoPublishSocial] = useState(true)
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -43,6 +44,30 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
 
             if (res.success) {
                 toast.success(initialData ? 'Blog post updated' : 'Blog post created')
+
+                // Auto-publish to social media via Ayrshare
+                if (autoPublishSocial && published) {
+                    try {
+                        const postText = `New Blog Post: ${data.title}\n\n${data.excerpt}\n\nRead more: https://ajprworld.com/blog/${data.slug}`
+                        const ayrRes = await fetch('/api/ayrshare/post', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                post: postText,
+                                platforms: ['facebook', 'twitter', 'linkedin']
+                            })
+                        })
+                        if (ayrRes.ok) {
+                            toast.success('Successfully auto-published to social media!')
+                        } else {
+                            toast.error('Failed to auto-publish to social media')
+                        }
+                    } catch (err) {
+                        console.error('Social publish error:', err)
+                        toast.error('Network error while posting to social media')
+                    }
+                }
+
                 router.push('/dashboard/admin/blog')
             } else {
                 toast.error('Failed to save blog post')
@@ -109,13 +134,26 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
                 </div>
             </div>
 
-            <div className="flex items-center space-x-2">
-                <Checkbox 
-                    id="published" 
-                    checked={published} 
-                    onCheckedChange={(c) => setPublished(c as boolean)} 
-                />
-                <Label htmlFor="published">Published</Label>
+            <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-2">
+                    <Checkbox 
+                        id="published" 
+                        checked={published} 
+                        onCheckedChange={(c) => setPublished(c as boolean)} 
+                    />
+                    <Label htmlFor="published">Published</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                    <Checkbox 
+                        id="autoPublishSocial" 
+                        checked={autoPublishSocial} 
+                        onCheckedChange={(c) => setAutoPublishSocial(c as boolean)} 
+                        disabled={!published}
+                    />
+                    <Label htmlFor="autoPublishSocial" className={!published ? "text-slate-400" : "text-amber-600 font-bold"}>
+                        Auto-publish to Facebook/Twitter/LinkedIn
+                    </Label>
+                </div>
             </div>
 
             <Button type="submit" className="w-full" disabled={loading}>

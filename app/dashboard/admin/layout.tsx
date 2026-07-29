@@ -19,6 +19,7 @@ export default function AdminLayout({
 
   const navItems = [
     { name: 'Overview', href: '/dashboard/admin', icon: LayoutTemplate },
+    { name: '🔥 Growth Engine', href: '/dashboard/admin/growth', icon: Zap },
     { name: 'Users', href: '/dashboard/admin/users', icon: UserCog },
     { name: 'Projects', href: '/dashboard/admin/projects', icon: Database },
     { name: 'Services', href: '/dashboard/admin/services', icon: Database },

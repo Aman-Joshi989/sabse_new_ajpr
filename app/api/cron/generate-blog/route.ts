@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createBlog, getBlogs } from '@/lib/db/queries';
 import { revalidatePath } from 'next/cache';
+import { createLocalPost } from '@/lib/gbp';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
@@ -359,15 +360,15 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
     console.log(`[Cron] Published: "${blogTitle}" (${wordCount} words)`);
 
     // --- AYRSHARE AUTO-POST TRIGGER ---
-    const apiKey = process.env.AYRSHARE_API_KEY;
-    if (apiKey) {
+    const apiKeyAyrshare = process.env.AYRSHARE_API_KEY;
+    if (apiKeyAyrshare) {
       try {
         console.log('[Cron] Auto-posting to social media via Ayrshare...');
         const socialPost = `New article on the blog! 🚀\n\n${blogTitle}\n\nRead the full guide here: https://ajprworld.com/blog/${slug}\n\n#AI #Startup #Tech`;
         await fetch('https://app.ayrshare.com/api/post', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${apiKey}`,
+            'Authorization': `Bearer ${apiKeyAyrshare}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -375,12 +376,27 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
             platforms: ['twitter', 'linkedin', 'facebook', 'instagram'],
           })
         });
-        console.log('[Cron] Social post sent successfully');
+        console.log('[Cron] Social post sent successfully via Ayrshare');
       } catch (e) {
         console.error('[Cron] Failed to auto-post to social media:', e);
       }
     }
     // ----------------------------------
+
+    // --- GOOGLE BUSINESS PROFILE AUTO-POST TRIGGER ---
+    try {
+      console.log('[Cron] Auto-posting to Google Business Profile...');
+      const postUrl = `https://ajprworld.com/blog/${slug}`;
+      const summaryText = blogExcerpt || `Check out our latest guide on ${topic}. Learn exactly how to leverage this for your business growth today.`;
+      
+      // Attempt to publish to GBP
+      await createLocalPost(blogTitle, summaryText, postUrl);
+      console.log('[Cron] GBP Post created successfully!');
+    } catch (e: any) {
+      // We don't want to fail the whole cron if GBP fails, just log it.
+      console.error('[Cron] Failed to post to Google Business Profile:', e.message || e);
+    }
+    // -------------------------------------------------
 
     return NextResponse.json({
       success: true,

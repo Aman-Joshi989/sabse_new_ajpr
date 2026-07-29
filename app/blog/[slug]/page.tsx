@@ -13,7 +13,7 @@ import { AffiliateProductCard } from '@/components/AffiliateProductCard';
 import ShareButton from '@/components/ui/ShareButton';
 import { getSeoMetadata } from "@/lib/db/queries";
 import { TableOfContents } from '@/components/TableOfContents';
-import { ExitIntentPopup } from '@/components/ExitIntentPopup';
+import ExitIntentPopup from '@/components/ExitIntentPopup';
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 

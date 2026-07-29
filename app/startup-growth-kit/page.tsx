@@ -12,6 +12,33 @@ import {
 
 export default function StartupGrowthKitPage() {
   const [isVisible, setIsVisible] = useState(false)
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+    setStatus('loading')
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setStatus('success')
+        setEmail('')
+      } else {
+        setStatus('error')
+        setErrorMessage(data.error || 'Failed to subscribe')
+      }
+    } catch (err) {
+      setStatus('error')
+      setErrorMessage('Network error occurred')
+    }
+  }
 
   useEffect(() => {
     setIsVisible(true)
@@ -226,6 +253,45 @@ export default function StartupGrowthKitPage() {
             <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-4 leading-snug">AI strategy + human touch + video — all in one kit.</h3>
             <p className="text-slate-900/80 font-semibold leading-relaxed max-w-sm">Most agencies offer templates. We offer tailored AI strategy sessions, on-site content shoots, a personal mentor, AND custom-built software for your specific business model.</p>
             <Zap className="absolute -bottom-8 -right-8 w-48 h-48 text-slate-900/10 rotate-12" />
+          </div>
+        </div>
+
+        {/* LEAD CAPTURE SECTION */}
+        <div className={`mb-16 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 md:p-12 rounded-3xl shadow-xl transition-all duration-1000 delay-800 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex-1">
+              <Badge variant="outline" className="mb-4 bg-rose-500/10 text-rose-500 border-rose-500/20 uppercase tracking-widest px-3 py-1">Free Resource</Badge>
+              <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-3">Download the Ultimate 2026 Growth Checklist</h3>
+              <p className="text-slate-500 dark:text-slate-400 font-medium">Get our internal 50-point checklist we use to scale startups from $0 to $1M. Delivered instantly to your inbox.</p>
+            </div>
+            <div className="w-full md:w-[400px] shrink-0">
+              {status === 'success' ? (
+                <div className="bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-400 p-4 rounded-xl border border-teal-200 dark:border-teal-900/50 flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 shrink-0" />
+                  <p className="font-bold text-sm">Success! Check your inbox for the download link.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
+                  <div className="flex gap-2">
+                    <input 
+                      type="email" 
+                      placeholder="founder@startup.com" 
+                      className="flex-1 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                    <Button type="submit" disabled={status === 'loading'} className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 px-6 py-3 h-auto rounded-xl font-bold transition-all">
+                      {status === 'loading' ? 'Sending...' : 'Get PDF'}
+                    </Button>
+                  </div>
+                  {status === 'error' && (
+                    <p className="text-rose-500 text-sm font-semibold pl-2">{errorMessage}</p>
+                  )}
+                  <p className="text-xs text-slate-400 text-center md:text-left pl-2">No spam. Unsubscribe anytime.</p>
+                </form>
+              )}
+            </div>
           </div>
         </div>
 

@@ -87,6 +87,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import { CartProvider } from '@/components/providers/CartProvider'
+import ExitIntentPopup from '@/components/ExitIntentPopup'
+import FloatingLeadWidget from '@/components/FloatingLeadWidget'
 
 export default async function RootLayout({
   children,
@@ -127,6 +129,8 @@ export default async function RootLayout({
               <main className='min-h-screen'>
                 {children}
               </main>
+              <ExitIntentPopup />
+              <FloatingLeadWidget />
               <Footer services={services} blogs={blogs} />
               <Toaster />
               <Analytics />

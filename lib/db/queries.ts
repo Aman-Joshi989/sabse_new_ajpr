@@ -335,6 +335,13 @@ export async function updateProject(projectId: number, data: { title: string, st
   return result[0];
 }
 
+export async function deleteProject(projectId: number) {
+  // Need to delete associated milestones and tasks first
+  await dynamicSql`DELETE FROM milestones WHERE project_id = ${projectId}`;
+  await dynamicSql`DELETE FROM tasks WHERE project_id = ${projectId}`;
+  return await dynamicSql`DELETE FROM projects WHERE id = ${projectId}`;
+}
+
 // --- Milestones ---
 export async function getAllMilestones() {
   return await dynamicSql`
@@ -399,6 +406,29 @@ export async function registerUser(data: { name: string, email: string, password
     RETURNING *;
   `;
   return result[0];
+}
+
+export async function updateUser(userId: number, data: { name: string, email: string, role: string, skills?: string, portfolio_url?: string, hourly_rate?: number, approved_status?: string }) {
+  const result = await dynamicSql`
+    UPDATE users 
+    SET name = ${data.name},
+        email = ${data.email},
+        role = ${data.role},
+        skills = ${data.skills || null},
+        portfolio_url = ${data.portfolio_url || null},
+        hourly_rate = ${data.hourly_rate || null},
+        approved_status = ${data.approved_status || 'pending'}
+    WHERE id = ${userId}
+    RETURNING *;
+  `;
+  return result[0];
+}
+
+export async function deleteUser(userId: number) {
+  // Optional: Nullify references in projects before deleting user
+  await dynamicSql`UPDATE projects SET client_id = NULL WHERE client_id = ${userId}`;
+  await dynamicSql`UPDATE projects SET developer_id = NULL WHERE developer_id = ${userId}`;
+  return await dynamicSql`DELETE FROM users WHERE id = ${userId}`;
 }
 
 export async function updateUserStatus(userId: number, status: string) {

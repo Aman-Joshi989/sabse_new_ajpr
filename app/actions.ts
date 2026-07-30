@@ -630,3 +630,39 @@ export async function registerUserAction(formData: FormData) {
         return { error: "Registration failed: " + error.message };
     }
 }
+
+// --- Admin CRUD Extensions ---
+import { updateUser, deleteUser, deleteProject } from "@/lib/db/queries";
+
+export async function updateUserAction(userId: number, data: any) {
+    try {
+        const result = await updateUser(userId, data);
+        revalidatePath('/dashboard/admin/users');
+        return { success: true, user: result };
+    } catch (e: any) {
+        console.error("Failed to update user", e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function deleteUserAction(userId: number) {
+    try {
+        await deleteUser(userId);
+        revalidatePath('/dashboard/admin/users');
+        return { success: true };
+    } catch (e: any) {
+        console.error("Failed to delete user", e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function deleteProjectAction(projectId: number) {
+    try {
+        await deleteProject(projectId);
+        revalidatePath('/dashboard/admin/projects');
+        return { success: true };
+    } catch (e: any) {
+        console.error("Failed to delete project", e);
+        return { success: false, error: e.message };
+    }
+}

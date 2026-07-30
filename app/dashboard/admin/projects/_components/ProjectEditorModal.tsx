@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { X, Plus, Trash2, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
-import { updateProjectAction, createMilestoneAction, updateMilestoneAction, deleteMilestoneAction, createProjectAction } from "@/app/actions";
+import { updateProjectAction, createMilestoneAction, updateMilestoneAction, deleteMilestoneAction, createProjectAction, deleteProjectAction } from "@/app/actions";
 
 export default function ProjectEditorModal({ 
   project, 
@@ -70,6 +70,19 @@ export default function ProjectEditorModal({
       }
     } catch(e: any) {
         toast.error(e.message);
+    }
+    setLoading(false);
+  };
+
+  const handleDeleteProject = async () => {
+    if (!confirm("Are you sure you want to delete this project? All associated milestones and tasks will be deleted.")) return;
+    setLoading(true);
+    const res = await deleteProjectAction(project.id);
+    if (res.success) {
+        toast.success("Project deleted successfully!");
+        onClose();
+    } else {
+        toast.error(res.error || "Failed to delete project");
     }
     setLoading(false);
   };
@@ -186,13 +199,25 @@ export default function ProjectEditorModal({
                 </>
                 )}
 
-                <button 
-                  onClick={handleSaveProject} 
-                  disabled={loading}
-                  className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all"
-                >
-                  {loading ? "Saving..." : "Save Project Details"}
-                </button>
+                <div className="flex gap-4 mt-4">
+                  <button 
+                    onClick={handleSaveProject} 
+                    disabled={loading}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all"
+                  >
+                    {loading ? "Saving..." : "Save Project Details"}
+                  </button>
+                  
+                  {!isNew && (
+                  <button 
+                    onClick={handleDeleteProject} 
+                    disabled={loading}
+                    className="px-6 bg-red-100 dark:bg-red-900/30 text-red-600 hover:bg-red-200 dark:hover:bg-red-900/50 font-bold rounded-xl transition-all flex items-center justify-center"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                  )}
+                </div>
             </div>
 
             {/* RIGHT COL: Milestones (Only if not new) */}

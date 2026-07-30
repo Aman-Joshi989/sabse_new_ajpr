@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { createServiceAction, updateServiceAction } from '@/app/actions'
+import { createServiceAction, updateServiceAction, deleteServiceAction } from '@/app/actions'
 import { Switch } from '@/components/ui/switch'
 import { Plus, Trash2 } from 'lucide-react'
 
@@ -56,6 +56,21 @@ export default function ServiceForm({ initialData }: { initialData?: any }) {
             router.refresh()
         } else {
             alert('Operation failed')
+            setLoading(false)
+        }
+    }
+
+    async function handleDelete() {
+        if (!initialData?.id) return
+        if (!confirm('Are you sure you want to delete this service?')) return
+        
+        setLoading(true)
+        const res = await deleteServiceAction(initialData.id)
+        if (res.success) {
+            router.push('/dashboard/admin/services')
+            router.refresh()
+        } else {
+            alert('Delete failed')
             setLoading(false)
         }
     }
@@ -163,11 +178,21 @@ export default function ServiceForm({ initialData }: { initialData?: any }) {
                 </CardContent>
             </Card>
 
-            <div className="flex justify-end gap-4">
-                <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
-                <Button type="submit" disabled={loading}>
-                    {loading ? 'Saving...' : (initialData ? 'Update Service' : 'Create Service')}
-                </Button>
+            <div className="flex justify-between items-center">
+                <div>
+                    {initialData && (
+                        <Button type="button" variant="destructive" onClick={handleDelete} disabled={loading}>
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Delete Service
+                        </Button>
+                    )}
+                </div>
+                <div className="flex gap-4">
+                    <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
+                    <Button type="submit" disabled={loading}>
+                        {loading ? 'Saving...' : (initialData ? 'Update Service' : 'Create Service')}
+                    </Button>
+                </div>
             </div>
         </form>
     )

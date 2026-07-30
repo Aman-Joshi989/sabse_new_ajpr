@@ -28,7 +28,9 @@ import {
   ShieldCheck,
   Menu,
   ChevronDown,
-  ShoppingCart
+  ShoppingCart,
+  LayoutDashboard,
+  LogOut
 } from 'lucide-react'
 
 const iconRegistry: Record<string, any> = {
@@ -239,12 +241,12 @@ export default function Header({ services }: { services?: any[] }) {
                                         href={user.role === 'admin' ? '/dashboard/admin' : user.role === 'client' ? '/dashboard/client' : '/dashboard/developer'}
                                         className="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600"
                                     >
-                                        <code className="material-symbols-outlined text-lg mr-2">dashboard</code>
+                                        <LayoutDashboard className="w-4 h-4 mr-2" />
                                         Dashboard
                                     </Link>
                                     <form action={logout}>
                                         <button className="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 text-left">
-                                            <code className="material-symbols-outlined text-lg mr-2">logout</code>
+                                            <LogOut className="w-4 h-4 mr-2" />
                                             Sign Out
                                         </button>
                                     </form>

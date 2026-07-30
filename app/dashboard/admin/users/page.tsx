@@ -1,5 +1,4 @@
 import React from "react";
-import Sidebar from "@/components/dashboard/admin/Sidebar";
 import { getUsers } from "@/lib/db/queries";
 import { Users, Code2, Briefcase, CheckCircle, Clock } from "lucide-react";
 import Link from "next/link";
@@ -14,7 +13,6 @@ export default async function AdminUsersPage() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark font-display text-[#0f172a] dark:text-white transition-colors duration-200">
-      <Sidebar />
       <main className="flex-1 overflow-y-auto p-8 lg:p-12 bg-slate-50 dark:bg-slate-950">
         <div className="max-w-6xl mx-auto space-y-12">
             

@@ -1,4 +1,5 @@
 import React from "react";
+import { Wallet, ArrowRight } from "lucide-react";
 
 export default function Financials({ total, pending }: { total: number, pending: number }) {
   const paid = total - pending;
@@ -14,8 +15,8 @@ export default function Financials({ total, pending }: { total: number, pending:
         <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
           Financial Status
         </h4>
-        <div className="p-2.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-full text-emerald-600/70 group-hover:text-emerald-600 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-900/40 transition-colors">
-           <span className="material-symbols-outlined text-xl">account_balance_wallet</span>
+        <div className="p-2.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-full text-emerald-600/70 group-hover:text-emerald-600 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-900/40 transition-colors shadow-sm">
+           <Wallet className="w-5 h-5" />
         </div>
       </div>
 
@@ -63,9 +64,9 @@ export default function Financials({ total, pending }: { total: number, pending:
         </div>
       </div>
 
-      <button className="w-full mt-10 py-4 bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-black rounded-xl hover:shadow-lg active:scale-[0.98] transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-2 group/btn">
+      <button className="w-full mt-10 py-4 bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-black rounded-xl hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10 active:scale-[0.98] transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-2 group/btn">
         <span>View Invoices</span>
-        <span className="material-symbols-outlined text-base group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
       </button>
     </div>
   );

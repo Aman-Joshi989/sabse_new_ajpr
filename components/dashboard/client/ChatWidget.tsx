@@ -2,6 +2,7 @@
 
 import { submitMessage } from "@/app/actions";
 import React, { useState, useRef, useEffect } from "react";
+import { MessageSquare, X, Send } from "lucide-react";
 
 export default function ChatWidget({ initialMessages = [], role, senderName }: { initialMessages: any[], role: 'client' | 'developer', senderName: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,7 +73,7 @@ export default function ChatWidget({ initialMessages = [], role, senderName }: {
                 onClick={() => setIsOpen(false)}
                 className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all"
               >
-                <span className="material-symbols-outlined">close</span>
+                <X className="w-5 h-5" />
               </button>
             </div>
           </div>
@@ -101,10 +102,8 @@ export default function ChatWidget({ initialMessages = [], role, senderName }: {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               />
-              <button onClick={handleSend} className="absolute right-3 top-1/2 -translate-y-1/2 bg-black dark:bg-white text-white dark:text-black size-10 rounded-xl flex items-center justify-center shadow-md-card active:translate-y-px">
-                <span className="material-symbols-outlined font-black">
-                  send
-                </span>
+              <button onClick={handleSend} className="absolute right-3 top-1/2 -translate-y-1/2 bg-black dark:bg-white text-white dark:text-black size-10 rounded-xl flex items-center justify-center shadow-md-card active:translate-y-px transition-all">
+                <Send className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -112,11 +111,9 @@ export default function ChatWidget({ initialMessages = [], role, senderName }: {
       )}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-gradient-to-r from-blue-600 to-violet-600 size-16 rounded-full flex items-center justify-center text-white shadow-md-fab hover:scale-110 active:scale-95 transition-all duration-300 group relative ring-4 ring-white dark:ring-slate-900 hover:shadow-lg hover:shadow-blue-500/50"
+        className="bg-gradient-to-r from-blue-600 to-indigo-600 size-16 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 group relative ring-4 ring-white dark:ring-slate-900 hover:shadow-xl hover:shadow-blue-500/50"
       >
-        <span className="material-symbols-outlined text-4xl font-light">
-          chat_bubble
-        </span>
+        <MessageSquare className="w-7 h-7" />
         <div className="absolute right-full mr-4 bg-black text-white px-4 py-2 rounded-xl text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl pointer-events-none">
           Chat with Developer
         </div>

@@ -19,19 +19,13 @@ export default function ProjectOverview({ title, status }: { title: string, stat
       </div>
       <div className="flex items-center gap-3">
         <Link
-          className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-violet-600 text-white px-6 py-3 rounded-lg text-sm font-black shadow-material-1 hover:shadow-material-2 transition-all hover:scale-105 active:scale-95"
+          className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl text-sm font-black shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all hover:scale-105 active:scale-95"
           href="/demo"
           target="_blank"
         >
-          <span className="material-symbols-outlined text-base">
-            visibility
-          </span>
           VIEW DEMO
         </Link>
-        <button className="flex items-center gap-2 bg-black text-white dark:bg-white dark:text-black px-6 py-3 rounded-lg text-sm font-black shadow-md-card hover:shadow-md-card-hover transition-all">
-          <span className="material-symbols-outlined text-base">
-            description
-          </span>
+        <button className="flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-xl text-sm font-black shadow-sm hover:shadow-md transition-all hover:bg-slate-50 dark:hover:bg-slate-700">
           PROJECT BRIEF
         </button>
       </div>

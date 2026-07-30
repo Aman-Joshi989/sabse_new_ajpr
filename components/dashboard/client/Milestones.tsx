@@ -1,4 +1,5 @@
 import React from "react";
+import { CheckCircle2 } from "lucide-react";
 
 export default function Milestones({ milestones }: { milestones: any[] }) {
   const completed = milestones.filter(m => m.status === 'completed');
@@ -14,8 +15,8 @@ export default function Milestones({ milestones }: { milestones: any[] }) {
         <div className="flex flex-col gap-5">
           {completed.map((m) => (
             <div key={m.id} className="flex items-center gap-4 group">
-              <span className="material-symbols-outlined text-status-green text-2xl">check_circle</span>
-              <span className="text-sm font-bold text-slate-400 line-through decoration-slate-300">{m.name}</span>
+              <CheckCircle2 className="text-emerald-500 w-6 h-6" />
+              <span className="text-sm font-bold text-slate-400 line-through decoration-slate-300">{m.title || m.name}</span>
             </div>
           ))}
         </div>
@@ -41,7 +42,7 @@ export default function Milestones({ milestones }: { milestones: any[] }) {
                  <div className="size-3 rounded-full bg-slate-300 dark:bg-slate-600"></div>
                )}
               <span className="text-sm font-bold">
-                {m.name}
+                {m.title || m.name}
               </span>
             </div>
            ))}

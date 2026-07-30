@@ -510,9 +510,9 @@ export async function getSiteSettingsAction() {
 }
 
 // --- Admin CRM Actions ---
-import { createProject, updateProject, assignProjectToClient, createMilestone, updateMilestone, deleteMilestone } from "@/lib/db/queries";
+import { createProject, updateProject, assignProjectToClient, assignProjectToDeveloper, createMilestone, updateMilestone, deleteMilestone } from "@/lib/db/queries";
 
-export async function createProjectAction(data: { title: string, client_id?: number }) {
+export async function createProjectAction(data: { title: string, client_id?: number, developer_id?: number }) {
     try {
         const project = await createProject(data);
         revalidatePath('/dashboard/admin/projects');
@@ -523,11 +523,14 @@ export async function createProjectAction(data: { title: string, client_id?: num
     }
 }
 
-export async function updateProjectAction(projectId: number, data: { title: string, status: string, progress_percent: number, hours_used: number, total_hours: number, total_value: number, pending_value: number, client_id?: number }) {
+export async function updateProjectAction(projectId: number, data: { title: string, status: string, progress_percent: number, hours_used: number, total_hours: number, total_value: number, pending_value: number, client_id?: number, developer_id?: number }) {
     try {
         const project = await updateProject(projectId, data);
         if (data.client_id !== undefined) {
             await assignProjectToClient(projectId, data.client_id);
+        }
+        if (data.developer_id !== undefined) {
+            await assignProjectToDeveloper(projectId, data.developer_id);
         }
         revalidatePath('/dashboard/admin/projects');
         revalidatePath('/dashboard/client');
@@ -571,5 +574,59 @@ export async function deleteMilestoneAction(milestoneId: number) {
     } catch (e: any) {
         console.error("Failed to delete milestone", e);
         return { success: false, error: e.message };
+    }
+}
+
+import { registerUser } from "@/lib/db/queries";
+
+export async function registerUserAction(formData: FormData) {
+    try {
+        const name = formData.get("name") as string;
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
+        const role = formData.get("role") as string;
+        
+        const skills = formData.get("skills") as string;
+        const portfolio_url = formData.get("portfolio_url") as string;
+        const hourly_rate = formData.get("hourly_rate") ? parseInt(formData.get("hourly_rate") as string) : undefined;
+
+        if (!name || !email || !password || !role) {
+            return { error: "Missing required fields." };
+        }
+
+        const existingUser = await getUserByEmail(email);
+        if (existingUser) {
+            return { error: "User with this email already exists." };
+        }
+
+        const passwordHash = await bcrypt.hash(password, 10);
+        
+        const user = await registerUser({
+            name,
+            email,
+            passwordHash,
+            role,
+            skills,
+            portfolio_url,
+            hourly_rate
+        });
+
+        // Create Session
+        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+        const session = await encrypt({ user: { id: user.id, email: user.email, role: user.role, name: user.name }, expires });
+        (await cookies()).set("session", session, { expires, httpOnly: true });
+
+        // Redirect based on role
+        if (user.role === 'client') {
+            redirect('/dashboard/client');
+        } else if (user.role === 'developer') {
+            redirect('/dashboard/developer');
+        } else {
+            redirect('/'); 
+        }
+    } catch (error: any) {
+        console.error("Registration Error:", error);
+        if (error.message === "NEXT_REDIRECT") throw error;
+        return { error: "Registration failed: " + error.message };
     }
 }

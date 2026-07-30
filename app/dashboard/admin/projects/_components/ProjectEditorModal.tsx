@@ -21,6 +21,7 @@ export default function ProjectEditorModal({
   // Project State
   const [title, setTitle] = useState(project?.title || "");
   const [clientId, setClientId] = useState(project?.client_id || "");
+  const [developerId, setDeveloperId] = useState(project?.developer_id || "");
   const [status, setStatus] = useState(project?.status || "Not Started");
   const [progress, setProgress] = useState(project?.progress_percent || 0);
   const [hoursUsed, setHoursUsed] = useState(project?.hours_used || 0);
@@ -37,7 +38,11 @@ export default function ProjectEditorModal({
     setLoading(true);
     try {
       if (isNew) {
-         const res = await createProjectAction({ title, client_id: clientId ? parseInt(clientId) : undefined });
+         const res = await createProjectAction({ 
+             title, 
+             client_id: clientId ? parseInt(clientId) : undefined,
+             developer_id: developerId ? parseInt(developerId) : undefined
+         });
          if(res.success) {
             toast.success("Project created successfully!");
             onClose();
@@ -53,7 +58,8 @@ export default function ProjectEditorModal({
              total_hours: parseInt(totalHours),
              total_value: parseInt(totalValue),
              pending_value: parseInt(pendingValue),
-             client_id: clientId ? parseInt(clientId) : undefined
+             client_id: clientId ? parseInt(clientId) : undefined,
+             developer_id: developerId ? parseInt(developerId) : undefined
          };
          const res = await updateProjectAction(project.id, data);
          if(res.success) {
@@ -123,6 +129,16 @@ export default function ProjectEditorModal({
                     <select value={clientId} onChange={e => setClientId(e.target.value)} className="p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-blue-500">
                         <option value="">Unassigned</option>
                         {users.filter(u => u.role === 'client').map(u => (
+                            <option key={u.id} value={u.id}>{u.name} ({u.email})</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <label className="text-sm font-semibold">Assign Developer</label>
+                    <select value={developerId} onChange={e => setDeveloperId(e.target.value)} className="p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-blue-500">
+                        <option value="">Unassigned</option>
+                        {users.filter(u => u.role === 'developer').map(u => (
                             <option key={u.id} value={u.id}>{u.name} ({u.email})</option>
                         ))}
                     </select>

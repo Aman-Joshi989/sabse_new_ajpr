@@ -177,8 +177,20 @@ export async function ensureDbInitialized() {
           email VARCHAR(255) UNIQUE NOT NULL,
           password TEXT NOT NULL,
           role VARCHAR(50) DEFAULT 'client',
+          skills TEXT,
+          portfolio_url TEXT,
+          hourly_rate INTEGER,
+          approved_status VARCHAR(50) DEFAULT 'pending',
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
+      `;
+      
+      await sql`
+        ALTER TABLE users 
+          ADD COLUMN IF NOT EXISTS skills TEXT,
+          ADD COLUMN IF NOT EXISTS portfolio_url TEXT,
+          ADD COLUMN IF NOT EXISTS hourly_rate INTEGER,
+          ADD COLUMN IF NOT EXISTS approved_status VARCHAR(50) DEFAULT 'pending';
       `;
 
       await sql`
@@ -203,8 +215,14 @@ export async function ensureDbInitialized() {
           pending_value NUMERIC DEFAULT 0,
           deadline DATE,
           client_id INTEGER,
+          developer_id INTEGER,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
+      `;
+
+      await sql`
+        ALTER TABLE projects
+          ADD COLUMN IF NOT EXISTS developer_id INTEGER;
       `;
 
       await sql`
@@ -253,10 +271,16 @@ export async function ensureDbInitialized() {
 }
 
 // --- Projects & Financials ---
-export async function getProjectDetails(clientId?: number) {
+export async function getProjectDetails({ clientId, developerId }: { clientId?: number, developerId?: number } = {}) {
   if (clientId) {
     const result = await dynamicSql`
       SELECT * FROM projects WHERE client_id = ${clientId} LIMIT 1;
+    `;
+    return result[0] || null;
+  }
+  if (developerId) {
+    const result = await dynamicSql`
+      SELECT * FROM projects WHERE developer_id = ${developerId} LIMIT 1;
     `;
     return result[0] || null;
   }
@@ -272,10 +296,10 @@ export async function getAllProjects() {
   `;
 }
 
-export async function createProject(data: { title: string, client_id?: number }) {
+export async function createProject(data: { title: string, client_id?: number, developer_id?: number }) {
   const result = await dynamicSql`
-    INSERT INTO projects (title, status, progress_percent, hours_used, total_hours, total_value, pending_value, deadline, client_id)
-    VALUES (${data.title}, 'Not Started', 0, 0, 100, 0, 0, CURRENT_DATE + INTERVAL '30 days', ${data.client_id || null})
+    INSERT INTO projects (title, status, progress_percent, hours_used, total_hours, total_value, pending_value, deadline, client_id, developer_id)
+    VALUES (${data.title}, 'Not Started', 0, 0, 100, 0, 0, CURRENT_DATE + INTERVAL '30 days', ${data.client_id || null}, ${data.developer_id || null})
     RETURNING *;
   `;
   return result[0];
@@ -284,6 +308,13 @@ export async function createProject(data: { title: string, client_id?: number })
 export async function assignProjectToClient(projectId: number, clientId: number) {
   const result = await dynamicSql`
     UPDATE projects SET client_id = ${clientId} WHERE id = ${projectId} RETURNING *;
+  `;
+  return result[0];
+}
+
+export async function assignProjectToDeveloper(projectId: number, developerId: number) {
+  const result = await dynamicSql`
+    UPDATE projects SET developer_id = ${developerId} WHERE id = ${projectId} RETURNING *;
   `;
   return result[0];
 }
@@ -353,11 +384,27 @@ export async function getTasks(projectId: number) {
 
 // --- Users ---
 export async function getUsers() {
-  return await dynamicSql`SELECT * FROM users;`;
+  return await dynamicSql`SELECT * FROM users ORDER BY id DESC;`;
 }
 
 export async function getUserByEmail(email: string) {
   const result = await dynamicSql`SELECT * FROM users WHERE email = ${email}`;
+  return result[0];
+}
+
+export async function registerUser(data: { name: string, email: string, passwordHash: string, role: string, skills?: string, portfolio_url?: string, hourly_rate?: number }) {
+  const result = await dynamicSql`
+    INSERT INTO users (name, email, password, role, skills, portfolio_url, hourly_rate, approved_status)
+    VALUES (${data.name}, ${data.email}, ${data.passwordHash}, ${data.role}, ${data.skills || null}, ${data.portfolio_url || null}, ${data.hourly_rate || null}, ${data.role === 'client' ? 'approved' : 'pending'})
+    RETURNING *;
+  `;
+  return result[0];
+}
+
+export async function updateUserStatus(userId: number, status: string) {
+  const result = await dynamicSql`
+    UPDATE users SET approved_status = ${status} WHERE id = ${userId} RETURNING *;
+  `;
   return result[0];
 }
 

@@ -5,13 +5,15 @@ import TaskKanban from "@/components/dashboard/developer/TaskKanban";
 import FinancialSummary from "@/components/dashboard/developer/FinancialSummary";
 import ClientCard from "@/components/dashboard/developer/ClientCard";
 import ChatWidget from "@/components/dashboard/client/ChatWidget"; // Reusing efficient Widget with different props
-import React from "react";
 import { getProjectDetails, getTasks, getMessages } from "@/lib/db/queries";
+import { getSession } from "@/lib/auth";
 
 export const dynamic = 'force-dynamic';
 
 export default async function DeveloperDashboard() {
-  const project = await getProjectDetails();
+  const session = await getSession();
+  const developerId = session?.user?.id;
+  const project = await getProjectDetails({ developerId });
   const tasks = project ? await getTasks(project.id) : [];
   const initialMessages = await getMessages();
 

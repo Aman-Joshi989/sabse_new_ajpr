@@ -20,7 +20,7 @@ export default async function ClientDashboard({ searchParams }: { searchParams: 
     return <div className="p-12 text-center text-slate-500">Authentication Required</div>;
   }
 
-  let project = await getProjectDetails(userId);
+  let project = await getProjectDetails({ clientId: userId });
   let milestones = project ? await getMilestones(project.id) : [];
   const initialMessages = await getMessages();
 

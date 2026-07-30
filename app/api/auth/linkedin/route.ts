@@ -12,8 +12,8 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: 'Missing LINKEDIN_CLIENT_ID' }, { status: 500 });
   }
 
-  // The scopes required for Pages Data Portability API and reading organization info
-  const scope = 'r_organization_social rw_organization_admin w_member_social';
+  // Standard scopes for Sign In with LinkedIn and Share on LinkedIn (requires 'Share on LinkedIn' and 'Sign In with LinkedIn using OpenID Connect' products enabled in LinkedIn Developer Portal)
+  const scope = 'w_member_social openid profile email';
   const state = Math.random().toString(36).substring(7);
 
   const linkedInAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}&scope=${encodeURIComponent(scope)}`;

@@ -19,6 +19,7 @@ export default function ExitIntentPopup() {
       if (e.clientY <= 0 || e.clientX <= 0 || (e.clientX >= window.innerWidth || e.clientY >= window.innerHeight)) {
         setIsVisible(true)
         sessionStorage.setItem('exitIntentShown', 'true')
+        document.removeEventListener('mouseleave', handleMouseLeave)
       }
     }
 
@@ -66,7 +67,7 @@ export default function ExitIntentPopup() {
 
         <button 
           onClick={() => setIsVisible(false)}
-          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 rounded-full transition-colors z-10"
+          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 rounded-full transition-colors z-[60] cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>

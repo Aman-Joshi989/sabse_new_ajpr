@@ -684,6 +684,38 @@ export async function getAffiliateLink(slug: string) {
   return result[0];
 }
 
+export async function incrementClicks(route: string) {
+  try {
+    await dynamicSql`
+      UPDATE seo_metadata 
+      SET clicks = clicks + 1 
+      WHERE route = ${route}
+    `;
+  } catch (err) {
+    console.error("Failed to increment clicks:", err);
+  }
+}
+
+export async function saveSubscriber(email: string) {
+  try {
+    await dynamicSql`
+      CREATE TABLE IF NOT EXISTS subscribers (
+          id SERIAL PRIMARY KEY,
+          email VARCHAR(255) UNIQUE NOT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    await dynamicSql`INSERT INTO subscribers (email) VALUES (${email})`;
+    return { success: true };
+  } catch (error: any) {
+    if (error.message?.includes("duplicate key")) {
+      return { success: false, error: "Already subscribed" };
+    }
+    console.error("Failed to save subscriber:", error);
+    return { success: false, error: "Database error" };
+  }
+}
+
 export async function recordAffiliateClick(slug: string) {
   await dynamicSql`
     UPDATE affiliate_links 

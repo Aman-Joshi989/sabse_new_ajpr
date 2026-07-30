@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { Rocket, LayoutDashboard, Flag, FolderOpen, Receipt, Settings } from "lucide-react";
 
 export default function Sidebar() {
   return (
@@ -7,7 +8,7 @@ export default function Sidebar() {
       <div className="flex flex-col gap-8">
         <div className="flex items-center gap-3">
           <div className="bg-vibrant-gradient size-10 rounded-lg flex items-center justify-center text-white shadow-md-card">
-            <span className="material-symbols-outlined">rocket_launch</span>
+            <Rocket className="w-5 h-5" />
           </div>
           <div className="flex flex-col">
             <h1 className="text-[#0f172a] dark:text-white text-base font-black leading-tight">
@@ -23,35 +24,35 @@ export default function Sidebar() {
             className="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900"
             href="#"
           >
-            <span className="material-symbols-outlined fill-1">dashboard</span>
+            <LayoutDashboard className="w-5 h-5" />
             <span className="text-sm font-bold">Dashboard</span>
           </Link>
           <Link
             className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             href="#"
           >
-            <span className="material-symbols-outlined">event_note</span>
+            <Flag className="w-5 h-5" />
             <span className="text-sm font-semibold">Milestones</span>
           </Link>
           <Link
             className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             href="#"
           >
-            <span className="material-symbols-outlined">folder_open</span>
+            <FolderOpen className="w-5 h-5" />
             <span className="text-sm font-semibold">Files</span>
           </Link>
           <Link
             className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             href="#"
           >
-            <span className="material-symbols-outlined">payments</span>
+            <Receipt className="w-5 h-5" />
             <span className="text-sm font-semibold">Invoices</span>
           </Link>
           <Link
             className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             href="#"
           >
-            <span className="material-symbols-outlined">settings</span>
+            <Settings className="w-5 h-5" />
             <span className="text-sm font-semibold">Settings</span>
           </Link>
         </nav>

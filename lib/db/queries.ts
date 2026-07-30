@@ -288,10 +288,57 @@ export async function assignProjectToClient(projectId: number, clientId: number)
   return result[0];
 }
 
+export async function updateProject(projectId: number, data: { title: string, status: string, progress_percent: number, hours_used: number, total_hours: number, total_value: number, pending_value: number }) {
+  const result = await dynamicSql`
+    UPDATE projects 
+    SET title = ${data.title},
+        status = ${data.status},
+        progress_percent = ${data.progress_percent},
+        hours_used = ${data.hours_used},
+        total_hours = ${data.total_hours},
+        total_value = ${data.total_value},
+        pending_value = ${data.pending_value}
+    WHERE id = ${projectId}
+    RETURNING *;
+  `;
+  return result[0];
+}
+
 // --- Milestones ---
+export async function getAllMilestones() {
+  return await dynamicSql`
+    SELECT * FROM milestones ORDER BY id ASC;
+  `;
+}
+
 export async function getMilestones(projectId: number) {
   return await dynamicSql`
     SELECT * FROM milestones WHERE project_id = ${projectId} ORDER BY id ASC;
+  `;
+}
+
+export async function createMilestone(projectId: number, name: string, status: string = 'pending') {
+  const result = await dynamicSql`
+    INSERT INTO milestones (project_id, name, status)
+    VALUES (${projectId}, ${name}, ${status})
+    RETURNING *;
+  `;
+  return result[0];
+}
+
+export async function updateMilestone(milestoneId: number, name: string, status: string) {
+  const result = await dynamicSql`
+    UPDATE milestones 
+    SET name = ${name}, status = ${status}
+    WHERE id = ${milestoneId}
+    RETURNING *;
+  `;
+  return result[0];
+}
+
+export async function deleteMilestone(milestoneId: number) {
+  return await dynamicSql`
+    DELETE FROM milestones WHERE id = ${milestoneId};
   `;
 }
 

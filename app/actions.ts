@@ -508,3 +508,68 @@ export async function getSiteSettingsAction() {
         return { success: false, settings: null };
     }
 }
+
+// --- Admin CRM Actions ---
+import { createProject, updateProject, assignProjectToClient, createMilestone, updateMilestone, deleteMilestone } from "@/lib/db/queries";
+
+export async function createProjectAction(data: { title: string, client_id?: number }) {
+    try {
+        const project = await createProject(data);
+        revalidatePath('/dashboard/admin/projects');
+        return { success: true, project };
+    } catch (e: any) {
+        console.error("Failed to create project", e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function updateProjectAction(projectId: number, data: { title: string, status: string, progress_percent: number, hours_used: number, total_hours: number, total_value: number, pending_value: number, client_id?: number }) {
+    try {
+        const project = await updateProject(projectId, data);
+        if (data.client_id !== undefined) {
+            await assignProjectToClient(projectId, data.client_id);
+        }
+        revalidatePath('/dashboard/admin/projects');
+        revalidatePath('/dashboard/client');
+        return { success: true, project };
+    } catch (e: any) {
+        console.error("Failed to update project", e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function createMilestoneAction(projectId: number, name: string, status: string = 'pending') {
+    try {
+        const milestone = await createMilestone(projectId, name, status);
+        revalidatePath('/dashboard/admin/projects');
+        revalidatePath('/dashboard/client');
+        return { success: true, milestone };
+    } catch (e: any) {
+        console.error("Failed to create milestone", e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function updateMilestoneAction(milestoneId: number, name: string, status: string) {
+    try {
+        const milestone = await updateMilestone(milestoneId, name, status);
+        revalidatePath('/dashboard/admin/projects');
+        revalidatePath('/dashboard/client');
+        return { success: true, milestone };
+    } catch (e: any) {
+        console.error("Failed to update milestone", e);
+        return { success: false, error: e.message };
+    }
+}
+
+export async function deleteMilestoneAction(milestoneId: number) {
+    try {
+        await deleteMilestone(milestoneId);
+        revalidatePath('/dashboard/admin/projects');
+        revalidatePath('/dashboard/client');
+        return { success: true };
+    } catch (e: any) {
+        console.error("Failed to delete milestone", e);
+        return { success: false, error: e.message };
+    }
+}

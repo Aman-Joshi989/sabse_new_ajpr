@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createBlog, getBlogs } from '@/lib/db/queries';
 import { revalidatePath } from 'next/cache';
 import { createLocalPost } from '@/lib/gbp';
+import { triggerSocialSyndication } from '@/lib/syndication';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
@@ -136,7 +137,14 @@ async function generateFullBlog(topic: string): Promise<{ title: string; content
   const content = await callGPT([
     {
       role: 'system',
-      content: `You are an expert technical SEO copywriter and startup growth consultant. Write long-form, high-quality blog posts genuinely useful to startup founders and engineers. Style: direct, authoritative, practical. No fluff. No AI cliches. Use contractions. Vary sentence length. Include specific numbers and actionable steps.`,
+      content: `You are an expert technical SEO copywriter and startup growth consultant. Write long-form, high-quality blog posts genuinely useful to startup founders and engineers.
+Style: direct, authoritative, practical. No fluff. No AI cliches. Use contractions. Vary sentence length.
+CRITICAL: You must format this post for Generative Engine Optimization (GEO). This means you must include:
+- A "Key Takeaways" or "Quick Answer" blockquote right after the intro.
+- Direct, factual, and unambiguous answers to common questions.
+- Strong H2 and H3 structures.
+- Statistical claims and specific numbers (create realistic startup data if necessary).
+- Embedded schema-ready FAQ section.`,
     },
     {
       role: 'user',
@@ -355,9 +363,10 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .slice(0, 120);
-
+    
     console.log('[Cron] Publishing to database...');
-    const result = await createBlog({
+    // Save to database
+    const savedBlog = await createBlog({
       slug,
       title: blogTitle,
       excerpt: blogExcerpt || blogContent.replace(/[#*>\n\[\]]/g, '').slice(0, 155).trim(),
@@ -366,10 +375,19 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
       author: 'AJPR SEO Engine',
       cover_image: imageUrl,
       published: true,
+      published_at: new Date(),
     });
 
     revalidatePath('/blog');
     revalidatePath('/dashboard/admin/blog');
+    
+    // Trigger Social Syndication Webhook
+    const blogUrl = `https://ajprworld.com/blog/${slug}`;
+    await triggerSocialSyndication({
+      title: blogTitle,
+      url: blogUrl,
+      excerpt: blogExcerpt || blogContent.replace(/[#*>\n\[\]]/g, '').slice(0, 155).trim()
+    });
 
     const wordCount = (blogTitle + ' ' + blogContent).split(/\s+/).length;
     console.log(`[Cron] Published: "${blogTitle}" (${wordCount} words)`);
@@ -417,7 +435,7 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
       success: true,
       message: 'Daily blog post successfully generated and published!',
       topic,
-      slug: result?.slug || slug,
+      slug,
       title: blogTitle,
       wordCount,
     }, { status: 201 });

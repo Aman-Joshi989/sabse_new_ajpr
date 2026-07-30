@@ -12,7 +12,7 @@ type Message = {
 export default function FloatingLeadWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
-    { id: '1', text: "Hi! I'm AJPR's AI assistant. Are you looking to scale your startup or business?", sender: 'bot' }
+    { id: '1', text: "Hi! I'm AJPR's AI Growth Assistant. Want to see how we use autonomous SEO to 10x startup traffic?", sender: 'bot' }
   ])
   const [inputValue, setInputValue] = useState('')
   const [step, setStep] = useState(0)
@@ -31,7 +31,7 @@ export default function FloatingLeadWidget() {
       setTimeout(() => {
         setMessages(prev => [...prev, { 
           id: Date.now().toString(), 
-          text: "Great! We specialize in custom software and SEO. What is the best email to reach you at to schedule a free strategy call?", 
+          text: "Excellent. We build custom software and deploy AI traffic engines. Drop your email below and I'll have our lead strategist send you a free growth blueprint.", 
           sender: 'bot' 
         }])
         setStep(1)

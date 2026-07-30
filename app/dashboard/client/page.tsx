@@ -24,26 +24,21 @@ export default async function ClientDashboard({ searchParams }: { searchParams: 
   let milestones = project ? await getMilestones(project.id) : [];
   const initialMessages = await getMessages();
 
-  // 💎 AUTO-DEMO PROVISIONING
-  // If no project is assigned, we inject premium dummy data so the client sees the full experience.
+  // If no project is assigned, show an elegant waiting screen
   if (!project) {
-    project = {
-       title: "Nexus Growth Engine V2",
-       status: "In Progress",
-       progress_percent: 68,
-       hours_used: 142,
-       total_hours: 200,
-       deadline: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14).toISOString(),
-       total_value: 1250000, // Cents ($12,500)
-       pending_value: 450000,
-       overview: "Developing the premium AI SEO Engine and conversion funnels."
-    };
-    milestones = [
-       { id: 1, title: "Kickoff Strategy", status: "completed", date: new Date(Date.now() - 86400000 * 10).toISOString() },
-       { id: 2, title: "UI/UX Overhaul", status: "completed", date: new Date(Date.now() - 86400000 * 3).toISOString() },
-       { id: 3, title: "Autonomous Agents", status: "in_progress", date: new Date().toISOString() },
-       { id: 4, title: "Launch & QA", status: "pending", date: new Date(Date.now() + 86400000 * 7).toISOString() },
-    ];
+      return (
+          <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#030712] font-display">
+              <div className="text-center bg-white dark:bg-slate-900/40 p-12 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-lg">
+                  <div className="w-20 h-20 bg-blue-500/10 text-blue-500 flex items-center justify-center rounded-full mx-auto mb-6">
+                      <Wrench className="w-10 h-10" />
+                  </div>
+                  <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-4">Awaiting Assignment</h1>
+                  <p className="text-slate-500">
+                      Your workspace is ready. We are currently provisioning your project details. Please check back shortly once the admin assigns your project.
+                  </p>
+              </div>
+          </div>
+      );
   }
 
   const activeTab = searchParams?.tab || 'dashboard';
@@ -62,6 +57,7 @@ export default async function ClientDashboard({ searchParams }: { searchParams: 
                   percent={project.progress_percent} 
                   hoursUsed={project.hours_used} 
                   deadline={new Date(project.deadline).toLocaleDateString()} 
+                  title={project.title}
                 />
                 <Milestones milestones={milestones} />
               </div>

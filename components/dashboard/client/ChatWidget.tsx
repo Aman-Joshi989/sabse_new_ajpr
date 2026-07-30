@@ -40,7 +40,7 @@ export default function ChatWidget({ initialMessages = [], role, senderName }: {
   };
 
   const opponentRole = role === 'client' ? 'developer' : 'client';
-  const opponentName = role === 'client' ? 'Alex Rivera' : 'Mark Thompson';
+  const opponentName = role === 'client' ? 'Aman Joshi' : 'Client';
   const opponentStatus = role === 'client' ? 'working now' : 'online';
 
   return (

@@ -34,7 +34,7 @@ export default function Sidebar({ activeTab }: { activeTab: string }) {
             </div>
             <div className="flex flex-col">
               <h1 className="text-[#0f172a] dark:text-white text-base font-black leading-tight">
-                NEXUS
+                AJPR WORLD
               </h1>
               <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">
                 Client Portal
@@ -85,9 +85,9 @@ export default function Sidebar({ activeTab }: { activeTab: string }) {
               }}
             ></div>
             <div className="flex flex-col overflow-hidden">
-              <p className="text-sm font-bold truncate">Mark Thompson</p>
+              <p className="text-sm font-bold truncate">Aman Joshi</p>
               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
-                Nexus Owner
+                AJPR World Owner
               </p>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ProgressSection({ percent, hoursUsed, deadline }: { percent: number, hoursUsed: number, deadline: string }) {
+export default function ProgressSection({ percent, hoursUsed, deadline, title }: { percent: number, hoursUsed: number, deadline: string, title?: string }) {
   return (
     <div className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200/60 dark:border-slate-800 shadow-md-card flex flex-col md:flex-row items-center gap-10 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-32 h-32 bg-vibrant-gradient opacity-5 blur-3xl -mr-16 -mt-16"></div>
@@ -49,11 +49,10 @@ export default function ProgressSection({ percent, hoursUsed, deadline }: { perc
       </div>
       <div className="flex-1 text-center md:text-left">
         <h3 className="text-2xl font-black mb-3 text-slate-900 dark:text-white">
-          Development Phase 04
+          {title || "Project Execution"}
         </h3>
         <p className="text-slate-500 text-base leading-relaxed mb-6 font-medium">
-          Infrastructure build is progressing rapidly. We are currently
-          finalizing the API endpoints and performing security stress tests.
+          Your project is currently active and progressing as scheduled. Review the milestones below to see what we are currently working on.
         </p>
         <div className="grid grid-cols-2 gap-4">
           <div className="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-100 dark:border-slate-800">

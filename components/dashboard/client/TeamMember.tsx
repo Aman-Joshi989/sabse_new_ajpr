@@ -16,9 +16,9 @@ export default function TeamMember() {
             <div className="absolute -bottom-1 -right-1 size-4 bg-status-green border-2 border-white dark:border-slate-900 rounded-full"></div>
           </div>
           <div>
-            <p className="text-base font-black">Alex Rivera</p>
+            <p className="text-base font-black">Aman Joshi</p>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-              Lead Full-Stack
+              Systems Architect
             </p>
           </div>
         </div>

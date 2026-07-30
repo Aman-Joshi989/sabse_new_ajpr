@@ -77,9 +77,9 @@ export default function ExitIntentPopup() {
             <Zap className="w-8 h-8" />
           </div>
           
-          <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-4">Wait! Don't leave empty handed.</h2>
+          <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-4">Wait! You're leaving money on the table.</h2>
           <p className="text-slate-500 dark:text-slate-400 mb-8 font-medium">
-            Get a <strong className="text-slate-900 dark:text-white">FREE AI Growth Audit</strong> for your startup before you go. We'll show you exactly where you're losing traffic and revenue.
+            Claim your <strong className="text-slate-900 dark:text-white">FREE AI Growth Audit</strong> before you leave. We'll hand you the exact blueprint to steal traffic from your competitors and unlock hidden revenue.
           </p>
 
           {status === 'success' ? (
@@ -92,15 +92,16 @@ export default function ExitIntentPopup() {
             <form onSubmit={handleSubscribe} className="flex flex-col gap-4">
               <input 
                 type="email" 
-                placeholder="Where should we send the audit?" 
+                placeholder="Enter your best email address..." 
                 className="w-full px-5 py-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all text-center"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
               <Button type="submit" disabled={status === 'loading'} className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 px-6 py-4 h-auto rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2">
-                {status === 'loading' ? 'Claiming...' : 'Claim My Free Audit'} <ArrowRight className="w-5 h-5" />
+                {status === 'loading' ? 'Claiming...' : 'Yes, Send Me The Free Audit!'} <ArrowRight className="w-5 h-5" />
               </Button>
+              <p className="text-xs text-slate-400 font-medium">🔒 100% Free. No credit card required.</p>
               {status === 'error' && (
                 <p className="text-rose-500 text-sm font-semibold">{errorMessage}</p>
               )}
@@ -111,7 +112,7 @@ export default function ExitIntentPopup() {
             onClick={() => setIsVisible(false)}
             className="mt-6 text-sm text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium transition-colors"
           >
-            No thanks, I have too much traffic already
+            No thanks, I prefer letting my competitors win.
           </button>
         </div>
       </div>

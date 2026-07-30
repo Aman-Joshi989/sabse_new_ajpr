@@ -33,7 +33,27 @@ const GLOSSARY_TERMS = [
   'Intellectual Property (IP)', 'Startup Incubation',
   'Private Limited Company',
   'Search Engine Optimization (SEO)', 'Software as a Service (SaaS)',
-  'Product Market Fit', 'User Experience (UX)', 'User Interface (UI)'
+  'Product Market Fit', 'User Experience (UX)', 'User Interface (UI)',
+  
+  // Maximum Traffic Glossary Expansion
+  'Growth Hacking', 'Customer Acquisition Cost (CAC)', 'Customer Lifetime Value (LTV)',
+  'Monthly Recurring Revenue (MRR)', 'Annual Recurring Revenue (ARR)', 'Churn Rate',
+  'Conversion Rate Optimization (CRO)', 'Exit Intent', 'Lead Magnet',
+  'Click-Through Rate (CTR)', 'Bounce Rate', 'Search Engine Results Page (SERP)',
+  'Domain Authority (DA)', 'Backlink Profile', 'Anchor Text', 'Long-Tail Keywords',
+  'Canonical Tag', 'Core Web Vitals', 'LCP (Largest Contentful Paint)',
+  'FID (First Input Delay)', 'CLS (Cumulative Layout Shift)', 'Alt Text',
+  'Knowledge Graph', 'Rich Snippets', 'Structured Data', 'JSON-LD',
+  'A/B Testing', 'Multivariate Testing', 'Sales Funnel', 'Top of Funnel (ToFu)',
+  'Middle of Funnel (MoFu)', 'Bottom of Funnel (BoFu)', 'Inbound Marketing',
+  'Outbound Marketing', 'Cold Emailing', 'Omnichannel Marketing', 'Marketing Automation',
+  'Customer Relationship Management (CRM)', 'Net Promoter Score (NPS)', 'Value Proposition',
+  'Go-To-Market Strategy (GTM)', 'Venture Capital (VC)', 'Angel Investor', 'Seed Round',
+  'Series A', 'Cap Table', 'Term Sheet', 'Burn Rate', 'Runway', 'Bootstrapping',
+  'Agile Development', 'Scrum', 'Kanban', 'DevOps', 'Site Reliability Engineering (SRE)',
+  'Load Balancing', 'Content Delivery Network (CDN)', 'Serverless Architecture',
+  'Containerization', 'Docker', 'Kubernetes', 'GraphQL', 'REST API', 'WebSockets',
+  'OAuth', 'JWT (JSON Web Token)', 'Single Sign-On (SSO)', 'Role-Based Access Control (RBAC)'
 ];
 
 function slugify(text: string) {

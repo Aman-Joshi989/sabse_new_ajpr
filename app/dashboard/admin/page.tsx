@@ -24,8 +24,17 @@ export default async function AdminDashboard() {
   
   // Calculate total revenue from completed payments
   const totalRevenue = payments
-    .filter((p: any) => p.payment_status?.toLowerCase() === 'completed' || p.payment_status?.toLowerCase() === 'paid')
+    .filter((p: any) => p.payment_status?.toLowerCase() === 'completed' || p.payment_status?.toLowerCase() === 'paid' || p.payment_status?.toLowerCase() === 'successful')
     .reduce((sum: number, p: any) => sum + parseFloat(p.amount || 0), 0)
+
+  // Calculate active projects
+  const activeProjects = projects.filter((p: any) => p.status !== 'Completed' && p.status !== 'Finished')
+
+  // Combine inquiries for the request list
+  const combinedInquiries = [
+    ...requests.map((r: any) => ({ ...r, type: 'cart_request' })),
+    ...submissions.map((s: any) => ({ ...s, type: 'contact_submission' }))
+  ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
   return (
     <div className="space-y-8">
@@ -60,7 +69,7 @@ export default async function AdminDashboard() {
                 <span className="text-sm font-bold text-[#5F6368] dark:text-[#9AA0A6] uppercase tracking-wider">Active Projects</span>
                 <div className="p-2 bg-blue-50 dark:bg-blue-500/20 rounded-lg text-blue-600 dark:text-blue-400"><Briefcase className="w-5 h-5"/></div>
             </div>
-            <span className="text-4xl font-black text-[#202124] dark:text-white">{projects.length}</span>
+            <span className="text-4xl font-black text-[#202124] dark:text-white">{activeProjects.length}</span>
             <span className="text-xs text-blue-600 font-medium mt-2 flex items-center gap-1">In progress</span>
           </div>
           
@@ -194,7 +203,7 @@ export default async function AdminDashboard() {
                 </Link>
             </div>
             <div className="bg-white dark:bg-[#292A2D] border border-[#DADCE0] dark:border-[#3C4043] rounded-xl overflow-hidden">
-              <AdminClientRequestList requests={requests} />
+              <AdminClientRequestList requests={combinedInquiries} />
             </div>
           </div>
 

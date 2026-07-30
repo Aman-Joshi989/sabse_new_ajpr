@@ -15,11 +15,19 @@ export default function AdminClientRequestList({ requests }: { requests: any[] }
     const [loading, setLoading] = useState(false)
 
     const handleOpenCreate = (req: any) => {
-        const data = JSON.parse(req.content)
+        let name = req.name || ''
+        let email = req.email || ''
+
+        if (req.type === 'cart_request' && req.content) {
+            const data = JSON.parse(req.content)
+            name = data.name || ''
+            email = data.email || ''
+        }
+
         setSelectedRequest(req)
         setFormData({
-            name: data.name || '',
-            email: data.email || '',
+            name,
+            email,
             password: Math.random().toString(36).slice(-8) // Generate random password
         })
         setIsCreateOpen(true)
@@ -60,38 +68,54 @@ export default function AdminClientRequestList({ requests }: { requests: any[] }
             {/* Header Row */}
             <div className="grid grid-cols-12 gap-4 p-4 border-b border-[#DADCE0] dark:border-[#3C4043] text-xs font-medium text-[#5F6368] dark:text-[#9AA0A6] uppercase tracking-wider">
                 <div className="col-span-5 md:col-span-4">Client</div>
-                <div className="col-span-3 hidden md:block">Order Value</div>
-                <div className="col-span-3">Status</div>
+                <div className="col-span-3 hidden md:block">Value / Budget</div>
+                <div className="col-span-3">Type</div>
                 <div className="col-span-4 md:col-span-2 text-right">Actions</div>
             </div>
 
             {/* List Items */}
-            {requests.map((req: any, idx: number) => {
-                const data = JSON.parse(req.content)
-                const cartTotal = data.total || 0
-                const isPaid = data.paymentStatus === 'paid'
+            {requests.slice(0, 5).map((req: any, idx: number) => {
+                let name = req.name || ''
+                let email = req.email || ''
+                let valueText = ''
+                let typeText = 'Inquiry'
+                let isPaid = false
+
+                if (req.type === 'cart_request') {
+                    const data = req.content ? JSON.parse(req.content) : {}
+                    name = data.name || 'Unknown'
+                    email = data.email || 'No email'
+                    valueText = `₹${(data.total || 0).toLocaleString()}`
+                    isPaid = data.paymentStatus === 'paid'
+                    typeText = isPaid ? 'Paid Order' : 'Cart Request'
+                } else if (req.type === 'contact_submission') {
+                    name = req.name || 'Unknown'
+                    email = req.email || 'No email'
+                    valueText = req.budget_range || 'N/A'
+                    typeText = 'Lead Form'
+                }
                 
                 return (
                     <div 
-                        key={req.id} 
+                        key={`${req.type}-${req.id}`} 
                         className={`grid grid-cols-12 gap-4 p-4 items-center transition-colors hover:bg-[#F8F9FA] dark:hover:bg-[#303134] ${
-                            idx !== requests.length - 1 ? 'border-b border-[#DADCE0] dark:border-[#3C4043]' : ''
+                            idx !== Math.min(requests.length, 5) - 1 ? 'border-b border-[#DADCE0] dark:border-[#3C4043]' : ''
                         }`}
                     >
                         <div className="col-span-5 md:col-span-4 flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-[#E8F0FE] dark:bg-[#1A73E8]/20 flex items-center justify-center shrink-0">
                                 <span className="text-xs font-bold text-[#1A73E8] dark:text-[#8AB4F8]">
-                                    {data.name?.charAt(0).toUpperCase()}
+                                    {name.charAt(0).toUpperCase()}
                                 </span>
                             </div>
                             <div className="min-w-0">
-                                <p className="text-sm font-medium text-[#202124] dark:text-[#E8EAED] truncate">{data.name}</p>
-                                <p className="text-xs text-[#5F6368] dark:text-[#9AA0A6] truncate">{data.email}</p>
+                                <p className="text-sm font-medium text-[#202124] dark:text-[#E8EAED] truncate">{name}</p>
+                                <p className="text-xs text-[#5F6368] dark:text-[#9AA0A6] truncate">{email}</p>
                             </div>
                         </div>
                         
                         <div className="col-span-3 hidden md:flex flex-col">
-                            <span className="text-sm text-[#3C4043] dark:text-[#E8EAED]">₹{cartTotal.toLocaleString()}</span>
+                            <span className="text-sm text-[#3C4043] dark:text-[#E8EAED]">{valueText}</span>
                             <span className="text-[10px] text-[#5F6368] dark:text-[#9AA0A6]">
                                 {new Date(req.created_at).toISOString().split('T')[0]}
                             </span>
@@ -99,12 +123,12 @@ export default function AdminClientRequestList({ requests }: { requests: any[] }
 
                         <div className="col-span-3 flex items-center">
                             <div className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                isPaid 
-                                ? 'bg-[#E6F4EA] text-[#137333] dark:bg-[#34A853]/20 dark:text-[#81C995]' 
-                                : 'bg-[#FEF7E0] text-[#B06000] dark:bg-[#FBBC04]/20 dark:text-[#FDE293]'
+                                req.type === 'cart_request' 
+                                ? (isPaid ? 'bg-[#E6F4EA] text-[#137333] dark:bg-[#34A853]/20 dark:text-[#81C995]' : 'bg-[#FEF7E0] text-[#B06000] dark:bg-[#FBBC04]/20 dark:text-[#FDE293]')
+                                : 'bg-[#E8F0FE] text-[#1A73E8] dark:bg-[#1A73E8]/20 dark:text-[#8AB4F8]'
                             }`}>
-                                {isPaid ? <CreditCard className="w-3 h-3" /> : <div className="w-1.5 h-1.5 rounded-full bg-current" />}
-                                {isPaid ? 'Paid' : 'Pending'}
+                                {req.type === 'cart_request' && isPaid ? <CreditCard className="w-3 h-3" /> : <div className="w-1.5 h-1.5 rounded-full bg-current" />}
+                                {typeText}
                             </div>
                         </div>
 

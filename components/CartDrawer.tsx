@@ -79,11 +79,20 @@ export default function CartDrawer() {
   const handleCheckout = async (isGuest: boolean = false) => {
       setLoading(true)
       try {
-          // 1. Create Razorpay Order
-          const order = await createRazorpayOrder(payableTotal)
-          if (!order) throw new Error('Order creation failed')
-
           const currentUserDetails = isGuest ? guestDetails : { name: user?.name, email: user?.email, phone: '' }
+
+          // 1. Create Razorpay Order with rich metadata
+          const order = await createRazorpayOrder(payableTotal, {
+              type: 'cart_checkout',
+              name: currentUserDetails.name,
+              email: currentUserDetails.email,
+              phone: currentUserDetails.phone,
+              paymentType: paymentType,
+              advanceAmount: payableTotal,
+              totalAmount: cartTotal,
+              cartItems: cart.map(i => `${i.name} (x${i.quantity})`).join(', ')
+          })
+          if (!order) throw new Error('Order creation failed')
 
           const options = {
               key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,

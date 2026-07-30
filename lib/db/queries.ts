@@ -168,6 +168,83 @@ export async function ensureDbInitialized() {
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
       `;
+
+      // 11. Core tables for dashboard and communication
+      await sql`
+        CREATE TABLE IF NOT EXISTS users (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          email VARCHAR(255) UNIQUE NOT NULL,
+          password TEXT NOT NULL,
+          role VARCHAR(50) DEFAULT 'client',
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
+      await sql`
+        CREATE TABLE IF NOT EXISTS messages (
+          id SERIAL PRIMARY KEY,
+          content TEXT NOT NULL,
+          sender_name VARCHAR(255),
+          sender_role VARCHAR(50),
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
+      await sql`
+        CREATE TABLE IF NOT EXISTS projects (
+          id SERIAL PRIMARY KEY,
+          title VARCHAR(255) NOT NULL,
+          status VARCHAR(100) DEFAULT 'Not Started',
+          progress_percent INTEGER DEFAULT 0,
+          hours_used INTEGER DEFAULT 0,
+          total_hours INTEGER DEFAULT 0,
+          total_value NUMERIC DEFAULT 0,
+          pending_value NUMERIC DEFAULT 0,
+          deadline DATE,
+          client_id INTEGER,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
+      await sql`
+        CREATE TABLE IF NOT EXISTS tasks (
+          id SERIAL PRIMARY KEY,
+          project_id INTEGER,
+          title VARCHAR(255) NOT NULL,
+          status VARCHAR(100) DEFAULT 'todo',
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
+      await sql`
+        CREATE TABLE IF NOT EXISTS milestones (
+          id SERIAL PRIMARY KEY,
+          project_id INTEGER,
+          title VARCHAR(255) NOT NULL,
+          status VARCHAR(100) DEFAULT 'pending',
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
+      await sql`
+        CREATE TABLE IF NOT EXISTS bookings (
+            id SERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            company_name TEXT,
+            website_url TEXT,
+            booking_date DATE NOT NULL,
+            booking_time VARCHAR(50) NOT NULL,
+            topic TEXT,
+            status VARCHAR(20) DEFAULT 'Pending',
+            meet_link TEXT,
+            payment_id TEXT,
+            payment_status VARCHAR(20) DEFAULT 'Unpaid',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
     } catch (err) {
       console.error("Database lazy-initialization migration failed:", err);
       dbInitialized = false;

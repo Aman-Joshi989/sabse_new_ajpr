@@ -10,6 +10,15 @@ export async function POST(req: Request) {
     }
 
     try {
+        // Ensure the table exists before attempting to insert
+        await sql`
+            CREATE TABLE IF NOT EXISTS subscribers (
+                id SERIAL PRIMARY KEY,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        `;
+        
         await sql`INSERT INTO subscribers (email) VALUES (${email})`;
         return NextResponse.json({ success: true });
     } catch (error: any) {

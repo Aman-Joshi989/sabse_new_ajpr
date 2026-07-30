@@ -159,6 +159,15 @@ export async function ensureDbInitialized() {
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
       `;
+
+      // 10. Ensure subscribers table exists for lead capture
+      await sql`
+        CREATE TABLE IF NOT EXISTS subscribers (
+          id SERIAL PRIMARY KEY,
+          email VARCHAR(255) UNIQUE NOT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
     } catch (err) {
       console.error("Database lazy-initialization migration failed:", err);
       dbInitialized = false;

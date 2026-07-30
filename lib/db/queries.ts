@@ -155,10 +155,18 @@ export async function ensureDbInitialized() {
           id SERIAL PRIMARY KEY,
           platform VARCHAR(50) UNIQUE NOT NULL,
           access_token TEXT NOT NULL,
+          refresh_token TEXT,
           expires_at TIMESTAMP,
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
       `;
+      
+      // Safely add refresh_token if it doesn't exist (in case the table was already created)
+      try {
+          await sql`ALTER TABLE social_tokens ADD COLUMN IF NOT EXISTS refresh_token TEXT;`;
+      } catch (e) {
+          console.error("Error adding refresh_token column:", e);
+      }
 
       // 10. Ensure subscribers table exists for lead capture
       await sql`
@@ -1062,17 +1070,18 @@ export async function updateSocialLeadStatus(id: number, status: string) {
 
 // --- Social Tokens (OAuth) Queries ---
 
-export async function saveSocialToken(platform: string, access_token: string, expires_in_seconds?: number) {
+export async function saveSocialToken(platform: string, access_token: string, expires_in_seconds?: number, refresh_token?: string) {
     try {
         const expires_at = expires_in_seconds 
             ? new Date(Date.now() + expires_in_seconds * 1000).toISOString()
             : null;
             
         await sql`
-            INSERT INTO social_tokens (platform, access_token, expires_at)
-            VALUES (${platform}, ${access_token}, ${expires_at})
+            INSERT INTO social_tokens (platform, access_token, refresh_token, expires_at)
+            VALUES (${platform}, ${access_token}, ${refresh_token || null}, ${expires_at})
             ON CONFLICT (platform) DO UPDATE 
             SET access_token = EXCLUDED.access_token,
+                refresh_token = COALESCE(EXCLUDED.refresh_token, social_tokens.refresh_token),
                 expires_at = EXCLUDED.expires_at,
                 created_at = CURRENT_TIMESTAMP
         `;

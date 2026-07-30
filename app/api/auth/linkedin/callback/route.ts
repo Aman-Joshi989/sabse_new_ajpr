@@ -51,7 +51,7 @@ export async function GET(req: Request) {
 
     // Save token to DB
     await ensureDbInitialized();
-    await saveSocialToken('linkedin', tokenData.access_token, tokenData.expires_in);
+    await saveSocialToken('linkedin', tokenData.access_token, tokenData.expires_in, tokenData.refresh_token);
 
     // Redirect back to dashboard
     return NextResponse.redirect(new URL('/dashboard/admin/social-media', req.url));

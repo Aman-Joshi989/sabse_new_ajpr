@@ -1,25 +1,46 @@
-import { neon } from "@neondatabase/serverless";
+import { Pool } from 'pg';
 import { unstable_noStore as noStore } from "next/cache";
 import { submitToIndexNow } from "../indexnow";
 
-// Instantiate Neon client once globally to reuse TCP/TLS keep-alive connections
-let cachedClient: any = null;
-const getClient = () => {
-  if (cachedClient) return cachedClient;
+// Instantiate pg client once globally to reuse connections
+let cachedPool: Pool | null = null;
+const getPool = () => {
+  if (cachedPool) return cachedPool;
   const url = process.env.DATABASE_URL;
   if (!url) return null;
-  cachedClient = neon(url);
-  return cachedClient;
+  cachedPool = new Pool({
+    connectionString: url,
+    ssl: { rejectUnauthorized: false }
+  });
+  return cachedPool;
 };
 
 // Standard sql — does NOT call noStore(), allowing Next.js response caching (ISR)
-const sql = (strings: TemplateStringsArray, ...values: any[]) => {
-  const client = getClient();
-  if (!client) {
+const sql = async (strings: TemplateStringsArray, ...values: any[]) => {
+  const pool = getPool();
+  if (!pool) {
     console.warn("WARNING: DATABASE_URL is not defined in this environment. Returning a safe empty fallback.");
-    return Promise.resolve([] as any);
+    return [] as any;
   }
-  return client(strings, ...values);
+  
+  // Convert tagged template into parameterized query
+  let text = '';
+  for (let i = 0; i < strings.length; i++) {
+    text += strings[i];
+    if (i < values.length) {
+      text += `$${i + 1}`;
+    }
+  }
+  
+  try {
+    const res = values.length > 0 
+      ? await pool.query(text, values)
+      : await pool.query(text); // Simple query protocol allows multiple statements
+    return res.rows || (Array.isArray(res) ? res[res.length-1]?.rows || [] : []);
+  } catch (err) {
+    console.error("SQL Error:", err);
+    throw err;
+  }
 };
 
 // Dynamic sql — calls noStore() to force fresh data on every request (for mutations, admin pages)

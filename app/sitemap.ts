@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getPublishedServices, getBlogs, getGlossaryTerms } from '@/lib/db/queries'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 86400; // Cache for 24 hours to prevent SEO bots from draining Neon DB compute
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://ajprworld.com'

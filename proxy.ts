@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { updateSession, decrypt } from '@/lib/auth';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     // 0. Canonical WWW to non-WWW & HTTP to HTTPS Redirect (301 Moved Permanently)
     const host = request.headers.get('host') || '';
     const isLocal = host.includes('localhost') || host.includes('127.0.0.1');

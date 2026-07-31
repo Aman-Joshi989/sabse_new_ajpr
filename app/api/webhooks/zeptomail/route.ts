@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const payload = await req.json();
+        // Safely parse JSON in case ZeptoMail sends an empty body during "Verify"
+        const rawBody = await req.text();
+        const payload = rawBody ? JSON.parse(rawBody) : {};
         
         // Log the webhook payload for debugging
         console.log("ZeptoMail Webhook Received:", JSON.stringify(payload, null, 2));
@@ -18,8 +20,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ success: true, message: "Webhook received" }, { status: 200 });
     } catch (error) {
         console.error("Error processing ZeptoMail webhook:", error);
-        // Even on error, we should probably return 200 so ZeptoMail doesn't retry indefinitely
-        // if the payload is just malformed, but 500 is safer for debugging initially.
-        return NextResponse.json({ error: "Failed to process webhook" }, { status: 500 });
+        // We MUST return 200 even on error so ZeptoMail accepts the verification
+        return NextResponse.json({ success: true, message: "Error processed but ignored for verification" }, { status: 200 });
     }
 }

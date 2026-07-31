@@ -31,7 +31,7 @@ export default function FloatingLeadWidget() {
       setTimeout(() => {
         setMessages(prev => [...prev, { 
           id: Date.now().toString(), 
-          text: "Excellent. We build custom software and deploy AI traffic engines. Drop your email below and I'll have our lead strategist send you a free growth blueprint.", 
+          text: "Excellent. Drop your email below and I'll send you our Ultimate 2026 Growth Checklist instantly.", 
           sender: 'bot' 
         }])
         setStep(1)

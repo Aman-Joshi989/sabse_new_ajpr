@@ -79,7 +79,7 @@ export default function ExitIntentPopup() {
           
           <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-4">Wait! You're leaving money on the table.</h2>
           <p className="text-slate-500 dark:text-slate-400 mb-8 font-medium">
-            Claim your <strong className="text-slate-900 dark:text-white">FREE AI Growth Audit</strong> before you leave. We'll hand you the exact blueprint to steal traffic from your competitors and unlock hidden revenue.
+            Claim your <strong className="text-slate-900 dark:text-white">FREE Ultimate 2026 Growth Checklist</strong> before you leave. Get our internal 50-point checklist we use to scale startups from $0 to $1M.
           </p>
 
           {status === 'success' ? (
@@ -99,7 +99,7 @@ export default function ExitIntentPopup() {
                 required
               />
               <Button type="submit" disabled={status === 'loading'} className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 px-6 py-4 h-auto rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2">
-                {status === 'loading' ? 'Claiming...' : 'Yes, Send Me The Free Audit!'} <ArrowRight className="w-5 h-5" />
+                {status === 'loading' ? 'Sending...' : 'Yes, Send Me The Checklist!'} <ArrowRight className="w-5 h-5" />
               </Button>
               <p className="text-xs text-slate-400 font-medium">🔒 100% Free. No credit card required.</p>
               {status === 'error' && (

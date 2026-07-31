@@ -46,12 +46,7 @@ const sql = async (strings: TemplateStringsArray, ...values: any[]) => {
 // Dynamic sql — calls noStore() to force fresh data on every request (for mutations, admin pages)
 const dynamicSql = (strings: TemplateStringsArray, ...values: any[]) => {
   noStore();
-  const client = getClient();
-  if (!client) {
-    console.warn("WARNING: DATABASE_URL is not defined in this environment. Returning a safe empty fallback.");
-    return Promise.resolve([] as any);
-  }
-  return client(strings, ...values);
+  return sql(strings, ...values);
 };
 
 let dbInitialized = false;

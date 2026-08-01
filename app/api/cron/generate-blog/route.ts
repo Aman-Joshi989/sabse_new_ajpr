@@ -138,6 +138,7 @@ async function generateFullBlog(topic: string): Promise<{ title: string; content
     {
       role: 'system',
       content: `You are an expert technical SEO copywriter and startup growth consultant. Write long-form, high-quality blog posts genuinely useful to startup founders and engineers.
+The CURRENT YEAR IS 2026. Make sure all timelines, strategies, and facts are framed in the context of 2026. NEVER use the year 2024.
 Style: direct, authoritative, practical. No fluff. No AI cliches. Use contractions. Vary sentence length.
 CRITICAL: You must format this post for Generative Engine Optimization (GEO). This means you must include:
 - A "Key Takeaways" or "Quick Answer" blockquote right after the intro.
@@ -237,11 +238,11 @@ async function executeDailyBlogPipeline(req: NextRequest) {
       topic = (await callGPT([
         {
           role: 'system',
-          content: 'You are a creative SEO content strategist for AJPR World, an India-based B2B startup tech company. Your goal is to write blog topics that ride the wave of trending tech news to maximize traffic. Output ONLY the plain headline, no quotes, no explanation.',
+          content: 'You are a creative SEO content strategist for AJPR World, an India-based B2B startup tech company. The CURRENT YEAR IS 2026. NEVER use 2024 in your topics. Your goal is to write blog topics that ride the wave of trending tech news to maximize traffic. Output ONLY the plain headline, no quotes, no explanation.',
         },
         {
           role: 'user',
-          content: `${contextText}\n\nAlready published (do NOT repeat these topics):\n${existingList}\n\nGenerate ONE brand new unique, click-worthy blog headline based on current trends:`,
+          content: `${contextText}\n\nAlready published (do NOT repeat these topics):\n${existingList}\n\nGenerate ONE brand new unique, click-worthy blog headline based on current trends for the year 2026:`,
         },
       ])).trim().replace(/^["']|["']$/g, '');
     } catch (e: any) {

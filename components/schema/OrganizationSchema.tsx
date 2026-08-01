@@ -1,4 +1,5 @@
 import { getSiteSettings } from '@/lib/db/queries';
+import Script from 'next/script';
 
 export const OrganizationSchema = async () => {
   let settings: any = null;
@@ -30,7 +31,7 @@ export const OrganizationSchema = async () => {
   };
 
   return (
-    <script
+    <Script
       id="organization-schema"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

@@ -1,4 +1,5 @@
 import { getSiteSettings } from '@/lib/db/queries';
+import Script from 'next/script';
 
 export async function LocalBusinessSchema() {
   let settings: any = null;
@@ -54,7 +55,7 @@ export async function LocalBusinessSchema() {
   };
 
   return (
-    <script
+    <Script
       id="local-business-schema"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

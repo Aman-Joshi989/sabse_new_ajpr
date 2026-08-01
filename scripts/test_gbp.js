@@ -45,8 +45,8 @@ async function testConnection() {
     }
   } catch (error) {
     console.error('❌ API Test Failed:');
-    if (error.code === 403) {
-      console.error('Permission Denied. The Business Profile API might not be enabled on your Google Cloud Project, or your service account does not have access.');
+    if (error.response && error.response.data) {
+      console.error('Exact Google API Error:', JSON.stringify(error.response.data, null, 2));
     } else {
       console.error(error.message);
     }

@@ -407,7 +407,7 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
           },
           body: JSON.stringify({
             post: socialPost,
-            platforms: ['linkedin', 'facebook'],
+            platforms: ['linkedin', 'facebook', 'gmb'],
           })
         });
         console.log('[Cron] Social post sent successfully via Ayrshare');
@@ -416,21 +416,6 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
       }
     }
     // ----------------------------------
-
-    // --- GOOGLE BUSINESS PROFILE AUTO-POST TRIGGER ---
-    try {
-      console.log('[Cron] Auto-posting to Google Business Profile...');
-      const postUrl = `https://ajprworld.com/blog/${slug}`;
-      const summaryText = blogExcerpt || `Check out our latest guide on ${topic}. Learn exactly how to leverage this for your business growth today.`;
-      
-      // Attempt to publish to GBP
-      await createLocalPost(blogTitle, summaryText, postUrl);
-      console.log('[Cron] GBP Post created successfully!');
-    } catch (e: any) {
-      // We don't want to fail the whole cron if GBP fails, just log it.
-      console.error('[Cron] Failed to post to Google Business Profile:', e.message || e);
-    }
-    // -------------------------------------------------
 
     return NextResponse.json({
       success: true,

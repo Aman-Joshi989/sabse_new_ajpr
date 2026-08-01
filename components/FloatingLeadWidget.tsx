@@ -12,12 +12,9 @@ export default function FloatingLeadWidget() {
     return () => clearTimeout(timer);
   }, []);
 
-  const openWhatsApp = () => {
-    const phoneNumber = "919220970755";
-    const message = encodeURIComponent("Hi AJPR World, I want to discuss a Custom AI MVP.");
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-  };
-
+  const whatsappNumber = '919220970755'; 
+  const message = 'Hi AJPR World, I want to discuss a Custom AI MVP.';
+  const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   if (!isVisible) return null;
 
   return (

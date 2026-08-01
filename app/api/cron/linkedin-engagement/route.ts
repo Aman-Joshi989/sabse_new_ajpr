@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { publishToLinkedIn } from '@/lib/linkedin';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
-
-const AYRSHARE_API_KEY = process.env.AYRSHARE_API_KEY;
 
 // Mock trending topics. In production, you would fetch real LinkedIn feeds via an API.
 const TRENDING_TOPICS = [
@@ -56,28 +55,21 @@ export async function GET(req: NextRequest) {
     console.log(`[LinkedIn Engine] Generating expert comment for topic: ${topic.topic}`);
     const expertComment = await generateExpertComment(topic);
     
-    console.log(`[LinkedIn Engine] Engaging via Ayrshare API...`);
+    console.log(`[LinkedIn Engine] Publishing via Native LinkedIn API...`);
 
-    if (AYRSHARE_API_KEY) {
-      // In a real scenario, Ayrshare's auto-comment or auto-post endpoint is called.
-      // Here we simulate an autonomous post positioning Aman as a thought leader on the trending topic.
-      const response = await fetch('https://app.ayrshare.com/api/post', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${AYRSHARE_API_KEY}`
-        },
-        body: JSON.stringify({
-          post: `Trending thought: ${topic.context}\n\nMy take:\n${expertComment}\n\n#AI #MVP #Startups #AJPRWorld #Founders`,
-          platforms: ['linkedin'],
-          profileKeys: ['LinkedInProfileKey'] // Required if using specific profiles
-        })
-      });
-      
-      const ayrshareData = await response.json();
-      results.push({ topic: topic.topic, status: 'Posted', ayrshare: ayrshareData });
+    const companyId = process.env.LINKEDIN_COMPANY_ID || '12345678'; // Fallback to mock ID if not set
+
+    const postResult = await publishToLinkedIn({
+      text: `Trending thought: ${topic.context}\n\nMy take:\n${expertComment}\n\n#AI #MVP #Startups #AJPRWorld #Founders`,
+      companyId: companyId,
+      target: 'both' // Posts to both Aman's personal profile and the company page
+    });
+
+    if (postResult.success) {
+      results.push({ topic: topic.topic, status: 'Posted via Native API', data: postResult.data });
     } else {
-      results.push({ topic: topic.topic, status: 'Simulated (No API Key)', comment: expertComment });
+      console.error('LinkedIn native publish failed:', postResult.error);
+      results.push({ topic: topic.topic, status: 'Failed to Post', error: postResult.error });
     }
 
     return NextResponse.json({ success: true, results }, { status: 200 });

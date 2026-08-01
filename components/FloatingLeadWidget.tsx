@@ -1,12 +1,24 @@
 'use client'
 
-import React from 'react'
-import { MessageCircle } from 'lucide-react' // Using MessageCircle to mimic WhatsApp icon if custom isn't available
+import React, { useState, useEffect } from 'react'
+import { MessageCircle } from 'lucide-react'
 
 export default function FloatingLeadWidget() {
-  const whatsappNumber = '919997205257'; 
-  const message = 'Hi AJPR World, I want to discuss a Custom AI MVP.';
-  const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Show widget after 3 seconds
+    const timer = setTimeout(() => setIsVisible(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const openWhatsApp = () => {
+    const phoneNumber = "919220970755";
+    const message = encodeURIComponent("Hi AJPR World, I want to discuss a Custom AI MVP.");
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  };
+
+  if (!isVisible) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">

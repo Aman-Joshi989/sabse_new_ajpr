@@ -407,7 +407,7 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
           },
           body: JSON.stringify({
             post: socialPost,
-            platforms: ['twitter', 'linkedin', 'facebook', 'instagram'],
+            platforms: ['linkedin', 'facebook'],
           })
         });
         console.log('[Cron] Social post sent successfully via Ayrshare');

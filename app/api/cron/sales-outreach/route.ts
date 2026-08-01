@@ -1,21 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SendMailClient } from 'zeptomail';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { getUncontactedLeads, markLeadAsContacted } from '@/lib/db/queries';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
 
 // Configuration
 const ZEPTO_URL = "https://api.zeptomail.in/v1.1/email";
-const ZEPTO_TOKEN = "Zoho-enczapikey PHtE6r1bQ+293mEs8RRR5fDpRMGsMt9//uNjKVRP449HDqcCG01X+d16kzbi+kh5VaNCEqLJyY1rt+iftunUdGvtZ24YXmqyqK3sx/VYSPOZsbq6x00asFwTdULYVYDtcNFr1iTRvNmX";
+const ZEPTO_TOKEN = process.env.AYRSHARE_API_KEY || "Zoho-enczapikey PHtE6r1bQ+293mEs8RRR5fDpRMGsMt9//uNjKVRP449HDqcCG01X+d16kzbi+kh5VaNCEqLJyY1rt+iftunUdGvtZ24YXmqyqK3sx/VYSPOZsbq6x00asFwTdULYVYDtcNFr1iTRvNmX";
 const zeptoClient = new SendMailClient({ url: ZEPTO_URL, token: ZEPTO_TOKEN });
-
-// Sample pool of leads (In production, this would be fetched from Supabase)
-const SAMPLE_LEADS = [
-  { name: 'Rahul', company: 'TechNova India', industry: 'E-commerce', focus: 'Scaling logistics and automation' },
-  { name: 'Priya', company: 'FinEdge Solutions', industry: 'Fintech', focus: 'Building AI risk models' },
-  { name: 'Vikram', company: 'HealthSync', industry: 'Healthtech', focus: 'Patient data processing' },
-];
 
 async function generateColdEmail(lead: any) {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -26,7 +20,7 @@ async function generateColdEmail(lead: any) {
 
   const prompt = `You are Aman Joshi, the Lead Technical Founder at AJPR World, an elite B2B tech agency in India.
 Write a concise, high-converting cold email (under 120 words) to ${lead.name} from ${lead.company}.
-Their industry is ${lead.industry} and their current focus is ${lead.focus}.
+Their industry is ${lead.industry || 'Tech'} and their current focus is ${lead.focus || 'growth and automation'}.
 Pitch our "Custom AI MVP Development in 4 weeks" service. Focus on ROI and speed.
 Do not use generic fluff. Be direct and slightly casual. End with a CTA for a 15-min discovery call.
 Return ONLY the raw HTML body of the email. Do NOT include markdown tags like \`\`\`html.`;
@@ -53,14 +47,22 @@ export async function GET(req: NextRequest) {
     console.log('[Sales Outreach] Starting daily outreach cron...');
     const results = [];
 
+    // Fetch real uncontacted leads from Supabase
+    const leads = await getUncontactedLeads();
+    
+    if (!leads || leads.length === 0) {
+      console.log('[Sales Outreach] No new leads to contact today.');
+      return NextResponse.json({ success: true, message: 'No leads in queue' }, { status: 200 });
+    }
+
     // Process one lead per run to avoid spamming / rate limits
-    const lead = SAMPLE_LEADS[Math.floor(Math.random() * SAMPLE_LEADS.length)];
+    const lead = leads[0];
     
     console.log(`[Sales Outreach] Generating pitch for ${lead.company}...`);
     const emailBody = await generateColdEmail(lead);
 
-    console.log(`[Sales Outreach] Sending via ZeptoMail...`);
-    // NOTE: In production, the "to" address would be lead.email. For testing, it sends to the owner.
+    console.log(`[Sales Outreach] Sending via ZeptoMail to ${lead.email}...`);
+    
     await zeptoClient.sendMail({
       "from": {
           "address": "hello@ajprworld.com",
@@ -69,8 +71,8 @@ export async function GET(req: NextRequest) {
       "to": [
           {
               "email_address": {
-                  "address": "hello@ajprworld.com",
-                  "name": "Aman Joshi (Test Mode)"
+                  "address": lead.email,
+                  "name": lead.name
               }
           }
       ],
@@ -78,7 +80,10 @@ export async function GET(req: NextRequest) {
       "htmlbody": emailBody,
     });
 
-    results.push({ lead: lead.company, status: 'Sent' });
+    // Mark as contacted so we never email them again
+    await markLeadAsContacted(lead.id);
+
+    results.push({ lead: lead.company, email: lead.email, status: 'Sent' });
 
     return NextResponse.json({ success: true, results }, { status: 200 });
   } catch (error: any) {

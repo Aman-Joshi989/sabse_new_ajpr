@@ -165,6 +165,20 @@ export async function ensureDbInitialized() {
         );
       `;
 
+      // 8.5 Ensure sales_leads table exists for autonomous cold email engine
+      await sql`
+        CREATE TABLE IF NOT EXISTS sales_leads (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          company VARCHAR(255) NOT NULL,
+          email VARCHAR(255) NOT NULL,
+          industry VARCHAR(255),
+          focus TEXT,
+          status VARCHAR(50) DEFAULT 'new',
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
       // 9. Ensure social_tokens table exists for OAuth connections
       await sql`
         CREATE TABLE IF NOT EXISTS social_tokens (
@@ -540,6 +554,21 @@ export async function getContactSubmissions() {
 
   return await dynamicSql`
     SELECT * FROM contact_submissions ORDER BY created_at DESC;
+  `;
+}
+
+// --- Sales Leads (Autonomous Email Engine) ---
+export async function getUncontactedLeads() {
+  await ensureDbInitialized();
+  return await dynamicSql`
+    SELECT * FROM sales_leads WHERE status = 'new' ORDER BY created_at ASC LIMIT 10;
+  `;
+}
+
+export async function markLeadAsContacted(id: number) {
+  await ensureDbInitialized();
+  return await dynamicSql`
+    UPDATE sales_leads SET status = 'contacted' WHERE id = ${id} RETURNING *;
   `;
 }
 

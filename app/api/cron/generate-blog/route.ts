@@ -3,22 +3,31 @@ import { createBlog, getBlogs } from '@/lib/db/queries';
 import { revalidatePath } from 'next/cache';
 import { createLocalPost } from '@/lib/gbp';
 import { triggerSocialSyndication } from '@/lib/syndication';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+// --- GEMINI HELPER FUNCTION ---
+async function callGemini(messages: { role: string; content: string }[]) {
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  if (!apiKey) throw new Error('GEMINI_API_KEY not set in .env.local');
+  
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+  // Convert ChatGPT style messages to Gemini style prompt
+  const prompt = messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n\n');
+
+  try {
+    const result = await model.generateContent(prompt);
+    return result.response.text();
+  } catch (error: any) {
+    console.error('[Gemini Error]', error.message || error);
+    throw new Error(`Gemini API failed: ${error.message}`);
+  }
+}
+// ------------------------------
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
-
-async function callGPT(messages: { role: string; content: string }[]) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error('OPENAI_API_KEY not set');
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({ model: 'gpt-4o-mini', messages, temperature: 0.85 }),
-  });
-  if (!res.ok) throw new Error(`OpenAI ${res.status}: ${await res.text()}`);
-  const data = await res.json();
-  return data.choices[0].message.content as string;
-}
 
 async function generateDalleImage(prompt: string): Promise<string> {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -134,7 +143,7 @@ function pickUniqueTopic(existingTitles: string[]): string {
 }
 
 async function generateFullBlog(topic: string): Promise<{ title: string; content: string; excerpt: string }> {
-  const content = await callGPT([
+  const content = await callGemini([
     {
       role: 'system',
       content: `You are an expert technical SEO copywriter and startup growth consultant. Write long-form, high-quality blog posts genuinely useful to startup founders and engineers.
@@ -235,7 +244,7 @@ async function executeDailyBlogPipeline(req: NextRequest) {
         ? `Here are the top trending tech news headlines today:\n${trendingHeadlines}\n\nUse one of these trending topics as inspiration to write something highly relevant right now.` 
         : `Focus on AI MVP development, GEO/AEO optimization, startup scaling, technical SEO, or AI automation.`;
 
-      topic = (await callGPT([
+      topic = (await callGemini([
         {
           role: 'system',
           content: 'You are a creative SEO content strategist for AJPR World, an India-based B2B startup tech company. The CURRENT YEAR IS 2026. NEVER use 2024 in your topics. Your goal is to write blog topics that ride the wave of trending tech news to maximize traffic. Output ONLY the plain headline, no quotes, no explanation.',

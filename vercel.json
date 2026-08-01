@@ -21,6 +21,14 @@
     {
       "path": "/api/cron/autonomous-agent",
       "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/cron/sales-outreach",
+      "schedule": "0 9 * * 1-5"
+    },
+    {
+      "path": "/api/cron/linkedin-engagement",
+      "schedule": "0 10 * * *"
     }
   ]
 }

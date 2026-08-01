@@ -109,16 +109,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
       }));
       
-      // Programmatic local SEO pages
-      const targetCities = ['new-york', 'london', 'san-francisco', 'singapore', 'dubai'];
-      const localServices: MetadataRoute.Sitemap = services.flatMap((service: any) => 
-        targetCities.map(city => ({
-          url: `${baseUrl}/services/${service.slug}/${city}`,
-          lastModified: service.created_at ? new Date(service.created_at) : new Date(),
-          changeFrequency: 'weekly' as const,
-          priority: 0.6,
-        }))
-      );
+      // Programmatic local SEO pages for Uttarakhand
+      const targetCities = [
+        'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 
+        'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
+      ];
+      const targetServices = [
+        'custom-software', 'web-development', 'app-development', 'ai-solutions', 'cloud-architecture'
+      ];
+      
+      const localServices: MetadataRoute.Sitemap = [];
+      for (const city of targetCities) {
+        for (const service of targetServices) {
+          localServices.push({
+            url: `${baseUrl}/locations/${city}/${service}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+          });
+        }
+      }
       
       servicePages = [...baseServices, ...localServices];
     }

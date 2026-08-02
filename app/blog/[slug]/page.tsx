@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import ReactMarkdown from 'react-markdown';
 import Script from 'next/script';
-import { Client } from 'pg';
+import { getBlogBySlug } from '@/lib/db/queries';
 
 export const revalidate = 3600; // ISR: Revalidate every hour
 
@@ -35,14 +35,9 @@ function injectInternalLinks(markdown: string) {
 }
 
 async function getPost(slug: string) {
-    const client = new Client({ connectionString: process.env.DATABASE_URL });
-    await client.connect();
-    
-    const res = await client.query('SELECT * FROM blog_posts WHERE slug = $1', [slug]);
-    await client.end();
-
-    if (res.rows.length === 0) return null;
-    return res.rows[0];
+    const post = await getBlogBySlug(slug);
+    if (!post) return null;
+    return post;
 }
 
 type Props = {

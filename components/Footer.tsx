@@ -43,6 +43,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         { name: 'AI Chat Playground', href: '/chat-agents' },
         { name: 'Swarm Simulator', href: '/demo-ruflo' },
         { name: 'Tech & AI Glossary', href: '/glossary' },
+        { name: 'Locations & Areas Served', href: '/locations' },
     ];
 
     const logoSrc = mounted && resolvedTheme === 'dark'

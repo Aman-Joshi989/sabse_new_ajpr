@@ -41,10 +41,11 @@ async function getPost(slug: string) {
 }
 
 type Props = {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+    const params = await props.params;
     const post = await getPost(params.slug);
     
     if (!post) return { title: 'Not Found' };
@@ -62,7 +63,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default async function BlogPostPage({ params }: Props) {
+export default async function BlogPost(props: Props) {
+    const params = await props.params;
     const post = await getPost(params.slug);
 
     if (!post) {

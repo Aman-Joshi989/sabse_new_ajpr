@@ -77,7 +77,7 @@ export default function AICostEstimator() {
                             />
                             <button
                                 type="submit"
-                                disabled={isLoading || !input.trim()}
+                                disabled={isLoading || !input?.trim()}
                                 className="absolute right-2 p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors disabled:opacity-50"
                             >
                                 <Send className="w-5 h-5" />

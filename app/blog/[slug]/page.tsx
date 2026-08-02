@@ -8,13 +8,13 @@ export const revalidate = 3600; // ISR: Revalidate every hour
 
 function injectInternalLinks(markdown: string) {
     const links: Record<string, string> = {
-        'Custom AI': '/services/ai-solutions',
-        'MVP': '/services/custom-software',
+        'Custom AI': '/services/business-ai-automation',
+        'MVP': '/services/startup-mvp-development',
         'Web Development': '/services/web-development',
-        'Software Engineering': '/services/custom-software',
-        'UI/UX': '/services/ui-ux-design',
-        'Cloud': '/services/cloud-architecture',
-        'AI Automation': '/services/ai-solutions',
+        'Software Engineering': '/services/saas-product-development',
+        'UI/UX': '/services/graphics-branding',
+        'Cloud': '/services/cloud-devops-services',
+        'AI Automation': '/services/business-ai-automation',
     };
 
     let modified = markdown;

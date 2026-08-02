@@ -724,6 +724,10 @@ export async function createBlog(data: any) {
     VALUES (${slug}, ${title}, ${excerpt}, ${content}, ${category}, ${author}, ${cover_image}, ${published ?? true}, ${affiliate_product_slug ?? null}, ${amazon_asin ?? null});
   `;
   if (published ?? true) submitToIndexNow(`blog/${slug}`);
+  try {
+    revalidatePath('/blog');
+    revalidatePath(`/blog/${slug}`);
+  } catch(e) {}
   return { success: true, slug };
 }
 
@@ -757,6 +761,10 @@ export async function updateBlog(id: number, data: any) {
     WHERE id = ${id};
   `;
   if (published ?? true) submitToIndexNow(`blog/${slug}`);
+  try {
+    revalidatePath('/blog');
+    revalidatePath(`/blog/${slug}`);
+  } catch(e) {}
   return { success: true };
 }
 
@@ -765,7 +773,13 @@ export async function deleteBlog(id: number) {
   // Fetch slug before deleting to ping IndexNow
   const blog = await getBlogById(id);
   await sql`DELETE FROM blog_posts WHERE id = ${id};`;
-  if (blog?.slug) submitToIndexNow(`blog/${blog.slug}`);
+  if (blog?.slug) {
+    submitToIndexNow(`blog/${blog.slug}`);
+    try {
+      revalidatePath('/blog');
+      revalidatePath(`/blog/${blog.slug}`);
+    } catch(e) {}
+  }
   return { success: true };
 }
 

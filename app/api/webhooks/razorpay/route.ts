@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { neon } from "@neondatabase/serverless";
+import { sql } from "@/lib/db/queries";
 import crypto from "crypto";
 
 export async function POST(req: Request) {
-    const sql = neon(process.env.DATABASE_URL!);
     try {
         const rawBody = await req.text();
         const signature = req.headers.get("x-razorpay-signature");

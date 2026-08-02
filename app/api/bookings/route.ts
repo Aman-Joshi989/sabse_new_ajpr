@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { neon } from "@neondatabase/serverless";
+import { sql } from "@/lib/db/queries";
 import { getSession } from "@/lib/auth";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
@@ -13,7 +13,6 @@ function generateGoogleMeetLink() {
 }
 
 export async function POST(req: Request) {
-    const sql = neon(process.env.DATABASE_URL!);
     try {
         const { 
             name, 
@@ -108,7 +107,7 @@ export async function GET(req: Request) {
         return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
     }
 
-    const sql = neon(process.env.DATABASE_URL!);
+
     try {
         // Run safe migration
         await sql`
@@ -154,7 +153,7 @@ export async function PATCH(req: Request) {
         return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
     }
 
-    const sql = neon(process.env.DATABASE_URL!);
+
     try {
         const { id, status } = await req.json();
 
@@ -354,7 +353,7 @@ export async function DELETE(req: Request) {
         return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
     }
 
-    const sql = neon(process.env.DATABASE_URL!);
+
     try {
         const { id } = await req.json();
 

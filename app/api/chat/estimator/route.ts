@@ -24,5 +24,5 @@ Be extremely professional, concise, and technical. Speak confidently about AI ca
         ]
     });
 
-    return result.toDataStreamResponse();
+    return (result as any).toDataStreamResponse ? (result as any).toDataStreamResponse() : (result as any).toTextStreamResponse();
 }

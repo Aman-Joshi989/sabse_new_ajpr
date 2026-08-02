@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import { submitToIndexNow } from "../indexnow";
 
 // Instantiate pg client once globally to reuse connections
@@ -16,7 +16,7 @@ const getPool = () => {
 };
 
 // Standard sql — does NOT call noStore(), allowing Next.js response caching (ISR)
-const sql = async (strings: TemplateStringsArray, ...values: any[]) => {
+export const sql = async (strings: TemplateStringsArray, ...values: any[]) => {
   const pool = getPool();
   if (!pool) {
     console.warn("WARNING: DATABASE_URL is not defined in this environment. Returning a safe empty fallback.");

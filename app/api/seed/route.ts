@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
-import { neon } from "@neondatabase/serverless";
+import { sql } from "@/lib/db/queries";
 import bcrypt from 'bcryptjs';
 
 export async function GET() {
     try {
-        const sql = neon(process.env.DATABASE_URL!);
         const hashedPassword = await bcrypt.hash('admin123', 10);
 
         // Check if admin exists

@@ -12,8 +12,8 @@ import { getPublishedServices } from '@/lib/db/queries'
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: `Premium Technology Services | Software, AI & DevOps | AJPR World`,
-  description: `We engineer growth. Explore our premium services including custom web development, SaaS product engineering, AI voice agents, and technical SEO.`,
+  title: 'Technology Services | Software, AI & DevOps | AJPR',
+  description: 'Explore AJPR World\'s premium technology services. From custom SaaS development to AI automation and cloud architecture, we build systems that scale.',
   alternates: {
     canonical: 'https://ajprworld.com/services',
   },

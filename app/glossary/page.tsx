@@ -5,8 +5,8 @@ import type { Metadata } from 'next'
 export const revalidate = 60; // Cache for 60 seconds (ISR)
 
 export const metadata: Metadata = {
-  title: 'Tech & AI Glossary | AJPR World Services',
-  description: 'Comprehensive dictionary of artificial intelligence, software development, and B2B SaaS startup terminology.',
+  title: 'Startup AI & Technology Glossary | AJPR World',
+  description: 'Comprehensive glossary and dictionary of artificial intelligence, software development, and B2B SaaS startup terminology. Learn industry standards.',
   openGraph: {
     title: 'Tech & AI Glossary | AJPR World',
     description: 'Explore our comprehensive glossary of AI and startup terms.',

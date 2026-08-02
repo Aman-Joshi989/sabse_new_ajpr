@@ -34,7 +34,7 @@ export async function generateStaticParams() {
 }
 
 type Props = {
-    params: { city: string; service: string };
+    params: Promise<{ city: string; service: string }>;
 };
 
 function formatName(slug: string) {
@@ -44,7 +44,8 @@ function formatName(slug: string) {
         .join(' ');
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+    const params = await props.params;
     const cityName = formatName(params.city);
     const serviceDetails = SERVICES.find(s => s.slug === params.service);
     
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     const title = `Top ${serviceDetails.name} Company in ${cityName} | AJPR World`;
-    const description = `Looking for the best ${serviceDetails.name} agency in ${cityName}? AJPR World delivers premium, scalable, and high-converting tech solutions tailored for businesses in ${cityName}.`;
+    const description = `Top ${serviceDetails.name} agency in ${cityName}. AJPR World builds premium software, apps & AI solutions to scale your business.`;
 
     return {
         title,
@@ -67,7 +68,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default function LocationServicePage({ params }: Props) {
+export default async function LocationServicePage(props: Props) {
+    const params = await props.params;
     const cityName = formatName(params.city);
     const serviceDetails = SERVICES.find(s => s.slug === params.service);
 

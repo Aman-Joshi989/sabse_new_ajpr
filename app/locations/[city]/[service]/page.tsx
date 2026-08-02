@@ -53,7 +53,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
         return { title: 'Not Found' };
     }
 
-    const title = `Top ${serviceDetails.name} Company in ${cityName} | AJPR World`;
+    const title = `${serviceDetails.name} in ${cityName} | AJPR World`;
     const description = `Top ${serviceDetails.name} agency in ${cityName}. AJPR World builds premium software, apps & AI solutions to scale your business.`;
 
     return {

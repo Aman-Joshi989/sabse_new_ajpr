@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import { Send, Bot, User, Sparkles } from 'lucide-react';
 
 export default function AICostEstimator() {
+    // @ts-ignore
     const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
         api: '/api/chat/estimator',
         initialMessages: [

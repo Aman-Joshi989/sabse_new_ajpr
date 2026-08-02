@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { sql } from "@/lib/db/queries";
+import { sql, ensureDbInitialized } from "@/lib/db/queries";
 
 export async function POST(req: Request) {
     try {
@@ -21,7 +21,6 @@ export async function POST(req: Request) {
         }
 
         // Ensure database schema is initialized (handles contact_submissions columns)
-        const { ensureDbInitialized } = require("@/lib/db/queries");
         await ensureDbInitialized();
 
         await sql`

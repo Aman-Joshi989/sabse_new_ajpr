@@ -47,7 +47,7 @@ export async function POST(req: Request) {
                             <p>Thank you for requesting our <strong>Ultimate 2026 Growth Checklist</strong>. This is the exact 50-point framework we use to scale startups from $0 to $1M in ARR.</p>
                             
                             <div style="text-align: center; margin: 30px 0;">
-                                <a href="https://ajprworld.com/startup-growth-kit.pdf" style="background-color: #f59e0b; color: #0f172a; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Download the PDF Checklist</a>
+                                <a href="https://ajprworld.com/startup-growth-kit.pdf" style="display: inline-block; background-color: #f59e0b; color: #0f172a; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">Download the PDF Checklist</a>
                             </div>
                             
                             <h3 style="color: #0f172a; margin-top: 40px;">What's next?</h3>

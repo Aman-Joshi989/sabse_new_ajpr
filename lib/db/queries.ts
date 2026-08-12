@@ -141,6 +141,21 @@ export async function ensureDbInitialized() {
         );
       `;
 
+      // 6.5. Ensure products table exists
+      await sql`
+        CREATE TABLE IF NOT EXISTS products (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          slug VARCHAR(255) UNIQUE NOT NULL,
+          description TEXT,
+          price NUMERIC NOT NULL,
+          currency VARCHAR(10) DEFAULT 'USD',
+          features JSONB,
+          is_active BOOLEAN DEFAULT true,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
       // 7. Ensure seo_metadata table exists for dynamic AI SEO updates
       await sql`
         CREATE TABLE IF NOT EXISTS seo_metadata (
@@ -170,10 +185,13 @@ export async function ensureDbInitialized() {
         CREATE TABLE IF NOT EXISTS sales_leads (
           id SERIAL PRIMARY KEY,
           name VARCHAR(255) NOT NULL,
-          company VARCHAR(255) NOT NULL,
+          company VARCHAR(255),
           email VARCHAR(255) NOT NULL,
           industry VARCHAR(255),
           focus TEXT,
+          budget VARCHAR(100),
+          tech_stack TEXT,
+          company_size VARCHAR(100),
           status VARCHAR(50) DEFAULT 'new',
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
@@ -1068,7 +1086,7 @@ export async function createGlossaryTerm(data: any) {
   const { slug, term, definition, detailed_explanation, related_terms } = data;
   const result = await dynamicSql`
     INSERT INTO glossary_terms (slug, term, definition, detailed_explanation, related_terms)
-    VALUES (${slug}, ${term}, ${definition}, ${detailed_explanation}, ${JSON.stringify(related_terms || [])})
+    VALUES (${slug}, ${term}, ${definition}, ${detailed_explanation}, ${related_terms || []})
     ON CONFLICT (slug) DO UPDATE SET 
       term = EXCLUDED.term,
       definition = EXCLUDED.definition,
@@ -1162,4 +1180,23 @@ export async function getSocialToken(platform: string) {
         console.error('Error fetching social token:', error);
         throw error;
     }
+}
+
+export async function getProducts() {
+  return await sql`SELECT * FROM products WHERE is_active = true ORDER BY price ASC`;
+}
+
+export async function getProductBySlug(slug: string) {
+  const result = await sql`SELECT * FROM products WHERE slug = ${slug} LIMIT 1`;
+  return result[0] || null;
+}
+
+export async function saveSalesLead(data: any) {
+  const { name, email, companySize, budget, techStack } = data;
+  const result = await sql`
+    INSERT INTO sales_leads (name, email, company_size, budget, tech_stack, status)
+    VALUES (${name}, ${email}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new')
+    RETURNING *;
+  `;
+  return result[0];
 }

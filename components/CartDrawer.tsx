@@ -119,6 +119,15 @@ export default function CartDrawer() {
                       })
 
                       if (res.success) {
+                          // Fire GTM Purchase Event
+                          if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                              (window as any).dataLayer.push({
+                                  event: 'purchase',
+                                  transaction_id: response.razorpay_payment_id,
+                                  value: payableTotal,
+                                  currency: 'INR'
+                              });
+                          }
                           alert(`Payment Successful! Request ID: ${response.razorpay_payment_id}. Our team will contact you shortly.`)
                           clearCart()
                           setIsCartOpen(false)

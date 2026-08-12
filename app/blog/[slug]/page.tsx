@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import ReactMarkdown from 'react-markdown';
 import Script from 'next/script';
 import { getBlogBySlug } from '@/lib/db/queries';
+import { cleanMetaTitle, cleanMetaDescription } from '@/app/layout';
 
 export const revalidate = 3600; // ISR: Revalidate every hour
 
@@ -50,15 +51,19 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     
     if (!post) return { title: 'Not Found' };
 
+    const cleanTitle = cleanMetaTitle(post.title || post.h1_title);
+    const cleanDesc = cleanMetaDescription(post.meta_description || post.excerpt || `Read our latest blog on ${post.title}`);
+
     return {
-        title: post.title,
-        description: post.meta_description,
+        title: cleanTitle,
+        description: cleanDesc,
         keywords: post.keywords,
         openGraph: {
-            title: post.title,
-            description: post.meta_description,
+            title: cleanTitle,
+            description: cleanDesc,
             type: 'article',
             publishedTime: post.published_at.toISOString(),
+            url: `https://ajprworld.com/blog/${post.slug}`,
         }
     };
 }

@@ -64,6 +64,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             title,
             description,
             type: 'website',
+            url: `https://ajprworld.com/locations/${params.city}/${params.service}`,
         }
     };
 }

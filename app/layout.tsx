@@ -21,6 +21,13 @@ export const revalidate = 60;
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })
 
+export function cleanMetaTitle(title: string, maxLen = 60): string {
+  if (!title) return '';
+  const clean = title.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLen) return clean;
+  return clean.slice(0, maxLen - 3).trim() + '...';
+}
+
 export function cleanMetaDescription(desc: string, maxLen = 155): string {
   if (!desc) return '';
   const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
@@ -42,24 +49,25 @@ export async function generateMetadata(): Promise<Metadata> {
     const twitterDesc = cleanMetaDescription(settings?.seo_description || 'Premium web development, custom software engineering & creative branding for business growth.');
 
     return {
-      title: settings?.seo_title || 'AJPR World – Premium Tech, Custom Software & Creative Branding',
+      metadataBase: new URL('https://ajprworld.com'),
+      title: cleanMetaTitle(settings?.seo_title || 'AJPR World – Premium Tech, Custom Software & Creative Branding'),
       description: seoDesc,
       keywords: settings?.seo_keywords || 'Best Software, tech solutions, web development, custom software, UI/UX design, cloud deployment, digital branding',
       openGraph: {
-        title: settings?.seo_title || 'AJPR World - Premium Tech & Software Solutions',
+        type: 'website',
+        title: cleanMetaTitle(settings?.seo_title || 'AJPR World - Premium Tech & Software Solutions'),
         description: ogDesc,
         url: 'https://ajprworld.com',
         siteName: 'AJPR World',
         images: [
           {
-            url: 'https://ajprworld.com/og-image.jpg',
+            url: '/og-image.jpg',
             width: 1200,
             height: 630,
             alt: 'AJPR World',
           },
         ],
         locale: 'en_US',
-        type: 'website',
       },
       twitter: {
         card: 'summary_large_image',
@@ -114,8 +122,29 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <FontLoader />
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-NCWB8DWL');
+            `,
+          }}
+        />
       </head>
       <body className={`${inter.variable} ${manrope.variable} font-sans`} suppressHydrationWarning>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-NCWB8DWL"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

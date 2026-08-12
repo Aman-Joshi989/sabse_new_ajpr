@@ -94,12 +94,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  let servicePages: MetadataRoute.Sitemap = []
-  let blogPages: MetadataRoute.Sitemap = []
+  // Programmatic local SEO pages for Uttarakhand
+  const targetCities = [
+    'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 
+    'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
+  ];
+  const targetServices = [
+    'custom-software', 'web-development', 'app-development', 'ai-solutions', 'cloud-architecture'
+  ];
+  
+  const localServices: MetadataRoute.Sitemap = [];
+  for (const city of targetCities) {
+    for (const service of targetServices) {
+      localServices.push({
+        url: `${baseUrl}/locations/${city}/${service}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.9,
+      });
+    }
+  }
+
+  let servicePages: MetadataRoute.Sitemap = [...localServices];
+  let blogPages: MetadataRoute.Sitemap = [];
 
   try {
     // Fetch dynamic services from Neon database
-    const services = await getPublishedServices()
+    const services = await getPublishedServices();
     if (Array.isArray(services)) {
       // Standard service pages
       const baseServices: MetadataRoute.Sitemap = services.map((service: any) => ({
@@ -108,29 +129,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'weekly' as const,
         priority: 0.8,
       }));
-      
-      // Programmatic local SEO pages for Uttarakhand
-      const targetCities = [
-        'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 
-        'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
-      ];
-      const targetServices = [
-        'custom-software', 'web-development', 'app-development', 'ai-solutions', 'cloud-architecture'
-      ];
-      
-      const localServices: MetadataRoute.Sitemap = [];
-      for (const city of targetCities) {
-        for (const service of targetServices) {
-          localServices.push({
-            url: `${baseUrl}/locations/${city}/${service}`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9,
-          });
-        }
-      }
-      
-      servicePages = [...baseServices, ...localServices];
+      servicePages = [...servicePages, ...baseServices];
     }
   } catch (error) {
     console.error('Error fetching services for sitemap:', error)

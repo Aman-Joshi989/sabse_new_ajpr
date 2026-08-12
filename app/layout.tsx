@@ -135,6 +135,24 @@ export default async function RootLayout({
             `,
           }}
         />
+        
+        {/* Google Analytics 4 (gtag.js) */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-RQ61F2W65K"
+        />
+        <Script
+          id="ga4-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-RQ61F2W65K');
+            `,
+          }}
+        />
       </head>
       <body className={`${inter.variable} ${manrope.variable} font-sans`} suppressHydrationWarning>
         <noscript>

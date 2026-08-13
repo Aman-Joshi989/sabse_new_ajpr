@@ -4,7 +4,7 @@ import PricingClient from './PricingClient';
 
 export const metadata: Metadata = {
   title: 'Pricing & Packages | AJPR World',
-  description: 'Transparent pricing for premium web development, MVP engineering, and SEO audits.',,
+  description: 'Transparent pricing for premium web development, MVP engineering, and SEO audits.',
   alternates: {
     canonical: '/pricing'
   },

@@ -4,7 +4,7 @@ import { ShieldCheck, Zap, BarChart3 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Free Technical & SEO Audit | AJPR World',
-  description: 'Apply for a free technical architecture and SEO audit from our senior engineering team.',,
+  description: 'Apply for a free technical architecture and SEO audit from our senior engineering team.',
   alternates: {
     canonical: '/free-audit'
   },

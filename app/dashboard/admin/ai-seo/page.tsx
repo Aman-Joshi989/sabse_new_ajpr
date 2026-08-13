@@ -3,7 +3,7 @@ import AiSeoTable from './_components/AiSeoTable';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'AI SEO Manager | Admin Dashboard',,
+  title: 'AI SEO Manager | Admin Dashboard',
   alternates: {
     canonical: '/dashboard/admin/ai-seo'
   },

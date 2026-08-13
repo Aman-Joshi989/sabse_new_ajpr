@@ -1,12 +1,6 @@
-import dynamic from 'next/dynamic'
-import { getPublishedServices, getBlogs, getSiteSettings } from '@/lib/db/queries'
+import HomeClient from './HomeClient'
+import { getPublishedServices, getBlogs, getSiteSettings, getSeoMetadata } from '@/lib/db/queries'
 import type { Metadata } from 'next'
-import { getSeoMetadata } from "@/lib/db/queries";
-
-const HomeClient = dynamic(() => import('./HomeClient'), {
-  loading: () => <div className="min-h-screen bg-slate-50 dark:bg-[#030712] animate-pulse"></div>,
-})
-
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 

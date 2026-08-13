@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { unstable_noStore as noStore, revalidatePath } from "next/cache";
+import { unstable_noStore as noStore, revalidatePath, unstable_cache } from "next/cache";
 import { submitToIndexNow } from "../indexnow";
 
 // Instantiate pg client once globally to reuse connections
@@ -719,21 +719,20 @@ export async function deletePortfolioItem(id: number) {
 
 // --- Blogs ---
 
-export async function getBlogs() {
-  await ensureDbInitialized();
-  const now = Date.now();
-  if (layoutCache.blogs && (now - layoutCache.blogs.timestamp < CACHE_TTL_MS)) {
-    return layoutCache.blogs.data;
-  }
-  const data = await sql`
-    SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published, affiliate_product_slug, amazon_asin 
-    FROM blog_posts 
-    WHERE published = true 
-    ORDER BY created_at DESC;
-  `;
-  layoutCache.blogs = { data, timestamp: now };
-  return data;
-}
+export const getBlogs = unstable_cache(
+  async () => {
+    await ensureDbInitialized();
+    const data = await sql`
+      SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published, affiliate_product_slug, amazon_asin 
+      FROM blog_posts 
+      WHERE published = true 
+      ORDER BY created_at DESC;
+    `;
+    return data;
+  },
+  ['get-blogs'],
+  { revalidate: 60, tags: ['blogs'] }
+);
 
 export async function getBlogBySlug(slug: string) {
   await ensureDbInitialized();
@@ -836,19 +835,18 @@ export async function getAllServices() {
   `;
 }
 
-export async function getPublishedServices() {
-  const now = Date.now();
-  if (layoutCache.publishedServices && (now - layoutCache.publishedServices.timestamp < CACHE_TTL_MS)) {
-    return layoutCache.publishedServices.data;
-  }
-  const data = await sql`
-    SELECT * FROM services 
-    WHERE published = true
-    ORDER BY created_at DESC;
-  `;
-  layoutCache.publishedServices = { data, timestamp: now };
-  return data;
-}
+export const getPublishedServices = unstable_cache(
+  async () => {
+    const data = await sql`
+      SELECT * FROM services 
+      WHERE published = true
+      ORDER BY created_at DESC;
+    `;
+    return data;
+  },
+  ['get-published-services'],
+  { revalidate: 60, tags: ['services'] }
+);
 
 export async function getServiceBySlug(slug: string) {
   const result = await sql`
@@ -990,13 +988,10 @@ export async function initSiteSettingsTable() {
   `;
 }
 
-export async function getSiteSettings() {
-  await ensureDbInitialized();
-  const now = Date.now();
-  if (layoutCache.siteSettings && (now - layoutCache.siteSettings.timestamp < CACHE_TTL_MS)) {
-    return layoutCache.siteSettings.data;
-  }
-  const result = await sql`SELECT * FROM site_settings WHERE id = 1;`;
+export const getSiteSettings = unstable_cache(
+  async () => {
+    await ensureDbInitialized();
+    const result = await sql`SELECT * FROM site_settings WHERE id = 1;`;
   
   let settings;
   if (result.length === 0) {
@@ -1045,9 +1040,11 @@ export async function getSiteSettings() {
     settings = result[0];
   }
   
-  layoutCache.siteSettings = { data: settings, timestamp: now };
   return settings;
-}
+  },
+  ['get-site-settings'],
+  { revalidate: 60, tags: ['settings'] }
+);
 
 export async function updateSiteSettings(data: any) {
   await initSiteSettingsTable();

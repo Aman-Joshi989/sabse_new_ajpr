@@ -57,13 +57,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
         if (!seoData) return { title: 'Not Found' };
     }
 
-    const title = seoData?.meta_title || `${serviceDetails?.name} in ${cityName} | AJPR World`;
-    const description = seoData?.meta_description || `Top ${serviceDetails?.name} agency in ${cityName}. AJPR World builds premium software, apps & AI solutions to scale your business.`;
+    const serviceName = serviceDetails?.name || formatName(params.service);
+    const title = seoData?.meta_title || `${serviceName} in ${cityName} | AJPR World`;
+    const description = seoData?.meta_description || `Top ${serviceName} agency in ${cityName}. AJPR World builds premium software, apps & AI solutions to scale your business.`;
 
     return {
         title,
         description,
-        keywords: `${serviceDetails.name} ${cityName}, Best IT Company ${cityName}, Tech Agency ${cityName}, Top Software Developer ${cityName}, AJPR World ${cityName}`,
+        keywords: `${serviceName} ${cityName}, Best IT Company ${cityName}, Tech Agency ${cityName}, Top Software Developer ${cityName}, AJPR World ${cityName}`,
         openGraph: {
             title,
             description,

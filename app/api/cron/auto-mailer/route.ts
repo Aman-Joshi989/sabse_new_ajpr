@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server';
 import { sql } from '@/lib/db/queries';
 import { generateText } from 'ai';
-import { google } from '@ai-sdk/google';
+import { createGoogle } from '@ai-sdk/google';
 import { sendColdEmail } from '@/lib/email/nodemailer';
+
+const google = createGoogle({
+  apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY
+});
 
 // Securing the cron route
 export async function GET(request: Request) {
@@ -61,10 +65,7 @@ export async function GET(request: Request) {
 
       try {
         const { text } = await generateText({
-          model: google('gemini-2.5-flash', {
-            // Need to map the env var if it's missing in Vercel
-            apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY
-          }),
+          model: google('gemini-2.5-flash'),
           prompt,
         });
 

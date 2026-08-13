@@ -1261,8 +1261,16 @@ export async function updateLeadStatus(id: number, status: string) {
 }
 
 export async function getSeoContent(route: string) {
-  const res = await sql`SELECT * FROM programmatic_seo WHERE route = ${route} LIMIT 1`;
-  return res[0] || null;
+  try {
+    const res = await sql`SELECT * FROM programmatic_seo WHERE route = ${route} LIMIT 1`;
+    return res[0] || null;
+  } catch (err: any) {
+    if (err.code === '42P01') {
+      ensureDbInitialized().catch(console.error);
+      return null;
+    }
+    throw err;
+  }
 }
 
 export async function saveSeoContent(data: any) {
@@ -1281,5 +1289,13 @@ export async function saveSeoContent(data: any) {
 }
 
 export async function getAllSeoRoutes() {
-  return await sql`SELECT route, updated_at FROM programmatic_seo ORDER BY updated_at DESC`;
+  try {
+    return await sql`SELECT route, updated_at FROM programmatic_seo ORDER BY updated_at DESC`;
+  } catch (err: any) {
+    if (err.code === '42P01') {
+      ensureDbInitialized().catch(console.error);
+      return [];
+    }
+    throw err;
+  }
 }

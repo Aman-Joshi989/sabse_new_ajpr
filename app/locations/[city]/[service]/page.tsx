@@ -155,23 +155,11 @@ export default async function LocationServicePage(props: Props) {
                         ) : (
                             <>
                                 {/* Feature Grid (Fallback) */}
-                <div className="grid md:grid-cols-3 gap-8 mb-20">
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
-                        <ServiceIcon className="w-12 h-12 text-blue-600 mb-6" />
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Enterprise Architecture</h3>
-                        <p className="text-slate-600 dark:text-slate-400">We don't build standard templates. Our {serviceDetails.name.toLowerCase()} relies on modern, scalable architecture designed for high traffic.</p>
-                    </div>
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
-                        <Cpu className="w-12 h-12 text-blue-600 mb-6" />
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">AI-Powered Engineering</h3>
-                        <p className="text-slate-600 dark:text-slate-400">We integrate the latest LLMs and automation into your business processes, giving you a massive advantage over competitors in {cityName}.</p>
-                    </div>
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
                                 <div className="grid md:grid-cols-3 gap-8 mb-20">
                                     <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
                                         <ServiceIcon className="w-12 h-12 text-blue-600 mb-6" />
                                         <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Enterprise Architecture</h3>
-                                        <p className="text-slate-600 dark:text-slate-400">We don't build standard templates. Our {serviceDetails?.name.toLowerCase()} relies on modern, scalable architecture designed for high traffic.</p>
+                                        <p className="text-slate-600 dark:text-slate-400">We don't build standard templates. Our {serviceDetails?.name?.toLowerCase()} relies on modern, scalable architecture designed for high traffic.</p>
                                     </div>
                                     <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
                                         <Cpu className="w-12 h-12 text-blue-600 mb-6" />

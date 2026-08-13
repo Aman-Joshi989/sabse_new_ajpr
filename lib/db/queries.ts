@@ -193,8 +193,16 @@ export async function ensureDbInitialized() {
           tech_stack TEXT,
           company_size VARCHAR(100),
           status VARCHAR(50) DEFAULT 'new',
+          utm_source VARCHAR(255),
+          utm_medium VARCHAR(255),
+          utm_campaign VARCHAR(255),
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
+        
+        ALTER TABLE sales_leads
+          ADD COLUMN IF NOT EXISTS utm_source VARCHAR(255),
+          ADD COLUMN IF NOT EXISTS utm_medium VARCHAR(255),
+          ADD COLUMN IF NOT EXISTS utm_campaign VARCHAR(255);
       `;
 
       // 9. Ensure social_tokens table exists for OAuth connections
@@ -1186,17 +1194,50 @@ export async function getProducts() {
   return await sql`SELECT * FROM products WHERE is_active = true ORDER BY price ASC`;
 }
 
+export async function getAllProducts() {
+  return await dynamicSql`SELECT * FROM products ORDER BY id DESC`;
+}
+
+export async function createProduct(data: any) {
+  return await dynamicSql`
+    INSERT INTO products (name, slug, description, price, currency, features, is_active)
+    VALUES (${data.name}, ${data.slug}, ${data.description}, ${data.price}, ${data.currency}, ${data.features}::jsonb, ${data.is_active})
+    RETURNING *;
+  `;
+}
+
+export async function updateProduct(id: number, data: any) {
+  return await dynamicSql`
+    UPDATE products 
+    SET name = ${data.name}, slug = ${data.slug}, description = ${data.description}, 
+        price = ${data.price}, currency = ${data.currency}, features = ${data.features}::jsonb, 
+        is_active = ${data.is_active}
+    WHERE id = ${id}
+    RETURNING *;
+  `;
+}
+
 export async function getProductBySlug(slug: string) {
   const result = await sql`SELECT * FROM products WHERE slug = ${slug} LIMIT 1`;
   return result[0] || null;
 }
 
 export async function saveSalesLead(data: any) {
-  const { name, email, companySize, budget, techStack } = data;
+  const { name, email, companySize, budget, techStack, utm_source, utm_medium, utm_campaign } = data;
   const result = await sql`
-    INSERT INTO sales_leads (name, email, company_size, budget, tech_stack, status)
-    VALUES (${name}, ${email}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new')
+    INSERT INTO sales_leads (name, email, company_size, budget, tech_stack, status, utm_source, utm_medium, utm_campaign)
+    VALUES (${name}, ${email}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new', ${utm_source || null}, ${utm_medium || null}, ${utm_campaign || null})
     RETURNING *;
   `;
   return result[0];
+}
+
+export async function getSalesLeads() {
+  return await dynamicSql`SELECT * FROM sales_leads ORDER BY created_at DESC`;
+}
+
+export async function updateLeadStatus(id: number, status: string) {
+  return await dynamicSql`
+    UPDATE sales_leads SET status = ${status} WHERE id = ${id} RETURNING *;
+  `;
 }

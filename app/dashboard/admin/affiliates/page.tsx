@@ -6,7 +6,7 @@ export default async function AffiliatesAdminPage() {
   const leads = await getSalesLeads();
   
   // Aggregate leads by utm_source (acting as Affiliate ID)
-  const affiliateStats = leads.reduce((acc: any, lead) => {
+  const affiliateStats = leads.reduce((acc: any, lead: any) => {
     const source = lead.utm_source || 'Direct / SEO';
     if (!acc[source]) {
       acc[source] = {

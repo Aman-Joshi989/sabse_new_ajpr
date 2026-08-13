@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Script from 'next/script';
 import { notFound } from 'next/navigation';
-import { MapPin, Code, Cpu, Smartphone, LayoutDashboard, Cloud, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { MapPin, Code, Cpu, Smartphone, LayoutDashboard, Cloud, ArrowRight, CheckCircle2, ChevronRight, Zap } from 'lucide-react';
 import Link from 'next/link';
+import { getSeoContent } from '@/lib/db/queries';
 
 export const revalidate = 86400; // ISR: Cache for 24 hours
 
@@ -46,15 +47,18 @@ function formatName(slug: string) {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
     const params = await props.params;
+    const route = `/locations/${params.city}/${params.service}`;
+    const seoData = await getSeoContent(route);
+
     const cityName = formatName(params.city);
     const serviceDetails = SERVICES.find(s => s.slug === params.service);
     
     if (!serviceDetails || !CITIES.includes(params.city.toLowerCase())) {
-        return { title: 'Not Found' };
+        if (!seoData) return { title: 'Not Found' };
     }
 
-    const title = `${serviceDetails.name} in ${cityName} | AJPR World`;
-    const description = `Top ${serviceDetails.name} agency in ${cityName}. AJPR World builds premium software, apps & AI solutions to scale your business.`;
+    const title = seoData?.meta_title || `${serviceDetails?.name} in ${cityName} | AJPR World`;
+    const description = seoData?.meta_description || `Top ${serviceDetails?.name} agency in ${cityName}. AJPR World builds premium software, apps & AI solutions to scale your business.`;
 
     return {
         title,
@@ -71,19 +75,22 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function LocationServicePage(props: Props) {
     const params = await props.params;
+    const route = `/locations/${params.city}/${params.service}`;
+    const seoData = await getSeoContent(route);
+
     const cityName = formatName(params.city);
     const serviceDetails = SERVICES.find(s => s.slug === params.service);
 
-    if (!serviceDetails || !CITIES.includes(params.city.toLowerCase())) {
+    if (!seoData && (!serviceDetails || !CITIES.includes(params.city.toLowerCase()))) {
         notFound();
     }
 
-    const ServiceIcon = serviceDetails.icon;
+    const ServiceIcon = serviceDetails?.icon || Code;
 
     const schema = {
         '@context': 'https://schema.org',
         '@type': 'Service',
-        name: `${serviceDetails.name} in ${cityName}`,
+        name: seoData?.h1_title || `${serviceDetails?.name} in ${cityName}`,
         provider: {
             '@type': 'LocalBusiness',
             name: 'AJPR World',
@@ -99,7 +106,7 @@ export default async function LocationServicePage(props: Props) {
             '@type': 'City',
             name: cityName
         },
-        description: `Premium ${serviceDetails.name} services provided by AJPR World for businesses in ${cityName}.`
+        description: seoData?.meta_description || `Premium ${serviceDetails?.name} services provided by AJPR World for businesses in ${cityName}.`
     };
 
     return (
@@ -113,28 +120,41 @@ export default async function LocationServicePage(props: Props) {
             {/* Hero Section */}
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-semibold text-sm mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-semibold text-sm mb-6 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
                         <MapPin className="w-4 h-4" />
                         Serving {cityName} & Beyond
                     </div>
                     <h1 className="text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
-                        The Premier <span className="text-blue-600 dark:text-blue-500">{serviceDetails.name}</span> Agency in {cityName}
+                        {seoData?.h1_title ? (
+                            <span dangerouslySetInnerHTML={{ __html: seoData.h1_title.replace(serviceDetails?.name || '', `<span class="text-blue-600 dark:text-blue-500">${serviceDetails?.name}</span>`) }} />
+                        ) : (
+                            <>The Premier <span className="text-blue-600 dark:text-blue-500">{serviceDetails?.name}</span> Agency in {cityName}</>
+                        )}
                     </h1>
-                    <p className="text-xl text-slate-600 dark:text-slate-400 mb-10">
-                        AJPR World partners with ambitious brands and enterprises in {cityName} to engineer scalable, cutting-edge digital solutions that drive massive growth.
+                    <p className="text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
+                        {seoData?.hero_subtitle || `AJPR World partners with ambitious brands and enterprises in ${cityName} to engineer scalable, cutting-edge digital solutions that drive massive growth.`}
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Link href="/contact" className="px-8 py-4 w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-blue-500/25 flex items-center justify-center gap-2">
-                            Get a Free Consultation
+                        <Link href={`/free-audit?utm_source=${cityName}-${params.service}`} className="px-8 py-4 w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] flex items-center justify-center gap-2 relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                            Get Your Free Growth Audit
                             <ArrowRight className="w-5 h-5" />
-                        </Link>
-                        <Link href="/portfolio" className="px-8 py-4 w-full sm:w-auto bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-900 dark:text-white font-bold rounded-full transition-all flex items-center justify-center">
-                            View Our Work
                         </Link>
                     </div>
                 </div>
 
-                {/* Feature Grid */}
+                {/* Main Content & Elite CTA Layout */}
+                <div className="grid lg:grid-cols-3 gap-12 mb-20 relative">
+                    
+                    <div className="lg:col-span-2">
+                        {seoData?.body_html ? (
+                            <div 
+                                className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-slate-900 dark:prose-headings:text-white prose-a:text-blue-600 dark:prose-a:text-blue-400"
+                                dangerouslySetInnerHTML={{ __html: seoData.body_html }}
+                            />
+                        ) : (
+                            <>
+                                {/* Feature Grid (Fallback) */}
                 <div className="grid md:grid-cols-3 gap-8 mb-20">
                     <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
                         <ServiceIcon className="w-12 h-12 text-blue-600 mb-6" />
@@ -147,21 +167,74 @@ export default async function LocationServicePage(props: Props) {
                         <p className="text-slate-600 dark:text-slate-400">We integrate the latest LLMs and automation into your business processes, giving you a massive advantage over competitors in {cityName}.</p>
                     </div>
                     <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
-                        <MapPin className="w-12 h-12 text-blue-600 mb-6" />
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Local {cityName} Expertise</h3>
-                        <p className="text-slate-600 dark:text-slate-400">We understand the local market dynamics. We build tech that perfectly aligns with your target audience in {cityName} and Uttarakhand.</p>
-                    </div>
-                </div>
+                                <div className="grid md:grid-cols-3 gap-8 mb-20">
+                                    <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
+                                        <ServiceIcon className="w-12 h-12 text-blue-600 mb-6" />
+                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Enterprise Architecture</h3>
+                                        <p className="text-slate-600 dark:text-slate-400">We don't build standard templates. Our {serviceDetails?.name.toLowerCase()} relies on modern, scalable architecture designed for high traffic.</p>
+                                    </div>
+                                    <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
+                                        <Cpu className="w-12 h-12 text-blue-600 mb-6" />
+                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">AI-Powered Engineering</h3>
+                                        <p className="text-slate-600 dark:text-slate-400">We integrate the latest LLMs and automation into your business processes, giving you a massive advantage over competitors in {cityName}.</p>
+                                    </div>
+                                    <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800">
+                                        <MapPin className="w-12 h-12 text-blue-600 mb-6" />
+                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">Local {cityName} Expertise</h3>
+                                        <p className="text-slate-600 dark:text-slate-400">We understand the local market dynamics. We build tech that perfectly aligns with your target audience in {cityName} and Uttarakhand.</p>
+                                    </div>
+                                </div>
+                            </>
+                        )}
 
-                {/* Why Choose Us */}
-                <div className="bg-blue-600 rounded-3xl p-8 md:p-16 text-white text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to scale your business in {cityName}?</h2>
-                    <p className="text-blue-100 mb-10 max-w-2xl mx-auto text-lg">
-                        Stop settling for mediocre tech. Partner with AJPR World for world-class {serviceDetails.name.toLowerCase()} that actually delivers ROI.
-                    </p>
-                    <Link href="/contact" className="px-10 py-5 bg-white text-blue-600 font-extrabold rounded-full transition-all hover:bg-slate-50 shadow-xl hover:shadow-2xl inline-block">
-                        Start Your Project Today
-                    </Link>
+                        {seoData ? null : (
+                            <>
+                                <div className="bg-blue-600 rounded-3xl p-8 md:p-16 text-white text-center">
+                                    <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to scale your business in {cityName}?</h2>
+                                    <p className="text-blue-100 mb-10 max-w-2xl mx-auto text-lg">
+                                        Stop settling for mediocre tech. Partner with AJPR World for world-class {serviceDetails?.name?.toLowerCase()} that actually delivers ROI.
+                                    </p>
+                                    <Link href="/contact" className="inline-flex items-center gap-2 bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-full font-bold transition-all shadow-xl hover:shadow-2xl">
+                                        Contact Us Today
+                                        <ChevronRight className="w-5 h-5" />
+                                    </Link>
+                                </div>
+                            </>
+                        )}
+                    </div>
+
+                    {/* Elite Sticky CTA Sidebar */}
+                    <div className="hidden lg:block relative">
+                        <div className="sticky top-28 bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl">
+                            <div className="absolute -top-4 -right-4 p-3 bg-blue-600 rounded-2xl shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+                                <Zap className="w-6 h-6 text-white" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-4">Get Your Free Growth Audit</h3>
+                            <p className="text-slate-400 mb-6">
+                                Join 15+ other businesses in {cityName} who scaled their revenue using our tech. We'll analyze your current setup for free.
+                            </p>
+                            <ul className="space-y-4 mb-8">
+                                <li className="flex items-center gap-3 text-slate-300">
+                                    <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                                    Performance & SEO Review
+                                </li>
+                                <li className="flex items-center gap-3 text-slate-300">
+                                    <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                                    Architecture Assessment
+                                </li>
+                                <li className="flex items-center gap-3 text-slate-300">
+                                    <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                                    Actionable Growth Plan
+                                </li>
+                            </ul>
+                            <Link href={`/free-audit?utm_source=${cityName}-${params.service}`} className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center justify-center gap-2">
+                                Claim Free Audit
+                                <ArrowRight className="w-5 h-5" />
+                            </Link>
+                            <p className="text-xs text-slate-500 text-center mt-4">No credit card required. 100% free.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

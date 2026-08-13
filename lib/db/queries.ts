@@ -209,11 +209,29 @@ export async function ensureDbInitialized() {
       await sql`
         CREATE TABLE IF NOT EXISTS social_tokens (
           id SERIAL PRIMARY KEY,
-          platform VARCHAR(50) UNIQUE NOT NULL,
+          platform VARCHAR(50) NOT NULL,
           access_token TEXT NOT NULL,
           refresh_token TEXT,
           expires_at TIMESTAMP,
-          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
+      // 10. Ensure programmatic_seo table exists for AI-generated localized content
+      await sql`
+        CREATE TABLE IF NOT EXISTS programmatic_seo (
+          id SERIAL PRIMARY KEY,
+          route VARCHAR(255) UNIQUE NOT NULL,
+          city VARCHAR(100) NOT NULL,
+          service VARCHAR(100) NOT NULL,
+          h1_title VARCHAR(255) NOT NULL,
+          hero_subtitle TEXT NOT NULL,
+          body_html TEXT NOT NULL,
+          meta_title VARCHAR(255) NOT NULL,
+          meta_description TEXT NOT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
       `;
       
@@ -1240,4 +1258,28 @@ export async function updateLeadStatus(id: number, status: string) {
   return await dynamicSql`
     UPDATE sales_leads SET status = ${status} WHERE id = ${id} RETURNING *;
   `;
+}
+
+export async function getSeoContent(route: string) {
+  const res = await sql`SELECT * FROM programmatic_seo WHERE route = ${route} LIMIT 1`;
+  return res[0] || null;
+}
+
+export async function saveSeoContent(data: any) {
+  return await dynamicSql`
+    INSERT INTO programmatic_seo (route, city, service, h1_title, hero_subtitle, body_html, meta_title, meta_description)
+    VALUES (${data.route}, ${data.city}, ${data.service}, ${data.h1_title}, ${data.hero_subtitle}, ${data.body_html}, ${data.meta_title}, ${data.meta_description})
+    ON CONFLICT (route) DO UPDATE SET 
+      h1_title = EXCLUDED.h1_title,
+      hero_subtitle = EXCLUDED.hero_subtitle,
+      body_html = EXCLUDED.body_html,
+      meta_title = EXCLUDED.meta_title,
+      meta_description = EXCLUDED.meta_description,
+      updated_at = CURRENT_TIMESTAMP
+    RETURNING *;
+  `;
+}
+
+export async function getAllSeoRoutes() {
+  return await sql`SELECT route, updated_at FROM programmatic_seo ORDER BY updated_at DESC`;
 }

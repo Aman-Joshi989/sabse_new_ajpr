@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getPublishedServices, getBlogs, getGlossaryTerms } from '@/lib/db/queries'
+import { getPublishedServices, getBlogs, getGlossaryTerms, getAllSeoRoutes } from '@/lib/db/queries'
 
 export const revalidate = 86400; // Cache for 24 hours to prevent SEO bots from draining Neon DB compute
 
@@ -165,5 +165,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error fetching glossary terms for sitemap:', error)
   }
 
-  return [...staticPages, ...servicePages, ...blogPages, ...glossaryPages]
+  // 4. Fetch AI Programmatic SEO Location Routes
+  let programmaticRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const seoRoutes = await getAllSeoRoutes();
+    programmaticRoutes = seoRoutes.map((r: any) => ({
+      url: `${baseUrl}${r.route}`,
+      lastModified: r.updated_at,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    }));
+  } catch (error) {
+    console.error("Failed to fetch programmatic SEO routes for sitemap", error);
+  }
+
+  // Combine all routes
+  return [...staticPages, ...servicePages, ...blogPages, ...glossaryPages, ...programmaticRoutes]
 }

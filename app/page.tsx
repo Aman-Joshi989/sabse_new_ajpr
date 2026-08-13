@@ -37,6 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
       const seo = await getSeoMetadata('/');
       return {
+    alternates: { canonical: '' },
         title: seo?.title,
         description: seo?.description,
         openGraph: {

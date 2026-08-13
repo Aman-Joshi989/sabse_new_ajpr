@@ -1,9 +1,29 @@
+import { Metadata } from 'next';
 import LeadForm from '@/components/LeadForm';
 import { ShieldCheck, Zap, BarChart3 } from 'lucide-react';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Free Technical & SEO Audit | AJPR World',
-  description: 'Apply for a free technical architecture and SEO audit from our senior engineering team.',
+  description: 'Apply for a free technical architecture and SEO audit from our senior engineering team.',,
+  alternates: {
+    canonical: '/free-audit'
+  },
+  openGraph: {
+    title: 'Free Technical & SEO Audit | AJPR World',
+    description: 'Apply for a free technical architecture and SEO audit from our senior engineering team.',
+    url: 'https://ajprworld.com/free-audit',
+    siteName: 'AJPR World',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Free Technical & SEO Audit | AJPR World',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  }
 };
 
 export default function FreeAuditPage() {

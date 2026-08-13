@@ -10,7 +10,8 @@ export async function generateMetadata({ params }: { params: Promise<{ term: str
   const { term: termSlug } = await params
   const termData = await getGlossaryTermBySlug(termSlug)
   
-  if (!termData) return { title: 'Term Not Found' }
+  if (!termData) return {
+    alternates: { canonical: `/glossary/${term}` }, title: 'Term Not Found' }
 
   // Ensure title is < 60 chars for SEO
   const baseTitle = `What is ${termData.term}?`

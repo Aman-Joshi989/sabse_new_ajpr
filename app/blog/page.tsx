@@ -227,6 +227,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
       const seo = await getSeoMetadata('/blog');
       return {
+    alternates: { canonical: '/blog' },
         title: seo?.title,
         description: seo?.description,
         openGraph: {

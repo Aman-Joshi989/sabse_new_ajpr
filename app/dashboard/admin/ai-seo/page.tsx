@@ -3,7 +3,26 @@ import AiSeoTable from './_components/AiSeoTable';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'AI SEO Manager | Admin Dashboard',
+  title: 'AI SEO Manager | Admin Dashboard',,
+  alternates: {
+    canonical: '/dashboard/admin/ai-seo'
+  },
+  openGraph: {
+    title: 'AI SEO Manager | Admin Dashboard',
+    description: 'AJPR World delivers premium digital solutions.',
+    url: 'https://ajprworld.com/dashboard/admin/ai-seo',
+    siteName: 'AJPR World',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'AI SEO Manager | Admin Dashboard',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  }
 };
 
 export const revalidate = 0; // Always fetch fresh data on dashboard load

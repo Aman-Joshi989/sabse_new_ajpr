@@ -28,10 +28,16 @@ export function cleanMetaTitle(title: string, maxLen = 60): string {
   return clean.slice(0, maxLen - 3).trim() + '...';
 }
 
-export function cleanMetaDescription(desc: string, maxLen = 155): string {
+export function cleanMetaDescription(desc: string, maxLen = 155, minLen = 50): string {
   if (!desc) return '';
   const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-  if (clean.length <= maxLen) return clean;
+  
+  if (clean.length <= maxLen && clean.length >= minLen) return clean;
+  if (clean.length < minLen) {
+    // If the description is too short, append a generic fallback to hit a better length.
+    return `${clean} | AJPR World offers premium digital solutions, custom web development, and creative branding.`;
+  }
+  
   const sliced = clean.slice(0, maxLen - 3);
   const lastSpace = sliced.lastIndexOf(' ');
   if (lastSpace > maxLen * 0.7) {

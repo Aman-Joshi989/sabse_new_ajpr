@@ -54,8 +54,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const serviceDetails = SERVICES.find(s => s.slug === params.service);
     
     if (!serviceDetails || !CITIES.includes(params.city.toLowerCase())) {
-        if (!seoData) return {
-    alternates: { canonical: `/locations/${city}/${service}` }, title: 'Not Found' };
+        if (!seoData) return { title: 'Not Found' };
     }
 
     const serviceName = serviceDetails?.name || formatName(params.service);
@@ -63,6 +62,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const description = seoData?.meta_description || `Top ${serviceName} agency in ${cityName}. AJPR World builds premium software, apps & AI solutions to scale your business.`;
 
     return {
+        alternates: { canonical: route },
         title,
         description,
         keywords: `${serviceName} ${cityName}, Best IT Company ${cityName}, Tech Agency ${cityName}, Top Software Developer ${cityName}, AJPR World ${cityName}`,

@@ -10,14 +10,14 @@ export async function generateMetadata({ params }: { params: Promise<{ term: str
   const { term: termSlug } = await params
   const termData = await getGlossaryTermBySlug(termSlug)
   
-  if (!termData) return {
-    alternates: { canonical: `/glossary/${term}` }, title: 'Term Not Found' }
+  if (!termData) return { title: 'Term Not Found' }
 
   // Ensure title is < 60 chars for SEO
   const baseTitle = `What is ${termData.term}?`
   const title = baseTitle.length + 7 <= 60 ? `${baseTitle} | AJPR` : baseTitle
 
   return {
+    alternates: { canonical: `/glossary/${termSlug}` },
     title,
     description: termData.definition,
     openGraph: {

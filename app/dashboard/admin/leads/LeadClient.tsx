@@ -57,8 +57,46 @@ export default function LeadClient({ initialLeads }: { initialLeads: Lead[] }) {
     setDraggedLead(null);
   };
 
+  const [analyzingId, setAnalyzingId] = useState<number | null>(null);
+  const [aiResult, setAiResult] = useState<string | null>(null);
+
+  const handleAIAnalyze = async (lead: Lead) => {
+    setAnalyzingId(lead.id);
+    setAiResult(null);
+    try {
+      const res = await fetch('/api/admin/lead-ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(lead)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setAiResult(data.text);
+      } else {
+        toast.error("AI Analysis failed");
+      }
+    } catch (e) {
+      toast.error("Network error");
+    }
+    setAnalyzingId(null);
+  };
+
   return (
-    <div className="p-6 h-full flex flex-col">
+    <div className="p-6 h-full flex flex-col relative">
+      {aiResult && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-blue-500/50 p-6 rounded-2xl max-w-2xl w-full shadow-[0_0_50px_rgba(59,130,246,0.2)]">
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">✨ AI Sales Strategy</span>
+            </h2>
+            <div className="whitespace-pre-wrap text-slate-300 text-sm font-medium">
+              {aiResult}
+            </div>
+            <button onClick={() => setAiResult(null)} className="mt-6 w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition">Close</button>
+          </div>
+        </div>
+      )}
+
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">High-Ticket CRM</h1>
         <p className="text-slate-400">Manage incoming leads from your free-audit funnel. Drag and drop to update status.</p>
@@ -70,8 +108,8 @@ export default function LeadClient({ initialLeads }: { initialLeads: Lead[] }) {
             key={col.id}
             onDragOver={handleDragOver}
             onDrop={() => handleDrop(col.id)}
-            className={`rounded-2xl border bg-slate-900/50 p-4 flex flex-col ${
-              draggedLead ? 'border-dashed border-slate-700' : 'border-slate-800'
+            className={`rounded-2xl border bg-slate-900/50 p-4 flex flex-col transition-all duration-300 ${
+              draggedLead ? 'border-dashed border-blue-500/50 bg-blue-500/5' : 'border-slate-800'
             }`}
           >
             <div className={`px-3 py-1.5 rounded-full text-xs font-semibold w-max mb-4 border ${col.color}`}>
@@ -85,11 +123,16 @@ export default function LeadClient({ initialLeads }: { initialLeads: Lead[] }) {
                   key={lead.id}
                   draggable
                   onDragStart={() => handleDragStart(lead)}
-                  className="bg-slate-800 p-4 rounded-xl border border-slate-700 cursor-grab active:cursor-grabbing hover:border-slate-500 transition-colors"
+                  className="group relative bg-slate-800/80 backdrop-blur-md p-4 rounded-xl border border-slate-700 cursor-grab active:cursor-grabbing hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all"
                 >
                   <h3 className="text-white font-medium flex justify-between items-start">
                     {lead.name}
-                    <a href={`mailto:${lead.email}`} className="text-slate-400 hover:text-blue-400"><Mail className="w-4 h-4"/></a>
+                    <div className="flex gap-2">
+                      <button onClick={() => handleAIAnalyze(lead)} className="text-slate-400 hover:text-purple-400">
+                        {analyzingId === lead.id ? <span className="animate-spin">✨</span> : '✨'}
+                      </button>
+                      <a href={`mailto:${lead.email}`} className="text-slate-400 hover:text-blue-400"><Mail className="w-4 h-4"/></a>
+                    </div>
                   </h3>
                   
                   <div className="mt-3 space-y-2 text-xs text-slate-400">

@@ -1,7 +1,8 @@
-import { getClientRequests, getDevelopers, getUsers, getPayments, getContactSubmissions, getAllProjects } from '@/lib/db/queries'
+import { getClientRequests, getDevelopers, getUsers, getPayments, getContactSubmissions, getAllProjects, getSalesLeads } from '@/lib/db/queries'
 import { Card, CardContent } from '@/components/ui/card'
 import AdminClientRequestList from './_components/AdminClientRequestList'
 import AdminDeveloperList from './_components/AdminDeveloperList'
+import DashboardClient from './DashboardClient'
 import { 
   FileText, Users, Database, 
   LayoutTemplate, Inbox, Globe, Activity,
@@ -11,13 +12,14 @@ import Link from 'next/link'
 import { formatDistanceToNow } from 'date-fns'
 
 export default async function AdminDashboard() {
-  const [requests, developers, allUsers, payments, submissions, projects] = await Promise.all([
+  const [requests, developers, allUsers, payments, submissions, projects, salesLeads] = await Promise.all([
     getClientRequests(),
     getDevelopers(),
     getUsers(),
     getPayments(),
     getContactSubmissions(),
-    getAllProjects()
+    getAllProjects(),
+    getSalesLeads()
   ])
 
   const clients = allUsers.filter((u: any) => u.role === 'client')
@@ -36,61 +38,29 @@ export default async function AdminDashboard() {
     ...submissions.map((s: any) => ({ ...s, type: 'contact_submission' }))
   ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
+  // Elite Stats for DashboardClient
+  const closedLeads = salesLeads.filter((l: any) => l.status === 'closed').length;
+  const qualifiedLeads = salesLeads.filter((l: any) => l.status === 'qualified').length;
+  const estimatedPipeline = closedLeads * 5000 + qualifiedLeads * 1000; // rough estimates
+  
+  const sourcesMap = salesLeads.reduce((acc: any, lead: any) => {
+    const s = lead.utm_source || 'direct';
+    acc[s] = (acc[s] || 0) + 1;
+    return acc;
+  }, {});
+  
+  const sources = Object.entries(sourcesMap).map(([source, count]) => ({ source, count }));
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 bg-black min-h-screen -m-6 p-6">
         
-        {/* Header Section */}
-        <div className="flex justify-between items-end">
-          <div>
-            <h1 className="text-3xl font-bold text-[#202124] dark:text-white tracking-tight mb-2">Master Control Room</h1>
-            <p className="text-sm text-[#5F6368] dark:text-[#9AA0A6]">Real-time command center for marketing, sales, and operations.</p>
-          </div>
-          <Link href="/dashboard/admin/growth">
-            <button className="flex items-center gap-2 bg-[#1A73E8] hover:bg-[#1557b0] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors shadow-sm">
-                <Zap className="w-4 h-4" />
-                Launch Growth Engine
-            </button>
-          </Link>
-        </div>
-
-        {/* Financial & Growth Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white dark:bg-[#292A2D] border border-[#DADCE0] dark:border-[#3C4043] rounded-xl p-6 flex flex-col shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex justify-between items-start mb-4">
-                <span className="text-sm font-bold text-[#5F6368] dark:text-[#9AA0A6] uppercase tracking-wider">Total Revenue</span>
-                <div className="p-2 bg-green-50 dark:bg-green-500/20 rounded-lg text-green-600 dark:text-green-400"><DollarSign className="w-5 h-5"/></div>
-            </div>
-            <span className="text-4xl font-black text-[#202124] dark:text-white">₹{totalRevenue.toLocaleString()}</span>
-            <span className="text-xs text-green-600 font-medium mt-2 flex items-center gap-1"><TrendingUp className="w-3 h-3"/> {payments.length} transactions</span>
-          </div>
-
-          <div className="bg-white dark:bg-[#292A2D] border border-[#DADCE0] dark:border-[#3C4043] rounded-xl p-6 flex flex-col shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex justify-between items-start mb-4">
-                <span className="text-sm font-bold text-[#5F6368] dark:text-[#9AA0A6] uppercase tracking-wider">Active Projects</span>
-                <div className="p-2 bg-blue-50 dark:bg-blue-500/20 rounded-lg text-blue-600 dark:text-blue-400"><Briefcase className="w-5 h-5"/></div>
-            </div>
-            <span className="text-4xl font-black text-[#202124] dark:text-white">{activeProjects.length}</span>
-            <span className="text-xs text-blue-600 font-medium mt-2 flex items-center gap-1">In progress</span>
-          </div>
-          
-          <div className="bg-white dark:bg-[#292A2D] border border-[#DADCE0] dark:border-[#3C4043] rounded-xl p-6 flex flex-col shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex justify-between items-start mb-4">
-                <span className="text-sm font-bold text-[#5F6368] dark:text-[#9AA0A6] uppercase tracking-wider">Client Inquiries</span>
-                <div className="p-2 bg-orange-50 dark:bg-orange-500/20 rounded-lg text-orange-600 dark:text-orange-400"><Inbox className="w-5 h-5"/></div>
-            </div>
-            <span className="text-4xl font-black text-[#202124] dark:text-white">{submissions.length + requests.length}</span>
-            <span className="text-xs text-orange-600 font-medium mt-2 flex items-center gap-1">Action required</span>
-          </div>
-
-          <div className="bg-white dark:bg-[#292A2D] border border-[#DADCE0] dark:border-[#3C4043] rounded-xl p-6 flex flex-col shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex justify-between items-start mb-4">
-                <span className="text-sm font-bold text-[#5F6368] dark:text-[#9AA0A6] uppercase tracking-wider">Total Clients</span>
-                <div className="p-2 bg-purple-50 dark:bg-purple-500/20 rounded-lg text-purple-600 dark:text-purple-400"><Users className="w-5 h-5"/></div>
-            </div>
-            <span className="text-4xl font-black text-[#202124] dark:text-white">{clients.length}</span>
-            <span className="text-xs text-purple-600 font-medium mt-2 flex items-center gap-1">Registered</span>
-          </div>
-        </div>
+        <DashboardClient stats={{
+          totalLeads: salesLeads.length,
+          closedLeads,
+          qualifiedLeads,
+          estimatedPipeline,
+          sources
+        }} />
 
         {/* Master Control Grid */}
         <div>

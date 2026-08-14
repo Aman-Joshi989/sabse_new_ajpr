@@ -1296,3 +1296,44 @@ export async function getAllSeoRoutes() {
     throw err;
   }
 }
+
+// --- Autonomous Agents Tracking ---
+
+export async function getLeadsForHermes() {
+  await ensureDbInitialized();
+  return await dynamicSql`
+    SELECT * FROM sales_leads 
+    WHERE status IN ('contacted', 'in_progress') 
+    ORDER BY created_at ASC LIMIT 10;
+  `;
+}
+
+export async function getLeadsForHephaestus() {
+  await ensureDbInitialized();
+  return await dynamicSql`
+    SELECT * FROM sales_leads 
+    WHERE status = 'needs_scoping' 
+    ORDER BY created_at ASC LIMIT 10;
+  `;
+}
+
+export async function getProjectsForHera() {
+  await ensureDbInitialized();
+  // Fetch active projects that might need weekly status reports or check-ins
+  return await dynamicSql`
+    SELECT * FROM projects 
+    WHERE status NOT IN ('Completed', 'Archived') 
+    ORDER BY created_at ASC LIMIT 10;
+  `;
+}
+
+export async function getProjectsForPlutus() {
+  await ensureDbInitialized();
+  // Fetch projects that are completed but not fully paid, or pending invoices
+  return await dynamicSql`
+    SELECT * FROM projects 
+    WHERE (status = 'Completed' AND pending_value > 0)
+       OR (status = 'Not Started' AND progress_percent = 0)
+    ORDER BY created_at ASC LIMIT 10;
+  `;
+}

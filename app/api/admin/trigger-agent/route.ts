@@ -17,15 +17,17 @@ export async function POST(req: Request) {
         targetEndpoint = action === 'blog' ? '/api/cron/generate-blog' : '/api/cron/generate-post';
         break;
       case 'hermes':
+        targetEndpoint = '/api/cron/agent-hermes';
+        break;
       case 'hephaestus':
+        targetEndpoint = '/api/cron/agent-hephaestus';
+        break;
       case 'hera':
+        targetEndpoint = '/api/cron/agent-hera';
+        break;
       case 'plutus':
-        // These agents might not have direct endpoints yet. We simulate success.
-        await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate work
-        return NextResponse.json({
-          success: true,
-          message: `${agentId.toUpperCase()} completed task: ${action || 'default process'}.`,
-        });
+        targetEndpoint = '/api/cron/agent-plutus';
+        break;
       default:
         return NextResponse.json({ error: 'Unknown agent ID' }, { status: 400 });
     }

@@ -61,7 +61,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             asChild
                         >
                             <Link href="/book-call">
-                                Book Strategy Call <ArrowRight className="ml-2 w-4 h-4" />
+                                Get Free Tech & AI Audit <ArrowRight className="ml-2 w-4 h-4" />
                             </Link>
                         </Button>
                         <Button 
@@ -76,6 +76,10 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             </Link>
                         </Button>
                     </div>
+                    
+                    <p className="mt-4 text-xs font-semibold text-green-600 dark:text-green-400 animate-fade-up [animation-delay:700ms]">
+                        🎁 Free Architecture Audit Valued at $1,500
+                    </p>
 
                 </div>
             </div>

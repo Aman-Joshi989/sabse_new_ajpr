@@ -1405,3 +1405,11 @@ export async function getOutreachEmails() {
   return await sql`SELECT * FROM backlink_outreach ORDER BY created_at DESC LIMIT 50;`;
 }
 
+
+export async function insertLead(data: { name?: string; email: string; company?: string; project_details?: string; status?: string }) {
+  await ensureDbInitialized();
+  return await sql`
+    INSERT INTO leads (name, email, company, project_details, status)
+    VALUES (${data.name || ''}, ${data.email}, ${data.company || ''}, ${data.project_details || ''}, ${data.status || 'new'})
+  `;
+}

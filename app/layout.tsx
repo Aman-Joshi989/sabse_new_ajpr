@@ -103,6 +103,7 @@ import { AuthProvider } from '@/components/providers/AuthProvider'
 import { CartProvider } from '@/components/providers/CartProvider'
 import ExitIntentPopup from '@/components/ExitIntentPopup'
 import FloatingLeadWidget from '@/components/FloatingLeadWidget'
+import HermesChatWidget from '@/components/HermesChatWidget'
 
 export default async function RootLayout({
   children,
@@ -190,6 +191,7 @@ export default async function RootLayout({
               <SpeedInsights />
               <OrganizationSchema />
               <LocalBusinessSchema />
+              <HermesChatWidget />
               <Script
                 id="ahrefs-analytics"
                 src="/analytics/ahrefs.js"

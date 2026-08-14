@@ -102,7 +102,6 @@ export async function generateMetadata(): Promise<Metadata> {
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import { CartProvider } from '@/components/providers/CartProvider'
 import ExitIntentPopup from '@/components/ExitIntentPopup'
-import FloatingLeadWidget from '@/components/FloatingLeadWidget'
 import HermesChatWidget from '@/components/HermesChatWidget'
 
 export default async function RootLayout({
@@ -184,7 +183,6 @@ export default async function RootLayout({
                 {children}
               </main>
               <ExitIntentPopup />
-              <FloatingLeadWidget />
               <Footer services={services} blogs={blogs} />
               <Toaster />
               <Analytics />

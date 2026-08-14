@@ -254,7 +254,7 @@ ${form.blockersText}
                                 { step: 3, title: "Architecture", desc: "Design your system blueprint." },
                                 { step: 4, title: "Execution", desc: "We build and deploy to scale." }
                             ].map((s, i) => (
-                                <div className="animate-fade-up" key={i} className="flex flex-col items-center text-center p-8 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 shadow-sm dark:shadow-none backdrop-blur-sm gap-4 hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:-translate-y-1 transition-all duration-300">
+                                <div key={i} className="animate-fade-up flex flex-col items-center text-center p-8 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 shadow-sm dark:shadow-none backdrop-blur-sm gap-4 hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:-translate-y-1 transition-all duration-300">
                                     <div className="flex items-center justify-center w-16 h-16 rounded-full border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0B0F19] text-blue-600 dark:text-blue-400 font-black text-2xl shadow-[0_0_15px_-3px_rgba(37,99,235,0.2)] mb-2">
                                         0{s.step}
                                     </div>

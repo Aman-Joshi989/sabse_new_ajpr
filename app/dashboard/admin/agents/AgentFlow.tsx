@@ -17,6 +17,12 @@ import '@xyflow/react/dist/style.css';
 
 const initialNodes: Node[] = [
   {
+    id: 'thoth',
+    position: { x: 50, y: -50 },
+    data: { label: '📖 Thoth (SEO Writer)' },
+    style: { background: '#fdf4ff', border: '1px solid #d946ef', color: '#d946ef', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
+  },
+  {
     id: 'apollo',
     position: { x: 50, y: 150 },
     data: { label: '🎯 Apollo (Prospecting)' },
@@ -52,6 +58,24 @@ const initialNodes: Node[] = [
     data: { label: '🛡️ Hera (Success)' },
     style: { background: '#ecfdf5', border: '1px solid #10b981', color: '#10b981', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
   },
+  {
+    id: 'daedalus',
+    position: { x: 300, y: -50 },
+    data: { label: '🎨 Daedalus (UI/UX)' },
+    style: { background: '#f5f3ff', border: '1px solid #8b5cf6', color: '#8b5cf6', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
+  },
+  {
+    id: 'midas',
+    position: { x: 600, y: 0 },
+    data: { label: '📈 Midas (Strategy)' },
+    style: { background: '#fefce8', border: '1px solid #eab308', color: '#eab308', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
+  },
+  {
+    id: 'artemis',
+    position: { x: 50, y: 250 },
+    data: { label: '🏹 Artemis (Outreach)' },
+    style: { background: '#fdf2f8', border: '1px solid #ec4899', color: '#ec4899', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
+  },
 ];
 
 const initialEdges: Edge[] = [
@@ -61,6 +85,10 @@ const initialEdges: Edge[] = [
   { id: 'e4', source: 'hermes', target: 'plutus', animated: true },
   { id: 'e5', source: 'hermes', target: 'hera', animated: true },
   { id: 'e6', source: 'plutus', target: 'hera', animated: false, label: 'Payment Cleared' },
+  { id: 'e7', source: 'thoth', target: 'athena', animated: true },
+  { id: 'e8', source: 'daedalus', target: 'hephaestus', animated: true },
+  { id: 'e9', source: 'midas', target: 'plutus', animated: true },
+  { id: 'e10', source: 'artemis', target: 'hermes', animated: true },
 ];
 
 export default function AgentFlow() {

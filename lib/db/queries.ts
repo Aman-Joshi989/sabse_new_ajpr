@@ -1371,3 +1371,36 @@ export async function getRecentAgentLogs() {
     SELECT * FROM agent_logs ORDER BY created_at DESC LIMIT 15;
   `;
 }
+
+export async function insertOutreachEmail(targetUrl: string, targetEmail: string, subject: string, body: string, status: string = 'sent') {
+  await sql`
+    CREATE TABLE IF NOT EXISTS backlink_outreach (
+      id SERIAL PRIMARY KEY,
+      target_url TEXT NOT NULL,
+      target_email TEXT NOT NULL,
+      subject TEXT NOT NULL,
+      body TEXT NOT NULL,
+      status TEXT NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+  await sql`
+    INSERT INTO backlink_outreach (target_url, target_email, subject, body, status)
+    VALUES (${targetUrl}, ${targetEmail}, ${subject}, ${body}, ${status});
+  `;
+}
+
+export async function getOutreachEmails() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS backlink_outreach (
+      id SERIAL PRIMARY KEY,
+      target_url TEXT NOT NULL,
+      target_email TEXT NOT NULL,
+      subject TEXT NOT NULL,
+      body TEXT NOT NULL,
+      status TEXT NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+  return await sql`SELECT * FROM backlink_outreach ORDER BY created_at DESC LIMIT 50;`;
+}

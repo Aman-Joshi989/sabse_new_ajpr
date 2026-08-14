@@ -65,7 +65,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
   const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white selection:bg-blue-600/50 selection:text-white font-sans transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-white selection:bg-blue-600/50 selection:text-white font-sans">
       <div ref={containerRef} className="w-[80%] mx-auto min-h-screen">
         {/* Custom Cursor Trailing Effect */}
         <motion.div
@@ -124,7 +124,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
 
           {/* Background Elements */}
           <div className="absolute inset-0 z-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[800px] bg-[radial-gradient(circle,rgba(37,99,235,0.05)_0%,transparent_60%)] dark:bg-[radial-gradient(circle,rgba(37,99,235,0.08)_0%,transparent_60%)] rounded-full" />
             <div className="absolute inset-0 opacity-[0.05] dark:opacity-[0.02]" style={{
               backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`,
               backgroundSize: '40px 40px'

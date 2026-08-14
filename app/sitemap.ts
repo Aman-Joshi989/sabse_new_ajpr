@@ -141,7 +141,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Programmatic local SEO pages for Uttarakhand
   const targetCities = [
     'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 
-    'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
+    'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand',
+    'new-york', 'london', 'san-francisco', 'singapore', 'dubai', 
+    'sydney', 'toronto', 'austin', 'chicago', 'boston'
   ];
   const targetServices = [
     'custom-software', 'web-development', 'app-development', 'ai-solutions', 'cloud-architecture'

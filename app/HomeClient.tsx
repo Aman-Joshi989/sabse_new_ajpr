@@ -100,7 +100,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
   const displayServices = services.length > 0 ? services : defaultServices;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#030712] text-slate-900 dark:text-slate-300 selection:bg-slate-200 dark:selection:bg-slate-800 font-sans transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-[#030712] text-slate-900 dark:text-slate-300 selection:bg-slate-200 dark:selection:bg-slate-800 font-sans">
 
       {/* Floating Promo Banner - Clean Integration */}
       <AnimatePresence>
@@ -394,7 +394,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         {/* 9. FINAL CTA SECTION */}
         <section className="py-20 relative text-center overflow-hidden bg-white dark:bg-[#030712]">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-500/5 dark:bg-blue-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[radial-gradient(circle,rgba(59,130,246,0.03)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(59,130,246,0.05)_0%,transparent_70%)] rounded-full pointer-events-none"></div>
 
           <div className="container mx-auto px-4 relative z-10 max-w-3xl">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1]">Stop Managing Tech Debt. <br />Start Scaling.</h2>

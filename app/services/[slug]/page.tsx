@@ -236,8 +236,8 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
             />
             <div className={`w-full bg-gradient-to-br ${getServiceGradient(service.gradient)} pt-32 pb-20 px-4 text-white relative overflow-hidden`}>
                 {/* Background ambient glowing details */}
-                <div className="absolute top-0 right-0 w-[45%] h-[80%] bg-white/10 rounded-full blur-[120px] pointer-events-none"></div>
-                <div className="absolute -bottom-20 left-10 w-[30%] h-[60%] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute top-0 right-0 w-[45%] h-[80%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)] rounded-full pointer-events-none"></div>
+                <div className="absolute -bottom-20 left-10 w-[30%] h-[60%] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.1)_0%,transparent_70%)] rounded-full pointer-events-none"></div>
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,white,transparent)] pointer-events-none"></div>
 
                 <div className="w-[80%] mx-auto relative z-10">

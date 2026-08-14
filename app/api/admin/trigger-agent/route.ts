@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   try {
     const { agentId, action } = await req.json();
 
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const origin = new URL(req.url).origin;
     const cronSecret = process.env.CRON_SECRET || 'ajprworld-agents-super-secret';
 
     let targetEndpoint = '';
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     if (targetEndpoint) {
       await insertAgentLog(agentId, `Manually triggered task: ${action || 'default process'}`);
       // Call the existing cron endpoint securely
-      const response = await fetch(`${baseUrl}${targetEndpoint}?secret=${cronSecret}`, {
+      const response = await fetch(`${origin}${targetEndpoint}?secret=${cronSecret}`, {
         method: 'GET', // Most crons are GET
       });
 

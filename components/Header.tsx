@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import {
     Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger
@@ -30,7 +31,8 @@ import {
   ChevronDown,
   ShoppingCart,
   LayoutDashboard,
-  LogOut
+  LogOut,
+  X
 } from 'lucide-react'
 
 const iconRegistry: Record<string, any> = {
@@ -57,6 +59,7 @@ export default function Header({ services }: { services?: any[] }) {
     const [scrolled, setScrolled] = useState(false)
     const [isVisible, setIsVisible] = useState(true)
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+    const [isBannerVisible, setIsBannerVisible] = useState(true)
     const [mounted, setMounted] = useState(false)
     const pathname = usePathname()
 
@@ -127,11 +130,40 @@ export default function Header({ services }: { services?: any[] }) {
     return (
         <header
             className={`sticky top-0 z-50 w-full transition-all duration-500 ease-in-out ${scrolled
-                ? 'bg-white/85 dark:bg-[#030712]/85 backdrop-blur-lg shadow-md border-b border-slate-200/50 dark:border-slate-800/50 py-1'
-                : 'bg-transparent backdrop-blur-none border-b border-transparent py-4'
+                ? 'bg-white/85 dark:bg-[#030712]/85 backdrop-blur-lg shadow-md border-b border-slate-200/50 dark:border-slate-800/50'
+                : 'bg-transparent backdrop-blur-none border-b border-transparent'
                 }`}
         >
-            <div className="container flex h-16 items-center justify-between">
+            {/* Promo Banner - integrated cleanly inside header, disappears on scroll */}
+            <AnimatePresence>
+                {isBannerVisible && !scrolled && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0, transition: { duration: 0.2 } }}
+                        className="w-full bg-slate-900 dark:bg-blue-600/10 border-b border-slate-800 dark:border-blue-500/20 relative z-50 flex items-center justify-center overflow-hidden"
+                    >
+                        <div className="py-2.5 px-4 flex items-center justify-center w-full">
+                            <p className="text-xs sm:text-sm font-medium text-slate-300 dark:text-blue-100 flex items-center gap-2 sm:gap-3">
+                                <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse hidden sm:block"></span>
+                                <strong className="text-white">LaunchPad Pro:</strong> The Complete Startup Growth Kit.
+                                <Link href="/startup-growth-kit" className="text-blue-400 dark:text-blue-300 font-bold hover:text-white dark:hover:text-white transition-colors ml-1 sm:ml-2">
+                                    Explore Now &rarr;
+                                </Link>
+                            </p>
+                            <button
+                                onClick={() => setIsBannerVisible(false)}
+                                className="absolute right-4 text-slate-400 hover:text-white transition-colors"
+                                aria-label="Close Banner"
+                            >
+                                <X className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <div className={`container flex h-16 items-center justify-between transition-all duration-300 ${!scrolled && isBannerVisible ? 'mt-2' : ''}`}>
                 {/* Logo */}
                 <Link href="/" className="flex items-center space-x-3 group">
                     <div className="group-hover:scale-105 transition-transform duration-300">
@@ -158,9 +190,9 @@ export default function Header({ services }: { services?: any[] }) {
                         >
                             <Link
                                 href={item.href}
-                                className={`flex items-center font-medium py-2 transition-colors ${isActive(item.href)
-                                    ? 'text-primary'
-                                    : 'text-muted-foreground hover:text-primary'
+                                className={`flex items-center font-medium px-4 py-2 rounded-full transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#030712] ${isActive(item.href)
+                                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm'
+                                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50'
                                     }`}
                             >
                                 {item.name}

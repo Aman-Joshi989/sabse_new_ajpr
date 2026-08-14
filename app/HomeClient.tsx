@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Database, Code2, Cpu, GitMerge, Layout, Layers, ShieldCheck, CheckCircle, X, Terminal, Globe, Smartphone, Lock, Cloud, Sparkles } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ArrowRight, Database, Code2, Cpu, GitMerge, Layout, Layers, ShieldCheck, CheckCircle, Terminal, Globe, Smartphone, Lock, Cloud, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
@@ -49,8 +49,6 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ services = [], blogs = [], settings }: HomeClientProps) {
-  const [isBannerVisible, setIsBannerVisible] = useState(true);
-
   // Fallback static services if DB is empty
   const defaultServices = [
     {
@@ -101,33 +99,6 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#030712] text-slate-900 dark:text-slate-300 selection:bg-slate-200 dark:selection:bg-slate-800 font-sans">
-
-      {/* Floating Promo Banner - Clean Integration */}
-      <AnimatePresence>
-        {isBannerVisible && (
-          <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -50, opacity: 0, transition: { duration: 0.2 } }}
-            className="w-full bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-3 relative z-50 flex items-center justify-center px-4"
-          >
-            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-3">
-              <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse hidden sm:block"></span>
-              <strong className="text-slate-900 dark:text-white">LaunchPad Pro:</strong> The Complete Startup Growth Kit.
-              <Link href="/startup-growth-kit" className="text-blue-600 dark:text-blue-400 font-bold hover:underline ml-2">
-                Explore Now &rarr;
-              </Link>
-            </p>
-            <button
-              onClick={() => setIsBannerVisible(false)}
-              className="absolute right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <div className="w-full mx-auto">
         {/* 1. HERO SECTION */}
         <HeroSection services={displayServices} />

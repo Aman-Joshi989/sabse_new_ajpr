@@ -76,9 +76,24 @@ const initialNodes: Node[] = [
     data: { label: '🏹 Artemis (Outreach)' },
     style: { background: '#fdf2f8', border: '1px solid #ec4899', color: '#ec4899', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
   },
+  {
+    id: 'zeus',
+    position: { x: 300, y: -150 },
+    data: { label: '👁️ Zeus (The Overseer)' },
+    style: { background: '#f4f4f5', border: '2px solid #71717a', color: '#71717a', borderRadius: '8px', padding: '12px', fontWeight: 'bold', transition: 'all 0.3s ease' },
+  },
 ];
 
 const initialEdges: Edge[] = [
+  // Zeus oversees all
+  { id: 'ez1', source: 'zeus', target: 'apollo', animated: true, style: { stroke: '#a1a1aa' } },
+  { id: 'ez2', source: 'zeus', target: 'athena', animated: true, style: { stroke: '#a1a1aa' } },
+  { id: 'ez3', source: 'zeus', target: 'hephaestus', animated: true, style: { stroke: '#a1a1aa' } },
+  { id: 'ez4', source: 'zeus', target: 'hermes', animated: true, style: { stroke: '#a1a1aa' } },
+  { id: 'ez5', source: 'zeus', target: 'hera', animated: true, style: { stroke: '#a1a1aa' } },
+  { id: 'ez6', source: 'zeus', target: 'plutus', animated: true, style: { stroke: '#a1a1aa' } },
+  
+  // Pipeline connections
   { id: 'e1', source: 'athena', target: 'hermes', animated: true },
   { id: 'e2', source: 'apollo', target: 'hermes', animated: true },
   { id: 'e3', source: 'hephaestus', target: 'hermes', animated: false },

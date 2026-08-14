@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { Play, CheckCircle2, AlertCircle, Loader2, Network, Shield, Target, PenTool, Wrench, Handshake, DollarSign } from 'lucide-react';
+import { Play, CheckCircle2, AlertCircle, Loader2, Network, Shield, Target, PenTool, Wrench, Handshake, DollarSign, Palette, Search, TrendingUp, Navigation, Eye } from 'lucide-react';
 
 // Dynamically import the heavy React Flow component to preserve optimal space complexity
 const AgentFlow = dynamic(() => import('./AgentFlow'), {
@@ -74,6 +74,56 @@ const agents = [
     bg: 'bg-cyan-500/10',
     description: 'Generates invoices and tracks profitability.',
     actions: [{ label: 'Audit Invoices', id: 'audit' }],
+  },
+  {
+    id: 'daedalus',
+    name: 'Daedalus',
+    role: 'UI/UX Architect',
+    icon: Palette,
+    color: 'text-orange-500',
+    bg: 'bg-orange-500/10',
+    description: 'Runs UX audits and suggests A/B tests for services.',
+    actions: [{ label: 'Run Audit', id: 'audit' }],
+  },
+  {
+    id: 'thoth',
+    name: 'Thoth',
+    role: 'SEO Content Strategist',
+    icon: Search,
+    color: 'text-indigo-500',
+    bg: 'bg-indigo-500/10',
+    description: 'Researches keywords and synthesizes SEO blogs.',
+    actions: [{ label: 'Draft Blog', id: 'draft' }],
+  },
+  {
+    id: 'midas',
+    name: 'Midas',
+    role: 'Business Strategist',
+    icon: TrendingUp,
+    color: 'text-yellow-500',
+    bg: 'bg-yellow-500/10',
+    description: 'Analyzes market gaps and drafts new services.',
+    actions: [{ label: 'Draft Service', id: 'draft' }],
+  },
+  {
+    id: 'artemis',
+    name: 'Artemis',
+    role: 'Backlink Outreach Scout',
+    icon: Navigation,
+    color: 'text-pink-500',
+    bg: 'bg-pink-500/10',
+    description: 'Hunts for backlinks and sends outreach emails.',
+    actions: [{ label: 'Hunt Links', id: 'hunt' }],
+  },
+  {
+    id: 'zeus',
+    name: 'Zeus',
+    role: 'The Overseer',
+    icon: Eye,
+    color: 'text-zinc-500',
+    bg: 'bg-zinc-500/10',
+    description: 'Monitors all agents and generates daily health reports.',
+    actions: [{ label: 'Check Status', id: 'status' }],
   },
 ];
 

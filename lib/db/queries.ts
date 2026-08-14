@@ -1404,3 +1404,4 @@ export async function getOutreachEmails() {
   `;
   return await sql`SELECT * FROM backlink_outreach ORDER BY created_at DESC LIMIT 50;`;
 }
+

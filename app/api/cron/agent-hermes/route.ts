@@ -32,6 +32,7 @@ export async function GET(req: Request) {
 
     if (leads.length === 0) {
       console.log("[Hermes] No leads currently need follow-ups.");
+      await insertAgentLog('Hermes', 'Scan complete. No leads currently need follow-ups.');
       return NextResponse.json({ success: true, agent: 'Hermes', action: 'No leads found', processedCount: 0 });
     }
 

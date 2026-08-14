@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createBlog, getBlogs } from '@/lib/db/queries';
+import { createBlog, getBlogs, insertAgentLog } from '@/lib/db/queries';
 import { revalidatePath } from 'next/cache';
 import { createLocalPost } from '@/lib/gbp';
 import { triggerSocialSyndication } from '@/lib/syndication';
@@ -226,6 +226,7 @@ async function executeDailyBlogPipeline(req: NextRequest) {
   }
 
   try {
+    await insertAgentLog('athena', 'Initializing Content SEO Pipeline...');
     let existingTitles: string[] = [];
     try {
       existingTitles = ((await getBlogs()) || []).map((b: any) => b.title);
@@ -260,6 +261,7 @@ async function executeDailyBlogPipeline(req: NextRequest) {
     }
 
     console.log(`[Cron] Topic: "${topic}"`);
+    await insertAgentLog('athena', `Drafting high-SEO content for topic: "${topic}"`);
 
     let blogTitle = topic;
     let blogContent = '';
@@ -426,6 +428,8 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
     }
     // ----------------------------------
 
+    await insertAgentLog('athena', `Successfully published SEO blog: "${blogTitle}"`);
+
     return NextResponse.json({
       success: true,
       message: 'Daily blog post successfully generated and published!',
@@ -437,6 +441,7 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
 
   } catch (err: any) {
     console.error('[Cron] Fatal error:', err);
+    await insertAgentLog('athena', `Fatal error during blog generation: ${err.message}`, 'error');
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }
 }

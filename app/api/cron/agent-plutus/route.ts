@@ -31,6 +31,7 @@ export async function GET(req: Request) {
 
     if (projects.length === 0) {
       console.log("[Plutus] No projects currently need invoicing.");
+      await insertAgentLog('Plutus', 'Scan complete. No projects currently require invoicing.');
       return NextResponse.json({ success: true, agent: 'Plutus', action: 'No unpaid projects found', processedCount: 0 });
     }
 

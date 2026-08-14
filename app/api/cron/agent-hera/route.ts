@@ -31,6 +31,7 @@ export async function GET(req: Request) {
 
     if (projects.length === 0) {
       console.log("[Hera] No active projects need updates.");
+      await insertAgentLog('Hera', 'Scan complete. No active projects currently require updates.');
       return NextResponse.json({ success: true, agent: 'Hera', action: 'No projects found', processedCount: 0 });
     }
 

@@ -31,6 +31,7 @@ export async function GET(req: Request) {
 
     if (leads.length === 0) {
       console.log("[Hephaestus] No leads currently need scoping.");
+      await insertAgentLog('Hephaestus', 'Scan complete. No leads currently need technical scoping.');
       return NextResponse.json({ success: true, agent: 'Hephaestus', action: 'No leads found', processedCount: 0 });
     }
 

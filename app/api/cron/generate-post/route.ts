@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { Client } from 'pg';
+import { insertAgentLog } from '@/lib/db/queries';
 
 export const maxDuration = 60; // Allow 60 seconds for AI generation
 
@@ -30,6 +31,7 @@ export async function GET(req: Request) {
         const slug = topic.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
         console.log(`Starting Auto-Blogging for topic: ${topic}`);
+        await insertAgentLog('athena', `Drafting high-SEO post for topic: "${topic}"`);
 
         let title = topic;
         let content = '';
@@ -85,6 +87,8 @@ Contact **AJPR World** to build your Custom AI MVP today!`;
         ]);
         await client.end();
 
+        await insertAgentLog('athena', `Successfully published SEO post: "${title}"`);
+
         return NextResponse.json({
             success: true,
             message: `Successfully generated and published: ${title}`,
@@ -94,6 +98,7 @@ Contact **AJPR World** to build your Custom AI MVP today!`;
 
     } catch (error: any) {
         console.error('Cron job error:', error);
+        await insertAgentLog('athena', `Fatal error during post generation: ${error.message}`, 'error');
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

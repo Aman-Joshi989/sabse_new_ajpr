@@ -16,7 +16,7 @@ export default function HermesChatWidget() {
   const [leadPhone, setLeadPhone] = useState('');
   const [leadMessage, setLeadMessage] = useState('');
   
-  const { messages, append, status, setMessages } = useChat();
+  const { messages, sendMessage, status, setMessages } = useChat();
   
   const isLoading = status === 'streaming' || status === 'submitted';
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -44,16 +44,16 @@ export default function HermesChatWidget() {
     setMessages(uiMessages);
 
     // We send the hidden metadata to the AI to trigger the lead extraction & initial response
-    append({ 
+    sendMessage({ 
       role: 'user', 
-      content: systemInitMessage 
+      parts: [{ type: 'text', text: systemInitMessage }]
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if(input.trim()) {
-      append({ role: 'user', content: input });
+      sendMessage({ role: 'user', parts: [{ type: 'text', text: input }] });
       setInput('');
     }
   };

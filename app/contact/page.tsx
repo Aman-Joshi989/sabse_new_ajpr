@@ -91,14 +91,14 @@ ${form.blockersText}
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-800 dark:text-slate-300 font-sans selection:bg-blue-600/30 transition-colors duration-300">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-800 dark:text-slate-300 font-sans selection:bg-blue-600/30">
             <div className="w-[80%] mx-auto min-h-screen">
 
-                {/* Background Ambience */}
-                <div className="fixed inset-0 pointer-events-none z-0">
-                    <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 dark:bg-blue-600/5 rounded-full blur-[150px] mix-blend-multiply dark:mix-blend-screen transition-colors duration-300" />
-                    <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-indigo-500/10 dark:bg-indigo-600/5 rounded-full blur-[150px] mix-blend-multiply dark:mix-blend-screen transition-colors duration-300" />
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)] opacity-50 dark:opacity-20 transition-opacity" />
+                {/* Background Ambience (Optimized for Performance) */}
+                <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+                    <div className="absolute -top-1/2 -right-1/4 w-[1000px] h-[1000px] bg-[radial-gradient(circle,rgba(59,130,246,0.05)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(37,99,235,0.05)_0%,transparent_70%)]" />
+                    <div className="absolute -bottom-1/2 -left-1/4 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(99,102,241,0.05)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(79,70,229,0.05)_0%,transparent_70%)]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)]" />
                 </div>
 
                 <div className="container mx-auto px-4 lg:px-8 py-24 md:py-32 relative z-10">

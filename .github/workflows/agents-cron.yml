@@ -1,0 +1,43 @@
+name: Autonomous Agents Cron
+
+on:
+  schedule:
+    # Run every 4 hours
+    - cron: '0 */4 * * *'
+  workflow_dispatch: # Allows manual triggering from GitHub UI
+
+jobs:
+  run-agents:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Athena (Blog Generation)
+        run: |
+          curl -X GET "${{ secrets.APP_URL }}/api/cron/generate-blog?secret=${{ secrets.CRON_SECRET }}"
+          
+      - name: Trigger Apollo (Prospecting)
+        run: |
+          curl -X GET "${{ secrets.APP_URL }}/api/cron/autonomous-agent?secret=${{ secrets.CRON_SECRET }}"
+          
+      - name: Trigger Apollo (Sales Outreach)
+        run: |
+          curl -X GET "${{ secrets.APP_URL }}/api/cron/sales-outreach?secret=${{ secrets.CRON_SECRET }}"
+          
+      - name: Trigger Apollo/Athena (LinkedIn Engagement)
+        run: |
+          curl -X GET "${{ secrets.APP_URL }}/api/cron/linkedin-engagement?secret=${{ secrets.CRON_SECRET }}"
+
+      - name: Trigger Hermes (Closing)
+        run: |
+          curl -X GET "${{ secrets.APP_URL }}/api/cron/agent-hermes?secret=${{ secrets.CRON_SECRET }}"
+          
+      - name: Trigger Hephaestus (Technical Scoping)
+        run: |
+          curl -X GET "${{ secrets.APP_URL }}/api/cron/agent-hephaestus?secret=${{ secrets.CRON_SECRET }}"
+          
+      - name: Trigger Hera (Account Management)
+        run: |
+          curl -X GET "${{ secrets.APP_URL }}/api/cron/agent-hera?secret=${{ secrets.CRON_SECRET }}"
+          
+      - name: Trigger Plutus (Invoicing & Finance)
+        run: |
+          curl -X GET "${{ secrets.APP_URL }}/api/cron/agent-plutus?secret=${{ secrets.CRON_SECRET }}"

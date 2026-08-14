@@ -1328,24 +1328,26 @@ export async function getLeadsForHephaestus() {
   `;
 }
 
-export async function getProjectsForHera() {
+export async function getProjectsWithClientForHera() {
   await ensureDbInitialized();
-  // Fetch active projects that might need weekly status reports or check-ins
   return await dynamicSql`
-    SELECT * FROM projects 
-    WHERE status NOT IN ('Completed', 'Archived') 
-    ORDER BY created_at ASC LIMIT 10;
+    SELECT p.*, u.name as client_name, u.email as client_email 
+    FROM projects p
+    LEFT JOIN users u ON p.client_id = u.id
+    WHERE p.status NOT IN ('Completed', 'Archived') 
+    ORDER BY p.created_at ASC LIMIT 10;
   `;
 }
 
-export async function getProjectsForPlutus() {
+export async function getProjectsWithClientForPlutus() {
   await ensureDbInitialized();
-  // Fetch projects that are completed but not fully paid, or pending invoices
   return await dynamicSql`
-    SELECT * FROM projects 
-    WHERE (status = 'Completed' AND pending_value > 0)
-       OR (status = 'Not Started' AND progress_percent = 0)
-    ORDER BY created_at ASC LIMIT 10;
+    SELECT p.*, u.name as client_name, u.email as client_email 
+    FROM projects p
+    LEFT JOIN users u ON p.client_id = u.id
+    WHERE (p.status = 'Completed' AND p.pending_value > 0)
+       OR (p.status = 'Not Started' AND p.progress_percent = 0)
+    ORDER BY p.created_at ASC LIMIT 10;
   `;
 }
 

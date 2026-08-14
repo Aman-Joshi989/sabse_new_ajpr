@@ -55,7 +55,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const cleanDesc = cleanMetaDescription(post.meta_description || post.excerpt || `Read our latest blog on ${post.title}`);
 
     return {
-        alternates: { canonical: `/blog/${params.slug}` },
+        alternates: { canonical: `https://ajprworld.com/blog/${params.slug}` },
         title: cleanTitle,
         description: cleanDesc,
         keywords: post.keywords,

@@ -62,7 +62,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const description = seoData?.meta_description || `Top ${serviceName} agency in ${cityName}. AJPR World builds premium software, apps & AI solutions to scale your business.`;
 
     return {
-        alternates: { canonical: route },
+        alternates: { canonical: `https://ajprworld.com${route}` },
         title,
         description,
         keywords: `${serviceName} ${cityName}, Best IT Company ${cityName}, Tech Agency ${cityName}, Top Software Developer ${cityName}, AJPR World ${cityName}`,

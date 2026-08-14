@@ -6,6 +6,7 @@ import { Sparkles, Zap, Monitor, Star, Menu, X, ArrowUpRight, Github, Globe, Lay
 import { PortfolioCard } from './PortfolioCard'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface PortfolioClientProps {
   initialProjects: any[];
@@ -199,10 +200,13 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                   >
                     {/* Left: Device Mockup / Image */}
                     <div className={`relative rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-800 aspect-[4/3] border border-slate-200 dark:border-slate-700 shadow-2xl ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                      <img
+                      <Image
                         src={project.image_url || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}
                         alt={project.title}
-                        className="w-full h-full object-cover opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700 hover:scale-105"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        priority={index === 0}
+                        className="object-cover opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700 hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#0B0F19] via-transparent to-transparent opacity-90" />
                       <div className="absolute top-6 left-6 flex gap-2">

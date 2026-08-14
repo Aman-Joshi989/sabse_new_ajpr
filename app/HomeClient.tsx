@@ -327,7 +327,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               ].map((study, i) => (
                 <div key={i} className="group cursor-pointer">
                   <div className="aspect-[16/10] w-full bg-slate-200 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl mb-6 relative overflow-hidden flex items-center justify-center transition-all">
-                    <Image src={study.image} alt={study.title} fill className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                    <Image src={study.image} alt={study.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                   </div>
                   <div className="space-y-3">
                     <Badge variant="outline" className="border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 rounded-md font-bold text-[10px] uppercase bg-white dark:bg-[#030712]">{study.category}</Badge>

@@ -89,12 +89,18 @@ export default function AgentFlow() {
         setNodes((nds) => 
           nds.map((node) => {
             const isActive = activeAgents.has(node.id);
+            const targetBoxShadow = isActive ? '0 0 15px var(--tw-shadow-color)' : 'none';
+            
+            // Prevent unnecessary deep re-renders if style hasn't changed
+            if (node.style?.boxShadow === targetBoxShadow) {
+              return node;
+            }
+
             return {
               ...node,
               style: {
                 ...node.style,
-                boxShadow: isActive ? '0 0 15px var(--tw-shadow-color)' : 'none',
-                // Keep the color matching their border but glow it
+                boxShadow: targetBoxShadow,
                 '--tw-shadow-color': (node.style as any).color
               }
             };

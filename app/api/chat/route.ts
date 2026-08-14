@@ -1,9 +1,13 @@
-import { google } from '@ai-sdk/google';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { streamText } from 'ai';
 import { insertLead, insertAgentLog } from '@/lib/db/queries';
 
 export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
+
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+});
 
 export async function POST(req: Request) {
   const { messages } = await req.json();

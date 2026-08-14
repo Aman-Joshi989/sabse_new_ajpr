@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   ReactFlow,
   MiniMap,
@@ -11,45 +11,46 @@ import {
   addEdge,
   Connection,
   Edge,
+  Node
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-const initialNodes = [
+const initialNodes: Node[] = [
   {
     id: 'apollo',
     position: { x: 50, y: 150 },
     data: { label: '🎯 Apollo (Prospecting)' },
-    style: { background: '#fef2f2', border: '1px solid #ef4444', color: '#ef4444', borderRadius: '8px', padding: '10px' },
+    style: { background: '#fef2f2', border: '1px solid #ef4444', color: '#ef4444', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
   },
   {
     id: 'athena',
     position: { x: 50, y: 50 },
     data: { label: '✍️ Athena (Inbound/SEO)' },
-    style: { background: '#faf5ff', border: '1px solid #a855f7', color: '#a855f7', borderRadius: '8px', padding: '10px' },
+    style: { background: '#faf5ff', border: '1px solid #a855f7', color: '#a855f7', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
   },
   {
     id: 'hephaestus',
     position: { x: 300, y: 50 },
     data: { label: '⚙️ Hephaestus (Architect)' },
-    style: { background: '#eff6ff', border: '1px solid #3b82f6', color: '#3b82f6', borderRadius: '8px', padding: '10px' },
+    style: { background: '#eff6ff', border: '1px solid #3b82f6', color: '#3b82f6', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
   },
   {
     id: 'hermes',
     position: { x: 300, y: 150 },
     data: { label: '🤝 Hermes (Sales Closer)' },
-    style: { background: '#fffbeb', border: '1px solid #f59e0b', color: '#f59e0b', borderRadius: '8px', padding: '10px' },
+    style: { background: '#fffbeb', border: '1px solid #f59e0b', color: '#f59e0b', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
   },
   {
     id: 'plutus',
     position: { x: 600, y: 100 },
     data: { label: '💰 Plutus (Finance)' },
-    style: { background: '#ecfeff', border: '1px solid #06b6d4', color: '#06b6d4', borderRadius: '8px', padding: '10px' },
+    style: { background: '#ecfeff', border: '1px solid #06b6d4', color: '#06b6d4', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
   },
   {
     id: 'hera',
     position: { x: 600, y: 200 },
     data: { label: '🛡️ Hera (Success)' },
-    style: { background: '#ecfdf5', border: '1px solid #10b981', color: '#10b981', borderRadius: '8px', padding: '10px' },
+    style: { background: '#ecfdf5', border: '1px solid #10b981', color: '#10b981', borderRadius: '8px', padding: '10px', transition: 'all 0.3s ease' },
   },
 ];
 
@@ -65,6 +66,51 @@ const initialEdges: Edge[] = [
 export default function AgentFlow() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [logs, setLogs] = useState<any[]>([]);
+
+  const fetchLogs = useCallback(async () => {
+    try {
+      const res = await fetch('/api/admin/agent-logs');
+      const data = await res.json();
+      if (data.logs) {
+        setLogs(data.logs);
+        
+        // Find agents that ran in the last 15 minutes
+        const activeAgents = new Set<string>();
+        const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
+        
+        data.logs.forEach((log: any) => {
+          if (new Date(log.created_at) > fifteenMinsAgo) {
+            activeAgents.add(log.agent_name.toLowerCase());
+          }
+        });
+
+        // Update node styles to show glowing animation for active agents
+        setNodes((nds) => 
+          nds.map((node) => {
+            const isActive = activeAgents.has(node.id);
+            return {
+              ...node,
+              style: {
+                ...node.style,
+                boxShadow: isActive ? '0 0 15px var(--tw-shadow-color)' : 'none',
+                // Keep the color matching their border but glow it
+                '--tw-shadow-color': (node.style as any).color
+              }
+            };
+          })
+        );
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [setNodes]);
+
+  useEffect(() => {
+    fetchLogs();
+    const interval = setInterval(fetchLogs, 10000); // Poll every 10 seconds
+    return () => clearInterval(interval);
+  }, [fetchLogs]);
 
   const onConnect = useCallback(
     (params: Connection | Edge) => setEdges((eds) => addEdge(params, eds)),
@@ -72,22 +118,58 @@ export default function AgentFlow() {
   );
 
   return (
-    <div style={{ width: '100%', height: '400px' }} className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        fitView
-      >
-        <Controls />
-        <MiniMap zoomable pannable nodeColor={(n) => {
-          if (n.style?.background) return n.style.background as string;
-          return '#fff';
-        }} />
-        <Background color="#ccc" gap={16} />
-      </ReactFlow>
+    <div className="flex flex-col lg:flex-row gap-4 h-[500px]">
+      {/* Node Map */}
+      <div className="flex-1 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 relative">
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          fitView
+        >
+          <Controls />
+          <MiniMap zoomable pannable nodeColor={(n) => {
+            if (n.style?.background) return n.style.background as string;
+            return '#fff';
+          }} />
+          <Background color="#ccc" gap={16} />
+        </ReactFlow>
+        <div className="absolute top-2 left-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md px-3 py-1 rounded text-xs font-semibold flex items-center gap-2">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          Live Mapping
+        </div>
+      </div>
+
+      {/* Live Activity Feed */}
+      <div className="w-full lg:w-80 border border-gray-200 dark:border-gray-700 rounded-xl flex flex-col bg-gray-50 dark:bg-gray-900/50">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 font-semibold flex items-center justify-between">
+          <span>Brain Feed</span>
+          <span className="text-xs text-gray-500">Last 15 Logs</span>
+        </div>
+        <div className="p-4 flex-1 overflow-y-auto flex flex-col gap-3 text-sm">
+          {logs.length === 0 ? (
+            <p className="text-gray-500 text-center mt-4">Waiting for agent activity...</p>
+          ) : (
+            logs.map((log) => (
+              <div key={log.id} className="flex gap-2 items-start bg-white dark:bg-gray-800 p-2 rounded border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div className={`mt-0.5 shrink-0 w-2 h-2 rounded-full ${log.status === 'error' ? 'bg-red-500' : 'bg-green-500'}`} />
+                <div>
+                  <span className="font-bold text-gray-700 dark:text-gray-200">{log.agent_name}: </span>
+                  <span className="text-gray-600 dark:text-gray-400">{log.action}</span>
+                  <div className="text-[10px] text-gray-400 mt-1">
+                    {new Date(log.created_at).toLocaleTimeString()}
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -251,6 +251,17 @@ export async function ensureDbInitialized() {
         );
       `;
 
+      // 10.5 Ensure agent_logs table exists for live dashboard
+      await sql`
+        CREATE TABLE IF NOT EXISTS agent_logs (
+          id SERIAL PRIMARY KEY,
+          agent_name VARCHAR(50) NOT NULL,
+          action TEXT NOT NULL,
+          status VARCHAR(20) DEFAULT 'success',
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
       // 11. Core tables for dashboard and communication
       await sql`
         CREATE TABLE IF NOT EXISTS users (
@@ -1335,5 +1346,26 @@ export async function getProjectsForPlutus() {
     WHERE (status = 'Completed' AND pending_value > 0)
        OR (status = 'Not Started' AND progress_percent = 0)
     ORDER BY created_at ASC LIMIT 10;
+  `;
+}
+
+export async function insertAgentLog(agentName: string, action: string, status: string = 'success') {
+  await ensureDbInitialized();
+  await sql`
+    INSERT INTO agent_logs (agent_name, action, status)
+    VALUES (${agentName}, ${action}, ${status});
+  `;
+  // Cleanup old logs automatically (keep last 100)
+  await sql`
+    DELETE FROM agent_logs WHERE id NOT IN (
+      SELECT id FROM agent_logs ORDER BY created_at DESC LIMIT 100
+    );
+  `;
+}
+
+export async function getRecentAgentLogs() {
+  await ensureDbInitialized();
+  return await dynamicSql`
+    SELECT * FROM agent_logs ORDER BY created_at DESC LIMIT 15;
   `;
 }

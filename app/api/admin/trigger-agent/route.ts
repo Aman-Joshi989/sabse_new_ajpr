@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { insertAgentLog } from '@/lib/db/queries';
 
 export async function POST(req: Request) {
   try {
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
     }
 
     if (targetEndpoint) {
+      await insertAgentLog(agentId, `Manually triggered task: ${action || 'default process'}`);
       // Call the existing cron endpoint securely
       const response = await fetch(`${baseUrl}${targetEndpoint}?secret=${cronSecret}`, {
         method: 'GET', // Most crons are GET

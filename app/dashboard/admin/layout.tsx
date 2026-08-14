@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 import { 
   FileText, Users, UserCog, Database, LayoutTemplate, 
-  Inbox, Search, Bell, Settings, Globe, Activity, Menu, X, ArrowLeft, CreditCard, Zap
+  Inbox, Search, Bell, Settings, Globe, Activity, Menu, X, ArrowLeft, CreditCard, Zap, Bot
 } from 'lucide-react'
 
 export default function AdminLayout({
@@ -19,6 +19,7 @@ export default function AdminLayout({
 
   const navItems = [
     { name: 'Overview', href: '/dashboard/admin', icon: LayoutTemplate },
+    { name: '🤖 AI Agent Roster', href: '/dashboard/admin/agents', icon: Bot },
     { name: '🔥 Growth Engine', href: '/dashboard/admin/growth', icon: Zap },
     { name: 'CRM (Leads)', href: '/dashboard/admin/leads', icon: Users },
     { name: 'Products & Pricing', href: '/dashboard/admin/products', icon: Database },

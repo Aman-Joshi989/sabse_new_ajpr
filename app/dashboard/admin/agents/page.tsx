@@ -2,7 +2,14 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { Play, CheckCircle2, AlertCircle, Loader2, Network, Shield, Target, PenTool, Wrench, Handshake, DollarSign } from 'lucide-react';
+
+// Dynamically import the heavy React Flow component to preserve optimal space complexity
+const AgentFlow = dynamic(() => import('./AgentFlow'), {
+  ssr: false,
+  loading: () => <div className="w-full h-[400px] flex items-center justify-center bg-gray-50 dark:bg-[#202124] rounded-xl border border-gray-200 dark:border-gray-700"><Loader2 className="w-8 h-8 animate-spin text-indigo-500" /></div>
+});
 
 const agents = [
   {
@@ -177,65 +184,14 @@ export default function AgentCommandCenter() {
         ))}
       </div>
 
-      {/* Visual Connection Map (Simple Version) */}
-      <div className="mt-12 bg-white dark:bg-[#292A2D] rounded-xl border border-gray-200 dark:border-gray-700 p-8">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Pipeline Workflow</h2>
+      {/* Interactive Visual Connection Map (React Flow) */}
+      <div className="mt-12 bg-white dark:bg-[#292A2D] rounded-xl border border-gray-200 dark:border-gray-700 p-8 shadow-sm">
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Pipeline Workflow</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Drag nodes to reorganize or connect them to build new custom pipelines.</p>
+        </div>
         
-        <div className="relative flex flex-col md:flex-row justify-between items-center gap-4">
-          
-          {/* Node 1: Sourcing */}
-          <div className="flex flex-col items-center gap-2 z-10">
-            <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 text-red-500 rounded-full flex items-center justify-center border-2 border-red-500/50">
-              <Target className="w-5 h-5" />
-            </div>
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Apollo</span>
-          </div>
-
-          {/* Line */}
-          <div className="hidden md:block flex-1 h-0.5 bg-gradient-to-r from-red-500 to-amber-500" />
-
-          {/* Node 2: Closing & Scoping */}
-          <div className="flex flex-col items-center gap-2 z-10">
-            <div className="flex gap-2">
-              <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 text-amber-500 rounded-full flex items-center justify-center border-2 border-amber-500/50">
-                <Network className="w-5 h-5" />
-              </div>
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-500 rounded-full flex items-center justify-center border-2 border-blue-500/50">
-                <Wrench className="w-5 h-5" />
-              </div>
-            </div>
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Hermes & Hephaestus</span>
-          </div>
-
-          {/* Line */}
-          <div className="hidden md:block flex-1 h-0.5 bg-gradient-to-r from-amber-500 to-emerald-500" />
-
-          {/* Node 3: Management */}
-          <div className="flex flex-col items-center gap-2 z-10">
-            <div className="flex gap-2">
-              <div className="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-500 rounded-full flex items-center justify-center border-2 border-cyan-500/50">
-                <DollarSign className="w-5 h-5" />
-              </div>
-              <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-500 rounded-full flex items-center justify-center border-2 border-emerald-500/50">
-                <Shield className="w-5 h-5" />
-              </div>
-            </div>
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Plutus & Hera</span>
-          </div>
-
-        </div>
-
-        {/* Independent Node */}
-        <div className="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800 flex justify-center">
-          <div className="flex flex-col items-center gap-2 text-center">
-             <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-purple-500 rounded-full flex items-center justify-center border-2 border-purple-500/50">
-                <PenTool className="w-5 h-5" />
-              </div>
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Athena (Inbound Engine)</span>
-              <span className="text-xs text-gray-400">Operates continuously</span>
-          </div>
-        </div>
-
+        <AgentFlow />
       </div>
 
     </div>

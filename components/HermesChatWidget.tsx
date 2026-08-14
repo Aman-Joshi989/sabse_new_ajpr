@@ -9,19 +9,51 @@ export default function HermesChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   
-  const { messages, sendMessage, status } = useChat();
+  // Pre-chat form states
+  const [hasSubmittedDetails, setHasSubmittedDetails] = useState(false);
+  const [leadName, setLeadName] = useState('');
+  const [leadEmail, setLeadEmail] = useState('');
+  const [leadPhone, setLeadPhone] = useState('');
+  const [leadMessage, setLeadMessage] = useState('');
+  
+  const { messages, append, status, setMessages } = useChat();
   
   const isLoading = status === 'streaming' || status === 'submitted';
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, hasSubmittedDetails]);
+
+  const handlePreChatSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!leadName || !leadEmail || !leadMessage) return;
+
+    setHasSubmittedDetails(true);
+
+    const systemInitMessage = `[SYSTEM: LEAD ACQUIRED]\nName: ${leadName}\nEmail: ${leadEmail}\nPhone: ${leadPhone}\nMessage: ${leadMessage}`;
+    
+    // We add the user's initial message to the local UI immediately (so they see it, without the SYSTEM metadata)
+    const uiMessages: UIMessage[] = [
+      {
+        id: Date.now().toString(),
+        role: 'user',
+        content: leadMessage,
+      }
+    ];
+    setMessages(uiMessages);
+
+    // We send the hidden metadata to the AI to trigger the lead extraction & initial response
+    append({ 
+      role: 'user', 
+      content: systemInitMessage 
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if(input.trim()) {
-      sendMessage({ role: 'user', parts: [{ type: 'text', text: input }] });
+      append({ role: 'user', content: input });
       setInput('');
     }
   };
@@ -74,72 +106,124 @@ export default function HermesChatWidget() {
               </button>
             </div>
 
-            {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-[#1a1b1e]">
-              {messages.length === 0 ? (
-                <div className="flex justify-start">
-                  <div className="max-w-[85%] p-3 rounded-2xl text-sm bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 text-gray-800 dark:text-gray-200 rounded-tl-none shadow-sm">
-                    Hi! I am Agent Hermes. Are you looking to build custom software or scale with AI? Tell me your idea and I can give you an instant price estimate.
-                  </div>
+            {!hasSubmittedDetails ? (
+              /* Pre-chat Form */
+              <div className="flex-1 overflow-y-auto p-6 bg-gray-50 dark:bg-[#1a1b1e]">
+                <div className="mb-6 text-center">
+                  <Bot className="w-12 h-12 text-indigo-600 mx-auto mb-2" />
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Let's get started!</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Please provide a few details so we can assist you better.</p>
                 </div>
-              ) : (
-                messages.map((m: UIMessage) => (
-                  <div
-                    key={m.id}
-                    className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                <form onSubmit={handlePreChatSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Name *</label>
+                    <input
+                      required
+                      type="text"
+                      value={leadName}
+                      onChange={(e) => setLeadName(e.target.value)}
+                      className="w-full px-3 py-2 bg-white dark:bg-[#292A2D] border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:text-white"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Email *</label>
+                    <input
+                      required
+                      type="email"
+                      value={leadEmail}
+                      onChange={(e) => setLeadEmail(e.target.value)}
+                      className="w-full px-3 py-2 bg-white dark:bg-[#292A2D] border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:text-white"
+                      placeholder="john@company.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
+                    <input
+                      type="tel"
+                      value={leadPhone}
+                      onChange={(e) => setLeadPhone(e.target.value)}
+                      className="w-full px-3 py-2 bg-white dark:bg-[#292A2D] border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:text-white"
+                      placeholder="+1 (555) 000-0000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">How can we help? *</label>
+                    <textarea
+                      required
+                      value={leadMessage}
+                      onChange={(e) => setLeadMessage(e.target.value)}
+                      rows={3}
+                      className="w-full px-3 py-2 bg-white dark:bg-[#292A2D] border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:text-white resize-none"
+                      placeholder="I'm looking to build..."
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full py-3 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-colors"
                   >
-                    <div
-                      className={`max-w-[85%] p-3 rounded-2xl text-sm ${
-                        m.role === 'user'
-                          ? 'bg-indigo-600 text-white rounded-tr-none'
-                          : 'bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 text-gray-800 dark:text-gray-200 rounded-tl-none shadow-sm'
-                      }`}
-                    >
-                      {m.parts?.map((part, index) => {
-                        if (part.type === 'text') {
-                          return <span key={index}>{part.text}</span>;
-                        }
-                        return null;
-                      })}
-                    </div>
-                  </div>
-                ))
-              )}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 p-4 rounded-2xl rounded-tl-none shadow-sm">
-                    <Loader2 className="w-4 h-4 animate-spin text-indigo-500" />
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-4 bg-white dark:bg-[#202124] border-t border-gray-100 dark:border-gray-800">
-              <div className="relative flex items-center">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Describe your project..."
-                  className="w-full pl-4 pr-12 py-3 bg-gray-50 dark:bg-[#1a1b1e] border border-gray-200 dark:border-gray-700 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:text-white"
-                />
-                <button
-                  type="submit"
-                  disabled={isLoading || !input.trim()}
-                  className="absolute right-2 p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:hover:bg-indigo-600"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
+                    Start Chat
+                  </button>
+                </form>
               </div>
-              <p className="text-[10px] text-center text-gray-400 mt-2">
-                Powered by AJPR AI Engine
-              </p>
-            </form>
+            ) : (
+              /* Active Chat Area */
+              <>
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-[#1a1b1e]">
+                  {messages.map((m: UIMessage) => (
+                    <div
+                      key={m.id}
+                      className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-[85%] p-3 rounded-2xl text-sm ${
+                          m.role === 'user'
+                            ? 'bg-indigo-600 text-white rounded-tr-none'
+                            : 'bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 text-gray-800 dark:text-gray-200 rounded-tl-none shadow-sm'
+                        }`}
+                      >
+                        {m.content}
+                      </div>
+                    </div>
+                  ))}
+                  {isLoading && (
+                    <div className="flex justify-start">
+                      <div className="bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 p-4 rounded-2xl rounded-tl-none shadow-sm">
+                        <Loader2 className="w-4 h-4 animate-spin text-indigo-500" />
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+
+                {/* Input Area */}
+                <form onSubmit={handleSubmit} className="p-4 bg-white dark:bg-[#202124] border-t border-gray-100 dark:border-gray-800">
+                  <div className="relative flex items-center">
+                    <input
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      placeholder="Reply..."
+                      className="w-full pl-4 pr-12 py-3 bg-gray-50 dark:bg-[#1a1b1e] border border-gray-200 dark:border-gray-700 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:text-white"
+                    />
+                    <button
+                      type="submit"
+                      disabled={isLoading || !input.trim()}
+                      className="absolute right-2 p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:hover:bg-indigo-600"
+                    >
+                      <Send className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-center text-gray-400 mt-2">
+                    Powered by AJPR AI Engine
+                  </p>
+                </form>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
 }
+

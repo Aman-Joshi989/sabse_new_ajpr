@@ -26,7 +26,28 @@ If they provide an email, thank them, confirm that you will send the proposal, a
   // Lead extraction logic
   try {
     const lastMessage = messages[messages.length - 1];
-    if (lastMessage.role === 'user') {
+    if (lastMessage.role === 'user' && lastMessage.content.includes('[SYSTEM: LEAD ACQUIRED]')) {
+      const content = lastMessage.content;
+      
+      const nameMatch = content.match(/Name:\s*(.*)/);
+      const emailMatch = content.match(/Email:\s*(.*)/);
+      const phoneMatch = content.match(/Phone:\s*(.*)/);
+      const msgMatch = content.match(/Message:\s*([\s\S]*)/);
+      
+      const email = emailMatch ? emailMatch[1].trim() : '';
+      
+      if (email) {
+        await insertLead({
+          name: nameMatch ? nameMatch[1].trim() : 'Hermes Chat Lead',
+          email: email,
+          company: phoneMatch ? `Phone: ${phoneMatch[1].trim()}` : 'Unknown',
+          project_details: msgMatch ? msgMatch[1].trim() : 'No initial message',
+          status: 'new'
+        });
+        await insertAgentLog('hermes', `Captured new pre-chat lead: ${email}`);
+      }
+    } else if (lastMessage.role === 'user') {
+      // Fallback regex for mid-conversation email drops
       const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
       const emailsFound = lastMessage.content.match(emailRegex);
       
@@ -39,7 +60,7 @@ If they provide an email, thank them, confirm that you will send the proposal, a
           project_details: messages.map((m:any) => m.role + ": " + m.content).join('\n'),
           status: 'new'
         });
-        await insertAgentLog('hermes', `Captured new lead via chat: ${email}`);
+        await insertAgentLog('hermes', `Captured new lead via mid-chat: ${email}`);
       }
     }
   } catch (e) {

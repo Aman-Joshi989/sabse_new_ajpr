@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { ArrowRight, Globe, Linkedin, CheckCircle2 } from 'lucide-react'
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,18 +9,7 @@ import { Button } from "@/components/ui/button"
 import EmailLink from '@/components/EmailLink';
 
 
-const fadeInUp: any = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-}
 
-const staggerContainer: any = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: { staggerChildren: 0.15 }
-    }
-}
 
 export default function ApplicationPage() {
     const [form, setForm] = useState({
@@ -120,34 +108,34 @@ ${form.blockersText}
                         <div className="lg:w-5/12 space-y-24">
 
                             {/* 1. Hero Section */}
-                            <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="space-y-8">
-                                <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.05]">
+                            <div className="space-y-8 animate-fade-up">
+                                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter text-slate-900 dark:text-white leading-[1.05] animate-fade-up">
                                     Let's Engineer <br />What's Next.
-                                </motion.h1>
-                                <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-lg">
+                                </h1>
+                                <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-lg animate-fade-up">
                                     We partner with ambitious founders and growth-focused businesses to build scalable digital systems and product-driven infrastructure.
-                                </motion.p>
-                                <motion.div variants={fadeInUp}>
+                                </p>
+                                <div className="animate-fade-up">
                                     <Button onClick={scrollToForm} size="lg" className="h-12 px-8 text-base rounded-none bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all shadow-[0_0_30px_-10px_rgba(37,99,235,0.4)] border border-blue-500/50 hover:scale-[1.02]">
                                         Apply for Partnership <ArrowRight className="ml-2 w-4 h-4" />
                                     </Button>
-                                </motion.div>
-                            </motion.div>
+                                </div>
+                            </div>
 
                             {/* 2. Exclusivity Section */}
-                            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-6 max-w-lg relative pl-8 border-l-2 border-blue-500/30 dark:border-blue-900/50">
-                                <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">We're Selective by Design.</motion.h2>
-                                <motion.div variants={fadeInUp} className="space-y-4 text-slate-700 dark:text-slate-400 text-base md:text-lg font-medium leading-relaxed">
+                            <div className="space-y-6 max-w-lg relative pl-8 border-l-2 border-blue-500/30 dark:border-blue-900/50 animate-fade-up">
+                                <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight animate-fade-up">We're Selective by Design.</h2>
+                                <div className="space-y-4 text-slate-700 dark:text-slate-400 text-base md:text-lg font-medium leading-relaxed animate-fade-up">
                                     <p>AJPR WORLD works with a limited number of partners at a time.</p>
                                     <p>We focus on long-term execution, scalable architecture, and measurable impact.</p>
                                     <p className="text-blue-600 dark:text-blue-400/80 font-bold">If you're looking for quick fixes or low-cost builds — we're probably not the right fit.</p>
-                                </motion.div>
-                            </motion.div>
+                                </div>
+                            </div>
 
                             {/* 3. Ideal Partner Section */}
-                            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-6 max-w-lg">
-                                <motion.h2 variants={fadeInUp} className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Who We Work Best With</motion.h2>
-                                <motion.ul variants={fadeInUp} className="space-y-4">
+                            <div className="space-y-6 max-w-lg animate-fade-up">
+                                <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight animate-fade-up">Who We Work Best With</h2>
+                                <ul className="space-y-4 animate-fade-up">
                                     {[
                                         "Funded or Revenue-Generating Startups",
                                         "Scaling Ecommerce Brands",
@@ -159,8 +147,8 @@ ${form.blockersText}
                                             {item}
                                         </li>
                                     ))}
-                                </motion.ul>
-                            </motion.div>
+                                </ul>
+                            </div>
 
 
 
@@ -168,11 +156,7 @@ ${form.blockersText}
 
                         {/* RIGHT COLUMN: The Application Form */}
                         <div className="lg:w-7/12" id="application-form">
-                            <motion.div
-                                initial={{ opacity: 0, x: 40 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                                className="p-8 md:p-12 lg:p-16 rounded-none bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl backdrop-blur-xl relative"
+                            <div className="p-8 md:p-12 lg:p-16 rounded-none bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 shadow-xl dark:shadow-2xl backdrop-blur-xl relative animate-fade-up"
                             >
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-600" />
 
@@ -255,14 +239,14 @@ ${form.blockersText}
                                     )}
 
                                 </form>
-                            </motion.div>
+                            </div>
                         </div>
 
                     </div>
 
                     {/* 5. What Happens Next Section (Centered Full Width) */}
-                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="mt-32 max-w-6xl mx-auto text-center border-t border-slate-200 dark:border-slate-800/50 pt-24">
-                        <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-16">What Happens After You Apply</motion.h2>
+                    <div className="mt-32 max-w-6xl mx-auto text-center border-t border-slate-200 dark:border-slate-800/50 pt-24 animate-fade-up">
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-16 animate-fade-up">What Happens After You Apply</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                             {[
                                 { step: 1, title: "Review", desc: "We review your business constraints." },
@@ -270,16 +254,16 @@ ${form.blockersText}
                                 { step: 3, title: "Architecture", desc: "Design your system blueprint." },
                                 { step: 4, title: "Execution", desc: "We build and deploy to scale." }
                             ].map((s, i) => (
-                                <motion.div variants={fadeInUp} key={i} className="flex flex-col items-center text-center p-8 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 shadow-sm dark:shadow-none backdrop-blur-sm gap-4 hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:-translate-y-1 transition-all duration-300">
+                                <div className="animate-fade-up" key={i} className="flex flex-col items-center text-center p-8 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 shadow-sm dark:shadow-none backdrop-blur-sm gap-4 hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:-translate-y-1 transition-all duration-300">
                                     <div className="flex items-center justify-center w-16 h-16 rounded-full border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0B0F19] text-blue-600 dark:text-blue-400 font-black text-2xl shadow-[0_0_15px_-3px_rgba(37,99,235,0.2)] mb-2">
                                         0{s.step}
                                     </div>
                                     <h3 className="font-bold text-slate-900 dark:text-white tracking-wide text-lg">{s.title}</h3>
                                     <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">{s.desc}</p>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* 6. Authority Strip */}
                     <div className="mt-32 pt-8 border-t border-slate-200 dark:border-slate-800/50 flex flex-col md:flex-row items-center justify-between text-slate-500 dark:text-slate-500 font-bold text-sm tracking-widest uppercase gap-4">

@@ -1,9 +1,7 @@
-'use client'
-
-import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArrowRight, Terminal } from 'lucide-react'
+import AnimatedServiceText from './AnimatedServiceText'
 
 const defaultServices = [
     "Web Development",
@@ -24,15 +22,6 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
     const displayServices = services && services.length > 0 
         ? services.map(s => s.title) 
         : defaultServices;
-
-    const [currentService, setCurrentService] = useState(0)
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentService((prev) => (prev + 1) % displayServices.length)
-        }, 2500)
-        return () => clearInterval(interval)
-    }, [displayServices.length])
 
     return (
         <section className="relative min-h-[90vh] flex flex-col justify-center items-center overflow-hidden bg-white dark:bg-[#030712] pt-20 pb-20">
@@ -55,13 +44,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-8 animate-fade-up [animation-delay:200ms]">
                         Engineering Scalable <br className="hidden md:block" />
                         <div className="relative flex justify-center w-full max-w-[800px] mx-auto mt-2 overflow-hidden align-bottom min-h-[1.5em] md:min-h-[1.3em]">
-                            <span
-                                key={currentService}
-                                className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300 pb-4"
-                                style={{ animation: 'slideUpFade 0.5s ease-out forwards' }}
-                            >
-                                {displayServices[currentService]}.
-                            </span>
+                            <AnimatedServiceText services={displayServices} />
                         </div>
                     </h1>
 

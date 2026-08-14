@@ -2,10 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import {
-    Code2, Scale, Calculator, Users, Briefcase, FileText, Shield,
-    ArrowRight, CheckCircle, Zap, Globe, Smartphone, Palette, Package
-} from 'lucide-react'
+import { ArrowRight, CheckCircle, Package } from 'lucide-react'
+import { ServiceIconMap } from '@/components/ui/ServiceIcons'
 import React from 'react'
 import { getPublishedServices } from '@/lib/db/queries'
 
@@ -27,21 +25,7 @@ export const metadata: Metadata = {
 };
 
 
-// Mapping string names from DB to Lucide icons
-const iconMap: Record<string, any> = {
-    'Code2': Code2,
-    'Scale': Scale,
-    'Calculator': Calculator,
-    'Users': Users,
-    'Briefcase': Briefcase,
-    'FileText': FileText,
-    'Shield': Shield,
-    'Zap': Zap,
-    'Globe': Globe,
-    'Smartphone': Smartphone,
-    'Palette': Palette,
-    'Package': Package
-}
+
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
@@ -61,7 +45,7 @@ export default async function ServicesPage() {
                         </div>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {services.map((s: any, i: number) => {
-                                const IconComponent = iconMap[s.icon_name || 'Package'] || Package;
+                                const IconComponent = ServiceIconMap[s.icon_name || 'Package'] || Package;
                                 const featuresList = typeof s.features === 'string' ? JSON.parse(s.features) : (s.features || []);
                                 
                                 let displayPrice = '';

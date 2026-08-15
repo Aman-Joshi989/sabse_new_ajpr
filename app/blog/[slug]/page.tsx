@@ -22,7 +22,7 @@ function injectInternalLinks(markdown: string) {
     for (const [keyword, url] of Object.entries(links)) {
         const regex = new RegExp(`\\b(${keyword})\\b`, 'i');
         const parts = modified.split(/(\\[[^\\]]+\\]\\([^)]+\\))/);
-        
+
         for (let i = 0; i < parts.length; i++) {
             if (i % 2 === 0 && regex.test(parts[i])) {
                 parts[i] = parts[i].replace(regex, `[$1](${url})`);
@@ -48,7 +48,7 @@ type Props = {
 export async function generateMetadata(props: Props): Promise<Metadata> {
     const params = await props.params;
     const post = await getPost(params.slug);
-    
+
     if (!post) return { title: 'Not Found' };
 
     const cleanTitle = cleanMetaTitle(post.title || post.h1_title);
@@ -122,11 +122,11 @@ export default async function BlogPost(props: Props) {
                 <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-a:text-blue-600 hover:prose-a:text-blue-500">
                     <ReactMarkdown>{injectInternalLinks(post.content)}</ReactMarkdown>
                 </div>
-                
+
                 <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 text-center">
-                     <a href="/contact" className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors shadow-sm">
+                    <a href="/contact" className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors shadow-sm">
                         Build your Custom AI MVP today
-                     </a>
+                    </a>
                 </footer>
             </div>
         </article>

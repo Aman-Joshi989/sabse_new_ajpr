@@ -33,15 +33,8 @@ export default function HermesChatWidget() {
 
     const systemInitMessage = `[SYSTEM: LEAD ACQUIRED]\nName: ${leadName}\nEmail: ${leadEmail}\nPhone: ${leadPhone}\nMessage: ${leadMessage}`;
     
-    // We add the user's initial message to the local UI immediately (so they see it, without the SYSTEM metadata)
-    const uiMessages: UIMessage[] = [
-      {
-        id: Date.now().toString(),
-        role: 'user',
-        parts: [{ type: 'text', text: leadMessage }],
-      } as UIMessage
-    ];
-    setMessages(uiMessages);
+    // We no longer manually setMessages because sendMessage already appends to the UI.
+    // Instead, we will filter out the system metadata in the render function.
 
     // We send the hidden metadata to the AI to trigger the lead extraction & initial response
     sendMessage({ 
@@ -184,7 +177,16 @@ export default function HermesChatWidget() {
                       >
                         {m.parts?.map((part: any, index: number) => {
                           if (part.type === 'text') {
-                            return <span key={index}>{part.text}</span>;
+                            let displayText = part.text;
+                            if (m.role === 'user' && displayText.includes('[SYSTEM: LEAD ACQUIRED]')) {
+                              const match = displayText.match(/Message:\s*([\s\S]*)$/);
+                              if (match) {
+                                displayText = match[1].trim();
+                              } else {
+                                displayText = "Inquiry sent.";
+                              }
+                            }
+                            return <span key={index}>{displayText}</span>;
                           }
                           return null;
                         })}

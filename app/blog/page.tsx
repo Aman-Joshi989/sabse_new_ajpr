@@ -76,30 +76,35 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] pt-24 pb-20 selection:bg-blue-200 dark:selection:bg-blue-900 transition-colors duration-300 font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] selection:bg-blue-200 dark:selection:bg-blue-900 transition-colors duration-300 font-sans">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
       />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        
-        {/* Header Hero */}
-        <div className="relative py-16 md:py-24 rounded-[3rem] bg-gradient-to-br from-slate-100 to-white dark:from-slate-900 dark:to-[#090D1A] border border-slate-200/50 dark:border-slate-800/50 shadow-sm overflow-hidden mb-12 flex flex-col items-center text-center px-4 group">
-            <div className="absolute top-0 right-0 -mt-20 -mr-20 w-[400px] h-[400px] bg-blue-600/10 dark:bg-blue-600/20 blur-[100px] rounded-full pointer-events-none group-hover:bg-blue-600/20 transition-all duration-700" />
-            <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-[400px] h-[400px] bg-indigo-600/10 dark:bg-indigo-600/20 blur-[100px] rounded-full pointer-events-none group-hover:bg-indigo-600/20 transition-all duration-700" />
-            
-            <div className="relative z-10 max-w-3xl flex flex-col items-center">
-              <Badge className="mb-8 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border-none font-black tracking-widest px-4 py-1.5 uppercase text-[10px] shadow-sm">
-                Engineering & Growth Insights
-              </Badge>
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-8 text-slate-900 dark:text-white leading-[1.05]">
-                The <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Growth</span> Journal.
-              </h1>
-              <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium max-w-2xl leading-relaxed">
-                Actionable tactics on custom web development, AI automation frameworks, and dominating local search rankings. Built for startups and scaling brands.
-              </p>
+      
+      {/* Premium Dark Hero Section */}
+      <section className="relative pt-32 pb-24 overflow-hidden bg-slate-950">
+        <div className="absolute top-0 right-0 w-[80%] h-[150%] bg-[radial-gradient(circle_at_70%_0%,rgba(59,130,246,0.15)_0%,transparent_50%)] pointer-events-none"></div>
+        <div className="absolute top-40 -left-20 w-[60%] h-[120%] bg-[radial-gradient(circle_at_30%_80%,rgba(139,92,246,0.1)_0%,transparent_50%)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/djp3uolnn/image/upload/v1723528256/grid-pattern_qayf0d.png')] opacity-20 bg-[length:32px_32px] pointer-events-none mix-blend-overlay"></div>
+        <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent pointer-events-none"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-8 animate-fade-in max-w-4xl mx-auto">
+            <div className="inline-flex px-4 py-1.5 bg-white/5 border border-white/10 backdrop-blur-xl rounded-full text-xs font-bold tracking-widest text-blue-300 uppercase mb-8 shadow-[0_0_20px_rgba(59,130,246,0.1)]">
+              Engineering & Growth Insights
             </div>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60">
+              The Growth Journal
+            </h1>
+            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed">
+              Actionable tactics on custom web development, AI automation frameworks, and dominating local search rankings. Built for startups and scaling brands.
+            </p>
+          </div>
         </div>
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 py-16">
 
         {/* Category Filters */}
         <div className="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800/80 pb-6">

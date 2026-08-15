@@ -163,36 +163,36 @@ export default function HermesChatWidget() {
               /* Active Chat Area */
               <>
                 <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-[#1a1b1e]">
-                  {messages.map((m: UIMessage) => (
-                    <div
-                      key={m.id}
-                      className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
+                  {messages.map((m: UIMessage) => {
+                    // Check if this is the hidden system lead message
+                    const isSystemLead = m.role === 'user' && m.parts?.some((p: any) => p.type === 'text' && p.text.includes('[SYSTEM: LEAD ACQUIRED]'));
+                    
+                    if (isSystemLead) {
+                      return null; // Completely hide the form submission from the chat UI
+                    }
+
+                    return (
                       <div
-                        className={`max-w-[85%] p-3 rounded-2xl text-sm ${
-                          m.role === 'user'
-                            ? 'bg-indigo-600 text-white rounded-tr-none'
-                            : 'bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 text-gray-800 dark:text-gray-200 rounded-tl-none shadow-sm'
-                        }`}
+                        key={m.id}
+                        className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
                       >
-                        {m.parts?.map((part: any, index: number) => {
-                          if (part.type === 'text') {
-                            let displayText = part.text;
-                            if (m.role === 'user' && displayText.includes('[SYSTEM: LEAD ACQUIRED]')) {
-                              const match = displayText.match(/Message:\s*([\s\S]*)$/);
-                              if (match) {
-                                displayText = match[1].trim();
-                              } else {
-                                displayText = "Inquiry sent.";
-                              }
+                        <div
+                          className={`max-w-[85%] p-3 rounded-2xl text-sm ${
+                            m.role === 'user'
+                              ? 'bg-indigo-600 text-white rounded-tr-none'
+                              : 'bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 text-gray-800 dark:text-gray-200 rounded-tl-none shadow-sm'
+                          }`}
+                        >
+                          {m.parts?.map((part: any, index: number) => {
+                            if (part.type === 'text') {
+                              return <span key={index}>{part.text}</span>;
                             }
-                            return <span key={index}>{displayText}</span>;
-                          }
-                          return null;
-                        })}
+                            return null;
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                   {isLoading && (
                     <div className="flex justify-start">
                       <div className="bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 p-4 rounded-2xl rounded-tl-none shadow-sm">

@@ -15,19 +15,20 @@ import { getSeoMetadata } from "@/lib/db/queries";
 export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
 
 function getServiceGradient(gradient: string) {
+    // Ultra-premium dark theme gradients
     const map: Record<string, string> = {
-        'from-violet-500 to-indigo-600': 'from-[#5B21B6] via-[#4F46E5] to-[#1E1B4B]',
-        'from-blue-500 to-cyan-500': 'from-[#1D4ED8] via-[#06B6D4] to-[#0F172A]',
-        'from-blue-400 to-indigo-500': 'from-[#2563EB] via-[#6366F1] to-[#0F172A]',
-        'from-blue-600 to-indigo-800': 'from-[#1E3A8A] via-[#2563EB] to-[#0F172A]',
-        'from-purple-600 to-blue-600': 'from-[#7E22CE] via-[#3B82F6] to-[#0F172A]',
-        'from-green-500 to-emerald-500': 'from-[#047857] via-[#10B981] to-[#064E3B]',
-        'from-purple-500 to-pink-500': 'from-[#6D28D9] via-[#EC4899] to-[#500724]',
-        'from-orange-500 to-red-500': 'from-[#C2410C] via-[#EF4444] to-[#450A0A]',
-        'from-indigo-500 to-purple-500': 'from-[#4338CA] via-[#8B5CF6] to-[#2E1065]',
-        'from-red-500 to-pink-500': 'from-[#B91C1C] via-[#EC4899] to-[#500724]'
+        'from-violet-500 to-indigo-600': 'from-[#0A0514] via-[#1A0B2E] to-[#0A0514]',
+        'from-blue-500 to-cyan-500': 'from-[#051124] via-[#0A192F] to-[#051124]',
+        'from-blue-400 to-indigo-500': 'from-[#0A0F1F] via-[#131A33] to-[#0A0F1F]',
+        'from-blue-600 to-indigo-800': 'from-[#060D1F] via-[#0D1836] to-[#060D1F]',
+        'from-purple-600 to-blue-600': 'from-[#110A1F] via-[#1A1636] to-[#110A1F]',
+        'from-green-500 to-emerald-500': 'from-[#03140C] via-[#062417] to-[#03140C]',
+        'from-purple-500 to-pink-500': 'from-[#170514] via-[#2A0923] to-[#170514]',
+        'from-orange-500 to-red-500': 'from-[#1C0804] via-[#2D0F08] to-[#1C0804]',
+        'from-indigo-500 to-purple-500': 'from-[#0B081A] via-[#16102E] to-[#0B081A]',
+        'from-red-500 to-pink-500': 'from-[#1A050A] via-[#2A0915] to-[#1A050A]'
     };
-    return map[gradient] || 'from-[#1E3A8A] via-[#2563EB] to-[#0F172A]';
+    return map[gradient] || 'from-[#060D1F] via-[#0D1836] to-[#060D1F]';
 }
 
 function getRobustMetaDescription(desc: string, featuresStr: string, minLen = 110, maxLen = 155): string {
@@ -233,45 +234,64 @@ export default async function ServiceLocationPage({ params }: { params: Promise<
                 providerName="AJPR World"
                 url={`https://ajprworld.com/services/${service.slug}/${location}`}
             />
-            <div className={`w-full bg-gradient-to-br ${getServiceGradient(service.gradient)} pt-32 pb-20 px-4 text-white relative overflow-hidden`}>
-                {/* Background ambient glowing details */}
-                <div className="absolute top-0 right-0 w-[45%] h-[80%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)] rounded-full pointer-events-none"></div>
-                <div className="absolute -bottom-20 left-10 w-[30%] h-[60%] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.1)_0%,transparent_70%)] rounded-full pointer-events-none"></div>
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,white,transparent)] pointer-events-none"></div>
+            <div className={`w-full bg-gradient-to-br ${getServiceGradient(service.gradient)} pt-32 pb-24 px-4 text-white relative overflow-hidden`}>
+                {/* Background ambient glowing details - Modern Premium */}
+                <div className="absolute top-0 right-0 w-full h-[150%] bg-[radial-gradient(circle_at_70%_20%,rgba(59,130,246,0.15)_0%,transparent_60%)] pointer-events-none"></div>
+                <div className="absolute -bottom-40 -left-20 w-[80%] h-[120%] bg-[radial-gradient(circle_at_30%_80%,rgba(139,92,246,0.1)_0%,transparent_50%)] pointer-events-none"></div>
+                
+                {/* Tech grid overlay */}
+                <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/djp3uolnn/image/upload/v1723528256/grid-pattern_qayf0d.png')] opacity-10 bg-[length:32px_32px] pointer-events-none mix-blend-overlay"></div>
+                
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"></div>
 
-                <div className="w-[80%] mx-auto relative z-10">
-                    <Button variant="ghost" className="text-white hover:bg-white/20 mb-8" asChild>
+                <div className="w-[85%] max-w-7xl mx-auto relative z-10">
+                    <Button variant="ghost" className="text-slate-400 hover:text-white hover:bg-white/10 mb-8 rounded-full h-10 px-6 backdrop-blur-md border border-white/5" asChild>
                         <Link href="/services">
                             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Services
                         </Link>
                     </Button>
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div>
-                            <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-sm font-medium mb-6">
+                            <div className="inline-flex px-4 py-1.5 bg-white/5 border border-white/10 backdrop-blur-xl rounded-full text-xs font-bold tracking-widest text-blue-300 uppercase mb-6 shadow-[0_0_20px_rgba(59,130,246,0.1)]">
                                 {service.category} • Top Rated in {displayLocation}
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tight drop-shadow-sm">
+                            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60">
                                 {service.title} in {displayLocation}
                             </h1>
-                            <p className="text-lg md:text-xl text-white/90 font-medium mb-8 max-w-xl leading-relaxed">
+                            <p className="text-lg md:text-xl text-slate-300 font-medium mb-10 max-w-xl leading-relaxed">
                                 {service.description}
                             </p>
                             <div className="flex flex-wrap gap-4 items-center">
-                                <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 font-bold text-base h-14 px-8 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all" asChild>
+                                <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-500 font-bold text-base h-14 px-8 rounded-full shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:shadow-[0_0_60px_rgba(37,99,235,0.6)] hover:scale-[1.02] active:scale-95 transition-all" asChild>
                                     <Link href="/contact">Get Started Today</Link>
                                 </Button>
-                                <div className="text-white/80 font-medium text-sm flex items-center gap-2">
-                                    <Shield className="w-4 h-4" /> Secure & Confidential
+                                <div className="text-slate-400 font-medium text-sm flex items-center gap-2 ml-4">
+                                    <Shield className="w-4 h-4 text-blue-400" /> Secure & Confidential
                                 </div>
                             </div>
                         </div>
-                        <div className="hidden md:flex justify-center">
-                            {/* Abstract visual representation of the service */}
-                            <div className="relative w-72 h-72 group">
-                                <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl rounded-full animate-pulse group-hover:scale-105 transition-transform duration-700"></div>
-                                <div className="absolute inset-4 bg-white/20 backdrop-blur-2xl rounded-full flex items-center justify-center border border-white/10 shadow-2xl group-hover:rotate-12 transition-transform duration-700">
-                                    <BannerIcon className="w-32 h-32 text-white/80" strokeWidth={1} />
+                        <div className="hidden lg:flex justify-end relative">
+                            {/* Premium Abstract Visual Representation */}
+                            <div className="relative w-80 h-80 flex items-center justify-center">
+                                {/* Orbit rings */}
+                                <div className="absolute inset-0 border border-white/5 rounded-full animate-[spin_30s_linear_infinite]"></div>
+                                <div className="absolute inset-4 border border-blue-500/10 rounded-full animate-[spin_20s_linear_infinite_reverse]"></div>
+                                <div className="absolute inset-10 border border-purple-500/10 rounded-full animate-[spin_40s_linear_infinite]"></div>
+                                
+                                {/* Glowing backdrop */}
+                                <div className="absolute w-48 h-48 bg-blue-500/20 rounded-full blur-3xl animate-pulse-glow"></div>
+                                
+                                {/* Floating Glass Card */}
+                                <div className="relative w-56 h-56 bg-white/5 border border-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl flex items-center justify-center animate-float-slow transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                                    <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                                    <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent rounded-3xl opacity-50"></div>
+                                    <BannerIcon className="w-24 h-24 text-blue-400 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]" strokeWidth={1.5} />
                                 </div>
+                                
+                                {/* Floating particles */}
+                                <div className="absolute -top-4 right-10 w-3 h-3 bg-blue-400 rounded-full shadow-[0_0_10px_rgba(59,130,246,1)] animate-bounce" style={{ animationDuration: '3s' }}></div>
+                                <div className="absolute bottom-10 -left-4 w-4 h-4 bg-purple-500 rounded-full shadow-[0_0_15px_rgba(168,85,247,1)] animate-bounce" style={{ animationDuration: '4s', animationDelay: '1s' }}></div>
                             </div>
                         </div>
                     </div>
@@ -284,15 +304,16 @@ export default async function ServiceLocationPage({ params }: { params: Promise<
                     
                     {/* Left: Features & Details */}
                     <div className="md:col-span-2 space-y-12">
-                        {/* Dynamic Citable TL;DR Executive Summary (Optimized for AI RAG Citation) */}
-                        <div className="p-8 bg-blue-50/50 dark:bg-blue-950/20 border-2 border-blue-500/20 rounded-3xl relative overflow-hidden backdrop-blur-sm text-left">
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
-                            <h3 className="text-lg font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4 flex items-center">
-                                <span className="w-2.5 h-2.5 rounded-full bg-blue-500 mr-2.5 animate-pulse" />
+                        {/* Dynamic Citable TL;DR Executive Summary */}
+                        <div className="p-8 bg-white dark:bg-[#080D1A] border border-slate-200 dark:border-slate-800 rounded-3xl relative overflow-hidden shadow-xl shadow-slate-200/20 dark:shadow-none text-left">
+                            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-transparent"></div>
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+                            <h3 className="text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4 flex items-center">
+                                <span className="w-2 h-2 rounded-full bg-blue-500 mr-3 animate-pulse" />
                                 Executive Summary (TL;DR)
                             </h3>
-                            <p className="text-base text-slate-700 dark:text-slate-300 font-semibold leading-relaxed mb-0">
-                                {service.title} by AJPR World is a premium, enterprise-ready service tailored to accelerate your business growth. It leverages high-performance modern tech stacks, optimized SEO structures, and robust engineering to deliver custom value. Key highlights include: {featuresList && featuresList.length > 0 ? featuresList.slice(0, 3).join(', ') : 'bespoke engineering'} and expert consulting support.
+                            <p className="text-lg text-slate-800 dark:text-slate-200 font-medium leading-relaxed mb-0">
+                                <strong className="text-slate-900 dark:text-white font-black">{service.title} in {displayLocation}</strong> by AJPR World is a premium, enterprise-ready service tailored to accelerate your business growth. It leverages high-performance modern tech stacks, optimized SEO structures, and robust engineering to deliver custom value. Key highlights include: <span className="text-blue-600 dark:text-blue-400">{featuresList && featuresList.length > 0 ? featuresList.slice(0, 3).join(', ') : 'bespoke engineering'}</span> and expert consulting support.
                             </p>
                         </div>
 
@@ -347,26 +368,37 @@ export default async function ServiceLocationPage({ params }: { params: Promise<
 
                     {/* Right: Sticky Pricing Card */}
                     <div className="relative">
-                        <div className="sticky top-32 p-8 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-white/10 shadow-xl">
-                            <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">Investment</h3>
-                            <div className="text-4xl font-black text-blue-600 dark:text-blue-400 mb-6">
+                        <div className="sticky top-32 p-8 bg-white dark:bg-[#080D1A] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/30 dark:shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                            <div className="absolute -top-px inset-x-8 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
+                            
+                            <h3 className="text-lg font-black tracking-wide text-slate-500 uppercase mb-3">Investment</h3>
+                            <div className="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-8 tracking-tight">
                                 {displayPrice}
                             </div>
                             
-                            <div className="space-y-4 mb-8">
-                                <div className="flex items-center gap-3 text-slate-600 dark:text-slate-400">
-                                    <Clock className="w-5 h-5 text-slate-400" />
-                                    <span className="font-medium">Estimated Delivery: <strong className="text-slate-900 dark:text-white">{service.delivery_time || 'TBD'}</strong></span>
+                            <div className="space-y-4 mb-8 p-5 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800/80">
+                                <div className="flex items-start gap-4 text-slate-600 dark:text-slate-400">
+                                    <div className="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 shrink-0">
+                                        <Clock className="w-5 h-5 text-blue-500" />
+                                    </div>
+                                    <div>
+                                        <div className="text-sm font-semibold text-slate-900 dark:text-white mb-0.5">Estimated Delivery</div>
+                                        <div className="text-sm font-medium">{service.delivery_time || 'Custom Timeline'}</div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <Button className="w-full h-14 text-lg font-bold bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" asChild>
-                                <Link href="/contact">Request a Quote</Link>
+                            <Button className="w-full h-14 text-lg font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all" asChild>
+                                <Link href="/contact">Request a Custom Quote</Link>
                             </Button>
-                            <p className="text-center text-xs text-slate-500 mt-4">
+                            
+                            <p className="text-center text-xs font-medium text-slate-400 mt-6 px-4 leading-relaxed">
                                 No credit card required. We will discuss your exact needs before proceeding.
                             </p>
-                            <TrustBadges />
+                            
+                            <div className="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800">
+                                <TrustBadges />
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,9 @@ export const revalidate = 86400; // ISR: Cache for 24 hours
 // List of targeted cities in Uttarakhand
 const CITIES = [
     'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 
-    'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
+    'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand',
+    'new-york', 'london', 'san-francisco', 'singapore', 'dubai', 
+    'sydney', 'toronto', 'austin', 'chicago', 'boston'
 ];
 
 // List of core services

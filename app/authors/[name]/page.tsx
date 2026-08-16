@@ -13,14 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ name: str
   
   return {
     title: `${decodedName} - Author Profile | AJPR World`,
-    description: `Read articles by ${decodedName,
-        openGraph: {
-            title: `${decodedName} - Author Profile | AJPR World`,
-            description: `Read articles by ${decodedName,
-            type: 'website',
-            siteName: 'AJPR World'
-        }
-    }, an expert at AJPR World.`,
+    description: `Read articles by ${decodedName}, an expert at AJPR World.`,
     alternates: {
       canonical: `https://ajprworld.com/authors/${resolvedParams.name}`,
     },
@@ -29,6 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ name: str
       description: `Read articles by ${decodedName}, an expert at AJPR World.`,
       url: `https://ajprworld.com/authors/${resolvedParams.name}`,
       type: 'profile',
+      siteName: 'AJPR World',
       images: ['https://ajprworld.com/og-image.jpg']
     }
   };

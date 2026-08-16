@@ -64,6 +64,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
   const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 100])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
 
+  return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 selection:text-white font-sans transition-colors duration-300">
       <div ref={containerRef} className="w-full relative">
         {/* Custom Cursor Trailing Effect */}

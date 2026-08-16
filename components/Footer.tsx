@@ -61,7 +61,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
     }
 
     // Force dark mode on pages with dark aesthetic
-    const forceDark = pathname === '/contact' || pathname === '/portfolio' || pathname.startsWith('/portfolio/');
+    const forceDark = pathname === '/contact' || pathname === '/about' || pathname === '/portfolio' || pathname.startsWith('/portfolio/');
 
     return (
         <div className={forceDark ? "dark contents" : "contents"}>

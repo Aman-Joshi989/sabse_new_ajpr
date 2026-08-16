@@ -92,32 +92,23 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                 Strategic Technology Partner
               </motion.div>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60"
+              <h1
+                className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60 animate-fade-up"
               >
                 We Build Infrastructure That <br className="hidden md:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
                   Scales Revenue.
                 </span>
-              </motion.h1>
+              </h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed mb-12"
+              <p
+                className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed mb-12 animate-fade-up animation-delay-200"
               >
                 AJPR WORLD partners with ambitious businesses to design scalable digital systems, AI automation, and performance-driven technology stacks.
-              </motion.p>
+              </p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
+              <div
+                className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animation-delay-400"
               >
                 <Button size="lg" className="bg-blue-600 hover:bg-blue-500 h-14 px-8 rounded-xl text-base font-bold text-white shadow-lg shadow-blue-900/20 transition-all hover:-translate-y-1" asChild>
                   <Link href="#case-studies">View Case Studies</Link>
@@ -125,7 +116,7 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                 <Button size="lg" variant="outline" className="h-14 px-8 rounded-xl text-base font-bold bg-white/5 hover:bg-white/10 border-white/10 text-white backdrop-blur-md transition-all" asChild>
                   <Link href="/book-call">Book Strategy Call <ArrowUpRight className="ml-2 w-4 h-4" /></Link>
                 </Button>
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </section>

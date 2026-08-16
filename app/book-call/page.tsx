@@ -291,7 +291,7 @@ export default function BookCallPage() {
 
                 {/* RIGHT PANE: Flow steps */}
                 <div className="w-full md:w-[65%] flex flex-col justify-center min-h-[500px]">
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence mode="wait" initial={false}>
                         
                         {/* STEP 1: Date & Time Picker */}
                         {step === 'datetime' && (

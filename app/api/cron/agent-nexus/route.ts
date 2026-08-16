@@ -33,9 +33,10 @@ Identify any anomalies, bottlenecks, or failures in the autonomous workforce. Pr
         });
 
         // Store the management report in the agent logs table
+        const actionPayload = `System Overseer Report:\n\n${report}`;
         await sql`
-            INSERT INTO agent_logs (agent_name, action, result, timestamp)
-            VALUES ('Nexus (Manager)', 'System Overseer Report', ${report}, NOW())
+            INSERT INTO agent_logs (agent_name, action, status)
+            VALUES ('Nexus (Manager)', ${actionPayload}, 'success')
         `;
 
         return NextResponse.json({ success: true, agent: 'Nexus', status: 'Management review complete', report });

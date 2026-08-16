@@ -11,6 +11,8 @@ const AgentFlow = dynamic(() => import('./AgentFlow'), {
   loading: () => <div className="w-full h-[400px] flex items-center justify-center bg-gray-50 dark:bg-[#202124] rounded-xl border border-gray-200 dark:border-gray-700"><Loader2 className="w-8 h-8 animate-spin text-indigo-500" /></div>
 });
 
+import AgentLogs from './AgentLogs';
+
 const agents = [
   {
     id: 'apollo',
@@ -125,6 +127,26 @@ const agents = [
     description: 'Monitors all agents and generates daily health reports.',
     actions: [{ label: 'Check Status', id: 'status' }],
   },
+  {
+    id: 'aegis',
+    name: 'Aegis',
+    role: 'Chief Cybersecurity Officer',
+    icon: Shield,
+    color: 'text-rose-500',
+    bg: 'bg-rose-500/10',
+    description: 'Monitors threat vectors, authentication, and logs anomalies.',
+    actions: [{ label: 'Run Scan', id: 'scan' }],
+  },
+  {
+    id: 'nexus',
+    name: 'Nexus',
+    role: 'Operations Overseer',
+    icon: Network,
+    color: 'text-teal-500',
+    bg: 'bg-teal-500/10',
+    description: 'Reviews agent performance logs and reports on workforce health.',
+    actions: [{ label: 'Audit Agents', id: 'audit' }],
+  }
 ];
 
 export default function AgentCommandCenter() {
@@ -243,6 +265,9 @@ export default function AgentCommandCenter() {
         
         <AgentFlow />
       </div>
+
+      {/* Live Agent Logs Feed */}
+      <AgentLogs />
 
     </div>
   );

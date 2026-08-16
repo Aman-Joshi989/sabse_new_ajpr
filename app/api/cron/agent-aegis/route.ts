@@ -25,9 +25,10 @@ Recommend immediate actions if the threat level is elevated. Ensure your tone is
         });
 
         // Store the security report in the agent logs table
+        const actionPayload = `Daily Threat Assessment:\n\n${report}`;
         await sql`
-            INSERT INTO agent_logs (agent_name, action, result, timestamp)
-            VALUES ('Aegis (Cybersecurity)', 'Daily Threat Assessment', ${report}, NOW())
+            INSERT INTO agent_logs (agent_name, action, status)
+            VALUES ('Aegis (Cybersecurity)', ${actionPayload}, 'success')
         `;
 
         return NextResponse.json({ success: true, agent: 'Aegis', status: 'Threat assessment complete', report });

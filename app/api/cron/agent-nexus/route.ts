@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import { generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
-import { getDbConnection } from '@/lib/db';
+import { sql } from '@/lib/db/queries';
 
 export const maxDuration = 60; 
 
 export async function GET(request: Request) {
     try {
-        const sql = await getDbConnection();
+        
         
         // Fetch the recent activity of all agents to pass to Nexus for management review
         const recentLogs = await sql`
@@ -16,8 +16,7 @@ export async function GET(request: Request) {
             ORDER BY timestamp DESC 
             LIMIT 50
         `;
-        
-        const logsStr = recentLogs.map(l => `[${l.timestamp.toISOString()}] ${l.agent_name}: ${l.action}`).join('\n');
+        const logsStr = recentLogs.map((l: { timestamp: Date; agent_name: string; action: string }) => `[${l.timestamp.toISOString()}] ${l.agent_name}: ${l.action}`).join('\n');
 
         const prompt = `You are Agent Nexus, the Chief Operations AI Manager.
 Your job is to oversee all autonomous agents running on the system (Hermes, Daedalus, Aegis, Artemis, etc.).

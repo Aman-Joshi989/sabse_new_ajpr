@@ -44,6 +44,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         { name: 'Swarm Simulator', href: '/demo-ruflo' },
         { name: 'Tech & AI Glossary', href: '/glossary' },
         { name: 'Locations & Areas Served', href: '/locations' },
+        { name: 'Sitemap', href: '/sitemap' },
     ];
 
     const logoSrc = mounted && resolvedTheme === 'dark'

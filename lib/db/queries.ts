@@ -66,6 +66,7 @@ export function invalidateLayoutCache() {
 }
 
 export async function ensureDbInitialized() {
+  return; // Disabled in production to prevent Vercel serverless cold-start DB connection exhaustion
   if (dbInitialized) return;
   dbInitialized = true; // Mark immediately to prevent concurrent triggers
   const url = process.env.DATABASE_URL;
@@ -674,15 +675,14 @@ export async function assignDeveloper(clientId: number, developerId: number) {
 
 // --- Portfolio Management ---
 
-export async function getPortfolioItems() {
-  const now = Date.now();
-  if (layoutCache.portfolioItems && (now - layoutCache.portfolioItems.timestamp < CACHE_TTL_MS)) {
-    return layoutCache.portfolioItems.data;
-  }
-  const data = await sql`SELECT * FROM portfolio_items ORDER BY created_at DESC;`;
-  layoutCache.portfolioItems = { data, timestamp: now };
-  return data;
-}
+export const getPortfolioItems = unstable_cache(
+  async () => {
+    const data = await sql`SELECT * FROM portfolio_items ORDER BY created_at DESC;`;
+    return data;
+  },
+  ['portfolio-items'],
+  { revalidate: 60, tags: ['portfolio'] }
+);
 
 export async function getPortfolioItemById(id: number) {
   const result = await dynamicSql`SELECT * FROM portfolio_items WHERE id = ${id}`;
@@ -1132,13 +1132,16 @@ export async function createGlossaryTerm(data: any) {
   return result[0];
 }
 
-export async function getSeoMetadata(route: string) {
-  // Use standard sql (cached) for fast layout reads
-  const result = await sql`
-    SELECT * FROM seo_metadata WHERE route = ${route} LIMIT 1;
-  `;
-  return result[0] || null;
-}
+export const getSeoMetadata = unstable_cache(
+  async (route: string) => {
+    const result = await sql`
+      SELECT * FROM seo_metadata WHERE route = ${route} LIMIT 1;
+    `;
+    return result[0] || null;
+  },
+  ['seo-metadata'],
+  { revalidate: 60, tags: ['seo'] }
+);
 
 export async function getAllSeoMetadata() {
   return await dynamicSql`

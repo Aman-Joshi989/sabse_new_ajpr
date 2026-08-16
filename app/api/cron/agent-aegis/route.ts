@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import { generateText } from 'ai';
 import { openai } from '@ai-sdk/openai';
-import { getDbConnection } from '@/lib/db';
+import { sql } from '@/lib/db/queries';
 
 export const maxDuration = 60; 
 
 export async function GET(request: Request) {
     try {
-        const sql = await getDbConnection();
+        
         
         // Simulating checking security logs, auth attempts, WAF logs etc.
         const recentAuthErrors = await sql`SELECT count(*) FROM user_sessions WHERE created_at > NOW() - INTERVAL '24 hours' AND status = 'failed'`;

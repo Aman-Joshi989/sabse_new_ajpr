@@ -11,7 +11,7 @@ async function callGemini(messages: { role: string; content: string }[]) {
   if (!apiKey) throw new Error('GEMINI_API_KEY not set in .env.local');
   
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
 
   // Convert ChatGPT style messages to Gemini style prompt
   const prompt = messages.map(m => `${m.role.toUpperCase()}: ${m.content}`).join('\n\n');

@@ -126,13 +126,17 @@ export default function Header({ services }: { services?: any[] }) {
         return null;
     }
 
+    // Force dark mode on pages with dark aesthetic
+    const forceDark = pathname === '/contact' || pathname === '/portfolio' || pathname.startsWith('/portfolio/');
+
     return (
-        <header
-            className={`sticky top-0 z-50 w-full transition-all duration-500 ease-in-out ${scrolled
-                ? 'bg-white/85 dark:bg-[#030712]/85 backdrop-blur-lg shadow-md border-b border-slate-200/50 dark:border-slate-800/50'
-                : 'bg-transparent backdrop-blur-none border-b border-transparent'
-                }`}
-        >
+        <div className={forceDark ? "dark contents" : "contents"}>
+            <header
+                className={`sticky top-0 z-50 w-full transition-all duration-500 ease-in-out ${scrolled
+                    ? 'bg-white/85 dark:bg-[#030712]/85 backdrop-blur-lg shadow-md border-b border-slate-200/50 dark:border-slate-800/50'
+                    : 'bg-transparent backdrop-blur-none border-b border-transparent'
+                    }`}
+            >
             <div className={`container flex h-16 items-center justify-between transition-all duration-300`}>
                 {/* Logo */}
                 <Link href="/" className="flex items-center space-x-3 group">
@@ -427,5 +431,6 @@ export default function Header({ services }: { services?: any[] }) {
             </div>
             <CartDrawer />
         </header>
+        </div>
     )
 }

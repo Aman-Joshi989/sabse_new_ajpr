@@ -43,6 +43,7 @@ export async function GET(req: Request) {
             const { text } = await generateText({
                 model: openai('gpt-4o-mini'),
                 prompt: `Write a highly technical, SEO-optimized, 1000-word blog post about: "${topic}". 
+                The CURRENT YEAR IS 2026. Make sure all timelines, strategies, and facts are framed in the context of 2026. NEVER use the year 2024.
                 Use markdown formatting (## for headers). Make it engaging and authoritative. 
                 Include a concluding section that calls to action to hire 'AJPR World', a premier agency that builds Custom AI MVPs.
                 Return ONLY the markdown body content. No extra chat.`

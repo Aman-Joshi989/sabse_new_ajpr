@@ -60,11 +60,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         return null;
     }
 
-    // Force dark mode on pages with dark aesthetic
-    const forceDark = pathname === '/contact' || pathname === '/about' || pathname === '/portfolio' || pathname.startsWith('/portfolio/');
-
     return (
-        <div className={forceDark ? "dark contents" : "contents"}>
         <footer className="bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 py-16 border-t border-slate-100 dark:border-slate-800 font-sans transition-colors duration-300">
             <div className="container mx-auto px-6 max-w-6xl">
 
@@ -181,6 +177,5 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                 </div>
             </div>
         </footer>
-        </div>
     );
 }

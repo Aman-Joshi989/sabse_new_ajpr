@@ -123,7 +123,7 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
       ]
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 font-sans transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white selection:bg-blue-500/30 font-sans transition-colors duration-300">
       <div className="w-[80%] mx-auto min-h-screen">
 
         {/* 1. HERO SECTION */}
@@ -141,23 +141,23 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="max-w-5xl mx-auto text-center"
             >
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-8 leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-8 leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-slate-900 dark:from-white via-slate-800 dark:via-white to-slate-600 dark:to-white/60">
                 Building Systems That <br className="hidden md:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
                   Scale Businesses.
                 </span>
               </h1>
 
-              <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-12 font-medium">
+              <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed mb-12 font-medium">
                 {settings?.seo_description || 'We design, develop, and automate powerful digital infrastructures that help modern businesses grow faster, operate smarter, and convert better.'}
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button size="lg" className="rounded-xl h-14 px-8 text-base font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-900/20 transition-all hover:-translate-y-1" asChild>
+                <Button size="lg" className="rounded-xl h-14 px-8 text-base font-bold bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white shadow-lg shadow-blue-900/20 transition-all hover:-translate-y-1" asChild>
                   <Link href="/contact">Work With Us</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="rounded-xl h-14 px-8 text-base font-bold border-white/10 hover:bg-white/10 bg-white/5 backdrop-blur-md transition-all text-white hover:-translate-y-1" asChild>
-                  <Link href="/portfolio">See Our Work <ArrowRight className="ml-2 w-4 h-4 text-white" /></Link>
+                <Button size="lg" variant="outline" className="rounded-xl h-14 px-8 text-base font-bold border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 bg-white dark:bg-white/5 backdrop-blur-md transition-all text-slate-900 dark:text-white hover:-translate-y-1" asChild>
+                  <Link href="/portfolio">See Our Work <ArrowRight className="ml-2 w-4 h-4 text-slate-900 dark:text-white" /></Link>
                 </Button>
               </div>
 
@@ -166,12 +166,12 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="mt-20 pt-10 border-t border-white/10"
+                className="mt-20 pt-10 border-t border-slate-200 dark:border-white/10"
               >
-                <p className="text-sm text-slate-400 uppercase tracking-widest font-bold mb-6">Execution Expertise</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 uppercase tracking-widest font-bold mb-6">Execution Expertise</p>
                 <div className="flex flex-wrap justify-center gap-4 md:gap-8">
                   {displayCapabilities.map((item, idx) => (
-                    <div key={idx} className="flex items-center text-slate-200 bg-white/5 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/10 shadow-sm">
+                    <div key={idx} className="flex items-center text-slate-700 dark:text-slate-200 bg-white dark:bg-white/5 backdrop-blur-sm px-5 py-2.5 rounded-full border border-slate-200 dark:border-white/10 shadow-sm">
                       <item.icon className="w-4 h-4 mr-2 text-blue-400" />
                       <span className="text-sm font-medium">{item.label}</span>
                     </div>
@@ -183,13 +183,13 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
         </section>
 
         {/* 2. OUR STORY */}
-        <section className="py-24 relative z-20 bg-slate-900 border-y border-white/10">
+        <section className="py-24 relative z-20 bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-white/10">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-5xl font-black mb-8 text-white tracking-tight">Systematic Growth. <br />Zero Inefficiencies.</h2>
-              <div className="space-y-6 text-lg md:text-xl text-slate-300 font-medium leading-relaxed">
+              <h2 className="text-3xl md:text-5xl font-black mb-8 text-slate-900 dark:text-white tracking-tight">Systematic Growth. <br />Zero Inefficiencies.</h2>
+              <div className="space-y-6 text-lg md:text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
                 <p>
-                  <strong className="text-white">AJPR WORLD</strong> was founded with a singular vision: to eliminate operational chaos in modern businesses by building powerful, automated digital systems.
+                  <strong className="text-slate-900 dark:text-white">AJPR WORLD</strong> was founded with a singular vision: to eliminate operational chaos in modern businesses by building powerful, automated digital systems.
                 </p>
                 <p>
                   We don't believe in vanity metrics or generic templates. Driven by an execution-first mindset, we engineer custom solutions that bridge the gap between complex technology and tangible business ROI.
@@ -197,7 +197,7 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
                 <p className="text-blue-400 font-bold">
                   We are your long-term execution machine.
                 </p>
-                <div className="pt-4 text-sm text-slate-400 font-bold">
+                <div className="pt-4 text-sm text-slate-500 dark:text-slate-400 font-bold">
                   Led by <Link href="/aman-joshi" className="text-blue-400 underline hover:text-blue-300 hover:scale-[1.01] inline-block transition-all">{settings?.founder_name || 'Aman Joshi'}, {settings?.founder_title || 'Founder & Systems Architect'}</Link>.
                 </div>
               </div>
@@ -206,11 +206,11 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
         </section>
 
         {/* 3. WHAT MAKES US DIFFERENT */}
-        <section className="py-32 relative bg-slate-950">
+        <section className="py-32 relative bg-slate-50 dark:bg-slate-950">
           <div className="container mx-auto px-4 max-w-7xl">
             <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-6 text-white">The Execution Blueprint.</h2>
-              <p className="text-xl text-slate-400">Why ambitious brands choose us as their growth infrastructure partner.</p>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-6 text-slate-900 dark:text-white">The Execution Blueprint.</h2>
+              <p className="text-xl text-slate-500 dark:text-slate-400">Why ambitious brands choose us as their growth infrastructure partner.</p>
             </div>
 
             <motion.div
@@ -222,13 +222,13 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
             >
               {features.map((feature, i) => (
                 <motion.div key={i} variants={itemVariants}>
-                  <Card className="h-full bg-white/5 backdrop-blur-xl border-white/10 hover:bg-white/10 transition-colors duration-300">
+                  <Card className="h-full bg-white dark:bg-white/5 backdrop-blur-xl border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors duration-300">
                     <CardContent className="p-8">
                       <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6">
                         <feature.icon className="w-6 h-6 text-blue-400" />
                       </div>
-                      <h3 className="text-2xl font-bold mb-3 text-white">{feature.title}</h3>
-                      <p className="text-slate-300 leading-relaxed font-medium">
+                      <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white">{feature.title}</h3>
+                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                         {feature.description}
                       </p>
                     </CardContent>
@@ -240,21 +240,21 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
         </section>
 
         {/* 4. MISSION & VISION */}
-        <section className="py-24 bg-slate-900 relative overflow-hidden">
+        <section className="py-24 bg-white dark:bg-slate-900 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-600/10 blur-[120px] rounded-full pointer-events-none" />
 
           <div className="container mx-auto px-4 max-w-5xl relative z-10">
             <div className="grid md:grid-cols-2 gap-12">
-              <div className="p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl">
+              <div className="p-10 rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-md shadow-2xl">
                 <h3 className="text-sm font-bold tracking-widest text-blue-400 uppercase mb-4">Our Mission</h3>
-                <p className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                <p className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight">
                   To build scalable digital infrastructures that empower businesses to grow without operational chaos.
                 </p>
               </div>
-              <div className="p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl">
+              <div className="p-10 rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-md shadow-2xl">
                 <h3 className="text-sm font-bold tracking-widest text-indigo-400 uppercase mb-4">Our Vision</h3>
-                <p className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                <p className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight">
                   To become a global technology growth partner for ambitious, forward-thinking brands.
                 </p>
               </div>
@@ -263,11 +263,11 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
         </section>
 
         {/* 5. WHO WE HELP */}
-        <section className="py-32 relative bg-slate-950 border-t border-white/10">
+        <section className="py-32 relative bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-white/10">
           <div className="container mx-auto px-4 max-w-7xl">
             <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-6 text-white">Who We Empower.</h2>
-              <p className="text-xl text-slate-400">Transforming challenges into automated growth engines.</p>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-6 text-slate-900 dark:text-white">Who We Empower.</h2>
+              <p className="text-xl text-slate-500 dark:text-slate-400">Transforming challenges into automated growth engines.</p>
             </div>
 
             <div className="space-y-6 max-w-4xl mx-auto">
@@ -278,17 +278,17 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="group p-6 md:p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
+                  className="group p-6 md:p-8 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
                 >
                   <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
-                    <div className="w-14 h-14 shrink-0 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-900/30 group-hover:border-blue-500/30 transition-all">
-                      <audience.icon className="w-6 h-6 text-slate-300 group-hover:text-blue-400" />
+                    <div className="w-14 h-14 shrink-0 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-900/30 group-hover:border-blue-500/30 transition-all">
+                      <audience.icon className="w-6 h-6 text-slate-600 dark:text-slate-300 group-hover:text-blue-400" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-white mb-2">{audience.title}</h3>
+                      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{audience.title}</h3>
                       <div className="space-y-1">
-                        <p className="text-slate-400 text-sm font-medium"><span className="text-rose-400">Pain:</span> {audience.painPoint}</p>
-                        <p className="text-slate-300 font-medium"><span className="text-emerald-400">Solution:</span> {audience.solution}</p>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm font-medium"><span className="text-rose-400">Pain:</span> {audience.painPoint}</p>
+                        <p className="text-slate-600 dark:text-slate-300 font-medium"><span className="text-emerald-400">Solution:</span> {audience.solution}</p>
                       </div>
                     </div>
                   </div>
@@ -299,21 +299,21 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
         </section>
 
         {/* 7. CTA SECTION */}
-        <section className="py-32 px-4 container mx-auto bg-slate-950">
-          <div className="bg-white/5 border border-white/10 rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl backdrop-blur-xl">
+        <section className="py-32 px-4 container mx-auto bg-slate-50 dark:bg-slate-950">
+          <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl backdrop-blur-xl">
             <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-blue-600/20 blur-[100px] rounded-full pointer-events-none" />
             <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-purple-600/20 blur-[100px] rounded-full pointer-events-none" />
             <div className="absolute inset-0 bg-grid-white/[0.02] bg-[bottom_1px_center] pointer-events-none" />
 
             <div className="relative z-10 max-w-3xl mx-auto">
-              <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">Ready to Scale the Smart Way?</h2>
-              <p className="text-xl text-slate-300 mb-10 font-medium leading-relaxed">Stop letting technical limitations dictate your growth speed. Let's build a digital infrastructure that accelerates your business.</p>
+              <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">Ready to Scale the Smart Way?</h2>
+              <p className="text-xl text-slate-600 dark:text-slate-300 mb-10 font-medium leading-relaxed">Stop letting technical limitations dictate your growth speed. Let's build a digital infrastructure that accelerates your business.</p>
 
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Button size="lg" className="rounded-xl h-14 px-10 bg-blue-600 text-white hover:bg-blue-500 hover:scale-105 transition-all shadow-lg shadow-blue-900/20 font-bold text-lg" asChild>
+                <Button size="lg" className="rounded-xl h-14 px-10 bg-blue-600 text-slate-900 dark:text-white hover:bg-blue-500 hover:scale-105 transition-all shadow-lg shadow-blue-900/20 font-bold text-lg" asChild>
                   <Link href="/book-call">Book a Strategy Call</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="rounded-xl h-14 px-10 text-lg border-white/10 hover:bg-white/10 text-white bg-white/5 backdrop-blur-md transition-all hover:scale-105" asChild>
+                <Button size="lg" variant="outline" className="rounded-xl h-14 px-10 text-lg border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-900 dark:text-white bg-white dark:bg-white/5 backdrop-blur-md transition-all hover:scale-105" asChild>
                   <Link href="/services">Start Your Project</Link>
                 </Button>
               </div>

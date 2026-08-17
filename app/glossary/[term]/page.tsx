@@ -26,6 +26,14 @@ export async function generateMetadata({ params }: { params: Promise<{ term: str
       url: `https://ajprworld.com/glossary/${termSlug}`,
       siteName: 'AJPR World',
       type: 'article',
+            images: [
+                {
+                    url: 'https://ajprworld.com/og-image.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: 'AJPR World',
+                }
+            ],
     }
   }
 }

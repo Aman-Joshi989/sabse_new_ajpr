@@ -44,6 +44,14 @@ export async function generateMetadata(): Promise<Metadata> {
           title: seo?.title,
           description: seo?.description,
           url: `https://ajprworld.com${'/'}`,
+            images: [
+                {
+                    url: 'https://ajprworld.com/og-image.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: 'AJPR World',
+                }
+            ],
         }
       };
 }

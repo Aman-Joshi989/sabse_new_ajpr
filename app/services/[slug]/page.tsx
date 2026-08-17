@@ -111,6 +111,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
                 siteName: 'AJPR World',
                 locale: 'en_US',
                 type: 'website',
+                images: [
+                    {
+                        url: 'https://ajprworld.com/og-image.jpg',
+                        width: 1200,
+                        height: 630,
+                        alt: override.title,
+                    }
+                ],
             }
         };
     }
@@ -138,7 +146,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             type: 'website',
             images: [
                 {
-                    url: 'https://ajprworld.com/og-image.jpg',
+                    url: service.image_url || 'https://ajprworld.com/og-image.jpg',
                     width: 1200,
                     height: 630,
                     alt: `${service.title} - AJPR World`,

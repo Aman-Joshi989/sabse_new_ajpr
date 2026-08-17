@@ -73,6 +73,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             description,
             type: 'website',
             url: `https://ajprworld.com/locations/${params.city}/${params.service}`,
+            images: [
+                {
+                    url: 'https://ajprworld.com/og-image.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: 'AJPR World',
+                }
+            ],
         }
     };
 }

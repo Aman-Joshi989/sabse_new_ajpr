@@ -65,6 +65,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             type: 'article',
             publishedTime: post.published_at.toISOString(),
             url: `https://ajprworld.com/blog/${post.slug}`,
+            images: [
+                {
+                    url: post.image_url || 'https://ajprworld.com/og-image.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: cleanTitle,
+                }
+            ],
         }
     };
 }

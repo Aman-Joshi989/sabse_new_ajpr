@@ -12,7 +12,15 @@ export const metadata = {
     description: 'HTML Sitemap for AJPR World - Premium Tech & Software Solutions.',
     url: 'https://ajprworld.com/sitemap',
     siteName: 'AJPR World',
-    type: 'website'
+    type: 'website',
+            images: [
+                {
+                    url: 'https://ajprworld.com/og-image.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: 'AJPR World',
+                }
+            ],
   }
 };
 

@@ -46,7 +46,7 @@ export default function GraphicsBrandingPage() {
                         <Palette className="w-4 h-4 mr-2" />
                         Graphics & Branding
                     </Badge>
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">Elevate Your Brand Identity</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">Elevate Your Brand Identity</h1>
                     <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
                         Transform your business with professional graphics and digital branding.
                         We create visual stories that connect with your audience and drive growth.
@@ -66,7 +66,7 @@ export default function GraphicsBrandingPage() {
                                 <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-lg">
                                     {step.step}
                                 </div>
-                                <h3 className="font-bold mb-2">{step.title}</h3>
+                                <h3 className="font-bold mb-2 text-slate-900 dark:text-white">{step.title}</h3>
                                 <p className="text-sm text-slate-600 dark:text-slate-300">{step.description}</p>
                             </CardContent>
                         </Card>
@@ -117,7 +117,7 @@ export default function GraphicsBrandingPage() {
                                 </Badge>
                             )}
                             <CardContent className="p-0">
-                                <h3 className="text-xl font-bold mb-4">{plan.title}</h3>
+                                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white">{plan.title}</h3>
                                 <div className="text-3xl font-bold text-pink-600 mb-6">{plan.price}</div>
                                 <ul className="space-y-3 mb-8 text-left">
                                     {plan.features.map((feature, idx) => (

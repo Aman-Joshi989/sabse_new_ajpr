@@ -15,7 +15,7 @@ export default function WebDevelopmentPage() {
                 <Badge className="mb-4 bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-800">
                     <Sparkles className="w-5 h-5 mr-2" /> Beyond Vendors
                 </Badge>
-                <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                <h1 className="text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white">
                     Your Vision Deserves a Technology Partner
                 </h1>
                 <p className="max-w-3xl mx-auto text-lg text-slate-600 dark:text-slate-300 mb-8">
@@ -28,7 +28,7 @@ export default function WebDevelopmentPage() {
 
             {/* Service Offerings */}
             <section id="service-offerings" className="py-24 px-4">
-                <h2 className="text-4xl font-bold text-center mb-6">Service Offerings</h2>
+                <h2 className="text-4xl font-bold text-center mb-6 text-slate-900 dark:text-white">Service Offerings</h2>
                 <p className="text-center text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-12">
                     Get the full spectrum of software development services all in one place, with flexible engagement models to suit your every need.
                 </p>
@@ -76,7 +76,7 @@ export default function WebDevelopmentPage() {
             <PricingSection />
             {/* Success Stories */}
             <section className="py-24 bg-white dark:bg-slate-900 px-4">
-                <h2 className="text-4xl font-bold text-center mb-6">Software Engineering Success Stories</h2>
+                <h2 className="text-4xl font-bold text-center mb-6 text-slate-900 dark:text-white">Software Engineering Success Stories</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto text-center">
                     {[
                         { value: '25+', label: 'Years Excellence' },
@@ -94,7 +94,7 @@ export default function WebDevelopmentPage() {
 
             {/* Differentiators */}
             <section className="py-24 px-4">
-                <h2 className="text-4xl font-bold text-center mb-6">What Sets Us Apart</h2>
+                <h2 className="text-4xl font-bold text-center mb-6 text-slate-900 dark:text-white">What Sets Us Apart</h2>
                 <p className="text-center text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-12">
                     Experience a distinctive blend of innovation, expertise, and customer-centric approach.
                 </p>
@@ -120,7 +120,7 @@ export default function WebDevelopmentPage() {
 
             {/* Industry Expertise */}
             <section className="py-24 bg-white dark:bg-slate-900 px-4">
-                <h2 className="text-4xl font-bold text-center mb-6">Expertise Across Industries</h2>
+                <h2 className="text-4xl font-bold text-center mb-6 text-slate-900 dark:text-white">Expertise Across Industries</h2>
                 <p className="text-center text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-12">
                     Stay ahead with best practices, emerging trends, and top-tier security standards in your industry.
                 </p>
@@ -136,7 +136,7 @@ export default function WebDevelopmentPage() {
 
             {/* Customer Speak */}
             <section className="py-24 px-4">
-                <h2 className="text-4xl font-bold text-center mb-6">Customer Speak</h2>
+                <h2 className="text-4xl font-bold text-center mb-6 text-slate-900 dark:text-white">Customer Speak</h2>
                 <p className="text-center text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-12">
                     Hear what our customers have to say about partnering with us.
                 </p>

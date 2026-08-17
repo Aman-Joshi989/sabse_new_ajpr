@@ -46,7 +46,7 @@ export default function DigitalMarketingPage() {
                         <Megaphone className="w-4 h-4 mr-2" />
                         Digital Marketing
                     </Badge>
-                    <h1 className="text-4xl font-bold mb-4">Digital Marketing Services</h1>
+                    <h1 className="text-4xl font-bold mb-4 text-slate-900 dark:text-white">Digital Marketing Services</h1>
                     <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
                         Grow your business online with our comprehensive digital marketing strategies
                         that drive traffic, generate leads, and increase conversions.
@@ -63,7 +63,7 @@ export default function DigitalMarketingPage() {
                                     <div className="mx-auto w-fit p-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full mb-6">
                                         <IconComponent className="h-8 w-8" />
                                     </div>
-                                    <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
+                                    <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white">{feature.title}</h3>
                                     <p className="text-slate-600 dark:text-slate-300">{feature.description}</p>
                                 </CardContent>
                             </Card>
@@ -74,7 +74,7 @@ export default function DigitalMarketingPage() {
                 {/* Services List */}
                 <Card className="p-8 bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-950/20 dark:to-purple-950/20 border-0 shadow-lg mb-16">
                     <CardContent className="p-0">
-                        <h3 className="text-2xl font-bold mb-8 text-center">Our Marketing Services</h3>
+                        <h3 className="text-2xl font-bold mb-8 text-center text-slate-900 dark:text-white">Our Marketing Services</h3>
                         <div className="grid md:grid-cols-2 gap-4">
                             {marketingServices.map((service, index) => (
                                 <div key={index} className="flex items-center p-4 bg-white/80 dark:bg-slate-800/80 rounded-lg">
@@ -113,7 +113,7 @@ export default function DigitalMarketingPage() {
                                 </Badge>
                             )}
                             <CardContent className="p-0">
-                                <h3 className="text-xl font-bold mb-4">{plan.title}</h3>
+                                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white">{plan.title}</h3>
                                 <div className="text-3xl font-bold text-pink-600 mb-6">{plan.price}</div>
                                 <ul className="space-y-3 mb-8">
                                     {plan.features.map((feature, idx) => (

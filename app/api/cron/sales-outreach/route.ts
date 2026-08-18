@@ -18,11 +18,11 @@ async function generateColdEmail(lead: any) {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-  const prompt = `You are Aman Joshi, the Lead Technical Founder at AJPR World, an elite B2B tech agency in India.
-Write a concise, high-converting cold email (under 120 words) to ${lead.name} from ${lead.company}.
-Their industry is ${lead.industry || 'Tech'} and their current focus is ${lead.focus || 'growth and automation'}.
-Pitch our "Custom AI MVP Development in 4 weeks" service. Focus on ROI and speed.
-Do not use generic fluff. Be direct and slightly casual. End with a CTA for a 15-min discovery call.
+  const prompt = `You are Aman Joshi, the Lead Technical Founder at AJPR World.
+Write a concise, high-converting cold email (under 75 words) to ${lead.name} from ${lead.company}.
+Their industry is ${lead.industry || 'Roofing Contractors in the US/CA'} and their current focus is ${lead.focus || 'getting more exclusive roof replacement leads'}.
+Do not sell generic "marketing". Sell an outcome: more qualified estimates, dominating local SEO/Google Maps, or a higher-converting website.
+Example style: "Noticed you're expanding your roofing services. We just helped a similar local contractor double their exclusive leads with a fast, high-converting site redesign. Open to a 5-min chat to see if we can do the same for your territory?"
 Return ONLY the raw HTML body of the email. Do NOT include markdown tags like \`\`\`html.`;
 
   const result = await model.generateContent(prompt);
@@ -65,8 +65,9 @@ export async function GET(req: NextRequest) {
     
     await zeptoClient.sendMail({
       "from": {
+          // TODO: Use a secondary domain (e.g., aman@tryajpr.com) to protect main domain SEO as per US Outreach Strategy
           "address": "hello@ajprworld.com",
-          "name": "AJPR World"
+          "name": "Aman Joshi | AJPR World"
       },
       "to": [
           {

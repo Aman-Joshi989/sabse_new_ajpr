@@ -15,44 +15,44 @@ import { Badge } from '@/components/ui/badge'
 // Competitor Data
 const comparisonData = [
     {
-        service: 'Google One',
-        logo: '/logo/logo_google_one.svg',
+        service: 'AWS S3',
+        logo: '/logo/logo_google_one.svg', // using placeholder
         color: 'text-blue-500',
-        free: '15 GB',
-        plan100: '₹130 / mo',
-        plan2TB: '₹650 / mo',
-        usp: 'Ecosystem Integration',
+        free: 'Pay as you go',
+        plan100: 'Variable',
+        plan2TB: 'Variable',
+        usp: 'Complex Ecosystem',
         icon: Cloud
     },
     {
-        service: 'JioCloud',
-        logo: '/logo/logo_jiocloud.svg',
+        service: 'Azure',
+        logo: '/logo/logo_jiocloud.svg', // using placeholder
         color: 'text-blue-700',
-        free: '100 GB*',
-        plan100: 'Bundled*',
-        plan2TB: 'N/A',
-        usp: 'Bundled with Jio Ecosystem',
+        free: 'Pay as you go',
+        plan100: 'Variable',
+        plan2TB: 'Variable',
+        usp: 'Enterprise Legacy',
         icon: Cloud
     },
     {
-        service: 'Zoho WorkDrive',
-        logo: '/logo/logo_zoho.svg',
+        service: 'Google Cloud',
+        logo: '/logo/logo_zoho.svg', // using placeholder
         color: 'text-yellow-600',
-        free: '5 GB',
-        plan100: '₹170 / user',
-        plan2TB: 'Team focused',
-        usp: 'Business Collaboration Suite',
+        free: 'Pay as you go',
+        plan100: 'Variable',
+        plan2TB: 'Variable',
+        usp: 'Data Analytics Focus',
         icon: Database
     },
     {
-        service: 'AJPR Cloud',
-        logo: '/logo/ajpr-logo.png', // Using standard logo as container is white
+        service: 'AJPR Sovereign Cloud',
+        logo: '/logo/ajpr-logo.png',
         color: 'text-blue-600',
         isHighlight: true,
-        free: '20 GB',
-        plan100: '₹99 / mo',
-        plan2TB: '₹549 / mo',
-        usp: 'Ad-free, UPI, Fast Speed',
+        free: 'Free Migration',
+        plan100: 'Fixed Custom Quote',
+        plan2TB: 'Dedicated Servers',
+        usp: 'Flat Predictable Cost, Dedicated Support',
         icon: Shield
     }
 ]
@@ -124,9 +124,9 @@ export default function CloudSolutionsPage() {
                             {/* Table Header */}
                             <div className="grid grid-cols-6 gap-4 p-6 bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                                 <div className="col-span-1">Service</div>
-                                <div className="col-span-1">Free Tier</div>
-                                <div className="col-span-1">100 GB Plan</div>
-                                <div className="col-span-1">2 TB Plan</div>
+                                <div className="col-span-1">Pricing Model</div>
+                                <div className="col-span-1">Startup Tier</div>
+                                <div className="col-span-1">Enterprise Tier</div>
                                 <div className="col-span-2">Main USP / Advantage</div>
                             </div>
 

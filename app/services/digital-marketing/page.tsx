@@ -90,20 +90,22 @@ export default function DigitalMarketingPage() {
                 <div className="grid md:grid-cols-3 gap-8 mb-16">
                     {[
                         {
-                            title: 'Starter',
-                            price: '₹15,000/month',
-                            features: ['SEO optimization', 'Social media setup', 'Content creation (5 posts)', 'Basic analytics', 'Monthly report']
+                            title: 'Growth Starter',
+                            price: 'Custom Quote',
+                            features: ['SEO Audit & Optimization', '2 Blog Posts / Month', 'Basic Social Media Management', 'Monthly Performance Report'],
+                            popular: false
                         },
                         {
-                            title: 'Growth',
-                            price: '₹30,000/month',
-                            features: ['Complete SEO', 'Google Ads management', 'Social media marketing', 'Content marketing', 'Email campaigns', 'Advanced analytics'],
+                            title: 'Scale Accelerator',
+                            price: 'Custom Quote',
+                            features: ['Advanced Local & Global SEO', '4 Blog Posts / Month', 'Pro Social Media & Ad Management', 'Weekly Analytics Sync', 'Dedicated Account Manager'],
                             popular: true
                         },
                         {
-                            title: 'Enterprise',
-                            price: '₹50,000/month',
-                            features: ['Full service marketing', 'Custom strategy', 'Dedicated account manager', 'Priority support', 'Unlimited revisions', 'Weekly reporting']
+                            title: 'Enterprise Dominance',
+                            price: 'Custom Quote',
+                            features: ['Full-Scale Content Strategy', 'Aggressive Link Building', 'Multi-channel Ad Campaigns (Meta/Google)', 'Conversion Rate Optimization (CRO)', 'Custom Reporting Dashboard'],
+                            popular: false
                         }
                     ].map((plan, index) => (
                         <Card key={index} className={`p-8 text-center hover-lift border-0 shadow-lg hover:shadow-xl relative ${plan.popular ? 'ring-2 ring-pink-500' : ''}`}>
@@ -124,7 +126,7 @@ export default function DigitalMarketingPage() {
                                     ))}
                                 </ul>
                                 <Button className={`w-full ${plan.popular ? 'bg-gradient-to-r from-pink-600 to-purple-600' : 'bg-gradient-to-r from-pink-500 to-purple-500'}`} asChild>
-                                    <Link href="/contact">Get Started</Link>
+                                    <Link href="/contact">Request Proposal</Link>
                                 </Button>
                             </CardContent>
                         </Card>

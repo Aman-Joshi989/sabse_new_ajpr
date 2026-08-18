@@ -54,7 +54,7 @@ export default async function AdminServicesPage() {
                                         {service.category}
                                     </Badge>
                                     <span className="text-xs text-slate-500 ml-2">
-                                        {service.price_type === 'custom' ? 'Custom Quote' : `₹${parseFloat(service.price).toLocaleString()}`}
+                                        {service.price_type === 'custom' ? 'Custom Quote' : `$${parseFloat(service.price).toLocaleString()}`}
                                     </span>
                                 </div>
                             </div>

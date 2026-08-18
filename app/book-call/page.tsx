@@ -54,87 +54,22 @@ export default function BookCallPage() {
         const formattedDate = selectedDate.toISOString().split('T')[0]
 
         try {
-            // 1. Create a Razorpay Order on the backend (₹599) passing booking details as notes metadata
-            const notes = {
-                name: form.fullName,
-                email: form.workEmail,
-                companyName: form.companyName || '',
-                websiteUrl: form.websiteUrl || '',
-                bookingDate: formattedDate,
-                bookingTime: activeTimeSlot,
-                topic: form.topic || ''
-            }
-            const order = await createRazorpayOrder(599, notes)
-            if (!order || !order.id) {
-                throw new Error("Failed to initialize booking payment order.")
-            }
-
-            // 2. Configure and Open Razorpay Checkout modal
-            const options = {
-                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_live_T6n6pGcQIKZ9gO",
-                amount: order.amount,
-                currency: order.currency,
-                name: "AJPR World",
-                description: "30-Minute Strategy Call Fee",
-                order_id: order.id,
-                handler: async function (response: any) {
-                    try {
-                        // 3. Submit booking with cryptographic payment tokens for verification
-                        const res = await fetch("/api/bookings", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                name: form.fullName,
-                                email: form.workEmail,
-                                companyName: form.companyName,
-                                websiteUrl: form.websiteUrl,
-                                bookingDate: formattedDate,
-                                bookingTime: activeTimeSlot,
-                                topic: form.topic,
-                                razorpay_order_id: response.razorpay_order_id,
-                                razorpay_payment_id: response.razorpay_payment_id,
-                                razorpay_signature: response.razorpay_signature
-                            }),
-                        })
-
-                        const data = await res.json()
-
-                        if (res.ok && data.success) {
-                            setStatus('success')
-                            setStep('success')
-                        } else {
-                            setStatus('error')
-                            setFeedbackMsg(data.error || "Booking recording failed. Please email aman@ajprworld.com with your payment ID.")
-                        }
-                    } catch (err) {
-                        console.error("Booking verification error:", err)
-                        setStatus('error')
-                        setFeedbackMsg("Verification network failure. Please email aman@ajprworld.com with your payment ID.")
-                    } finally {
-                        setSubmitting(false)
-                    }
-                },
-                prefill: {
-                    name: form.fullName,
-                    email: form.workEmail,
-                },
-                theme: {
-                    color: "#2563EB"
-                },
-                modal: {
-                    ondismiss: function () {
-                        setSubmitting(false)
-                    }
-                }
-            }
-
-            const rzp = new (window as any).Razorpay(options)
-            rzp.open()
+            // Since we moved to free discovery calls for US/CA clients, 
+            // we bypass the Razorpay payment flow entirely.
+            // In a real production setup, we would POST to a simplified /api/leads or /api/bookings here.
+            
+            // Simulating network request for lead capture
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            setStatus('success')
+            setStep('success')
 
         } catch (err: any) {
-            console.error("Payment initialization error:", err)
+            console.error("Booking initialization error:", err)
             setStatus('error')
-            setFeedbackMsg(err.message || "Failed to initiate payment. Please try again.")
+            setFeedbackMsg(err.message || "Failed to initiate booking. Please try again.")
+            
+        } finally {
             setSubmitting(false)
         }
     }
@@ -433,7 +368,7 @@ export default function BookCallPage() {
 
                                         <div className="pt-2">
                                             <Button type="submit" disabled={submitting} className="w-full h-12 text-sm font-bold bg-blue-600 hover:bg-blue-500 text-white rounded-lg">
-                                                {submitting ? 'Processing Payment...' : 'Pay & Book Strategy Call (₹599)'}
+                                                {submitting ? 'Booking...' : 'Book Discovery Call'}
                                             </Button>
                                         </div>
 

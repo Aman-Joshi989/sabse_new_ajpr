@@ -183,14 +183,7 @@ export default async function ServiceLocationPage({ params }: { params: Promise<
 
     const featuresList = typeof service.features === 'string' ? JSON.parse(service.features) : (service.features || [])
 
-    let displayPrice = '';
-    if (service.price_type === 'custom') {
-        displayPrice = 'Custom Quote';
-    } else if (service.price_type === 'starting_at') {
-        displayPrice = `Starting at ₹${parseFloat(service.price).toLocaleString()}`;
-    } else {
-        displayPrice = `₹${parseFloat(service.price).toLocaleString()}`;
-    }
+    let displayPrice = 'Custom Quote';
 
     // Generate dynamic FAQs for SEO based on service data
     const dynamicFaqs = [

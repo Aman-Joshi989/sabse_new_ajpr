@@ -186,15 +186,7 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
     const GLOBAL_PRICE_MULTIPLIER = siteSettings?.global_price_multiplier ? parseFloat(siteSettings.global_price_multiplier) : 1.0;
     const finalPrice = Math.round(parseFloat(service.price) * GLOBAL_PRICE_MULTIPLIER);
 
-    let displayPrice = '';
-    if (service.price_type === 'custom') {
-        displayPrice = 'Custom Quote';
-    } else if (service.price_type === 'starting_at') {
-        displayPrice = `Starting at ₹${finalPrice.toLocaleString()}`;
-    } else {
-        displayPrice = `₹${finalPrice.toLocaleString()}`;
-    }
-
+    let displayPrice = 'Custom Quote';
     // Generate dynamic FAQs for SEO based on service data
     const dynamicFaqs = [
         {

@@ -137,7 +137,7 @@ export default function UserEditorModal({
                         <input type="text" value={skills} onChange={e => setSkills(e.target.value)} placeholder="e.g. React, Node.js" className="p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label className="text-sm font-semibold">Hourly Rate (₹)</label>
+                        <label className="text-sm font-semibold">Hourly Rate ($)</label>
                         <input type="number" value={hourlyRate} onChange={e => setHourlyRate(e.target.value)} className="p-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-blue-500" />
                     </div>
                     {!isNew && (

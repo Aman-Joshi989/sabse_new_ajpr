@@ -192,20 +192,20 @@ ${form.blockersText}
                                             <select id="monthlyRevenue" name="monthlyRevenue" value={form.monthlyRevenue} onChange={handleChange} required className="h-14 px-3 bg-slate-900/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
                                                 <option value="" disabled>Select Revenue Level</option>
                                                 <option value="Pre-revenue">Pre-revenue / Seed</option>
-                                                <option value="₹0 - ₹10k">₹0 - ₹10k / mo</option>
-                                                <option value="₹10k - ₹50k">₹10k - ₹50k / mo</option>
-                                                <option value="₹50k - ₹100k">₹50k - ₹100k / mo</option>
-                                                <option value="₹100k+">₹100k+ / mo</option>
+                                                <option value="$0 - $10k">$0 - $10k / mo</option>
+                                                <option value="$10k - $50k">$10k - $50k / mo</option>
+                                                <option value="$50k - $100k">$50k - $100k / mo</option>
+                                                <option value="$100k+">$100k+ / mo</option>
                                             </select>
                                         </div>
                                         <div className="space-y-3 flex flex-col">
                                             <Label htmlFor="budgetRange" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Project Budget Range</Label>
                                             <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={handleChange} required className="h-14 px-3 bg-slate-900/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
-                                                <option value="" disabled>Select Budget Range</option>
-                                                <option value="1L - 3L">₹1L – ₹3L INR</option>
-                                                <option value="3L - 10L">₹3L – ₹10L INR</option>
-                                                <option value="10L - 25L">₹10L – ₹25L INR</option>
-                                                <option value="25L+">₹25L+ INR</option>
+                                                <option value="" disabled>Select a range</option>
+                                                <option value="$5k - $10k">$5,000 - $10,000</option>
+                                                <option value="$10k - $25k">$10,000 - $25,000</option>
+                                                <option value="$25k - $50k">$25,000 - $50,000</option>
+                                                <option value="$50k+">$50,000+</option>
                                             </select>
                                         </div>
                                     </div>

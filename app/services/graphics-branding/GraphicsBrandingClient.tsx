@@ -217,19 +217,19 @@ export default function GraphicsBrandingClient() {
                         {[
                             {
                                 title: 'Startup Identity',
-                                price: '₹9,999',
+                                price: 'Custom Quote',
                                 features: ['2 Logo concepts', 'Brand color palette', 'Social media profile kit', 'Standard Business card', 'Email signature'],
                                 popular: false
                             },
                             {
                                 title: 'Complete Branding',
-                                price: '₹19,999',
+                                price: 'Custom Quote',
                                 features: ['Unlimited Logo revisions', 'Complete Brand Book', 'Letterhead & Envelopes', 'Social Media Templates', '3D Mockups', 'Iconography set'],
                                 popular: true
                             },
                             {
                                 title: 'Digital Presence',
-                                price: '₹24,999',
+                                price: 'Custom Quote',
                                 features: ['Brand Identity Kit', 'UI/UX Design Concept', 'PowerPoint Theme', 'Ad Banner Templates', 'YouTube Branding', '1 Month Support'],
                                 popular: false
                             }
@@ -252,7 +252,7 @@ export default function GraphicsBrandingClient() {
                                         ))}
                                     </ul>
                                     <Button className={`w-full ${plan.popular ? 'bg-gradient-to-r from-pink-600 to-rose-600' : 'bg-slate-900 dark:bg-slate-800 text-white'} hover:opacity-90 transition-opacity py-6 text-lg rounded-xl`} asChild>
-                                        <Link href="/contact">Choose Plan</Link>
+                                        <Link href="/contact">Request Proposal</Link>
                                     </Button>
                                 </CardContent>
                             </Card>

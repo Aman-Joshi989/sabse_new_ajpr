@@ -119,7 +119,7 @@ export default function ServiceForm({ initialData }: { initialData?: any }) {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="price">Price (₹) *</Label>
+                            <Label htmlFor="price">Price ($) *</Label>
                             <Input id="price" name="price" type="number" step="0.01" defaultValue={initialData?.price} required placeholder="34999.00" className="bg-slate-50 dark:bg-black/50" />
                         </div>
                         <div className="space-y-2">

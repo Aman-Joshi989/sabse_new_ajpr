@@ -156,7 +156,7 @@ export default async function AdminDashboard() {
                               <p className="text-xs text-[#5F6368] dark:text-[#9AA0A6]">{payment.client_email}</p>
                           </div>
                           <div className="text-right">
-                              <p className="font-bold text-[#202124] dark:text-white">₹{parseFloat(payment.amount).toLocaleString()}</p>
+                              <p className="font-bold text-[#202124] dark:text-white">${parseFloat(payment.amount).toLocaleString()}</p>
                               <p className="text-[10px] uppercase font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded inline-block mt-1">{payment.payment_status}</p>
                           </div>
                       </div>

@@ -1,18 +1,12 @@
-import { useState } from 'react'
-import Script from 'next/script'
+'use client'
+
 import Link from 'next/link'
-import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react'
+import { CheckCircle, XCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog'
-import { Checkbox } from '@/components/ui/checkbox'
-import { useAuth } from '@/components/providers/AuthProvider'
-import { useCart } from '@/components/providers/CartProvider'
-import { addonsList } from '@/lib/constants'
+import { Card, CardContent, CardHeader, CardFooter } from '@/components/ui/card'
 
 interface PricingTier {
   name: string
-  price: number
   description: string
   features: string[]
   timeline: string
@@ -22,129 +16,55 @@ interface PricingTier {
 
 const pricingTiers: PricingTier[] = [
   {
-    name: 'BASIC PACKAGE',
-    price: 11000,
+    name: 'STARTUP PRESENCE',
     description: 'Static / Frontend Website',
     features: [
-      '4-page Static Website',
       'Modern Frontend Design',
       'Mobile-responsive layout',
-      'WhatsApp button integration',
-      'Standard Contact form',
-      'Basic SEO setup',
-      '1 free correction'
+      'High-conversion landing page',
+      'Standard Contact form integration',
+      'Basic On-Page SEO setup',
     ],
-    timeline: '12-15 working days'
+    timeline: '2-3 Weeks'
   },
   {
-    name: 'STANDARD PACKAGE',
-    price: 19999,
-    description: 'Full Stack (No Admin)',
+    name: 'BUSINESS SCALE',
+    description: 'Dynamic Web Application',
     isPopular: true,
     features: [
-      'Dynamic Website Solution',
-      'Database Integration',
-      'API Development',
-      'Faster delivery',
-      'Priority support',
-      '3 free corrections'
+      'Everything in Startup Presence',
+      'Database Architecture & Integration',
+      'Custom API Development',
+      'CMS Integration (Headless)',
+      'Performance Optimization',
+      'Advanced Technical SEO'
     ],
-    notIncluded: ['No Admin Panel included'],
-    timeline: '12-15 working days'
+    notIncluded: ['Custom Admin Panel'],
+    timeline: '4-6 Weeks'
   },
   {
-    name: 'PREMIUM PACKAGE',
-    price: 34999,
-    description: 'Full Stack + Admin Panel',
+    name: 'ENTERPRISE SOLUTION',
+    description: 'Full Stack + Custom Admin',
     features: [
-      'Complete Full Stack Solution',
-      'Custom Admin Dashboard',
-      'Content Management System (CMS)',
+      'Complex Full Stack Architecture',
+      'Custom Internal Admin Dashboard',
       'Advanced Database Management',
-      'User Authentication (if needed)',
-      'Monthly maintenance (1 month)',
-      'Priority WhatsApp support'
+      'Scalable Cloud Infrastructure',
+      'Enterprise-grade Security',
+      'Priority SLASupport',
     ],
-    timeline: '12-15 working days'
+    timeline: '8-12 Weeks'
   }
 ]
 
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
-
 export default function PricingSection() {
-  const { user } = useAuth()
-  const { addToCart } = useCart()
-
-  const [isAddonsOpen, setIsAddonsOpen] = useState(false)
-  const [selectedTier, setSelectedTier] = useState<PricingTier | null>(null)
-  const [selectedAddons, setSelectedAddons] = useState<string[]>([])
-
-  const handleSelectPlan = (tier: PricingTier) => {
-    setSelectedTier(tier)
-    setSelectedAddons([])
-    setIsAddonsOpen(true)
-  }
-
-  const toggleAddon = (addonId: string) => {
-    setSelectedAddons(prev =>
-      prev.includes(addonId)
-        ? prev.filter(id => id !== addonId)
-        : [...prev, addonId]
-    )
-  }
-
-  const handleAddToCart = () => {
-    if (!selectedTier) return
-
-    // Add Main Plan
-    addToCart({
-      type: 'package',
-      name: selectedTier.name,
-      price: selectedTier.price,
-      details: selectedTier.description,
-      quantity: 1
-    })
-
-    // Add Selected Addons
-    selectedAddons.forEach(addonId => {
-      const addon = addonsList.find(a => a.id === addonId)
-      if (addon) {
-        addToCart({
-          type: 'addon',
-          name: `${addon.name} (Add-on)`,
-          price: addon.price,
-          details: addon.description,
-          quantity: 1
-        })
-      }
-    })
-
-    setIsAddonsOpen(false)
-    setSelectedTier(null)
-    setSelectedAddons([])
-  }
-
-  const calculateTotal = () => {
-    if (!selectedTier) return 0
-    const addonsTotal = selectedAddons.reduce((sum, id) => {
-      const addon = addonsList.find(a => a.id === id)
-      return sum + (addon ? addon.price : 0)
-    }, 0)
-    return selectedTier.price + addonsTotal
-  }
-
   return (
     <section className="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300" id="pricing">
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl font-bold mb-4 text-slate-900 dark:text-white">Engineering Tiers</h2>
           <p className="text-lg text-slate-600 dark:text-slate-300">
-            Choose the foundation that best applies to your current growth stage. We provide custom quotes based on exact specifications.
+            Choose the technical foundation that best applies to your current growth stage. We provide custom proposals and dedicated teams based on your exact specifications.
           </p>
         </div>
 
@@ -153,10 +73,10 @@ export default function PricingSection() {
             <Card
               key={tier.name}
               className={`relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 
-                ${tier.isPopular ? 'border-primary shadow-lg scale-105 z-10' : 'border-slate-200 dark:border-slate-800'}`}
+                ${tier.isPopular ? 'border-blue-600 shadow-lg scale-105 z-10 ring-1 ring-blue-600' : 'border-slate-200 dark:border-slate-800'}`}
             >
               {tier.isPopular && (
-                <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-bl-lg">
+                <div className="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
                   MOST POPULAR
                 </div>
               )}
@@ -164,7 +84,7 @@ export default function PricingSection() {
               <CardHeader>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white uppercase tracking-wider">{tier.name}</h3>
                 <div className="flex items-baseline mt-2">
-                  <span className="text-xl font-bold text-blue-600 dark:text-blue-400">Custom Quote</span>
+                  <span className="text-xl font-bold text-blue-600 dark:text-blue-400">Custom Proposal</span>
                 </div>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">{tier.description}</p>
               </CardHeader>
@@ -179,14 +99,14 @@ export default function PricingSection() {
                   ))}
                   {tier.notIncluded?.map((feature, i) => (
                     <div key={i} className="flex items-start text-sm text-slate-400 dark:text-slate-500 line-through">
-                      <XCircle className="w-4 h-4 text-red-400 mr-2 mt-0.5 shrink-0" />
+                      <XCircle className="w-4 h-4 text-slate-300 dark:text-slate-600 mr-2 mt-0.5 shrink-0" />
                       <span>{feature}</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
-                  <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Timeline:</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Typical Timeline:</p>
                   <p className="text-sm text-slate-700 dark:text-slate-300">{tier.timeline}</p>
                 </div>
               </CardContent>
@@ -194,80 +114,15 @@ export default function PricingSection() {
               <CardFooter>
                 <Button
                   className={`w-full ${tier.isPopular ? 'bg-blue-600 hover:bg-blue-700 text-white' : ''}`}
+                  size="lg"
                   asChild
                 >
-                  <Link href="/contact">Get a Quote</Link>
+                  <Link href="/contact">Request a Quote</Link>
                 </Button>
               </CardFooter>
             </Card>
           ))}
         </div>
-
-        {/* Addons Dialog */}
-        <Dialog open={isAddonsOpen} onOpenChange={setIsAddonsOpen}>
-          <DialogContent className="sm:max-w-lg">
-            <DialogHeader>
-              <DialogTitle>Customize Your Package</DialogTitle>
-              <DialogDescription>
-                Add extra services to your {selectedTier?.name} to get the best results.
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="space-y-4 py-4">
-              <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg border">
-                <h4 className="font-bold text-sm mb-1">{selectedTier?.name}</h4>
-                <p className="text-2xl font-bold text-blue-600">₹{selectedTier?.price.toLocaleString()}</p>
-              </div>
-
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold">Recommended Add-ons</h4>
-                {addonsList
-                  .filter(addon => {
-                    if (addon.id === 'graphics-branding' && (selectedTier?.name === 'STANDARD PACKAGE' || selectedTier?.name === 'PREMIUM PACKAGE')) {
-                      return false
-                    }
-                    return true
-                  })
-                  .map((addon) => (
-                    <div key={addon.id} className="flex items-start space-x-3 p-3 border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
-                      <Checkbox
-                        id={addon.id}
-                        checked={selectedAddons.includes(addon.id)}
-                        onCheckedChange={() => toggleAddon(addon.id)}
-                      />
-                      <div className="grid gap-1.5 leading-none flex-1">
-                        <label
-                          htmlFor={addon.id}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                        >
-                          {addon.name}
-                        </label>
-                        <p className="text-xs text-muted-foreground">
-                          {addon.description}
-                        </p>
-                      </div>
-                      <div className="font-semibold text-sm">
-                        +₹{addon.price.toLocaleString()}
-                      </div>
-                    </div>
-                  ))}
-              </div>
-
-              <div className="flex justify-between items-center pt-4 border-t">
-                <span className="font-semibold">Total Amount:</span>
-                <span className="text-2xl font-bold text-blue-600">₹{calculateTotal().toLocaleString()}</span>
-              </div>
-            </div>
-
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsAddonsOpen(false)}>Cancel</Button>
-              <Button onClick={handleAddToCart} className="gap-2">
-                <ShoppingCart className="w-4 h-4" />
-                Add to Cart
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       </div>
     </section>
   )

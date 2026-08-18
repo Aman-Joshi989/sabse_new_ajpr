@@ -121,7 +121,7 @@ export async function sendOrderEmail(data: any) {
     const { name, email, phone, cart, total, advanceAmount, paymentId } = data;
 
     const itemsList = cart.map((item: any) =>
-        `<li>${item.name} (x${item.quantity}) - ₹${item.price}</li>`
+        `<li>${item.name} (x${item.quantity}) - $${item.price}</li>`
     ).join('');
 
     const htmlContent = `
@@ -187,7 +187,7 @@ export async function sendOrderEmail(data: any) {
                                                 <strong>${item.name}</strong> <span style="color: #6b7280;">(x${item.quantity})</span>
                                             </td>
                                             <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; color: #111827; text-align: right; font-weight: bold;">
-                                                ₹${item.price.toLocaleString()}
+                                                $${item.price.toLocaleString()}
                                             </td>
                                         </tr>
                                         `).join('')}
@@ -197,12 +197,12 @@ export async function sendOrderEmail(data: any) {
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                         <tr>
                                             <td style="padding: 8px 0; color: #6b7280; text-align: right;">Total Project Value:</td>
-                                            <td style="padding: 8px 0; color: #374151; text-align: right; width: 120px; font-weight: bold;">₹${total.toLocaleString()}</td>
+                                            <td style="padding: 8px 0; color: #374151; text-align: right; width: 120px; font-weight: bold;">$${total.toLocaleString()}</td>
                                         </tr>
                                         <tr>
                                             <td style="padding: 8px 0; color: #2563EB; text-align: right; font-weight: bold;">Advance Paid Now:</td>
                                             <td style="padding: 8px 0; color: #2563EB; text-align: right; width: 120px; font-weight: bold; font-size: 18px;">
-                                                ₹${advanceAmount ? advanceAmount.toLocaleString() : (total * 0.5).toLocaleString()}
+                                                $${advanceAmount ? advanceAmount.toLocaleString() : (total * 0.5).toLocaleString()}
                                             </td>
                                         </tr>
                                     </table>

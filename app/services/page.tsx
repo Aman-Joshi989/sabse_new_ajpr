@@ -67,15 +67,7 @@ export default async function ServicesPage() {
                             {services.map((s: any, i: number) => {
                                 const IconComponent = ServiceIconMap[s.icon_name || 'Package'] || Package;
                                 const featuresList = typeof s.features === 'string' ? JSON.parse(s.features) : (s.features || []);
-                                
-                                let displayPrice = '';
-                                if (s.price_type === 'custom') {
-                                    displayPrice = 'Custom Quote';
-                                } else if (s.price_type === 'starting_at') {
-                                    displayPrice = `₹${parseFloat(s.price).toLocaleString()}+`;
-                                } else {
-                                    displayPrice = `₹${parseFloat(s.price).toLocaleString()}`;
-                                }
+                                let displayPrice = 'Custom Quote';
 
                                 return (
                                 <Card

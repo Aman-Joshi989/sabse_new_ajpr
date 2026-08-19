@@ -42,7 +42,7 @@ export default function AICostEstimator() {
                                 )}
                                 <div className={`max-w-[80%] rounded-2xl p-5 ${m.role === 'user' ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100'}`}>
                                     <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none">
-                                        <ReactMarkdown>{m.content}</ReactMarkdown>
+                                        <ReactMarkdown components={{ h1: 'h2' }}>{m.content}</ReactMarkdown>
                                     </div>
                                 </div>
                                 {m.role === 'user' && (

@@ -38,7 +38,7 @@ export default function ResourcesPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {/* Comparisons Category */}
-          <Link href="/resources/compare" className="group bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-lg transition-all">
+          <div className="group bg-white/50 dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 opacity-70 cursor-not-allowed">
             <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6 group-hover:scale-110 transition-transform">
               <SplitSquareHorizontal className="w-6 h-6" />
             </div>
@@ -46,8 +46,8 @@ export default function ResourcesPage() {
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
               Highly structured, data-driven comparisons. Perfect for evaluating technologies, corporate structures, and service tiers.
             </p>
-            <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm group-hover:underline">Explore Comparisons &rarr;</span>
-          </Link>
+            <span className="text-slate-500 font-semibold text-sm">Coming Soon</span>
+          </div>
 
           {/* Guides Category */}
           <Link href="/blog" className="group bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 hover:shadow-lg transition-all">

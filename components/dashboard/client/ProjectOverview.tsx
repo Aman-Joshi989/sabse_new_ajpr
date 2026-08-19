@@ -20,7 +20,7 @@ export default function ProjectOverview({ title, status }: { title: string, stat
       <div className="flex items-center gap-3">
         <Link
           className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl text-sm font-black shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all hover:scale-105 active:scale-95"
-          href="/demo"
+          href="/demo-shining"
           target="_blank"
         >
           VIEW DEMO

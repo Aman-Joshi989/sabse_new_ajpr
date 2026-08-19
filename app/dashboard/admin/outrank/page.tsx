@@ -105,7 +105,7 @@ export default function OutrankPage() {
             <h2 className="font-bold text-emerald-900 dark:text-emerald-100">Mission Accomplished</h2>
           </div>
           <div className="p-6 md:p-8 prose prose-emerald dark:prose-invert max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown components={{ h1: 'h2' }} remarkPlugins={[remarkGfm]}>
               {report}
             </ReactMarkdown>
             

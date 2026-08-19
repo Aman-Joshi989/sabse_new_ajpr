@@ -17,6 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
         title: seo?.title,
         description: seo?.description,
         openGraph: {
+          type: 'website',
+          siteName: 'AJPR World',
           title: seo?.title,
           description: seo?.description,
           url: `https://ajprworld.com${'/startup-growth-kit'}`,

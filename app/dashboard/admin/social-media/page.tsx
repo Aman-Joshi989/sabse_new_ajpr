@@ -513,7 +513,7 @@ export default function SocialMediaPage() {
                 </h2>
               </div>
               <div className="p-4 prose prose-blue dark:prose-invert max-w-none text-sm">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{report}</ReactMarkdown>
+                <ReactMarkdown components={{ h1: 'h2' }} remarkPlugins={[remarkGfm]}>{report}</ReactMarkdown>
               </div>
             </div>
           )}

@@ -42,6 +42,19 @@ export default async function SitemapPage() {
     { title: 'Locations & Areas Served', url: '/locations' },
     { title: 'Privacy Policy', url: '/privacy' },
     { title: 'Terms of Service', url: '/terms' },
+    { title: 'Affiliates', url: '/affiliates' },
+    { title: 'Network Search', url: '/network-search' },
+    { title: 'Pricing', url: '/pricing' },
+    { title: 'Resources', url: '/resources' },
+    { title: 'AI Cost Estimator', url: '/tools/ai-cost-estimator' },
+    { title: 'Roofing Contractors', url: '/roofing-contractors' },
+    { title: 'Free Audit', url: '/free-audit' },
+    { title: 'Chat Agents', url: '/chat-agents' },
+    { title: 'Sign Up as Client', url: '/signup/client' },
+    { title: 'Sign Up as Developer', url: '/signup/developer' },
+    { title: 'CPU Demo', url: '/demo-cpu' },
+    { title: 'Shining Demo', url: '/demo-shining' },
+    { title: 'Ruflo Demo', url: '/demo-ruflo' },
   ];
 
   return (

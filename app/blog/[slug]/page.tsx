@@ -128,7 +128,7 @@ export default async function BlogPost(props: Props) {
                 </header>
 
                 <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-a:text-blue-600 hover:prose-a:text-blue-500">
-                    <ReactMarkdown>{injectInternalLinks(post.content)}</ReactMarkdown>
+                    <ReactMarkdown components={{ h1: 'h2' }}>{injectInternalLinks(post.content)}</ReactMarkdown>
                 </div>
 
                 <footer className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 text-center">

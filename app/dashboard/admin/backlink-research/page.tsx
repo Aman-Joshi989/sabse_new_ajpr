@@ -107,7 +107,7 @@ export default function BacklinkResearchPage() {
             <h2 className="font-semibold text-gray-900 dark:text-white">AI Link Building Strategy</h2>
           </div>
           <div className="p-6 md:p-8 prose prose-blue dark:prose-invert max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown components={{ h1: 'h2' }} remarkPlugins={[remarkGfm]}>
               {report}
             </ReactMarkdown>
           </div>

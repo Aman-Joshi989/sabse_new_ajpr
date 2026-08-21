@@ -92,7 +92,7 @@ export const AffiliateProductCard = ({
           <Link 
             href={ctaUrl || `/go/${affiliateSlug}`} 
             target="_blank" 
-            rel="sponsored nofollow"
+            rel="sponsored"
             className="w-full md:w-auto inline-flex items-center justify-center bg-amber-400 hover:bg-amber-500 text-slate-900 font-black px-8 py-4 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 text-lg"
           >
             {buttonText} <ArrowRight className="ml-2 w-5 h-5" />

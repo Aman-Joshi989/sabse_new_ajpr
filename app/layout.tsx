@@ -101,8 +101,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import { CartProvider } from '@/components/providers/CartProvider'
-import ExitIntentPopup from '@/components/ExitIntentPopup'
-import HermesChatWidget from '@/components/HermesChatWidget'
+import dynamic from 'next/dynamic'
+const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'))
+const HermesChatWidget = dynamic(() => import('@/components/HermesChatWidget'))
 
 export default async function RootLayout({
   children,

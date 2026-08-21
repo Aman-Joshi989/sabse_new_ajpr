@@ -41,7 +41,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     </div>
 
                     {/* Main Heading (SEO Preserved) */}
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-8 animate-fade-up [animation-delay:200ms]">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-8">
                         Engineering Scalable <br className="hidden md:block" />
                         <div className="relative flex justify-center w-full max-w-[800px] mx-auto mt-2 overflow-hidden align-bottom min-h-[1.5em] md:min-h-[1.3em]">
                             <AnimatedServiceText services={displayServices} />

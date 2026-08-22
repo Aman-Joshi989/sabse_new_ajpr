@@ -18,10 +18,8 @@ Be extremely professional, concise, and technical. Speak confidently about AI ca
 
     const result = await streamText({
         model: openai('gpt-4o-mini'),
-        messages: [
-            { role: 'system', content: systemPrompt },
-            ...messages
-        ]
+        system: systemPrompt,
+        messages,
     });
 
     return (result as any).toDataStreamResponse ? (result as any).toDataStreamResponse() : (result as any).toTextStreamResponse();

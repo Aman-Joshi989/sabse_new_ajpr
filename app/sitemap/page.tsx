@@ -53,11 +53,17 @@ export default async function SitemapPage() {
     { title: 'Roofing Contractors', url: '/roofing-contractors' },
     { title: 'Free Audit', url: '/free-audit' },
     { title: 'Chat Agents', url: '/chat-agents' },
+    { title: 'Aman Joshi (CEO)', url: '/aman-joshi' },
+    { title: 'Book a Call', url: '/book-call' },
     { title: 'Sign Up as Client', url: '/signup/client' },
     { title: 'Sign Up as Developer', url: '/signup/developer' },
     { title: 'CPU Demo', url: '/demo-cpu' },
     { title: 'Shining Demo', url: '/demo-shining' },
     { title: 'Ruflo Demo', url: '/demo-ruflo' },
+    { title: 'Cloud Solutions', url: '/services/cloud-solutions' },
+    { title: 'Digital Marketing', url: '/services/digital-marketing' },
+    { title: 'Graphics & Branding', url: '/services/graphics-branding' },
+    { title: 'Web Development', url: '/services/web-development' },
   ];
 
   const targetCities = [

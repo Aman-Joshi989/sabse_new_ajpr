@@ -53,8 +53,8 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
     // Hide global footer on dashboard, login, and full-screen routes
     if (
-        pathname.startsWith('/dashboard') || 
-        pathname === '/login' || 
+        pathname.startsWith('/dashboard') ||
+        pathname === '/login' ||
         pathname === '/chat-agents'
     ) {
         return null;
@@ -169,7 +169,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             <Linkedin className="w-5 h-5" />
                             <span className="sr-only">LinkedIn</span>
                         </Link>
-                        <Link href="https://youtube.com" target="_blank" rel="nofollow" className="hover:text-red-600 transition-colors">
+                        <Link href="https://www.youtube.com/@AJPRWorld" target="_blank" rel="nofollow" className="hover:text-red-600 transition-colors">
                             <Youtube className="w-5 h-5" />
                             <span className="sr-only">YouTube</span>
                         </Link>

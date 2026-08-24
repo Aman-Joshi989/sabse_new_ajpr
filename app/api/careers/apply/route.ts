@@ -55,30 +55,30 @@ export async function POST(req: Request) {
 
     // Send Notification Email
     try {
-      const emailContent = \`
-        New Job Application: \${role_applied_for}
+      const emailContent = `
+        New Job Application: ${role_applied_for}
         
-        Name: \${name}
-        Email: \${email}
-        Phone: \${phone}
-        LinkedIn: \${linkedin_url}
-        Resume: \${resume_url || 'No file uploaded'}
+        Name: ${name}
+        Email: ${email}
+        Phone: ${phone}
+        LinkedIn: ${linkedin_url}
+        Resume: ${resume_url || 'No file uploaded'}
         
         Cover Letter: 
-        \${cover_letter}
+        ${cover_letter}
         
         --- Tracking Data ---
-        Source: \${utm_source || 'direct'}
-        Medium: \${utm_medium || 'N/A'}
-        Campaign: \${utm_campaign || 'N/A'}
-      \`;
+        Source: ${utm_source || 'direct'}
+        Medium: ${utm_medium || 'N/A'}
+        Campaign: ${utm_campaign || 'N/A'}
+      `;
 
       if (typeof sendEmail === 'function') {
         await sendEmail({
           to: 'hello@ajprworld.com',
-          subject: \`New Application: \${role_applied_for} - \${name}\`,
+          subject: `New Application: ${role_applied_for} - ${name}`,
           text: emailContent,
-          html: \`<pre>\${emailContent}</pre>\`
+          html: `<pre>${emailContent}</pre>`
         });
       }
     } catch (emailError) {

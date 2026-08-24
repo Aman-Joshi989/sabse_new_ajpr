@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { 
   Briefcase, Mail, Phone, ExternalLink, Calendar, Link as LinkIcon, BarChart
 } from 'lucide-react';
-import { revalidatePath } from 'next/cache';
 
 // Revalidate this page dynamically
 export const dynamic = 'force-dynamic';
@@ -61,14 +60,14 @@ export default async function CareersAdminPage() {
                   <div className="space-y-4">
                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Contact Info</h4>
                     <div className="space-y-3">
-                      <a href={\`mailto:\${app.email}\`} className="flex items-center text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 transition-colors">
+                      <a href={`mailto:${app.email}`} className="flex items-center text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 transition-colors">
                         <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mr-3">
                           <Mail className="w-4 h-4 text-slate-500" />
                         </div>
                         {app.email}
                       </a>
                       {app.phone && (
-                        <a href={\`tel:\${app.phone}\`} className="flex items-center text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 transition-colors">
+                        <a href={`tel:${app.phone}`} className="flex items-center text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 transition-colors">
                           <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mr-3">
                             <Phone className="w-4 h-4 text-slate-500" />
                           </div>

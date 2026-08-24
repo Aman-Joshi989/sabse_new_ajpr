@@ -1,7 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -56,7 +57,24 @@ const values = [
   }
 ]
 
-export default function CareersPage() {
+function CareersContent() {
+  const searchParams = useSearchParams();
+  const utmParams = new URLSearchParams();
+  
+  if (searchParams) {
+    searchParams.forEach((value, key) => {
+      if (key.startsWith('utm_')) {
+        utmParams.append(key, value);
+      }
+    });
+  }
+
+  const utmString = utmParams.toString();
+  const getApplyLink = (role: string) => {
+    const roleParam = `role=${encodeURIComponent(role)}`;
+    return `/careers/apply?${roleParam}${utmString ? `&${utmString}` : ''}`;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans">
       
@@ -152,7 +170,7 @@ export default function CareersPage() {
                   </div>
                   
                   <Button asChild className="w-full bg-slate-900 hover:bg-slate-850 text-white dark:bg-white dark:text-[#030712] dark:hover:bg-slate-200 rounded-xl font-bold h-11" size="sm">
-                    <Link href="/contact">
+                    <Link href={getApplyLink(job.title)}>
                       Apply Now <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </Button>
@@ -168,12 +186,20 @@ export default function CareersPage() {
               We are always looking for ambitious developers, automation specialists, and domain experts. Send us your CV and we'll keep you in mind for future openings.
             </p>
             <Button asChild variant="outline" className="rounded-xl font-bold px-8 h-12 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
-              <Link href="/contact">Send Open Application</Link>
+              <Link href={getApplyLink("Open Application")}>Send Open Application</Link>
             </Button>
           </div>
         </div>
       </section>
 
     </div>
+  )
+}
+
+export default function CareersPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <CareersContent />
+    </Suspense>
   )
 }

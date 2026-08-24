@@ -22,7 +22,7 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
         geo_placename: initialSettings?.geo_placename || '',
         geo_position: initialSettings?.geo_position || '',
         geo_icbm: initialSettings?.geo_icbm || '',
-        contact_email: initialSettings?.contact_email || 'ajprworld@gmail.com',
+        contact_email: initialSettings?.contact_email || 'hello@ajprworld.com',
         contact_phone: initialSettings?.contact_phone || '+91 9997205257',
         founder_name: initialSettings?.founder_name || 'Aman Joshi',
         founder_title: initialSettings?.founder_title || 'Founder & Systems Architect',
@@ -257,7 +257,7 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
                                 onChange={handleChange} 
                                 required 
                                 className="h-11 bg-slate-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043] focus-visible:ring-1 focus-visible:ring-blue-600" 
-                                placeholder="ajprworld@gmail.com"
+                                placeholder="hello@ajprworld.com"
                             />
                             <p className="text-[11px] text-[#5F6368] dark:text-[#9AA0A6]">Displayed across all pages including Terms, Privacy, and Header/Footer elements.</p>
                         </div>

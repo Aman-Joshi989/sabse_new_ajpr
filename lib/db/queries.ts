@@ -101,7 +101,7 @@ export async function ensureDbInitialized() {
       // 4. Ensure site_settings columns exist
       await sql`
         ALTER TABLE site_settings 
-          ADD COLUMN IF NOT EXISTS contact_email VARCHAR(255) DEFAULT 'ajprworld@gmail.com',
+          ADD COLUMN IF NOT EXISTS contact_email VARCHAR(255) DEFAULT 'hello@ajprworld.com',
           ADD COLUMN IF NOT EXISTS contact_phone VARCHAR(100) DEFAULT '+91 9997205257',
           ADD COLUMN IF NOT EXISTS founder_name VARCHAR(255) DEFAULT 'Aman Joshi',
           ADD COLUMN IF NOT EXISTS founder_title VARCHAR(255) DEFAULT 'Founder & Systems Architect',
@@ -1028,7 +1028,7 @@ export const getSiteSettings = unstable_cache(
         'New Delhi',
         '28.6139;77.2090',
         '28.6139, 77.2090',
-        'ajprworld@gmail.com',
+        'hello@ajprworld.com',
         '+91 9997205257',
         'Aman Joshi',
         'Founder & Systems Architect',

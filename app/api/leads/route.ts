@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       // Assuming sendEmail exists. If not, this is a placeholder.
       if (typeof sendEmail === 'function') {
         await sendEmail({
-          to: 'ajprworld@gmail.com',
+          to: 'hello@ajprworld.com',
           subject: 'New High-Ticket Lead - AJPR World',
           text: emailContent,
           html: `<pre>${emailContent}</pre>`

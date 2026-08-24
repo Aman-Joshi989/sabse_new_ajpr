@@ -36,15 +36,16 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
     const companyLinks = [
         { name: 'About Us', href: '/about' },
         { name: 'Careers', href: '/careers' },
-        { name: 'Contact', href: '/contact' },
         { name: 'Portfolio', href: '/portfolio' },
-        { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
         { name: 'Aman Joshi (CEO)', href: '/aman-joshi' },
+        { name: 'Contact', href: '/contact' },
+    ];
+
+    const resourceLinks = [
+        { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
         { name: 'AI Chat Playground', href: '/chat-agents' },
         { name: 'Swarm Simulator', href: '/demo-ruflo' },
         { name: 'Tech & AI Glossary', href: '/glossary' },
-        { name: 'Locations & Areas Served', href: '/locations' },
-        { name: 'Sitemap', href: '/sitemap' },
     ];
 
     const logoSrc = mounted && resolvedTheme === 'dark'
@@ -80,7 +81,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                     </div>
 
                     {/* Links Columns */}
-                    <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
+                    <div className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-8">
                         {/* Column 1 */}
                         <div className="space-y-4">
                             <h3 className="font-medium text-slate-900 dark:text-white">Services</h3>
@@ -110,6 +111,20 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                         </div>
 
                         {/* Column 3 */}
+                        <div className="space-y-4">
+                            <h3 className="font-medium text-slate-900 dark:text-white">Resources</h3>
+                            <ul className="space-y-3 text-sm">
+                                {resourceLinks.map((link) => (
+                                    <li key={link.name}>
+                                        <Link href={link.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                            {link.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Column 4 */}
                         <div className="space-y-4">
                             <h3 className="font-medium text-slate-900 dark:text-white">Trending Insights</h3>
                             <ul className="space-y-3 text-sm">
@@ -145,9 +160,11 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             />
                             India
                         </div>
-                        <div className="flex gap-6 text-slate-500 dark:text-slate-500">
+                        <div className="flex flex-wrap gap-4 md:gap-6 text-slate-500 dark:text-slate-500">
+                            <Link href="/locations" className="hover:text-slate-800 dark:hover:text-slate-300">Locations</Link>
+                            <Link href="/sitemap" className="hover:text-slate-800 dark:hover:text-slate-300">Sitemap</Link>
                             <Link href="/privacy" className="hover:text-slate-800 dark:hover:text-slate-300">Privacy</Link>
-                            <Link href="/terms" className="hover:text-slate-800 dark:hover:text-slate-300">Terms of Service</Link>
+                            <Link href="/terms" className="hover:text-slate-800 dark:hover:text-slate-300">Terms</Link>
                         </div>
                     </div>
 

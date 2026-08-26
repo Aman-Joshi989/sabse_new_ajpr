@@ -35,7 +35,7 @@ export async function POST(req: Request) {
     if (file && file.size > 0) {
       try {
         const blob = await put(`resumes/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`, file, {
-          access: 'public',
+          access: 'private',
         });
         resume_url = blob.url;
       } catch (uploadError: any) {

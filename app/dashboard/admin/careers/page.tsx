@@ -105,7 +105,7 @@ export default async function CareersAdminPage() {
                     <div>
                       <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Resume / CV</h4>
                       {app.resume_url ? (
-                        <a href={app.resume_url} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg transition-colors">
+                        <a href={`/api/admin/download-resume?url=${encodeURIComponent(app.resume_url)}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg transition-colors">
                           View Resume Document <ExternalLink className="w-4 h-4 ml-2" />
                         </a>
                       ) : (

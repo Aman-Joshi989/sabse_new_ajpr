@@ -1,0 +1,55 @@
+=========================================================
+ORACLE CLOUD ALWAYS FREE + HERMES AGENT SETUP GUIDE
+=========================================================
+
+Oracle Cloud's "Always Free" tier is widely considered the absolute best free VPS for hosting autonomous AI systems like the Hermes Agent. Oracle gives you an ARM-based (Ampere A1) instance with up to 4 vCPUs and 24GB of RAM completely for free, which is more than enough headroom to run Hermes 24/7.
+
+Here is the step-by-step guide to setting it up:
+
+STEP 1: CLAIM YOUR ORACLE VPS
+---------------------------------------------------------
+1. Go to Oracle Cloud (https://www.oracle.com/cloud/free/) and sign up for a free tier account.
+   (Note: Oracle is notoriously strict with credit card validations during signup, so make sure your billing details match your bank exactly).
+2. Once logged in, go to Compute -> Instances and click "Create Instance".
+3. Important Configuration:
+   - Image / OS: Select Ubuntu 24.04 (or 22.04).
+   - Shape: Click "Change Shape", select Ampere (ARM), and choose "VM.Standard.A1.Flex". Slide the bar to 4 OCPUs and 24 GB RAM. (This is the max free limit).
+4. Scroll down to the Networking/SSH Keys section and save the Private Key to your computer (you need this to log in).
+5. Click "Create" and wait a minute for the server to boot.
+
+STEP 2: CONNECT TO YOUR VPS
+---------------------------------------------------------
+Once the server shows a green "Running" icon, copy its Public IP Address.
+Open your terminal (Mac/Linux) or Command Prompt (Windows) and type:
+
+# First, secure the key you downloaded
+chmod 400 ~/Downloads/your-oracle-key.key
+
+# Connect to the server (Ubuntu is the default username)
+ssh -i ~/Downloads/your-oracle-key.key ubuntu@YOUR_SERVER_IP
+
+
+STEP 3: INSTALL DOCKER
+---------------------------------------------------------
+Hermes runs best inside Docker to ensure it stays online 24/7 even after you close your terminal. Run these commands on your VPS to install Docker:
+
+sudo apt update && sudo apt upgrade -y
+sudo apt install docker.io docker-compose -y
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+
+(You may need to log out and log back in by typing `exit` and running the ssh command again for the permissions to apply).
+
+
+STEP 4: INSTALL THE HERMES AGENT
+---------------------------------------------------------
+Now, download and run the official Hermes installer:
+
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+
+The installer will prompt you for your API keys (e.g., OpenRouter, OpenAI, or whatever LLM backend you are using to power Hermes). 
+
+Once it's done, Hermes will be running in the background as a system service. It will stay online 24/7 for free!
+
+NOTE: If you run into any "Out of Capacity" errors when trying to select the 4-core Ampere shape (some regions get full), you can write a script to ping the Oracle API until a slot opens up.

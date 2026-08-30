@@ -20,33 +20,62 @@ export default async function AboutPage() {
     console.error("Failed to fetch dynamic data for about page:", err)
   }
 
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About AJPR World',
+    description: 'Learn about AJPR World, a premium technology agency specializing in custom software engineering, web development, and digital marketing.',
+    url: 'https://ajprworld.com/about'
+  };
+
   return (
-    <AboutClient 
-      services={services} 
-      settings={settings} 
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <AboutClient 
+        services={services} 
+        settings={settings} 
+      />
+    </>
   )
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  let seo = null;
+  try {
+    seo = await getSeoMetadata('/about');
+  } catch (err) {
+    console.error("Failed to fetch SEO for about:", err);
+  }
 
-      const seo = await getSeoMetadata('/about');
-      return {
-    alternates: { canonical: '/about' },
-        title: seo?.title,
-        description: seo?.description,
-        openGraph: {
-          title: seo?.title,
-          description: seo?.description,
-          url: `https://ajprworld.com${'/about'}`,
-            images: [
-                {
-                    url: 'https://ajprworld.com/og-image.jpg',
-                    width: 1200,
-                    height: 630,
-                    alt: 'AJPR World',
-                }
-            ],
+  // If the database returns the placeholder title, override it.
+  const dbTitle = seo?.title;
+  const isPlaceholder = dbTitle && dbTitle.includes('Ultimate Guide to About Page');
+  
+  const title = (!dbTitle || isPlaceholder) 
+    ? 'About Us | AJPR World - Premium Tech Agency' 
+    : dbTitle;
+    
+  const description = seo?.description || 'Learn about AJPR World, a premium technology agency specializing in custom software engineering, web development, and digital marketing.';
+
+  return {
+    alternates: { canonical: 'https://ajprworld.com/about' },
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      url: 'https://ajprworld.com/about',
+      images: [
+        {
+          url: 'https://ajprworld.com/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'AJPR World',
         }
-      };
+      ],
+    }
+  };
 }

@@ -34,24 +34,34 @@ export default async function HomePage() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  let seo = null;
+  try {
+    seo = await getSeoMetadata('/');
+  } catch (error) {
+    console.error("Failed to fetch SEO metadata for homepage:", error);
+  }
 
-      const seo = await getSeoMetadata('/');
-      return {
-    alternates: { canonical: '' },
-        title: seo?.title,
-        description: seo?.description,
-        openGraph: {
-          title: seo?.title,
-          description: seo?.description,
-          url: `https://ajprworld.com${'/'}`,
-            images: [
-                {
-                    url: 'https://ajprworld.com/og-image.jpg',
-                    width: 1200,
-                    height: 630,
-                    alt: 'AJPR World',
-                }
-            ],
+  const defaultTitle = 'AJPR World – Premium Tech, Custom Software & Creative Branding';
+  const defaultDesc = 'AJPR World delivers premium web development, custom software engineering, UI/UX design, and AI solutions.';
+  const title = seo?.title || defaultTitle;
+  const description = seo?.description || defaultDesc;
+
+  return {
+    alternates: { canonical: 'https://ajprworld.com' },
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      url: 'https://ajprworld.com',
+      images: [
+        {
+          url: 'https://ajprworld.com/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'AJPR World',
         }
-      };
+      ],
+    }
+  };
 }

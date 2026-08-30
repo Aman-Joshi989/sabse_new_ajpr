@@ -34,6 +34,24 @@ export default async function ServicesPage() {
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-300 transition-colors duration-300 font-sans">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(
+                        services.map((s: any) => ({
+                            '@context': 'https://schema.org',
+                            '@type': 'Service',
+                            'serviceType': s.title,
+                            'provider': {
+                                '@type': 'Organization',
+                                'name': 'AJPR World'
+                            },
+                            'description': s.description,
+                            'url': `https://ajprworld.com/services/${s.slug}`
+                        }))
+                    )
+                }}
+            />
             {/* Premium Hero Section */}
             <section className="relative pt-32 pb-24 overflow-hidden bg-slate-950">
                 {/* Background ambient glowing details - Modern Premium */}
@@ -83,7 +101,7 @@ export default async function ServicesPage() {
                                         <div className={`p-4 rounded-xl bg-gradient-to-br ${s.gradient || 'from-blue-600 to-indigo-800'} text-white shadow-[0_0_20px_rgba(37,99,235,0.3)] transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
                                             <IconComponent className="h-6 w-6" />
                                         </div>
-                                        <CardTitle className="text-xl font-black text-slate-900 dark:text-white leading-tight">{s.title}</CardTitle>
+                                        <h2 className="text-xl font-black text-slate-900 dark:text-white leading-tight">{s.title}</h2>
                                     </CardHeader>
                                     <CardContent className="pt-0 p-6 space-y-6 relative">
                                         <p className="text-sm text-slate-600 dark:text-slate-400 font-medium line-clamp-2 leading-relaxed">{s.description}</p>

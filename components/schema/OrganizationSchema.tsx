@@ -12,21 +12,58 @@ export const OrganizationSchema = async () => {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'AJPR World',
+    alternateName: 'AJPR Tech',
     url: 'https://ajprworld.com',
-    logo: 'https://ajprworld.com/logo.png',
-    description: settings?.seo_description || 'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding.',
+    logo: 'https://ajprworld.com/logo/ajpr-logo.png',
+    description: settings?.seo_description || 'AJPR World is a global technology and software engineering firm delivering custom AI MVPs, enterprise workflow automation, full-stack web applications, and Generative Engine Optimization (GEO).',
+    founder: {
+      '@type': 'Person',
+      name: 'Aman Joshi',
+      jobTitle: 'Founder & CEO',
+      url: 'https://ajprworld.com/aman-joshi'
+    },
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+91-1234567890',
-      contactType: 'customer service',
-      areaServed: 'IN',
-      availableLanguage: ['en', 'hi'],
+      email: 'hello@ajprworld.com',
+      contactType: 'technical sales & support',
+      areaServed: ['US', 'GB', 'CA', 'AU', 'IN', 'Worldwide'],
+      availableLanguage: ['en'],
     },
     sameAs: [
       'https://www.linkedin.com/company/ajprworld',
       'https://twitter.com/ajprworld',
-      'https://www.facebook.com/ajprworld',
+      'https://github.com/Aman-Joshi989'
     ],
+    knowsAbout: [
+      'Custom AI MVP Development',
+      'Autonomous AI Pipelines',
+      'Full-Stack Web Development',
+      'Generative Engine Optimization (GEO)',
+      'Technical SEO',
+      'Cloud Architecture'
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Technology & AI Engineering Services',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Custom AI MVP Development in 4 Weeks',
+            url: 'https://ajprworld.com/services/custom-web-development-ai-solutions'
+          }
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Business AI Automation & Autonomous Workflows',
+            url: 'https://ajprworld.com/services/business-ai-automation'
+          }
+        }
+      ]
+    }
   };
 
   return (

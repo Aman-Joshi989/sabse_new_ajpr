@@ -21,21 +21,20 @@ export const revalidate = 86400;
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })
 
-export function cleanMetaTitle(title: string, maxLen = 60): string {
+export function cleanMetaTitle(title: string, maxLen = 70): string {
   if (!title) return '';
   const clean = title.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
   if (clean.length <= maxLen) return clean;
   return clean.slice(0, maxLen - 3).trim() + '...';
 }
 
-export function cleanMetaDescription(desc: string, maxLen = 150, minLen = 110): string {
+export function cleanMetaDescription(desc: string, maxLen = 160, minLen = 110): string {
   if (!desc) return '';
   const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
   
   if (clean.length <= maxLen && clean.length >= minLen) return clean;
   if (clean.length < minLen) {
-    // If the description is too short, append a generic fallback to hit a better length.
-    const padded = `${clean} | AJPR World offers premium digital solutions, custom web development, and creative branding.`;
+    const padded = `${clean} | AJPR World builds custom AI MVPs and scalable web systems.`;
     return padded.length > maxLen ? padded.slice(0, maxLen - 3).trim() + '...' : padded;
   }
   
@@ -50,19 +49,19 @@ export function cleanMetaDescription(desc: string, maxLen = 150, minLen = 110): 
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await getSiteSettings();
-    const rawDesc = settings?.seo_description || 'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding.';
+    const rawDesc = settings?.seo_description || 'AJPR World engineers custom AI MVPs, enterprise automation pipelines, and scalable web applications in 4 weeks for US startups and growing enterprises.';
     const seoDesc = cleanMetaDescription(rawDesc);
-    const ogDesc = cleanMetaDescription(settings?.seo_description || 'Your premium partner for tech, custom software & creative branding.');
-    const twitterDesc = cleanMetaDescription(settings?.seo_description || 'Premium web development, custom software engineering & creative branding for business growth.');
+    const ogDesc = cleanMetaDescription(settings?.seo_description || 'Custom AI MVPs, web engineering, and autonomous workflows in 4 weeks.');
+    const twitterDesc = cleanMetaDescription(settings?.seo_description || 'Custom AI MVPs, enterprise automation, and full-stack software development in 4 weeks.');
 
     return {
       metadataBase: new URL('https://ajprworld.com'),
-      title: cleanMetaTitle(settings?.seo_title || 'AJPR World – Premium Tech, Custom Software & Creative Branding'),
+      title: cleanMetaTitle(settings?.seo_title || 'Custom AI MVP Development & Software Engineering | AJPR World'),
       description: seoDesc,
-      keywords: settings?.seo_keywords || 'Best Software, tech solutions, web development, custom software, UI/UX design, cloud deployment, digital branding',
+      keywords: settings?.seo_keywords || 'Custom AI MVP, AI software development, US startup engineering, workflow automation, Next.js developer, B2B software agency',
       openGraph: {
         type: 'website',
-        title: cleanMetaTitle(settings?.seo_title || 'AJPR World - Premium Tech & Software Solutions'),
+        title: cleanMetaTitle(settings?.seo_title || 'Custom AI MVP Development & Software Engineering | AJPR World'),
         description: ogDesc,
         url: 'https://ajprworld.com',
         siteName: 'AJPR World',

@@ -41,8 +41,8 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error("Failed to fetch SEO metadata for homepage:", error);
   }
 
-  const defaultTitle = 'AJPR World – Premium Tech, Custom Software & Creative Branding';
-  const defaultDesc = 'AJPR World delivers premium web development, custom software engineering, UI/UX design, and AI solutions.';
+  const defaultTitle = 'Custom AI MVP Development & Software Engineering Agency | AJPR World';
+  const defaultDesc = 'AJPR World engineers custom AI MVPs, enterprise automation pipelines, and scalable web applications in 4 weeks for US startups and growing companies.';
   const title = seo?.title || defaultTitle;
   const description = seo?.description || defaultDesc;
 

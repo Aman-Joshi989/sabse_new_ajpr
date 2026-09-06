@@ -13,6 +13,7 @@ import {
     Sparkles, 
     CheckCircle 
 } from 'lucide-react';
+import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 interface ToolItem {
     id: string;
@@ -202,6 +203,24 @@ export default function SaasBloatAuditPage() {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Direct Lead Capture Form */}
+                        <ToolLeadCapture
+                            title="Get Your 1-Page Consolidation Blueprint"
+                            subtitle={`You are spending ~$${roundedAnnual.toLocaleString()}/yr on ${selectedTools.length} separate tools, with an estimated ~$${estimatedWasted.toLocaleString()} wasted on unused licenses. We'll send you a custom architecture blueprint showing how to replace them with a unified portal.`}
+                            badge="Software Audit Blueprint"
+                            ctaText="Email Me My Consolidation Blueprint"
+                            toolSource="saas_bloat_audit"
+                            reportSummary={{
+                                headline: `Annual SaaS Spend: $${roundedAnnual.toLocaleString()} (${selectedTools.length} tools, ~${teamSeats} seats)`,
+                                metrics: {
+                                    'Selected Tools': selectedTools.join(', '),
+                                    'Monthly Spend': `$${roundedMonthly}`,
+                                    'Estimated Wasted Spend': `$${estimatedWasted}/yr`,
+                                    'Team Seats': teamSeats
+                                }
+                            }}
+                        />
 
                         {/* Consolidation Pitch */}
                         <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-blue-950 text-white border border-slate-800 shadow-xl space-y-4">

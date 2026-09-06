@@ -14,6 +14,7 @@ import {
     TrendingDown,
     Zap
 } from 'lucide-react';
+import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 export default function AdminCostCalculatorPage() {
     const [emailHours, setEmailHours] = useState<number>(10);
@@ -237,6 +238,24 @@ export default function AdminCostCalculatorPage() {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Direct Lead Capture Form */}
+                        <ToolLeadCapture
+                            title="Get Your Custom Automation Action Plan"
+                            subtitle={`Save an estimated ${annualHoursSaved.toLocaleString()} hours and $${annualMoneySaved.toLocaleString()} every year. We'll email you a 1-page roadmap detailing the exact automations to deploy first.`}
+                            badge="Personalized Action Plan"
+                            ctaText="Email Me My Automation Plan"
+                            toolSource="admin_cost_calculator"
+                            reportSummary={{
+                                headline: `Annual Admin Drag: $${annualCost.toLocaleString()} (${totalAnnualHours} hrs/yr)`,
+                                metrics: {
+                                    'Weekly Hours Lost': totalWeeklyHours,
+                                    'Monthly Cost': `$${monthlyCost}`,
+                                    'Annual Savings Potential': `$${annualMoneySaved}`,
+                                    'Team Size': teamSize
+                                }
+                            }}
+                        />
 
                         {/* CTA Box */}
                         <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-blue-950 text-white border border-slate-800 shadow-xl space-y-4">

@@ -3,7 +3,7 @@ import AboutClient from './AboutClient'
 import { Metadata } from 'next'
 import { getSeoMetadata } from "@/lib/db/queries";
 
-export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
+export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel free limits
 
 export default async function AboutPage() {
   let services: any[] = []

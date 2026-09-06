@@ -681,7 +681,7 @@ export const getPortfolioItems = unstable_cache(
     return data;
   },
   ['portfolio-items'],
-  { revalidate: 60, tags: ['portfolio'] }
+  { revalidate: 86400, tags: ['portfolio'] }
 );
 
 export async function getPortfolioItemById(id: number) {
@@ -742,7 +742,7 @@ export const getBlogs = unstable_cache(
     return data;
   },
   ['get-blogs'],
-  { revalidate: 60, tags: ['blogs'] }
+  { revalidate: 86400, tags: ['blogs'] }
 );
 
 export async function getBlogBySlug(slug: string) {
@@ -856,7 +856,7 @@ export const getPublishedServices = unstable_cache(
     return data;
   },
   ['get-published-services'],
-  { revalidate: 60, tags: ['services'] }
+  { revalidate: 86400, tags: ['services'] }
 );
 
 export async function getServiceBySlug(slug: string) {
@@ -1054,7 +1054,7 @@ export const getSiteSettings = unstable_cache(
   return settings;
   },
   ['get-site-settings'],
-  { revalidate: 60, tags: ['settings'] }
+  { revalidate: 86400, tags: ['settings'] }
 );
 
 export async function updateSiteSettings(data: any) {
@@ -1140,7 +1140,7 @@ export const getSeoMetadata = unstable_cache(
     return result[0] || null;
   },
   ['seo-metadata'],
-  { revalidate: 60, tags: ['seo'] }
+  { revalidate: 86400, tags: ['seo'] }
 );
 
 export async function getAllSeoMetadata() {

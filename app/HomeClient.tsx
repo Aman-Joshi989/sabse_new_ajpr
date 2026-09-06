@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Database, Code2, Cpu, GitMerge, Layout, Layers, ShieldCheck, CheckCircle, Terminal, Globe, Smartphone, Lock, Cloud, Sparkles } from 'lucide-react'
+import { ArrowRight, Database, Code2, Cpu, GitMerge, Layout, Layers, ShieldCheck, CheckCircle, Terminal, Globe, Smartphone, Lock, Cloud, Sparkles, Mail, DollarSign, Zap, AlertCircle, Calculator, Bot } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
@@ -166,7 +166,145 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           </div>
         </section>
 
+        {/* 4. THE 5 OPERATIONAL BOTTLENECKS WE ELIMINATE */}
+        <section className="py-20 bg-slate-900 text-white relative overflow-hidden border-y border-slate-800">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none"></div>
+          
+          <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
+            <div className="max-w-3xl mb-16">
+              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+                Engineering Outcomes
+              </Badge>
+              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-white mb-6 leading-tight">
+                The 5 Operational Bottlenecks <br className="hidden md:block" />We Eliminate for US Businesses.
+              </h2>
+              <p className="text-lg text-slate-300 font-medium leading-relaxed">
+                Most founders, agency owners, and growing companies lose 20–40% of their operational velocity to administrative drag, SaaS clutter, and delayed software execution. Here is how our engineering eliminates each bottleneck.
+              </p>
+            </div>
 
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {[
+                {
+                  number: "01",
+                  title: "The Email & Admin Black Hole",
+                  stat: "120 emails/day • 11+ hrs/wk lost",
+                  problem: "US professionals lose over 28% of their entire workweek triaging inboxes, chasing late invoices, and answering repetitive client queries.",
+                  solution: "We build custom autonomous triage agents and AI inboxes that handle repetitive communication in your exact brand tone.",
+                  link: "/tools/client-response-generator",
+                  linkText: "Try Free Email Drafter",
+                  icon: Mail
+                },
+                {
+                  number: "02",
+                  title: "Wearing 5 Operational Hats",
+                  stat: "20%–40% daily productivity tax",
+                  problem: "Founders juggle customer service, sales, invoicing, social media, and IT daily. Rapid context-switching drains strategic focus.",
+                  solution: "We architect automated backend pipelines that run on auto-pilot—from lead qualification to automated project onboarding.",
+                  link: "/tools/admin-cost-calculator",
+                  linkText: "Calculate Admin Cost",
+                  icon: Calculator
+                },
+                {
+                  number: "03",
+                  title: "SaaS Bloat & Broken Integrations",
+                  stat: "51% unused software • $500-$2,500/mo waste",
+                  problem: "Paying for 10+ subscriptions (HubSpot, Zapier, Calendly, Airtable) where data gets siloed and connections constantly break.",
+                  solution: "We consolidate your tech stack into a single, high-speed Next.js + PostgreSQL portal with zero per-seat licensing fees.",
+                  link: "/tools/saas-bloat-audit",
+                  linkText: "Audit Your SaaS Bloat",
+                  icon: Layers
+                },
+                {
+                  number: "04",
+                  title: "Prohibitive US Labor Costs",
+                  stat: "$150k-$220k/yr + 28% overhead per dev",
+                  problem: "US in-house engineering and domestic agencies charging $200/hr burn through startup runway in just 3 to 6 months.",
+                  solution: "Direct senior systems architecture (Aman Joshi & core engineers) delivering production-grade MVPs in 14–30 days at 70% lower cost.",
+                  link: "/book-call",
+                  linkText: "Book Architecture Call",
+                  icon: DollarSign
+                },
+                {
+                  number: "05",
+                  title: "The AI Adoption Gap",
+                  stat: "80% test ChatGPT • Only 18% deploy in production",
+                  problem: "Businesses know AI saves money, but don't know how to connect LLMs to databases securely without 'automating chaos.'",
+                  solution: "We deploy production-grade agentic workflows (LangGraph, custom RAG, vector databases) built for actual business ROI.",
+                  link: "/tools/ai-cost-estimator",
+                  linkText: "Estimate AI Project",
+                  icon: Bot
+                }
+              ].map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <div 
+                    key={idx}
+                    className="p-8 rounded-2xl bg-slate-800/40 border border-slate-700/60 hover:border-blue-500/60 transition-all duration-300 flex flex-col justify-between group"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-blue-400 font-mono text-sm font-bold">{item.number}</span>
+                        <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center border border-slate-700 group-hover:bg-blue-600 transition-colors">
+                          <Icon className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors" />
+                        </div>
+                      </div>
+
+                      <h3 className="text-xl font-bold text-white tracking-tight">
+                        {item.title}
+                      </h3>
+
+                      <div className="inline-block px-3 py-1 rounded-md bg-red-950/40 border border-red-800/50 text-red-400 text-xs font-bold font-mono">
+                        {item.stat}
+                      </div>
+
+                      <p className="text-xs text-slate-400 leading-relaxed">
+                        <strong className="text-slate-300">The Problem:</strong> {item.problem}
+                      </p>
+
+                      <p className="text-xs text-slate-300 leading-relaxed pt-1">
+                        <strong className="text-blue-400">Our Solution:</strong> {item.solution}
+                      </p>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-slate-700/60">
+                      <Link 
+                        href={item.link}
+                        className="inline-flex items-center text-xs font-bold text-blue-400 hover:text-blue-300 group-hover:translate-x-1 transition-all gap-1.5"
+                      >
+                        {item.linkText} <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Master Tools Box */}
+              <div className="p-8 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex flex-col justify-between shadow-xl">
+                <div className="space-y-4">
+                  <span className="text-xs font-bold uppercase tracking-widest bg-white/20 px-3 py-1 rounded-full">
+                    Free Toolkit
+                  </span>
+                  <h3 className="text-2xl font-black tracking-tight leading-tight">
+                    Explore Our Free US Productivity Suite
+                  </h3>
+                  <p className="text-xs text-blue-100 leading-relaxed">
+                    Interactive calculators, audit tools, and template generators designed to eliminate operational friction and save you hours every week.
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-white/20">
+                  <Link 
+                    href="/tools"
+                    className="inline-flex items-center justify-center w-full px-5 py-3 rounded-xl bg-white text-blue-700 font-bold text-xs hover:bg-blue-50 transition-colors shadow-md gap-2"
+                  >
+                    Open All Free Tools <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* 5. CORE ENGINEERING & AI SERVICES */}
         <section id="solutions" className="py-24 relative bg-slate-50/50 dark:bg-[#050914] border-y border-slate-200 dark:border-slate-800/80">

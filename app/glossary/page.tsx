@@ -2,7 +2,7 @@ import { getGlossaryTerms } from '@/lib/db/queries'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
-export const revalidate = 60; // Cache for 60 seconds (ISR)
+export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel free limits
 
 export const metadata: Metadata = {
   title: 'Startup AI & Technology Glossary | AJPR World',

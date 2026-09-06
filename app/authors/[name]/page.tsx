@@ -5,7 +5,7 @@ import { ArrowLeftIcon, Github, Linkedin, Twitter } from 'lucide-react';
 import { Metadata } from 'next';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 
-export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
+export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel free limits
 
 export async function generateMetadata({ params }: { params: Promise<{ name: string }> }): Promise<Metadata> {
   const resolvedParams = await params;

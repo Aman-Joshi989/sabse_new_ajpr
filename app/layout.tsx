@@ -14,8 +14,8 @@ import { getSiteSettings, getPublishedServices, getBlogs } from '@/lib/db/querie
 import LayoutClientEffect from '@/components/LayoutClientEffect';
 import FontLoader from '@/components/FontLoader';
 
-// Enable ISR: cache layout data for 60s, revalidate in background
-export const revalidate = 60;
+// Enable ISR: cache layout data for 24h to prevent Vercel ISR Write limits
+export const revalidate = 86400;
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })

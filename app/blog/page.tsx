@@ -8,7 +8,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { getSeoMetadata } from "@/lib/db/queries";
 
-export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
+export const revalidate = 3600; // Cache for 1 hour (ISR) to protect Vercel free limits
 type BlogPost = {
   id: number;
   slug: string;

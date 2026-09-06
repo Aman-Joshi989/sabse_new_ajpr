@@ -98,6 +98,8 @@ export default function Header({ services }: { services?: any[] }) {
         },
         { name: 'About', href: '/about' },
         { name: 'Portfolio', href: '/portfolio' },
+        { name: 'Tools', href: '/tools' },
+        { name: 'Blog', href: '/blog' },
         { name: 'Contact', href: '/contact' },
     ]
 

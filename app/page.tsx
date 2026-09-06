@@ -2,7 +2,7 @@ import HomeClient from './HomeClient'
 import { getPublishedServices, getBlogs, getSiteSettings, getSeoMetadata } from '@/lib/db/queries'
 import type { Metadata } from 'next'
 
-export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
+export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel free limits
 
 export default async function HomePage() {
   let services: any[] = []

@@ -12,7 +12,7 @@ import { Metadata } from 'next'
 import { cleanMetaDescription } from '@/app/layout'
 import { getSeoMetadata } from "@/lib/db/queries";
 
-export const revalidate = 60; // Cache for 60 seconds (ISR) to fix slow HTML load times
+export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel free limits
 
 export async function generateMetadata(): Promise<Metadata> {
   const override = await getSeoMetadata('/aman-joshi');

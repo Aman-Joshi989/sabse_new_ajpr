@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, BookOpen, ChevronRight } from 'lucide-react'
 
-export const revalidate = 60; // ISR Caching
+export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel free limits
 
 export async function generateMetadata({ params }: { params: Promise<{ term: string }> }): Promise<Metadata> {
   const { term: termSlug } = await params

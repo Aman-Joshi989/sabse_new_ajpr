@@ -61,8 +61,23 @@ export default function SaasBloatAuditPage() {
     const roundedAnnual = Math.round(roundedMonthly * 12);
     const estimatedWasted = Math.round(roundedAnnual * 0.51); // 51% industry waste
 
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        'name': 'SaaS Bloat & Redundant Subscription Cost Auditor',
+        'applicationCategory': 'BusinessApplication',
+        'operatingSystem': 'All',
+        'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+        'description': 'Audit paid SaaS licenses, uncover annual wasted capital, and see software consolidation recommendations.',
+        'url': 'https://ajprworld.com/tools/saas-bloat-audit'
+    };
+
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-200 py-16 px-4 sm:px-6 lg:px-8 font-sans">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="max-w-5xl mx-auto">
                 
                 {/* Top Breadcrumb */}

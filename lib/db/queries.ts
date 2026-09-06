@@ -1317,8 +1317,8 @@ export async function getLeadsForHermes() {
   await ensureDbInitialized();
   return await dynamicSql`
     SELECT * FROM sales_leads 
-    WHERE status IN ('contacted', 'in_progress') 
-    ORDER BY created_at ASC LIMIT 10;
+    WHERE status IN ('new', 'contacted', 'in_progress') 
+    ORDER BY created_at DESC LIMIT 10;
   `;
 }
 

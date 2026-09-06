@@ -42,9 +42,10 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
     ];
 
     const resourceLinks = [
+        { name: 'Free US Business Tools', href: '/tools' },
+        { name: 'Refer & Earn (20%)', href: '/affiliates' },
         { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
         { name: 'AI Chat Playground', href: '/chat-agents' },
-        { name: 'Swarm Simulator', href: '/demo-ruflo' },
         { name: 'Tech & AI Glossary', href: '/glossary' },
     ];
 

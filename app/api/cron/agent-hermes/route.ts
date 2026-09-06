@@ -48,29 +48,59 @@ export async function GET(req: Request) {
 
     // 3. Process Leads
     for (const lead of leads) {
-      console.log(`[Hermes] Processing lead: ${lead.name} (${lead.email})`);
+      console.log(`[Hermes] Processing lead: ${lead.name} (${lead.email}) [status: ${lead.status}]`);
+
+      let stageInstruction = "";
+      let nextStatus = "contacted";
+
+      if (lead.status === 'new') {
+        nextStatus = 'contacted';
+        stageInstruction = `
+        This is an INITIAL RESPONSE to a new lead.
+        They generated a report using: "${lead.utm_source || 'AJPR World Tech Tools'}".
+        Findings / Calculator data: "${lead.budget || 'Inquiry received'}"
+        Breakdown / Details: "${lead.tech_stack || 'Standard tech stack'}"
+        
+        Acknowledge their exact numbers and calculations. Provide a direct, authoritative breakdown of how Aman Joshi and our engineering team at AJPR World automate this exact friction in 4 weeks. Invite them to a 15-minute technical discovery call to review their custom automation architecture.
+        `;
+      } else if (lead.status === 'contacted') {
+        nextStatus = 'in_progress';
+        stageInstruction = `
+        This is a FOLLOW-UP email (Status: contacted).
+        They haven't booked a call yet.
+        Emphasize the ongoing cost of inaction regarding "${lead.budget || 'their tech bottlenecks'}".
+        Offer two specific time slots this week for a 15-minute call with Aman Joshi. Keep it high-conviction and concise.
+        `;
+      } else {
+        nextStatus = 'followup_completed';
+        stageInstruction = `
+        This is a FINAL STRATEGIC FOLLOW-UP (Status: in_progress).
+        Inform them that our sprint capacity for next month is filling up.
+        Provide a link to book a direct 15-minute slot or reply with their preferred time.
+        `;
+      }
 
       const prompt = `
         ${persona}
         
-        You are following up with a lead named "${lead.name}" at "${lead.company || 'their company'}".
-        Their current status is "${lead.status}".
+        Lead Details:
+        Name: "${lead.name}"
+        Company: "${lead.company || lead.company_size || 'their company'}"
+        Current Pipeline Stage: "${lead.status}"
         
-        Write a hyper-personalized, assertive follow-up email. 
-        - Your goal is to get them on a 15-minute discovery call this week.
-        - Emphasize urgency and the cost of inaction.
-        - Do not be overly polite; be authoritative and valuable.
+        Stage Directives:
+        ${stageInstruction}
         
-        Return EXACTLY a JSON object with these keys (no markdown formatting or backticks outside of the JSON string):
+        Output format: Return EXACTLY a JSON object with keys:
         {
-          "subject": "A catchy, urgent subject line",
-          "html_body": "The email body in HTML format (using <p> and <br> tags). End it with your signature."
+          "subject": "Compelling, urgent subject line tailored to their issue",
+          "html_body": "HTML formatted email body (<p>, <br>, <strong>). End with: <br><br>Best regards,<br><strong>Hermes</strong><br>Lead AI Technical Consultant | AJPR World<br><small>Acting on behalf of Aman Joshi, Founder</small>"
         }
       `;
 
       try {
         const { text } = await generateText({
-          model: google('gemini-2.5-flash'), // Using flash for fast generation
+          model: google('gemini-2.5-flash'),
           prompt,
         });
 
@@ -80,8 +110,8 @@ export async function GET(req: Request) {
         const success = await sendColdEmail(lead.email, aiEmail.subject, aiEmail.html_body);
 
         if (success) {
-          await updateLeadStatus(lead.id, 'in_progress');
-          await insertAgentLog('Hermes', `Successfully sent follow-up email to ${lead.name} and updated status to in_progress.`);
+          await updateLeadStatus(lead.id, nextStatus);
+          await insertAgentLog('Hermes', `Sent stage [${lead.status} -> ${nextStatus}] email to ${lead.name} (${lead.email}).`);
           emailsSent++;
         } else {
           await insertAgentLog('Hermes', `Failed to send email to ${lead.name}.`, 'error');

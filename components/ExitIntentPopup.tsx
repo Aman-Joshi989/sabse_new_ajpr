@@ -107,10 +107,21 @@ export default function ExitIntentPopup() {
               )}
             </form>
           )}
+
+          <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <a 
+              href="/tools" 
+              onClick={() => setIsVisible(false)}
+              className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center justify-center gap-1"
+            >
+              <span>⚡ Or calculate your lost admin payroll instantly with our Free Tools</span>
+              <ArrowRight className="w-3 h-3" />
+            </a>
+          </div>
           
           <button 
             onClick={() => setIsVisible(false)}
-            className="mt-6 text-sm text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium transition-colors"
+            className="mt-4 text-xs text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium transition-colors"
           >
             No thanks, I prefer letting my competitors win.
           </button>

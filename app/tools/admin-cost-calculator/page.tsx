@@ -36,8 +36,23 @@ export default function AdminCostCalculatorPage() {
     const annualHoursSaved = Math.round(totalAnnualHours * 0.75);
     const annualMoneySaved = Math.round(annualCost * 0.75);
 
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        'name': 'US Business Admin Cost & Automation ROI Calculator',
+        'applicationCategory': 'FinanceApplication',
+        'operatingSystem': 'All',
+        'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+        'description': 'Calculate monthly burned payroll on administrative busywork and see your return on autonomous AI workflows.',
+        'url': 'https://ajprworld.com/tools/admin-cost-calculator'
+    };
+
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-200 py-16 px-4 sm:px-6 lg:px-8 font-sans">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="max-w-5xl mx-auto">
                 
                 {/* Top Breadcrumb */}

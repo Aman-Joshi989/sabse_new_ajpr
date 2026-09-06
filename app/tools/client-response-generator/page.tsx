@@ -350,8 +350,23 @@ export default function ClientResponseGeneratorPage() {
         }
     };
 
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        'name': 'Client Response & Difficult Email Generator',
+        'applicationCategory': 'BusinessApplication',
+        'operatingSystem': 'All',
+        'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+        'description': 'Draft professional client responses for scope creep, late invoices, rate objections, and project delays in seconds.',
+        'url': 'https://ajprworld.com/tools/client-response-generator'
+    };
+
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-200 py-16 px-4 sm:px-6 lg:px-8 font-sans">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="max-w-5xl mx-auto">
                 
                 {/* Header Breadcrumbs */}

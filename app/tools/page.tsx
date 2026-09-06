@@ -24,6 +24,42 @@ export const metadata: Metadata = {
     }
 };
 
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'name': 'Free Productivity & Automation Tools for US Businesses',
+    'description': 'Interactive calculators, generators, and audit tools designed for US business owners.',
+    'itemListElement': [
+        {
+            '@type': 'SoftwareApplication',
+            'position': 1,
+            'name': 'Client Response & Difficult Email Generator',
+            'applicationCategory': 'BusinessApplication',
+            'operatingSystem': 'All',
+            'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+            'url': 'https://ajprworld.com/tools/client-response-generator'
+        },
+        {
+            '@type': 'SoftwareApplication',
+            'position': 2,
+            'name': 'US Business Admin Cost & Automation ROI Calculator',
+            'applicationCategory': 'FinanceApplication',
+            'operatingSystem': 'All',
+            'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+            'url': 'https://ajprworld.com/tools/admin-cost-calculator'
+        },
+        {
+            '@type': 'SoftwareApplication',
+            'position': 3,
+            'name': 'SaaS Bloat & Redundant Subscription Audit Checklist',
+            'applicationCategory': 'BusinessApplication',
+            'operatingSystem': 'All',
+            'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+            'url': 'https://ajprworld.com/tools/saas-bloat-audit'
+        }
+    ]
+};
+
 interface ToolCard {
     slug: string;
     title: string;
@@ -81,6 +117,10 @@ const toolsList: ToolCard[] = [
 export default function ToolsHubPage() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-200 py-16 px-4 sm:px-6 lg:px-8 font-sans">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="max-w-6xl mx-auto">
                 
                 {/* Hero Header */}

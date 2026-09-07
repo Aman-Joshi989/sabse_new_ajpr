@@ -162,8 +162,6 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             India
                         </div>
                         <div className="flex flex-wrap gap-4 md:gap-6 text-slate-500 dark:text-slate-500">
-                            <Link href="/locations" className="hover:text-slate-800 dark:hover:text-slate-300">Locations</Link>
-                            <Link href="/sitemap" className="hover:text-slate-800 dark:hover:text-slate-300">Sitemap</Link>
                             <Link href="/privacy" className="hover:text-slate-800 dark:hover:text-slate-300">Privacy</Link>
                             <Link href="/terms" className="hover:text-slate-800 dark:hover:text-slate-300">Terms</Link>
                         </div>

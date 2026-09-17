@@ -1,10 +1,104 @@
-# AJPR World — Staff SEO Operations & Execution Manual (SOP)
+# AJPR World — Competitive Intelligence & Staff SEO Operations Manual
 
 > **CONFIDENTIAL & INTERNAL USE ONLY**  
 > **Agency**: AJPR World (`ajprworld.com`)  
-> **Objective**: Outrank WebFX and Web Tonic systematically by executing on high-intent money clusters, vertical industry pages, US metro expansion, and passive link-earning assets — **with zero chaos**.
+> **Target Benchmark**: `webtonic.io/blog/marketing-strategy-consulting-how-to-choose-a-provider`  
+> **Strategic Objective**: Outrank WebFX and Web Tonic systematically by executing on high-intent money clusters, vertical industry pages, US metro expansion, and passive link-earning assets — **with zero chaos**.
 
 ---
+
+# PART 1: COMPETITIVE TEARDOWN & ACTION PLAN (WEB TONIC vs. AJPR)
+
+## 1. Executive Summary & Benchmark Target
+- **Target URL**: `https://webtonic.io/blog/marketing-strategy-consulting-how-to-choose-a-provider`
+- **Core Mission**: Reverse-engineer Web Tonic's editorial, E-E-A-T, and conversion systems, implement superior architecture on `ajprworld.com`, and capture high-intent organic consulting traffic.
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1. Breadcrumbs: Growth Marketing > News > Category > Topic                 │
+│ 2. Headline + Subtitle (Lead Deck with 6 Vetting Pillars)                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 3. E-E-A-T Multi-Verification Bar                                          │
+│    - WRITTEN BY: Founder & CEO (Credentials, exits, ad spend managed)       │
+│    - VERIFIED BY: Technical Editor (M.Sc. Management, Google Certifications)│
+│    - Tag: Category Pill + [MAKE US A PREFERRED SOURCE] button               │
+│    - Links: Editorial Policy & Data-Driven Vetting Methodology              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 4. Interactive Reader Widgets                                               │
+│    - Collapsible Table of Contents (TOC)                                    │
+│    - "Summarize with AI" (ChatGPT / Claude / Gemini / Perplexity prompts)   │
+│    - "Key Takeaways" summary box before the fold                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 5. Front-End Product Wedge: The "$1,500 Diagnostic Audit"                  │
+│    - Pitching a paid audit to de-risk clients before pitching retainers     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 6. Programmatic Metro Interception (Related Articles Footer)                │
+│    - "Detroit AI Marketing Consultants (2026)"                              │
+│    - "Sacramento AI Marketing List (2026)"                                  │
+│    - "Las Vegas AI Marketing Without Buzzwords (2026)"                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 2. The 7 Strategic Levers: How AJPR World Wins
+
+### Lever 1: The "Double E-E-A-T" Dual-Author Verification System
+- **What Web Tonic Does**: Displays two credentialed profiles: Founder & CEO + Technical Editor (M.Sc.).
+- **Why Google Rewards It**: Google’s Core Updates heavily prioritize human verification and rigorous editorial review for commercial advisory and financial content.
+- **Our Implementation**: Built into [`app/blog/[slug]/BlogArticleClient.tsx`](/app/blog/[slug]/BlogArticleClient.tsx):
+  - **Author**: Aman Joshi (Founder & Systems Architect).
+  - **Verified By**: Zahra Sanati (M.Sc. Analytics & Head of Growth).
+  - **Schema**: Injected JSON-LD with distinct `author`, `editor`, and `publisher` properties.
+
+### Lever 2: The "Make Us a Preferred Source" Google News Hook
+- **What Web Tonic Does**: Outline button `MAKE US A PREFERRED SOURCE` linking to Google preferences.
+- **Why It Works**: Encourages readers with Google accounts to mark the domain as preferred, boosting articles in Google Discover and Chrome New Tab feeds.
+- **Our Implementation**: Integrated on AJPR World's blog header, copying our live RSS feed (`https://ajprworld.com/feed.xml`) and linking into Google News source preferences.
+
+### Lever 3: AI Prompting & Summarization Bar
+- **What Web Tonic Does**: `Summarize this article with AI` widget linking to ChatGPT, Claude, and Perplexity.
+- **Why It Works**: When visitors query LLMs with the URL, it trains the model's retrieval engine to cite the URL for subsequent queries.
+- **Our Implementation**: On-page interactive accordion generating an instant 4-bullet executive summary tailored per article, increasing on-site dwell time.
+
+### Lever 4: The Low-Friction Offer ("Diagnostic Audit" vs "$5k Retainer")
+- **What Web Tonic Does**: Pitches a $1,500 diagnostic audit rather than forcing a $5,000/mo retainer on cold visitors.
+- **Why It Works**: B2B buyers have high risk aversion. A $1,500 diagnostic is an easy corporate purchase with zero long-term liability.
+- **Our Implementation**: Embedded an interactive **48-Hour Diagnostic Audit Modal** directly inside every blog post to capture Website URL, Work Email, and Primary Growth Bottleneck with zero friction.
+
+### Lever 5: Original Research Citations (The Link Magnet)
+- **What Web Tonic Does**: Cites 9 external secondary reports (Gather, Consulting Success, Spencer Stuart).
+- **Our Implementation**: In addition to industry benchmarks, we cite our proprietary study — the [2026 US Agency Pricing Report](/research/agency-pricing-report) (survey of 214 US agencies) — making AJPR World the primary citation source that earning organic backlinks.
+
+### Lever 6: Programmatic Metro Listicle Expansion
+- **What Web Tonic Does**: Ranks for `[City] AI Marketing Consultants in 2026` in article footers.
+- **Our Implementation**: Scaffolded top US buyer metros (Austin, Denver, Phoenix, Charlotte, Tampa, Nashville, Dallas, Atlanta, Miami, Chicago, New York, San Francisco) under `/locations/[city]/[service]`.
+
+### Lever 7: Transparent Pricing Infrastructure
+- **What Competitors Lack**: Vague "Request Proposal" forms that require 3 sales calls.
+- **Our Implementation**: Dedicated money guides at `/pricing/seo-cost`, `/pricing/ppc-cost`, and `/pricing/website-cost` with public tier benchmarks.
+
+---
+
+## 3. 30-Day Step-by-Step Action Plan
+
+### Phase 1: Deploy Template & Seed Benchmark Post (COMPLETED)
+- [x] Redesigned `app/blog/[slug]/page.tsx` and built `BlogArticleClient.tsx` with Web Tonic’s signature UI elements.
+- [x] Published counter-article: `/blog/marketing-strategy-consulting-how-to-choose-a-provider`.
+- [x] Verified with `npm run build`: 144 static & dynamic pages generated with 0 errors.
+
+### Phase 2: Content Multiplication (DEPLOYED)
+- [x] `marketing-strategy-consultant-cost-rates`: Rates ($150-$350/hr), diagnostic sprints ($2.5k-$7.5k), and retainers.
+- [x] `b2b-marketing-strategy-in-house-vs-agency-vs-consultant`: Total Cost of Ownership ($193k-$271k in-house vs $42k-$90k consultant).
+- [x] `best-b2b-growth-marketing-agencies-us`: Vetted shortlist featuring AJPR World, Refine Labs, WebFX, and Directive.
+
+### Phase 3: Passive Link Generation & Digital PR (ONGOING)
+- [ ] Weekly Digital PR push (Template #1) sharing findings from the 214-agency pricing study.
+- [ ] Submit `https://ajprworld.com/feed.xml` to Google Publisher Center for Google News indexing.
+
+---
+
+# PART 2: STAFF OPERATIONS & EXECUTION MANUAL (SOP)
 
 ## 1. Zero-Chaos Core Principles
 

@@ -45,20 +45,19 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
     console.error("Failed to load blogs:", err);
   }
 
-  // Ensure high-priority cornerstone guides are featured
+  // Ensure high-priority cornerstone guides are featured, with the benchmark article pinned strictly on top
   for (const cp of [...CORNERSTONE_BLOG_POSTS].reverse()) {
-    if (!allBlogs.some(b => b.slug === cp.slug)) {
-      allBlogs.unshift({
-        id: cp.id,
-        slug: cp.slug,
-        title: cp.title,
-        excerpt: cp.excerpt,
-        author: cp.author,
-        cover_image: cp.cover_image,
-        created_at: cp.published_at,
-        published: true
-      });
-    }
+    allBlogs = allBlogs.filter(b => b.slug !== cp.slug);
+    allBlogs.unshift({
+      id: cp.id,
+      slug: cp.slug,
+      title: cp.title,
+      excerpt: cp.excerpt,
+      author: cp.author,
+      cover_image: cp.cover_image,
+      created_at: cp.published_at,
+      published: true
+    });
   }
 
   // Map category to each blog

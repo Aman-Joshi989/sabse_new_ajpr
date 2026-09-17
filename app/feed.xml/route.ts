@@ -1,4 +1,5 @@
 import { getBlogs } from '@/lib/db/queries';
+import { CORNERSTONE_BLOG_POSTS } from '@/lib/blog-data';
 
 export const revalidate = 3600; // Cache for 1 hour to prevent DB drain
 
@@ -10,9 +11,23 @@ export async function GET() {
     console.error('Failed to fetch blogs for RSS feed', error);
   }
 
+  // Ensure cornerstone articles are included in the RSS feed
+  const combinedBlogs = [...blogs];
+  for (const cp of CORNERSTONE_BLOG_POSTS) {
+    if (!combinedBlogs.some(b => b.slug === cp.slug)) {
+      combinedBlogs.unshift({
+        slug: cp.slug,
+        title: cp.title,
+        excerpt: cp.excerpt,
+        author: cp.author,
+        created_at: cp.published_at,
+      });
+    }
+  }
+
   const siteUrl = 'https://ajprworld.com';
 
-  const rssItems = blogs
+  const rssItems = combinedBlogs
     .map((blog) => {
       const blogUrl = `${siteUrl}/blog/${blog.slug}`;
       const pubDate = new Date(blog.created_at).toUTCString();

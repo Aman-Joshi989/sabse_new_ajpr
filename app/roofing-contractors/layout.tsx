@@ -3,6 +3,9 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
     title: 'Web Design & SEO for Roofing Contractors | AJPR World',
     description: 'Double your exclusive roofing leads with a high-converting web engine. We build premium, SEO-optimized websites and local marketing systems for US and Canadian roofing contractors.',
+    alternates: {
+        canonical: 'https://ajprworld.com/roofing-contractors',
+    },
     openGraph: {
         title: 'Web Design & SEO for Roofing Contractors | AJPR World',
         description: 'Double your exclusive roofing leads with a high-converting web engine.',
@@ -18,6 +21,13 @@ export const metadata: Metadata = {
             }
         ],
     },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Web Design & SEO for Roofing Contractors | AJPR World',
+        description: 'Double your exclusive roofing leads with a high-converting web engine.',
+        creator: '@ajprworld',
+        images: ['https://ajprworld.com/og-image.jpg']
+    }
 }
 
 export default function RoofingLayout({

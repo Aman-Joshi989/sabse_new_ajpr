@@ -106,18 +106,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/demo-cpu`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/demo-shining`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
       url: `${baseUrl}/free-audit`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
@@ -184,6 +172,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/tools/action-figure-generator`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/roofing-contractors`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
@@ -219,16 +213,144 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/services/geo-optimization`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/pricing/seo-cost`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/pricing/ppc-cost`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/pricing/website-cost`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/industries`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/industries/home-services`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/industries/saas-marketing`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/industries/healthcare-marketing`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/industries/ecommerce-marketing`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/platforms/shopify-seo`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/platforms/webflow-agency`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/compare`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/compare/webfx-alternatives`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/compare/webtonic-alternatives`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/tools/agency-pricing-calculator`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/research/agency-pricing-report`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/blog/marketing-strategy-consulting-how-to-choose-a-provider`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/marketing-strategy-consultant-cost-rates`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/b2b-marketing-strategy-in-house-vs-agency-vs-consultant`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/best-b2b-growth-marketing-agencies-us`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/sitemap`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7,
+    },
   ]
 
-  // Programmatic local SEO pages for Uttarakhand
+  // Programmatic local SEO pages for US Metros and Regional Hubs
   const targetCities = [
+    'austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 
+    'dallas', 'atlanta', 'miami', 'chicago', 'boston', 'seattle',
+    'new-york', 'san-francisco',
     'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 
-    'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand',
-    'new-york', 'london', 'san-francisco', 'singapore', 'dubai', 
-    'sydney', 'toronto', 'austin', 'chicago', 'boston'
+    'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
   ];
   const targetServices = [
+    'seo-agency', 'ppc-agency', 'web-design', 'digital-marketing', 'social-media-marketing',
     'custom-software', 'web-development', 'app-development', 'ai-solutions', 'cloud-architecture'
   ];
   
@@ -258,7 +380,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'weekly' as const,
         priority: 0.8,
       }));
-      servicePages = [...servicePages, ...baseServices];
+
+      // Programmatic service location pages for global tech hubs
+      const globalHubs = ['new-york', 'london', 'san-francisco', 'singapore', 'dubai'];
+      const locationServicePages: MetadataRoute.Sitemap = [];
+      for (const service of services) {
+        for (const city of globalHubs) {
+          locationServicePages.push({
+            url: `${baseUrl}/services/${service.slug}/${city}`,
+            lastModified: service.created_at ? new Date(service.created_at) : new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.85,
+          });
+        }
+      }
+
+      servicePages = [...servicePages, ...baseServices, ...locationServicePages];
     }
   } catch (error) {
     console.error('Error fetching services for sitemap:', error)

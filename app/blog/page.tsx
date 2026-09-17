@@ -7,6 +7,7 @@ import { ArrowRight, BookOpen, Clock, Tag } from 'lucide-react';
 import React from 'react';
 import { Metadata } from 'next';
 import { getSeoMetadata } from "@/lib/db/queries";
+import { CORNERSTONE_BLOG_POSTS } from '@/lib/blog-data';
 
 export const revalidate = 3600; // Cache for 1 hour (ISR) to protect Vercel free limits
 type BlogPost = {
@@ -42,6 +43,22 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
     allBlogs = (fetched || []) as BlogPost[];
   } catch (err) {
     console.error("Failed to load blogs:", err);
+  }
+
+  // Ensure high-priority cornerstone guides are featured
+  for (const cp of [...CORNERSTONE_BLOG_POSTS].reverse()) {
+    if (!allBlogs.some(b => b.slug === cp.slug)) {
+      allBlogs.unshift({
+        id: cp.id,
+        slug: cp.slug,
+        title: cp.title,
+        excerpt: cp.excerpt,
+        author: cp.author,
+        cover_image: cp.cover_image,
+        created_at: cp.published_at,
+        published: true
+      });
+    }
   }
 
   // Map category to each blog
@@ -232,7 +249,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
       const seo = await getSeoMetadata('/blog');
       return {
-    alternates: { canonical: '/blog' },
+        alternates: { canonical: 'https://ajprworld.com/blog' },
         title: seo?.title,
         description: seo?.description,
         openGraph: {

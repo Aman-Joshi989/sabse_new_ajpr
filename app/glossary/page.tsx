@@ -7,6 +7,9 @@ export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel f
 export const metadata: Metadata = {
   title: 'Startup AI & Technology Glossary | AJPR World',
   description: 'Comprehensive glossary and dictionary of artificial intelligence, software development, and B2B SaaS startup terminology. Learn industry standards.',
+  alternates: {
+    canonical: 'https://ajprworld.com/glossary',
+  },
   openGraph: {
     title: 'Tech & AI Glossary | AJPR World',
     description: 'Explore our comprehensive glossary of AI and startup terms.',
@@ -14,15 +17,22 @@ export const metadata: Metadata = {
     siteName: 'AJPR World',
     locale: 'en_US',
     type: 'website',
-            images: [
-                {
-                    url: 'https://ajprworld.com/og-image.jpg',
-                    width: 1200,
-                    height: 630,
-                    alt: 'AJPR World',
-                }
-            ],
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'AJPR World',
+      }
+    ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tech & AI Glossary | AJPR World',
+    description: 'Comprehensive glossary and dictionary of artificial intelligence, software development, and B2B SaaS startup terminology.',
+    creator: '@ajprworld',
+    images: ['https://ajprworld.com/og-image.jpg']
+  }
 }
 
 export default async function GlossaryIndexPage() {

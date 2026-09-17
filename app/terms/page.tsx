@@ -115,7 +115,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
       const seo = await getSeoMetadata('/terms');
       return {
-    alternates: { canonical: '/terms' },
+        alternates: { canonical: 'https://ajprworld.com/terms' },
         title: seo?.title,
         description: seo?.description,
         openGraph: {

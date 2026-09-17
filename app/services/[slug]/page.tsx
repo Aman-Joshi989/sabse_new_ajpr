@@ -104,6 +104,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         return {
             title: override.title,
             description: override.description,
+            alternates: {
+                canonical: `https://ajprworld.com/services/${slug}`,
+            },
             openGraph: {
                 title: override.title,
                 description: override.description,
@@ -119,6 +122,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
                         alt: override.title,
                     }
                 ],
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: override.title,
+                description: override.description,
+                creator: '@ajprworld',
+                images: ['https://ajprworld.com/og-image.jpg']
             }
         };
     }

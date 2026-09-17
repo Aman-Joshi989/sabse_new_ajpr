@@ -21,27 +21,34 @@ export const revalidate = 86400;
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })
 
-export function cleanMetaTitle(title: string, maxLen = 70): string {
+export function cleanMetaTitle(title: string, maxLen = 60): string {
   if (!title) return '';
   const clean = title.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
   if (clean.length <= maxLen) return clean;
-  return clean.slice(0, maxLen - 3).trim() + '...';
-}
-
-export function cleanMetaDescription(desc: string, maxLen = 160, minLen = 110): string {
-  if (!desc) return '';
-  const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-  
-  if (clean.length <= maxLen && clean.length >= minLen) return clean;
-  if (clean.length < minLen) {
-    const padded = `${clean} | AJPR World builds custom AI MVPs and scalable web systems.`;
-    return padded.length > maxLen ? padded.slice(0, maxLen - 3).trim() + '...' : padded;
-  }
-  
   const sliced = clean.slice(0, maxLen - 3);
   const lastSpace = sliced.lastIndexOf(' ');
   if (lastSpace > maxLen * 0.7) {
-      return clean.slice(0, lastSpace).trim() + '...';
+    return clean.slice(0, lastSpace).trim() + '...';
+  }
+  return sliced.trim() + '...';
+}
+
+export function cleanMetaDescription(desc: string, maxLen = 158, minLen = 110): string {
+  if (!desc) return '';
+  const clean = desc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  
+  let target = clean;
+  if (clean.length < minLen) {
+    target = `${clean} | AJPR World builds custom AI MVPs and scalable web systems.`;
+  }
+  
+  if (target.length <= maxLen && target.length >= minLen) return target;
+  if (target.length <= maxLen) return target;
+  
+  const sliced = target.slice(0, maxLen - 3);
+  const lastSpace = sliced.lastIndexOf(' ');
+  if (lastSpace > maxLen * 0.7) {
+    return sliced.slice(0, lastSpace).trim() + '...';
   }
   return sliced.trim() + '...';
 }
@@ -56,6 +63,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
     return {
       metadataBase: new URL('https://ajprworld.com'),
+      alternates: {
+        canonical: 'https://ajprworld.com',
+      },
       title: cleanMetaTitle(settings?.seo_title || 'Custom AI MVP Development & Software Engineering | AJPR World'),
       description: seoDesc,
       keywords: settings?.seo_keywords || 'Custom AI MVP, AI software development, US startup engineering, workflow automation, Next.js developer, B2B software agency',

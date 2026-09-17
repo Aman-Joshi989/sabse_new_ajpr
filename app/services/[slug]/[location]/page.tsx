@@ -102,6 +102,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         return {
             title: override.title,
             description: override.description,
+            alternates: {
+                canonical: `https://ajprworld.com/services/${slug}/${location}`,
+            },
             openGraph: {
                 title: override.title,
                 description: override.description,
@@ -109,14 +112,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
                 siteName: 'AJPR World',
                 locale: 'en_US',
                 type: 'website',
-            images: [
-                {
-                    url: 'https://ajprworld.com/og-image.jpg',
-                    width: 1200,
-                    height: 630,
-                    alt: 'AJPR World',
-                }
-            ],
+                images: [
+                    {
+                        url: 'https://ajprworld.com/og-image.jpg',
+                        width: 1200,
+                        height: 630,
+                        alt: override.title,
+                    }
+                ],
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: override.title,
+                description: override.description,
+                creator: '@ajprworld',
+                images: ['https://ajprworld.com/og-image.jpg']
             }
         };
     }

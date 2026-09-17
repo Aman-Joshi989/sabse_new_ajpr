@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Free Technical & SEO Audit | AJPR World',
   description: 'Apply for a free technical architecture and SEO audit from our senior engineering team.',
   alternates: {
-    canonical: '/free-audit'
+    canonical: 'https://ajprworld.com/free-audit'
   },
   openGraph: {
     title: 'Free Technical & SEO Audit | AJPR World',

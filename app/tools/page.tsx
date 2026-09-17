@@ -11,16 +11,29 @@ import {
     Clock, 
     ShieldCheck,
     CheckCircle2,
-    Zap
+    Zap,
+    Wand2
 } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Free Productivity & Automation Tools for US Businesses | AJPR World',
     description: 'Free interactive tools, calculators, and generators designed to help US founders, agency operators, and business owners eliminate administrative drag, calculate automation ROI, and cut SaaS costs.',
+    alternates: {
+        canonical: 'https://ajprworld.com/tools',
+    },
     openGraph: {
         title: 'Free Productivity & Business Tools | AJPR World',
         description: 'Interactive calculators and tools to reclaim billable hours, audit software bloat, and generate client responses.',
         url: 'https://ajprworld.com/tools',
+        siteName: 'AJPR World',
+        images: ['https://ajprworld.com/og-image.jpg'],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Productivity & Automation Tools | AJPR World',
+        description: 'Interactive calculators and tools to eliminate admin drag and cut software costs.',
+        creator: '@ajprworld',
+        images: ['https://ajprworld.com/og-image.jpg']
     }
 };
 
@@ -111,6 +124,16 @@ const toolsList: ToolCard[] = [
         icon: Bot,
         color: 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/60',
         timeToValue: 'Interactive Chat'
+    },
+    {
+        slug: '/tools/action-figure-generator',
+        title: 'AI Action Figure & Toy Box Studio',
+        description: 'Design and generate custom mint-in-box 3D action figures sealed in retro blister packaging with custom accessories, power stats, and Midjourney / DALL-E prompts.',
+        solves: 'Viral Brand Marketing & Custom AI Avatars',
+        badge: 'Viral & Creative AI',
+        icon: Wand2,
+        color: 'text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/40 border-cyan-200 dark:border-cyan-900/60',
+        timeToValue: 'Instant (10 sec)'
     }
 ];
 

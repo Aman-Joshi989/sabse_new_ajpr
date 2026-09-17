@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
   const defaultRule = {
     userAgent: '*',
     allow: '/',
-    disallow: ['/dashboard/', '/api/', '/_next/'],
+    disallow: ['/dashboard/', '/api/', '/_next/', '/login', '/careers/apply'],
   }
 
   // AI and Generative Engine bots (Important for GEO/AI citations)
@@ -30,7 +30,7 @@ export default function robots(): MetadataRoute.Robots {
   const aiRules = aiUserAgents.map((agent) => ({
     userAgent: agent,
     allow: '/',
-    disallow: ['/dashboard/', '/api/', '/_next/'],
+    disallow: ['/dashboard/', '/api/', '/_next/', '/login', '/careers/apply'],
   }))
 
   return {

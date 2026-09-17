@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Pricing & Packages | AJPR World',
   description: 'Transparent pricing for premium web development, MVP engineering, and SEO audits.',
   alternates: {
-    canonical: '/pricing'
+    canonical: 'https://ajprworld.com/pricing'
   },
   openGraph: {
     title: 'Pricing & Packages | AJPR World',

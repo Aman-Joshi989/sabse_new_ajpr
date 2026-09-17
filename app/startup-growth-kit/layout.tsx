@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
       const seo = await getSeoMetadata('/startup-growth-kit');
       return {
-    alternates: { canonical: '/startup-growth-kit' },
+        alternates: { canonical: 'https://ajprworld.com/startup-growth-kit' },
         title: seo?.title,
         description: seo?.description,
         openGraph: {

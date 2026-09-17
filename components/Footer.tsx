@@ -19,10 +19,10 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
     const activeServices = services && services.length > 0
         ? services.slice(0, 6).map((s: any) => ({ name: s.title, href: `/services/${s.slug}` }))
         : [
+            { name: 'GEO (AI Search Optimization)', href: '/services/geo-optimization' },
+            { name: 'Shopify SEO Agency', href: '/platforms/shopify-seo' },
+            { name: 'Webflow Development & SEO', href: '/platforms/webflow-agency' },
             { name: 'Custom Web Dev', href: '/services/custom-web-development-ai-solutions' },
-            { name: 'AI Chatbot Dev', href: '/services/ai-chatbot-development' },
-            { name: 'AI Automation', href: '/services/business-ai-automation' },
-            { name: 'AI Voice Agents', href: '/services/ai-voice-agent-development' },
             { name: 'Digital Marketing', href: '/services/ai-digital-marketing-services' },
             { name: 'Performance Marketing', href: '/services/performance-marketing' },
         ];
@@ -30,22 +30,26 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
     const activeBlogs = blogs && blogs.length > 0
         ? blogs.slice(0, 3).map((b: any) => ({ name: b.title, href: `/blog/${b.slug}` }))
         : [
-            { name: 'What is GEO (AI Search)?', href: '/blog/what-is-geo-generative-engine-optimization' }
+            { name: 'What is GEO (AI Search)?', href: '/blog/what-is-geo-generative-engine-optimization' },
+            { name: '2026 Agency Pricing Report', href: '/research/agency-pricing-report' },
+            { name: 'WebFX Alternatives Comparison', href: '/compare/webfx-alternatives' }
         ];
 
     const companyLinks = [
         { name: 'About Us', href: '/about' },
-        { name: 'Careers', href: '/careers' },
+        { name: 'Industry Solutions', href: '/industries' },
+        { name: 'Agency Comparisons', href: '/compare' },
+        { name: 'Pricing & Retainers', href: '/pricing' },
         { name: 'Portfolio', href: '/portfolio' },
-        { name: 'Aman Joshi (CEO)', href: '/aman-joshi' },
         { name: 'Contact', href: '/contact' },
     ];
 
     const resourceLinks = [
+        { name: 'SEO Cost Guide (2026)', href: '/pricing/seo-cost' },
+        { name: 'PPC Management Cost', href: '/pricing/ppc-cost' },
+        { name: 'Website Cost Guide', href: '/pricing/website-cost' },
+        { name: 'Agency ROI Calculator', href: '/tools/agency-pricing-calculator' },
         { name: 'Free US Business Tools', href: '/tools' },
-        { name: 'Refer & Earn (20%)', href: '/affiliates' },
-        { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
-        { name: 'AI Chat Playground', href: '/chat-agents' },
         { name: 'Tech & AI Glossary', href: '/glossary' },
     ];
 

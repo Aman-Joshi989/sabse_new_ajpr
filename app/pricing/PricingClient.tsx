@@ -118,6 +118,72 @@ export default function PricingClient({ products }: { products: Product[] }) {
             );
           })}
         </div>
+
+        {/* 2026 Transparent Cost & Retainer Guides */}
+        <div className="max-w-7xl mx-auto mt-24 pt-16 border-t border-slate-800">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+              Explore Dedicated 2026 Cost & Retainer Guides
+            </h2>
+            <p className="text-slate-400 text-sm">
+              We believe in radical pricing transparency. Check real retainer breakdowns, hourly rates, and ROI expectations for every marketing channel.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <a
+              href="/pricing/seo-cost"
+              className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 transition-all group block"
+            >
+              <div className="text-xs uppercase font-bold text-blue-400 tracking-wider mb-2">SEO Retainers</div>
+              <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-2">
+                How Much Does SEO Cost? (2026 Guide) →
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Realistic retainers range from $1,500 to $10,000/mo. Compare hourly vs project vs ongoing performance tiers.
+              </p>
+            </a>
+
+            <a
+              href="/pricing/ppc-cost"
+              className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 transition-all group block"
+            >
+              <div className="text-xs uppercase font-bold text-emerald-400 tracking-wider mb-2">Google & Meta Ads</div>
+              <h3 className="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
+                PPC Management Cost Breakdown →
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Discover standard flat fees ($1,500–$5,000/mo) vs % of ad spend (10-20%) with zero media markups.
+              </p>
+            </a>
+
+            <a
+              href="/pricing/website-cost"
+              className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/50 transition-all group block"
+            >
+              <div className="text-xs uppercase font-bold text-indigo-400 tracking-wider mb-2">Web Design Scope</div>
+              <h3 className="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors mb-2">
+                Custom Website Cost Guide (2026) →
+              </h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                From $3,500 startup sites to $25,000+ custom Next.js platforms. See exact scope and timeline deliverables.
+              </p>
+            </a>
+          </div>
+
+          <div className="mt-12 p-6 rounded-2xl bg-gradient-to-r from-blue-900/40 to-indigo-950/50 border border-blue-800/40 text-center flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-left">
+              <div className="text-sm font-bold text-white">Need a customized agency budget projection?</div>
+              <div className="text-xs text-slate-400">Calculate recommended monthly retainers and projected 12-month revenue with our free calculator.</div>
+            </div>
+            <a
+              href="/tools/agency-pricing-calculator"
+              className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold whitespace-nowrap transition-colors"
+            >
+              Open Agency ROI Calculator →
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -19,6 +19,7 @@ export default function AdminLayout({
 
   const navItems = [
     { name: 'Overview', href: '/dashboard/admin', icon: LayoutTemplate },
+    { name: '📖 Staff Operations Manual', href: '/dashboard/admin/operations-manual', icon: FileText },
     { name: '🤖 AI Agent Roster', href: '/dashboard/admin/agents', icon: Bot },
     { name: '🔥 Growth Engine', href: '/dashboard/admin/growth', icon: Zap },
     { name: 'CRM (Leads)', href: '/dashboard/admin/leads', icon: Users },

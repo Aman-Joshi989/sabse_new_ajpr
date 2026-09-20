@@ -229,8 +229,28 @@ export default function BookCallPage() {
                         </div>
 
                         <p className="text-xs md:text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-                            Book a direct discovery call with AJPR World’s tech consultants to map out MVP designs, system architectures, automation loops, or SEO growth strategies.
+                            Book a direct 1-on-1 strategy call with senior systems architect Aman Joshi to map your software MVP, AI automation, or high-converting web architecture.
                         </p>
+
+                        {/* Competitor Contrast Trust Points */}
+                        <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-white/10">
+                            <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                                <span>Direct with senior engineer &bull; No sales reps</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                                <span>Guaranteed 2–4 week MVP sprint delivery</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                                <span>100% code & IP ownership &bull; Zero lock-in</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                                <span>Month-to-month or flat sprints &bull; No lock-in</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="pt-4 border-t border-slate-200/50 dark:border-white/5 flex items-center justify-between text-xs text-slate-400">

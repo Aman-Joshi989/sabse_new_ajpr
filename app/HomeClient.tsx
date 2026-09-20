@@ -798,6 +798,113 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           </div>
         </section>
 
+        {/* 6.8 COMPETITOR COMPARISON MATRIX */}
+        <section className="py-20 bg-slate-50/70 dark:bg-[#070c18] border-b border-slate-200 dark:border-slate-800 relative">
+          <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+            <div className="max-w-3xl mb-12">
+              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+                Competitive Breakdown
+              </Badge>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+                Why Ambitious Brands Choose Us Over Legacy Agencies.
+              </h2>
+              <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                See how AJPR World stacks up against 500-person legacy agencies (like WebFX), slow traditional dev shops, and the exorbitant cost of in-house hiring.
+              </p>
+            </div>
+
+            {/* Comparison Table */}
+            <div className="overflow-x-auto rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0a0f1c] shadow-xl">
+              <table className="w-full text-left border-collapse min-w-[720px]">
+                <thead>
+                  <tr className="border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider font-bold">
+                    <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">Evaluation Metric</th>
+                    <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">Legacy Agencies (e.g., WebFX)</th>
+                    <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">In-House US Developer</th>
+                    <th className="p-5 bg-blue-600/10 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 w-1/4 border-l border-blue-200 dark:border-blue-800 font-extrabold">
+                      AJPR World
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs md:text-sm">
+                  <tr>
+                    <td className="p-5 font-bold text-slate-900 dark:text-white">Delivery Velocity</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">3 to 6 months of scope creep & delays</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">3+ months hiring + 2 months onboarding</td>
+                    <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
+                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="w-4 h-4 shrink-0" /> 14 to 30 Days Guaranteed
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-5 font-bold text-slate-900 dark:text-white">Who Actually Works on It</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">Junior account coordinator relaying to offshore pool</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">Single dev (limited to one skillset)</td>
+                    <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
+                      <span className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
+                        <CheckCircle2 className="w-4 h-4 shrink-0" /> Direct Senior Systems Engineers
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-5 font-bold text-slate-900 dark:text-white">Contract Commitments</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">6 to 12-month non-cancellable lock-in</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">Full-time salary + benefits + severance liability</td>
+                    <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
+                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="w-4 h-4 shrink-0" /> Fixed Sprints or Month-to-Month
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-5 font-bold text-slate-900 dark:text-white">Code & Data Ownership</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">Proprietary platform lock-in (e.g., MarketingCloudFX)</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">Company owns code</td>
+                    <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
+                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="w-4 h-4 shrink-0" /> 100% Client-Owned (Full Repo Transfer)
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-5 font-bold text-slate-900 dark:text-white">Total Investment</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">$5,000–$15,000/mo + software upsell fees</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">$180,000–$240,000/yr + 28% overhead</td>
+                    <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
+                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="w-4 h-4 shrink-0" /> $4,500 sprint or $5,500/mo pod (70% savings)
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-5 font-bold text-slate-900 dark:text-white">Technology Stack</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">WordPress, template builders, legacy PHP</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">Constrained to single engineer's stack</td>
+                    <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
+                      <span className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
+                        <CheckCircle2 className="w-4 h-4 shrink-0" /> Next.js 15, PostgreSQL, AI Agents & Edge
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800">
+              <span className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300">
+                Want to read our in-depth breakdown of legacy agency models and proprietary software lock-in?
+              </span>
+              <Link
+                href="/compare/webfx-alternatives"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline shrink-0"
+              >
+                Read WebFX Alternatives Guide <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* 7. HOW WE WORK */}
         <section className="py-16 md:py-20 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-5xl">

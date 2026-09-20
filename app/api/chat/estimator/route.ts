@@ -1,12 +1,13 @@
 import { openai } from '@ai-sdk/openai';
-import { streamText } from 'ai';
+import { streamText, convertToModelMessages } from 'ai';
 
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-    const { messages } = await req.json();
+    try {
+        const { messages } = await req.json();
 
-    const systemPrompt = `You are a highly technical and professional Custom AI MVP Cost Estimator working for AJPR World, a premium software engineering agency.
+        const systemPrompt = `You are a highly technical and professional Custom AI MVP Cost Estimator working for AJPR World, a premium software engineering agency.
 Your goal is to estimate the cost of building a Custom AI solution based on the user's requirements.
 Always provide a structured response in Markdown:
 1. **Architecture Overview**: Briefly explain the tech stack (e.g., Next.js, Vercel AI SDK, Supabase, pgvector).
@@ -16,11 +17,20 @@ Always provide a structured response in Markdown:
 
 Be extremely professional, concise, and technical. Speak confidently about AI capabilities.`;
 
-    const result = await streamText({
-        model: openai('gpt-4o-mini'),
-        system: systemPrompt,
-        messages,
-    });
+        const modelMessages = await convertToModelMessages(messages);
 
-    return (result as any).toDataStreamResponse ? (result as any).toDataStreamResponse() : (result as any).toTextStreamResponse();
+        const result = streamText({
+            model: openai('gpt-4o-mini'),
+            system: systemPrompt,
+            messages: modelMessages,
+        });
+
+        return result.toUIMessageStreamResponse();
+    } catch (error: any) {
+        console.error("Estimator chat API error:", error);
+        return new Response(JSON.stringify({ error: error?.message || 'Failed to estimate' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' },
+        });
+    }
 }

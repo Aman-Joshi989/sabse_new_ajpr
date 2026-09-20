@@ -16,7 +16,7 @@ export default function HermesChatWidget() {
   const [leadPhone, setLeadPhone] = useState('');
   const [leadMessage, setLeadMessage] = useState('');
   
-  const { messages, sendMessage, status, setMessages } = useChat();
+  const { messages, sendMessage, status, setMessages, error } = useChat();
   
   const isLoading = status === 'streaming' || status === 'submitted';
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -198,6 +198,11 @@ export default function HermesChatWidget() {
                       <div className="bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 p-4 rounded-2xl rounded-tl-none shadow-sm">
                         <Loader2 className="w-4 h-4 animate-spin text-indigo-500" />
                       </div>
+                    </div>
+                  )}
+                  {error && (
+                    <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-xl text-xs text-red-600 dark:text-red-300 text-center">
+                      Unable to connect to Agent Hermes. Please try again or email contact@ajprworld.com.
                     </div>
                   )}
                   <div ref={messagesEndRef} />

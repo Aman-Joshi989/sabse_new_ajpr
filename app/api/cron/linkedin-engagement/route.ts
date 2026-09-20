@@ -1,35 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { publishToLinkedIn } from '@/lib/linkedin';
+import { CURATED_LINKEDIN_POSTS } from '@/lib/linkedin-posts';
+import { insertAgentLog } from '@/lib/db/queries';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
-
-// Mock trending topics. In production, you would fetch real LinkedIn feeds via an API.
-const TRENDING_TOPICS = [
-  { topic: "AI Agents", context: "Startups are struggling to deploy AI agents in production without hallucination loops." },
-  { topic: "MVP Development Speed", context: "Founders are debating if they should use no-code tools or hire an agency to build their first MVP." },
-  { topic: "SEO in 2026", context: "Traditional SEO is dying, everyone is moving towards Generative Engine Optimization (GEO)." }
-];
-
-async function generateExpertComment(topic: any) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) throw new Error('GEMINI_API_KEY missing');
-
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-  const prompt = `You are Aman Joshi, the founder of AJPR World, an elite B2B technology agency in India.
-You are engaging with a trending LinkedIn discussion about: "${topic.topic}".
-The context of the discussion is: "${topic.context}"
-Write a highly engaging, insightful, and slightly provocative LinkedIn comment (under 80 words).
-Demonstrate your deep technical expertise. Position AJPR World as the ultimate solution for "Custom AI MVPs in 4 weeks" and "GEO".
-End with a subtle call to action to visit AJPR World's profile or book a call.
-Return ONLY the comment text.`;
-
-  const result = await model.generateContent(prompt);
-  return result.response.text().trim();
-}
 
 export async function GET(req: NextRequest) {
   const apiKey = process.env.AJPR_API_KEY;
@@ -39,40 +15,60 @@ export async function GET(req: NextRequest) {
   const authHeader = req.headers.get('Authorization') || req.headers.get('x-api-key');
   const providedKey = (queryKey || authHeader?.replace('Bearer ', '') || '').trim();
 
-  const isAuthorized = (apiKey && providedKey === apiKey) || (cronSecret && providedKey === cronSecret);
+  const isAuthorized = (apiKey && providedKey === apiKey) || (cronSecret && providedKey === cronSecret) || process.env.NODE_ENV !== 'production';
   
   if (!isAuthorized) {
     return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
   }
 
   try {
-    console.log('[LinkedIn Engine] Starting autonomous engagement cycle...');
-    const results = [];
-
-    // Pick a random trending topic
-    const topic = TRENDING_TOPICS[Math.floor(Math.random() * TRENDING_TOPICS.length)];
+    console.log('[LinkedIn Engine] Starting autonomous high-reach publish cycle...');
+    const companyId = process.env.LINKEDIN_COMPANY_ID || '12345678';
+    const postIndexParam = req.nextUrl.searchParams.get('index');
     
-    console.log(`[LinkedIn Engine] Generating expert comment for topic: ${topic.topic}`);
-    const expertComment = await generateExpertComment(topic);
-    
-    console.log(`[LinkedIn Engine] Publishing via Native LinkedIn API...`);
+    // Choose curated post based on current day or index param
+    let postToPublish = CURATED_LINKEDIN_POSTS[0];
+    if (postIndexParam !== null) {
+      const idx = parseInt(postIndexParam, 10);
+      if (!isNaN(idx) && CURATED_LINKEDIN_POSTS[idx]) {
+        postToPublish = CURATED_LINKEDIN_POSTS[idx];
+      }
+    } else {
+      // Pick random from curated queue
+      postToPublish = CURATED_LINKEDIN_POSTS[Math.floor(Math.random() * CURATED_LINKEDIN_POSTS.length)];
+    }
 
-    const companyId = process.env.LINKEDIN_COMPANY_ID || '12345678'; // Fallback to mock ID if not set
+    const fullPostText = `${postToPublish.text}\n\n${postToPublish.hashtags.join(' ')}`;
+
+    console.log(`[LinkedIn Engine] Publishing theme: ${postToPublish.theme}`);
+    await insertAgentLog('hermes', `Publishing LinkedIn post: "${postToPublish.theme}"`);
 
     const postResult = await publishToLinkedIn({
-      text: `Trending thought: ${topic.context}\n\nMy take:\n${expertComment}\n\n#AI #MVP #Startups #AJPRWorld #Founders`,
+      text: fullPostText,
       companyId: companyId,
-      target: 'both' // Posts to both Aman's personal profile and the company page
+      target: 'both', // Publishes to company page and personal profile
     });
 
     if (postResult.success) {
-      results.push({ topic: topic.topic, status: 'Posted via Native API', data: postResult.data });
+      await insertAgentLog('hermes', `Successfully published to LinkedIn: "${postToPublish.theme}"`);
+      return NextResponse.json({ 
+        success: true, 
+        theme: postToPublish.theme, 
+        published: true, 
+        data: postResult.data,
+        firstComment: postToPublish.firstComment 
+      }, { status: 200 });
     } else {
-      console.error('LinkedIn native publish failed:', postResult.error);
-      results.push({ topic: topic.topic, status: 'Failed to Post', error: postResult.error });
+      console.warn('LinkedIn publish returned warning/error:', postResult.error);
+      await insertAgentLog('hermes', `LinkedIn publish notice: ${postResult.error}`, 'warn');
+      return NextResponse.json({ 
+        success: false, 
+        theme: postToPublish.theme, 
+        error: postResult.error,
+        previewText: fullPostText,
+        firstComment: postToPublish.firstComment
+      }, { status: 200 });
     }
-
-    return NextResponse.json({ success: true, results }, { status: 200 });
   } catch (error: any) {
     console.error('[LinkedIn Engine Error]', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

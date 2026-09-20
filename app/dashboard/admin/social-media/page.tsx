@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Users, Loader2, Target, CheckCircle2, TrendingUp, Search, Linkedin, Twitter, Youtube, Instagram, MessageCircle, Bot, Inbox, Check, Settings2, BarChart3, ArrowUpRight, Send } from 'lucide-react';
+import { Users, Loader2, Target, CheckCircle2, TrendingUp, Search, Linkedin, Twitter, Youtube, Instagram, MessageCircle, Bot, Inbox, Check, Settings2, BarChart3, ArrowUpRight, Send, Sparkles, Copy, Calendar, Layers, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar } from 'recharts';
+import { CURATED_LINKEDIN_POSTS, LinkedInContentItem } from '@/lib/linkedin-posts';
 
 export default function SocialMediaPage() {
   const [targetNiche, setTargetNiche] = useState('');
@@ -27,6 +28,8 @@ export default function SocialMediaPage() {
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(['twitter', 'linkedin', 'facebook']);
   const [publishing, setPublishing] = useState(false);
   const [publishResult, setPublishResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [selectedQueuePost, setSelectedQueuePost] = useState<LinkedInContentItem | null>(null);
+  const [triggeringCron, setTriggeringCron] = useState<string | null>(null);
 
   const fetchLeads = async () => {
     try {
@@ -388,6 +391,142 @@ export default function SocialMediaPage() {
             </div>
           </div>
 
+        </div>
+      </div>
+
+      {/* LinkedIn High-Reach Content Engine & Queue */}
+      <div className="bg-gradient-to-br from-slate-900 via-[#1E293B] to-slate-950 text-white rounded-xl border border-blue-500/20 p-6 shadow-xl overflow-hidden relative">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-white/10 pb-4">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider mb-2">
+              <Sparkles className="w-3.5 h-3.5" /> High-Reach Thought Leadership
+            </div>
+            <h2 className="text-2xl font-black text-white flex items-center gap-2">
+              <Linkedin className="w-6 h-6 text-blue-400" /> LinkedIn Automated Post Engine
+            </h2>
+            <p className="text-xs text-slate-400 mt-1">
+              Curated viral posts, carousel slide blueprints, and automated 3x/week publishing schedule (Mon, Wed, Fri @ 8:30 AM EST).
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-semibold border border-emerald-500/30">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-2"></span>
+              Cron Active (0 13 * * 1,3,5)
+            </span>
+          </div>
+        </div>
+
+        {/* Post Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {CURATED_LINKEDIN_POSTS.map((post, idx) => (
+            <div 
+              key={post.id}
+              className="bg-slate-800/60 border border-slate-700/60 hover:border-blue-500/50 rounded-lg p-5 transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="px-2.5 py-0.5 rounded text-xs font-bold bg-blue-600 text-white">
+                    {post.day} Drop
+                  </span>
+                  <span className="text-[11px] text-slate-400 font-medium">
+                    {post.theme}
+                  </span>
+                </div>
+                <div className="bg-slate-900/80 rounded p-3 text-xs text-slate-300 font-mono whitespace-pre-wrap leading-relaxed max-h-36 overflow-y-auto mb-4 border border-slate-700">
+                  {post.text.slice(0, 240)}...
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex flex-wrap gap-2 text-[11px]">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-8 border-slate-700 text-slate-200 hover:bg-blue-600 hover:text-white"
+                    onClick={() => {
+                      setPostContent(`${post.text}\n\n${post.hashtags.join(' ')}`);
+                      setSelectedPlatforms(['linkedin']);
+                      toast.success(`Loaded "${post.day} Drop" into Studio editor below!`);
+                    }}
+                  >
+                    Load into Studio
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-8 border-slate-700 text-slate-200 hover:bg-slate-700"
+                    onClick={() => {
+                      navigator.clipboard.writeText(post.firstComment);
+                      toast.success('Copied first-comment link to clipboard!');
+                    }}
+                  >
+                    <Copy className="w-3.5 h-3.5 mr-1" /> Copy 1st Comment
+                  </Button>
+                  {post.carouselSlides && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-8 border-slate-700 text-blue-300 hover:bg-slate-700"
+                      onClick={() => {
+                        setSelectedQueuePost(selectedQueuePost?.id === post.id ? null : post);
+                      }}
+                    >
+                      <Layers className="w-3.5 h-3.5 mr-1" /> {selectedQueuePost?.id === post.id ? 'Hide Slides' : `${post.carouselSlides.length} Carousel Slides`}
+                    </Button>
+                  )}
+                  <Button
+                    size="sm"
+                    className="h-8 bg-blue-600 hover:bg-blue-500 text-white font-semibold ml-auto"
+                    disabled={triggeringCron === post.id}
+                    onClick={async () => {
+                      setTriggeringCron(post.id);
+                      try {
+                        const res = await fetch(`/api/cron/linkedin-engagement?index=${idx}`);
+                        const data = await res.json();
+                        if (data.success) {
+                          toast.success(`Published "${post.theme}" to LinkedIn!`);
+                        } else {
+                          toast.info(`LinkedIn notice: ${data.error || 'Triggered! Check company feed.'}`);
+                        }
+                      } catch (err: any) {
+                        toast.error(`Trigger failed: ${err.message}`);
+                      } finally {
+                        setTriggeringCron(null);
+                      }
+                    }}
+                  >
+                    {triggeringCron === post.id ? <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" /> : <Send className="w-3.5 h-3.5 mr-1" />}
+                    Post Now
+                  </Button>
+                </div>
+
+                {/* Collapsible Carousel Slide Blueprint */}
+                {selectedQueuePost?.id === post.id && post.carouselSlides && (
+                  <div className="mt-4 p-4 rounded-lg bg-slate-950 border border-blue-500/30 text-xs space-y-3">
+                    <p className="font-bold text-blue-400 uppercase tracking-wider text-[11px] flex items-center justify-between">
+                      <span>Visual Carousel Design Blueprint ({post.carouselSlides.length} Slides)</span>
+                      <span className="text-slate-400 font-normal">Aspect: 1080x1350px (4:5)</span>
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {post.carouselSlides.map((slide) => (
+                        <div key={slide.slideNumber} className="p-2.5 rounded bg-slate-900 border border-slate-800">
+                          <p className="font-bold text-slate-200">Slide {slide.slideNumber}: {slide.headline}</p>
+                          <p className="text-slate-400 mt-0.5 text-[11px]">{slide.subheadline}</p>
+                          {slide.points && (
+                            <ul className="list-disc list-inside mt-1.5 space-y-0.5 text-slate-300 text-[10px]">
+                              {slide.points.map((pt, i) => (
+                                <li key={i}>{pt}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

@@ -290,4 +290,63 @@ Staff should immediately escalate a conversation directly to **Aman Joshi (CEO)*
 4. **Client Retention Risk**: Any existing client reporting dissatisfaction or requesting contract modification.
 
 ---
+
+# PART 3: LINKEDIN COMPANY & FOUNDER CONTENT SYNDICATION PROTOCOL
+
+## 1. Objectives & Reach Strategy
+LinkedIn is AJPR World’s primary high-ticket inbound funnel. The goal is to position **Aman Joshi** and **AJPR World** as the undisputed technical authorities on AI-driven web engineering, GEO (Generative Engine Optimization), and high-velocity B2B growth.
+
+### Target Cadence
+| Day | Time | Content Pillar | Format | Goal |
+|---|---|---|---|---|
+| **Monday** | 8:30 AM EST | **Contrarian Industry Teardown** | Long-form Text + 5-Slide Carousel | Drive debate, founder resonance, high comments |
+| **Wednesday** | 8:30 AM EST | **GEO & AI Search Paradigm** | Authority Breakdown + Flowchart | High saves, reshares, positioning as GEO leader |
+| **Friday** | 8:30 AM EST | **Transparent Pricing & Proof** | Data Table / Cost Benchmark | Inbound DMs, calendar bookings |
+
+---
+
+## 2. Visual Design Specifications (Canva / Figma Blueprint)
+Every carousel or image asset must follow these strict brand tokens:
+- **Canvas Dimensions**: `1080 x 1350 px` (4:5 Portrait — occupies maximum mobile screen real estate).
+- **Primary Background**: Obsidian Black (`#030712`) or Deep Navy Slate (`#0B132B`).
+- **Accent Highlight**: Electric Cobalt Blue (`#3B82F6`) or Emerald Teal (`#10B981`).
+- **Typography**: 
+  - Headlines: `Inter` or `Plus Jakarta Sans`, 54pt+, ExtraBold (white).
+  - Body / Bullets: `Inter` Regular/Medium, 24pt–28pt (slate-300).
+- **Slide Architecture (5-Slide Rule)**:
+  - **Slide 1 (Hook)**: One massive curiosity-inducing question or bold contrarian statement + subtitle.
+  - **Slide 2 (The Flaw)**: The hidden breakdown of what legacy agencies or traditional methods do wrong.
+  - **Slide 3 (The Framework)**: The 4-step modern engineering alternative.
+  - **Slide 4 (The Data / Benchmark)**: Hard metrics, real dollars, or performance numbers.
+  - **Slide 5 (The Action)**: "Follow Aman Joshi & AJPR World for technical growth teardowns."
+
+---
+
+## 3. The "Zero Outbound Link" Algorithm Rule
+LinkedIn severely downranks posts containing external links in the main caption.
+
+**Mandatory Posting Rule**:
+1. Post caption contains **ONLY** copy + hook + 3-5 hashtags (`#B2BMarketing #Startups #GEO #AI`).
+2. Within 60 seconds of publishing, staff or automated engine drops the **FIRST COMMENT** with the live asset:
+   > *"Full interactive evaluation matrix and benchmark data: ajprworld.com/blog/marketing-strategy-consulting-how-to-choose-a-provider"*
+3. Pin the comment to the top of the post thread.
+
+---
+
+## 4. The 60-Minute Engagement Multiplier
+The LinkedIn algorithm measures engagement velocity in the first 60 minutes:
+- Staff must monitor the post for the first hour.
+- Reply to every comment with an open-ended question to foster thread depth.
+- Never reply with simple "Thanks!" — always expand with a strategic point:
+  > *"Spot on, [Name]. When we audited legacy retainers, 60% of time was wasted on weekly status calls rather than production code. What has been your experience?"*
+
+---
+
+## 5. Automated Console & Cron Schedule
+Staff can manage all posts without manual chaos via the internal command center:
+1. **Live Admin Portal**: Navigate to `/dashboard/admin/social-media`.
+2. **One-Click Publishing**: Under **"LinkedIn Automated Post Engine"**, click **"Load into Studio"** or **"Post Now"**.
+3. **Automated Background Cron**: Configured in `vercel.json` to trigger `/api/cron/linkedin-engagement` every **Monday, Wednesday, and Friday at 13:00 UTC (8:30 AM EST)**.
+
+---
 *End of Operations Manual — For questions, reach out directly in the internal team Slack.*

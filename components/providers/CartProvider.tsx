@@ -2,14 +2,33 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { addonsList } from '@/lib/constants'
+
+export type CartCurrency = 'USD' | 'INR' | 'EUR' | 'GBP'
 
 export interface CartItem {
   id: string
   type: 'package' | 'addon'
   name: string
-  price: number
+  price: number // Base price in USD
+  addonId?: string
+  currency?: CartCurrency
   details?: string
   quantity: number
+}
+
+export const CURRENCY_SYMBOLS: Record<CartCurrency, string> = {
+  USD: '$',
+  INR: '₹',
+  EUR: '€',
+  GBP: '£'
+}
+
+export const EXCHANGE_RATES: Record<CartCurrency, number> = {
+  USD: 1.0,
+  INR: 85.0,
+  EUR: 0.92,
+  GBP: 0.79
 }
 
 interface CartContextType {
@@ -18,6 +37,11 @@ interface CartContextType {
   removeFromCart: (id: string) => void
   updateQuantity: (id: string, quantity: number) => void
   clearCart: () => void
+  currency: CartCurrency
+  setCurrency: (currency: CartCurrency) => void
+  currencySymbol: string
+  formatPrice: (amount: number) => string
+  getItemPrice: (item: CartItem) => number
   cartTotal: number
   packageTotal: number
   addonTotal: number
@@ -34,8 +58,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([])
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [paymentType, setPaymentType] = useState<'advance' | 'full'>('advance')
+  const [currency, setCurrencyState] = useState<CartCurrency>('USD')
   
-  // Load cart from local storage on mount
+  // Load cart & currency from local storage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem('ajpr_cart')
     if (savedCart) {
@@ -45,6 +70,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         console.error('Failed to parse cart', e)
       }
     }
+    const savedCurrency = localStorage.getItem('ajpr_currency') as CartCurrency
+    if (savedCurrency && ['USD', 'INR', 'EUR', 'GBP'].includes(savedCurrency)) {
+      setCurrencyState(savedCurrency)
+    }
   }, [])
 
   // Save cart to local storage whenever it changes
@@ -52,12 +81,41 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem('ajpr_cart', JSON.stringify(cart))
   }, [cart])
 
+  const setCurrency = (c: CartCurrency) => {
+    setCurrencyState(c)
+    localStorage.setItem('ajpr_currency', c)
+  }
+
+  const currencySymbol = CURRENCY_SYMBOLS[currency] || '$'
+
+  const getItemPrice = (item: CartItem): number => {
+    if (item.type === 'addon') {
+      const match = addonsList.find(a => a.id === item.addonId || item.name.includes(a.name))
+      if (match) {
+        if (currency === 'INR') return match.priceINR
+        if (currency === 'EUR') return Math.round(match.priceUSD * EXCHANGE_RATES.EUR)
+        if (currency === 'GBP') return Math.round(match.priceUSD * EXCHANGE_RATES.GBP)
+        return match.priceUSD
+      }
+    }
+
+    // For packages
+    if (currency === 'USD') return item.price
+    if (currency === 'INR') return Math.round(item.price * EXCHANGE_RATES.INR)
+    if (currency === 'EUR') return Math.round(item.price * EXCHANGE_RATES.EUR)
+    if (currency === 'GBP') return Math.round(item.price * EXCHANGE_RATES.GBP)
+    return item.price
+  }
+
+  const formatPrice = (amount: number): string => {
+    return `${currencySymbol}${amount.toLocaleString()}`
+  }
+
   const addToCart = (item: Omit<CartItem, 'id'>) => {
     // Check if package already exists, only one package allowed
     if (item.type === 'package') {
       const existingPackageIndex = cart.findIndex(i => i.type === 'package')
       if (existingPackageIndex !== -1) {
-        // Replace the existing package with the new one and open cart
         setCart((prev) => {
           const newCart = [...prev]
           newCart[existingPackageIndex] = { ...item, id: prev[existingPackageIndex].id }
@@ -70,7 +128,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
     const newItem = { ...item, id: uuidv4() }
     setCart((prev) => [...prev, newItem])
-    setIsCartOpen(true) // Open cart when item added
+    setIsCartOpen(true)
   }
 
   const removeFromCart = (id: string) => {
@@ -88,20 +146,19 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     setCart([])
   }
 
-  const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0)
-  
   const packageTotal = cart
     .filter(item => item.type === 'package')
-    .reduce((total, item) => total + (item.price * item.quantity), 0)
+    .reduce((total, item) => total + (getItemPrice(item) * item.quantity), 0)
 
   const addonTotal = cart
     .filter(item => item.type === 'addon')
-    .reduce((total, item) => total + (item.price * item.quantity), 0)
+    .reduce((total, item) => total + (getItemPrice(item) * item.quantity), 0)
 
-  // Calculate payable total based on paymentType
+  const cartTotal = packageTotal + addonTotal
+
   const payableTotal = paymentType === 'full' 
     ? packageTotal + addonTotal 
-    : (packageTotal * 0.5) + addonTotal
+    : Math.round((packageTotal * 0.5) + addonTotal)
 
   return (
     <CartContext.Provider value={{
@@ -110,6 +167,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       removeFromCart,
       updateQuantity,
       clearCart,
+      currency,
+      setCurrency,
+      currencySymbol,
+      formatPrice,
+      getItemPrice,
       cartTotal,
       packageTotal,
       addonTotal,
@@ -131,3 +193,4 @@ export const useCart = () => {
   }
   return context
 }
+

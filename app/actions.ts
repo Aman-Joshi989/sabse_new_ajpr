@@ -117,11 +117,12 @@ const transporter = nodemailer.createTransport({
 
 // Exporting for backfill usage
 export async function sendOrderEmail(data: any) {
-    // added advanceAmount to data destructuring
-    const { name, email, phone, cart, total, advanceAmount, paymentId } = data;
+    // added advanceAmount and currency to data destructuring
+    const { name, email, phone, cart, total, advanceAmount, paymentId, currency = 'USD', paymentMethod = 'skydo' } = data;
+    const sym = currency === 'INR' ? '₹' : (currency === 'EUR' ? '€' : (currency === 'GBP' ? '£' : '$'));
 
     const itemsList = cart.map((item: any) =>
-        `<li>${item.name} (x${item.quantity}) - $${item.price}</li>`
+        `<li>${item.name} (x${item.quantity}) - ${sym}${item.price}</li>`
     ).join('');
 
     const htmlContent = `
@@ -141,7 +142,7 @@ export async function sendOrderEmail(data: any) {
                             <tr>
                                 <td style="background-color: #2563EB; padding: 30px 40px; text-align: center;">
                                     <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: bold; letter-spacing: 1px;">AJPR World</h1>
-                                    <p style="color: #e0e7ff; margin: 10px 0 0 0; font-size: 16px;">New Guest Order Received</p>
+                                    <p style="color: #e0e7ff; margin: 10px 0 0 0; font-size: 16px;">New Order Placed (${paymentMethod.toUpperCase()})</p>
                                 </td>
                             </tr>
 
@@ -152,7 +153,7 @@ export async function sendOrderEmail(data: any) {
                                         Hello Admin,
                                     </p>
                                     <p style="color: #374151; font-size: 16px; line-height: 24px; margin-bottom: 30px;">
-                                        A new order has been placed by a guest user. Please review the details below and contact the client to finalize their account setup.
+                                        A new client order has been registered on AJPR World via <strong>${paymentMethod === 'skydo' ? 'Skydo (International)' : 'Razorpay (Domestic)'}</strong>.
                                     </p>
 
                                     <!-- Client Details Box -->
@@ -173,6 +174,10 @@ export async function sendOrderEmail(data: any) {
                                                         <td style="padding: 5px 0; color: #6b7280; width: 100px; font-weight: bold;">Phone:</td>
                                                         <td style="padding: 5px 0; color: #111827;">${phone}</td>
                                                     </tr>
+                                                    <tr>
+                                                        <td style="padding: 5px 0; color: #6b7280; width: 100px; font-weight: bold;">Currency:</td>
+                                                        <td style="padding: 5px 0; color: #111827;">${currency}</td>
+                                                    </tr>
                                                 </table>
                                             </td>
                                         </tr>
@@ -187,7 +192,7 @@ export async function sendOrderEmail(data: any) {
                                                 <strong>${item.name}</strong> <span style="color: #6b7280;">(x${item.quantity})</span>
                                             </td>
                                             <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6; color: #111827; text-align: right; font-weight: bold;">
-                                                $${item.price.toLocaleString()}
+                                                ${sym}${item.price.toLocaleString()}
                                             </td>
                                         </tr>
                                         `).join('')}
@@ -196,21 +201,22 @@ export async function sendOrderEmail(data: any) {
                                     <!-- Totals -->
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                         <tr>
-                                            <td style="padding: 8px 0; color: #6b7280; text-align: right;">Total Project Value:</td>
-                                            <td style="padding: 8px 0; color: #374151; text-align: right; width: 120px; font-weight: bold;">$${total.toLocaleString()}</td>
+                                            <td style="padding: 8px 0; color: #6b7280; text-align: right;">Total Value:</td>
+                                            <td style="padding: 8px 0; color: #374151; text-align: right; width: 120px; font-weight: bold;">${sym}${total.toLocaleString()} ${currency}</td>
                                         </tr>
                                         <tr>
-                                            <td style="padding: 8px 0; color: #2563EB; text-align: right; font-weight: bold;">Advance Paid Now:</td>
+                                            <td style="padding: 8px 0; color: #2563EB; text-align: right; font-weight: bold;">Amount Due/Paid:</td>
                                             <td style="padding: 8px 0; color: #2563EB; text-align: right; width: 120px; font-weight: bold; font-size: 18px;">
-                                                $${advanceAmount ? advanceAmount.toLocaleString() : (total * 0.5).toLocaleString()}
+                                                ${sym}${advanceAmount ? advanceAmount.toLocaleString() : (total * 0.5).toLocaleString()} ${currency}
                                             </td>
                                         </tr>
                                     </table>
 
                                     <!-- Footer Info -->
                                     <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 14px; color: #6b7280;">
-                                        <p style="margin: 0 0 5px 0;"><strong>Payment ID:</strong> ${paymentId}</p>
-                                        <p style="margin: 0;">This is an automated notification. Please do not reply directly to this email.</p>
+                                        <p style="margin: 0 0 5px 0;"><strong>Payment / Reference ID:</strong> ${paymentId}</p>
+                                        <p style="margin: 0 0 5px 0;"><strong>Payment Gateway:</strong> ${paymentMethod.toUpperCase()}</p>
+                                        <p style="margin: 0;">This is an automated notification from AJPR World.</p>
                                     </div>
                                 </td>
                             </tr>
@@ -233,7 +239,7 @@ export async function sendOrderEmail(data: any) {
         await transporter.sendMail({
             from: process.env.GMAIL_USER,
             to: process.env.GMAIL_USER, // Send to Admin (same as sender for now, or configured admin email)
-            subject: `New Guest Order - ${name}`,
+            subject: `New ${currency} Order (${paymentMethod.toUpperCase()}) - ${name}`,
             html: htmlContent
         });
         console.log("Email sent successfully to admin.");
@@ -259,15 +265,15 @@ export async function submitOrderRequest(data: any) {
             client_email: data.email,
             client_phone: data.phone,
             amount: data.advanceAmount || data.total,
+            currency: data.currency || 'USD',
             payment_status: data.paymentStatus || 'completed',
-            payment_method: 'razorpay',
+            payment_method: data.paymentMethod || data.gateway || 'skydo',
             payment_id: data.paymentId || 'N/A',
             payment_type: data.paymentType || 'advance',
             order_details: data.cart
         });
 
         // Send Email for ALL orders (Guest or Logged-in) if payment is successful
-        // We assume submitOrderRequest is called after successful payment or for a valid request
         await sendOrderEmail(data);
 
         return { success: true };
@@ -276,6 +282,7 @@ export async function submitOrderRequest(data: any) {
         return { success: false };
     }
 }
+
 
 
 

@@ -394,7 +394,7 @@ export default function SocialMediaPage() {
         </div>
       </div>
 
-      {/* LinkedIn High-Reach Content Engine & Queue */}
+      {/* LinkedIn High-Reach Content Engine & Manual Publishing Deck */}
       <div className="bg-gradient-to-br from-slate-900 via-[#1E293B] to-slate-950 text-white rounded-xl border border-blue-500/20 p-6 shadow-xl overflow-hidden relative">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-white/10 pb-4">
           <div>
@@ -402,17 +402,24 @@ export default function SocialMediaPage() {
               <Sparkles className="w-3.5 h-3.5" /> High-Reach Thought Leadership
             </div>
             <h2 className="text-2xl font-black text-white flex items-center gap-2">
-              <Linkedin className="w-6 h-6 text-blue-400" /> LinkedIn Automated Post Engine
+              <Linkedin className="w-6 h-6 text-blue-400" /> LinkedIn Manual Publishing Command Center
             </h2>
             <p className="text-xs text-slate-400 mt-1">
-              Curated viral posts, carousel slide blueprints, and automated 3x/week publishing schedule (Mon, Wed, Fri @ 8:30 AM EST).
+              Curated viral posts, carousel slide blueprints, and 1-click copy-to-publish workflow. Manual posting achieves 3x–5x higher organic reach without API token expiration.
             </p>
           </div>
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-semibold border border-emerald-500/30">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-2"></span>
-              Cron Active (0 13 * * 1,3,5)
+              100% Manual Mode (Safe & High-Reach)
             </span>
+            <Button
+              size="sm"
+              className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold"
+              onClick={() => window.open('https://www.linkedin.com/feed/', '_blank')}
+            >
+              <ExternalLink className="w-3.5 h-3.5 mr-1" /> Open LinkedIn Feed
+            </Button>
           </div>
         </div>
 
@@ -441,16 +448,16 @@ export default function SocialMediaPage() {
                 <div className="flex flex-wrap gap-2 text-[11px]">
                   <Button
                     size="sm"
-                    variant="outline"
-                    className="h-8 border-slate-700 text-slate-200 hover:bg-blue-600 hover:text-white"
+                    className="h-8 bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
                     onClick={() => {
-                      setPostContent(`${post.text}\n\n${post.hashtags.join(' ')}`);
-                      setSelectedPlatforms(['linkedin']);
-                      toast.success(`Loaded "${post.day} Drop" into Studio editor below!`);
+                      const fullContent = `${post.text}\n\n${post.hashtags.join(' ')}`;
+                      navigator.clipboard.writeText(fullContent);
+                      toast.success(`Copied "${post.day} Drop" to clipboard! Paste directly into LinkedIn.`);
                     }}
                   >
-                    Load into Studio
+                    <Copy className="w-3.5 h-3.5 mr-1" /> Copy Full Post
                   </Button>
+
                   <Button
                     size="sm"
                     variant="outline"
@@ -462,42 +469,33 @@ export default function SocialMediaPage() {
                   >
                     <Copy className="w-3.5 h-3.5 mr-1" /> Copy 1st Comment
                   </Button>
+
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-8 border-slate-700 text-blue-300 hover:bg-blue-600 hover:text-white"
+                    onClick={() => {
+                      const fullContent = `${post.text}\n\n${post.hashtags.join(' ')}`;
+                      navigator.clipboard.writeText(fullContent);
+                      toast.success('Copied post! Opening LinkedIn...');
+                      window.open('https://www.linkedin.com/feed/', '_blank');
+                    }}
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 mr-1" /> Copy & Open LinkedIn
+                  </Button>
+
                   {post.carouselSlides && (
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-8 border-slate-700 text-blue-300 hover:bg-slate-700"
+                      className="h-8 border-slate-700 text-slate-300 hover:bg-slate-700"
                       onClick={() => {
                         setSelectedQueuePost(selectedQueuePost?.id === post.id ? null : post);
                       }}
                     >
-                      <Layers className="w-3.5 h-3.5 mr-1" /> {selectedQueuePost?.id === post.id ? 'Hide Slides' : `${post.carouselSlides.length} Carousel Slides`}
+                      <Layers className="w-3.5 h-3.5 mr-1" /> {selectedQueuePost?.id === post.id ? 'Hide Slides' : `${post.carouselSlides.length} Slides`}
                     </Button>
                   )}
-                  <Button
-                    size="sm"
-                    className="h-8 bg-blue-600 hover:bg-blue-500 text-white font-semibold ml-auto"
-                    disabled={triggeringCron === post.id}
-                    onClick={async () => {
-                      setTriggeringCron(post.id);
-                      try {
-                        const res = await fetch(`/api/cron/linkedin-engagement?index=${idx}`);
-                        const data = await res.json();
-                        if (data.success) {
-                          toast.success(`Published "${post.theme}" to LinkedIn!`);
-                        } else {
-                          toast.info(`LinkedIn notice: ${data.error || 'Triggered! Check company feed.'}`);
-                        }
-                      } catch (err: any) {
-                        toast.error(`Trigger failed: ${err.message}`);
-                      } finally {
-                        setTriggeringCron(null);
-                      }
-                    }}
-                  >
-                    {triggeringCron === post.id ? <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" /> : <Send className="w-3.5 h-3.5 mr-1" />}
-                    Post Now
-                  </Button>
                 </div>
 
                 {/* Collapsible Carousel Slide Blueprint */}

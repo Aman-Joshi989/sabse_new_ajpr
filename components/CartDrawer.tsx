@@ -2,7 +2,7 @@ import { useAuth } from '@/components/providers/AuthProvider'
 import { useRouter } from 'next/navigation'
 import { useCart, CartCurrency } from '@/components/providers/CartProvider'
 import { useState } from 'react'
-import { ShoppingCart, Trash2, ShoppingBag, Plus, Minus, Globe, CreditCard, ExternalLink, ShieldCheck, CheckCircle2, Landmark, Copy, Check } from 'lucide-react'
+import { ShoppingCart, Trash2, ShoppingBag, Plus, Minus, Globe, CreditCard, ExternalLink, ShieldCheck, CheckCircle2, Landmark, Copy, Check, FileText, Smartphone, Send, Clock, HelpCircle } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
 import {
@@ -21,8 +21,9 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { addonsList, getAddonPrice } from '@/lib/constants'
-import { submitOrderRequest, createRazorpayOrder } from '@/app/actions'
+import { submitOrderRequest } from '@/app/actions'
 import Image from 'next/image'
 
 export default function CartDrawer() {
@@ -50,176 +51,115 @@ export default function CartDrawer() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
-  // Guest Checkout State
-  const [isGuestCheckoutOpen, setIsGuestCheckoutOpen] = useState(false)
-  const [guestDetails, setGuestDetails] = useState({
+  // Order Details Modal State
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
+  const [orderDetails, setOrderDetails] = useState({
       name: '',
       email: '',
-      phone: ''
+      phone: '',
+      company: '',
+      notes: ''
   })
 
-  // Skydo International Payment Dialog State
-  const [isSkydoModalOpen, setIsSkydoModalOpen] = useState(false)
-  const [skydoOrderInfo, setSkydoOrderInfo] = useState<{
+  // Manual Payment Instruction Sheet State
+  const [isPaymentSheetOpen, setIsPaymentSheetOpen] = useState(false)
+  const [activeOrder, setActiveOrder] = useState<{
       referenceId: string;
       amount: number;
       currency: string;
       customerName: string;
       customerEmail: string;
+      paymentType: string;
   } | null>(null)
-  const [copiedAccount, setCopiedAccount] = useState(false)
 
-  // Handle Input Change for Guest Form
-  const handleGuestInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setGuestDetails({ ...guestDetails, [e.target.name]: e.target.value })
+  const [transactionRef, setTransactionRef] = useState('')
+  const [copiedField, setCopiedField] = useState<string | null>(null)
+  const [paymentTab, setPaymentTab] = useState<'skydo' | 'wire' | 'upi' | 'invoice'>('skydo')
+
+  const copyToClipboard = (text: string, fieldId: string) => {
+      navigator.clipboard.writeText(text)
+      setCopiedField(fieldId)
+      setTimeout(() => setCopiedField(null), 2500)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setOrderDetails({ ...orderDetails, [e.target.name]: e.target.value })
   }
 
   const proceedToCheckout = () => {
       if (user) {
-          handleCheckout()
-      } else {
-          setIsGuestCheckoutOpen(true)
+          setOrderDetails(prev => ({
+              ...prev,
+              name: prev.name || user.name || '',
+              email: prev.email || user.email || ''
+          }))
       }
+      setIsOrderModalOpen(true)
   }
 
-  const handleGuestSubmit = async (e: React.FormEvent) => {
+  const handleOrderSubmit = async (e: React.FormEvent) => {
       e.preventDefault()
-      if (!guestDetails.name || !guestDetails.email || !guestDetails.phone) {
-          alert("Please fill in all fields.")
+      if (!orderDetails.name || !orderDetails.email || !orderDetails.phone) {
+          alert("Please fill in your name, email, and contact number.")
           return
       }
-      setIsGuestCheckoutOpen(false)
-      handleCheckout(true)
-  }
 
-  const handleCheckout = async (isGuest: boolean = false) => {
       setLoading(true)
-      const currentUserDetails = isGuest ? guestDetails : { name: user?.name, email: user?.email, phone: '' }
+      const referenceId = `AJPR-${new Date().getFullYear()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`
 
       try {
-          // ROUTE 1: International Checkout via SKYDO (for USD, EUR, GBP)
-          if (currency !== 'INR') {
-              const referenceId = `SKYDO-${Date.now().toString(36).toUpperCase()}`
-
-              // 1. Register order as pending_payment in database & send email notification
-              await submitOrderRequest({
-                  name: currentUserDetails.name,
-                  email: currentUserDetails.email,
-                  phone: currentUserDetails.phone,
-                  cart: cart.map(i => ({ ...i, price: getItemPrice(i) })),
-                  total: cartTotal,
-                  advanceAmount: payableTotal,
-                  currency: currency,
-                  paymentStatus: 'pending_payment',
-                  paymentMethod: 'skydo',
-                  paymentId: referenceId,
-                  paymentType: paymentType,
-                  isGuest: isGuest
-              })
-
-              // Fire GTM Event
-              if (typeof window !== 'undefined' && (window as any).dataLayer) {
-                  (window as any).dataLayer.push({
-                      event: 'begin_checkout',
-                      transaction_id: referenceId,
-                      value: payableTotal,
-                      currency: currency
-                  });
-              }
-
-              setSkydoOrderInfo({
-                  referenceId,
-                  amount: payableTotal,
-                  currency,
-                  customerName: currentUserDetails.name || 'Client',
-                  customerEmail: currentUserDetails.email || ''
-              })
-              setIsSkydoModalOpen(true)
-              return
-          }
-
-          // ROUTE 2: Domestic Indian Checkout via RAZORPAY (for INR)
-          const order = await createRazorpayOrder(payableTotal, {
-              type: 'cart_checkout',
-              name: currentUserDetails.name,
-              email: currentUserDetails.email,
-              phone: currentUserDetails.phone,
-              paymentType: paymentType,
+          // Register order as manual pending in DB & trigger admin notification email
+          const paymentMethod = currency === 'INR' ? 'manual_upi' : 'manual_skydo'
+          await submitOrderRequest({
+              name: orderDetails.name,
+              email: orderDetails.email,
+              phone: orderDetails.phone,
+              company: orderDetails.company,
+              notes: orderDetails.notes,
+              cart: cart.map(i => ({ ...i, price: getItemPrice(i) })),
+              total: cartTotal,
               advanceAmount: payableTotal,
-              totalAmount: cartTotal,
-              cartItems: cart.map(i => `${i.name} (x${i.quantity})`).join(', ')
+              currency: currency,
+              paymentStatus: 'pending_verification',
+              paymentMethod: paymentMethod,
+              paymentId: referenceId,
+              paymentType: paymentType,
+              isGuest: !user
           })
-          if (!order) throw new Error('Order creation failed')
 
-          const options = {
-              key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-              amount: order.amount,
-              currency: order.currency,
-              name: "AJPR World",
-              description: paymentType === 'full' ? "Full Service Payment (100%)" : "Service Advance Payment (50%)",
-              order_id: order.id,
-              handler: async function (response: any) {
-                  try {
-                      const res = await submitOrderRequest({
-                          name: currentUserDetails.name,
-                          email: currentUserDetails.email,
-                          phone: currentUserDetails.phone,
-                          cart: cart.map(i => ({ ...i, price: getItemPrice(i) })),
-                          total: cartTotal,
-                          advanceAmount: payableTotal,
-                          currency: 'INR',
-                          paymentStatus: 'paid',
-                          paymentMethod: 'razorpay',
-                          paymentId: response.razorpay_payment_id,
-                          paymentType: paymentType,
-                          isGuest: isGuest
-                      })
+          // Setup order info for manual payment sheet
+          setActiveOrder({
+              referenceId,
+              amount: payableTotal,
+              currency,
+              customerName: orderDetails.name,
+              customerEmail: orderDetails.email,
+              paymentType
+          })
 
-                      if (res.success) {
-                          if (typeof window !== 'undefined' && (window as any).dataLayer) {
-                              (window as any).dataLayer.push({
-                                  event: 'purchase',
-                                  transaction_id: response.razorpay_payment_id,
-                                  value: payableTotal,
-                                  currency: 'INR'
-                              });
-                          }
-                          alert(`Payment Successful! Request ID: ${response.razorpay_payment_id}. Our team will contact you shortly.`)
-                          clearCart()
-                          setIsCartOpen(false)
-                          if (isGuest) {
-                              setGuestDetails({ name: '', email: '', phone: '' })
-                          }
-                      } else {
-                          alert("Payment recorded, but email notification had a delay.")
-                      }
-                  } catch (saveError) {
-                      console.error("Save Error:", saveError)
-                      alert("Payment successful but error saving order.")
-                  }
-              },
-              prefill: {
-                  name: currentUserDetails.name,
-                  email: currentUserDetails.email,
-                  contact: currentUserDetails.phone
-              },
-              theme: {
-                  color: "#2563EB"
-              }
+          // Default tab based on currency
+          if (currency === 'INR') {
+              setPaymentTab('upi')
+          } else {
+              setPaymentTab('skydo')
           }
 
-          const rzp1 = new (window as any).Razorpay(options)
-          rzp1.on('payment.failed', function (response: any) {
-              alert(`Payment Failed: ${response.error.description}`)
-          })
-          rzp1.open()
+          setIsOrderModalOpen(false)
+          setIsPaymentSheetOpen(true)
 
-      } catch (error) {
-          console.error('Payment Error:', error)
-          alert("Payment initiation failed. Please try again or reach out to support.")
+      } catch (err) {
+          console.error("Manual order error:", err)
+          alert("Failed to register order. Please try again or reach out to hello@ajprworld.com")
       } finally {
           setLoading(false)
       }
+  }
+
+  const handleFinalConfirm = async () => {
+      clearCart()
+      setIsPaymentSheetOpen(false)
+      setIsCartOpen(false)
+      alert(`Thank you ${activeOrder?.customerName}! Order ${activeOrder?.referenceId} has been confirmed.\n\nOur engineering pod will review your details and send your project kickoff confirmation to ${activeOrder?.customerEmail}.`)
   }
 
   const handleAddAddon = (addonId: string) => {
@@ -237,8 +177,8 @@ export default function CartDrawer() {
   }
 
   const skydoBaseUrl = process.env.NEXT_PUBLIC_SKYDO_PAYMENT_URL || "https://pay.skydo.com"
-  const skydoCheckoutUrl = skydoOrderInfo 
-    ? `${skydoBaseUrl}?ref=${skydoOrderInfo.referenceId}&amount=${skydoOrderInfo.amount}&cur=${skydoOrderInfo.currency}&name=${encodeURIComponent(skydoOrderInfo.customerName)}`
+  const skydoCheckoutUrl = activeOrder 
+    ? `${skydoBaseUrl}?ref=${activeOrder.referenceId}&amount=${activeOrder.amount}&cur=${activeOrder.currency}&name=${encodeURIComponent(activeOrder.customerName)}`
     : skydoBaseUrl
 
   return (
@@ -280,7 +220,7 @@ export default function CartDrawer() {
               <p className="text-slate-500 mb-8">Choose a package to get started</p>
               <Button 
                 onClick={() => setIsCartOpen(false)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 font-bold"
               >
                 Explore Services
               </Button>
@@ -387,19 +327,19 @@ export default function CartDrawer() {
                                 <input type="radio" checked={paymentType === 'advance'} onChange={() => setPaymentType('advance')} className="w-4 h-4 text-blue-600" />
                                 <span className="font-bold text-sm text-slate-900 dark:text-white">50% Advance</span>
                             </div>
-                            <span className="text-xs text-slate-500 pl-6">Pay half now, rest later</span>
+                            <span className="text-xs text-slate-500 pl-6">Pay half now, rest on milestones</span>
                         </label>
                         <label className={`flex-1 flex flex-col p-3 border rounded-xl cursor-pointer transition-colors ${paymentType === 'full' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/50'}`}>
                             <div className="flex items-center gap-2 mb-1">
                                 <input type="radio" checked={paymentType === 'full'} onChange={() => setPaymentType('full')} className="w-4 h-4 text-blue-600" />
-                                <span className="font-bold text-sm text-slate-900 dark:text-white">100% Full Payment</span>
+                                <span className="font-bold text-sm text-slate-900 dark:text-white">100% Full</span>
                             </div>
                             <span className="text-xs text-slate-500 pl-6">Clear all dues upfront</span>
                         </label>
                     </div>
 
                     <div className="flex justify-between items-center text-sm text-slate-600 dark:text-slate-400 mt-4">
-                      <span>Package Payment</span>
+                      <span>Package Amount</span>
                       <span>{formatPrice(paymentType === 'full' ? packageTotal : Math.round(packageTotal * 0.5))}</span>
                     </div>
                     {addonTotal > 0 && (
@@ -419,19 +359,19 @@ export default function CartDrawer() {
                 </div>
                 {paymentType === 'advance' && (
                   <p className="text-[10px] text-slate-500 mt-2">
-                      Balance amount of {formatPrice(Math.round(packageTotal * 0.5))} will be due as per project milestones.
+                      Remaining balance of {formatPrice(Math.round(packageTotal * 0.5))} will be due upon milestone delivery.
                   </p>
                 )}
             </div>
             
-            {/* Gateway trust indicator */}
+            {/* Manual Invoicing Notice */}
             <div className="mb-3 flex items-center justify-between text-xs text-slate-500 px-1">
               <span className="flex items-center gap-1.5 font-medium">
                 <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                {currency !== 'INR' ? 'Global Checkout via Skydo' : 'Domestic UPI/Cards via Razorpay'}
+                Direct Invoicing & Verification
               </span>
               <span className="text-[11px] text-slate-400">
-                {currency !== 'INR' ? 'Visa • MC • Amex • ACH' : 'UPI • RuPay • NetBanking'}
+                {currency !== 'INR' ? 'Skydo • US Wire • Cards' : 'UPI • IMPS • NetBanking'}
               </span>
             </div>
 
@@ -440,166 +380,291 @@ export default function CartDrawer() {
               onClick={proceedToCheckout} 
               disabled={loading}
             >
-              {loading ? (
-                'Processing...'
-              ) : currency !== 'INR' ? (
-                <>
-                  <CreditCard className="w-5 h-5" />
-                  {paymentType === 'full' ? `Pay Full (${formatPrice(payableTotal)}) with Skydo` : `Pay Advance (${formatPrice(payableTotal)}) with Skydo`}
-                </>
-              ) : (
-                <>
-                  {paymentType === 'full' ? `Pay Full (${formatPrice(payableTotal)}) Now` : `Pay Advance (${formatPrice(payableTotal)}) Now`}
-                </>
-              )}
+              <FileText className="w-5 h-5" />
+              Place Order & Get Payment Details ({formatPrice(payableTotal)})
             </Button>
           </div>
         )}
       </SheetContent>
     </Sheet>
 
-    {/* Guest Details Dialog */}
-      <Dialog open={isGuestCheckoutOpen} onOpenChange={setIsGuestCheckoutOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+    {/* Order Details & Client Info Dialog */}
+      <Dialog open={isOrderModalOpen} onOpenChange={setIsOrderModalOpen}>
+        <DialogContent className="sm:max-w-[480px]">
           <DialogHeader>
-            <DialogTitle>Guest Checkout</DialogTitle>
+            <DialogTitle className="text-xl font-bold">Client & Project Details</DialogTitle>
             <DialogDescription>
-              Please provide your details so our engineering pod can connect and set up your project workspace.
+              Please enter your contact details. Our team will log your order and generate your payment instructions.
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleGuestSubmit} className="space-y-4 py-4">
+          <form onSubmit={handleOrderSubmit} className="space-y-4 py-2">
             <div className="grid gap-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Full Name *</Label>
               <Input
                 id="name"
                 name="name"
                 placeholder="John Doe"
-                value={guestDetails.name}
-                onChange={handleGuestInputChange}
+                value={orderDetails.name}
+                onChange={handleInputChange}
                 required
               />
             </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Work Email *</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="john@company.com"
+                  value={orderDetails.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="phone">Phone / WhatsApp *</Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  value={orderDetails.phone}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            </div>
             <div className="grid gap-2">
-              <Label htmlFor="email">Work Email</Label>
+              <Label htmlFor="company">Company / Website (Optional)</Label>
               <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="john@company.com"
-                value={guestDetails.email}
-                onChange={handleGuestInputChange}
-                required
+                id="company"
+                name="company"
+                placeholder="Acme Inc. / https://example.com"
+                value={orderDetails.company}
+                onChange={handleInputChange}
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="phone">Phone / WhatsApp</Label>
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                placeholder="+1 (555) 000-0000"
-                value={guestDetails.phone}
-                onChange={handleGuestInputChange}
-                required
+              <Label htmlFor="notes">Project Scope / Specific Requirements (Optional)</Label>
+              <Textarea
+                id="notes"
+                name="notes"
+                placeholder="Briefly describe any custom requirements or preferred launch timeline..."
+                value={orderDetails.notes}
+                onChange={handleInputChange}
+                rows={2}
               />
             </div>
             <DialogFooter className="pt-4">
-                <Button type="button" variant="outline" onClick={() => setIsGuestCheckoutOpen(false)}>Cancel</Button>
-                <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white font-bold">
-                  Continue to {currency !== 'INR' ? 'Skydo Payment' : 'Payment'}
+                <Button type="button" variant="outline" onClick={() => setIsOrderModalOpen(false)}>Cancel</Button>
+                <Button type="submit" disabled={loading} className="bg-blue-600 hover:bg-blue-700 text-white font-bold">
+                  {loading ? 'Submitting Order...' : 'Generate Payment Details →'}
                 </Button>
             </DialogFooter>
           </form>
         </DialogContent>
       </Dialog>
 
-    {/* Skydo International Payment Confirmation Dialog */}
-      <Dialog open={isSkydoModalOpen} onOpenChange={setIsSkydoModalOpen}>
-        <DialogContent className="sm:max-w-[500px] p-6 bg-slate-950 text-white border border-slate-800">
+    {/* 100% Manual Payment & Invoicing Instructions Sheet */}
+      <Dialog open={isPaymentSheetOpen} onOpenChange={setIsPaymentSheetOpen}>
+        <DialogContent className="sm:max-w-[560px] p-6 bg-slate-950 text-white border border-slate-800 max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <div className="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-2">
-              <CreditCard className="w-6 h-6" />
+            <div className="flex items-center gap-2 mb-1">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                Order Registered
+              </span>
+              <span className="text-xs text-slate-500 font-mono">
+                {activeOrder?.referenceId}
+              </span>
             </div>
             <DialogTitle className="text-2xl font-bold text-white">
-              Complete Your International Payment
+              Complete Your Payment
             </DialogTitle>
             <DialogDescription className="text-slate-400 text-sm">
-              Your order has been registered on AJPR World. Complete payment securely via <strong>Skydo</strong>.
+              Please send your payment using any of the manual methods below. Your engineering pod will verify and kick off work.
             </DialogDescription>
           </DialogHeader>
 
-          {skydoOrderInfo && (
-            <div className="space-y-4 py-4">
-              {/* Order Pill */}
-              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-                <div className="flex justify-between text-xs text-slate-400">
-                  <span>Reference ID:</span>
-                  <span className="font-mono text-blue-400 font-bold">{skydoOrderInfo.referenceId}</span>
+          {activeOrder && (
+            <div className="space-y-5 py-3">
+              {/* Order Summary Pill */}
+              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex justify-between items-center">
+                <div>
+                  <div className="text-xs text-slate-400">Payable Amount ({activeOrder.paymentType === 'full' ? '100% Full' : '50% Advance'}):</div>
+                  <div className="text-2xl font-black text-white mt-0.5">
+                    {formatPrice(activeOrder.amount)} <span className="text-sm font-normal text-slate-400">{activeOrder.currency}</span>
+                  </div>
                 </div>
-                <div className="flex justify-between text-xs text-slate-400">
-                  <span>Client Email:</span>
-                  <span className="text-slate-200">{skydoOrderInfo.customerEmail}</span>
-                </div>
-                <div className="flex justify-between items-center pt-2 border-t border-slate-800">
-                  <span className="text-sm font-semibold text-slate-300">Amount Due:</span>
-                  <span className="text-2xl font-black text-white">
-                    {formatPrice(skydoOrderInfo.amount)} <span className="text-sm font-normal text-slate-400">{skydoOrderInfo.currency}</span>
-                  </span>
+                <div className="text-right">
+                  <div className="text-xs text-slate-400">Order Reference:</div>
+                  <button 
+                    onClick={() => copyToClipboard(activeOrder.referenceId, 'ref')}
+                    className="flex items-center gap-1 font-mono text-xs text-blue-400 hover:text-blue-300 font-bold bg-slate-800 px-2.5 py-1 rounded-md border border-slate-700 mt-1"
+                  >
+                    {activeOrder.referenceId}
+                    {copiedField === 'ref' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  </button>
                 </div>
               </div>
 
-              {/* Payment Methods Supported */}
-              <div className="flex items-center justify-between px-2 text-xs text-slate-400">
-                <span>Accepted Rails:</span>
-                <span className="text-slate-300 font-medium">Visa • Mastercard • Amex • Apple Pay • US ACH</span>
+              {/* Payment Method Selector Tabs */}
+              <div className="grid grid-cols-3 gap-2 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setPaymentTab('skydo')}
+                  className={`py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                    paymentTab === 'skydo' 
+                      ? 'bg-blue-600 text-white shadow-md' 
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <CreditCard className="w-3.5 h-3.5" />
+                  Skydo / Card
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPaymentTab('wire')}
+                  className={`py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                    paymentTab === 'wire' 
+                      ? 'bg-blue-600 text-white shadow-md' 
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Landmark className="w-3.5 h-3.5" />
+                  US Wire / ACH
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPaymentTab('upi')}
+                  className={`py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                    paymentTab === 'upi' 
+                      ? 'bg-blue-600 text-white shadow-md' 
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Smartphone className="w-3.5 h-3.5" />
+                  UPI / India
+                </button>
               </div>
 
-              {/* Primary Skydo Action Button */}
-              <a
-                href={skydoCheckoutUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full h-14 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl font-bold text-base shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 transition-all group"
-              >
-                <span>Pay {formatPrice(skydoOrderInfo.amount)} on Skydo Portal</span>
-                <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </a>
-
-              {/* Direct US ACH / Wire Details (Zero Card Fees) */}
-              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs space-y-2">
-                <div className="flex items-center gap-2 font-bold text-slate-300">
-                  <Landmark className="w-4 h-4 text-blue-400" />
-                  <span>Paying via US ACH Wire / Bank Transfer?</span>
+              {/* Tab 1: Skydo Payment Link */}
+              {paymentTab === 'skydo' && (
+                <div className="space-y-4 p-4 bg-slate-900/60 rounded-xl border border-slate-800">
+                  <div className="flex items-center justify-between text-xs text-slate-300">
+                    <span className="font-semibold text-white">Skydo International Payment Link</span>
+                    <span className="text-emerald-400 font-medium">Visa • Mastercard • Amex</span>
+                  </div>
+                  <p className="text-slate-400 text-xs leading-relaxed">
+                    Click below to open our official Skydo payment portal. Enter your reference ID <code className="text-blue-400 font-bold">{activeOrder.referenceId}</code> when completing payment.
+                  </p>
+                  <a
+                    href={skydoCheckoutUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full h-12 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all group shadow-lg shadow-blue-600/20"
+                  >
+                    <span>Open Skydo Payment Link ({formatPrice(activeOrder.amount)})</span>
+                    <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  </a>
                 </div>
-                <p className="text-slate-400 text-[11px] leading-relaxed">
-                  For large retainers, our US virtual bank details can be found directly on your Skydo payment link or generated invoice. You can also mention Reference ID <code className="text-blue-400">{skydoOrderInfo.referenceId}</code> in your transfer memo.
-                </p>
+              )}
+
+              {/* Tab 2: Direct US ACH / Wire */}
+              {paymentTab === 'wire' && (
+                <div className="space-y-3 p-4 bg-slate-900/60 rounded-xl border border-slate-800 text-xs">
+                  <div className="flex justify-between items-center text-slate-300">
+                    <span className="font-bold text-white">US ACH & Domestic Wire Transfer</span>
+                    <span className="text-blue-400">0% Processing Fee</span>
+                  </div>
+                  <p className="text-slate-400 text-[11px] leading-relaxed">
+                    For enterprise retainers and international clients, transfer directly via local US ACH wire to our virtual account partner:
+                  </p>
+                  <div className="space-y-2 p-3 bg-slate-950 rounded-lg border border-slate-800 font-mono text-[11px]">
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Beneficiary:</span>
+                      <span className="text-slate-200">Aman Joshi / AJPR World</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Partner Bank:</span>
+                      <span className="text-slate-200">Community Federal Savings Bank</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Routing / Account:</span>
+                      <span className="text-blue-400">Available on invoice / Skydo link</span>
+                    </div>
+                    <div className="flex justify-between pt-1 border-t border-slate-800">
+                      <span className="text-slate-500">Memo / Reference:</span>
+                      <span className="text-emerald-400 font-bold">{activeOrder.referenceId}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Tab 3: UPI / India Domestic */}
+              {paymentTab === 'upi' && (
+                <div className="space-y-3 p-4 bg-slate-900/60 rounded-xl border border-slate-800 text-xs">
+                  <div className="flex justify-between items-center text-slate-300">
+                    <span className="font-bold text-white">Domestic UPI / IMPS Transfer</span>
+                    <span className="text-emerald-400">Instant Verification</span>
+                  </div>
+                  <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-400 text-[11px]">UPI ID:</span>
+                      <button
+                        type="button"
+                        onClick={() => copyToClipboard('9997205257@paytm', 'upi')}
+                        className="flex items-center gap-1 font-mono text-blue-400 hover:text-blue-300 font-bold bg-slate-900 px-2 py-1 rounded border border-slate-800"
+                      >
+                        9997205257@paytm
+                        {copiedField === 'upi' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                      </button>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-400 text-[11px]">Phone / GPay / Paytm:</span>
+                      <span className="font-mono text-slate-200">+91 9997205257</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-400 text-[11px]">Beneficiary:</span>
+                      <span className="text-slate-200">Aman Joshi (AJPR World)</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Transaction Reference / UTR Input */}
+              <div className="space-y-2 pt-1">
+                <Label htmlFor="txRef" className="text-xs text-slate-300">
+                  Transaction Reference / UTR Number / Notes (Optional)
+                </Label>
+                <Input
+                  id="txRef"
+                  placeholder="e.g. UTR12345678, Skydo Receipt #, or 'Invoice requested'"
+                  value={transactionRef}
+                  onChange={(e) => setTransactionRef(e.target.value)}
+                  className="bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 text-xs h-10"
+                />
               </div>
             </div>
           )}
 
-          <DialogFooter className="flex-col sm:flex-row gap-2 pt-2 border-t border-slate-800">
+          <DialogFooter className="flex-col sm:flex-row gap-2 pt-3 border-t border-slate-800">
             <Button
               variant="outline"
-              className="w-full sm:w-auto border-slate-700 text-slate-300 hover:bg-slate-800"
+              className="w-full sm:w-auto border-slate-700 text-slate-300 hover:bg-slate-800 text-xs"
               onClick={() => {
-                setIsSkydoModalOpen(false)
+                setIsPaymentSheetOpen(false)
                 setIsCartOpen(false)
               }}
             >
-              Close & Pay Later
+              I Will Pay Later
             </Button>
             <Button
-              className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold"
-              onClick={() => {
-                clearCart()
-                setIsSkydoModalOpen(false)
-                setIsCartOpen(false)
-                alert(`Thank you! Order ${skydoOrderInfo?.referenceId} has been logged. Once your Skydo transfer is received, your project pod will immediately kick off!`)
-              }}
+              className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs"
+              onClick={handleFinalConfirm}
             >
               <CheckCircle2 className="w-4 h-4 mr-1.5" />
-              I Have Completed Payment
+              I Have Sent Payment / Request Invoice
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -607,4 +672,5 @@ export default function CartDrawer() {
     </>
   )
 }
+
 

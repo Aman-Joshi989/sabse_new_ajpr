@@ -61,6 +61,14 @@ export const OrganizationSchema = async () => {
             name: 'Business AI Automation & Autonomous Workflows',
             url: 'https://ajprworld.com/services/business-ai-automation'
           }
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'AI Automation & AI Agent Systems for Business (LeadOS, SupportOS, OpsOS)',
+            url: 'https://ajprworld.com/ai-systems'
+          }
         }
       ]
     }

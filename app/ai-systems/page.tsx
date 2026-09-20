@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import AiSystemsClient from './AiSystemsClient';
+import AiSystemsClient from '@/app/ai-systems/AiSystemsClient';
 
 export const metadata: Metadata = {
   title: 'AI Automation & AI Agent Systems for Business | AJPR World',

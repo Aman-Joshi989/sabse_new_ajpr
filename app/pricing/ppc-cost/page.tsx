@@ -6,16 +6,17 @@ import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
   title: 'PPC Management Cost: 2026 Pricing & Retainer Guide | AJPR',
-  description: 'Discover PPC management costs in 2026. Compare flat retainers ($1,500-$5,000/mo) vs % of ad spend (10-20%). Real fee structures, ROAS models, and no hidden fees.',
+  description: 'Discover PPC management costs in 2026. Compare flat retainers ($1,500-$5,000/mo) vs % of ad spend, fee structures, ROAS models, and performance benchmarks.',
   alternates: {
     canonical: 'https://ajprworld.com/pricing/ppc-cost',
   },
   openGraph: {
     title: 'PPC Management Cost: 2026 Pricing & Retainer Guide | AJPR',
-    description: 'Discover PPC management costs in 2026. Compare flat retainers ($1,500-$5,000/mo) vs % of ad spend (10-20%). Real fee structures, ROAS models, and no hidden fees.',
+    description: 'Discover PPC management costs in 2026. Compare flat retainers ($1,500-$5,000/mo) vs % of ad spend, fee structures, ROAS models, and performance benchmarks.',
     url: 'https://ajprworld.com/pricing/ppc-cost',
     siteName: 'AJPR World',
     type: 'article',
+    images: ['https://ajprworld.com/og-image.jpg'],
   },
 };
 

@@ -90,24 +90,30 @@ export default function PrivacyPage() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoMetadata('/privacy');
+  const defaultTitle = 'Privacy Policy | AJPR World';
+  const defaultDesc = 'Learn how AJPR World protects your privacy, personal information, and data when using our software, web platforms, and digital consulting services.';
+  const title = seo?.title || defaultTitle;
+  const description = seo?.description || defaultDesc;
 
-      const seo = await getSeoMetadata('/privacy');
-      return {
-        alternates: { canonical: 'https://ajprworld.com/privacy' },
-        title: seo?.title,
-        description: seo?.description,
-        openGraph: {
-          title: seo?.title,
-          description: seo?.description,
-          url: `https://ajprworld.com${'/privacy'}`,
-            images: [
-                {
-                    url: 'https://ajprworld.com/og-image.jpg',
-                    width: 1200,
-                    height: 630,
-                    alt: 'AJPR World',
-                }
-            ],
+  return {
+    alternates: { canonical: 'https://ajprworld.com/privacy' },
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      url: 'https://ajprworld.com/privacy',
+      siteName: 'AJPR World',
+      type: 'website',
+      images: [
+        {
+          url: 'https://ajprworld.com/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'AJPR World',
         }
-      };
+      ],
+    }
+  };
 }

@@ -5,17 +5,18 @@ import { Layout, CheckCircle2, ArrowRight, Sparkles, Layers, Zap, Code2, HelpCir
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
-  title: 'Webflow SEO & Development Agency: High-Speed Web Design | AJPR',
+  title: 'Webflow SEO & Development Agency | AJPR World',
   description: 'Custom Webflow development and enterprise SEO optimization. Build blazing-fast marketing sites that outrank competitors and convert B2B prospects.',
   alternates: {
     canonical: 'https://ajprworld.com/platforms/webflow-agency',
   },
   openGraph: {
-    title: 'Webflow SEO & Development Agency: High-Speed Web Design | AJPR',
+    title: 'Webflow SEO & Development Agency | AJPR World',
     description: 'Custom Webflow development and enterprise SEO optimization. Build blazing-fast marketing sites that outrank competitors and convert B2B prospects.',
     url: 'https://ajprworld.com/platforms/webflow-agency',
     siteName: 'AJPR World',
     type: 'article',
+    images: ['https://ajprworld.com/og-image.jpg'],
   },
 };
 
@@ -48,6 +49,7 @@ export default function WebflowAgencyPage() {
       name: 'AJPR World',
       url: 'https://ajprworld.com',
     },
+    image: ['https://ajprworld.com/og-image.jpg'],
     areaServed: 'Global',
     description: 'Enterprise Webflow design, CMS collection architecture, technical SEO, and conversion optimization.',
   };

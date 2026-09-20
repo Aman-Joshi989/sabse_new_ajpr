@@ -3,8 +3,8 @@ import { Metadata } from 'next';
 import ActionFigureClient from './ActionFigureClient';
 
 export const metadata: Metadata = {
-  title: 'AI Action Figure Generator – Turn Yourself into a Collectible Toy | AJPR World',
-  description: 'Design and generate custom mint-in-box 3D action figures with blister packaging, collectible accessories, power stats, and Midjourney/DALL-E prompts.',
+  title: 'AI Action Figure Generator | AJPR World',
+  description: 'Design and generate custom mint-in-box 3D action figures with blister packaging, collectible accessories, power stats, and AI generator prompts.',
   alternates: {
     canonical: 'https://ajprworld.com/tools/action-figure-generator',
   },

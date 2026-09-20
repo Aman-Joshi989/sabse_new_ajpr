@@ -22,15 +22,15 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
             { name: 'GEO (AI Search Optimization)', href: '/services/geo-optimization' },
             { name: 'Shopify SEO Agency', href: '/platforms/shopify-seo' },
             { name: 'Webflow Development & SEO', href: '/platforms/webflow-agency' },
-            { name: 'Custom Web Dev', href: '/services/custom-web-development-ai-solutions' },
-            { name: 'Digital Marketing', href: '/services/ai-digital-marketing-services' },
-            { name: 'Performance Marketing', href: '/services/performance-marketing' },
+            { name: 'Custom Web Dev', href: '/services/web-development' },
+            { name: 'Digital Marketing', href: '/services/digital-marketing' },
+            { name: 'Cloud Solutions', href: '/services/cloud-solutions' },
         ];
 
     const activeBlogs = blogs && blogs.length > 0
         ? blogs.slice(0, 3).map((b: any) => ({ name: b.title, href: `/blog/${b.slug}` }))
         : [
-            { name: 'What is GEO (AI Search)?', href: '/blog/what-is-geo-generative-engine-optimization' },
+            { name: 'Marketing Strategy Consulting', href: '/blog/marketing-strategy-consulting-how-to-choose-a-provider' },
             { name: '2026 Agency Pricing Report', href: '/research/agency-pricing-report' },
             { name: 'WebFX Alternatives Comparison', href: '/compare/webfx-alternatives' }
         ];
@@ -173,23 +173,23 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                     {/* Right Side: Socials */}
                     <div className="flex items-center gap-6 text-slate-400 dark:text-slate-500">
-                        <Link href="https://x.com/AjprWorld" target="_blank" rel="nofollow" className="hover:text-blue-500 transition-colors">
+                        <Link href="https://twitter.com/AjprWorld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-500 transition-colors">
                             <Twitter className="w-5 h-5" />
                             <span className="sr-only">Twitter</span>
                         </Link>
-                        <Link href="https://www.instagram.com/ajprworld/" target="_blank" rel="nofollow" className="hover:text-pink-600 transition-colors">
+                        <Link href="https://www.instagram.com/ajprworld/" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-pink-600 transition-colors">
                             <Instagram className="w-5 h-5" />
                             <span className="sr-only">Instagram</span>
                         </Link>
-                        <Link href="https://facebook.com" target="_blank" rel="nofollow" className="hover:text-blue-700 transition-colors">
+                        <Link href="https://www.facebook.com/ajprworld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-700 transition-colors">
                             <Facebook className="w-5 h-5" />
                             <span className="sr-only">Facebook</span>
                         </Link>
-                        <Link href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="nofollow" className="hover:text-blue-600 transition-colors">
+                        <Link href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-600 transition-colors">
                             <Linkedin className="w-5 h-5" />
                             <span className="sr-only">LinkedIn</span>
                         </Link>
-                        <Link href="https://www.youtube.com/@AJPRWorld" target="_blank" rel="nofollow" className="hover:text-red-600 transition-colors">
+                        <Link href="https://www.youtube.com/@AJPRWorld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-red-600 transition-colors">
                             <Youtube className="w-5 h-5" />
                             <span className="sr-only">YouTube</span>
                         </Link>

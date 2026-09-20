@@ -16,22 +16,22 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'Free Productivity & Automation Tools for US Businesses | AJPR World',
-    description: 'Free interactive tools, calculators, and generators designed to help US founders, agency operators, and business owners eliminate administrative drag, calculate automation ROI, and cut SaaS costs.',
+    title: 'Free Business & Automation Tools | AJPR World',
+    description: 'Access free interactive calculators, ROI estimators, and AI workflow tools designed to streamline operations and eliminate administrative drag.',
     alternates: {
         canonical: 'https://ajprworld.com/tools',
     },
     openGraph: {
-        title: 'Free Productivity & Business Tools | AJPR World',
-        description: 'Interactive calculators and tools to reclaim billable hours, audit software bloat, and generate client responses.',
+        title: 'Free Business & Automation Tools | AJPR World',
+        description: 'Access free interactive calculators, ROI estimators, and AI workflow tools designed to streamline operations and eliminate administrative drag.',
         url: 'https://ajprworld.com/tools',
         siteName: 'AJPR World',
         images: ['https://ajprworld.com/og-image.jpg'],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Free Productivity & Automation Tools | AJPR World',
-        description: 'Interactive calculators and tools to eliminate admin drag and cut software costs.',
+        title: 'Free Business & Automation Tools | AJPR World',
+        description: 'Access free interactive calculators, ROI estimators, and AI workflow tools designed to streamline operations and eliminate administrative drag.',
         creator: '@ajprworld',
         images: ['https://ajprworld.com/og-image.jpg']
     }

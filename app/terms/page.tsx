@@ -112,24 +112,30 @@ export default function TermsPage() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoMetadata('/terms');
+  const defaultTitle = 'Terms of Service | AJPR World';
+  const defaultDesc = 'Read the Terms of Service governing your use of AJPR World websites, software engineering services, web development packages, and consulting solutions.';
+  const title = seo?.title || defaultTitle;
+  const description = seo?.description || defaultDesc;
 
-      const seo = await getSeoMetadata('/terms');
-      return {
-        alternates: { canonical: 'https://ajprworld.com/terms' },
-        title: seo?.title,
-        description: seo?.description,
-        openGraph: {
-          title: seo?.title,
-          description: seo?.description,
-          url: `https://ajprworld.com${'/terms'}`,
-            images: [
-                {
-                    url: 'https://ajprworld.com/og-image.jpg',
-                    width: 1200,
-                    height: 630,
-                    alt: 'AJPR World',
-                }
-            ],
+  return {
+    alternates: { canonical: 'https://ajprworld.com/terms' },
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      url: 'https://ajprworld.com/terms',
+      siteName: 'AJPR World',
+      type: 'website',
+      images: [
+        {
+          url: 'https://ajprworld.com/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'AJPR World',
         }
-      };
+      ],
+    }
+  };
 }

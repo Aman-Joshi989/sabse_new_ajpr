@@ -10,9 +10,9 @@ export default function Sidebar() {
             <span className="material-symbols-outlined">terminal</span>
           </div>
           <div className="flex flex-col">
-            <h1 className="text-[#0f172a] dark:text-white text-base font-black leading-tight">
+            <span className="text-[#0f172a] dark:text-white text-base font-black leading-tight block">
               DEVFLOW
-            </h1>
+            </span>
             <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">
               Developer Console
             </p>

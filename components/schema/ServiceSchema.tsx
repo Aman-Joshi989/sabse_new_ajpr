@@ -24,7 +24,7 @@ export const ServiceSchema = ({
       url: 'https://ajprworld.com',
     },
     url: url,
-    image: image ? [image] : [],
+    image: image ? [image] : ['https://ajprworld.com/og-image.jpg'],
   };
 
   return (

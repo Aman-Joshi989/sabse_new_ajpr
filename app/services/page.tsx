@@ -42,11 +42,14 @@ export default async function ServicesPage() {
                             '@context': 'https://schema.org',
                             '@type': 'Service',
                             'serviceType': s.title,
+                            'name': s.title,
                             'provider': {
                                 '@type': 'Organization',
-                                'name': 'AJPR World'
+                                'name': 'AJPR World',
+                                'url': 'https://ajprworld.com'
                             },
-                            'description': s.description,
+                            'image': ['https://ajprworld.com/og-image.jpg'],
+                            'description': s.description || 'AJPR World engineering and digital growth service.',
                             'url': `https://ajprworld.com/services/${s.slug}`
                         }))
                     )

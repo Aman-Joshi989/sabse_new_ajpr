@@ -20,7 +20,7 @@ export const ArticleSchema = ({
     '@type': 'Article',
     headline: title,
     description: description,
-    image: image ? [image] : [],
+    image: image ? [image] : ['https://ajprworld.com/og-image.jpg'],
     datePublished: datePublished,
     author: {
       '@type': 'Person',

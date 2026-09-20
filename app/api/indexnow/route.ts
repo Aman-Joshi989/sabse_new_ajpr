@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
 import sitemap from '@/app/sitemap';
 
-export async function GET() {
+async function handleIndexNow(customUrls?: string[]) {
     try {
-        const sitemapData = await sitemap();
-        const urlList = sitemapData.map((item) => item.url);
+        let urlList = customUrls;
+        if (!urlList || urlList.length === 0) {
+            const sitemapData = await sitemap();
+            urlList = sitemapData.map((item) => item.url);
+        }
 
         const indexNowPayload = {
             host: "ajprworld.com",
@@ -21,7 +24,7 @@ export async function GET() {
             body: JSON.stringify(indexNowPayload)
         });
 
-        if (response.ok) {
+        if (response.ok || response.status === 200 || response.status === 202) {
             return NextResponse.json({ success: true, message: 'Submitted to IndexNow successfully', urlsSubmitted: urlList.length });
         } else {
             return NextResponse.json({ success: false, error: 'IndexNow API rejected the submission', status: response.status }, { status: 500 });
@@ -29,5 +32,19 @@ export async function GET() {
     } catch (error) {
         console.error('Error submitting to IndexNow:', error);
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
+    }
+}
+
+export async function GET() {
+    return handleIndexNow();
+}
+
+export async function POST(req: Request) {
+    try {
+        const body = await req.json().catch(() => ({}));
+        const urls = Array.isArray(body?.urls) ? body.urls : undefined;
+        return handleIndexNow(urls);
+    } catch {
+        return handleIndexNow();
     }
 }

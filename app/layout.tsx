@@ -77,7 +77,7 @@ export async function generateMetadata(): Promise<Metadata> {
         siteName: 'AJPR World',
         images: [
           {
-            url: '/og-image.jpg',
+            url: 'https://ajprworld.com/og-image.jpg',
             width: 1200,
             height: 630,
             alt: 'AJPR World',
@@ -87,7 +87,7 @@ export async function generateMetadata(): Promise<Metadata> {
       },
       twitter: {
         card: 'summary_large_image',
-        title: settings?.seo_title || 'AJPR World - Premium Tech & Software Solutions',
+        title: cleanMetaTitle(settings?.seo_title || 'AJPR World - Premium Tech & Software Solutions'),
         description: twitterDesc,
         images: ['https://ajprworld.com/og-image.jpg'],
         creator: '@ajprworld',
@@ -102,8 +102,8 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch (error) {
     console.error("Failed to generate metadata dynamically:", error);
     return {
-      title: 'AJPR World – Premium Tech, Custom Software & Creative Branding',
-      description: 'AJPR World delivers premium web development, custom software engineering, UI/UX design, and AI solutions.',
+      title: 'AJPR World – Custom Software & AI Engineering',
+      description: 'AJPR World engineers custom web development, software solutions, UI/UX design, and AI systems built for fast-growing businesses.',
     };
   }
 }

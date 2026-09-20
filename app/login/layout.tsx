@@ -6,16 +6,16 @@ export const metadata: Metadata = {
     follow: false,
   },
   alternates: {
-    canonical: '/login'
+    canonical: 'https://ajprworld.com/login'
   },
   openGraph: {
-    title: 'AJPR World',
-    description: 'AJPR World delivers premium digital solutions.',
+    title: 'Client & Team Login | AJPR World',
+    description: 'Access your AJPR World client dashboard, project milestones, real-time analytics, and engineering progress.',
     url: 'https://ajprworld.com/login',
     siteName: 'AJPR World',
     images: [
       {
-        url: '/og-image.jpg',
+        url: 'https://ajprworld.com/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'AJPR World',

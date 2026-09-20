@@ -4,18 +4,18 @@ import { ShieldCheck, Zap, BarChart3 } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Free Technical & SEO Audit | AJPR World',
-  description: 'Apply for a free technical architecture and SEO audit from our senior engineering team.',
+  description: 'Get an actionable technical architecture and SEO audit from senior engineers. Uncover bottlenecks, Core Web Vitals issues, and growth opportunities.',
   alternates: {
     canonical: 'https://ajprworld.com/free-audit'
   },
   openGraph: {
     title: 'Free Technical & SEO Audit | AJPR World',
-    description: 'Apply for a free technical architecture and SEO audit from our senior engineering team.',
+    description: 'Get an actionable technical architecture and SEO audit from senior engineers. Uncover bottlenecks, Core Web Vitals issues, and growth opportunities.',
     url: 'https://ajprworld.com/free-audit',
     siteName: 'AJPR World',
     images: [
       {
-        url: '/og-image.jpg',
+        url: 'https://ajprworld.com/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Free Technical & SEO Audit | AJPR World',

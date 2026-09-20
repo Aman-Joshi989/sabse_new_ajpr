@@ -12,7 +12,7 @@ const CITIES = [
     'austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 
     'dallas', 'atlanta', 'miami', 'chicago', 'boston', 'seattle',
     'new-york', 'san-francisco', 'london', 'toronto', 'sydney', 'dubai', 'singapore',
-    'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 'rudrapur', 'uttarakhand'
+    'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
 ];
 
 // List of core agency & engineering services
@@ -288,7 +288,7 @@ export default async function LocationServicePage(props: Props) {
                     )}
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Link href={`/free-audit?utm_source=${cityName}-${params.service}`} rel="nofollow" className="px-8 py-4 w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] flex items-center justify-center gap-2">
+                        <Link href={`/free-audit?utm_source=${cityName}-${params.service}`} className="px-8 py-4 w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] flex items-center justify-center gap-2">
                             Claim Free {cityName} Market Audit
                             <ArrowRight className="w-5 h-5" />
                         </Link>
@@ -400,7 +400,7 @@ export default async function LocationServicePage(props: Props) {
                                     Custom Revenue Growth Roadmap
                                 </li>
                             </ul>
-                            <Link href={`/free-audit?utm_source=${cityName}-${params.service}`} rel="nofollow" className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center justify-center gap-2 text-sm">
+                            <Link href={`/free-audit?utm_source=${cityName}-${params.service}`} className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] flex items-center justify-center gap-2 text-sm">
                                 Claim {cityName} Audit
                                 <ArrowRight className="w-4 h-4" />
                             </Link>

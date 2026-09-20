@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ term: str
   const title = baseTitle.length + 7 <= 60 ? `${baseTitle} | AJPR` : baseTitle
 
   return {
-    alternates: { canonical: `/glossary/${termSlug}` },
+    alternates: { canonical: `https://ajprworld.com/glossary/${termSlug}` },
     title,
     description: termData.definition,
     openGraph: {

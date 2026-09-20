@@ -2,14 +2,14 @@ import Link from 'next/link';
 import { getPublishedServices, getBlogs, getAllSeoRoutes, getGlossaryTerms } from '@/lib/db/queries';
 
 export const metadata = {
-  title: 'Sitemap | AJPR World',
-  description: 'HTML Sitemap for AJPR World - Premium Tech & Software Solutions.',
+  title: 'HTML Sitemap | AJPR World',
+  description: 'Explore the complete HTML sitemap of AJPR World. Easily navigate our services, pricing guides, client comparisons, research reports, and developer tools.',
   alternates: {
     canonical: 'https://ajprworld.com/sitemap'
   },
   openGraph: {
-    title: 'Sitemap | AJPR World',
-    description: 'HTML Sitemap for AJPR World - Premium Tech & Software Solutions.',
+    title: 'HTML Sitemap | AJPR World',
+    description: 'Explore the complete HTML sitemap of AJPR World. Easily navigate our services, pricing guides, client comparisons, research reports, and developer tools.',
     url: 'https://ajprworld.com/sitemap',
     siteName: 'AJPR World',
     type: 'website',
@@ -18,7 +18,7 @@ export const metadata = {
         url: 'https://ajprworld.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'AJPR World',
+        alt: 'AJPR World Sitemap',
       }
     ],
   }
@@ -38,6 +38,10 @@ export default async function SitemapPage() {
     { title: 'Services', url: '/services' },
     { title: 'Portfolio', url: '/portfolio' },
     { title: 'Blog', url: '/blog' },
+    { title: 'Marketing Strategy Consulting Guide', url: '/blog/marketing-strategy-consulting-how-to-choose-a-provider' },
+    { title: 'Marketing Consultant Cost & Rates', url: '/blog/marketing-strategy-consultant-cost-rates' },
+    { title: 'B2B Marketing Strategy Guide', url: '/blog/b2b-marketing-strategy-in-house-vs-agency-vs-consultant' },
+    { title: 'Top B2B Growth Agencies Shortlist', url: '/blog/best-b2b-growth-marketing-agencies-us' },
     { title: 'Glossary', url: '/glossary' },
     { title: 'Contact', url: '/contact' },
     { title: 'Careers', url: '/careers' },
@@ -47,7 +51,7 @@ export default async function SitemapPage() {
     { title: 'Terms of Service', url: '/terms' },
     { title: 'Affiliates', url: '/affiliates' },
     { title: 'Network Search', url: '/network-search' },
-    { title: 'Pricing', url: '/pricing' },
+    { title: 'Pricing Hub', url: '/pricing' },
     { title: 'SEO Cost Guide (2026)', url: '/pricing/seo-cost' },
     { title: 'PPC Management Cost', url: '/pricing/ppc-cost' },
     { title: 'Website Cost Guide', url: '/pricing/website-cost' },
@@ -72,9 +76,6 @@ export default async function SitemapPage() {
     { title: 'Chat Agents', url: '/chat-agents' },
     { title: 'Aman Joshi (CEO)', url: '/aman-joshi' },
     { title: 'Book a Call', url: '/book-call' },
-    { title: 'Sign Up as Client', url: '/signup/client' },
-    { title: 'Sign Up as Developer', url: '/signup/developer' },
-    { title: 'Ruflo Demo', url: '/demo-ruflo' },
     { title: 'Cloud Solutions', url: '/services/cloud-solutions' },
     { title: 'Digital Marketing', url: '/services/digital-marketing' },
     { title: 'Graphics & Branding', url: '/services/graphics-branding' },
@@ -82,12 +83,15 @@ export default async function SitemapPage() {
   ];
 
   const targetCities = [
+    'austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 
+    'dallas', 'atlanta', 'miami', 'chicago', 'boston', 'seattle',
+    'new-york', 'san-francisco',
     'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 
     'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand',
-    'new-york', 'london', 'san-francisco', 'singapore', 'dubai', 
-    'sydney', 'toronto', 'austin', 'chicago', 'boston'
+    'london', 'toronto', 'sydney', 'dubai', 'singapore'
   ];
   const targetServices = [
+    'seo-agency', 'ppc-agency', 'web-design', 'digital-marketing', 'social-media-marketing',
     'custom-software', 'web-development', 'app-development', 'ai-solutions', 'cloud-architecture'
   ];
 

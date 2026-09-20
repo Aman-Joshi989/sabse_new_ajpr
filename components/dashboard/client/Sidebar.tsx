@@ -33,9 +33,9 @@ export default function Sidebar({ activeTab }: { activeTab: string }) {
               <Rocket className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-[#0f172a] dark:text-white text-base font-black leading-tight">
+              <span className="text-[#0f172a] dark:text-white text-base font-black leading-tight block">
                 AJPR WORLD
-              </h1>
+              </span>
               <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em]">
                 Client Portal
               </p>

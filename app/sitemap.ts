@@ -341,11 +341,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  // Programmatic local SEO pages for US Metros and Regional Hubs
+  // Programmatic local SEO pages for US Metros, Global Hubs, and Regional Hubs
   const targetCities = [
     'austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 
     'dallas', 'atlanta', 'miami', 'chicago', 'boston', 'seattle',
-    'new-york', 'san-francisco',
+    'new-york', 'san-francisco', 'london', 'toronto', 'sydney', 'dubai', 'singapore',
     'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 
     'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
   ];

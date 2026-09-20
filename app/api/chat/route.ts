@@ -23,14 +23,20 @@ export async function POST(req: Request) {
     const { messages } = await req.json();
 
     const systemPrompt = `
-You are Agent Hermes, the elite Technical Sales Consultant and AI expert for AJPR World (a premium software development and AI agency).
+You are Agent Hermes, the elite Technical Sales Consultant and AI expert for AJPR World (a premium software engineering and AI agency led by Founder & Systems Architect Aman Joshi).
 Your goal is to answer visitor questions, be extremely helpful, and qualify them as leads.
 
 Be concise, professional, and friendly. 
-If they ask for pricing or complex requirements, give a very brief, impressive technical outline, and then IMMEDIATELY say:
+If they ask for pricing or complex requirements, give a very brief, impressive technical outline, and then say:
 "Custom AI MVPs start at $5k - $15k depending on scope. I can give you an exact cost estimate and timeline for this. Just drop your email here and I'll send over the detailed proposal right away."
 
 If they provide an email, thank them, confirm that you will send the proposal, and then silently log it. Example: "Perfect! I've sent the detailed proposal and technical audit to your email. Is there anything else you'd like to know?"
+
+IMPORTANT - REAL AGENT HANDOFF:
+If the user asks to speak to a real person, human agent, founder, live engineer, or asks for a phone call/WhatsApp (e.g. "I want to talk to a person", "connect me to human", "can I speak to someone", "call me", "speak to an agent"):
+1. Reassure them warmly: "I'd be glad to connect you directly with Aman Joshi (Founder & Systems Architect) and our senior engineering team right away!"
+2. Mention that they can jump straight into a WhatsApp conversation, schedule a 15-minute scoping call, or call directly.
+3. ALWAYS append the exact token "[ACTION: HUMAN_HANDOFF]" at the end of your response so our system automatically activates the direct human connection card.
 `;
 
     // Lead extraction logic
@@ -39,6 +45,8 @@ If they provide an email, thank them, confirm that you will send the proposal, a
         const lastMessage = messages[messages.length - 1];
         const contentString = typeof lastMessage.content === 'string' ? lastMessage.content : 
                               (lastMessage.parts?.filter((p: any) => p.type === 'text').map((p: any) => p.text).join('') || '');
+
+        const isHumanRequest = /\b(human|real person|real agent|speak to someone|talk to someone|call me|whatsapp|live agent|representative)\b/i.test(contentString);
 
         if (lastMessage.role === 'user' && contentString.includes('[SYSTEM: LEAD ACQUIRED]')) {
           const content = contentString;
@@ -56,12 +64,12 @@ If they provide an email, thank them, confirm that you will send the proposal, a
               email: email,
               company: phoneMatch ? `Phone: ${phoneMatch[1].trim()}` : 'Unknown',
               project_details: msgMatch ? msgMatch[1].trim() : 'No initial message',
-              status: 'new'
+              status: isHumanRequest ? 'human_escalated' : 'new'
             });
-            await insertAgentLog('hermes', `Captured new pre-chat lead: ${email}`);
+            await insertAgentLog('hermes', `Captured new pre-chat lead: ${email}${isHumanRequest ? ' (HUMAN REQUESTED)' : ''}`);
           }
         } else if (lastMessage.role === 'user') {
-          // Fallback regex for mid-conversation email drops
+          // Fallback regex for mid-conversation email drops or human escalations
           const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
           const emailsFound = contentString.match(emailRegex);
           
@@ -72,9 +80,11 @@ If they provide an email, thank them, confirm that you will send the proposal, a
               email: email,
               company: 'Unknown',
               project_details: messages.map((m: any) => m.role + ": " + (typeof m.content === 'string' ? m.content : m.parts?.[0]?.text || '')).join('\n'),
-              status: 'new'
+              status: isHumanRequest ? 'human_escalated' : 'new'
             });
-            await insertAgentLog('hermes', `Captured new lead via mid-chat: ${email}`);
+            await insertAgentLog('hermes', `Captured new lead via mid-chat: ${email}${isHumanRequest ? ' (HUMAN REQUESTED)' : ''}`);
+          } else if (isHumanRequest) {
+            await insertAgentLog('hermes', `Visitor requested real human agent: "${contentString.slice(0, 100)}"`);
           }
         }
       }

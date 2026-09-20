@@ -8,6 +8,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { getSeoMetadata } from "@/lib/db/queries";
 import { CORNERSTONE_BLOG_POSTS } from '@/lib/blog-data';
+import { constructEnterpriseMetadata } from '@/lib/seo';
 
 export const revalidate = 3600; // Cache for 1 hour (ISR) to protect Vercel free limits
 type BlogPost = {
@@ -75,20 +76,41 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
   const featuredPost = filteredBlogs.length > 0 ? filteredBlogs[0] : null;
   const moreNews = filteredBlogs.length > 1 ? filteredBlogs.slice(1) : [];
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://ajprworld.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://ajprworld.com/blog',
+      },
+    ],
+  };
+
   const blogSchema = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'AJPR World Blog',
-    description: 'Expert insights on custom software engineering, web development, AI automation, and SEO by AJPR World.',
+    name: 'AJPR World Growth & Engineering Blog',
+    description: 'Actionable strategies on SEO, AI search discoverability, custom software engineering, and digital growth from the engineering team at AJPR World.',
     url: 'https://ajprworld.com/blog',
+    inLanguage: 'en-US',
     publisher: {
       '@type': 'Organization',
       name: 'AJPR World',
+      url: 'https://ajprworld.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://ajprworld.com/images/aman-joshi-profile.png'
-      }
-    }
+        url: 'https://ajprworld.com/images/aman-joshi-profile.png',
+      },
+    },
   };
 
   return (
@@ -96,6 +118,10 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       
       {/* Premium Dark Hero Section */}
@@ -245,30 +271,19 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seo = await getSeoMetadata('/blog');
-  const defaultTitle = 'Growth, SEO & Engineering Insights | AJPR World Blog';
-  const defaultDesc = 'Actionable strategies on SEO, AI search discoverability, custom software engineering, and digital growth from the engineering team at AJPR World.';
-  const title = seo?.title || defaultTitle;
-  const description = seo?.description || defaultDesc;
+  let seo = null;
+  try {
+    seo = await getSeoMetadata('/blog');
+  } catch (error) {
+    console.error('Failed to fetch SEO metadata for /blog from DB:', error);
+  }
 
-  return {
-    alternates: { canonical: 'https://ajprworld.com/blog' },
-    title: title,
-    description: description,
-    openGraph: {
-      title: title,
-      description: description,
-      url: 'https://ajprworld.com/blog',
-      siteName: 'AJPR World',
-      type: 'website',
-      images: [
-        {
-          url: 'https://ajprworld.com/og-image.jpg',
-          width: 1200,
-          height: 630,
-          alt: 'AJPR World',
-        }
-      ],
-    }
-  };
+  return constructEnterpriseMetadata({
+    path: '/blog',
+    title: seo?.title,
+    description: seo?.description,
+    defaultTitle: 'Growth, SEO & Engineering Insights | AJPR World Blog',
+    defaultDesc: 'Actionable strategies on SEO, AI search discoverability, custom software engineering, and digital growth from the engineering team at AJPR World.',
+    type: 'website',
+  });
 }

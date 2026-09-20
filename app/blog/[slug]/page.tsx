@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import Script from 'next/script';
 import { getBlogBySlug, getBlogs } from '@/lib/db/queries';
 import { cleanMetaTitle, cleanMetaDescription } from '@/app/layout';
+import { constructEnterpriseMetadata } from '@/lib/seo';
 import BlogArticleClient from './BlogArticleClient';
 
 export const revalidate = 3600; // ISR: Revalidate every hour
@@ -70,34 +71,30 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const params = await props.params;
     const post = await getPost(params.slug);
 
-    if (!post) return { title: 'Not Found' };
+    if (!post) {
+        return constructEnterpriseMetadata({
+            path: `/blog/${params.slug}`,
+            defaultTitle: 'Article Not Found | AJPR World',
+            defaultDesc: 'The requested engineering and growth article could not be found on AJPR World.',
+            noIndex: true,
+        });
+    }
 
-    const cleanTitle = cleanMetaTitle(post.title || 'Marketing Strategy Consulting | AJPR');
-    const cleanDesc = cleanMetaDescription(post.meta_description || post.excerpt || `Read our latest guide on ${post.title}`);
     const publishedTime = post.published_at 
         ? new Date(post.published_at).toISOString() 
         : new Date().toISOString();
 
-    return {
-        alternates: { canonical: `https://ajprworld.com/blog/${params.slug}` },
-        title: cleanTitle,
-        description: cleanDesc,
-        openGraph: {
-            title: cleanTitle,
-            description: cleanDesc,
-            type: 'article',
-            publishedTime: publishedTime,
-            url: `https://ajprworld.com/blog/${post.slug}`,
-            images: [
-                {
-                    url: post.image_url || post.cover_image || 'https://ajprworld.com/og-image.jpg',
-                    width: 1200,
-                    height: 630,
-                    alt: cleanTitle,
-                }
-            ],
-        }
-    };
+    return constructEnterpriseMetadata({
+        path: `/blog/${post.slug}`,
+        title: post.title ? `${post.title} | AJPR World` : 'Growth Insights | AJPR World',
+        description: post.meta_description || post.excerpt,
+        defaultTitle: `${post.title || 'Growth Strategy Guide'} | AJPR World`,
+        defaultDesc: `Read ${post.title}: actionable insights, engineering blueprints, and growth playbooks by AJPR World.`,
+        image: post.image_url || post.cover_image || 'https://ajprworld.com/og-image.jpg',
+        type: 'article',
+        publishedTime,
+        authors: post.author ? [post.author] : ['Aman Joshi'],
+    });
 }
 
 export default async function BlogPost(props: Props) {

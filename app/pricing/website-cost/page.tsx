@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/pricing/website-cost',
     siteName: 'AJPR World',
     type: 'article',
+    images: ['https://ajprworld.com/og-image.jpg'],
   },
 };
 

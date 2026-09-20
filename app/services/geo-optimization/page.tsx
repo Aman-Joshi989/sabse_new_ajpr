@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/services/geo-optimization',
     siteName: 'AJPR World',
     type: 'article',
+    images: ['https://ajprworld.com/og-image.jpg'],
   },
 };
 
@@ -48,6 +49,7 @@ export default function GeoOptimizationPage() {
       name: 'AJPR World',
       url: 'https://ajprworld.com',
     },
+    image: ['https://ajprworld.com/og-image.jpg'],
     areaServed: 'Global',
     description: 'Specialized optimization for ChatGPT, Google AI Overviews, Perplexity, and conversational AI search discovery.',
   };

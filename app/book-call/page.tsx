@@ -54,12 +54,27 @@ export default function BookCallPage() {
         const formattedDate = selectedDate.toISOString().split('T')[0]
 
         try {
-            // Since we moved to free discovery calls for US/CA clients, 
-            // we bypass the Razorpay payment flow entirely.
-            // In a real production setup, we would POST to a simplified /api/leads or /api/bookings here.
-            
-            // Simulating network request for lead capture
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: form.fullName,
+                    email: form.workEmail,
+                    phone: '',
+                    companyName: form.companyName,
+                    websiteUrl: form.websiteUrl,
+                    monthlyRevenue: 'Discovery Call Booking',
+                    budgetRange: '',
+                    buildingText: form.topic || 'Strategy Session',
+                    blockersText: `Scheduled for ${formattedDate} at ${activeTimeSlot}`,
+                    message: `Strategy Call Scheduled: ${form.fullName} (${form.workEmail}) from ${form.companyName || 'N/A'}. Date: ${formattedDate} at ${activeTimeSlot}. Topic: ${form.topic || 'General Strategy'}`
+                })
+            })
+
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}))
+                throw new Error(errData.error || "Failed to schedule session.")
+            }
             
             setStatus('success')
             setStep('success')

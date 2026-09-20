@@ -92,7 +92,7 @@ ${form.blockersText}
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 font-sans selection:bg-blue-500/30 transition-colors duration-300">
-            <div className="w-[80%] mx-auto min-h-screen relative">
+            <div className="w-full min-h-screen relative">
 
                 {/* Premium Dark Hero Background */}
                 <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -101,23 +101,23 @@ ${form.blockersText}
                     <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/djp3uolnn/image/upload/v1723528256/grid-pattern_qayf0d.png')] opacity-20 bg-[length:32px_32px] pointer-events-none mix-blend-overlay"></div>
                 </div>
 
-                <div className="container mx-auto px-4 lg:px-8 py-24 md:py-32 relative z-10">
-                    <div className="flex flex-col lg:flex-row gap-16 xl:gap-24">
+                <div className="container mx-auto px-4 lg:px-8 max-w-7xl py-16 md:py-24 relative z-10">
+                    <div className="flex flex-col lg:flex-row gap-12 xl:gap-20">
 
                         {/* LEFT COLUMN: Content & Copy */}
-                        <div className="lg:w-5/12 space-y-24">
+                        <div className="lg:w-5/12 space-y-16">
 
                             {/* 1. Hero Section */}
                             <div className="space-y-8 animate-fade-up">
-                                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] animate-fade-up text-transparent bg-clip-text bg-gradient-to-r from-slate-900 dark:from-white via-slate-800 dark:via-white to-slate-600 dark:to-white/60">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] animate-fade-up text-transparent bg-clip-text bg-gradient-to-r from-slate-900 dark:from-white via-slate-800 dark:via-white to-slate-600 dark:to-white/60">
                                     Let's Engineer <br />
-                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">What's Next.</span>
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">What's Next.</span>
                                 </h1>
-                                <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-lg animate-fade-up">
+                                <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-lg animate-fade-up">
                                     We partner with ambitious founders and growth-focused businesses to build scalable digital systems and product-driven infrastructure.
                                 </p>
                                 <div className="animate-fade-up">
-                                    <Button onClick={scrollToForm} size="lg" className="h-14 px-8 text-base rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold transition-all shadow-lg shadow-blue-900/20 hover:-translate-y-1">
+                                    <Button onClick={scrollToForm} size="lg" className="h-12 px-8 text-sm md:text-base rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold transition-all shadow-md">
                                         Apply for Partnership <ArrowRight className="ml-2 w-4 h-4" />
                                     </Button>
                                 </div>

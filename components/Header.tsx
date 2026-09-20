@@ -67,40 +67,55 @@ export default function Header({ services }: { services?: any[] }) {
     const { user, isLoading } = useAuth()
     const lastScrollY = useRef(0)
 
-    // Map dynamic services to dropdown items
-    const dynamicServices = services && services.length > 0
-        ? services.map(s => ({
-            name: s.title,
-            href: `/services/${s.slug}`,
-            icon_name: s.icon_name || 'Briefcase'
-        }))
-        : [
-            { name: 'Web Development', href: '/services/web-development', icon_name: 'Code2' },
-            { name: 'Cloud Solutions', href: '/services/cloud-solutions', icon_name: 'Cloud' },
-            { name: 'Graphics & Branding', href: '/services/graphics-branding', icon_name: 'Palette' },
-            { name: 'Digital Marketing', href: '/services/digital-marketing', icon_name: 'Phone' }
-        ];
+    // Map dynamic services to dropdown items with clear, customer-friendly titles
+    const coreServices = [
+        { name: 'Custom Web Development', href: '/services/web-development', icon_name: 'Code2', desc: 'Next.js, high-speed apps & APIs' },
+        { name: 'AI Chatbots & Agents', href: '/services/ai-chatbot-development', icon_name: 'Cpu', desc: 'Context-aware LLMs & autonomous workflows' },
+        { name: 'SaaS Platform Architecture', href: '/services/saas-product-development', icon_name: 'Layers', desc: 'Multi-tenant apps & scalable backends' },
+        { name: 'GEO & AI Search Optimization', href: '/services/geo-optimization', icon_name: 'TrendingUp', desc: 'Rank in Perplexity, ChatGPT & Google AI' },
+        { name: 'Cloud Solutions & DevOps', href: '/services/cloud-solutions', icon_name: 'Cloud', desc: 'AWS, GCP, Docker & 99.99% uptime' },
+        { name: 'Digital Growth & Technical SEO', href: '/services/digital-marketing', icon_name: 'Phone', desc: 'Performance marketing & revenue funnels' }
+    ];
 
+    const pricingLinks = [
+        { name: 'Packages & Transparent Pricing', href: '/pricing', icon_name: 'Briefcase', desc: 'Flat project sprints & monthly retainers' },
+        { name: 'Website Cost Calculator', href: '/pricing/website-cost', icon_name: 'Scale', desc: 'Interactive breakdown for web builds' },
+        { name: 'SEO & Growth Retainers', href: '/pricing/seo-cost', icon_name: 'TrendingUp', desc: 'ROI-driven organic search tiers' },
+        { name: 'Agency ROI Estimator', href: '/tools/agency-pricing-calculator', icon_name: 'ShieldCheck', desc: 'Compare in-house vs. senior agency ROI' }
+    ];
+
+    const resourceLinks = [
+        { name: 'Free US Business Tools', href: '/tools', icon_name: 'Cpu', desc: 'Calculators, audit tools & generators' },
+        { name: 'Engineering Insights & Blog', href: '/blog', icon_name: 'Briefcase', desc: 'Technical playbooks & growth case studies' },
+        { name: 'AI Agent Playground', href: '/chat-agents', icon_name: 'Code2', desc: 'Test live AI intelligence prototypes' },
+        { name: 'Tech & AI Glossary', href: '/glossary', icon_name: 'Layers', desc: 'Plain-English technical definitions' }
+    ];
+
+    // High-clarity 5-pillar navigation
     const navigation = [
-        { name: 'Home', href: '/' },
         {
             name: 'Services',
             href: '/services',
-            dropdown: dynamicServices
+            dropdown: coreServices
+        },
+        { 
+            name: 'Work', 
+            href: '/portfolio' 
         },
         {
-            name: 'Demos',
-            href: '#',
-            dropdown: [
-                { name: 'Swarm Simulator', href: '/demo-ruflo', icon_name: 'Cpu' },
-                { name: 'AI Chat Playground', href: '/chat-agents', icon_name: 'Code2' }
-            ]
+            name: 'Pricing',
+            href: '/pricing',
+            dropdown: pricingLinks
         },
-        { name: 'About', href: '/about' },
-        { name: 'Portfolio', href: '/portfolio' },
-        { name: 'Tools', href: '/tools' },
-        { name: 'Blog', href: '/blog' },
-        { name: 'Contact', href: '/contact' },
+        {
+            name: 'Resources',
+            href: '/tools',
+            dropdown: resourceLinks
+        },
+        { 
+            name: 'About', 
+            href: '/about' 
+        },
     ]
 
     useEffect(() => {
@@ -115,9 +130,9 @@ export default function Header({ services }: { services?: any[] }) {
 
     // helper to check if current route is active
     const isActive = (href: string) => {
+        if (href === '/') return pathname === '/'
         return pathname === href || pathname.startsWith(href + '/')
     }
-
 
     const logoSrc = mounted && resolvedTheme === 'dark'
         ? "/logo/ajpr-logo-white.png"
@@ -130,15 +145,15 @@ export default function Header({ services }: { services?: any[] }) {
 
     return (
         <header
-            className={`sticky top-0 z-50 w-full transition-all duration-500 ease-in-out ${scrolled
-                ? 'bg-white/85 dark:bg-[#030712]/85 backdrop-blur-lg shadow-md border-b border-slate-200/50 dark:border-slate-800/50'
+            className={`sticky top-0 z-50 w-full transition-all duration-300 ease-in-out ${scrolled
+                ? 'bg-white/90 dark:bg-[#030712]/90 backdrop-blur-xl shadow-sm border-b border-slate-200/80 dark:border-slate-800/80'
                 : 'bg-transparent backdrop-blur-none border-b border-transparent'
                 }`}
         >
-            <div className={`container flex h-16 items-center justify-between transition-all duration-300`}>
+            <div className={`container mx-auto px-4 lg:px-8 max-w-7xl flex h-16 items-center justify-between transition-all duration-300`}>
                 {/* Logo */}
-                <Link href="/" className="flex items-center space-x-3 group">
-                    <div className="group-hover:scale-105 transition-transform duration-300">
+                <Link href="/" className="flex items-center space-x-3 group shrink-0">
+                    <div className="group-hover:opacity-90 transition-opacity duration-300">
                         <Image
                             src={logoSrc}
                             alt="AJPR World Logo"
@@ -146,13 +161,13 @@ export default function Header({ services }: { services?: any[] }) {
                             height={40}
                             className="object-contain"
                             priority
-                            key={logoSrc} // Force re-render on src change
+                            key={logoSrc}
                         />
                     </div>
                 </Link>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden lg:flex items-center space-x-8 h-full">
+                <nav className="hidden lg:flex items-center space-x-2 h-full">
                     {navigation.map((item) => (
                         <div
                             key={item.name}
@@ -162,115 +177,131 @@ export default function Header({ services }: { services?: any[] }) {
                         >
                             <Link
                                 href={item.href}
-                                className={`flex items-center font-medium px-4 py-2 rounded-full transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#030712] ${isActive(item.href)
-                                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm'
-                                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                                className={`flex items-center text-sm font-semibold px-3.5 py-1.5 rounded-full transition-all outline-none ${isActive(item.href)
+                                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
+                                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-800/40'
                                     }`}
                             >
                                 {item.name}
-                                {item.dropdown && <ChevronDown className="ml-1 h-4 w-4" />}
+                                {item.dropdown && <ChevronDown className="ml-1 h-3.5 w-3.5 opacity-60 group-hover:rotate-180 transition-transform duration-200" />}
                             </Link>
 
                             {item.dropdown && activeDropdown === item.name && (
-                                <div className="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 py-2 animate-fade-down before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
-                                    {item.dropdown.map((subItem) => {
-                                        const IconComponent = subItem.icon_name 
-                                            ? iconRegistry[subItem.icon_name] || Briefcase 
-                                            : (subItem as any).icon || Briefcase
-                                        return (
-                                            <Link
-                                                key={subItem.name}
-                                                href={subItem.href}
-                                                className={`flex items-center px-4 py-2 transition-colors text-sm ${isActive(subItem.href)
-                                                    ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/20'
-                                                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20'
-                                                    }`}
-                                            >
-                                                <IconComponent className="w-4 h-4 mr-2 text-blue-600" />
-                                                <div className="font-medium">{subItem.name}</div>
-                                            </Link>
-                                        )
-                                    })}
+                                <div className="absolute top-full -left-4 mt-1 w-80 bg-white dark:bg-[#0a0f1c] rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-2 animate-fade-down z-50">
+                                    <div className="space-y-1">
+                                        {item.dropdown.map((subItem) => {
+                                            const IconComponent = subItem.icon_name 
+                                                ? iconRegistry[subItem.icon_name] || Briefcase 
+                                                : Briefcase
+                                            return (
+                                                <Link
+                                                    key={subItem.name}
+                                                    href={subItem.href}
+                                                    className={`flex items-start p-2.5 rounded-xl transition-all ${isActive(subItem.href)
+                                                        ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'
+                                                        : 'hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-800 dark:text-slate-200'
+                                                        }`}
+                                                >
+                                                    <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 shrink-0 mr-3">
+                                                        <IconComponent className="w-4 h-4" />
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-xs font-bold text-slate-900 dark:text-white leading-snug">{subItem.name}</div>
+                                                        {subItem.desc && (
+                                                            <div className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">{subItem.desc}</div>
+                                                        )}
+                                                    </div>
+                                                </Link>
+                                            )
+                                        })}
+                                    </div>
+                                    <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800/60 px-2 py-1 flex items-center justify-between text-xs">
+                                        <Link href={item.href} className="font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                                            View all {item.name.toLowerCase()} &rarr;
+                                        </Link>
+                                    </div>
                                 </div>
                             )}
                         </div>
                     ))}
-
-                    <div className="flex items-center space-x-4">
-                        <ModeToggle />
-
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="relative"
-                            onClick={() => setIsCartOpen(true)}
-                            aria-label="Open Shopping Cart"
-                        >
-                            <ShoppingCart className="h-5 w-5" />
-                            {cart.length > 0 && (
-                                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                                    {cart.length}
-                                </span>
-                            )}
-                        </Button>
-                        {isLoading ? (
-                            <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
-                        ) : user ? (
-                            <div className="relative group">
-                                <button className="flex items-center space-x-2 focus:outline-none" aria-label="User Account Menu">
-                                    <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border overflow-hidden">
-                                        {user.avatar_url ? (
-                                            <Image
-                                                src={user.avatar_url}
-                                                alt={user.name}
-                                                width={40}
-                                                height={40}
-                                                className="object-cover"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-slate-500 font-bold">
-                                                {user.name.charAt(0)}
-                                            </div>
-                                        )}
-                                    </div>
-                                    <ChevronDown className="w-4 h-4 text-slate-500" />
-                                </button>
-                                {/* Dropdown Menu */}
-                                <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 py-2 animate-fade-down hidden group-hover:block">
-                                    <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800 mb-2">
-                                        <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{user.name}</p>
-                                        <p className="text-xs text-slate-500 capitalize">{user.role}</p>
-                                    </div>
-                                    <Link
-                                        href={user.role === 'admin' ? '/dashboard/admin' : user.role === 'client' ? '/dashboard/client' : '/dashboard/developer'}
-                                        className="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600"
-                                    >
-                                        <LayoutDashboard className="w-4 h-4 mr-2" />
-                                        Dashboard
-                                    </Link>
-                                    <form action={logout}>
-                                        <button className="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 text-left">
-                                            <LogOut className="w-4 h-4 mr-2" />
-                                            Sign Out
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="flex items-center gap-4">
-                                <Link href="/login" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600">
-                                    Log In
-                                </Link>
-                                <Button
-                                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
-                                    asChild
-                                >
-                                    <Link href="/contact">Get Quote</Link>
-                                </Button>
-                            </div>
-                        )}
-                    </div>
                 </nav>
+
+                {/* Right Side Actions */}
+                <div className="hidden lg:flex items-center space-x-3">
+                    <ModeToggle />
+
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="relative text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                        onClick={() => setIsCartOpen(true)}
+                        aria-label="Open Shopping Cart"
+                    >
+                        <ShoppingCart className="h-4 w-4" />
+                        {cart.length > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                                {cart.length}
+                            </span>
+                        )}
+                    </Button>
+
+                    {isLoading ? (
+                        <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
+                    ) : user ? (
+                        <div className="relative group">
+                            <button className="flex items-center space-x-2 focus:outline-none" aria-label="User Account Menu">
+                                <div className="w-9 h-9 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 overflow-hidden">
+                                    {user.avatar_url ? (
+                                        <Image
+                                            src={user.avatar_url}
+                                            alt={user.name}
+                                            width={36}
+                                            height={36}
+                                            className="object-cover"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-slate-600 dark:text-slate-300 font-bold text-xs">
+                                            {user.name.charAt(0)}
+                                        </div>
+                                    )}
+                                </div>
+                                <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                            </button>
+                            {/* Dropdown Menu */}
+                            <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-[#0a0f1c] rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 py-2 animate-fade-down hidden group-hover:block z-50">
+                                <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800 mb-2">
+                                    <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{user.name}</p>
+                                    <p className="text-xs text-slate-500 capitalize">{user.role}</p>
+                                </div>
+                                <Link
+                                    href={user.role === 'admin' ? '/dashboard/admin' : user.role === 'client' ? '/dashboard/client' : '/dashboard/developer'}
+                                    className="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600"
+                                >
+                                    <LayoutDashboard className="w-4 h-4 mr-2" />
+                                    Dashboard
+                                </Link>
+                                <form action={logout}>
+                                    <button className="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 text-left">
+                                        <LogOut className="w-4 h-4 mr-2" />
+                                        Sign Out
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-2.5">
+                            <Link href="/login" className="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2 py-1">
+                                Log In
+                            </Link>
+                            <Button
+                                className="h-9 px-4 text-xs font-bold rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 shadow-md hover:shadow-lg transition-all"
+                                asChild
+                            >
+                                <Link href="/book-call">Book Strategy Call</Link>
+                            </Button>
+                        </div>
+                    )}
+                </div>
 
                 {/* Mobile Navigation */}
                 <div className="lg:hidden flex items-center space-x-2">
@@ -418,10 +449,15 @@ export default function Header({ services }: { services?: any[] }) {
                                     )}
                                 </div>
 
-                                {/* CTA Button */}
-                                <Button className="mt-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all" asChild>
-                                    <Link href="/contact">Get Quote</Link>
-                                </Button>
+                                {/* Mobile CTAs */}
+                                <div className="pt-2 space-y-2.5">
+                                    <Button className="w-full h-11 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-md transition-all text-sm" asChild>
+                                        <Link href="/book-call">Book Strategy Call</Link>
+                                    </Button>
+                                    <Button variant="outline" className="w-full h-11 rounded-xl border-slate-200 dark:border-slate-800 font-semibold text-slate-700 dark:text-slate-300 text-sm" asChild>
+                                        <Link href="/contact">Contact & Inquiry</Link>
+                                    </Button>
+                                </div>
                             </div>
                         </SheetContent>
                     </Sheet>

@@ -2,12 +2,22 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Database, Code2, Cpu, GitMerge, Layout, Layers, ShieldCheck, CheckCircle, Terminal, Globe, Smartphone, Lock, Cloud, Sparkles, Mail, DollarSign, Zap, AlertCircle, Calculator, Bot } from 'lucide-react'
+import { 
+  ArrowRight, Database, Code2, Cpu, GitMerge, Layout, Layers, ShieldCheck, 
+  CheckCircle, CheckCircle2, Terminal, Globe, Smartphone, Lock, Cloud, Sparkles, 
+  Mail, DollarSign, Zap, AlertCircle, Calculator, Bot, HelpCircle, Check, Calendar, ArrowUpRight, Clock
+} from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import HeroSection from '@/components/sections/HeroSection'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
 const MouseGlowCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -97,6 +107,73 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
 
   const displayServices = services.length > 0 ? services : defaultServices;
 
+  const [activeScope, setActiveScope] = useState<'web' | 'ai' | 'saas' | 'growth'>('web');
+
+  const scopeConfigs = {
+    web: {
+      title: "Custom Web Application",
+      tagline: "Ultra-fast Next.js platform, bespoke UI & edge API architecture",
+      timeline: "2–3 Weeks",
+      priceRange: "$4,500 – $7,500",
+      stack: ["Next.js 15 (App Router)", "TypeScript", "Tailwind CSS", "PostgreSQL", "Vercel Edge"],
+      features: [
+        "100% Code & GitHub Repository Ownership",
+        "Sub-150ms TTFB & 99+ Core Web Vitals",
+        "Custom API Integrations & Database Schema",
+        "SEO-Engineered OpenGraph & Structured Schema",
+        "30-Day Post-Launch Technical Warranty"
+      ],
+      idealFor: "Ambitious companies requiring a lightning-fast, high-converting digital platform."
+    },
+    ai: {
+      title: "Custom AI MVP & Agents",
+      tagline: "Autonomous multi-agent workflows, vector search & tool calling",
+      timeline: "2–4 Weeks",
+      priceRange: "$5,500 – $9,500",
+      stack: ["OpenAI / Claude / Groq", "LangChain & LangGraph", "Pinecone / pgvector", "Next.js", "Python FastAPI"],
+      features: [
+        "Custom Contextual Agent Workflows",
+        "Vector Embeddings & Document Retrieval (RAG)",
+        "Autonomous Task Routing & API Execution",
+        "API Guardrails & Cost-Limiting Governance",
+        "Admin Monitoring & Prompt Evaluation Dashboard"
+      ],
+      idealFor: "Founders seeking to validate an AI product idea or automate repetitive internal operations."
+    },
+    saas: {
+      title: "Full-Stack SaaS Platform",
+      tagline: "Multi-tenant software with auth, subscriptions & billing portals",
+      timeline: "3–4 Weeks",
+      priceRange: "$7,500 – $14,000",
+      stack: ["Next.js", "Supabase / PostgreSQL", "Stripe Billing", "Tailwind UI", "Docker"],
+      features: [
+        "Multi-Tenant User & Role Architecture",
+        "Stripe Subscriptions & Customer Portal",
+        "Real-Time Database & Analytics Tables",
+        "Secure Session Management & 2FA Ready",
+        "Clean Modular Code Base Ready for Scale"
+      ],
+      idealFor: "SaaS startups ready to ship an MVP and charge monthly recurring subscriptions."
+    },
+    growth: {
+      title: "Digital Growth & GEO Engine",
+      tagline: "Generative Engine Optimization & technical SEO for high organic reach",
+      timeline: "1–2 Weeks Setup",
+      priceRange: "$2,500 / month",
+      stack: ["Dynamic SEO Routes", "JSON-LD Rich Schema", "IndexNow Fast Indexing", "Ahrefs & Search Console"],
+      features: [
+        "Ranking Optimization for ChatGPT, Perplexity & Google",
+        "Programmatic Landing Page Generation",
+        "Automated Multi-Platform Social Syndication",
+        "Technical Debt & Core Web Vitals Remediation",
+        "Weekly Executive ROI & Conversion Reporting"
+      ],
+      idealFor: "Companies seeking compounding organic customer acquisition without massive ad spend."
+    }
+  };
+
+  const currentScope = scopeConfigs[activeScope];
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#030712] text-slate-900 dark:text-slate-300 selection:bg-slate-200 dark:selection:bg-slate-800 font-sans">
       <div className="w-full mx-auto">
@@ -162,6 +239,161 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                   <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{prop.desc}</p>
                 </MouseGlowCard>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 3.5 INTERACTIVE SCOPE & SPRINT PLANNER */}
+        <section className="py-16 md:py-20 bg-slate-50/70 dark:bg-[#070c18] border-y border-slate-200/80 dark:border-slate-800/80 relative">
+          <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
+            <div className="max-w-3xl mb-12">
+              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+                Interactive Sprint Planner
+              </Badge>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+                What are you looking to build?
+              </h2>
+              <p className="text-base md:text-lg text-slate-600 dark:text-slate-400">
+                Select your project type below to see recommended architecture, estimated delivery timelines, and guaranteed deliverables.
+              </p>
+            </div>
+
+            {/* Scope Selection Tabs */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+              {[
+                { id: 'web', label: 'Web Application', icon: Code2, badge: 'Fast Launch' },
+                { id: 'ai', label: 'AI MVP & Agents', icon: Cpu, badge: 'High Demand' },
+                { id: 'saas', label: 'SaaS Platform', icon: Layers, badge: 'Full-Stack' },
+                { id: 'growth', label: 'Growth & SEO', icon: Zap, badge: 'Compounding' },
+              ].map((tab) => {
+                const Icon = tab.icon;
+                const isSelected = activeScope === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveScope(tab.id as any)}
+                    className={`p-4 md:p-5 rounded-2xl text-left transition-all duration-200 border relative flex flex-col justify-between ${
+                      isSelected
+                        ? 'bg-white dark:bg-[#0d1527] border-blue-600 dark:border-blue-500 shadow-lg shadow-blue-500/10 ring-2 ring-blue-500/20'
+                        : 'bg-white/60 dark:bg-[#0a0f1c]/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between w-full mb-3">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                        isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                      }`}>
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                        isSelected ? 'bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                      }`}>
+                        {tab.badge}
+                      </span>
+                    </div>
+                    <div>
+                      <div className={`font-bold text-sm md:text-base ${isSelected ? 'text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300'}`}>
+                        {tab.label}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Scope Details Interactive Card */}
+            <div className="bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-10 shadow-xl">
+              <div className="grid lg:grid-cols-12 gap-8 items-center">
+                
+                {/* Left: Overview & Deliverables */}
+                <div className="lg:col-span-7 space-y-6">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-3 mb-2">
+                      <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+                        {currentScope.title}
+                      </h3>
+                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400">
+                        {currentScope.timeline} Sprint
+                      </span>
+                    </div>
+                    <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+                      {currentScope.tagline}
+                    </p>
+                  </div>
+
+                  {/* Architecture Stack */}
+                  <div>
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2.5">
+                      Production Architecture Stack:
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {currentScope.stack.map((item, idx) => (
+                        <span
+                          key={idx}
+                          className="text-xs font-semibold px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 border border-slate-200/60 dark:border-slate-700/60"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Deliverables Checklist */}
+                  <div>
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2.5">
+                      Guaranteed Inclusions & Deliverables:
+                    </div>
+                    <ul className="grid sm:grid-cols-2 gap-2.5">
+                      {currentScope.features.map((feat, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-xs md:text-sm text-slate-700 dark:text-slate-300 font-medium">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Right: Timeline, Investment & Direct Action */}
+                <div className="lg:col-span-5 p-6 md:p-8 rounded-2xl bg-slate-50 dark:bg-[#0d1424] border border-slate-200 dark:border-slate-800/80 space-y-6">
+                  <div className="space-y-3 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-500">
+                      <span>Delivery Target</span>
+                      <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                        <Clock className="w-3.5 h-3.5" /> Guaranteed
+                      </span>
+                    </div>
+                    <div className="text-3xl font-black text-slate-900 dark:text-white">
+                      {currentScope.timeline}
+                    </div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      {currentScope.idealFor}
+                    </p>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Button 
+                      className="w-full h-12 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-md hover:shadow-lg transition-all text-sm gap-2"
+                      asChild
+                    >
+                      <Link href={`/book-call?topic=${encodeURIComponent(currentScope.title)}`}>
+                        <Calendar className="w-4 h-4 text-blue-500" />
+                        Book Architecture Call for this Build
+                        <ArrowRight className="w-4 h-4 ml-auto" />
+                      </Link>
+                    </Button>
+                    <div className="text-center">
+                      <Link 
+                        href="/pricing" 
+                        className="text-xs font-semibold text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1"
+                      >
+                        Explore detailed cost breakdowns &rarr;
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
         </section>
@@ -454,6 +686,118 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           </div>
         </section>
 
+        {/* 6.5 TRANSPARENT ENGAGEMENT MODELS */}
+        <section className="py-20 bg-white dark:bg-[#030712] relative border-b border-slate-200 dark:border-slate-800">
+          <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+            <div className="max-w-3xl mb-16">
+              <Badge variant="outline" className="mb-4 border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+                Transparent Pricing
+              </Badge>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+                Predictable Sprints. Zero Agency Bloat.
+              </h2>
+              <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                Choose between fixed-price rapid sprints or a dedicated senior engineering pod. Every plan includes 100% code ownership and sub-150ms performance.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-12">
+              {/* Tier 1: Fixed MVP Sprint */}
+              <div className="p-8 rounded-3xl bg-slate-50 dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 flex flex-col justify-between hover:shadow-lg transition-all">
+                <div className="space-y-6">
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Fixed-Scope Delivery</span>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">MVP Sprint</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">For founders & teams needing a launch-ready product shipped fast.</p>
+                  </div>
+                  <div className="pb-4 border-b border-slate-200 dark:border-slate-800">
+                    <span className="text-4xl font-black text-slate-900 dark:text-white">$4,500</span>
+                    <span className="text-xs text-slate-500 font-semibold ml-2">/ one-off sprint</span>
+                  </div>
+                  <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Guaranteed 2–4 Week Delivery</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Full GitHub Repo & IP Transfer</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Next.js 15, PostgreSQL & API Backend</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> 99+ Core Web Vitals Guaranteed</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> 30-Day Post-Launch Warranty</li>
+                  </ul>
+                </div>
+                <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+                  <Button className="w-full h-11 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs" asChild>
+                    <Link href="/book-call?topic=MVP%20Sprint">Book Sprint Scoping</Link>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Tier 2: Dedicated Engineering Pod */}
+              <div className="p-8 rounded-3xl bg-blue-50/50 dark:bg-[#0c1424] border-2 border-blue-600 dark:border-blue-500 shadow-xl relative flex flex-col justify-between">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest shadow-md">
+                  Most Popular
+                </div>
+                <div className="space-y-6">
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Continuous Velocity</span>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">Dedicated Engineering</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Replaces full-time US hires & $20k/mo bloated agency retainers.</p>
+                  </div>
+                  <div className="pb-4 border-b border-blue-200 dark:border-blue-900/60">
+                    <span className="text-4xl font-black text-slate-900 dark:text-white">$5,500</span>
+                    <span className="text-xs text-slate-500 font-semibold ml-2">/ month</span>
+                  </div>
+                  <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Senior Engineer + AI Architect Pod</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Unlimited Tasks & Rapid Sprints</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Direct Slack Channel & Daily Syncs</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Full-Stack, AI Models & DevOps</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Pause or Cancel Anytime (Zero Lock-In)</li>
+                  </ul>
+                </div>
+                <div className="mt-8 pt-6 border-t border-blue-200 dark:border-blue-900/60">
+                  <Button className="w-full h-11 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md" asChild>
+                    <Link href="/book-call?topic=Dedicated%20Engineering">Start Dedicated Pod</Link>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Tier 3: Growth & AI Automation */}
+              <div className="p-8 rounded-3xl bg-slate-50 dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 flex flex-col justify-between hover:shadow-lg transition-all">
+                <div className="space-y-6">
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Compounding Reach</span>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">Growth & AI Retainer</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Engineered search dominance across Perplexity, ChatGPT & Google.</p>
+                  </div>
+                  <div className="pb-4 border-b border-slate-200 dark:border-slate-800">
+                    <span className="text-4xl font-black text-slate-900 dark:text-white">$2,500</span>
+                    <span className="text-xs text-slate-500 font-semibold ml-2">/ month</span>
+                  </div>
+                  <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Generative Engine Optimization (GEO)</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Technical SEO & Core Web Vitals Tuning</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Automated Multi-Platform Social Syndication</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Programmatic Content Architecture</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Weekly Executive Lead & Rank Reporting</li>
+                  </ul>
+                </div>
+                <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+                  <Button variant="outline" className="w-full h-11 rounded-xl border-slate-300 dark:border-slate-700 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-white" asChild>
+                    <Link href="/book-call?topic=Growth%20Retainer">Explore Growth Retainer</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <Link 
+                href="/pricing" 
+                className="inline-flex items-center gap-1.5 text-xs md:text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                View all packages, website cost calculators & detailed breakdown <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* 7. HOW WE WORK */}
         <section className="py-16 md:py-20 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
@@ -498,19 +842,93 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           </div>
         </section>
 
+        {/* 8. FREQUENTLY ASKED QUESTIONS */}
+        <section className="py-20 bg-slate-50/50 dark:bg-[#070c18] border-y border-slate-200 dark:border-slate-800">
+          <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
+            <div className="text-center mb-16">
+              <Badge variant="outline" className="mb-4 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+                Clear Answers
+              </Badge>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+                Everything you need to know about working with AJPR World, our delivery timelines, and intellectual property rights.
+              </p>
+            </div>
 
+            <Accordion type="single" collapsible className="space-y-4">
+              {[
+                {
+                  q: "How fast can you start and ship our software?",
+                  a: "We initiate scoping within 24 to 48 hours of your architecture call. Standard web applications and AI MVPs are engineered and deployed to production in 2 to 4 weeks using structured weekly sprint milestones."
+                },
+                {
+                  q: "Who actually writes the code? Do you outsource to junior devs?",
+                  a: "Zero outsourcing to junior contractors. All systems architecture, frontend Next.js code, database schemas, and AI agent pipelines are directly built by senior practitioners with full architectural accountability and weekly staging previews."
+                },
+                {
+                  q: "Do I own 100% of the code and intellectual property?",
+                  a: "Yes, 100%. Upon completion and delivery, all GitHub repositories, source code, database schemas, API keys, and deployment credentials are fully transferred to your company. Zero vendor lock-in or recurring IP licensing."
+                },
+                {
+                  q: "How do your costs compare to hiring full-time US engineers or traditional agencies?",
+                  a: "Hiring a senior US engineer costs $160k–$220k/yr salary plus $40k+ in benefits, equity, and recruitment fees, taking 3–6 months to hire. Traditional agencies charge $15k–$30k/month in account-management overhead. AJPR World delivers senior engineering at 70% lower overall cost with zero long-term commitments."
+                },
+                {
+                  q: "What happens after launch? Do you provide maintenance and ongoing support?",
+                  a: "Every build comes with a guaranteed 30-day post-launch warranty covering bug fixes and performance tuning. Afterward, you can transition into our Dedicated Engineering Pod for ongoing feature velocity or pause anytime with zero penalties."
+                }
+              ].map((faq, idx) => (
+                <AccordionItem
+                  key={idx}
+                  value={`item-${idx}`}
+                  className="bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-2 shadow-xs"
+                >
+                  <AccordionTrigger className="text-left font-bold text-slate-900 dark:text-white text-base hover:no-underline py-4">
+                    {faq.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed pb-4">
+                    {faq.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+
+            <div className="mt-12 text-center p-6 rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 max-w-xl mx-auto">
+              <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                Have a specific question about your project?
+              </p>
+              <Link 
+                href="/book-call" 
+                className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline mt-2"
+              >
+                Schedule a 15-minute quick discovery call &rarr;
+              </Link>
+            </div>
+          </div>
+        </section>
 
         {/* 9. FINAL CTA SECTION */}
-        <section className="py-20 relative text-center overflow-hidden bg-white dark:bg-[#030712]">
+        <section className="py-24 relative text-center overflow-hidden bg-white dark:bg-[#030712]">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[radial-gradient(circle,rgba(59,130,246,0.03)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(59,130,246,0.05)_0%,transparent_70%)] rounded-full pointer-events-none"></div>
 
           <div className="container mx-auto px-4 relative z-10 max-w-3xl">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1]">Stop Managing Tech Debt. <br />Start Scaling.</h2>
-            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium mb-10">Partner with an engineering team dedicated to long-term architectural success and rapid deployment.</p>
-            <Button size="lg" className="h-14 px-10 text-lg rounded-md bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-semibold transition-all shadow-xl" asChild>
-              <Link href="/book-call">Initiate Project <ArrowRight className="w-5 h-5 ml-2"/></Link>
-            </Button>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1]">
+              Stop Managing Tech Debt. <br />Start Scaling.
+            </h2>
+            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium mb-10 max-w-xl mx-auto">
+              Partner with dedicated senior engineers to build production-grade software and autonomous pipelines in weeks.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button size="lg" className="h-14 px-10 text-base rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold transition-all shadow-xl w-full sm:w-auto" asChild>
+                <Link href="/book-call">Book Free Strategy Call <ArrowRight className="w-5 h-5 ml-2"/></Link>
+              </Button>
+              <Button size="lg" variant="outline" className="h-14 px-8 text-base rounded-full border-slate-300 dark:border-slate-700 font-semibold w-full sm:w-auto" asChild>
+                <Link href="/pricing">Explore Pricing & Sprints</Link>
+              </Button>
+            </div>
           </div>
         </section>
       </div>

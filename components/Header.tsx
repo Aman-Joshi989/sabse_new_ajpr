@@ -24,6 +24,7 @@ import {
   Layers,
   Lock,
   Cpu,
+  Bot,
   Scale,
   TrendingUp,
   ShieldCheck,
@@ -44,10 +45,12 @@ const iconRegistry: Record<string, any> = {
   Layers,
   Lock,
   Cpu,
+  Bot,
   Scale,
   TrendingUp,
   ShieldCheck
 }
+
 import { ModeToggle } from '@/components/mode-toggle'
 import { useTheme } from 'next-themes'
 import { useCart } from '@/components/providers/CartProvider'
@@ -69,8 +72,9 @@ export default function Header({ services }: { services?: any[] }) {
 
     // Map dynamic services to dropdown items with clear, customer-friendly titles
     const coreServices = [
+        { name: 'AI Automation & Agent Systems', href: '/ai-systems', icon_name: 'Cpu', desc: 'LeadOS, WhatsApp agents & business systems' },
         { name: 'Custom Web Development', href: '/services/web-development', icon_name: 'Code2', desc: 'Next.js, high-speed apps & APIs' },
-        { name: 'AI Chatbots & Agents', href: '/services/ai-chatbot-development', icon_name: 'Cpu', desc: 'Context-aware LLMs & autonomous workflows' },
+        { name: 'AI Chatbots & Agents', href: '/services/ai-chatbot-development', icon_name: 'Bot', desc: 'Context-aware LLMs & autonomous workflows' },
         { name: 'SaaS Platform Architecture', href: '/services/saas-product-development', icon_name: 'Layers', desc: 'Multi-tenant apps & scalable backends' },
         { name: 'GEO & AI Search Optimization', href: '/services/geo-optimization', icon_name: 'TrendingUp', desc: 'Rank in Perplexity, ChatGPT & Google AI' },
         { name: 'Cloud Solutions & DevOps', href: '/services/cloud-solutions', icon_name: 'Cloud', desc: 'AWS, GCP, Docker & 99.99% uptime' },

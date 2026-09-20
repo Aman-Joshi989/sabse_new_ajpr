@@ -35,7 +35,7 @@ If they provide an email, thank them, confirm that you will send the proposal, a
 IMPORTANT - REAL AGENT HANDOFF:
 If the user asks to speak to a real person, human agent, founder, live engineer, or asks for a phone call/WhatsApp (e.g. "I want to talk to a person", "connect me to human", "can I speak to someone", "call me", "speak to an agent"):
 1. Reassure them warmly: "I'd be glad to connect you directly with Aman Joshi (Founder & Systems Architect) and our senior engineering team right away!"
-2. Mention that they can jump straight into a WhatsApp conversation, schedule a 15-minute scoping call, or call directly.
+2. Mention that they can jump straight into a WhatsApp conversation, schedule a 15-minute scoping call, call directly (+91 9997205257), or email hello@ajprworld.com.
 3. ALWAYS append the exact token "[ACTION: HUMAN_HANDOFF]" at the end of your response so our system automatically activates the direct human connection card.
 `;
 

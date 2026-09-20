@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useChat, UIMessage } from '@ai-sdk/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, X, Send, Loader2, Network, UserCheck, MessageCircle, Calendar, Phone } from 'lucide-react';
+import { Bot, X, Send, Loader2, Network, UserCheck, MessageCircle, Calendar, Phone, Mail } from 'lucide-react';
 
 function RealAgentCard({ leadName, leadEmail }: { leadName?: string; leadEmail?: string }) {
   const whatsappUrl = `https://wa.me/919997205257?text=${encodeURIComponent(
@@ -54,16 +54,22 @@ function RealAgentCard({ leadName, leadEmail }: { leadName?: string; leadEmail?:
           <span className="text-[10px] bg-indigo-700/60 px-1.5 py-0.5 rounded font-normal">Calendar</span>
         </a>
 
-        <a
-          href="tel:+919997205257"
-          className="flex items-center justify-between w-full px-3 py-1.5 bg-white dark:bg-[#202124] hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium transition-colors"
-        >
-          <span className="flex items-center gap-2">
+        <div className="grid grid-cols-2 gap-1.5">
+          <a
+            href="tel:+919997205257"
+            className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-[#202124] hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium transition-colors"
+          >
             <Phone className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
-            Call Directly: +91 9997205257
-          </span>
-          <span className="text-[10px] text-gray-400">Available</span>
-        </a>
+            <span>Call Directly</span>
+          </a>
+          <a
+            href="mailto:hello@ajprworld.com?subject=Direct%20Inquiry%20via%20Website%20Chat"
+            className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-[#202124] hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium transition-colors"
+          >
+            <Mail className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+            <span>Email Founder</span>
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -305,7 +311,7 @@ export default function HermesChatWidget() {
                   )}
                   {error && (
                     <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-xl text-xs text-red-600 dark:text-red-300 text-center">
-                      Unable to connect to Agent Hermes. Please try again or email contact@ajprworld.com.
+                      Unable to connect to Agent Hermes. Please try again or email hello@ajprworld.com.
                     </div>
                   )}
                   <div ref={messagesEndRef} />

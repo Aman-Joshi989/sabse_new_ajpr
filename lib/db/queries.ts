@@ -1410,9 +1410,12 @@ export async function getOutreachEmails() {
 
 
 export async function insertLead(data: { name?: string; email: string; company?: string; project_details?: string; status?: string }) {
-  await ensureDbInitialized();
-  return await sql`
-    INSERT INTO leads (name, email, company, project_details, status)
-    VALUES (${data.name || ''}, ${data.email}, ${data.company || ''}, ${data.project_details || ''}, ${data.status || 'new'})
-  `;
+  try {
+    return await sql`
+      INSERT INTO sales_leads (name, email, company, focus, status, utm_source)
+      VALUES (${data.name || 'Hermes Chat Lead'}, ${data.email}, ${data.company || ''}, ${data.project_details || ''}, ${data.status || 'new'}, 'hermes_chat')
+    `;
+  } catch (err) {
+    console.error("Failed to insert lead into sales_leads:", err);
+  }
 }

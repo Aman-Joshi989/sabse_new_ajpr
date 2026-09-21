@@ -78,6 +78,7 @@ function RealAgentCard({ leadName, leadEmail }: { leadName?: string; leadEmail?:
 export default function HermesChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
+  const [forceShowHandoff, setForceShowHandoff] = useState(false);
   
   // Pre-chat form states
   const [hasSubmittedDetails, setHasSubmittedDetails] = useState(false);
@@ -93,7 +94,7 @@ export default function HermesChatWidget() {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, hasSubmittedDetails]);
+  }, [messages, hasSubmittedDetails, forceShowHandoff]);
 
   const handlePreChatSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,23 +113,29 @@ export default function HermesChatWidget() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if(input.trim()) {
-      sendMessage({ role: 'user', parts: [{ type: 'text', text: input }] });
+      const userText = input.trim();
       setInput('');
+
+      if (/\b(human|real person|real agent|speak to someone|call me|whatsapp|representative)\b/i.test(userText)) {
+        setForceShowHandoff(true);
+      }
+
+      sendMessage({ role: 'user', parts: [{ type: 'text', text: userText }] });
     }
   };
 
   const handleRequestHumanHandoff = () => {
+    setForceShowHandoff(true);
     if (!hasSubmittedDetails) {
       setHasSubmittedDetails(true);
-      sendMessage({
-        role: 'user',
-        parts: [{ type: 'text', text: 'I want to speak directly with a real person / human agent.' }]
-      });
-    } else {
+    }
+    try {
       sendMessage({
         role: 'user',
         parts: [{ type: 'text', text: 'Please connect me with a real person / human agent.' }]
       });
+    } catch {
+      // ignore
     }
   };
 
@@ -302,6 +309,12 @@ export default function HermesChatWidget() {
                       </div>
                     );
                   })}
+                  {forceShowHandoff && (
+                    <div className="w-full max-w-[95%]">
+                      <RealAgentCard leadName={leadName} leadEmail={leadEmail} />
+                    </div>
+                  )}
+
                   {isLoading && (
                     <div className="flex justify-start">
                       <div className="bg-white dark:bg-[#292A2D] border border-gray-100 dark:border-gray-800 p-3.5 rounded-2xl rounded-tl-none shadow-sm">
@@ -310,8 +323,13 @@ export default function HermesChatWidget() {
                     </div>
                   )}
                   {error && (
-                    <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-xl text-xs text-red-600 dark:text-red-300 text-center">
-                      Unable to connect to Agent Hermes. Please try again or email hello@ajprworld.com.
+                    <div className="space-y-2 pt-1">
+                      <div className="p-2.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 rounded-xl text-xs text-amber-800 dark:text-amber-200 text-center">
+                        Agent Hermes is momentarily unavailable. You can connect with our team directly below:
+                      </div>
+                      <div className="w-full max-w-[95%]">
+                        <RealAgentCard leadName={leadName} leadEmail={leadEmail} />
+                      </div>
                     </div>
                   )}
                   <div ref={messagesEndRef} />

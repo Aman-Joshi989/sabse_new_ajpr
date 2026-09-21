@@ -1,22 +1,8 @@
-import { createOpenAI } from '@ai-sdk/openai';
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { openai } from '@ai-sdk/openai';
 import { streamText, convertToModelMessages } from 'ai';
 import { insertLead, insertAgentLog } from '@/lib/db/queries';
 
 export const maxDuration = 30;
-export const dynamic = 'force-dynamic';
-
-function getLanguageModel() {
-  const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-  if (geminiKey && geminiKey.startsWith('AIzaSy')) {
-    const google = createGoogleGenerativeAI({ apiKey: geminiKey });
-    return google('gemini-1.5-flash');
-  }
-  const openai = createOpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-  return openai('gpt-4o-mini');
-}
 
 export async function POST(req: Request) {
   try {
@@ -95,7 +81,7 @@ If the user asks to speak to a real person, human agent, founder, live engineer,
     const modelMessages = await convertToModelMessages(messages);
 
     const result = streamText({
-      model: getLanguageModel(),
+      model: openai('gpt-4o-mini'),
       system: systemPrompt,
       messages: modelMessages,
     });

@@ -235,11 +235,19 @@ export default function TheInfinixAlternativesPage() {
         {/* Lead Capture */}
         <div className="mb-12">
           <ToolLeadCapture 
-            toolName="The Infinix Comparison Audit"
-            toolSlug="compare-the-infinix-alternatives"
             title="Request Your Free Haldwani Competitive SEO Audit"
             subtitle="Discover exactly where your competitors outrank you on Google Maps and search, and how to displace them."
-            buttonText="Get Free Haldwani Audit →"
+            badge="Free Haldwani Audit"
+            ctaText="Get Free Haldwani Audit →"
+            toolSource="compare-the-infinix-alternatives"
+            reportSummary={{
+              headline: "Agency Comparison: The Infinix vs AJPR World (Haldwani 2026)",
+              metrics: {
+                "Target Region": "Haldwani, Nainital, Uttarakhand",
+                "Evaluation": "The Infinix vs AJPR World",
+                "Top Alternative": "AJPR World (Next.js 15 & Local SEO)"
+              }
+            }}
           />
         </div>
 

@@ -268,11 +268,19 @@ export default function DigiPhloxAlternativesPage() {
         {/* Lead Capture Component */}
         <div className="mb-12">
           <ToolLeadCapture 
-            toolName="DigiPhlox Comparison Audit"
-            toolSlug="compare-digiphlox-alternatives"
             title="Get a Free Haldwani Digital Audit for Your Business"
             subtitle="Compare your current search rankings, Google Maps visibility, and website speed against top competitors in Haldwani."
-            buttonText="Claim Free Haldwani Audit →"
+            badge="Free Haldwani Audit"
+            ctaText="Claim Free Haldwani Audit →"
+            toolSource="compare-digiphlox-alternatives"
+            reportSummary={{
+              headline: "Agency Comparison: DigiPhlox vs AJPR World (Haldwani 2026)",
+              metrics: {
+                "Target Region": "Haldwani, Nainital, Uttarakhand",
+                "Evaluation": "DigiPhlox vs AJPR World",
+                "Top Alternative": "AJPR World (Next.js 15 & Local SEO)"
+              }
+            }}
           />
         </div>
 

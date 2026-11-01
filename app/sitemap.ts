@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getPublishedServices, getBlogs, getGlossaryTerms, getAllSeoRoutes } from '@/lib/db/queries'
 import { PROGRAMMATIC_SOLUTIONS } from '@/lib/solutions-data'
+import { CORNERSTONE_BLOG_POSTS } from '@/lib/blog-data'
 
 export const revalidate = 86400; // Cache for 24 hours to prevent SEO bots from draining Neon DB compute
 
@@ -225,6 +226,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/b2b-growth-marketing`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/pricing/seo-cost`,
@@ -465,14 +472,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     // Fetch dynamic blogs from Neon database
     const blogs = await getBlogs()
-    if (Array.isArray(blogs)) {
-      blogPages = blogs.map((blog: any) => ({
-        url: `${baseUrl}/blog/${blog.slug}`,
-        lastModified: blog.created_at ? new Date(blog.created_at) : new Date(),
-        changeFrequency: 'weekly',
-        priority: 0.8,
-      }))
-    }
+    const dbBlogPages: MetadataRoute.Sitemap = Array.isArray(blogs)
+      ? blogs.map((blog: any) => ({
+          url: `${baseUrl}/blog/${blog.slug}`,
+          lastModified: blog.created_at ? new Date(blog.created_at) : new Date(),
+          changeFrequency: 'weekly',
+          priority: 0.8,
+        }))
+      : [];
+
+    const cornerstonePages: MetadataRoute.Sitemap = CORNERSTONE_BLOG_POSTS.map(post => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: post.updated_at || post.published_at || new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    }));
+
+    // Deduplicate by URL, prioritizing cornerstone posts
+    const blogMap = new Map<string, MetadataRoute.Sitemap[number]>();
+    for (const p of dbBlogPages) blogMap.set(p.url, p);
+    for (const p of cornerstonePages) blogMap.set(p.url, p);
+    blogPages = Array.from(blogMap.values());
   } catch (error) {
     console.error('Error fetching blogs for sitemap:', error)
   }

@@ -43,6 +43,8 @@ export default async function SitemapPage() {
     { title: 'Marketing Consultant Cost & Rates', url: '/blog/marketing-strategy-consultant-cost-rates' },
     { title: 'B2B Marketing Strategy Guide', url: '/blog/b2b-marketing-strategy-in-house-vs-agency-vs-consultant' },
     { title: 'Top B2B Growth Agencies Shortlist', url: '/blog/best-b2b-growth-marketing-agencies-us' },
+    { title: 'B2B Growth Marketing Agency', url: '/services/b2b-growth-marketing' },
+    { title: 'Google Core Update Recovery Guide', url: '/blog/how-to-recover-from-a-google-core-update' },
     { title: 'Glossary Hub', url: '/glossary' },
     { title: 'Contact', url: '/contact' },
     { title: 'Careers', url: '/careers' },

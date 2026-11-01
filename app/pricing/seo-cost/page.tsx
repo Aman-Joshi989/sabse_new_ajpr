@@ -57,6 +57,22 @@ const faqs = [
   {
     question: 'What is the difference between SEO retainer vs project pricing?',
     answer: 'A monthly retainer ($2,500-$7,500/mo) covers continuous optimization, new content production, technical maintenance, and active link building. Project pricing ($5,000-$25,000) is best for one-off scopes like technical migrations, website architecture redesigns, or comprehensive technical audits.'
+  },
+  {
+    question: 'What is the average international SEO price and retainer in 2026?',
+    answer: 'International SEO retainers generally range between $3,500 and $12,500 per month depending on the number of target countries, multi-lingual keyword research, ccTLD or subfolder architecture, and hreflang configuration. AJPR World provides global multi-region SEO retainers starting at $3,500/month with transparent deliverables.'
+  },
+  {
+    question: 'How much does a B2B SaaS SEO retainer cost per month?',
+    answer: 'A dedicated B2B SaaS SEO retainer typically costs between $3,500 and $8,500 per month. Deliverables focus on bottom-of-funnel customer acquisition: programmatic competitor alternative hubs, product feature landing pages, technical Core Web Vitals maintenance, and direct CRM pipeline attribution.'
+  },
+  {
+    question: 'How much does a website migration agency cost?',
+    answer: 'A professional technical website migration typically costs between $3,500 and $15,000 depending on URL count, CMS platform migration (e.g., WordPress to Next.js or Shopify), and database complexity. The scope includes complete 1-to-1 301 redirect mapping, staging audit, canonical enforcement, and zero-traffic-drop monitoring.'
+  },
+  {
+    question: 'What should a business budget for SEO in 2026?',
+    answer: 'In 2026, businesses should budget between $1,500 and $6,000 per month for organic search and Generative Engine Optimization (GEO). Annual budgets of $18,000 to $50,000 enable scaling companies to build durable topical authority, capture Google AI Overview citation cards, and lower long-term paid acquisition costs.'
   }
 ];
 

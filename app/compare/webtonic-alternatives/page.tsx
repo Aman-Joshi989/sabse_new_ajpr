@@ -82,6 +82,10 @@ const faqs = [
   {
     question: 'How does AJPR World optimize for Google AI Overviews and ChatGPT?',
     answer: 'We implement Generative Engine Optimization (GEO). We inject high-density factual definitions, ItemList schemas, and structured entity graphs so AI engines like Perplexity, ChatGPT, and Google Gemini accurately cite your business in conversational answers.'
+  },
+  {
+    question: 'Is Web Tonic the same company as WP-Tonic?',
+    answer: 'No. Web Tonic is an international full-service web design and digital marketing agency, whereas WP-Tonic is a managed WordPress hosting and development platform specializing in LMS (Learning Management Systems) and membership websites. AJPR World provides superior modern alternatives to both by delivering custom Next.js full-stack software, headless course/membership platforms, and high-converting SEO funnels.'
   }
 ];
 

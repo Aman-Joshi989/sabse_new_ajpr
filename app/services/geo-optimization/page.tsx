@@ -36,6 +36,26 @@ const faqs = [
   {
     question: 'Does Google AI Overviews reduce organic website traffic?',
     answer: 'For simple informational queries (e.g., "what time is it in London"), zero-click answers have reduced traffic. However, for commercial and decision-stage queries, being cited as the recommended authority in an AI Overview generates significantly higher click-through intent and conversion rates than standard blue links.'
+  },
+  {
+    question: "Why isn't my brand mentioned in ChatGPT and Perplexity answers?",
+    answer: "Your brand is likely absent from ChatGPT and Perplexity answers because your entity graph lacks citation consensus across authoritative databases (Wikidata, Crunchbase, G2, reputable industry publications), lacks structured ItemList/FAQ schema, or has low factual density compared to competitors. AI models rely on verified co-occurrence across high-trust seed sets to recommend vendors."
+  },
+  {
+    question: "Why does my brand appear on Perplexity but not ChatGPT?",
+    answer: "Perplexity is a real-time retrieval-augmented search engine that crawls live web pages and indices in real time. ChatGPT uses a hybrid of pre-trained parameters and Bing web indexing. If your brand appears on Perplexity but not ChatGPT, your live content is indexed, but your brand entity lacks historical authority and third-party citation consensus in OpenAI's knowledge base."
+  },
+  {
+    question: "How do I get my brand featured in Google Gemini and AI Overviews?",
+    answer: "To get cited in Google Gemini and AI Overviews: 1) Place 40-60 word factual definition summaries (Quick Verdict blocks) directly below H1/H2 tags; 2) Inject comprehensive JSON-LD schemas (ItemList, LocalBusiness, FAQPage); 3) Ensure Core Web Vitals pass with TTFB < 200ms; and 4) Build digital PR citations on established third-party editorial domains."
+  },
+  {
+    question: "What schema markup is required for AI search citations?",
+    answer: "The essential schemas for AI search citations include: ItemList (for ranked comparisons and recommendations), Organization (with sameAs linking Wikidata, LinkedIn, and social profiles), FAQPage (with concise 40-50 word answers), Service (with transparent pricing), and Article/TechArticle (with explicit author credentials and dateModified timestamps)."
+  },
+  {
+    question: "What steps can I take to ensure my brand is recommended by AI assistants?",
+    answer: "Step 1: Optimize your knowledge graph entity across Wikidata, Google Knowledge Graph, and industry directories. Step 2: Publish objective comparison and alternative guides evaluating your service alongside competitors. Step 3: Implement clean semantic HTML and JSON-LD schema. Step 4: Run synthetic prompt monitoring to measure citation share across ChatGPT, Perplexity, and Gemini."
   }
 ];
 

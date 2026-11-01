@@ -19,6 +19,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
     const activeServices = services && services.length > 0
         ? services.slice(0, 6).map((s: any) => ({ name: s.title, href: `/services/${s.slug}` }))
         : [
+            { name: 'B2B Growth Marketing', href: '/services/b2b-growth-marketing' },
             { name: 'GEO (AI Search Optimization)', href: '/services/geo-optimization' },
             { name: 'Website Security & Maintenance', href: '/services/website-security-maintenance' },
             { name: 'Technical SEO Services', href: '/services/technical-seo' },

@@ -37,20 +37,36 @@ export const metadata: Metadata = {
 
 const comparisons = [
   {
+    title: 'Web Tonic Alternatives: 2026 Agency Evaluation',
+    slug: '/compare/webtonic-alternatives',
+    target: 'Web Tonic vs AJPR World vs Traditional Agencies',
+    description: 'An objective review of Web Tonic’s regional trade strengths, full-service US marketing capabilities, Next.js engineering depth, and transparent pricing.',
+    badge: 'Trending Search #1',
+    highlights: ['US Market Reach', 'Deep Technical SEO', 'Transparent Retainers', 'Generative AI Citations']
+  },
+  {
     title: 'WebFX Alternatives & Competitor Review',
     slug: '/compare/webfx-alternatives',
     target: 'WebFX vs AJPR World vs Traditional Agencies',
     description: 'A fair, comprehensive analysis of WebFX pricing, MarketingCloudFX software lock-in, junior account rotation, and why modern brands choose agile specialist partners.',
-    badge: 'High Intent Comparison',
+    badge: 'Enterprise Review',
     highlights: ['Pricing Transparency', 'Direct Senior Access', 'Zero Software Lock-in', '100% Data Ownership']
   },
   {
-    title: 'Web Tonic Alternatives & Agency Comparison',
-    slug: '/compare/webtonic-alternatives',
-    target: 'Web Tonic vs AJPR World',
-    description: 'An objective review of Web Tonic’s regional trade strengths, full-service US marketing capabilities, technical SEO depth, and ROI reporting.',
-    badge: 'Competitive Review',
-    highlights: ['US Market Reach', 'Deep Technical SEO', 'Transparent Retainers', 'Multi-Channel Attribution']
+    title: 'SmartSites Alternatives & Agency Review',
+    slug: '/compare/smartsites-alternatives',
+    target: 'SmartSites vs AJPR World',
+    description: 'Compare SmartSites PPC management and WordPress builds against custom Next.js 16 architectures with sub-second Core Web Vitals and flat retainers.',
+    badge: 'PPC & Speed Focus',
+    highlights: ['Sub-1s Core Web Vitals', 'Custom Next.js vs WordPress', 'Transparent Ad Management', 'No Long Contracts']
+  },
+  {
+    title: 'Single Grain Alternatives for Tech Startups',
+    slug: '/compare/single-grain-alternatives',
+    target: 'Single Grain vs AJPR World',
+    description: 'Comparing Single Grain for SaaS and tech ventures? Discover an agile partner providing hands-on software development, AI agent pipelines, and high-velocity GEO.',
+    badge: 'SaaS & AI Focus',
+    highlights: ['Hands-on Software Engineering', 'AI Agent Workflows', '$1,500 - $3,500/mo Retainers', 'SaaS Growth Architecture']
   }
 ];
 

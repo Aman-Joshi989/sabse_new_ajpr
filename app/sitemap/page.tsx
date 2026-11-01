@@ -68,6 +68,8 @@ export default async function SitemapPage() {
     { title: 'Agency Comparisons Hub', url: '/compare' },
     { title: 'WebFX Alternatives', url: '/compare/webfx-alternatives' },
     { title: 'Web Tonic Alternatives', url: '/compare/webtonic-alternatives' },
+    { title: 'SmartSites Alternatives', url: '/compare/smartsites-alternatives' },
+    { title: 'Single Grain Alternatives', url: '/compare/single-grain-alternatives' },
     { title: 'Free US Business Tools Hub', url: '/tools' },
     { title: 'Agency Pricing & ROI Calculator', url: '/tools/agency-pricing-calculator' },
     { title: 'Admin Cost & Labor Drag Calculator', url: '/tools/admin-cost-calculator' },

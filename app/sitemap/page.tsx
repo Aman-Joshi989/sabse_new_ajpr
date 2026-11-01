@@ -70,6 +70,9 @@ export default async function SitemapPage() {
     { title: 'Web Tonic Alternatives', url: '/compare/webtonic-alternatives' },
     { title: 'SmartSites Alternatives', url: '/compare/smartsites-alternatives' },
     { title: 'Single Grain Alternatives', url: '/compare/single-grain-alternatives' },
+    { title: 'DigiPhlox Alternatives (Haldwani)', url: '/compare/digiphlox-alternatives' },
+    { title: 'The Infinix Alternatives (Haldwani)', url: '/compare/the-infinix-alternatives' },
+    { title: 'Top 7 Marketing Companies in Haldwani', url: '/blog/top-digital-marketing-companies-in-haldwani' },
     { title: 'Free US Business Tools Hub', url: '/tools' },
     { title: 'Agency Pricing & ROI Calculator', url: '/tools/agency-pricing-calculator' },
     { title: 'Admin Cost & Labor Drag Calculator', url: '/tools/admin-cost-calculator' },
@@ -117,12 +120,19 @@ export default async function SitemapPage() {
     'custom-software', 'web-development', 'app-development', 'ai-solutions', 'cloud-architecture'
   ];
 
-  const localLocations = targetCities.flatMap(city => 
-    targetServices.map(service => ({
-      title: `${service.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} in ${city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
-      url: `/locations/${city}/${service}`
-    }))
-  );
+  const localLocations = targetCities.flatMap(city => {
+    const formattedCity = city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    return [
+      {
+        title: `${formattedCity} Hub`,
+        url: `/locations/${city}`
+      },
+      ...targetServices.map(service => ({
+        title: `${service.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} in ${formattedCity}`,
+        url: `/locations/${city}/${service}`
+      }))
+    ];
+  });
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-24 pt-40 transition-colors duration-300">

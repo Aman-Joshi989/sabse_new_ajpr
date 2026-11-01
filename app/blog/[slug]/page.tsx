@@ -45,6 +45,13 @@ function injectInternalLinks(markdown: string) {
         'Webflow Agency': '/platforms/webflow-agency',
         'Agency Pricing Calculator': '/tools/agency-pricing-calculator',
         'Agency Pricing Report': '/research/agency-pricing-report',
+        'Digital Marketing Company in Haldwani': '/locations/haldwani/digital-marketing',
+        'Digital Marketing in Haldwani': '/locations/haldwani/digital-marketing',
+        'Haldwani Digital Marketing': '/locations/haldwani/digital-marketing',
+        'Top Marketing Companies in Haldwani': '/blog/top-digital-marketing-companies-in-haldwani',
+        'DigiPhlox Alternatives': '/compare/digiphlox-alternatives',
+        'The Infinix Alternatives': '/compare/the-infinix-alternatives',
+        'SEO in Haldwani': '/locations/haldwani/seo-agency',
         'Digital Marketing': '/services/digital-marketing',
     };
 

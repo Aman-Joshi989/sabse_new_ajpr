@@ -67,6 +67,22 @@ const comparisons = [
     description: 'Comparing Single Grain for SaaS and tech ventures? Discover an agile partner providing hands-on software development, AI agent pipelines, and high-velocity GEO.',
     badge: 'SaaS & AI Focus',
     highlights: ['Hands-on Software Engineering', 'AI Agent Workflows', '$1,500 - $3,500/mo Retainers', 'SaaS Growth Architecture']
+  },
+  {
+    title: 'DigiPhlox Alternatives & Comparison in Haldwani',
+    slug: '/compare/digiphlox-alternatives',
+    target: 'DigiPhlox vs AJPR World',
+    description: 'Compare DigiPhlox vs AJPR World in Haldwani, Uttarakhand. Side-by-side analysis of Next.js 15 vs WordPress, mobile speed, Google AI Overviews, and flat INR pricing.',
+    badge: 'Haldwani Regional #1',
+    highlights: ['Sub-50ms Next.js Speed', 'Google Maps 3-Pack', 'Flat INR Retainers (₹14,999/mo)', 'Generative AI (GEO)']
+  },
+  {
+    title: 'The Infinix Alternatives & Agency Review',
+    slug: '/compare/the-infinix-alternatives',
+    target: 'The Infinix vs AJPR World',
+    description: 'Looking for modern alternatives to The Infinix in Haldwani? Compare services, technical SEO capabilities, modern web development, and results side by side.',
+    badge: 'Local Search Focus',
+    highlights: ['Custom Next.js Web Apps', 'Transparent Retainers', 'Local Google Maps Dominance', 'Month-to-Month Terms']
   }
 ];
 

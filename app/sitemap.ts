@@ -317,6 +317,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/compare/digiphlox-alternatives`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/compare/the-infinix-alternatives`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/blog/top-digital-marketing-companies-in-haldwani`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
       url: `${baseUrl}/tools/agency-pricing-calculator`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
@@ -393,12 +411,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   
   const localServices: MetadataRoute.Sitemap = [];
   for (const city of targetCities) {
+    localServices.push({
+      url: `${baseUrl}/locations/${city}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: city === 'haldwani' ? 0.95 : 0.85,
+    });
     for (const service of targetServices) {
       localServices.push({
         url: `${baseUrl}/locations/${city}/${service}`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
-        priority: 0.9,
+        priority: city === 'haldwani' && service === 'digital-marketing' ? 1.0 : 0.9,
       });
     }
   }

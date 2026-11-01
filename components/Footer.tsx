@@ -30,8 +30,9 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         ];
 
     const activeBlogs = blogs && blogs.length > 0
-        ? blogs.slice(0, 3).map((b: any) => ({ name: b.title, href: `/blog/${b.slug}` }))
+        ? blogs.slice(0, 4).map((b: any) => ({ name: b.title, href: `/blog/${b.slug}` }))
         : [
+            { name: 'Top Marketing Companies in Haldwani', href: '/blog/top-digital-marketing-companies-in-haldwani' },
             { name: 'Marketing Strategy Consulting', href: '/blog/marketing-strategy-consulting-how-to-choose-a-provider' },
             { name: '2026 Agency Pricing Report', href: '/research/agency-pricing-report' },
             { name: 'WebFX Alternatives Comparison', href: '/compare/webfx-alternatives' }
@@ -40,6 +41,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
     const companyLinks = [
         { name: 'About Us', href: '/about' },
         { name: 'Areas We Serve', href: '/locations' },
+        { name: 'Digital Marketing Haldwani', href: '/locations/haldwani/digital-marketing' },
         { name: 'Industry Solutions', href: '/industries' },
         { name: 'Roofing Web Systems', href: '/roofing-contractors' },
         { name: 'Agency Comparisons', href: '/compare' },

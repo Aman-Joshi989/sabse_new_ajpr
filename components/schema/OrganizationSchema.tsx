@@ -27,6 +27,19 @@ export const OrganizationSchema = async () => {
     description: settings?.seo_description || 'AJPR World is a premier technology and software engineering firm delivering custom AI MVPs, enterprise workflow automation, full-stack Next.js web applications, and Generative Engine Optimization (GEO) for fast-growing US companies.',
     slogan: 'Custom AI MVPs, Scalable Web Systems & Enterprise Automation in 4 Weeks',
     foundingDate: '2024',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Nainital Road / Kaladhungi Road',
+      addressLocality: 'Haldwani',
+      addressRegion: 'Uttarakhand',
+      postalCode: '263139',
+      addressCountry: 'IN'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: '29.2183',
+      longitude: '79.5126'
+    },
     founder: {
       '@type': 'Person',
       '@id': 'https://ajprworld.com/aman-joshi/#person',

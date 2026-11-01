@@ -104,7 +104,9 @@ export default function LocationsIndex() {
                         <div key={city} className="bg-white dark:bg-[#0B0F19] border border-slate-200 dark:border-white/10 p-8 rounded-2xl hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-blue-900/20 transition-all duration-300 group">
                             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 pb-4 border-b border-slate-100 dark:border-white/10 flex items-center gap-3">
                                 <MapPin className="w-6 h-6 text-blue-600 dark:text-blue-500" />
-                                {formatName(city)}
+                                <Link href={`/locations/${city}`} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                    {formatName(city)}
+                                </Link>
                             </h3>
                             <ul className="space-y-2.5">
                                 {SERVICES.map((service) => (
@@ -122,6 +124,14 @@ export default function LocationsIndex() {
                                     </li>
                                 ))}
                             </ul>
+                            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-white/5">
+                                <Link 
+                                    href={`/locations/${city}`}
+                                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                                >
+                                    Explore all {formatName(city)} services <ArrowRight className="w-3 h-3" />
+                                </Link>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -140,7 +150,9 @@ export default function LocationsIndex() {
                         <div key={city} className="bg-white dark:bg-[#0B0F19] border border-slate-200 dark:border-white/10 p-8 rounded-2xl hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-blue-900/20 transition-all duration-300 group">
                             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 pb-4 border-b border-slate-100 dark:border-white/10 flex items-center gap-3">
                                 <MapPin className="w-6 h-6 text-blue-600 dark:text-blue-500" />
-                                {formatName(city)}
+                                <Link href={`/locations/${city}`} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                    {formatName(city)}
+                                </Link>
                             </h3>
                             <ul className="space-y-2.5">
                                 {SERVICES.map((service) => (
@@ -158,6 +170,14 @@ export default function LocationsIndex() {
                                     </li>
                                 ))}
                             </ul>
+                            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-white/5">
+                                <Link 
+                                    href={`/locations/${city}`}
+                                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                                >
+                                    Explore all {formatName(city)} services <ArrowRight className="w-3 h-3" />
+                                </Link>
+                            </div>
                         </div>
                     ))}
                 </div>

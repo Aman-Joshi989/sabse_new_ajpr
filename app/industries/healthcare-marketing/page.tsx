@@ -5,6 +5,7 @@ import { Stethoscope, CheckCircle2, ArrowRight, ShieldCheck, HeartPulse, MapPin,
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'Healthcare Marketing Agency: Medical & Dental SEO | AJPR',
   description: 'HIPAA-compliant healthcare marketing and SEO for medical practices and dental clinics. Attract new patients with local search and reputation management.',
   alternates: {
@@ -16,6 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/industries/healthcare-marketing',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Healthcare Marketing Agency - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Healthcare Marketing Agency: Medical & Dental SEO | AJPR',
+    description: 'HIPAA-compliant healthcare marketing and localized patient acquisition.',
+    images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

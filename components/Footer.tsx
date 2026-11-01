@@ -20,11 +20,13 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         ? services.slice(0, 6).map((s: any) => ({ name: s.title, href: `/services/${s.slug}` }))
         : [
             { name: 'GEO (AI Search Optimization)', href: '/services/geo-optimization' },
+            { name: 'Website Security & Maintenance', href: '/services/website-security-maintenance' },
+            { name: 'Technical SEO Services', href: '/services/technical-seo' },
+            { name: 'Cloud Solutions & DevOps', href: '/services/cloud-solutions' },
             { name: 'Shopify SEO Agency', href: '/platforms/shopify-seo' },
             { name: 'Webflow Development & SEO', href: '/platforms/webflow-agency' },
             { name: 'Custom Web Dev', href: '/services/web-development' },
             { name: 'Digital Marketing', href: '/services/digital-marketing' },
-            { name: 'Cloud Solutions', href: '/services/cloud-solutions' },
         ];
 
     const activeBlogs = blogs && blogs.length > 0
@@ -37,14 +39,21 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
     const companyLinks = [
         { name: 'About Us', href: '/about' },
+        { name: 'Areas We Serve', href: '/locations' },
         { name: 'Industry Solutions', href: '/industries' },
+        { name: 'Roofing Web Systems', href: '/roofing-contractors' },
         { name: 'Agency Comparisons', href: '/compare' },
         { name: 'Pricing & Retainers', href: '/pricing' },
         { name: 'Portfolio', href: '/portfolio' },
+        { name: 'Careers', href: '/careers' },
         { name: 'Contact', href: '/contact' },
     ];
 
     const resourceLinks = [
+        { name: 'Engineering Solutions', href: '/solutions' },
+        { name: 'AI Systems & Swarms', href: '/ai-systems' },
+        { name: 'RuFlo Swarm Simulator', href: '/demo-ruflo' },
+        { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
         { name: 'SEO Cost Guide (2026)', href: '/pricing/seo-cost' },
         { name: 'PPC Management Cost', href: '/pricing/ppc-cost' },
         { name: 'Website Cost Guide', href: '/pricing/website-cost' },
@@ -168,6 +177,12 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                         <div className="flex flex-wrap gap-4 md:gap-6 text-slate-500 dark:text-slate-500">
                             <Link href="/privacy" className="hover:text-slate-800 dark:hover:text-slate-300">Privacy</Link>
                             <Link href="/terms" className="hover:text-slate-800 dark:hover:text-slate-300">Terms</Link>
+                            <Link href="/sitemap" className="hover:text-slate-800 dark:hover:text-slate-300 font-medium">HTML Sitemap</Link>
+                            <Link href="/locations" className="hover:text-slate-800 dark:hover:text-slate-300">Locations</Link>
+                            <Link href="/signup/client" className="hover:text-slate-800 dark:hover:text-slate-300">Client Portal</Link>
+                            <Link href="/signup/developer" className="hover:text-slate-800 dark:hover:text-slate-300">Developer Network</Link>
+                            <Link href="/free-audit" className="hover:text-slate-800 dark:hover:text-slate-300 text-blue-600 dark:text-blue-400 font-semibold">Free Audit</Link>
+                            <Link href="/affiliates" className="hover:text-slate-800 dark:hover:text-slate-300">Affiliates</Link>
                         </div>
                     </div>
 

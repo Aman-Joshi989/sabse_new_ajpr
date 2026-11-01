@@ -179,15 +179,34 @@ function CareersContent() {
             ))}
           </div>
 
-          {/* Submission Info */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 md:p-12 text-center max-w-3xl mx-auto shadow-sm">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Don’t see a matching position?</h3>
-            <p className="text-sm text-slate-500 dark:text-slate-450 leading-relaxed font-medium mb-6">
-              We are always looking for ambitious developers, automation specialists, and domain experts. Send us your CV and we'll keep you in mind for future openings.
-            </p>
-            <Button asChild variant="outline" className="rounded-xl font-bold px-8 h-12 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
-              <Link href={getApplyLink("Open Application")}>Send Open Application</Link>
-            </Button>
+          {/* Submission Info & Developer Network */}
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 text-center shadow-sm flex flex-col justify-between">
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Don’t see a matching position?</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium mb-6">
+                  We are always looking for ambitious developers, automation specialists, and domain experts. Send us your CV for future openings.
+                </p>
+              </div>
+              <Button asChild variant="outline" className="rounded-xl font-bold px-8 h-12 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white w-full">
+                <Link href={getApplyLink("Open Application")}>Send Open Application</Link>
+              </Button>
+            </div>
+
+            <div className="bg-gradient-to-br from-slate-900 to-blue-950 border border-slate-800 rounded-3xl p-8 text-center shadow-sm text-white flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full mb-3 inline-block">
+                  Freelance & Contractor Network
+                </span>
+                <h3 className="text-xl font-bold text-white mb-2">Join the AJPR Developer Network</h3>
+                <p className="text-sm text-slate-300 leading-relaxed font-medium mb-6">
+                  Work on high-impact customer projects, take on paid sprint contracts, and collaborate with our engineering swarms.
+                </p>
+              </div>
+              <Button asChild className="rounded-xl font-bold px-8 h-12 bg-blue-600 hover:bg-blue-500 text-white w-full">
+                <Link href="/signup/developer">Register as Developer &rarr;</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>

@@ -5,6 +5,7 @@ import { ShoppingBag, CheckCircle2, ArrowRight, Code2, Layers, Search, Zap, Help
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'Shopify SEO Agency: Organic Revenue & Store Growth | AJPR',
   description: 'Fix Shopify crawl bloat, collection architecture, and product schema. We help Shopify and Shopify Plus stores scale organic revenue with technical SEO.',
   alternates: {
@@ -16,6 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/platforms/shopify-seo',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Shopify SEO Agency - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Shopify SEO Agency: Organic Revenue & Store Growth | AJPR',
+    description: 'Fix crawl traps, duplicate collection URLs, and scale Shopify organic sales.',
+    images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

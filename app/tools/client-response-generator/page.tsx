@@ -16,6 +16,9 @@ import {
     ChevronRight
 } from 'lucide-react';
 import { toast } from 'sonner';
+import RelatedTools from '@/components/RelatedTools';
+import ToolLeadCapture from '@/components/ToolLeadCapture';
+import { trackBookCall } from '@/lib/analytics';
 
 type ScenarioKey = 
     | 'scope-creep'
@@ -523,6 +526,23 @@ export default function ClientResponseGeneratorPage() {
                             </div>
                         </div>
 
+                        {/* Frictionless Email Capture */}
+                        <ToolLeadCapture
+                            title="Email Me the Complete Agency Client Response Playbook"
+                            subtitle="Get all 24 production-tested email templates, scope defense scripts, and price objection frameworks sent directly to your inbox."
+                            badge="Full 24-Template Playbook"
+                            ctaText="Send Me All 24 Email Scripts"
+                            toolSource="client_response_generator"
+                            reportSummary={{
+                                headline: `Scenario: ${scenarios[selectedScenario].title} (${selectedTone} tone)`,
+                                metrics: {
+                                    'Selected Scenario': scenarios[selectedScenario].title,
+                                    'Tone Style': selectedTone,
+                                    'Custom Details': customDetails || 'Standard template'
+                                }
+                            }}
+                        />
+
                         {/* Conversion Box */}
                         <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-blue-950 text-white border border-slate-800 shadow-xl relative overflow-hidden">
                             <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -539,6 +559,7 @@ export default function ClientResponseGeneratorPage() {
                                 <div className="pt-2">
                                     <Link 
                                         href="/book-call" 
+                                        onClick={() => trackBookCall('tool_client_response_gen')}
                                         className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs transition-all shadow-lg shadow-blue-600/30"
                                     >
                                         Build an AI Inbox Agent <ArrowRight className="w-4 h-4" />
@@ -549,6 +570,8 @@ export default function ClientResponseGeneratorPage() {
 
                     </div>
                 </div>
+
+                <RelatedTools currentSlug="/tools/client-response-generator" />
 
             </div>
         </div>

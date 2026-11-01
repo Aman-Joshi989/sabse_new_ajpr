@@ -35,16 +35,18 @@ export default async function SitemapPage() {
   const mainPages = [
     { title: 'Home', url: '/' },
     { title: 'About Us', url: '/about' },
-    { title: 'Services', url: '/services' },
-    { title: 'Portfolio', url: '/portfolio' },
-    { title: 'Blog', url: '/blog' },
+    { title: 'AI Automation & Agent Systems', url: '/ai-systems' },
+    { title: 'Services Hub', url: '/services' },
+    { title: 'Portfolio & Case Studies', url: '/portfolio' },
+    { title: 'Blog & Engineering Insights', url: '/blog' },
     { title: 'Marketing Strategy Consulting Guide', url: '/blog/marketing-strategy-consulting-how-to-choose-a-provider' },
     { title: 'Marketing Consultant Cost & Rates', url: '/blog/marketing-strategy-consultant-cost-rates' },
     { title: 'B2B Marketing Strategy Guide', url: '/blog/b2b-marketing-strategy-in-house-vs-agency-vs-consultant' },
     { title: 'Top B2B Growth Agencies Shortlist', url: '/blog/best-b2b-growth-marketing-agencies-us' },
-    { title: 'Glossary', url: '/glossary' },
+    { title: 'Glossary Hub', url: '/glossary' },
     { title: 'Contact', url: '/contact' },
     { title: 'Careers', url: '/careers' },
+    { title: 'Careers - Application Form', url: '/careers/apply' },
     { title: 'Startup Growth Kit', url: '/startup-growth-kit' },
     { title: 'Locations & Areas Served', url: '/locations' },
     { title: 'Privacy Policy', url: '/privacy' },
@@ -55,7 +57,7 @@ export default async function SitemapPage() {
     { title: 'SEO Cost Guide (2026)', url: '/pricing/seo-cost' },
     { title: 'PPC Management Cost', url: '/pricing/ppc-cost' },
     { title: 'Website Cost Guide', url: '/pricing/website-cost' },
-    { title: 'Industry Solutions', url: '/industries' },
+    { title: 'Industry Solutions Hub', url: '/industries' },
     { title: 'Home Services Marketing', url: '/industries/home-services' },
     { title: 'SaaS Marketing Agency', url: '/industries/saas-marketing' },
     { title: 'Healthcare Practice SEO', url: '/industries/healthcare-marketing' },
@@ -66,20 +68,38 @@ export default async function SitemapPage() {
     { title: 'Agency Comparisons Hub', url: '/compare' },
     { title: 'WebFX Alternatives', url: '/compare/webfx-alternatives' },
     { title: 'Web Tonic Alternatives', url: '/compare/webtonic-alternatives' },
+    { title: 'Free US Business Tools Hub', url: '/tools' },
     { title: 'Agency Pricing & ROI Calculator', url: '/tools/agency-pricing-calculator' },
-    { title: '2026 Agency Pricing Report', url: '/research/agency-pricing-report' },
-    { title: 'Resources', url: '/resources' },
-    { title: 'AI Cost Estimator', url: '/tools/ai-cost-estimator' },
+    { title: 'Admin Cost & Labor Drag Calculator', url: '/tools/admin-cost-calculator' },
+    { title: 'Client Response Email Generator', url: '/tools/client-response-generator' },
+    { title: 'SaaS Bloat & Redundant Tool Audit', url: '/tools/saas-bloat-audit' },
+    { title: 'AI Architecture & Cost Estimator', url: '/tools/ai-cost-estimator' },
     { title: 'AI Action Figure Generator', url: '/tools/action-figure-generator' },
-    { title: 'Roofing Contractors', url: '/roofing-contractors' },
-    { title: 'Free Audit', url: '/free-audit' },
-    { title: 'Chat Agents', url: '/chat-agents' },
-    { title: 'Aman Joshi (CEO)', url: '/aman-joshi' },
-    { title: 'Book a Call', url: '/book-call' },
+    { title: '2026 Agency Pricing Report', url: '/research/agency-pricing-report' },
+    { title: 'Resources & Knowledge Hub', url: '/resources' },
+    { title: 'Roofing Contractors Web Systems', url: '/roofing-contractors' },
+    { title: 'Free Growth & SEO Audit', url: '/free-audit' },
+    { title: 'Chat Agents Playground', url: '/chat-agents' },
+    { title: 'Demo Ruflo (Swarm Simulator)', url: '/demo-ruflo' },
+    { title: 'Aman Joshi (Founder & CEO)', url: '/aman-joshi' },
+    { title: 'Book a Strategy Call', url: '/book-call' },
+    { title: 'Client Sign Up', url: '/signup/client' },
+    { title: 'Developer Network Sign Up', url: '/signup/developer' },
     { title: 'Cloud Solutions', url: '/services/cloud-solutions' },
+    { title: 'Website Security & Maintenance', url: '/services/website-security-maintenance' },
+    { title: 'Technical SEO Services', url: '/services/technical-seo' },
     { title: 'Digital Marketing', url: '/services/digital-marketing' },
     { title: 'Graphics & Branding', url: '/services/graphics-branding' },
     { title: 'Web Development', url: '/services/web-development' },
+    { title: 'Engineering Solutions Hub', url: '/solutions' },
+    { title: 'Next.js MVP Agency', url: '/solutions/nextjs-mvp-agency' },
+    { title: 'Custom AI Agent Development', url: '/solutions/custom-ai-agent-development' },
+    { title: 'AI SaaS MVP Development', url: '/solutions/ai-saas-development' },
+    { title: 'React Native Mobile Agency', url: '/solutions/react-native-agency' },
+    { title: 'Python & FastAPI Backend Agency', url: '/solutions/python-fastapi-backend' },
+    { title: 'Enterprise Workflow Automation', url: '/solutions/enterprise-workflow-automation' },
+    { title: 'Cloud Architecture & DevOps Consulting', url: '/solutions/cloud-devops-consulting' },
+    { title: 'Technical SEO & GEO Agency', url: '/solutions/technical-seo-agency' },
   ];
 
   const targetCities = [
@@ -137,17 +157,19 @@ export default async function SitemapPage() {
             
             {glossaryTerms && glossaryTerms.length > 0 && (
               <>
-                <h2 className="text-2xl font-bold mb-6 text-slate-800 dark:text-slate-200 border-b border-slate-200 dark:border-slate-800 pb-2">Glossary</h2>
-                <ul className="space-y-3">
-                  {glossaryTerms.slice(0, 15).map((term: any) => (
-                    <li key={term.id}>
-                      <Link href={`/glossary/${term.slug}`} className="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+                <h2 className="text-2xl font-bold mb-6 text-slate-800 dark:text-slate-200 border-b border-slate-200 dark:border-slate-800 pb-2">Glossary Terms</h2>
+                <div className="max-h-[500px] overflow-y-auto pr-2 space-y-2.5 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-700">
+                  {glossaryTerms.map((term: any) => (
+                    <div key={term.id}>
+                      <Link href={`/glossary/${term.slug}`} className="text-blue-600 dark:text-blue-400 hover:underline text-xs block">
                         {term.term}
                       </Link>
-                    </li>
+                    </div>
                   ))}
-                  <li><Link href="/glossary" className="text-slate-500 hover:underline text-sm italic">View all terms &rarr;</Link></li>
-                </ul>
+                </div>
+                <div className="mt-3">
+                  <Link href="/glossary" className="text-slate-500 hover:underline text-xs italic font-medium">View Glossary Hub &rarr;</Link>
+                </div>
               </>
             )}
           </div>

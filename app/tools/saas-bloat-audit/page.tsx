@@ -14,6 +14,7 @@ import {
     CheckCircle 
 } from 'lucide-react';
 import ToolLeadCapture from '@/components/ToolLeadCapture';
+import RelatedTools from '@/components/RelatedTools';
 
 interface ToolItem {
     id: string;
@@ -260,6 +261,8 @@ export default function SaasBloatAuditPage() {
 
                     </div>
                 </div>
+
+                <RelatedTools currentSlug="/tools/saas-bloat-audit" />
 
             </div>
         </div>

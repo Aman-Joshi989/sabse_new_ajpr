@@ -156,6 +156,19 @@ export default function LoginPage() {
               </svg>
               Log in with Google
             </Link>
+
+            <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 text-center space-y-2">
+              <p className="text-xs text-slate-500 font-medium">Don&apos;t have an account yet?</p>
+              <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-bold">
+                <Link href="/signup/client" className="text-blue-600 dark:text-blue-400 hover:underline">
+                  Create Client Account &rarr;
+                </Link>
+                <span className="text-slate-300 dark:text-slate-700">&bull;</span>
+                <Link href="/signup/developer" className="text-blue-600 dark:text-blue-400 hover:underline">
+                  Join Developer Network &rarr;
+                </Link>
+              </div>
+            </div>
           </form>
         </div>
 

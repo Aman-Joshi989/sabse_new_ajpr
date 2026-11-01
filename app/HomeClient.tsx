@@ -12,6 +12,8 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import HeroSection from '@/components/sections/HeroSection'
+import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
+import { trackBookCall } from '@/lib/analytics'
 import {
   Accordion,
   AccordionContent,
@@ -376,7 +378,10 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                       className="w-full h-12 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-md hover:shadow-lg transition-all text-sm gap-2"
                       asChild
                     >
-                      <Link href={`/book-call?topic=${encodeURIComponent(currentScope.title)}`}>
+                      <Link 
+                        href={`/book-call?topic=${encodeURIComponent(currentScope.title)}`}
+                        onClick={() => trackBookCall(`interactive_scope_${currentScope.title}`)}
+                      >
                         <Calendar className="w-4 h-4 text-blue-500" />
                         Book Architecture Call for this Build
                         <ArrowRight className="w-4 h-4 ml-auto" />
@@ -724,7 +729,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 </div>
                 <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
                   <Button className="w-full h-11 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs" asChild>
-                    <Link href="/book-call?topic=MVP%20Sprint">Book Sprint Scoping</Link>
+                    <Link href="/book-call?topic=MVP%20Sprint" onClick={() => trackBookCall('home_pricing_mvp_sprint')}>Book Sprint Scoping</Link>
                   </Button>
                 </div>
               </div>
@@ -754,7 +759,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 </div>
                 <div className="mt-8 pt-6 border-t border-blue-200 dark:border-blue-900/60">
                   <Button className="w-full h-11 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md" asChild>
-                    <Link href="/book-call?topic=Dedicated%20Engineering">Start Dedicated Pod</Link>
+                    <Link href="/book-call?topic=Dedicated%20Engineering" onClick={() => trackBookCall('home_pricing_dedicated_pod')}>Start Dedicated Pod</Link>
                   </Button>
                 </div>
               </div>
@@ -781,7 +786,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 </div>
                 <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
                   <Button variant="outline" className="w-full h-11 rounded-xl border-slate-300 dark:border-slate-700 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-white" asChild>
-                    <Link href="/book-call?topic=Growth%20Retainer">Explore Growth Retainer</Link>
+                    <Link href="/book-call?topic=Growth%20Retainer" onClick={() => trackBookCall('home_pricing_growth_retainer')}>Explore Growth Retainer</Link>
                   </Button>
                 </div>
               </div>
@@ -965,38 +970,17 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             </div>
 
             <Accordion type="single" collapsible className="space-y-4">
-              {[
-                {
-                  q: "How fast can you start and ship our software?",
-                  a: "We initiate scoping within 24 to 48 hours of your architecture call. Standard web applications and AI MVPs are engineered and deployed to production in 2 to 4 weeks using structured weekly sprint milestones."
-                },
-                {
-                  q: "Who actually writes the code? Do you outsource to junior devs?",
-                  a: "Zero outsourcing to junior contractors. All systems architecture, frontend Next.js code, database schemas, and AI agent pipelines are directly built by senior practitioners with full architectural accountability and weekly staging previews."
-                },
-                {
-                  q: "Do I own 100% of the code and intellectual property?",
-                  a: "Yes, 100%. Upon completion and delivery, all GitHub repositories, source code, database schemas, API keys, and deployment credentials are fully transferred to your company. Zero vendor lock-in or recurring IP licensing."
-                },
-                {
-                  q: "How do your costs compare to hiring full-time US engineers or traditional agencies?",
-                  a: "Hiring a senior US engineer costs $160k–$220k/yr salary plus $40k+ in benefits, equity, and recruitment fees, taking 3–6 months to hire. Traditional agencies charge $15k–$30k/month in account-management overhead. AJPR World delivers senior engineering at 70% lower overall cost with zero long-term commitments."
-                },
-                {
-                  q: "What happens after launch? Do you provide maintenance and ongoing support?",
-                  a: "Every build comes with a guaranteed 30-day post-launch warranty covering bug fixes and performance tuning. Afterward, you can transition into our Dedicated Engineering Pod for ongoing feature velocity or pause anytime with zero penalties."
-                }
-              ].map((faq, idx) => (
+              {HOMEPAGE_FAQS.map((faq, idx) => (
                 <AccordionItem
                   key={idx}
                   value={`item-${idx}`}
                   className="bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-2 shadow-xs"
                 >
                   <AccordionTrigger className="text-left font-bold text-slate-900 dark:text-white text-base hover:no-underline py-4">
-                    {faq.q}
+                    {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed pb-4">
-                    {faq.a}
+                    {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -1030,7 +1014,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" className="h-14 px-10 text-base rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold transition-all shadow-xl w-full sm:w-auto" asChild>
-                <Link href="/book-call">Book Free Strategy Call <ArrowRight className="w-5 h-5 ml-2"/></Link>
+                <Link href="/book-call" onClick={() => trackBookCall('home_bottom_cta')}>Book Free Strategy Call <ArrowRight className="w-5 h-5 ml-2"/></Link>
               </Button>
               <Button size="lg" variant="outline" className="h-14 px-8 text-base rounded-full border-slate-300 dark:border-slate-700 font-semibold w-full sm:w-auto" asChild>
                 <Link href="/pricing">Explore Pricing & Sprints</Link>

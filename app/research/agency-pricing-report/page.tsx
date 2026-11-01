@@ -5,6 +5,7 @@ import { BarChart3, FileText, Download, Share2, CheckCircle2, ArrowRight, Shield
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: '2026 US Agency Pricing Report: Retainers & Rates | AJPR',
   description: 'Comprehensive benchmark report on 200+ US digital marketing agencies. Discover median retainers, hourly rates, pricing models, and hidden contract fees.',
   alternates: {
@@ -16,6 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/research/agency-pricing-report',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: '2026 US Agency Pricing Report - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '2026 US Agency Pricing Report: Retainers & Rates | AJPR',
+    description: 'Benchmark study of 200+ US agencies: median retainers, hourly billing rates, and contract analysis.',
+    images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

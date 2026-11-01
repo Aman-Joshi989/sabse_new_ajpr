@@ -5,6 +5,7 @@ import { MapPin, Code, Cpu, Smartphone, LayoutDashboard, Cloud, ArrowRight, Sear
 export const revalidate = 86400; // Cache for 24 hours
 
 export const metadata: Metadata = {
+    metadataBase: new URL('https://ajprworld.com'),
     title: 'Areas We Serve | AJPR World Locations',
     description: 'Explore US metros and global tech corridors where AJPR World engineers custom software, AI solutions, SEO, and high-yield digital marketing.',
     alternates: {
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
                 alt: 'AJPR World Locations',
             }
         ],
+        locale: 'en_US',
     },
     twitter: {
         card: 'summary_large_image',
@@ -31,6 +33,7 @@ export const metadata: Metadata = {
         description: 'Explore US metros and global tech corridors where AJPR World engineers custom software, AI solutions, SEO, and high-yield digital marketing.',
         images: ['https://ajprworld.com/og-image.jpg'],
         creator: '@ajprworld',
+        site: '@ajprworld',
     }
 };
 
@@ -103,18 +106,18 @@ export default function LocationsIndex() {
                                 <MapPin className="w-6 h-6 text-blue-600 dark:text-blue-500" />
                                 {formatName(city)}
                             </h3>
-                            <ul className="space-y-3">
-                                {SERVICES.slice(0, 6).map((service) => (
+                            <ul className="space-y-2.5">
+                                {SERVICES.map((service) => (
                                     <li key={service.slug}>
                                         <Link 
                                             href={`/locations/${city}/${service.slug}`}
                                             className="flex items-center justify-between text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium group/link transition-colors"
                                         >
-                                            <span className="flex items-center gap-3 text-sm">
-                                                <service.icon className="w-4 h-4 opacity-70 group-hover/link:opacity-100 transition-opacity" />
+                                            <span className="flex items-center gap-2.5 text-xs">
+                                                <service.icon className="w-3.5 h-3.5 opacity-70 group-hover/link:opacity-100 transition-opacity" />
                                                 {service.name}
                                             </span>
-                                            <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
+                                            <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
                                         </Link>
                                     </li>
                                 ))}
@@ -139,18 +142,18 @@ export default function LocationsIndex() {
                                 <MapPin className="w-6 h-6 text-blue-600 dark:text-blue-500" />
                                 {formatName(city)}
                             </h3>
-                            <ul className="space-y-3">
-                                {SERVICES.slice(0, 5).map((service) => (
+                            <ul className="space-y-2.5">
+                                {SERVICES.map((service) => (
                                     <li key={service.slug}>
                                         <Link 
                                             href={`/locations/${city}/${service.slug}`}
                                             className="flex items-center justify-between text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium group/link transition-colors"
                                         >
-                                            <span className="flex items-center gap-3 text-sm">
-                                                <service.icon className="w-4 h-4 opacity-70 group-hover/link:opacity-100 transition-opacity" />
+                                            <span className="flex items-center gap-2.5 text-xs">
+                                                <service.icon className="w-3.5 h-3.5 opacity-70 group-hover/link:opacity-100 transition-opacity" />
                                                 {service.name}
                                             </span>
-                                            <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
+                                            <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
                                         </Link>
                                     </li>
                                 ))}

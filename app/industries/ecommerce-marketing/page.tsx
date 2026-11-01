@@ -5,6 +5,7 @@ import { ShoppingBag, CheckCircle2, ArrowRight, TrendingUp, BarChart3, Tag, Refr
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'Ecommerce Marketing Agency: Shopify & DTC Growth | AJPR',
   description: 'Grow your DTC brand with high-converting Shopify SEO, Google Shopping, and retention marketing. Data-driven customer acquisition that lowers blended CAC.',
   alternates: {
@@ -16,6 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/industries/ecommerce-marketing',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Ecommerce Marketing Agency - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ecommerce Marketing Agency: Shopify & DTC Growth | AJPR',
+    description: 'DTC customer acquisition, Google Shopping optimization, and organic store revenue growth.',
+    images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

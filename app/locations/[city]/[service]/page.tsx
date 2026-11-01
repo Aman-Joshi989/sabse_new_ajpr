@@ -409,21 +409,74 @@ export default async function LocationServicePage(props: Props) {
                     </div>
                 </div>
 
-                {/* Related Cross Links */}
-                <div className="border-t border-slate-200 dark:border-slate-800 pt-10">
-                    <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">
-                        Related Services & Pricing
-                    </h3>
-                    <div className="flex flex-wrap gap-3">
-                        <Link href="/pricing/seo-cost" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-                            SEO Retainers Guide →
-                        </Link>
-                        <Link href="/pricing/ppc-cost" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-                            PPC Cost & Retainers →
-                        </Link>
-                        <Link href="/compare/webfx-alternatives" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-                            WebFX Alternatives & Pricing Comparison →
-                        </Link>
+                {/* Internal Linking Mesh: Sister Services in this City & Other Metros */}
+                <div className="border-t border-slate-200 dark:border-slate-800 pt-12 space-y-10">
+                    {/* 1. Other Services in this Metro */}
+                    <div>
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <MapPin className="w-4 h-4 text-blue-600" />
+                                Other Technology & Growth Services in {cityName}
+                            </h3>
+                            <Link href="/locations" className="text-xs font-semibold text-blue-600 hover:underline">
+                                View all service areas &rarr;
+                            </Link>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                            {SERVICES.filter(s => s.slug !== params.service).map(s => (
+                                <Link
+                                    key={s.slug}
+                                    href={`/locations/${params.city}/${s.slug}`}
+                                    className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 hover:shadow-md transition-all text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 block"
+                                >
+                                    <span className="font-semibold block mb-0.5">{s.name}</span>
+                                    <span className="text-[10px] text-slate-400">{cityName} Hub &rarr;</span>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* 2. Same Service in Other Metros */}
+                    <div>
+                        <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                            <Target className="w-4 h-4 text-blue-600" />
+                            {serviceName} Across Other Priority Hubs
+                        </h3>
+                        <div className="flex flex-wrap gap-2.5">
+                            {CITIES.filter(c => c !== params.city.toLowerCase()).slice(0, 12).map(c => (
+                                <Link
+                                    key={c}
+                                    href={`/locations/${c}/${params.service}`}
+                                    className="px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800"
+                                >
+                                    {serviceName} in {formatName(c)}
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* 3. Related Guides & Research */}
+                    <div>
+                        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                            Related Pricing Guides & Frameworks
+                        </h3>
+                        <div className="flex flex-wrap gap-2.5">
+                            <Link href="/pricing/seo-cost" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                2026 SEO Retainers Guide →
+                            </Link>
+                            <Link href="/pricing/ppc-cost" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                PPC Management Cost Breakdown →
+                            </Link>
+                            <Link href="/tools/agency-pricing-calculator" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                Agency ROI & Pricing Calculator →
+                            </Link>
+                            <Link href="/compare/webfx-alternatives" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                WebFX Alternatives & Comparison →
+                            </Link>
+                            <Link href="/research/agency-pricing-report" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                2026 US Agency Pricing Report →
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

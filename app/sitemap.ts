@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { getPublishedServices, getBlogs, getGlossaryTerms, getAllSeoRoutes } from '@/lib/db/queries'
+import { PROGRAMMATIC_SOLUTIONS } from '@/lib/solutions-data'
 
 export const revalidate = 86400; // Cache for 24 hours to prevent SEO bots from draining Neon DB compute
 
@@ -345,6 +346,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'daily',
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/solutions`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/website-security-maintenance`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/technical-seo`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
   ]
 
   // Programmatic local SEO pages for US Metros, Global Hubs, and Regional Hubs
@@ -451,6 +470,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Failed to fetch programmatic SEO routes for sitemap", error);
   }
 
+  // 5. High-Intent Programmatic Tech Stack & Solution Pages
+  const solutionPages: MetadataRoute.Sitemap = Object.keys(PROGRAMMATIC_SOLUTIONS).map((slug) => ({
+    url: `${baseUrl}/solutions/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.9,
+  }));
+
   // Combine all routes
-  return [...staticPages, ...servicePages, ...blogPages, ...glossaryPages, ...programmaticRoutes]
+  return [...staticPages, ...servicePages, ...solutionPages, ...blogPages, ...glossaryPages, ...programmaticRoutes]
 }

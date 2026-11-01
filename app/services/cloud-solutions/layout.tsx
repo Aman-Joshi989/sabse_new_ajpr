@@ -1,8 +1,27 @@
 import { Metadata } from 'next'
 import { getSeoMetadata } from "@/lib/db/queries";
+import { ServiceSchema } from '@/components/schema/ServiceSchema';
+import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return children
+  const breadcrumbs = [
+    { name: 'Home', item: 'https://ajprworld.com' },
+    { name: 'Services', item: 'https://ajprworld.com/services' },
+    { name: 'Cloud & DevOps Services', item: 'https://ajprworld.com/services/cloud-solutions' },
+  ];
+
+  return (
+    <>
+      <BreadcrumbSchema items={breadcrumbs} />
+      <ServiceSchema
+        name="Cloud & DevOps Services"
+        description="Enterprise cloud architecture, container orchestration (Docker/Kubernetes), automated CI/CD pipelines, AWS/GCP migration, and 99.99% uptime engineering."
+        providerName="AJPR World"
+        url="https://ajprworld.com/services/cloud-solutions"
+      />
+      {children}
+    </>
+  );
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,10 +34,11 @@ export async function generateMetadata(): Promise<Metadata> {
     seo = null;
   }
   
-  const title = seo?.title || `AJPR World - ${(path.split('/').pop() || '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`;
-  const description = seo?.description || `Discover more about ${(path.split('/').pop() || '').replace(/-/g, ' ')} at AJPR World.`;
+  const title = seo?.title || 'Cloud & DevOps Engineering Services | AWS, GCP & Architecture | AJPR World';
+  const description = seo?.description || 'Enterprise cloud architecture, Docker containerization, AWS & GCP deployments, automated CI/CD pipelines, and high-availability infrastructure.';
   
   return {
+    metadataBase: new URL('https://ajprworld.com'),
     title,
     description,
     alternates: { canonical: `https://ajprworld.com${path}` },
@@ -36,6 +56,15 @@ export async function generateMetadata(): Promise<Metadata> {
           alt: title,
         }
       ],
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['https://ajprworld.com/og-image.jpg'],
+      creator: '@ajprworld',
+      site: '@ajprworld',
     }
   };
 }

@@ -5,6 +5,7 @@ import { Scale, CheckCircle2, XCircle, ArrowRight, ShieldCheck, DollarSign, User
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'WebFX Alternatives: 2026 Agency Comparison & Review | AJPR',
   description: 'Comparing WebFX alternatives? See our transparent side-by-side analysis of pricing, team senior expertise, proprietary lock-in, and deliverable agility.',
   alternates: {
@@ -16,6 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/compare/webfx-alternatives',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'WebFX Alternatives Comparison - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'WebFX Alternatives: 2026 Agency Comparison & Review | AJPR',
+    description: 'Transparent comparison of WebFX vs modern senior engineering agencies: pricing, lock-in, and ROI.',
+    images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

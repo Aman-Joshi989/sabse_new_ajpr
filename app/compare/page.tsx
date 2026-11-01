@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, Scale, CheckCircle2, ShieldCheck, DollarSign, Users, Award } from 'lucide-react';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'Agency Comparisons & Alternatives Hub (2026) | AJPR',
   description: 'Objective, data-driven comparisons of top US digital marketing agencies, WebFX alternatives, pricing models, and agency selection frameworks.',
   alternates: {
@@ -14,6 +15,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/compare',
     siteName: 'AJPR World',
     type: 'website',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Agency Comparisons & Alternatives Hub - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Agency Comparisons & Alternatives Hub (2026) | AJPR',
+    description: 'Objective, data-driven comparisons of top US digital marketing agencies and WebFX alternatives.',
+    images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 
@@ -143,6 +161,30 @@ export default function CompareHubPage() {
             </div>
           </div>
         </section>
+
+        {/* Related Research & Pricing Data */}
+        <div className="border-t border-slate-200 dark:border-slate-800 pt-10 mb-16">
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">
+            Related Agency Pricing & Evaluation Benchmarks
+          </h3>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/research/agency-pricing-report" className="px-4 py-2 rounded-full bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              2026 US Agency Pricing Report (214 Agencies) →
+            </Link>
+            <Link href="/tools/agency-pricing-calculator" className="px-4 py-2 rounded-full bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              Agency ROI & Retainer Calculator →
+            </Link>
+            <Link href="/pricing/seo-cost" className="px-4 py-2 rounded-full bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              SEO Cost Guide (2026) →
+            </Link>
+            <Link href="/pricing/ppc-cost" className="px-4 py-2 rounded-full bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              PPC Management Cost →
+            </Link>
+            <Link href="/pricing" className="px-4 py-2 rounded-full bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              Transparent Pricing Packages →
+            </Link>
+          </div>
+        </div>
 
         {/* CTA */}
         <div className="bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-3xl p-8 sm:p-12 text-center border border-slate-800 shadow-xl">

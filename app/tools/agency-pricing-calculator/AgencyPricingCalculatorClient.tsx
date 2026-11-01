@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Calculator, DollarSign, TrendingUp, CheckCircle2, ArrowRight, RefreshCw, BarChart3, HelpCircle } from 'lucide-react';
+import RelatedTools from '@/components/RelatedTools';
+import ToolLeadCapture from '@/components/ToolLeadCapture';
+import { trackBookCall } from '@/lib/analytics';
 
 export default function AgencyPricingCalculatorClient() {
   const [monthlyTargetRev, setMonthlyTargetRev] = useState<number>(50000);
@@ -193,12 +196,35 @@ export default function AgencyPricingCalculatorClient() {
             </div>
 
             <Link
-              href="/contact"
+              href="/book-call?topic=Agency%20Pricing%20Calculation"
+              onClick={() => trackBookCall('tool_agency_pricing_calc')}
               className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm text-center transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
             >
-              Lock in Strategy & Pricing <ArrowRight className="w-4 h-4" />
+              Lock in Strategy & Book Call <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
+        </div>
+
+        {/* Frictionless Email Capture & Report Delivery */}
+        <div className="mb-12">
+          <ToolLeadCapture
+            title="Email Me My Custom Agency ROI & Budget Breakdown"
+            subtitle="Get this personalized breakdown with customer acquisition benchmarks, deal targets, and retainer recommendations delivered directly to your inbox."
+            badge="Instant Custom PDF Breakdown"
+            ctaText="Email My Agency ROI Report"
+            toolSource="agency_pricing_calculator"
+            reportSummary={{
+              headline: `Target: $${monthlyTargetRev.toLocaleString()}/mo | Retainer: $${recommendedRetainer.toLocaleString()}/mo | Net ROI: +${projectedNetRoi}%`,
+              metrics: {
+                'Target Monthly Revenue': `$${monthlyTargetRev.toLocaleString()}`,
+                'Average Customer Value': `$${avgCustomerValue.toLocaleString()}`,
+                'Recommended Retainer': `$${recommendedRetainer.toLocaleString()}/mo`,
+                'Deals Needed': `${newCustomersNeeded} deals/mo`,
+                'Qualified Leads Required': `${qualifiedLeadsNeeded} leads/mo`,
+                'Projected 12-Month Net ROI': `+${projectedNetRoi}%`
+              }
+            }}
+          />
         </div>
 
         {/* Cross links */}
@@ -218,6 +244,8 @@ export default function AgencyPricingCalculatorClient() {
             </Link>
           </div>
         </div>
+
+        <RelatedTools currentSlug="/tools/agency-pricing-calculator" />
       </div>
     </div>
   );

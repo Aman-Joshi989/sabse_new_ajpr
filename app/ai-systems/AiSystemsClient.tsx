@@ -915,6 +915,30 @@ export default function AiSystemsClient() {
           </div>
         </div>
 
+        {/* Cross-linking to Ecosystem */}
+        <div className="mt-16 pt-10 border-t border-slate-800 text-center">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
+            Explore AI Architecture & Developer Tools
+          </h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link href="/tools/ai-cost-estimator" className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-blue-900/30 text-slate-300 text-xs font-semibold transition-colors border border-slate-800">
+              AI Architecture & Cost Estimator →
+            </Link>
+            <Link href="/tools/admin-cost-calculator" className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-blue-900/30 text-slate-300 text-xs font-semibold transition-colors border border-slate-800">
+              Admin Labor Drag Calculator →
+            </Link>
+            <Link href="/chat-agents" className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-blue-900/30 text-slate-300 text-xs font-semibold transition-colors border border-slate-800">
+              Interactive AI Agent Playground →
+            </Link>
+            <Link href="/demo-ruflo" className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-blue-900/30 text-slate-300 text-xs font-semibold transition-colors border border-slate-800">
+              Swarm Orchestration Simulator →
+            </Link>
+            <Link href="/services/cloud-solutions" className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-blue-900/30 text-slate-300 text-xs font-semibold transition-colors border border-slate-800">
+              Cloud Infrastructure & DevOps →
+            </Link>
+          </div>
+        </div>
+
       </div>
     </div>
   );

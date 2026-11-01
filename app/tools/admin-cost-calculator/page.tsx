@@ -15,6 +15,7 @@ import {
     Zap
 } from 'lucide-react';
 import ToolLeadCapture from '@/components/ToolLeadCapture';
+import RelatedTools from '@/components/RelatedTools';
 
 export default function AdminCostCalculatorPage() {
     const [emailHours, setEmailHours] = useState<number>(10);
@@ -290,6 +291,8 @@ export default function AdminCostCalculatorPage() {
 
                     </div>
                 </div>
+
+                <RelatedTools currentSlug="/tools/admin-cost-calculator" />
 
             </div>
         </div>

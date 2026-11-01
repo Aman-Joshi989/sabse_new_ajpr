@@ -5,6 +5,7 @@ import { Wrench, CheckCircle2, ArrowRight, PhoneCall, ShieldCheck, MapPin, Star,
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'Home Services Marketing Agency: HVAC & Roofing SEO | AJPR',
   description: 'Drive qualified local leads for HVAC, roofing, and plumbing contractors. Local SEO, Google Local Services Ads, and automated quote capture that scales.',
   alternates: {
@@ -16,6 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/industries/home-services',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Home Services Marketing Agency - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Home Services Marketing Agency: HVAC & Roofing SEO | AJPR',
+    description: 'Local 3-pack rankings, Google Guaranteed Ads, and high-ticket customer acquisition.',
+    images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

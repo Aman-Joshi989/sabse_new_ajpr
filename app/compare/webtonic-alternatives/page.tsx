@@ -5,6 +5,7 @@ import { Scale, CheckCircle2, ArrowRight, ShieldCheck, DollarSign, Globe, Award,
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'Web Tonic Alternatives: 2026 Agency Comparison | AJPR',
   description: 'Looking for Web Tonic alternatives? Compare full-service US marketing capabilities, technical SEO depth, pricing transparency, and ROI reporting.',
   alternates: {
@@ -16,6 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/compare/webtonic-alternatives',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Web Tonic Alternatives Comparison - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Web Tonic Alternatives: 2026 Agency Comparison | AJPR',
+    description: 'Objective comparison of Web Tonic vs senior engineering agencies: services, pricing, and results.',
+    images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

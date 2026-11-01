@@ -5,6 +5,7 @@ import { Laptop, CheckCircle2, ArrowRight, Zap, Target, Cpu, TrendingUp, HelpCir
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'SaaS Marketing Agency: SEO, Demand Gen & Growth | AJPR',
   description: 'Scale product-led and enterprise SaaS pipeline. Technical SEO, GEO search optimization, and high-intent product comparison hubs that convert demos.',
   alternates: {
@@ -16,6 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/industries/saas-marketing',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'SaaS Marketing Agency - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SaaS Marketing Agency: SEO, Demand Gen & Growth | AJPR',
+    description: 'Bottom-of-funnel SaaS demand generation, programmatic comparison hubs, and pipeline velocity.',
+    images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

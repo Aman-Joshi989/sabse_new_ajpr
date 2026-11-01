@@ -1,20 +1,28 @@
 import { MetadataRoute } from 'next'
 
-
-
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = 'https://ajprworld.com'
+  const disallowedPaths = [
+    '/dashboard/',
+    '/api/',
+    '/_next/',
+    '/login',
+    '/careers/apply',
+    '/admin/',
+  ]
 
-  // Standard crawlers (Googlebot, Bingbot, etc.)
-  const defaultRule = {
-    userAgent: '*',
-    allow: '/',
-    disallow: ['/dashboard/', '/api/', '/_next/', '/login', '/careers/apply'],
-  }
+  // Standard search engine crawlers (Googlebot, Bingbot, Applebot, DuckDuckGo)
+  const standardCrawlers = [
+    '*',
+    'Googlebot',
+    'Bingbot',
+    'Applebot',
+    'DuckDuckBot',
+    'YandexBot',
+  ]
 
-  // AI and Generative Engine bots (Important for GEO/AI citations)
-  // If you want to block them instead, change allow to '/' and disallow to '/'
-  const aiUserAgents = [
+  // Generative Engine & AI Search Bots (Crucial for GEO / conversational LLM citations)
+  const aiCrawlers = [
     'ChatGPT-User',
     'GPTBot',
     'OAI-SearchBot',
@@ -24,17 +32,28 @@ export default function robots(): MetadataRoute.Robots {
     'PerplexityBot',
     'Google-Extended',
     'CCBot',
-    'Omgilibot'
+    'cohere-ai',
+    'Meta-ExternalAgent',
+    'Omgilibot',
+    'Diffbot',
   ]
 
-  const aiRules = aiUserAgents.map((agent) => ({
-    userAgent: agent,
-    allow: '/',
-    disallow: ['/dashboard/', '/api/', '/_next/', '/login', '/careers/apply'],
-  }))
+  const rules = [
+    ...standardCrawlers.map((agent) => ({
+      userAgent: agent,
+      allow: '/',
+      disallow: disallowedPaths,
+    })),
+    ...aiCrawlers.map((agent) => ({
+      userAgent: agent,
+      allow: '/',
+      disallow: disallowedPaths,
+    })),
+  ]
 
   return {
-    rules: [defaultRule, ...aiRules],
+    rules,
     sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   }
 }

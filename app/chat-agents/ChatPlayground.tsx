@@ -328,6 +328,12 @@ export default function ChatPlayground() {
               <span className="font-bold text-slate-300 block mb-1">🚀 Business Value:</span>
               Provides rapid, secure prototyping by running architectural design, coding drafts, security checks, and test-suite validation concurrently.
             </div>
+            <div className="pt-2 border-t border-slate-900/60 flex items-center justify-between">
+              <span className="text-[10px] text-slate-400">Visual Consensus Engine:</span>
+              <Link href="/demo-ruflo" className="text-[11px] font-bold text-blue-400 hover:underline">
+                RuFlo Swarm Simulator &rarr;
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -57,6 +57,7 @@ import { useCart } from '@/components/providers/CartProvider'
 import CartDrawer from '@/components/CartDrawer'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { logout } from '@/app/actions'
+import { trackBookCall } from '@/lib/analytics'
 
 export default function Header({ services }: { services?: any[] }) {
     const [scrolled, setScrolled] = useState(false)
@@ -74,11 +75,12 @@ export default function Header({ services }: { services?: any[] }) {
     const coreServices = [
         { name: 'AI Automation & Agent Systems', href: '/ai-systems', icon_name: 'Cpu', desc: 'LeadOS, WhatsApp agents & business systems' },
         { name: 'Custom Web Development', href: '/services/web-development', icon_name: 'Code2', desc: 'Next.js, high-speed apps & APIs' },
+        { name: 'Website Security & Maintenance', href: '/services/website-security-maintenance', icon_name: 'ShieldCheck', desc: '24/7 uptime, automated backups & security SLA' },
+        { name: 'Technical SEO & GEO', href: '/services/technical-seo', icon_name: 'TrendingUp', desc: 'Core Web Vitals, JSON-LD & AI citations' },
+        { name: 'Cloud Solutions & DevOps', href: '/services/cloud-solutions', icon_name: 'Cloud', desc: 'AWS, GCP, Docker & 99.99% uptime' },
         { name: 'AI Chatbots & Agents', href: '/services/ai-chatbot-development', icon_name: 'Bot', desc: 'Context-aware LLMs & autonomous workflows' },
         { name: 'SaaS Platform Architecture', href: '/services/saas-product-development', icon_name: 'Layers', desc: 'Multi-tenant apps & scalable backends' },
-        { name: 'GEO & AI Search Optimization', href: '/services/geo-optimization', icon_name: 'TrendingUp', desc: 'Rank in Perplexity, ChatGPT & Google AI' },
-        { name: 'Cloud Solutions & DevOps', href: '/services/cloud-solutions', icon_name: 'Cloud', desc: 'AWS, GCP, Docker & 99.99% uptime' },
-        { name: 'Digital Growth & Technical SEO', href: '/services/digital-marketing', icon_name: 'Phone', desc: 'Performance marketing & revenue funnels' }
+        { name: 'Digital Growth Marketing', href: '/services/digital-marketing', icon_name: 'Phone', desc: 'Performance marketing & revenue funnels' }
     ];
 
     const pricingLinks = [
@@ -89,9 +91,11 @@ export default function Header({ services }: { services?: any[] }) {
     ];
 
     const resourceLinks = [
+        { name: 'Engineering Solutions Hub', href: '/solutions', icon_name: 'Layers', desc: 'High-velocity 4-week tech stack sprints' },
         { name: 'Free US Business Tools', href: '/tools', icon_name: 'Cpu', desc: 'Calculators, audit tools & generators' },
-        { name: 'Engineering Insights & Blog', href: '/blog', icon_name: 'Briefcase', desc: 'Technical playbooks & growth case studies' },
+        { name: 'RuFlo Swarm Simulator', href: '/demo-ruflo', icon_name: 'Bot', desc: 'Live autonomous multi-agent simulator' },
         { name: 'AI Agent Playground', href: '/chat-agents', icon_name: 'Code2', desc: 'Test live AI intelligence prototypes' },
+        { name: 'Engineering Insights & Blog', href: '/blog', icon_name: 'Briefcase', desc: 'Technical playbooks & growth case studies' },
         { name: 'Tech & AI Glossary', href: '/glossary', icon_name: 'Layers', desc: 'Plain-English technical definitions' }
     ];
 
@@ -301,7 +305,7 @@ export default function Header({ services }: { services?: any[] }) {
                                 className="h-9 px-4 text-xs font-bold rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 shadow-md hover:shadow-lg transition-all"
                                 asChild
                             >
-                                <Link href="/book-call">Book Strategy Call</Link>
+                                <Link href="/book-call" onClick={() => trackBookCall('header_desktop')}>Book Strategy Call</Link>
                             </Button>
                         </div>
                     )}
@@ -456,7 +460,7 @@ export default function Header({ services }: { services?: any[] }) {
                                 {/* Mobile CTAs */}
                                 <div className="pt-2 space-y-2.5">
                                     <Button className="w-full h-11 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-md transition-all text-sm" asChild>
-                                        <Link href="/book-call">Book Strategy Call</Link>
+                                        <Link href="/book-call" onClick={() => trackBookCall('header_mobile')}>Book Strategy Call</Link>
                                     </Button>
                                     <Button variant="outline" className="w-full h-11 rounded-xl border-slate-200 dark:border-slate-800 font-semibold text-slate-700 dark:text-slate-300 text-sm" asChild>
                                         <Link href="/contact">Contact & Inquiry</Link>

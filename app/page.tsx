@@ -1,5 +1,7 @@
 import HomeClient from './HomeClient'
 import { getPublishedServices, getBlogs, getSiteSettings, getSeoMetadata } from '@/lib/db/queries'
+import { FAQSchema } from '@/components/schema/FAQSchema'
+import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
 import type { Metadata } from 'next'
 
 export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel free limits
@@ -25,11 +27,14 @@ export default async function HomePage() {
   }
 
   return (
-    <HomeClient 
-      services={services} 
-      blogs={blogs} 
-      settings={settings} 
-    />
+    <>
+      <FAQSchema faqs={HOMEPAGE_FAQS} />
+      <HomeClient 
+        services={services} 
+        blogs={blogs} 
+        settings={settings} 
+      />
+    </>
   )
 }
 
@@ -47,6 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = seo?.description || defaultDesc;
 
   return {
+    metadataBase: new URL('https://ajprworld.com'),
     alternates: { canonical: 'https://ajprworld.com' },
     title: title,
     description: description,
@@ -54,14 +60,25 @@ export async function generateMetadata(): Promise<Metadata> {
       title: title,
       description: description,
       url: 'https://ajprworld.com',
+      siteName: 'AJPR World',
+      type: 'website',
       images: [
         {
           url: 'https://ajprworld.com/og-image.jpg',
           width: 1200,
           height: 630,
-          alt: 'AJPR World',
+          alt: 'AJPR World - Custom AI MVPs & Scalable Software Engineering',
         }
       ],
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      images: ['https://ajprworld.com/og-image.jpg'],
+      creator: '@ajprworld',
+      site: '@ajprworld',
     }
   };
 }

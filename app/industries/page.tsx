@@ -127,6 +127,80 @@ export default function IndustriesPage() {
           })}
         </div>
 
+        {/* Specialist Trade & Platform Engines */}
+        <div className="mb-20">
+          <div className="mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+              Specialized Trade & Platform Systems
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+              Deep-dive platforms engineered for contractor exclusivity, enterprise CMS scalability, and high-volume e-commerce.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <Link
+              href="/roofing-contractors"
+              className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-xl transition-all group flex flex-col justify-between"
+            >
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-full mb-3 inline-block">
+                  Trade Specialization
+                </span>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors mb-2">
+                  Roofing Contractors Web & Lead Engine
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  Capture exclusive local homeowner estimates without paying high commissions for shared leads on Angi or HomeAdvisor.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                Explore Roofing Engine &rarr;
+              </span>
+            </Link>
+
+            <Link
+              href="/platforms/shopify-seo"
+              className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 hover:shadow-xl transition-all group flex flex-col justify-between"
+            >
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-full mb-3 inline-block">
+                  Ecommerce Platform
+                </span>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-500 transition-colors mb-2">
+                  Shopify SEO & Technical Architecture
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  Eliminate duplicate collection URLs, optimize faceted crawl budgets, and implement rich Product schema on Shopify Plus.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                Explore Shopify SEO &rarr;
+              </span>
+            </Link>
+
+            <Link
+              href="/platforms/webflow-agency"
+              className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-xl transition-all group flex flex-col justify-between"
+            >
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 bg-blue-500/10 px-2.5 py-1 rounded-full mb-3 inline-block">
+                  CMS Architecture
+                </span>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors mb-2">
+                  Webflow Development & Enterprise SEO
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  Award-winning visual design paired with clean client-first CSS, dynamic CMS collections, and sub-second load speeds.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                Explore Webflow Agency &rarr;
+              </span>
+            </Link>
+          </div>
+        </div>
+
         {/* Comparison Callout */}
         <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900 to-blue-950 text-white border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>

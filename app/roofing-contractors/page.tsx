@@ -230,6 +230,32 @@ export default function RoofingLandingPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Related Industry Solutions & Cross Links */}
+            <section className="py-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+                <div className="container mx-auto px-4 max-w-5xl">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-6 text-center">
+                        Explore Related Vertical Solutions & Pricing
+                    </h3>
+                    <div className="flex flex-wrap justify-center gap-3">
+                        <Link href="/industries/home-services" className="px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-700">
+                            Home Services Marketing Hub →
+                        </Link>
+                        <Link href="/industries" className="px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-700">
+                            All Industry Solutions →
+                        </Link>
+                        <Link href="/services/web-development" className="px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-700">
+                            Custom Web Engineering →
+                        </Link>
+                        <Link href="/pricing/seo-cost" className="px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-700">
+                            Local SEO Retainer Pricing →
+                        </Link>
+                        <Link href="/free-audit" className="px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-700">
+                            Claim Free Local SEO Audit →
+                        </Link>
+                    </div>
+                </div>
+            </section>
         </div>
     )
 }

@@ -5,6 +5,7 @@ import { CheckCircle2, ArrowRight, DollarSign, TrendingUp, HelpCircle, ShieldChe
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'SEO Cost in 2026: Pricing Guide & Retainers | AJPR',
   description: 'How much does SEO cost in 2026? Realistic retainers range from $1,500-$10,000/mo. Compare hourly, project, and package rates with transparent pricing.',
   alternates: {
@@ -16,7 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/pricing/seo-cost',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'SEO Cost Guide & Retainers - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SEO Cost in 2026: Pricing Guide & Retainers | AJPR',
+    description: 'Data-driven breakdown of SEO agency costs, retainers, and deliverable timelines.',
     images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

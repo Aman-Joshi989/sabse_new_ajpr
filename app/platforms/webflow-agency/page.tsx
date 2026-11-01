@@ -5,6 +5,7 @@ import { Layout, CheckCircle2, ArrowRight, Sparkles, Layers, Zap, Code2, HelpCir
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'Webflow SEO & Development Agency | AJPR World',
   description: 'Custom Webflow development and enterprise SEO optimization. Build blazing-fast marketing sites that outrank competitors and convert B2B prospects.',
   alternates: {
@@ -16,7 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/platforms/webflow-agency',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Webflow SEO & Development Agency - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Webflow SEO & Development Agency | AJPR World',
+    description: 'Custom Webflow development and technical SEO engineering for high-growth B2B brands.',
     images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

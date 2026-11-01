@@ -12,7 +12,8 @@ import {
     ShieldCheck,
     CheckCircle2,
     Zap,
-    Wand2
+    Wand2,
+    TrendingUp
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -46,6 +47,15 @@ const jsonLd = {
         {
             '@type': 'SoftwareApplication',
             'position': 1,
+            'name': 'Agency Pricing & ROI Calculator (2026)',
+            'applicationCategory': 'FinanceApplication',
+            'operatingSystem': 'All',
+            'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+            'url': 'https://ajprworld.com/tools/agency-pricing-calculator'
+        },
+        {
+            '@type': 'SoftwareApplication',
+            'position': 2,
             'name': 'Client Response & Difficult Email Generator',
             'applicationCategory': 'BusinessApplication',
             'operatingSystem': 'All',
@@ -54,7 +64,7 @@ const jsonLd = {
         },
         {
             '@type': 'SoftwareApplication',
-            'position': 2,
+            'position': 3,
             'name': 'US Business Admin Cost & Automation ROI Calculator',
             'applicationCategory': 'FinanceApplication',
             'operatingSystem': 'All',
@@ -63,12 +73,30 @@ const jsonLd = {
         },
         {
             '@type': 'SoftwareApplication',
-            'position': 3,
+            'position': 4,
             'name': 'SaaS Bloat & Redundant Subscription Audit Checklist',
             'applicationCategory': 'BusinessApplication',
             'operatingSystem': 'All',
             'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
             'url': 'https://ajprworld.com/tools/saas-bloat-audit'
+        },
+        {
+            '@type': 'SoftwareApplication',
+            'position': 5,
+            'name': 'AI Architecture & MVP Cost Estimator',
+            'applicationCategory': 'DeveloperApplication',
+            'operatingSystem': 'All',
+            'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+            'url': 'https://ajprworld.com/tools/ai-cost-estimator'
+        },
+        {
+            '@type': 'SoftwareApplication',
+            'position': 6,
+            'name': 'AI Action Figure & Toy Box Studio',
+            'applicationCategory': 'DesignApplication',
+            'operatingSystem': 'All',
+            'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+            'url': 'https://ajprworld.com/tools/action-figure-generator'
         }
     ]
 };
@@ -85,6 +113,16 @@ interface ToolCard {
 }
 
 const toolsList: ToolCard[] = [
+    {
+        slug: '/tools/agency-pricing-calculator',
+        title: 'Agency Pricing & 12-Month Marketing ROI Calculator',
+        description: 'Model realistic monthly SEO and PPC retainers against your target revenue and average customer value. Compare in-house hires vs. agency ROI.',
+        solves: 'Solves Problem #0: Retainer blind spots & agency budget planning',
+        badge: 'Pricing & ROI Modeling',
+        icon: TrendingUp,
+        color: 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/60',
+        timeToValue: 'Instant (30 sec)'
+    },
     {
         slug: '/tools/client-response-generator',
         title: 'Instant Client Response & Difficult Email Drafter',

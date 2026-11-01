@@ -3,7 +3,11 @@
 
 import { useChat } from '@ai-sdk/react';
 import ReactMarkdown from 'react-markdown';
-import { Send, Bot, User, Sparkles } from 'lucide-react';
+import { Send, Bot, User, Sparkles, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+import RelatedTools from '@/components/RelatedTools';
+import ToolLeadCapture from '@/components/ToolLeadCapture';
+import { trackBookCall } from '@/lib/analytics';
 
 export default function AICostEstimator() {
     // @ts-ignore
@@ -21,6 +25,16 @@ export default function AICostEstimator() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-16 px-4 md:px-8">
             <div className="max-w-4xl mx-auto">
+                {/* Top Breadcrumb */}
+                <div className="mb-8">
+                    <Link 
+                        href="/tools" 
+                        className="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-colors"
+                    >
+                        <ArrowLeft className="w-4 h-4 mr-1.5" /> All Free Tools
+                    </Link>
+                </div>
+
                 <div className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white flex items-center justify-center gap-3">
                         <Sparkles className="w-8 h-8 text-blue-600" />
@@ -85,6 +99,41 @@ export default function AICostEstimator() {
                         </div>
                     </form>
                 </div>
+
+                {/* Instant Strategy Call Trigger */}
+                <div className="my-8 p-6 rounded-2xl bg-gradient-to-r from-blue-900/40 via-slate-900 to-indigo-900/40 border border-blue-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+                    <div>
+                        <h3 className="text-base font-bold text-white">Need a Guaranteed Fixed-Price Quote?</h3>
+                        <p className="text-xs text-slate-300 mt-1">Talk directly with a Senior AI Systems Architect to review your schema and API integrations.</p>
+                    </div>
+                    <Link
+                        href="/book-call?topic=AI%20Cost%20Estimation"
+                        onClick={() => trackBookCall('tool_ai_cost_estimator_banner')}
+                        className="px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shrink-0 shadow-lg shadow-blue-600/30 transition-all hover:scale-105"
+                    >
+                        Book Architecture Call &rarr;
+                    </Link>
+                </div>
+
+                {/* Frictionless Email Capture for Architecture Blueprint */}
+                <div className="mb-12">
+                    <ToolLeadCapture
+                        title="Email Me My Custom AI Architecture & Timeline Blueprint"
+                        subtitle="Receive a formatted breakdown of vector database choices, API token cost forecasts, and sprint milestones delivered directly to your inbox."
+                        badge="Instant AI Technical Blueprint"
+                        ctaText="Email My Architecture Blueprint"
+                        toolSource="ai_cost_estimator"
+                        reportSummary={{
+                            headline: `AI Architecture Estimation (${messages.length > 1 ? 'Interactive Session' : 'Initial Inquiry'})`,
+                            metrics: {
+                                'Interaction Messages': messages.length,
+                                'Last Query': input || (messages[messages.length - 1]?.content.slice(0, 80) || 'AI MVP Project Scoping')
+                            }
+                        }}
+                    />
+                </div>
+
+                <RelatedTools currentSlug="/tools/ai-cost-estimator" />
             </div>
         </div>
     );

@@ -5,6 +5,7 @@ import { CheckCircle2, ArrowRight, DollarSign, Layout, HelpCircle, ShieldCheck, 
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ajprworld.com'),
   title: 'Website Cost in 2026: Web Design Pricing Guide | AJPR',
   description: 'How much does a custom website cost in 2026? Review real project tiers from $3,500 startup sites to $30,000+ custom web apps with transparent deliverables.',
   alternates: {
@@ -16,7 +17,23 @@ export const metadata: Metadata = {
     url: 'https://ajprworld.com/pricing/website-cost',
     siteName: 'AJPR World',
     type: 'article',
+    images: [
+      {
+        url: 'https://ajprworld.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Website Cost Pricing Guide - AJPR World',
+      },
+    ],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Website Cost in 2026: Web Design Pricing Guide | AJPR',
+    description: 'Real web design costs and transparent agency tiers for US startups and growing enterprises.',
     images: ['https://ajprworld.com/og-image.jpg'],
+    creator: '@ajprworld',
+    site: '@ajprworld',
   },
 };
 

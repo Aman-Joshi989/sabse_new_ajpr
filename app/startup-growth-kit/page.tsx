@@ -325,6 +325,30 @@ export default function StartupGrowthKitPage() {
           </div>
         </div>
 
+        {/* Cross Links to Startup Ecosystem */}
+        <div className="mt-16 pt-10 border-t border-slate-200 dark:border-slate-800 text-center">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
+            Explore the AJPR World Startup Ecosystem
+          </h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link href="/pricing" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800">
+              Transparent Retainer & Project Pricing →
+            </Link>
+            <Link href="/ai-systems" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800">
+              AI Automation & Swarm Systems →
+            </Link>
+            <Link href="/tools" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800">
+              Free Founder & Admin Tools →
+            </Link>
+            <Link href="/portfolio" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800">
+              Client Portfolio & Case Studies →
+            </Link>
+            <Link href="/services" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800">
+              All Engineering & Growth Services →
+            </Link>
+          </div>
+        </div>
+
       </div>
     </div>
   )

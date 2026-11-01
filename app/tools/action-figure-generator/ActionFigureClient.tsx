@@ -26,6 +26,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { toast } from 'sonner';
+import RelatedTools from '@/components/RelatedTools';
 
 type BoxTheme = 'retro-hasbro' | 'cyberpunk-neon' | 'minimalist-tech' | 'comic-book' | 'gold-edition';
 
@@ -890,6 +891,8 @@ export default function ActionFigureClient() {
             </Link>
           </div>
         </div>
+
+        <RelatedTools currentSlug="/tools/action-figure-generator" />
 
       </div>
     </div>

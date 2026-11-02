@@ -769,13 +769,13 @@ export default async function LocationServicePage(props: Props) {
                             
                             {isIndia && (
                                 <Link 
-                                    href="https://api.whatsapp.com/send?phone=919999999999&text=Hi%20AJPR%20World,%20I%20want%20to%20discuss%20Digital%20Marketing%20services%20for%20my%20business%20in%20Haldwani" 
+                                    href={`https://api.whatsapp.com/send?phone=919997205257&text=Hi%20AJPR%20World,%20I%20want%20to%20discuss%20${encodeURIComponent(serviceName)}%20services%20for%20my%20business%20in%20${encodeURIComponent(cityName)}`} 
                                     target="_blank" 
                                     rel="noopener noreferrer" 
                                     className="w-full mt-3 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 text-xs"
                                 >
                                     <MessageSquare className="w-4 h-4" />
-                                    Chat on WhatsApp
+                                    Chat on WhatsApp (Direct)
                                 </Link>
                             )}
 

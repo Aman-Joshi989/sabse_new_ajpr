@@ -93,10 +93,10 @@ export async function generateMetadata(): Promise<Metadata> {
         creator: '@ajprworld',
       },
       other: {
-        'geo.region': settings?.geo_region || 'IN-DL',
-        'geo.placename': settings?.geo_placename || 'New Delhi',
-        'geo.position': settings?.geo_position || '28.6139;77.2090',
-        'ICBM': settings?.geo_icbm || '28.6139, 77.2090'
+        'geo.region': settings?.geo_region || 'IN-UT',
+        'geo.placename': settings?.geo_placename || 'Haldwani',
+        'geo.position': settings?.geo_position || '29.2183;79.5126',
+        'ICBM': settings?.geo_icbm || '29.2183, 79.5126'
       }
     };
   } catch (error) {

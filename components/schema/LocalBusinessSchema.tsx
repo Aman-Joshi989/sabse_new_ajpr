@@ -8,9 +8,9 @@ export async function LocalBusinessSchema() {
     console.error("Failed to load settings for LocalBusinessSchema:", e);
   }
 
-  const region = settings?.geo_region || 'IN-DL';
-  const placename = settings?.geo_placename || 'New Delhi';
-  const position = settings?.geo_position || '28.6139;77.2090';
+  const region = settings?.geo_region || 'IN-UT';
+  const placename = settings?.geo_placename || 'Haldwani';
+  const position = settings?.geo_position || '29.2183;79.5126';
   const [lat, lng] = position.split(';');
 
   const schema = {
@@ -18,21 +18,23 @@ export async function LocalBusinessSchema() {
     '@type': 'ProfessionalService',
     name: 'AJPR World',
     url: 'https://ajprworld.com',
-    logo: 'https://ajprworld.com/logo.png',
+    logo: 'https://ajprworld.com/logo/ajpr-logo.png',
     image: 'https://ajprworld.com/og-image.jpg',
-    description: settings?.seo_description || 'AJPR World delivers premium digital solutions including custom web development, software engineering, UI/UX design, cloud architecture, and creative branding.',
-    telephone: '+91-1234567890',
-    priceRange: '$$$',
+    description: settings?.seo_description || 'AJPR World is a premier technology and digital marketing company delivering custom AI MVPs, Next.js web applications, full-funnel digital marketing, and Generative Engine Optimization (GEO).',
+    telephone: '+91-99972-05257',
+    priceRange: '₹₹',
     address: {
       '@type': 'PostalAddress',
+      streetAddress: 'Nainital Road / Kaladhungi Road',
       addressLocality: placename,
-      addressRegion: region,
+      addressRegion: 'Uttarakhand',
+      postalCode: '263139',
       addressCountry: 'IN',
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: lat || '28.6139',
-      longitude: lng || '77.2090',
+      latitude: lat || '29.2183',
+      longitude: lng || '79.5126',
     },
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',

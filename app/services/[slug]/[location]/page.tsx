@@ -1,5 +1,5 @@
 import { getServiceBySlug, getPublishedServices } from '@/lib/db/queries'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -184,7 +184,7 @@ export default async function ServiceLocationPage({ params }: { params: Promise<
     const displayLocation = location.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
     if (!service) {
-        notFound()
+        redirect(`/locations/${location.toLowerCase()}/${slug.toLowerCase()}`)
     }
 
     const BannerIcon = service.icon_name && (Icons as any)[service.icon_name] 

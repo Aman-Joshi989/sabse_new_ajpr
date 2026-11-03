@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Scale, CheckCircle2, ArrowRight, ShieldCheck, DollarSign, Globe, Award, HelpCircle, Zap, Code, Sparkles, MapPin, MessageSquare, Star } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
+import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
 import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 export const metadata: Metadata = {
@@ -231,6 +232,33 @@ export default function TheInfinixAlternativesPage() {
             ))}
           </div>
         </section>
+
+        {/* Topical Cluster Silo Hub */}
+        <TopicalClusterWidget
+          currentSiloTitle="Haldwani & Uttarakhand Digital Dominance Hub"
+          pillarHref="/locations/haldwani/digital-marketing"
+          pillarAnchor="Best Digital Marketing Company in Haldwani"
+          relatedLinks={[
+            {
+              badge: "Local Pillar",
+              title: "Digital Marketing in Haldwani",
+              href: "/locations/haldwani/digital-marketing",
+              description: "Complete Google Business Profile optimization, local citation building, and lead generation."
+            },
+            {
+              badge: "Competitor Comparison",
+              title: "DigiPhlox Alternatives & Review",
+              href: "/compare/digiphlox-alternatives",
+              description: "Compare Haldwani marketing agencies across mobile speed, Core Web Vitals, and GEO readiness."
+            },
+            {
+              badge: "Technical SEO",
+              title: "Free Website & SEO Audit",
+              href: "/free-audit",
+              description: "Instant 48-hour diagnostic report for businesses in Haldwani, Nainital, and Corbett."
+            }
+          ]}
+        />
 
         {/* Lead Capture */}
         <div className="mb-12">

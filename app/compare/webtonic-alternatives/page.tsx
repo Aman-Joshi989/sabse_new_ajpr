@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Scale, CheckCircle2, XCircle, ArrowRight, ShieldCheck, DollarSign, Globe, Award, HelpCircle, Zap, Code, Sparkles } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
+import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
 import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 export const metadata: Metadata = {
@@ -259,6 +260,33 @@ export default function WebTonicAlternativesPage() {
             ))}
           </div>
         </section>
+
+        {/* Topical Cluster Silo Hub */}
+        <TopicalClusterWidget
+          currentSiloTitle="B2B Growth Marketing & Agency Selection Hub"
+          pillarHref="/services/b2b-growth-marketing"
+          pillarAnchor="Explore B2B Growth Marketing Retainers"
+          relatedLinks={[
+            {
+              badge: "Core Service",
+              title: "B2B Growth Marketing Agency",
+              href: "/services/b2b-growth-marketing",
+              description: "Data-driven organic inbound funnels, programmatic SEO, and full-funnel CRO."
+            },
+            {
+              badge: "Pricing Guide",
+              title: "B2B SaaS SEO Retainer Cost (2026)",
+              href: "/pricing/seo-cost",
+              description: "Transparent retainer benchmarks, deliverables, and SLAs for high-growth tech startups."
+            },
+            {
+              badge: "AI Search",
+              title: "Generative Engine Optimization (GEO)",
+              href: "/services/geo-optimization",
+              description: "Engineering citations and brand mentions across ChatGPT, Perplexity, and Gemini answers."
+            }
+          ]}
+        />
 
         {/* Cross-linking Hub */}
         <div className="border-t border-slate-200 dark:border-slate-800 pt-10 mb-16">

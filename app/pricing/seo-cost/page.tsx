@@ -343,6 +343,9 @@ export default function SeoCostPage() {
             <Link href="/services/geo-optimization" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
               Generative Engine Optimization (GEO) →
             </Link>
+            <Link href="/services/b2b-growth-marketing" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              B2B Growth Marketing Agency & Retainers →
+            </Link>
           </div>
         </div>
 

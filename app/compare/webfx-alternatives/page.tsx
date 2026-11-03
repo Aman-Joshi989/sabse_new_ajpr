@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Scale, CheckCircle2, XCircle, ArrowRight, ShieldCheck, DollarSign, Users, Award, HelpCircle, Sparkles, Zap, Code } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
+import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
 import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 export const metadata: Metadata = {
@@ -298,6 +299,33 @@ export default function WebFxAlternativesPage() {
             ))}
           </div>
         </section>
+
+        {/* Topical Cluster Silo Hub */}
+        <TopicalClusterWidget
+          currentSiloTitle="Enterprise B2B Growth Marketing & SEO Hub"
+          pillarHref="/services/b2b-growth-marketing"
+          pillarAnchor="Explore B2B Growth Retainers"
+          relatedLinks={[
+            {
+              badge: "Core Service",
+              title: "B2B Growth Marketing Agency",
+              href: "/services/b2b-growth-marketing",
+              description: "Full-funnel organic growth, technical SEO, and conversion rate optimization without account middlemen."
+            },
+            {
+              badge: "Pricing Benchmark",
+              title: "B2B SaaS SEO Retainer Cost (2026)",
+              href: "/pricing/seo-cost",
+              description: "Compare mid-tier and enterprise SEO retainer rates, deliverables, and SLAs."
+            },
+            {
+              badge: "Alternative",
+              title: "Web Tonic Alternatives Review",
+              href: "/compare/webtonic-alternatives",
+              description: "Side-by-side comparison of agile systems firms vs advisory consultancies."
+            }
+          ]}
+        />
 
         {/* Cross Links */}
         <div className="border-t border-slate-200 dark:border-slate-800 pt-10 mb-16">

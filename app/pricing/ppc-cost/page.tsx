@@ -284,6 +284,51 @@ export default function PpcCostPage() {
           </div>
         </section>
 
+        {/* Regional & Metro PPC Management Hubs */}
+        <section className="mb-16 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 transition-colors">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                Localized Advertising Retainers
+              </span>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-1">
+                Regional PPC Agencies & Metro Performance Hubs
+              </h3>
+            </div>
+            <Link href="/locations" className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+              View All Global Locations <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {[
+              { city: 'Miami', slug: 'miami', tag: 'Florida' },
+              { city: 'Tampa', slug: 'tampa', tag: 'Florida' },
+              { city: 'Phoenix', slug: 'phoenix', tag: 'Arizona' },
+              { city: 'Dallas', slug: 'dallas', tag: 'Texas' },
+              { city: 'Austin', slug: 'austin', tag: 'Texas' },
+              { city: 'Chicago', slug: 'chicago', tag: 'Illinois' },
+              { city: 'Nashville', slug: 'nashville', tag: 'Tennessee' },
+              { city: 'Seattle', slug: 'seattle', tag: 'Washington' },
+              { city: 'London', slug: 'london', tag: 'United Kingdom' },
+              { city: 'Singapore', slug: 'singapore', tag: 'APAC / Asia' },
+            ].map((metro) => (
+              <Link
+                key={metro.slug}
+                href={`/locations/${metro.slug}/ppc-agency`}
+                className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:border-blue-500 hover:shadow-sm transition-all group"
+              >
+                <span className="block text-[11px] font-semibold text-slate-400 group-hover:text-blue-500 uppercase tracking-wider">
+                  {metro.tag}
+                </span>
+                <span className="font-bold text-sm text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {metro.city} PPC Agency
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         {/* Bottom Internal Links */}
         <div className="border-t border-slate-200 dark:border-slate-800 pt-10 mb-16">
           <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">
@@ -298,6 +343,9 @@ export default function PpcCostPage() {
             </Link>
             <Link href="/compare/webfx-alternatives" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
               WebFX Alternatives & Pricing Review →
+            </Link>
+            <Link href="/services/b2b-growth-marketing" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              B2B Growth Marketing Agency →
             </Link>
           </div>
         </div>

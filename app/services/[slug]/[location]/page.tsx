@@ -3,7 +3,7 @@ import { notFound, redirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import * as Icons from 'lucide-react'
+import { ServiceIconMap } from '@/components/ui/ServiceIcons'
 import { ArrowLeft, CheckCircle2, Star, Shield, Clock, Zap, Target } from 'lucide-react'
 import { FAQSchema } from '@/components/schema/FAQSchema'
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema'
@@ -187,8 +187,8 @@ export default async function ServiceLocationPage({ params }: { params: Promise<
         redirect(`/locations/${location.toLowerCase()}/${slug.toLowerCase()}`)
     }
 
-    const BannerIcon = service.icon_name && (Icons as any)[service.icon_name] 
-        ? (Icons as any)[service.icon_name] 
+    const BannerIcon = service.icon_name && ServiceIconMap[service.icon_name] 
+        ? ServiceIconMap[service.icon_name] 
         : Target;
 
     const featuresList = typeof service.features === 'string' ? JSON.parse(service.features) : (service.features || [])

@@ -55,7 +55,7 @@ export async function login(prevState: any, formData: FormData) {
         }
     } catch (error: any) {
         console.error("Login Error:", error);
-        if (error.message === "NEXT_REDIRECT") throw error; // Re-throw redirect
+        if (error?.message === "NEXT_REDIRECT" || error?.digest?.startsWith?.("NEXT_REDIRECT")) throw error; // Re-throw redirect
         return { error: "Login failed: " + error.message };
     }
 }
@@ -633,7 +633,7 @@ export async function registerUserAction(formData: FormData) {
         }
     } catch (error: any) {
         console.error("Registration Error:", error);
-        if (error.message === "NEXT_REDIRECT") throw error;
+        if (error?.message === "NEXT_REDIRECT" || error?.digest?.startsWith?.("NEXT_REDIRECT")) throw error;
         return { error: "Registration failed: " + error.message };
     }
 }

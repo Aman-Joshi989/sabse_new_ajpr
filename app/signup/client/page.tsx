@@ -30,6 +30,8 @@ export default function ClientSignup() {
     if (result?.error) {
       setError(result.error);
       setLoading(false);
+    } else {
+      window.location.href = '/dashboard/client';
     }
   };
 

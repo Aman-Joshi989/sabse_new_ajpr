@@ -5,11 +5,11 @@ import { getSeoMetadata } from "@/lib/db/queries";
 export default function PrivacyPage() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-300 transition-colors duration-300 font-sans">
-            <div className="w-[80%] mx-auto min-h-screen">
-                <section className="py-24">
-                    <div className="container mx-auto px-4 max-w-3xl">
+            <div className="container mx-auto px-4 max-w-4xl py-16 md:py-24">
+                <section>
+                    <div>
                         <h1 className="text-4xl md:text-5xl font-black mb-8 text-center text-slate-900 dark:text-white">Privacy Policy</h1>
-                        <div className="prose prose-lg dark:prose-invert text-slate-600 dark:text-slate-400">
+                        <div className="prose prose-lg dark:prose-invert text-slate-600 dark:text-slate-400 mx-auto">
 
                             <p>
                                 At <strong>AJPR World</strong>, your privacy is our top priority.
@@ -80,7 +80,7 @@ export default function PrivacyPage() {
                                 <EmailLink className="text-blue-600 hover:underline font-medium" />
                             </p>
 
-                            <p className="text-sm text-gray-500 mt-8">Last updated: August 19, 2025</p>
+                            <p className="text-sm text-gray-500 mt-8">Last updated: January 2026</p>
                         </div>
                     </div>
                 </section>

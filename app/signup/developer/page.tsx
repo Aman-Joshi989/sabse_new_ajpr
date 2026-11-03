@@ -30,6 +30,8 @@ export default function DeveloperSignup() {
     if (result?.error) {
       setError(result.error);
       setLoading(false);
+    } else {
+      window.location.href = '/dashboard/developer';
     }
   };
 

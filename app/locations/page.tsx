@@ -76,7 +76,8 @@ const SERVICES = [
     { slug: 'web-development', name: 'Web Development', icon: LayoutDashboard },
     { slug: 'app-development', name: 'Mobile App Development', icon: Smartphone },
     { slug: 'ai-solutions', name: 'AI & Machine Learning Solutions', icon: Cpu },
-    { slug: 'cloud-architecture', name: 'Cloud Architecture & DevOps', icon: Cloud }
+    { slug: 'cloud-architecture', name: 'Cloud Architecture & DevOps', icon: Cloud },
+    { slug: 'website-security', name: 'Website Security & Maintenance', icon: ShieldCheck }
 ];
 
 function formatName(slug: string) {

@@ -73,11 +73,20 @@ export const OrganizationSchema = async () => {
       }
     ],
     sameAs: [
-      'https://www.linkedin.com/company/ajprworld',
-      'https://twitter.com/ajprworld',
-      'https://x.com/ajprworld',
+      'https://www.linkedin.com/company/ajpr-world',
+      'https://twitter.com/AjprWorld',
+      'https://x.com/AjprWorld',
+      'https://www.facebook.com/ajprworld',
+      'https://www.instagram.com/ajprworld/',
+      'https://www.youtube.com/@AJPRWorld',
       'https://github.com/Aman-Joshi989',
-      'https://www.instagram.com/ajprworld/'
+      'https://clutch.co/profile/ajpr-world',
+      'https://www.goodfirms.co/company/ajpr-world',
+      'https://www.producthunt.com/@ajprworld',
+      'https://peerlist.io/company/ajprworld',
+      'https://sourceforge.net/p/ajprworld/',
+      'https://wellfound.com/company/ajpr-world',
+      'https://dev.to/ajprworld'
     ],
     knowsAbout: [
       'Custom AI MVP Development',

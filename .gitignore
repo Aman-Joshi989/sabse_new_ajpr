@@ -44,5 +44,7 @@ scratch/
 # data and credentials
 *.sql
 *.csv
+__pycache__/
+*.pyc
 *.bak
 google-credentials.json

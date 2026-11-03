@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { Cpu, CheckCircle2, ArrowRight, Sparkles, Network, Database, LineChart, HelpCircle, ShieldCheck } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
+import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
 
 export const metadata: Metadata = {
   title: 'Generative Engine Optimization (GEO) Agency | AJPR',
@@ -230,6 +231,33 @@ export default function GeoOptimizationPage() {
             ))}
           </div>
         </section>
+
+        {/* Topical Cluster Silo Hub */}
+        <TopicalClusterWidget
+          currentSiloTitle="Generative Engine Optimization & AI Citations Hub"
+          pillarHref="/services/geo-optimization"
+          pillarAnchor="Generative Engine Optimization (GEO)"
+          relatedLinks={[
+            {
+              badge: "Free Diagnostic",
+              title: "Free AI Citation & SEO Audit",
+              href: "/free-audit",
+              description: "Test your brand's presence across ChatGPT, Perplexity, and Google AI Overviews in under 60 seconds."
+            },
+            {
+              badge: "Growth Pillar",
+              title: "B2B Growth Marketing Agency",
+              href: "/services/b2b-growth-marketing",
+              description: "Full-funnel customer acquisition integrating organic search, technical SEO, and GEO brand citations."
+            },
+            {
+              badge: "Pricing Guide",
+              title: "SEO & GEO Retainer Pricing (2026)",
+              href: "/pricing/seo-cost",
+              description: "Transparent retainer costs, deliverables, and SLAs for enterprise AI search optimization."
+            }
+          ]}
+        />
 
         {/* Cross links */}
         <div className="border-t border-slate-200 dark:border-slate-800 pt-10 mb-16">

@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { ServiceSchema } from '@/components/schema/ServiceSchema';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { FAQSchema } from '@/components/schema/FAQSchema';
+import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
 import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 export const revalidate = 86400; // Cache for 24 hours
@@ -346,6 +347,33 @@ export default function B2bGrowthMarketingPage() {
             ))}
           </div>
         </div>
+
+        {/* Topical Cluster Silo Hub */}
+        <TopicalClusterWidget
+          currentSiloTitle="B2B Growth & Inbound Demand Architecture Hub"
+          pillarHref="/services/b2b-growth-marketing"
+          pillarAnchor="B2B Growth Retainers & Consulting"
+          relatedLinks={[
+            {
+              badge: "AI Search",
+              title: "Generative Engine Optimization (GEO)",
+              href: "/services/geo-optimization",
+              description: "Engineer your brand to be cited and recommended in ChatGPT, Perplexity, and Gemini answers."
+            },
+            {
+              badge: "Pricing Benchmark",
+              title: "B2B SaaS SEO Retainer Cost (2026)",
+              href: "/pricing/seo-cost",
+              description: "Transparent pricing tiers, deliverables, and SLAs for high-growth tech startups and mid-market firms."
+            },
+            {
+              badge: "Agency Comparison",
+              title: "Web Tonic Alternatives Review",
+              href: "/compare/webtonic-alternatives",
+              description: "Compare modern agile engineering agencies vs traditional high-overhead advisory consultancies."
+            }
+          ]}
+        />
 
         {/* Bottom CTA Banner */}
         <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white border border-blue-800/30 text-center relative overflow-hidden">

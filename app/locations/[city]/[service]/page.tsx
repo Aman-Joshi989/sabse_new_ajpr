@@ -26,7 +26,8 @@ const SERVICES = [
     { slug: 'web-development', name: 'Web Development', icon: LayoutDashboard },
     { slug: 'app-development', name: 'Mobile App Development', icon: Smartphone },
     { slug: 'ai-solutions', name: 'AI & Machine Learning Solutions', icon: Cpu },
-    { slug: 'cloud-architecture', name: 'Cloud Architecture & DevOps', icon: Cloud }
+    { slug: 'cloud-architecture', name: 'Cloud Architecture & DevOps', icon: Cloud },
+    { slug: 'website-security', name: 'Website Security & Maintenance', icon: ShieldCheck }
 ];
 
 // Localized market data & proof points to prevent duplicate doorway filtering
@@ -250,6 +251,42 @@ const METRO_DATA: Record<string, {
         coordinates: '30.0668;79.0193',
         currency: '₹',
         priceRange: '₹₹'
+    },
+    london: {
+        state: 'Greater London',
+        region: 'City & Tech City Corridor',
+        context: 'London’s fiercely competitive tech startup ecosystem and financial district require world-class digital PR, rapid MVP engineering, and high-velocity B2B growth marketing.',
+        proof: 'Launched a London fintech MVP from spec to production in 28 days with full SOC 2 compliance readiness.',
+        proofMetric: '28-Day MVP Delivery',
+        country: 'GB',
+        postalCode: 'EC1A 1BB',
+        coordinates: '51.5074;-0.1278',
+        currency: '£',
+        priceRange: '£££'
+    },
+    singapore: {
+        state: 'Central Region',
+        region: 'Marina Bay & One-North Innovation Hub',
+        context: 'Singapore enterprises and high-growth APAC startups require proactive website security hardening, rapid malware decontamination, autonomous AI voice workflows, and automated PPC lead generation.',
+        proof: 'Neutralized critical website vulnerabilities and restored 99.99% uptime for a Singapore cross-border e-commerce brand.',
+        proofMetric: '<15-Min P0 Response',
+        country: 'SG',
+        postalCode: '018989',
+        coordinates: '1.3521;103.8198',
+        currency: 'S$',
+        priceRange: 'S$$$'
+    },
+    dubai: {
+        state: 'Emirate of Dubai',
+        region: 'DIFC & Dubai Internet City',
+        context: 'Dubai’s rapid digital transformation mandates enterprise-grade website hardening, immediate malware extraction, and precision multi-channel PPC campaigns across UAE and GCC markets.',
+        proof: 'Completed full website malware sanitization, security hardening, and WAF deployment for a Dubai luxury brokerage within 4 hours.',
+        proofMetric: '100% Threat Elimination',
+        country: 'AE',
+        postalCode: '00000',
+        coordinates: '25.2048;55.2708',
+        currency: 'AED',
+        priceRange: 'AED AED AED'
     }
 };
 
@@ -941,6 +978,17 @@ export default async function LocationServicePage(props: Props) {
                                     DigiPhlox Alternatives & Comparison →
                                 </Link>
                             )}
+                            {isHaldwani && (
+                                <Link href="/compare/the-infinix-alternatives" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                    The Infinix Alternatives & Comparison →
+                                </Link>
+                            )}
+                            <Link href="/services/b2b-growth-marketing" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                B2B Growth Marketing Agency →
+                            </Link>
+                            <Link href="/services/geo-optimization" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                Generative Engine Optimization (GEO) →
+                            </Link>
                             <Link href="/pricing/seo-cost" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
                                 2026 SEO Retainers Guide →
                             </Link>

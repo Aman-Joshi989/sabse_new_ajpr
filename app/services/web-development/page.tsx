@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, ArrowRight, Globe, Users, Award, Target, Sparkles, Clock } from 'lucide-react'
 import PricingSection from '@/components/PricingSection'
+import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget'
 
 export default function WebDevelopmentPage() {
     return (
@@ -166,6 +167,35 @@ export default function WebDevelopmentPage() {
                         </Card>
                     ))}
                 </div>
+            </section>
+
+            {/* Topical Cluster Silo Hub */}
+            <section className="py-12 px-4 max-w-6xl mx-auto">
+                <TopicalClusterWidget
+                    currentSiloTitle="Custom Software & Web Engineering Architecture"
+                    pillarHref="/services/web-development"
+                    pillarAnchor="Custom Software & Full-Stack Web Development"
+                    relatedLinks={[
+                        {
+                            badge: "Cost Guide",
+                            title: "Custom Software & Web Cost Guide (2026)",
+                            href: "/pricing/website-cost",
+                            description: "Comprehensive pricing models, tech stacks, and delivery timelines for custom web apps."
+                        },
+                        {
+                            badge: "Autonomous Agents",
+                            title: "RuFlo AI Swarm Simulator",
+                            href: "/demo-ruflo",
+                            description: "Experience our experimental distributed AI multi-agent orchestration architecture."
+                        },
+                        {
+                            badge: "Free Diagnostic",
+                            title: "Free Architecture & Codebase Audit",
+                            href: "/free-audit",
+                            description: "Get a comprehensive analysis of your web application's speed, security, and scalability."
+                        }
+                    ]}
+                />
             </section>
 
             {/* Final CTA */}

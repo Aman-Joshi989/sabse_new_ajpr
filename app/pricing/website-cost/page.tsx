@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { CheckCircle2, ArrowRight, DollarSign, Layout, HelpCircle, ShieldCheck, Zap, Globe } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
+import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
@@ -237,6 +238,78 @@ export default function WebsiteCostPage() {
                   {faq.answer}
                 </p>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Topical Cluster Silo Hub */}
+        <TopicalClusterWidget
+          currentSiloTitle="Custom Software & Web Engineering Cost Hub"
+          pillarHref="/services/web-development"
+          pillarAnchor="Explore Custom Software & Web Engineering"
+          relatedLinks={[
+            {
+              badge: "Core Service",
+              title: "Custom Software Development",
+              href: "/services/web-development",
+              description: "Production Next.js full-stack engineering, PostgreSQL schemas, and sub-50ms TTFB."
+            },
+            {
+              badge: "Free Diagnostic",
+              title: "Free Technical & Speed Audit",
+              href: "/free-audit",
+              description: "Audit your website Core Web Vitals, mobile responsiveness, and security headers in 60s."
+            },
+            {
+              badge: "Open Source Lab",
+              title: "RuFlo AI Swarm Simulator",
+              href: "/demo-ruflo",
+              description: "Interactive visual simulator for high-throughput autonomous AI agent networks."
+            }
+          ]}
+        />
+
+        {/* Regional Custom Software Hubs */}
+        <section className="mb-16 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 transition-colors">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                Regional Engineering Centers
+              </span>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-1">
+                Metro Custom Software Development Hubs
+              </h3>
+            </div>
+            <Link href="/locations" className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
+              View All Locations <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {[
+              { city: 'Dallas', slug: 'dallas', tag: 'Texas' },
+              { city: 'Phoenix', slug: 'phoenix', tag: 'Arizona' },
+              { city: 'Tampa', slug: 'tampa', tag: 'Florida' },
+              { city: 'Seattle', slug: 'seattle', tag: 'Washington' },
+              { city: 'Boston', slug: 'boston', tag: 'Massachusetts' },
+              { city: 'Austin', slug: 'austin', tag: 'Texas' },
+              { city: 'London', slug: 'london', tag: 'United Kingdom' },
+              { city: 'Singapore', slug: 'singapore', tag: 'APAC' },
+              { city: 'Dubai', slug: 'dubai', tag: 'UAE' },
+              { city: 'Haldwani', slug: 'haldwani', tag: 'India HQ' },
+            ].map((metro) => (
+              <Link
+                key={metro.slug}
+                href={`/locations/${metro.slug}/custom-software`}
+                className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:border-indigo-500 hover:shadow-sm transition-all group"
+              >
+                <span className="block text-[11px] font-semibold text-slate-400 group-hover:text-indigo-500 uppercase tracking-wider">
+                  {metro.tag}
+                </span>
+                <span className="font-bold text-sm text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                  {metro.city} Software Dev
+                </span>
+              </Link>
             ))}
           </div>
         </section>

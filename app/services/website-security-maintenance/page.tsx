@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { ServiceSchema } from '@/components/schema/ServiceSchema';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { FAQSchema } from '@/components/schema/FAQSchema';
+import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
 
 export const revalidate = 86400;
 
@@ -163,6 +164,114 @@ export default function WebsiteSecurityMaintenancePage() {
           </div>
         </div>
       </section>
+
+      {/* Topical Cluster Silo Hub */}
+      <div className="container mx-auto px-4 max-w-5xl pt-12">
+        <TopicalClusterWidget
+          currentSiloTitle="Security Engineering & High-Availability Infrastructure Hub"
+          pillarHref="/services/website-security-maintenance"
+          pillarAnchor="Enterprise Website Security & Maintenance"
+          relatedLinks={[
+            {
+              badge: "Free Diagnostic",
+              title: "Free Security & Speed Audit",
+              href: "/free-audit",
+              description: "Audit SSL certificates, security headers, malware risks, and Core Web Vitals in 60s."
+            },
+            {
+              badge: "Infrastructure",
+              title: "Cloud & DevOps Architecture",
+              href: "/services/cloud-solutions",
+              description: "Zero-downtime CI/CD deployment pipelines, AWS/GCP server hardening, and Docker containerization."
+            },
+            {
+              badge: "AI Systems",
+              title: "Autonomous AI Agent Workflows",
+              href: "/ai-systems",
+              description: "Deploy self-healing monitoring agents and triage workflows for enterprise platforms."
+            }
+          ]}
+        />
+
+        {/* Regional Emergency & Security Hubs */}
+        <div className="mt-8 mb-12 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 transition-colors">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                International Incident Response Centers
+              </span>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-1">
+                Regional Malware Removal & Hardening Hubs
+              </h3>
+            </div>
+            <Link href="/locations" className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+              All Incident Hubs <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Link
+              href="/locations/singapore/website-security"
+              className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-blue-500 hover:shadow-sm transition-all group"
+            >
+              <span className="block text-[11px] font-semibold text-slate-400 group-hover:text-blue-500 uppercase tracking-wider">
+                Singapore • APAC Hub
+              </span>
+              <span className="font-bold text-sm text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors block mt-1">
+                Singapore Website Security & Malware Removal
+              </span>
+              <p className="text-xs text-slate-500 mt-1.5">
+                Proactive web hardening, WAF tuning & emergency incident response.
+              </p>
+            </Link>
+
+            <Link
+              href="/locations/dubai/website-security"
+              className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-blue-500 hover:shadow-sm transition-all group"
+            >
+              <span className="block text-[11px] font-semibold text-slate-400 group-hover:text-blue-500 uppercase tracking-wider">
+                Dubai • UAE / GCC
+              </span>
+              <span className="font-bold text-sm text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors block mt-1">
+                Dubai Website Hardening & Malware Removal
+              </span>
+              <p className="text-xs text-slate-500 mt-1.5">
+                Zero-downtime malware extraction, vulnerability patching & cloud defense.
+              </p>
+            </Link>
+
+            <Link
+              href="/locations/london/website-security"
+              className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-blue-500 hover:shadow-sm transition-all group"
+            >
+              <span className="block text-[11px] font-semibold text-slate-400 group-hover:text-blue-500 uppercase tracking-wider">
+                London • UK / EMEA
+              </span>
+              <span className="font-bold text-sm text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors block mt-1">
+                London Security & Infrastructure Maintenance
+              </span>
+              <p className="text-xs text-slate-500 mt-1.5">
+                SOC 2 compliance prep, continuous security monitoring & SLAs.
+              </p>
+            </Link>
+
+            <Link
+              href="/locations/haldwani/website-security"
+              className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-blue-500 hover:shadow-sm transition-all group"
+            >
+              <span className="block text-[11px] font-semibold text-slate-400 group-hover:text-blue-500 uppercase tracking-wider">
+                India HQ • 24/7 SOC
+              </span>
+              <span className="font-bold text-sm text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors block mt-1">
+                Haldwani & Uttarakhand Web Maintenance
+              </span>
+              <p className="text-xs text-slate-500 mt-1.5">
+                Round-the-clock site reliability engineering & backup testing.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </div>
 
       {/* CTA Conversion Box */}
       <section className="container mx-auto px-4 max-w-4xl pt-6">

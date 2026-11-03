@@ -10,7 +10,10 @@ const getPool = () => {
   if (!url) return null;
   cachedPool = new Pool({
     connectionString: url,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
+    connectionTimeoutMillis: 5000,
+    idleTimeoutMillis: 10000,
+    max: 10
   });
   return cachedPool;
 };
@@ -32,13 +35,16 @@ export const sql = async (strings: TemplateStringsArray, ...values: any[]) => {
     }
   }
   
+  console.log('[DB Query Start]:', text.replace(/\s+/g, ' ').trim().slice(0, 60));
+  const startTime = Date.now();
   try {
     const res = values.length > 0 
       ? await pool.query(text, values)
       : await pool.query(text); // Simple query protocol allows multiple statements
+    console.log(`[DB Query Done in ${Date.now() - startTime}ms]:`, text.replace(/\s+/g, ' ').trim().slice(0, 40));
     return res.rows || (Array.isArray(res) ? res[res.length-1]?.rows || [] : []);
   } catch (err) {
-    console.error("SQL Error:", err);
+    console.error(`[DB Query Failed in ${Date.now() - startTime}ms]:`, err);
     throw err;
   }
 };

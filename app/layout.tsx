@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Inter, Manrope } from 'next/font/google'
 import { Toaster } from 'sonner'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
@@ -18,8 +17,9 @@ import FontLoader from '@/components/FontLoader';
 export const revalidate = 86400;
 
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })
+// Standard high-performance system/web font configuration
+const inter = { variable: '--font-inter' }
+const manrope = { variable: '--font-manrope' }
 
 export function cleanMetaTitle(title: string, maxLen = 60): string {
   if (!title) return '';

@@ -37,6 +37,8 @@
   ],
   "exclude": [
     "node_modules",
-    "hermes-agent"
+    "hermes-agent",
+    "claude-seo",
+    ".venv_pdf"
   ]
 }

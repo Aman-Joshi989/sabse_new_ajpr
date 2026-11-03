@@ -1,7 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    optimizeCss: true,
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: [
+          '**/node_modules/**',
+          '**/hermes-agent/**',
+          '**/claude-seo/**',
+          '**/.venv_pdf/**',
+          '**/.git/**',
+        ],
+      };
+    }
+    return config;
   },
   images: {
     formats: ['image/avif', 'image/webp'],

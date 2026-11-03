@@ -182,11 +182,10 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                         </div>
                     </div>
 
-                    {/* Center: Legal & Standard Sitemap */}
+                    {/* Center: Legal */}
                     <div className="flex items-center gap-6">
                         <Link href="/privacy" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
                         <Link href="/terms" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
-                        <Link href="/sitemap" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Sitemap</Link>
                     </div>
 
                     {/* Right Side: Socials */}

@@ -19,12 +19,18 @@ export const ItemListSchema = ({ name, description, items }: ItemListSchemaProps
     '@type': 'ItemList',
     name,
     description,
+    numberOfItems: items.length,
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
       position: item.position ?? index + 1,
       name: item.name,
-      description: item.description,
       url: item.url,
+      item: {
+        '@type': 'Thing',
+        name: item.name,
+        description: item.description,
+        url: item.url,
+      },
     })),
   };
 

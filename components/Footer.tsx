@@ -43,25 +43,26 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         { name: 'About Us', href: '/about' },
         { name: 'Areas We Serve', href: '/locations' },
         { name: 'Digital Marketing Haldwani', href: '/locations/haldwani/digital-marketing' },
-        { name: 'Industry Solutions', href: '/industries' },
-        { name: 'Roofing Web Systems', href: '/roofing-contractors' },
-        { name: 'Agency Comparisons', href: '/compare' },
+        { name: 'Client Portal', href: '/signup/client' },
+        { name: 'Developer Network', href: '/signup/developer' },
+        { name: 'Partner Program', href: '/affiliates' },
         { name: 'Pricing & Retainers', href: '/pricing' },
+        { name: 'Agency Comparisons', href: '/compare' },
         { name: 'Portfolio', href: '/portfolio' },
         { name: 'Careers', href: '/careers' },
         { name: 'Contact', href: '/contact' },
     ];
 
     const resourceLinks = [
+        { name: 'Free Technical Audit', href: '/free-audit' },
+        { name: 'Agency ROI Calculator', href: '/tools/agency-pricing-calculator' },
         { name: 'Engineering Solutions', href: '/solutions' },
         { name: 'AI Systems & Swarms', href: '/ai-systems' },
         { name: 'RuFlo Swarm Simulator', href: '/demo-ruflo' },
-        { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
         { name: 'SEO Cost Guide (2026)', href: '/pricing/seo-cost' },
         { name: 'PPC Management Cost', href: '/pricing/ppc-cost' },
         { name: 'Website Cost Guide', href: '/pricing/website-cost' },
-        { name: 'Agency ROI Calculator', href: '/tools/agency-pricing-calculator' },
-        { name: 'Free US Business Tools', href: '/tools' },
+        { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
         { name: 'Tech & AI Glossary', href: '/glossary' },
     ];
 
@@ -163,52 +164,51 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-100 dark:border-slate-800 text-sm">
+                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 gap-4">
 
-                    {/* Left Side: Country & Links */}
-                    <div className="flex flex-wrap items-center gap-6 mb-4 md:mb-0">
-                        <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-medium">
+                    {/* Left Side: Copyright & Country */}
+                    <div className="flex flex-wrap items-center gap-3">
+                        <span>© {new Date().getFullYear()} AJPR World. All rights reserved.</span>
+                        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
+                        <div className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300">
                             <Image
                                 src="https://flagcdn.com/in.svg"
                                 alt="India"
-                                width={20}
-                                height={15}
-                                className="object-cover rounded-sm"
+                                width={16}
+                                height={12}
+                                className="object-cover rounded-[2px]"
                             />
-                            India
-                        </div>
-                        <div className="flex flex-wrap gap-4 md:gap-6 text-slate-500 dark:text-slate-500">
-                            <Link href="/privacy" className="hover:text-slate-800 dark:hover:text-slate-300">Privacy</Link>
-                            <Link href="/terms" className="hover:text-slate-800 dark:hover:text-slate-300">Terms</Link>
-                            <Link href="/sitemap" className="hover:text-slate-800 dark:hover:text-slate-300 font-medium">HTML Sitemap</Link>
-                            <Link href="/locations" className="hover:text-slate-800 dark:hover:text-slate-300">Locations</Link>
-                            <Link href="/signup/client" className="hover:text-slate-800 dark:hover:text-slate-300">Client Portal</Link>
-                            <Link href="/signup/developer" className="hover:text-slate-800 dark:hover:text-slate-300">Developer Network</Link>
-                            <Link href="/free-audit" className="hover:text-slate-800 dark:hover:text-slate-300 text-blue-600 dark:text-blue-400 font-semibold">Free Audit</Link>
-                            <Link href="/affiliates" className="hover:text-slate-800 dark:hover:text-slate-300">Affiliates</Link>
+                            <span>India (HQ) & Global Delivery</span>
                         </div>
                     </div>
 
+                    {/* Center: Legal & Standard Sitemap */}
+                    <div className="flex items-center gap-6">
+                        <Link href="/privacy" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
+                        <Link href="/sitemap" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Sitemap</Link>
+                    </div>
+
                     {/* Right Side: Socials */}
-                    <div className="flex items-center gap-6 text-slate-400 dark:text-slate-500">
-                        <Link href="https://twitter.com/AjprWorld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-500 transition-colors">
-                            <Twitter className="w-5 h-5" />
+                    <div className="flex items-center gap-4 text-slate-400 dark:text-slate-500">
+                        <Link href="https://twitter.com/AjprWorld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-500 transition-colors p-1" title="X (Twitter)">
+                            <Twitter className="w-4 h-4" />
                             <span className="sr-only">Twitter</span>
                         </Link>
-                        <Link href="https://www.instagram.com/ajprworld/" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-pink-600 transition-colors">
-                            <Instagram className="w-5 h-5" />
+                        <Link href="https://www.instagram.com/ajprworld/" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-pink-600 transition-colors p-1" title="Instagram">
+                            <Instagram className="w-4 h-4" />
                             <span className="sr-only">Instagram</span>
                         </Link>
-                        <Link href="https://www.facebook.com/ajprworld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-700 transition-colors">
-                            <Facebook className="w-5 h-5" />
+                        <Link href="https://www.facebook.com/ajprworld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-700 transition-colors p-1" title="Facebook">
+                            <Facebook className="w-4 h-4" />
                             <span className="sr-only">Facebook</span>
                         </Link>
-                        <Link href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-600 transition-colors">
-                            <Linkedin className="w-5 h-5" />
+                        <Link href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-600 transition-colors p-1" title="LinkedIn">
+                            <Linkedin className="w-4 h-4" />
                             <span className="sr-only">LinkedIn</span>
                         </Link>
-                        <Link href="https://www.youtube.com/@AJPRWorld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-red-600 transition-colors">
-                            <Youtube className="w-5 h-5" />
+                        <Link href="https://www.youtube.com/@AJPRWorld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-red-600 transition-colors p-1" title="YouTube">
+                            <Youtube className="w-4 h-4" />
                             <span className="sr-only">YouTube</span>
                         </Link>
                     </div>

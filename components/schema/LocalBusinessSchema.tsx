@@ -16,13 +16,36 @@ export async function LocalBusinessSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
+    '@id': 'https://ajprworld.com/#localbusiness',
     name: 'AJPR World',
+    alternateName: ['AJPR World Haldwani', 'AJPR Digital Marketing & Software'],
     url: 'https://ajprworld.com',
     logo: 'https://ajprworld.com/logo/ajpr-logo.png',
     image: 'https://ajprworld.com/og-image.jpg',
-    description: settings?.seo_description || 'AJPR World is a premier technology and digital marketing company delivering custom AI MVPs, Next.js web applications, full-funnel digital marketing, and Generative Engine Optimization (GEO).',
+    description: settings?.seo_description || 'AJPR World is a premier technology and digital marketing company in Haldwani, Uttarakhand, delivering custom AI MVPs, Next.js web applications, full-funnel digital marketing, and Generative Engine Optimization (GEO).',
     telephone: '+91-99972-05257',
+    email: 'hello@ajprworld.com',
     priceRange: '₹₹',
+    currenciesAccepted: 'INR, USD',
+    paymentAccepted: 'Credit Card, UPI, Wire Transfer, Net Banking',
+    areaServed: [
+      {
+        '@type': 'City',
+        name: 'Haldwani'
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'Uttarakhand'
+      },
+      {
+        '@type': 'Country',
+        name: 'India'
+      },
+      {
+        '@type': 'Country',
+        name: 'United States'
+      }
+    ],
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Nainital Road / Kaladhungi Road',
@@ -36,22 +59,28 @@ export async function LocalBusinessSchema() {
       latitude: lat || '29.2183',
       longitude: lng || '79.5126',
     },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday'
-      ],
-      opens: '09:00',
-      closes: '18:00'
-    },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: [
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday'
+        ],
+        opens: '09:00',
+        closes: '19:00'
+      }
+    ],
     sameAs: [
-      'https://www.linkedin.com/company/ajprworld',
-      'https://twitter.com/ajprworld',
-      'https://www.facebook.com/ajprworld'
+      'https://www.linkedin.com/company/ajpr-world',
+      'https://twitter.com/AjprWorld',
+      'https://x.com/AjprWorld',
+      'https://www.facebook.com/ajprworld',
+      'https://www.instagram.com/ajprworld/',
+      'https://www.youtube.com/@AJPRWorld'
     ]
   };
 

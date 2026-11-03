@@ -36,11 +36,15 @@ export default function AffiliatesPage() {
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://ajprworld.com';
     const link = `${baseUrl}?ref=${user?.id || 'partner_' + Math.random().toString(36).substring(7)}`;
     setAffiliateLink(link);
+    return link;
   };
 
   const copyToClipboard = () => {
-    if (!affiliateLink) generateLink();
-    navigator.clipboard.writeText(affiliateLink || `${typeof window !== 'undefined' ? window.location.origin : 'https://ajprworld.com'}?ref=partner`);
+    let link = affiliateLink;
+    if (!link) {
+      link = generateLink();
+    }
+    navigator.clipboard.writeText(link);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

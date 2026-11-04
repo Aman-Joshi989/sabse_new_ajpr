@@ -184,20 +184,23 @@ export default function CartDrawer() {
   return (
     <>
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-      <SheetContent className="w-full sm:max-w-md flex flex-col p-0 gap-0 bg-white dark:bg-slate-950">
-        <SheetHeader className="px-6 py-4 border-b dark:border-slate-800">
-          <div className="flex items-center justify-between">
-            <SheetTitle className="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-white">
-              Your Cart <span className="text-sm font-normal text-slate-500">({cart.length} items)</span>
+      <SheetContent className="w-full sm:max-w-lg flex flex-col p-0 gap-0 bg-white dark:bg-slate-950 z-[70] border-l border-slate-200 dark:border-slate-800 shadow-2xl">
+        <SheetHeader className="px-6 py-4 pr-14 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 sticky top-0 z-10">
+          <div className="flex items-center justify-between gap-3">
+            <SheetTitle className="flex items-center gap-2 text-xl font-black text-slate-900 dark:text-white">
+              Your Cart 
+              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full">
+                {cart.length} {cart.length === 1 ? 'item' : 'items'}
+              </span>
             </SheetTitle>
 
             {/* Currency Selector Pill */}
-            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-lg border border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
               {(['USD', 'EUR', 'GBP', 'INR'] as CartCurrency[]).map((cur) => (
                 <button
                   key={cur}
                   onClick={() => setCurrency(cur)}
-                  className={`px-2 py-1 text-xs font-bold rounded-md transition-colors ${
+                  className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
                     currency === cur 
                       ? 'bg-blue-600 text-white shadow-sm' 
                       : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
@@ -213,94 +216,102 @@ export default function CartDrawer() {
         <ScrollArea className="flex-1">
           {cart.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-[60vh] text-center px-10">
-              <div className="w-24 h-24 mb-6 opacity-80 text-slate-300">
+              <div className="w-24 h-24 mb-6 opacity-80 text-slate-300 dark:text-slate-700">
                 <ShoppingBag className="w-full h-full" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Your cart is empty</h3>
-              <p className="text-slate-500 mb-8">Choose a package to get started</p>
+              <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm">Choose an engineering sprint or growth package to get started</p>
               <Button 
                 onClick={() => setIsCartOpen(false)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 font-bold"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 font-bold rounded-xl shadow-lg shadow-blue-500/20"
               >
-                Explore Services
+                Explore Services & Sprints
               </Button>
             </div>
           ) : (
-            <div className="p-6 space-y-8">
-              <div className="space-y-6">
+            <div className="p-6 space-y-6">
+              <div className="space-y-3.5">
                 {cart.map((item) => (
-                  <div key={item.id} className="flex gap-4">
-                    <div className="w-20 h-20 bg-slate-100 dark:bg-slate-900 rounded-lg flex items-center justify-center shrink-0 border dark:border-slate-800">
-                        <ShoppingBag className="w-8 h-8 opacity-20 text-slate-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-start mb-1">
-                            <h4 className="font-bold text-slate-900 dark:text-white truncate pr-4">{item.name}</h4>
-                            <span className="font-bold text-slate-900 dark:text-white shrink-0">
-                                {formatPrice(getItemPrice(item))}
-                            </span>
+                  <div key={item.id} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-800/80 transition-all">
+                    <div className="flex gap-3.5">
+                      <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700 shadow-xs text-blue-600 dark:text-blue-400">
+                        <ShoppingBag className="w-5 h-5" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-start gap-2 mb-1">
+                          <h4 className="font-bold text-sm text-slate-900 dark:text-white leading-snug">{item.name}</h4>
+                          <span className="font-black text-sm text-slate-900 dark:text-white shrink-0 font-mono">
+                            {formatPrice(getItemPrice(item))}
+                          </span>
                         </div>
-                        {item.details && <p className="text-xs text-slate-500 line-clamp-1">{item.details}</p>}
+                        {item.details && <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">{item.details}</p>}
                         
-                        <div className="flex items-center justify-between mt-3">
-                            {item.type === 'addon' ? (
-                                <div className="flex items-center border dark:border-slate-800 rounded-md">
-                                    <button 
-                                        className="p-1 px-2 text-slate-500 hover:text-blue-600 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors border-r dark:border-slate-800"
-                                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                    >
-                                        <Minus className="w-3 h-3" />
-                                    </button>
-                                    <span className="px-3 text-sm font-bold text-slate-900 dark:text-white">{item.quantity}</span>
-                                    <button 
-                                        className="p-1 px-2 text-slate-500 hover:text-blue-600 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors border-l dark:border-slate-800"
-                                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                    >
-                                        <Plus className="w-3 h-3" />
-                                    </button>
-                                </div>
-                            ) : (
-                                <span className="text-xs font-semibold text-blue-600 bg-blue-50 dark:bg-blue-900/20 px-2 py-0.5 rounded">
-                                    Base Plan
-                                </span>
-                            )}
-                            <button 
-                                onClick={() => removeFromCart(item.id)}
-                                className="text-xs text-red-500 hover:text-red-600 font-semibold"
-                            >
-                                Remove
-                            </button>
+                        <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-slate-200/60 dark:border-slate-800/60">
+                          {item.type === 'addon' ? (
+                            <div className="flex items-center border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 shadow-xs">
+                              <button 
+                                className="p-1 px-2.5 text-slate-500 hover:text-blue-600 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-r border-slate-200 dark:border-slate-800"
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                aria-label="Decrease quantity"
+                              >
+                                <Minus className="w-3 h-3" />
+                              </button>
+                              <span className="px-3 text-xs font-bold text-slate-900 dark:text-white">{item.quantity}</span>
+                              <button 
+                                className="p-1 px-2.5 text-slate-500 hover:text-blue-600 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-l border-slate-200 dark:border-slate-800"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                aria-label="Increase quantity"
+                              >
+                                <Plus className="w-3 h-3" />
+                              </button>
+                            </div>
+                          ) : (
+                            <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2.5 py-0.5 rounded-full border border-blue-200/50 dark:border-blue-800/50">
+                              Base Engineering Sprint
+                            </span>
+                          )}
+                          <button 
+                            onClick={() => removeFromCart(item.id)}
+                            className="text-xs text-rose-500 hover:text-rose-600 font-semibold hover:underline transition-colors flex items-center gap-1.5"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>Remove</span>
+                          </button>
                         </div>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
 
               {/* Addons List */}
-              <div className="pt-6 border-t dark:border-slate-800">
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-4">Enhance Your Package</h4>
-                <div className="space-y-3">
+              <div className="pt-6 border-t border-slate-200 dark:border-slate-800">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Enhance Your Package</h4>
+                  <span className="text-[11px] text-blue-600 dark:text-blue-400 font-semibold">Optional Sprints</span>
+                </div>
+                <div className="space-y-2.5">
                   {addonsList
                     .filter(addon => !cart.some(item => item.name.includes(addon.name)))
                     .map((addon) => {
                       const addonPrice = getAddonPrice(addon, currency === 'INR' ? 'INR' : 'USD')
                       return (
-                        <div key={addon.id} className="flex items-center justify-between p-3 border dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
+                        <div key={addon.id} className="flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors group">
                           <div className="flex-1 min-w-0 pr-4">
                             <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{addon.name}</p>
-                            <p className="text-[10px] text-slate-500 truncate">{addon.description}</p>
+                            <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{addon.description}</p>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-sm font-bold text-slate-900 dark:text-white">
+                            <span className="text-sm font-bold text-slate-900 dark:text-white font-mono">
                               {formatPrice(addonPrice)}
                             </span>
                             <Button 
-                              size="icon" 
+                              size="sm" 
                               variant="outline" 
-                              className="h-8 w-8 rounded-full border-blue-200 dark:border-blue-900 hover:bg-blue-600 hover:text-white"
+                              className="h-8 px-3 rounded-lg border-blue-200 dark:border-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition-all text-xs font-bold gap-1 shadow-xs"
                               onClick={() => handleAddAddon(addon.id)}
                             >
-                              <Plus className="w-4 h-4" />
+                              <Plus className="w-3.5 h-3.5" /> Add
                             </Button>
                           </div>
                         </div>
@@ -313,75 +324,81 @@ export default function CartDrawer() {
         </ScrollArea>
 
         {cart.length > 0 && (
-          <div className="p-6 border-t dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30">
-            <div className="space-y-3 mb-6">
-                <div className="flex justify-between items-center text-sm text-slate-500">
+          <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/40">
+            <div className="space-y-3 mb-5">
+                <div className="flex justify-between items-center text-xs font-semibold text-slate-500 dark:text-slate-400">
                   <span>Total Project Value</span>
-                  <span className="font-bold text-slate-700 dark:text-slate-300">{formatPrice(cartTotal)}</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200 font-mono text-sm">{formatPrice(cartTotal)}</span>
                 </div>
                 
-                <div className="space-y-3 py-3 border-y dark:border-slate-800">
-                    <div className="flex gap-4">
-                        <label className={`flex-1 flex flex-col p-3 border rounded-xl cursor-pointer transition-colors ${paymentType === 'advance' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/50'}`}>
+                <div className="space-y-3 py-3 border-y border-slate-200 dark:border-slate-800">
+                    <div className="grid grid-cols-2 gap-3">
+                        <label className={`flex flex-col p-3 rounded-xl cursor-pointer border transition-all ${paymentType === 'advance' ? 'border-blue-600 bg-blue-50/80 dark:bg-blue-950/40 ring-1 ring-blue-600 shadow-xs' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-100/50 dark:hover:bg-slate-900/50'}`}>
                             <div className="flex items-center gap-2 mb-1">
                                 <input type="radio" checked={paymentType === 'advance'} onChange={() => setPaymentType('advance')} className="w-4 h-4 text-blue-600" />
-                                <span className="font-bold text-sm text-slate-900 dark:text-white">50% Advance</span>
+                                <span className="font-bold text-xs text-slate-900 dark:text-white">50% Advance</span>
                             </div>
-                            <span className="text-xs text-slate-500 pl-6">Pay half now, rest on milestones</span>
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">Pay half now, rest on milestones</span>
                         </label>
-                        <label className={`flex-1 flex flex-col p-3 border rounded-xl cursor-pointer transition-colors ${paymentType === 'full' ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/20' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/50'}`}>
+                        <label className={`flex flex-col p-3 rounded-xl cursor-pointer border transition-all ${paymentType === 'full' ? 'border-blue-600 bg-blue-50/80 dark:bg-blue-950/40 ring-1 ring-blue-600 shadow-xs' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-100/50 dark:hover:bg-slate-900/50'}`}>
                             <div className="flex items-center gap-2 mb-1">
                                 <input type="radio" checked={paymentType === 'full'} onChange={() => setPaymentType('full')} className="w-4 h-4 text-blue-600" />
-                                <span className="font-bold text-sm text-slate-900 dark:text-white">100% Full</span>
+                                <span className="font-bold text-xs text-slate-900 dark:text-white">100% Full</span>
                             </div>
-                            <span className="text-xs text-slate-500 pl-6">Clear all dues upfront</span>
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">Clear all dues upfront</span>
                         </label>
                     </div>
 
-                    <div className="flex justify-between items-center text-sm text-slate-600 dark:text-slate-400 mt-4">
+                    <div className="flex justify-between items-center text-xs text-slate-600 dark:text-slate-400">
                       <span>Package Amount</span>
-                      <span>{formatPrice(paymentType === 'full' ? packageTotal : Math.round(packageTotal * 0.5))}</span>
+                      <span className="font-mono">{formatPrice(paymentType === 'full' ? packageTotal : Math.round(packageTotal * 0.5))}</span>
                     </div>
                     {addonTotal > 0 && (
-                        <div className="flex justify-between items-center text-sm text-slate-600 dark:text-slate-400">
+                        <div className="flex justify-between items-center text-xs text-slate-600 dark:text-slate-400">
                           <span>Add-ons (100%)</span>
-                          <span>{formatPrice(addonTotal)}</span>
+                          <span className="font-mono">{formatPrice(addonTotal)}</span>
                         </div>
                     )}
                 </div>
 
-                <div className="flex justify-between items-center pt-2">
+                <div className="flex justify-between items-center pt-1">
                   <div className="flex flex-col">
-                    <span className="font-bold text-lg text-slate-900 dark:text-white pr-2">Net Payable Now</span>
-                    <span className="text-[10px] text-blue-600 font-bold uppercase tracking-wider">{paymentType === 'full' ? 'Full Payment' : 'Adv. Payment'}</span>
+                    <span className="font-black text-base text-slate-900 dark:text-white">Net Payable Now</span>
+                    <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">{paymentType === 'full' ? 'Full Settlement' : '50% Advance Milestone'}</span>
                   </div>
-                  <span className="text-2xl font-black text-blue-600">{formatPrice(payableTotal)}</span>
+                  <span className="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono">{formatPrice(payableTotal)}</span>
                 </div>
                 {paymentType === 'advance' && (
-                  <p className="text-[10px] text-slate-500 mt-2">
-                      Remaining balance of {formatPrice(Math.round(packageTotal * 0.5))} will be due upon milestone delivery.
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
+                      Remaining balance of {formatPrice(Math.round(packageTotal * 0.5))} is due upon milestone completion.
                   </p>
                 )}
             </div>
             
-            {/* Manual Invoicing Notice */}
-            <div className="mb-3 flex items-center justify-between text-xs text-slate-500 px-1">
-              <span className="flex items-center gap-1.5 font-medium">
-                <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                Direct Invoicing & Verification
+            {/* Trust & Invoicing Notice */}
+            <div className="mb-3.5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1">
+              <span className="flex items-center gap-1.5 font-medium text-[11px]">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                Direct Invoicing & SLA Guarantee
               </span>
-              <span className="text-[11px] text-slate-400">
+              <span className="text-[10px] text-slate-400 font-medium">
                 {currency !== 'INR' ? 'Skydo • US Wire • Cards' : 'UPI • IMPS • NetBanking'}
               </span>
             </div>
 
+            {/* Crisp, Non-Overflowing Checkout Button */}
             <Button 
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-7 text-lg shadow-xl shadow-blue-500/20 font-bold flex items-center justify-center gap-2" 
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-14 rounded-2xl text-base shadow-xl shadow-blue-500/25 font-bold flex items-center justify-between px-6 transition-all active:scale-[0.99] group" 
               onClick={proceedToCheckout} 
               disabled={loading}
             >
-              <FileText className="w-5 h-5" />
-              Place Order & Get Payment Details ({formatPrice(payableTotal)})
+              <span className="flex items-center gap-2.5">
+                <FileText className="w-5 h-5 text-blue-200 group-hover:scale-110 transition-transform" />
+                <span>Proceed to Checkout</span>
+              </span>
+              <span className="font-mono text-base bg-blue-700/80 px-3.5 py-1.5 rounded-xl border border-blue-400/30 font-black">
+                {formatPrice(payableTotal)}
+              </span>
             </Button>
           </div>
         )}

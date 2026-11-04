@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useChat, UIMessage } from '@ai-sdk/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, X, Send, Loader2, Network, UserCheck, MessageCircle, Calendar, Phone, Mail } from 'lucide-react';
+import { useCart } from '@/components/providers/CartProvider';
 
 function RealAgentCard({ leadName, leadEmail }: { leadName?: string; leadEmail?: string }) {
   const whatsappUrl = `https://wa.me/919997205257?text=${encodeURIComponent(
@@ -76,6 +77,7 @@ function RealAgentCard({ leadName, leadEmail }: { leadName?: string; leadEmail?:
 }
 
 export default function HermesChatWidget() {
+  const { isCartOpen } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [forceShowHandoff, setForceShowHandoff] = useState(false);
@@ -138,6 +140,10 @@ export default function HermesChatWidget() {
       // ignore
     }
   };
+
+  if (isCartOpen) {
+    return null;
+  }
 
   return (
     <>

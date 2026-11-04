@@ -178,7 +178,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                                 height={12}
                                 className="object-cover rounded-[2px]"
                             />
-                            <span>India (HQ) & Global Delivery</span>
+                            <span>India</span>
                         </div>
                     </div>
 

@@ -93,7 +93,8 @@ export async function ensureDbInitialized() {
           ADD COLUMN IF NOT EXISTS budget_range TEXT,
           ADD COLUMN IF NOT EXISTS building_text TEXT,
           ADD COLUMN IF NOT EXISTS blockers_text TEXT,
-          ADD COLUMN IF NOT EXISTS phone TEXT;
+          ADD COLUMN IF NOT EXISTS phone TEXT,
+          ADD COLUMN IF NOT EXISTS reference_id VARCHAR(100);
       `;
 
       // 3. Ensure blog_posts columns exist

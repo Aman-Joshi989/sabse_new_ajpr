@@ -1,15 +1,23 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, Globe, Linkedin, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, Globe, Linkedin, CheckCircle2, Calendar, MessageCircle, RotateCcw, Clock, ShieldCheck, Mail } from 'lucide-react'
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import EmailLink from '@/components/EmailLink';
 
-
-
+interface SubmittedInfo {
+    name: string;
+    email: string;
+    companyName: string;
+    websiteUrl: string;
+    monthlyRevenue: string;
+    budgetRange: string;
+    buildingText: string;
+    referenceId: string;
+}
 
 export default function ApplicationPage() {
     const [form, setForm] = useState({
@@ -26,6 +34,7 @@ export default function ApplicationPage() {
     const [submitting, setSubmitting] = useState(false)
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
     const [feedbackMsg, setFeedbackMsg] = useState('')
+    const [submittedInfo, setSubmittedInfo] = useState<SubmittedInfo | null>(null)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -68,12 +77,24 @@ ${form.blockersText}
                 }),
             })
 
+            const data = await res.json().catch(() => ({}))
+
             if (res.ok) {
+                setSubmittedInfo({
+                    name: form.fullName,
+                    email: form.workEmail,
+                    companyName: form.companyName,
+                    websiteUrl: form.websiteUrl,
+                    monthlyRevenue: form.monthlyRevenue,
+                    budgetRange: form.budgetRange,
+                    buildingText: form.buildingText,
+                    referenceId: data.referenceId || `AJPR-APP-${Date.now().toString(36).toUpperCase()}`
+                })
                 setStatus('success')
-                setFeedbackMsg("Application submitted successfully. We will review and reach out within 48 hours.")
+                setFeedbackMsg("Application submitted successfully. We have dispatched a confirmation email to your address.")
                 setForm({ fullName: '', workEmail: '', companyName: '', websiteUrl: '', monthlyRevenue: '', budgetRange: '', buildingText: '', blockersText: '' })
+                document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })
             } else {
-                const data = await res.json()
                 setStatus('error')
                 setFeedbackMsg("Failed to submit: " + (data.error || "Please try again later."))
             }
@@ -151,94 +172,200 @@ ${form.blockersText}
                                 </ul>
                             </div>
 
-
-
                         </div>
 
-                        {/* RIGHT COLUMN: The Application Form */}
+                        {/* RIGHT COLUMN: The Application Form or Confirmation Card */}
                         <div className="lg:w-7/12" id="application-form">
                             <div className="p-8 md:p-12 lg:p-16 rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-2xl backdrop-blur-xl relative animate-fade-up">
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-t-3xl" />
 
-                                <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Apply to Work With Us</h2>
-                                <p className="text-slate-500 dark:text-slate-400 font-medium mb-12">All fields are required to help us prepare for our discussion.</p>
+                                {status === 'success' && submittedInfo ? (
+                                    <div className="space-y-6">
+                                        <div className="flex items-center gap-2 px-3.5 py-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 rounded-full w-fit text-xs font-bold uppercase tracking-wider">
+                                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                            Application Received • Ref #{submittedInfo.referenceId}
+                                        </div>
 
-                                <form onSubmit={handleSubmit} className="space-y-8">
-                                    <div className="grid md:grid-cols-2 gap-8">
                                         <div className="space-y-3">
-                                            <Label htmlFor="fullName" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Full Name</Label>
-                                            <Input id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required className="h-14 bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. Aman Joshi" />
+                                            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+                                                Application Received!
+                                            </h2>
+                                            <p className="text-slate-600 dark:text-slate-300 text-base leading-relaxed">
+                                                Thank you, <strong className="text-slate-900 dark:text-white">{submittedInfo.name}</strong>. An official confirmation email with your project overview and next steps has been dispatched to:
+                                            </p>
+                                            <div className="p-4 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/80 rounded-xl flex items-center gap-3 text-sm font-semibold text-blue-700 dark:text-blue-300">
+                                                <Mail className="w-5 h-5 shrink-0 text-blue-600 dark:text-blue-400" />
+                                                <span className="truncate">{submittedInfo.email}</span>
+                                            </div>
+                                            <p className="text-xs text-slate-500 dark:text-slate-400 italic">
+                                                * If you do not see the confirmation in your inbox within a few minutes, please check your promotions or spam folder.
+                                            </p>
                                         </div>
-                                        <div className="space-y-3">
-                                            <Label htmlFor="workEmail" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Work Email</Label>
-                                            <Input id="workEmail" name="workEmail" type="email" value={form.workEmail} onChange={handleChange} required className="h-14 bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. you@ajprworld.com" />
+
+                                        {/* Submission Snapshot */}
+                                        <div className="p-5 bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-3">
+                                            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                                                Logged Project Details
+                                            </h4>
+                                            <div className="grid grid-cols-2 gap-3 text-xs">
+                                                <div>
+                                                    <span className="text-slate-500 block">Company:</span>
+                                                    <span className="font-bold text-slate-900 dark:text-white truncate block">{submittedInfo.companyName || 'Not specified'}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-slate-500 block">Target Budget:</span>
+                                                    <span className="font-bold text-emerald-600 dark:text-emerald-400 block">{submittedInfo.budgetRange || 'Flexible'}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-slate-500 block">Revenue Tier:</span>
+                                                    <span className="font-bold text-slate-900 dark:text-white block">{submittedInfo.monthlyRevenue || 'Pre-revenue'}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-slate-500 block">Review SLA:</span>
+                                                    <span className="font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                                                        <Clock className="w-3.5 h-3.5" /> 24–48 Hours
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            {submittedInfo.buildingText && (
+                                                <div className="pt-2.5 border-t border-slate-200 dark:border-slate-800">
+                                                    <span className="text-slate-500 text-xs block mb-1">Project Focus:</span>
+                                                    <p className="text-xs text-slate-700 dark:text-slate-300 line-clamp-3 italic">
+                                                        &ldquo;{submittedInfo.buildingText}&rdquo;
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Fast-Track Actions */}
+                                        <div className="p-6 bg-gradient-to-br from-indigo-500/10 via-blue-500/10 to-purple-500/10 border border-indigo-200 dark:border-indigo-800/80 rounded-2xl space-y-4">
+                                            <div className="flex items-center gap-2 text-sm font-bold text-indigo-700 dark:text-indigo-300">
+                                                <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                                                Need Immediate Answers or Urgent Delivery?
+                                            </div>
+                                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                                Founder & Lead Systems Architect Aman Joshi personally reviews applications. To bypass email queue latency or lock in your sprint immediately:
+                                            </p>
+                                            <div className="space-y-2.5 pt-1">
+                                                <a
+                                                    href="/book-call"
+                                                    className="flex items-center justify-between w-full px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-md transition-all active:scale-[0.99]"
+                                                >
+                                                    <span className="flex items-center gap-2">
+                                                        <Calendar className="w-4 h-4" />
+                                                        Schedule 15-Minute Scoping Call
+                                                    </span>
+                                                    <span className="text-xs bg-blue-700/60 px-2 py-0.5 rounded font-normal">Calendar</span>
+                                                </a>
+
+                                                <a
+                                                    href={`https://wa.me/919997205257?text=${encodeURIComponent(
+                                                        `Hi Aman, I just submitted an application on AJPR World (Ref: ${submittedInfo.referenceId}) for ${submittedInfo.companyName || submittedInfo.name} and would like to connect directly.`
+                                                    )}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center justify-between w-full px-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-md transition-all active:scale-[0.99]"
+                                                >
+                                                    <span className="flex items-center gap-2">
+                                                        <MessageCircle className="w-4 h-4" />
+                                                        Chat Directly on WhatsApp
+                                                    </span>
+                                                    <span className="text-xs bg-emerald-700/60 px-2 py-0.5 rounded font-normal">+91 9997205257</span>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div className="pt-2 flex justify-center">
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setStatus('idle')
+                                                    setSubmittedInfo(null)
+                                                }}
+                                                className="text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 flex items-center gap-1.5 transition-colors"
+                                            >
+                                                <RotateCcw className="w-3.5 h-3.5" />
+                                                Submit another application or edit details
+                                            </button>
                                         </div>
                                     </div>
+                                ) : (
+                                    <>
+                                        <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Apply to Work With Us</h2>
+                                        <p className="text-slate-500 dark:text-slate-400 font-medium mb-12">All fields are required to help us prepare for our discussion.</p>
 
-                                    <div className="grid md:grid-cols-2 gap-8">
-                                        <div className="space-y-3">
-                                            <Label htmlFor="companyName" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Company Name</Label>
-                                            <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} required className="h-14 bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. AJPR World" />
-                                        </div>
-                                        <div className="space-y-3">
-                                            <Label htmlFor="websiteUrl" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Website / Product URL</Label>
-                                            <Input id="websiteUrl" name="websiteUrl" type="url" value={form.websiteUrl} onChange={handleChange} required className="h-14 bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. https://ajprworld.com" />
-                                        </div>
-                                    </div>
+                                        <form onSubmit={handleSubmit} className="space-y-8">
+                                            <div className="grid md:grid-cols-2 gap-8">
+                                                <div className="space-y-3">
+                                                    <Label htmlFor="fullName" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Full Name</Label>
+                                                    <Input id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required className="h-14 bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. Aman Joshi" />
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <Label htmlFor="workEmail" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Work Email</Label>
+                                                    <Input id="workEmail" name="workEmail" type="email" value={form.workEmail} onChange={handleChange} required className="h-14 bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. you@ajprworld.com" />
+                                                </div>
+                                            </div>
 
-                                    <div className="grid md:grid-cols-2 gap-8">
-                                        <div className="space-y-3 flex flex-col">
-                                            <Label htmlFor="monthlyRevenue" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Current Monthly Revenue</Label>
-                                            <select id="monthlyRevenue" name="monthlyRevenue" value={form.monthlyRevenue} onChange={handleChange} required className="h-14 px-3 bg-slate-900/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
-                                                <option value="" disabled>Select Revenue Level</option>
-                                                <option value="Pre-revenue">Pre-revenue / Seed</option>
-                                                <option value="$0 - $10k">$0 - $10k / mo</option>
-                                                <option value="$10k - $50k">$10k - $50k / mo</option>
-                                                <option value="$50k - $100k">$50k - $100k / mo</option>
-                                                <option value="$100k+">$100k+ / mo</option>
-                                            </select>
-                                        </div>
-                                        <div className="space-y-3 flex flex-col">
-                                            <Label htmlFor="budgetRange" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Project Budget Range</Label>
-                                            <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={handleChange} required className="h-14 px-3 bg-slate-900/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
-                                                <option value="" disabled>Select a range</option>
-                                                <option value="$5k - $10k">$5,000 - $10,000</option>
-                                                <option value="$10k - $25k">$10,000 - $25,000</option>
-                                                <option value="$25k - $50k">$25,000 - $50,000</option>
-                                                <option value="$50k+">$50,000+</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                            <div className="grid md:grid-cols-2 gap-8">
+                                                <div className="space-y-3">
+                                                    <Label htmlFor="companyName" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Company Name</Label>
+                                                    <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} required className="h-14 bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. AJPR World" />
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <Label htmlFor="websiteUrl" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Website / Product URL</Label>
+                                                    <Input id="websiteUrl" name="websiteUrl" type="url" value={form.websiteUrl} onChange={handleChange} required className="h-14 bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. https://ajprworld.com" />
+                                                </div>
+                                            </div>
 
-                                    <div className="space-y-3 flex flex-col">
-                                        <Label htmlFor="buildingText" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What are you building?</Label>
-                                        <Textarea id="buildingText" name="buildingText" value={form.buildingText} onChange={handleChange} required placeholder="e.g. We want to design an AI-powered SaaS automation portal and connect it to AJPR World's custom API infrastructure..." rows={4} className="resize-none bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
-                                    </div>
+                                            <div className="grid md:grid-cols-2 gap-8">
+                                                <div className="space-y-3 flex flex-col">
+                                                    <Label htmlFor="monthlyRevenue" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Current Monthly Revenue</Label>
+                                                    <select id="monthlyRevenue" name="monthlyRevenue" value={form.monthlyRevenue} onChange={handleChange} required className="h-14 px-3 bg-slate-900/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
+                                                        <option value="" disabled>Select Revenue Level</option>
+                                                        <option value="Pre-revenue">Pre-revenue / Seed</option>
+                                                        <option value="$0 - $10k">$0 - $10k / mo</option>
+                                                        <option value="$10k - $50k">$10k - $50k / mo</option>
+                                                        <option value="$50k - $100k">$50k - $100k / mo</option>
+                                                        <option value="$100k+">$100k+ / mo</option>
+                                                    </select>
+                                                </div>
+                                                <div className="space-y-3 flex flex-col">
+                                                    <Label htmlFor="budgetRange" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Project Budget Range</Label>
+                                                    <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={handleChange} required className="h-14 px-3 bg-slate-900/50 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
+                                                        <option value="" disabled>Select a range</option>
+                                                        <option value="$5k - $10k">$5,000 - $10,000</option>
+                                                        <option value="$10k - $25k">$10,000 - $25,000</option>
+                                                        <option value="$25k - $50k">$25,000 - $50,000</option>
+                                                        <option value="$50k+">$50,000+</option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                                    <div className="space-y-3 flex flex-col">
-                                        <Label htmlFor="blockersText" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What's blocking your growth right now?</Label>
-                                        <Textarea id="blockersText" name="blockersText" value={form.blockersText} onChange={handleChange} required placeholder="e.g. Tech debt and outdated legacy databases are bottlenecking checkout transactions, and we need to scale our system using AJPR World's engineering services." rows={4} className="resize-none bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
-                                    </div>
+                                            <div className="space-y-3 flex flex-col">
+                                                <Label htmlFor="buildingText" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What are you building?</Label>
+                                                <Textarea id="buildingText" name="buildingText" value={form.buildingText} onChange={handleChange} required placeholder="e.g. We want to design an AI-powered SaaS automation portal and connect it to AJPR World's custom API infrastructure..." rows={4} className="resize-none bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
+                                            </div>
 
-                                    <div className="pt-6">
-                                        <Button type="submit" size="lg" disabled={submitting} className="w-full h-16 text-lg bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold rounded-xl transition-all shadow-lg hover:-translate-y-1">
-                                            {submitting ? 'Submitting Application...' : 'Submit Application'}
-                                        </Button>
-                                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 text-center mt-4">Applications are reviewed within 48 hours.</p>
-                                    </div>
+                                            <div className="space-y-3 flex flex-col">
+                                                <Label htmlFor="blockersText" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What's blocking your growth right now?</Label>
+                                                <Textarea id="blockersText" name="blockersText" value={form.blockersText} onChange={handleChange} required placeholder="e.g. Tech debt and outdated legacy databases are bottlenecking checkout transactions, and we need to scale our system using AJPR World's engineering services." rows={4} className="resize-none bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
+                                            </div>
 
-                                    {status === 'success' && (
-                                        <div className="p-4 bg-green-500/10 border border-green-500/30 text-green-400 font-bold text-center rounded-xl">
-                                            {feedbackMsg}
-                                        </div>
-                                    )}
-                                    {status === 'error' && (
-                                        <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-center rounded-xl">
-                                            {feedbackMsg}
-                                        </div>
-                                    )}
+                                            <div className="pt-6">
+                                                <Button type="submit" size="lg" disabled={submitting} className="w-full h-16 text-lg bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg hover:-translate-y-1">
+                                                    {submitting ? 'Submitting Application...' : 'Submit Application'}
+                                                </Button>
+                                                <p className="text-sm font-medium text-slate-500 dark:text-slate-400 text-center mt-4">Applications are reviewed within 48 hours.</p>
+                                            </div>
 
-                                </form>
+                                            {status === 'error' && (
+                                                <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-400 font-bold text-center rounded-xl">
+                                                    {feedbackMsg}
+                                                </div>
+                                            )}
+                                        </form>
+                                    </>
+                                )}
                             </div>
                         </div>
 

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createSocialLeadCrew } from '@/lib/agents/social-lead-crew';
 import { saveSocialLead, ensureDbInitialized, insertAgentLog } from '@/lib/db/queries';
+import { isAuthorizedCron } from '@/lib/admin/guard';
 
 // Allow execution for up to 5 minutes if on Vercel Pro/Enterprise
 export const maxDuration = 300; 
@@ -9,19 +10,8 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: Request) {
   try {
-    // Basic security for cron (Vercel uses CRON_SECRET)
-    const authHeader = req.headers.get('authorization');
-    const cronSecret = process.env.CRON_SECRET || process.env.AGENT_SECRET;
-    
-    // We allow passing ?secret=xxx for manual testing
-    const { searchParams } = new URL(req.url);
-    const querySecret = searchParams.get('secret');
-
-    if (
-      authHeader !== `Bearer ${cronSecret}` &&
-      querySecret !== cronSecret &&
-      querySecret !== 'ajprworld-agents-super-secret'
-    ) {
+    // Timing-safe Bearer authorization check
+    if (!isAuthorizedCron(req)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

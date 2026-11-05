@@ -1,9 +1,30 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isEmailAuthorizedAdmin, assertSameOrigin, SESSION_COOKIE_NAME } from '../lib/admin/guard';
+import { isEmailAuthorizedAdmin, assertSameOrigin, SESSION_COOKIE_NAME, isAuthorizedCron } from '../lib/admin/guard';
+import { SESSION_COOKIE_OPTIONS, encrypt, decrypt } from '../lib/auth';
 
 test('SESSION_COOKIE_NAME is session', () => {
   assert.equal(SESSION_COOKIE_NAME, 'session');
+});
+
+test('SESSION_COOKIE_OPTIONS enforces security flags', () => {
+  assert.equal(SESSION_COOKIE_OPTIONS.httpOnly, true);
+  assert.equal(SESSION_COOKIE_OPTIONS.sameSite, 'lax');
+  assert.equal(SESSION_COOKIE_OPTIONS.path, '/');
+});
+
+test('encrypt and decrypt verify JWT round-trip', async () => {
+  const payload = { user: { id: 1, email: 'test@example.com', role: 'admin' } };
+  const token = await encrypt(payload);
+  assert.ok(typeof token === 'string' && token.length > 20);
+
+  const decrypted = await decrypt(token);
+  assert.equal(decrypted.user.email, 'test@example.com');
+  assert.equal(decrypted.user.role, 'admin');
+
+  // Tampered token returns null
+  const tampered = await decrypt(token.slice(0, -5) + 'abcde');
+  assert.equal(tampered, null);
 });
 
 test('isEmailAuthorizedAdmin validation and fail-closed security', () => {
@@ -81,6 +102,41 @@ test('assertSameOrigin verifies matching base url and Sec-Fetch-Site', () => {
     assert.equal(noBaseCheck.error, 'Forbidden');
   } finally {
     process.env.NEXT_PUBLIC_BASE_URL = orig;
+  }
+});
+
+test('isAuthorizedCron timing-safe and fail-closed validation', () => {
+  const orig = process.env.CRON_SECRET;
+
+  try {
+    process.env.CRON_SECRET = 'super-secret-cron-key-at-least-16-bytes';
+
+    // Valid Bearer
+    const validReq = new Request('https://example.com/api/cron/test', {
+      headers: { authorization: 'Bearer super-secret-cron-key-at-least-16-bytes' },
+    });
+    assert.equal(isAuthorizedCron(validReq), true);
+
+    // Invalid Bearer token
+    const invalidReq = new Request('https://example.com/api/cron/test', {
+      headers: { authorization: 'Bearer wrong-secret-key-at-least-16-bytes' },
+    });
+    assert.equal(isAuthorizedCron(invalidReq), false);
+
+    // Missing header
+    const noHeaderReq = new Request('https://example.com/api/cron/test');
+    assert.equal(isAuthorizedCron(noHeaderReq), false);
+
+    // Query string bypass rejected
+    const queryReq = new Request('https://example.com/api/cron/test?secret=super-secret-cron-key-at-least-16-bytes');
+    assert.equal(isAuthorizedCron(queryReq), false);
+
+    // Fail-closed if secret unset
+    delete process.env.CRON_SECRET;
+    delete process.env.AGENT_SECRET;
+    assert.equal(isAuthorizedCron(validReq), false);
+  } finally {
+    process.env.CRON_SECRET = orig;
   }
 });
 

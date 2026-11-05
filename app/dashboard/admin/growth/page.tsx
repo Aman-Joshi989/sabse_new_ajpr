@@ -19,12 +19,15 @@ export default function GrowthDashboard() {
     setIsBlogRunning(true)
     addLog('Starting AI Blog Pipeline (Generating content, Ayrshare, GBP)...', 'info')
     try {
-      // Pass the hardcoded UI secret or fetch it securely. For demo, we pass it.
-      const res = await fetch('/api/cron/generate-blog?key=ajpr-cron-2026-x7k9m2p4', { method: 'POST' })
+      const res = await fetch('/api/admin/trigger-agent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agentId: 'athena', action: 'blog' }),
+      })
       const data = await res.json()
       
       if (res.ok) {
-        addLog(`Blog Generated: ${data.title} (${data.wordCount} words)`, 'success')
+        addLog(`Blog Generated: ${data.data?.title || data.message || 'Complete'}`, 'success')
         toast.success('Blog pipeline completed successfully!')
       } else {
         addLog(`Blog Pipeline Failed: ${data.error}`, 'error')
@@ -41,11 +44,15 @@ export default function GrowthDashboard() {
     setIsAgentRunning(true)
     addLog('Waking up Autonomous Lead Agent...', 'info')
     try {
-      const res = await fetch('/api/cron/autonomous-agent?secret=ajprworld-agents-super-secret')
+      const res = await fetch('/api/admin/trigger-agent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agentId: 'apollo' }),
+      })
       const data = await res.json()
       
       if (res.ok) {
-        addLog(`Agent Run Complete. Saved ${data.leads?.length || 0} leads.`, 'success')
+        addLog(`Agent Run Complete. ${data.message || 'Success'}`, 'success')
         toast.success('Agent completed successfully!')
       } else {
         addLog(`Agent Run Failed: ${data.error}`, 'error')

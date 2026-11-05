@@ -1,40 +1,60 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { requireAdminApi } from '@/lib/admin/guard';
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const url = searchParams.get('url');
+export async function GET(req: NextRequest) {
+  const adminCheck = await requireAdminApi(req);
+  if (!adminCheck.authorized) {
+    return adminCheck.response;
+  }
 
-  if (!url) {
-    return NextResponse.json({ error: 'URL is required' }, { status: 400 });
+  const rawUrl = req.nextUrl.searchParams.get('url');
+  if (!rawUrl) {
+    return NextResponse.json({ error: 'Bad Request' }, { status: 400 });
+  }
+
+  // Reject URL-encoding tricks, percent signs, and directory traversal
+  if (rawUrl.includes('%') || rawUrl.includes('..')) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
   try {
-    const token = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!token) {
-      return NextResponse.json({ error: 'Vercel Blob token not configured' }, { status: 500 });
+    const parsedUrl = new URL(rawUrl);
+
+    // Strict Vercel Blob domain check (prevent SSRF and token leakage)
+    const isBlobHost = parsedUrl.hostname.endsWith('.blob.vercel-storage.com') || 
+                       parsedUrl.hostname === 'blob.vercel-storage.com';
+    if (!isBlobHost || !parsedUrl.pathname.startsWith('/resumes/')) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const res = await fetch(url, {
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    if (!token) {
+      return NextResponse.json({ error: 'Internal error' }, { status: 500 });
+    }
+
+    const res = await fetch(parsedUrl.toString(), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
     if (!res.ok) {
-      return NextResponse.json({ error: 'Failed to fetch file from Blob storage' }, { status: res.status });
+      return NextResponse.json({ error: 'Not found' }, { status: res.status === 404 ? 404 : 502 });
     }
 
     const contentType = res.headers.get('content-type') || 'application/pdf';
+    const rawFilename = parsedUrl.pathname.split('/').pop() || 'resume.pdf';
+    const safeFilename = rawFilename.replace(/[^a-zA-Z0-9._-]/g, '_');
     
-    // We stream the response back directly to the client
     return new NextResponse(res.body, {
+      status: 200,
       headers: {
         'Content-Type': contentType,
-        'Content-Disposition': 'inline', 
+        'Content-Disposition': `attachment; filename="${safeFilename}"`,
+        'X-Content-Type-Options': 'nosniff',
       },
     });
-  } catch (error: any) {
-    console.error('Error downloading private blob:', error);
-    return NextResponse.json({ error: 'Failed to download file' }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: 'Internal error' }, { status: 500 });
   }
 }

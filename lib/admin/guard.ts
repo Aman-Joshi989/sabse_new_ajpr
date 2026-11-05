@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
 import { decrypt } from '@/lib/auth';
 
 /**
@@ -224,5 +225,32 @@ export async function requireAdminForAction(): Promise<AdminSessionUser> {
     role: user.role,
     name: user.name,
   };
+}
+
+/**
+ * Validates incoming cron requests with timing-safe comparison against CRON_SECRET / AGENT_SECRET.
+ * Requires `Authorization: Bearer <secret>`.
+ * Fails closed if the secret is unset or shorter than 16 characters.
+ */
+export function isAuthorizedCron(request: Request | NextRequest): boolean {
+  const cronSecret = process.env.CRON_SECRET || process.env.AGENT_SECRET;
+  if (!cronSecret || cronSecret.length < 16) {
+    return false;
+  }
+
+  const authHeader = request.headers.get('authorization');
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return false;
+  }
+
+  const token = authHeader.slice(7).trim();
+  const tokenBuf = Buffer.from(token);
+  const secretBuf = Buffer.from(cronSecret);
+
+  if (tokenBuf.length !== secretBuf.length) {
+    return false;
+  }
+
+  return crypto.timingSafeEqual(tokenBuf, secretBuf);
 }
 

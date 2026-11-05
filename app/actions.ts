@@ -3,12 +3,11 @@
 import { sendMessage, getUserByEmail } from "@/lib/db/queries";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
-import { encrypt } from "@/lib/auth";
+import { encrypt, getSession, SESSION_COOKIE_OPTIONS } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import nodemailer from 'nodemailer';
 
-import { getSession } from "@/lib/auth";
 import { requireAdminForAction } from "@/lib/admin/guard";
 
 export async function getSessionAction() {
@@ -42,7 +41,7 @@ export async function login(prevState: any, formData: FormData) {
         const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
         const session = await encrypt({ user: { id: user.id, email: user.email, role: user.role, name: user.name }, expires });
 
-        (await cookies()).set("session", session, { expires, httpOnly: true });
+        (await cookies()).set("session", session, { expires, ...SESSION_COOKIE_OPTIONS });
 
         // Redirect based on role
         if (user.role === 'client') {
@@ -627,7 +626,7 @@ export async function registerUserAction(formData: FormData) {
         // Create Session
         const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
         const session = await encrypt({ user: { id: user.id, email: user.email, role: user.role, name: user.name }, expires });
-        (await cookies()).set("session", session, { expires, httpOnly: true });
+        (await cookies()).set("session", session, { expires, ...SESSION_COOKIE_OPTIONS });
 
         // Redirect based on role
         if (user.role === 'client') {

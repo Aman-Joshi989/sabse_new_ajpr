@@ -3,6 +3,7 @@ import { getLeadsForHermes, updateLeadStatus, insertAgentLog } from '@/lib/db/qu
 import { generateText } from 'ai';
 import { createGoogle } from '@ai-sdk/google';
 import { sendColdEmail } from '@/lib/email/nodemailer';
+import { isAuthorizedCron } from '@/lib/admin/guard';
 import fs from 'fs';
 import path from 'path';
 
@@ -12,14 +13,7 @@ const google = createGoogle({
 
 export async function GET(req: Request) {
   try {
-    const authHeader = req.headers.get('authorization');
-    const secret = new URL(req.url).searchParams.get('secret');
-
-    if (
-      authHeader !== `Bearer ${process.env.CRON_SECRET}` &&
-      secret !== process.env.CRON_SECRET &&
-      process.env.NODE_ENV === 'production'
-    ) {
+    if (!isAuthorizedCron(req)) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 

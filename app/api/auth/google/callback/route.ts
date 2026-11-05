@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserByEmail, createClientProfile } from '@/lib/db/queries';
-import { encrypt } from '@/lib/auth';
+import { encrypt, SESSION_COOKIE_OPTIONS } from '@/lib/auth';
+import { createRemoteJWKSet, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';
+
+const GOOGLE_JWKS = createRemoteJWKSet(new URL('https://www.googleapis.com/oauth2/v3/certs'));
 
 export async function GET(request: NextRequest) {
     const url = new URL(request.url);
@@ -9,7 +12,8 @@ export async function GET(request: NextRequest) {
     const state = url.searchParams.get('state');
     const storedState = request.cookies.get('oauth_state')?.value;
 
-    if (!code || state !== storedState) {
+    // Strict CSRF state validation
+    if (!code || !state || !storedState || state !== storedState) {
         return NextResponse.redirect(new URL('/login?error=Invalid_OAuth_State', request.url));
     }
 
@@ -18,8 +22,12 @@ export async function GET(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
     const redirectUri = `${baseUrl}/api/auth/google/callback`;
 
+    if (!clientId || !clientSecret) {
+        return NextResponse.redirect(new URL('/login?error=Configuration_Error', request.url));
+    }
+
     try {
-        // Exchange code for token
+        // Exchange authorization code for tokens
         const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
             method: 'POST',
             headers: {
@@ -27,8 +35,8 @@ export async function GET(request: NextRequest) {
             },
             body: new URLSearchParams({
                 code,
-                client_id: clientId!,
-                client_secret: clientSecret!,
+                client_id: clientId,
+                client_secret: clientSecret,
                 redirect_uri: redirectUri,
                 grant_type: 'authorization_code',
             }),
@@ -36,41 +44,42 @@ export async function GET(request: NextRequest) {
 
         const tokenData = await tokenResponse.json();
         
-        if (!tokenResponse.ok) {
-            console.error("Token exchange failed", tokenData);
+        if (!tokenResponse.ok || !tokenData.id_token) {
             return NextResponse.redirect(new URL('/login?error=Authentication_Failed', request.url));
         }
 
-        // Get user info
-        const userResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
-            headers: {
-                Authorization: `Bearer ${tokenData.access_token}`,
-            },
+        // Cryptographically verify Google ID Token with Google JWKS
+        const { payload: idTokenPayload } = await jwtVerify(tokenData.id_token, GOOGLE_JWKS, {
+            issuer: ['https://accounts.google.com', 'accounts.google.com'],
+            audience: clientId,
         });
 
-        const googleUser = await userResponse.json();
-        
-        if (!googleUser.email) {
-            return NextResponse.redirect(new URL('/login?error=No_Email_Provided', request.url));
+        if (!idTokenPayload.email || !idTokenPayload.email_verified) {
+            return NextResponse.redirect(new URL('/login?error=Unverified_Email', request.url));
         }
 
+        const email = (idTokenPayload.email as string).toLowerCase().trim();
+        const name = (idTokenPayload.name as string) || email.split('@')[0];
+
         // Check if user exists in DB
-        let user = await getUserByEmail(googleUser.email);
+        let user = await getUserByEmail(email);
         
         if (!user) {
-            // Create a secure dummy password since they authenticate via Google
+            // New OAuth accounts default strictly to 'client' role
             const dummyPassword = crypto.randomUUID() + crypto.randomUUID();
             const hashedPassword = await bcrypt.hash(dummyPassword, 10);
 
-            // Create user
             await createClientProfile({
-                name: googleUser.name || googleUser.email.split('@')[0],
-                email: googleUser.email,
+                name,
+                email,
                 password: hashedPassword,
                 role: 'client'
             });
-            // Fetch newly created user to get the ID
-            user = await getUserByEmail(googleUser.email);
+            user = await getUserByEmail(email);
+        }
+
+        if (!user) {
+            return NextResponse.redirect(new URL('/login?error=Account_Creation_Failed', request.url));
         }
 
         // Create JWT session
@@ -85,23 +94,20 @@ export async function GET(request: NextRequest) {
             expires 
         });
 
-        // Determine Redirect based on role
+        // Determine redirect based on existing role
         let redirectPath = '/dashboard';
         if (user.role === 'admin') redirectPath = '/dashboard/admin';
         if (user.role === 'client') redirectPath = '/dashboard/client';
         if (user.role === 'developer') redirectPath = '/dashboard/developer';
 
-        // Redirect to dashboard
         const response = NextResponse.redirect(new URL(redirectPath, request.url));
-        response.cookies.set("session", session, { expires, httpOnly: true, path: '/' });
+        response.cookies.set("session", session, { expires, ...SESSION_COOKIE_OPTIONS });
         
-        // Clean up oauth_state
+        // Clean up oauth_state cookie
         response.cookies.delete('oauth_state');
 
         return response;
-        
-    } catch (error) {
-        console.error("Google Callback Error", error);
-        return NextResponse.redirect(new URL('/login?error=Internal_Server_Error', request.url));
+    } catch {
+        return NextResponse.redirect(new URL('/login?error=Authentication_Failed', request.url));
     }
 }

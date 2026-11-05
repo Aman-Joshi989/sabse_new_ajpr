@@ -3,6 +3,25 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { CheckCircle2, ArrowRight, DollarSign, TrendingUp, HelpCircle, ShieldCheck, Sparkles, BarChart3 } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
+import { ItemListSchema } from '@/components/schema/ItemListSchema';
+
+const seoPricingTiers = [
+  {
+    name: 'Foundation SEO Tier ($1,500 – $3,000/mo)',
+    description: 'For local service businesses and startups. Full technical crawl fixes, local map pack optimization, and 2 monthly content assets.',
+    url: 'https://ajprworld.com/pricing/seo-cost#tiers'
+  },
+  {
+    name: 'Growth & Multi-Region Tier ($3,500 – $6,500/mo)',
+    description: 'For scaling B2B companies and regional brands. Generative Engine Optimization (GEO), 6 monthly thought-leadership articles, and digital PR backlink acquisition.',
+    url: 'https://ajprworld.com/pricing/seo-cost#tiers'
+  },
+  {
+    name: 'Enterprise & Programmatic Tier ($7,500 – $12,500+/mo)',
+    description: 'For nationwide platforms and enterprise brands. Programmatic cluster expansion, daily crawl budget management, international hreflang, and dedicated SEO architects.',
+    url: 'https://ajprworld.com/pricing/seo-cost#tiers'
+  }
+];
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
@@ -109,6 +128,11 @@ export default function SeoCostPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-28 pb-20">
       <FAQSchema faqs={faqs} />
+      <ItemListSchema 
+        name="SEO Cost & Retainer Tiers (2026 Agency Benchmark)"
+        description="Comprehensive pricing tiers and deliverable benchmarks for US SEO agency retainers."
+        items={seoPricingTiers}
+      />
       <Script
         id="service-schema-seo-cost"
         type="application/ld+json"
@@ -133,9 +157,44 @@ export default function SeoCostPage() {
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
             How Much Does SEO Cost in 2026?
           </h1>
-          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mb-8">
             SEO cost in 2026 ranges between <strong className="text-slate-900 dark:text-white">$1,500 and $10,000 per month</strong> for a professional US digital marketing agency retainer. The exact investment depends on your market competition, technical complexity, and target organic revenue goals.
           </p>
+
+          {/* AI Overview / Generative AI Quick Verdict Box */}
+          <div className="p-6 sm:p-8 rounded-2xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 shadow-md">
+            <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wider mb-2">
+              <Sparkles className="w-4 h-4" /> Quick Summary: 2026 SEO Pricing at a Glance
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+              Standard Monthly SEO Retainer Benchmarks
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-4 pt-2">
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-400 uppercase">Local & SMB</span>
+                <div className="text-2xl font-black text-slate-900 dark:text-white font-mono mt-1">$1.5k – $3k <span className="text-xs font-normal text-slate-500">/mo</span></div>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Technical hygiene, local citation audit, Google Maps rank.</p>
+              </div>
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border-2 border-blue-600 dark:border-blue-500 shadow-sm">
+                <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase">Growth & B2B SaaS</span>
+                <div className="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono mt-1">$3.5k – $6.5k <span className="text-xs font-normal text-slate-500">/mo</span></div>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">GEO (ChatGPT/Perplexity citations), editorial hubs, backlink PR.</p>
+              </div>
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-400 uppercase">Enterprise</span>
+                <div className="text-2xl font-black text-slate-900 dark:text-white font-mono mt-1">$7.5k – $12.5k+ <span className="text-xs font-normal text-slate-500">/mo</span></div>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Programmatic clusters, multi-region hreflang, custom Next.js.</p>
+              </div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-blue-200/60 dark:border-blue-900/40 flex flex-col sm:flex-row justify-between items-center gap-3">
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                Hourly consultant rates average <strong>$125 – $300/hr</strong>. One-time technical audits average <strong>$3,500 – $7,500</strong>.
+              </p>
+              <Link href="/book-call" className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shrink-0 transition-all">
+                Book Free SEO Audit Call <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
 
           {/* Proof Block Above the Fold */}
           <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-blue-900/90 to-slate-900 text-white border border-blue-800/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">

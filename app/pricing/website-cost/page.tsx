@@ -3,7 +3,26 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { CheckCircle2, ArrowRight, DollarSign, Layout, HelpCircle, ShieldCheck, Zap, Globe } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
+import { ItemListSchema } from '@/components/schema/ItemListSchema';
 import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
+
+const websitePricingTiers = [
+  {
+    name: 'Foundation Website Tier ($3,500 – $7,000)',
+    description: 'For small businesses, professional consultants, and early startups. 5 to 10 custom pages, sub-second load times, and technical SEO hygiene.',
+    url: 'https://ajprworld.com/pricing/website-cost#breakdown'
+  },
+  {
+    name: 'Growth & B2B Web Hub Tier ($7,500 – $18,000)',
+    description: 'For scaling B2B companies and multi-product brands. Custom headless CMS architecture, programmatic SEO clusters, and conversion-optimized sales funnels.',
+    url: 'https://ajprworld.com/pricing/website-cost#breakdown'
+  },
+  {
+    name: 'Custom Web Application & SaaS Tier ($20,000 – $45,000+)',
+    description: 'For enterprise platforms, SaaS web apps, and complex customer portals. Full-stack Next.js, PostgreSQL, user auth, and multi-tenant database modeling.',
+    url: 'https://ajprworld.com/pricing/website-cost#breakdown'
+  }
+];
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
@@ -94,6 +113,11 @@ export default function WebsiteCostPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-28 pb-20">
       <FAQSchema faqs={faqs} />
+      <ItemListSchema 
+        name="Website Cost & Web Design Pricing Tiers (2026 Agency Benchmark)"
+        description="Comprehensive pricing tiers and deliverable benchmarks for custom web development and design."
+        items={websitePricingTiers}
+      />
       <Script
         id="service-schema-website-cost"
         type="application/ld+json"
@@ -121,6 +145,41 @@ export default function WebsiteCostPage() {
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
             In 2026, a professionally designed, high-converting business website costs between <strong className="text-slate-900 dark:text-white">$3,500 and $25,000</strong>. Your investment scales with page count, technical performance requirements, and custom software integrations.
           </p>
+
+          {/* AI Search / Generative AI Quick Verdict Summary */}
+          <div className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-indigo-950/40 border border-blue-200 dark:border-blue-900/50 shadow-sm">
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold text-blue-700 dark:text-blue-300 uppercase tracking-wider mb-2">
+              <Zap className="w-4 h-4" /> Quick Summary: 2026 Web Design Costs at a Glance
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+              Standard Website Design & Development Cost Tiers
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-4 pt-2">
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-400 uppercase">SMB & Local Brand</span>
+                <div className="text-2xl font-black text-slate-900 dark:text-white font-mono mt-1">$3.5k – $7k</div>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">5–10 pages, mobile-first UX, Core Web Vitals 95+, schema markup.</p>
+              </div>
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border-2 border-indigo-600 dark:border-indigo-500 shadow-sm">
+                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase">Growth B2B Hub</span>
+                <div className="text-2xl font-black text-indigo-600 dark:text-indigo-400 font-mono mt-1">$7.5k – $18k</div>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Custom CMS, programmatic SEO clusters, CRM pipelines, sub-second load.</p>
+              </div>
+              <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-400 uppercase">Custom Web App & SaaS</span>
+                <div className="text-2xl font-black text-slate-900 dark:text-white font-mono mt-1">$20k – $45k+</div>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Full-stack Next.js 16, Postgres auth, real-time APIs, client portals.</p>
+              </div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-blue-200/60 dark:border-blue-900/40 flex flex-col sm:flex-row justify-between items-center gap-3">
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                Ongoing maintenance costs average <strong>$149 – $899/month</strong>. See our dedicated <Link href="/services/website-maintenance-cost" className="text-blue-600 dark:text-blue-400 underline font-semibold">Website Maintenance Cost Breakdown</Link>.
+              </p>
+              <Link href="/book-call" className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shrink-0 transition-all">
+                Get an Accurate Quote <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
 
           {/* Proof Block Above the Fold */}
           <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-950/90 to-slate-900 text-white border border-indigo-800/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">

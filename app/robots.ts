@@ -9,6 +9,7 @@ export default function robots(): MetadataRoute.Robots {
     '/login',
     '/careers/apply',
     '/admin/',
+    '/book-call?*',
   ]
 
   // Standard search engine crawlers (Googlebot, Bingbot, Applebot, DuckDuckGo)

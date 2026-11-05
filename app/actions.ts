@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import nodemailer from 'nodemailer';
 
 import { getSession } from "@/lib/auth";
+import { requireAdminForAction } from "@/lib/admin/guard";
 
 export async function getSessionAction() {
     try {
@@ -292,8 +293,6 @@ export async function createClientAccount(data: any) {
     try {
         const hashedPassword = await bcrypt.hash(data.password, 10);
         await createClientProfile({ ...data, password: hashedPassword });
-        // TODO: Email the client their credentials (mocked for now)
-        console.log(`Email sent to ${data.email} with password: ${data.password}`);
         return { success: true };
     } catch (e) {
         console.error("Failed to create client account", e);
@@ -589,17 +588,24 @@ import { registerUser } from "@/lib/db/queries";
 export async function registerUserAction(formData: FormData) {
     try {
         const name = formData.get("name") as string;
-        const email = formData.get("email") as string;
+        const rawEmail = formData.get("email") as string;
         const password = formData.get("password") as string;
-        const role = formData.get("role") as string;
         
         const skills = formData.get("skills") as string;
         const portfolio_url = formData.get("portfolio_url") as string;
         const hourly_rate = formData.get("hourly_rate") ? parseInt(formData.get("hourly_rate") as string) : undefined;
 
-        if (!name || !email || !password || !role) {
+        if (!name || !rawEmail || !password) {
             return { error: "Missing required fields." };
         }
+
+        const email = rawEmail.trim().toLowerCase();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            return { error: "Invalid email address format." };
+        }
+
+        // Hardcode role to 'client' - public registration can never assign admin/developer roles
+        const role = 'client';
 
         const existingUser = await getUserByEmail(email);
         if (existingUser) {
@@ -643,23 +649,58 @@ import { updateUser, deleteUser, deleteProject } from "@/lib/db/queries";
 
 export async function updateUserAction(userId: number, data: any) {
     try {
-        const result = await updateUser(userId, data);
+        const admin = await requireAdminForAction();
+        
+        const targetId = Number(userId);
+        if (!targetId || isNaN(targetId) || targetId <= 0) {
+            return { success: false, error: "Invalid user ID" };
+        }
+
+        // Prevent modifying own administrative role
+        if (String(admin.id) === String(targetId) && data.role && data.role !== admin.role) {
+            return { success: false, error: "Cannot modify your own administrative role." };
+        }
+
+        const safeData: any = {};
+        if (typeof data.name === 'string') safeData.name = data.name.trim();
+        if (typeof data.email === 'string') safeData.email = data.email.trim().toLowerCase();
+        if (typeof data.role === 'string') {
+            if (!['client', 'developer', 'admin'].includes(data.role)) {
+                return { success: false, error: "Invalid role specified." };
+            }
+            safeData.role = data.role;
+        }
+        if (typeof data.status === 'string') safeData.status = data.status;
+
+        const result = await updateUser(targetId, safeData);
         revalidatePath('/dashboard/admin/users');
         return { success: true, user: result };
     } catch (e: any) {
         console.error("Failed to update user", e);
-        return { success: false, error: e.message };
+        return { success: false, error: e.message || "Failed to update user" };
     }
 }
 
 export async function deleteUserAction(userId: number) {
     try {
-        await deleteUser(userId);
+        const admin = await requireAdminForAction();
+
+        const targetId = Number(userId);
+        if (!targetId || isNaN(targetId) || targetId <= 0) {
+            return { success: false, error: "Invalid user ID" };
+        }
+
+        // Prevent deleting own administrative account
+        if (String(admin.id) === String(targetId)) {
+            return { success: false, error: "Cannot delete your own administrative account." };
+        }
+
+        await deleteUser(targetId);
         revalidatePath('/dashboard/admin/users');
         return { success: true };
     } catch (e: any) {
         console.error("Failed to delete user", e);
-        return { success: false, error: e.message };
+        return { success: false, error: e.message || "Failed to delete user" };
     }
 }
 

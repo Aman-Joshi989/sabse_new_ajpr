@@ -15,12 +15,21 @@ export async function generateMetadata(): Promise<Metadata> {
     seo = null;
   }
   
-  const title = seo?.title || `AJPR World - ${(path.split('/').pop() || '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`;
-  const description = seo?.description || `Discover more about ${(path.split('/').pop() || '').replace(/-/g, ' ')} at AJPR World.`;
+  const title = seo?.title || 'Web Dev Agency & Custom Web Engineering | AJPR World';
+  const description = seo?.description || 'Premier full-stack web dev agency specializing in high-performance Next.js web applications, modern React architecture, and rapid MVP engineering. 14–30 day delivery.';
   
   return {
     title,
     description,
+    keywords: [
+      'web dev agency',
+      'web development agency',
+      'senior web dev agency',
+      'custom web application development',
+      'Next.js web dev agency',
+      'full stack web development',
+      'software engineering agency'
+    ],
     alternates: { canonical: `https://ajprworld.com${path}` },
     openGraph: {
       title,

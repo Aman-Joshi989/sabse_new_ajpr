@@ -27,6 +27,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
             { name: 'Shopify SEO Agency', href: '/platforms/shopify-seo' },
             { name: 'Webflow Development & SEO', href: '/platforms/webflow-agency' },
             { name: 'Custom Web Dev', href: '/services/web-development' },
+            { name: 'Website Maintenance Cost', href: '/services/website-maintenance-cost' },
             { name: 'Digital Marketing', href: '/services/digital-marketing' },
         ];
 
@@ -48,6 +49,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         { name: 'Partner Program', href: '/affiliates' },
         { name: 'Pricing & Retainers', href: '/pricing' },
         { name: 'Agency Comparisons', href: '/compare' },
+        { name: 'Web Tonic Alternatives', href: '/compare/webtonic-alternatives' },
         { name: 'Portfolio', href: '/portfolio' },
         { name: 'Careers', href: '/careers' },
         { name: 'Contact', href: '/contact' },

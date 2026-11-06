@@ -87,7 +87,8 @@ export default function Header({ services }: { services?: any[] }) {
         { name: 'Packages & Transparent Pricing', href: '/pricing', icon_name: 'Briefcase', desc: 'Flat project sprints & monthly retainers' },
         { name: 'Website Cost Calculator', href: '/pricing/website-cost', icon_name: 'Scale', desc: 'Interactive breakdown for web builds' },
         { name: 'SEO & Growth Retainers', href: '/pricing/seo-cost', icon_name: 'TrendingUp', desc: 'ROI-driven organic search tiers' },
-        { name: 'Agency ROI Estimator', href: '/tools/agency-pricing-calculator', icon_name: 'ShieldCheck', desc: 'Compare in-house vs. senior agency ROI' }
+        { name: 'Agency ROI Estimator', href: '/tools/agency-pricing-calculator', icon_name: 'ShieldCheck', desc: 'Compare in-house vs. senior agency ROI' },
+        { name: 'Agency Comparisons Hub', href: '/compare', icon_name: 'Scale', desc: 'Objective agency alternatives & benchmark audits' }
     ];
 
     const resourceLinks = [

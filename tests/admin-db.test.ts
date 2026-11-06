@@ -35,3 +35,4 @@ test('verifyAdminSessionActive rejects nonexistent or deactivated users safely',
   const result = await verifyAdminSessionActive('00000000-0000-0000-0000-000000000000');
   assert.equal(result.valid, false);
 });
+

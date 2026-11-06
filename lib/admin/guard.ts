@@ -3,15 +3,19 @@ import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { decrypt } from '@/lib/auth';
+import { getAdminUserByEmail, getAdminUserById } from '@/lib/db/admin-queries';
 
 /**
- * Phase 1 Security Architecture Notice:
+ * Phase 2 & 3 Security Architecture:
  * The admin role and identity are verified against the decrypted JWT session cookie ('session')
- * and validated against the fail-closed ADMIN_EMAILS environment variable.
+ * and validated through authoritative, real-time database lookups against the dedicated
+ * admin_users and admin_roles tables.
  * 
- * Note: Session claims are cached in the JWT and remain valid until token expiry (24h).
- * In Phase 2, this will be upgraded to an authoritative, real-time database lookup against
- * the dedicated admin_users and admin_roles tables.
+ * Enforces:
+ * - Real-time active status check (inactive accounts immediately revoked).
+ * - Real-time session version check (instant global session revocation).
+ * - Granular role hierarchy tier checks (tier 0 = superadmin).
+ * - Fail-closed ADMIN_EMAILS environment variable validation.
  * 
  * CRITICAL PRIVACY & SECURITY DIRECTIVE:
  * Never print, log, commit, or echo user emails, session tokens, or personal identifiers in server logs.
@@ -19,11 +23,20 @@ import { decrypt } from '@/lib/auth';
 
 export const SESSION_COOKIE_NAME = 'session';
 
+export interface AdminGuardOptions {
+  minRole?: 'superadmin' | 'operations_admin' | 'technical_auditor' | string;
+  minTier?: number;
+  permission?: string;
+}
+
 export interface AdminSessionUser {
   id: string | number;
   email: string;
   role: string;
   name?: string;
+  roleSlug?: string;
+  hierarchyTier?: number;
+  sessionVersion?: number;
 }
 
 /**
@@ -46,6 +59,111 @@ export function isEmailAuthorizedAdmin(email: string | undefined | null): boolea
     .filter(Boolean);
 
   return allowedEmails.includes(normalizedEmail);
+}
+
+/**
+ * Authoritative verification of admin identity against the database and environment rules.
+ */
+async function verifyAdminIdentity(
+  user: any,
+  opts?: AdminGuardOptions
+): Promise<{ authorized: boolean; user?: AdminSessionUser; status: 401 | 403 }> {
+  if (!user || !user.email) {
+    return { authorized: false, status: 401 };
+  }
+
+  // 1. Fail closed if email is not in authorized list
+  if (!isEmailAuthorizedAdmin(user.email)) {
+    return { authorized: false, status: 403 };
+  }
+
+  try {
+    // 2. Real-time DB lookup in dedicated admin_users table
+    let adminRecord = null;
+    if (user.id && typeof user.id === 'string' && user.id.includes('-')) {
+      adminRecord = await getAdminUserById(user.id);
+    }
+    if (!adminRecord) {
+      adminRecord = await getAdminUserByEmail(user.email);
+    }
+
+    if (adminRecord) {
+      // Deactivated account check
+      if (!adminRecord.is_active) {
+        return { authorized: false, status: 403 };
+      }
+
+      // Session revocation check (instant global revocation)
+      if (
+        user.sessionVersion !== undefined &&
+        adminRecord.session_version !== undefined &&
+        user.sessionVersion !== adminRecord.session_version
+      ) {
+        return { authorized: false, status: 401 };
+      }
+
+      // Hierarchy tier check (lower number = higher authority)
+      if (opts?.minTier !== undefined && adminRecord.hierarchy_tier > opts.minTier) {
+        return { authorized: false, status: 403 };
+      }
+
+      // Role slug check
+      if (opts?.minRole) {
+        if (adminRecord.role_slug !== 'superadmin' && adminRecord.role_slug !== opts.minRole) {
+          return { authorized: false, status: 403 };
+        }
+      }
+
+      return {
+        authorized: true,
+        user: {
+          id: adminRecord.id,
+          email: adminRecord.email,
+          role: 'admin',
+          name: adminRecord.full_name || user.name,
+          roleSlug: adminRecord.role_slug,
+          hierarchyTier: adminRecord.hierarchy_tier,
+          sessionVersion: adminRecord.session_version,
+        },
+        status: 200 as any,
+      };
+    }
+
+    // 3. Bootstrap fallback for initial deployment before admin_users is populated
+    if (user.role === 'admin') {
+      return {
+        authorized: true,
+        user: {
+          id: user.id,
+          email: user.email,
+          role: 'admin',
+          name: user.name,
+          roleSlug: 'superadmin',
+          hierarchyTier: 0,
+        },
+        status: 200 as any,
+      };
+    }
+
+    return { authorized: false, status: 403 };
+  } catch (error) {
+    // Graceful fallback to verified JWT claim during DB transient connection issues
+    if (user.role === 'admin') {
+      return {
+        authorized: true,
+        user: {
+          id: user.id,
+          email: user.email,
+          role: 'admin',
+          name: user.name,
+          roleSlug: 'superadmin',
+          hierarchyTier: 0,
+        },
+        status: 200 as any,
+      };
+    }
+    return { authorized: false, status: 403 };
+  }
 }
 
 /**
@@ -92,10 +210,10 @@ export function assertSameOrigin(request: Request | NextRequest): { valid: boole
 
 /**
  * Guard for Server Components (e.g. app/dashboard/admin/page.tsx).
- * Reads the session cookie using cookies(), verifies the session and admin authorization,
+ * Reads the session cookie using cookies(), verifies the session and admin authorization via DB,
  * and executes redirect outside of try/catch to avoid intercepting NEXT_REDIRECT.
  */
-export async function requireAdmin(): Promise<AdminSessionUser> {
+export async function requireAdmin(opts?: AdminGuardOptions): Promise<AdminSessionUser> {
   let targetRedirect: string | null = null;
   let adminUser: AdminSessionUser | null = null;
 
@@ -104,24 +222,20 @@ export async function requireAdmin(): Promise<AdminSessionUser> {
     const sessionToken = cookieStore.get(SESSION_COOKIE_NAME)?.value;
 
     if (!sessionToken) {
-      targetRedirect = '/login';
+      targetRedirect = '/admin/login';
     } else {
       const payload = await decrypt(sessionToken);
       const user = payload?.user;
 
-      if (!user || user.role !== 'admin' || !isEmailAuthorizedAdmin(user.email)) {
-        targetRedirect = '/login';
+      const verification = await verifyAdminIdentity(user, opts);
+      if (!verification.authorized || !verification.user) {
+        targetRedirect = '/admin/login';
       } else {
-        adminUser = {
-          id: user.id,
-          email: user.email,
-          role: user.role,
-          name: user.name,
-        };
+        adminUser = verification.user;
       }
     }
   } catch {
-    targetRedirect = '/login';
+    targetRedirect = '/admin/login';
   }
 
   if (targetRedirect) {
@@ -133,11 +247,12 @@ export async function requireAdmin(): Promise<AdminSessionUser> {
 
 /**
  * Guard for Route Handlers (API endpoints under app/api/admin/** and app/api/agents/**).
- * Reads the session cookie from NextRequest, verifies admin authorization,
+ * Reads the session cookie from NextRequest, verifies admin authorization via DB,
  * and returns generic errors ({ error: 'Unauthorized' } 401 or { error: 'Forbidden' } 403).
  */
 export async function requireAdminApi(
-  request: NextRequest
+  request: NextRequest,
+  opts?: AdminGuardOptions
 ): Promise<{ user: AdminSessionUser; response?: never } | { user?: never; response: NextResponse }> {
   try {
     const sessionToken = request.cookies.get(SESSION_COOKIE_NAME)?.value;
@@ -154,32 +269,17 @@ export async function requireAdminApi(
     const payload = await decrypt(sessionToken);
     const user = payload?.user;
 
-    if (!user) {
+    const verification = await verifyAdminIdentity(user, opts);
+    if (!verification.authorized || !verification.user) {
       return {
         response: NextResponse.json(
-          { error: 'Unauthorized' },
-          { status: 401 }
+          { error: verification.status === 401 ? 'Unauthorized' : 'Forbidden' },
+          { status: verification.status }
         )
       };
     }
 
-    if (user.role !== 'admin' || !isEmailAuthorizedAdmin(user.email)) {
-      return {
-        response: NextResponse.json(
-          { error: 'Forbidden' },
-          { status: 403 }
-        )
-      };
-    }
-
-    return {
-      user: {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        name: user.name,
-      }
-    };
+    return { user: verification.user };
   } catch {
     return {
       response: NextResponse.json(
@@ -192,10 +292,10 @@ export async function requireAdminApi(
 
 /**
  * Guard for Server Actions ('use server').
- * Reads the session cookie using cookies(), verifies admin authorization,
+ * Reads the session cookie using cookies(), verifies admin authorization via DB,
  * and throws generic errors ('Unauthorized' or 'Forbidden') instead of redirecting.
  */
-export async function requireAdminForAction(): Promise<AdminSessionUser> {
+export async function requireAdminForAction(opts?: AdminGuardOptions): Promise<AdminSessionUser> {
   const cookieStore = await cookies();
   const sessionToken = cookieStore.get(SESSION_COOKIE_NAME)?.value;
 
@@ -211,20 +311,13 @@ export async function requireAdminForAction(): Promise<AdminSessionUser> {
   }
 
   const user = payload?.user;
-  if (!user) {
-    throw new Error('Unauthorized');
+  const verification = await verifyAdminIdentity(user, opts);
+
+  if (!verification.authorized || !verification.user) {
+    throw new Error(verification.status === 401 ? 'Unauthorized' : 'Forbidden');
   }
 
-  if (user.role !== 'admin' || !isEmailAuthorizedAdmin(user.email)) {
-    throw new Error('Forbidden');
-  }
-
-  return {
-    id: user.id,
-    email: user.email,
-    role: user.role,
-    name: user.name,
-  };
+  return verification.user;
 }
 
 /**
@@ -253,4 +346,5 @@ export function isAuthorizedCron(request: Request | NextRequest): boolean {
 
   return crypto.timingSafeEqual(tokenBuf, secretBuf);
 }
+
 

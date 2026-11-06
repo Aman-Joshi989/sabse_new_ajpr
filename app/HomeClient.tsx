@@ -969,6 +969,13 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                   Rootstrap Alternatives (AI Studio Evaluation)
                 </Link>
                 <Link
+                  href="/compare/altar-io-alternatives"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-slate-200 dark:border-slate-800"
+                >
+                  <ArrowUpRight className="w-3 h-3 text-blue-500" />
+                  Altar.io Alternatives (Startup Studio Review)
+                </Link>
+                <Link
                   href="/compare/webtonic-alternatives"
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-slate-200 dark:border-slate-800"
                 >

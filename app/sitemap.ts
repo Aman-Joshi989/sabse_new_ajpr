@@ -306,6 +306,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.95,
     },
     {
+      url: `${baseUrl}/compare/altar-io-alternatives`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
       url: `${baseUrl}/compare/webfx-alternatives`,
       lastModified: new Date(),
       changeFrequency: 'weekly',

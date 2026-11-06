@@ -43,6 +43,11 @@ const comparisonItemList = [
     url: 'https://ajprworld.com/compare/rootstrap-alternatives'
   },
   {
+    name: 'Altar.io Alternatives: 2026 Startup Studio Evaluation',
+    description: 'Compare Altar.io $40k–$90k discovery and development quotes with AJPR World fixed 2–4 week AI sprints ($4,500).',
+    url: 'https://ajprworld.com/compare/altar-io-alternatives'
+  },
+  {
     name: 'Web Tonic Alternatives: 2026 Agency Evaluation',
     description: 'Detailed analysis of Web Tonic regional trade focus vs full-stack custom engineering and transparent retainers.',
     url: 'https://ajprworld.com/compare/webtonic-alternatives'
@@ -72,6 +77,14 @@ const comparisons = [
     description: 'Compare Rootstrap pricing ($50k–$150k) and 4-month timelines with AJPR World guaranteed 2–4 week AI MVP sprints, Next.js 16 architecture, and $4,500 fixed pricing.',
     badge: 'AI Studio Review #1',
     highlights: ['2–4 Week Sprints', '70% Cost Reduction ($4,500)', 'Next.js 16 + pgvector', '100% Client Repo Transfer']
+  },
+  {
+    title: 'Altar.io Alternatives: 2026 Startup Studio Evaluation',
+    slug: '/compare/altar-io-alternatives',
+    target: 'Altar.io vs AJPR World vs Traditional Consultancies',
+    description: 'Evaluate Altar.io discovery workshops ($40k–$90k) against AJPR World 2–4 week production AI MVP delivery, full TypeScript stack, and zero discovery bloat.',
+    badge: 'MVP Studio Review #2',
+    highlights: ['2–4 Week Build', '$4,500 Fixed Sprints', 'Next.js 16 + React 19', 'Full Code Ownership']
   },
   {
     title: 'Web Tonic Alternatives: 2026 Agency Evaluation',

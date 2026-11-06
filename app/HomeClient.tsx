@@ -792,13 +792,58 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               </div>
             </div>
 
-            <div className="text-center">
-              <Link 
-                href="/pricing" 
-                className="inline-flex items-center gap-1.5 text-xs md:text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                View all packages, website cost calculators & detailed breakdown <ArrowRight className="w-4 h-4" />
-              </Link>
+            {/* Investment Benchmarks & Calculator Direct Access */}
+            <div className="pt-8 border-t border-slate-200 dark:border-slate-800 space-y-4">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                <div>
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Transparent Engineering Benchmarks</span>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Explore interactive calculators and 2026 pricing breakdowns:</p>
+                </div>
+                <Link 
+                  href="/pricing" 
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline shrink-0"
+                >
+                  View Full Pricing & Retainers <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <Link
+                  href="/pricing/website-cost"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all shadow-sm"
+                >
+                  <Calculator className="w-3.5 h-3.5 text-blue-500" />
+                  Website Cost Calculator (2026)
+                </Link>
+                <Link
+                  href="/pricing/seo-cost"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all shadow-sm"
+                >
+                  <DollarSign className="w-3.5 h-3.5 text-emerald-500" />
+                  SEO & AI Search Retainer Pricing
+                </Link>
+                <Link
+                  href="/services/website-maintenance-cost"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all shadow-sm"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-500" />
+                  Website Maintenance Cost Breakdown
+                </Link>
+                <Link
+                  href="/tools/agency-pricing-calculator"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all shadow-sm"
+                >
+                  <Zap className="w-3.5 h-3.5 text-amber-500" />
+                  Agency vs In-House ROI Estimator
+                </Link>
+                <Link
+                  href="/tools/saas-bloat-audit"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all shadow-sm"
+                >
+                  <Cpu className="w-3.5 h-3.5 text-purple-500" />
+                  SaaS Bloat & Waste Audit Tool
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -896,16 +941,48 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               </table>
             </div>
 
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800">
-              <span className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300">
-                Want to read our in-depth breakdown of legacy agency models and proprietary software lock-in?
-              </span>
-              <Link
-                href="/compare/webfx-alternatives"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline shrink-0"
-              >
-                Read WebFX Alternatives Guide <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+            {/* Agency Comparisons & Alternative Audits */}
+            <div className="mt-8 p-6 rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                    Objective Agency Alternatives & Architecture Audits
+                  </h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    Independent breakdowns of trade agencies, legacy retainers, and proprietary software lock-in:
+                  </p>
+                </div>
+                <Link
+                  href="/compare"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline shrink-0"
+                >
+                  View All Agency Comparisons <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <Link
+                  href="/compare/webtonic-alternatives"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-slate-200 dark:border-slate-800"
+                >
+                  <ArrowUpRight className="w-3 h-3 text-blue-500" />
+                  Web Tonic Alternatives (2026 Evaluation)
+                </Link>
+                <Link
+                  href="/compare/webfx-alternatives"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-slate-200 dark:border-slate-800"
+                >
+                  <ArrowUpRight className="w-3 h-3 text-blue-500" />
+                  WebFX Alternatives & Retainer Audit
+                </Link>
+                <Link
+                  href="/services/website-security-maintenance"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-slate-200 dark:border-slate-800"
+                >
+                  <ShieldCheck className="w-3 h-3 text-emerald-500" />
+                  Website Security & 24/7 SLA Guarantee
+                </Link>
+              </div>
             </div>
           </div>
         </section>

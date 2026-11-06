@@ -1,6 +1,7 @@
 import HomeClient from './HomeClient'
 import { getPublishedServices, getBlogs, getSiteSettings, getSeoMetadata } from '@/lib/db/queries'
 import { FAQSchema } from '@/components/schema/FAQSchema'
+import { ItemListSchema } from '@/components/schema/ItemListSchema'
 import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
 import type { Metadata } from 'next'
 
@@ -29,6 +30,48 @@ export default async function HomePage() {
   return (
     <>
       <FAQSchema faqs={HOMEPAGE_FAQS} />
+      <ItemListSchema
+        name="AJPR World Commercial Engineering Capabilities & Investment Benchmarks"
+        description="Core digital engineering sprints, custom AI architectures, website cost calculators, and agency alternative evaluations by AJPR World."
+        items={[
+          {
+            name: "Custom AI MVP Development Sprints",
+            description: "Production-ready AI architectures and functional web MVPs delivered in 2 to 4 weeks with complete GitHub repository and IP transfer.",
+            url: "https://ajprworld.com/ai-systems",
+            position: 1,
+          },
+          {
+            name: "Full-Stack Web Engineering & Next.js Systems",
+            description: "Sub-second Next.js web applications, PostgreSQL architecture, custom API backends, and 99+ Core Web Vitals performance.",
+            url: "https://ajprworld.com/services/web-development",
+            position: 2,
+          },
+          {
+            name: "Website Development Cost Calculator (2026)",
+            description: "Interactive cost breakdown for web builds, comparing $3,500 SMB platforms against $20,000+ enterprise custom applications.",
+            url: "https://ajprworld.com/pricing/website-cost",
+            position: 3,
+          },
+          {
+            name: "SEO & Generative Engine Optimization Retainers",
+            description: "ROI-driven organic search and AI search engine citation retainers starting from $1,500/month for high-growth businesses.",
+            url: "https://ajprworld.com/pricing/seo-cost",
+            position: 4,
+          },
+          {
+            name: "Website Maintenance & Security Cost Guide",
+            description: "Transparent maintenance pricing ($149 – $899/mo) and 24/7 security SLA guarantees vs unpredictable emergency agency rates.",
+            url: "https://ajprworld.com/services/website-maintenance-cost",
+            position: 5,
+          },
+          {
+            name: "Objective Agency Alternative Comparisons",
+            description: "Independent evaluation matrix comparing Web Tonic and WebFX legacy retainer lock-ins with AJPR World modern engineering.",
+            url: "https://ajprworld.com/compare",
+            position: 6,
+          },
+        ]}
+      />
       <HomeClient 
         services={services} 
         blogs={blogs} 

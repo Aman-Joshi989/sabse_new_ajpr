@@ -1,6 +1,6 @@
 import React from 'react';
 import { requireAdmin } from '@/lib/admin/guard';
-import { getAdminTwoFactorState, getAdminAuditLogs } from '@/lib/db/admin-queries';
+import { getAdminTwoFactorState, getAdminAuditLogs, listAdminUsers } from '@/lib/db/admin-queries';
 import AdminSecurityClient from './AdminSecurityClient';
 
 export const metadata = {
@@ -25,7 +25,10 @@ export default async function AdminSecurityPage() {
     }
   }
 
-  const auditLogs = await getAdminAuditLogs(25);
+  const [auditLogs, adminUsers] = await Promise.all([
+    getAdminAuditLogs(25),
+    listAdminUsers(),
+  ]);
 
   return (
     <div className="p-6 md:p-10">
@@ -33,8 +36,11 @@ export default async function AdminSecurityPage() {
         initialTwoFactorEnabled={initialTwoFactorEnabled}
         initialBackupCodesCount={initialBackupCodesCount}
         adminEmail={admin.email}
+        actorTier={admin.hierarchyTier ?? 0}
         auditLogs={auditLogs}
+        initialAdminUsers={adminUsers}
       />
     </div>
   );
 }
+

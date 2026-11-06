@@ -3,3 +3,4 @@
 
 ALTER TABLE admin_users 
 DROP COLUMN IF EXISTS two_factor_backup_codes;
+

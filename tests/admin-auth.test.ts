@@ -5,6 +5,7 @@ import { encrypt } from '../lib/auth';
 import { NextRequest } from 'next/server';
 import { GET as getResume } from '../app/api/admin/download-resume/route';
 import { POST as postTrigger } from '../app/api/admin/trigger-agent/route';
+import { canAdminActOnTargetTier } from '../lib/db/admin-queries';
 
 test('Route handlers enforce requireAdminApi defense-in-depth', async () => {
   const unauthReq = new NextRequest('https://example.com/api/admin/download-resume?url=https://xyz.blob.vercel-storage.com/resumes/test.pdf');
@@ -108,7 +109,25 @@ test('requireAdminApi validates admin session and role hierarchy options', async
     } else {
       assert.fail('Expected authorized=false for unauthenticated request');
     }
+
+    // 8. Granular RBAC permission check (superadmin automatically satisfies all permissions)
+    const checkPerm = await requireAdminApi(validReq, { permission: 'agents:trigger' });
+    assert.equal(Boolean(checkPerm.user), true);
   } finally {
     process.env.ADMIN_EMAILS = orig;
   }
+});
+
+test('canAdminActOnTargetTier enforces strict hierarchy boundary', () => {
+  // Superadmin (Tier 0) can manage lower tiers
+  assert.equal(canAdminActOnTargetTier(0, 1), true);
+  assert.equal(canAdminActOnTargetTier(0, 5), true);
+
+  // Lower tier cannot manage higher tier
+  assert.equal(canAdminActOnTargetTier(1, 0), false);
+  assert.equal(canAdminActOnTargetTier(5, 1), false);
+
+  // Equal tier cannot modify equal tier
+  assert.equal(canAdminActOnTargetTier(0, 0), false);
+  assert.equal(canAdminActOnTargetTier(1, 1), false);
 });

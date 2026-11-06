@@ -16,7 +16,12 @@ import {
   disableAdminTwoFactor,
   updateAdminBackupCodes,
   createAdminAuditLog,
+  listAdminUsers,
+  getAdminUserById,
+  canAdminActOnTargetTier,
+  AdminUserRecord,
 } from '@/lib/db/admin-queries';
+import { isEmailAuthorizedAdmin } from '@/lib/admin/guard';
 import { encrypt, decrypt } from '@/lib/auth';
 import { sql } from '@/lib/db/queries';
 
@@ -224,3 +229,162 @@ export async function regenerateBackupCodesAction(
     return { error: error.message || 'Failed to regenerate backup codes' };
   }
 }
+
+/**
+ * Lists all registered administrators and their roles.
+ * Protected by 'security:manage' permission.
+ */
+export async function listAdminUsersAction(): Promise<{ success: boolean; users?: AdminUserRecord[]; error?: string }> {
+  try {
+    await requireAdminForAction({ permission: 'security:manage' });
+    const users = await listAdminUsers();
+    return { success: true, users };
+  } catch (error: any) {
+    return { success: false, error: error.message || 'Unauthorized' };
+  }
+}
+
+/**
+ * Activates or deactivates an administrator with strict hierarchy boundary checks.
+ * Deactivation immediately increments session_version, causing immediate session revocation.
+ */
+export async function toggleAdminUserActiveAction(
+  targetAdminId: string,
+  active: boolean
+): Promise<{ success?: boolean; error?: string }> {
+  try {
+    const actor = await requireAdminForAction({ permission: 'security:manage' });
+    const reqHeaders = await headers();
+    const forwarded = reqHeaders.get('x-forwarded-for');
+    const ipAddress = forwarded ? forwarded.split(',')[0].trim() : (reqHeaders.get('x-real-ip') || '127.0.0.1');
+    const userAgent = reqHeaders.get('user-agent') || 'unknown';
+
+    const target = await getAdminUserById(targetAdminId);
+    if (!target) {
+      return { error: 'Administrator not found' };
+    }
+
+    // Hierarchy boundary check: actor cannot modify equal or higher tier
+    const actorTier = actor.hierarchyTier ?? 99;
+    if (!canAdminActOnTargetTier(actorTier, target.hierarchy_tier)) {
+      await createAdminAuditLog({
+        adminId: String(actor.id),
+        adminEmail: actor.email,
+        action: 'ADMIN_HIERARCHY_VIOLATION_BLOCKED',
+        ipAddress,
+        userAgent,
+        metadata: {
+          targetId: target.id,
+          targetTier: target.hierarchy_tier,
+          actorTier,
+        },
+      });
+      return { error: 'Hierarchy Boundary Violation: You cannot modify an administrator of equal or greater authority.' };
+    }
+
+    // Toggle active status and increment session_version for instant revocation
+    await sql`
+      UPDATE admin_users
+      SET 
+        is_active = ${active},
+        session_version = session_version + 1,
+        updated_at = NOW()
+      WHERE id = ${targetAdminId};
+    `;
+
+    await createAdminAuditLog({
+      adminId: String(actor.id),
+      adminEmail: actor.email,
+      action: active ? 'ADMIN_USER_ACTIVATED' : 'ADMIN_USER_DEACTIVATED',
+      targetType: 'ADMIN_USER',
+      targetId: target.id,
+      ipAddress,
+      userAgent,
+      metadata: { targetEmail: target.email, newStatus: active },
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message || 'Failed to update administrator status' };
+  }
+}
+
+/**
+ * Creates a new administrator with strict tier boundary validation.
+ */
+export async function createAdminUserAction(data: {
+  email: string;
+  password: string;
+  fullName: string;
+  roleSlug: string;
+}): Promise<{ success?: boolean; error?: string }> {
+  try {
+    const actor = await requireAdminForAction({ permission: 'security:manage' });
+    const reqHeaders = await headers();
+    const forwarded = reqHeaders.get('x-forwarded-for');
+    const ipAddress = forwarded ? forwarded.split(',')[0].trim() : (reqHeaders.get('x-real-ip') || '127.0.0.1');
+    const userAgent = reqHeaders.get('user-agent') || 'unknown';
+
+    const cleanEmail = (data.email || '').trim().toLowerCase();
+    if (!cleanEmail || !data.password || !data.roleSlug) {
+      return { error: 'All fields are required' };
+    }
+
+    if (!isEmailAuthorizedAdmin(cleanEmail)) {
+      return { error: 'Email address is not in the authorized ADMIN_EMAILS environment allowlist.' };
+    }
+
+    // Role lookup
+    const roleRows = await sql`
+      SELECT id, hierarchy_tier FROM admin_roles WHERE slug = ${data.roleSlug} LIMIT 1;
+    `;
+    if (!roleRows || roleRows.length === 0) {
+      return { error: 'Invalid administrative role selected' };
+    }
+    const role = roleRows[0];
+
+    // Hierarchy boundary check: actor cannot create a role of equal or higher authority
+    const actorTier = actor.hierarchyTier ?? 99;
+    if (!canAdminActOnTargetTier(actorTier, role.hierarchy_tier)) {
+      return { error: 'Cannot create an administrator with equal or greater authority than your own tier.' };
+    }
+
+    const passwordHash = await bcrypt.hash(data.password, 12);
+
+    await sql`
+      INSERT INTO admin_users (
+        email,
+        password_hash,
+        full_name,
+        role_id,
+        is_active,
+        two_factor_enabled
+      ) VALUES (
+        ${cleanEmail},
+        ${passwordHash},
+        ${data.fullName.trim() || null},
+        ${role.id},
+        true,
+        false
+      );
+    `;
+
+    await createAdminAuditLog({
+      adminId: String(actor.id),
+      adminEmail: actor.email,
+      action: 'ADMIN_USER_CREATED',
+      targetType: 'ADMIN_USER',
+      ipAddress,
+      userAgent,
+      metadata: { newAdminEmail: cleanEmail, role: data.roleSlug },
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    if (error.message?.includes('unique constraint') || error.code === '23505') {
+      return { error: 'An administrator with this email already exists.' };
+    }
+    return { error: error.message || 'Failed to create administrator' };
+  }
+}
+

@@ -50,3 +50,20 @@ test('Migration 002 UP and DOWN files exist and define two_factor_backup_codes c
   assert.ok(downSql.includes('DROP COLUMN IF EXISTS two_factor_backup_codes'));
 });
 
+test('Migration 003 UP and DOWN files exist and seed RBAC permissions', () => {
+  const upFile = path.resolve(process.cwd(), 'migrations/003_seed_admin_rbac_permissions.sql');
+  const downFile = path.resolve(process.cwd(), 'migrations/003_seed_admin_rbac_permissions_down.sql');
+
+  assert.equal(fs.existsSync(upFile), true);
+  assert.equal(fs.existsSync(downFile), true);
+
+  const upSql = fs.readFileSync(upFile, 'utf8');
+  assert.ok(upSql.includes('INSERT INTO admin_permissions'));
+  assert.ok(upSql.includes('agents:trigger'));
+  assert.ok(upSql.includes('resumes:download'));
+  assert.ok(upSql.includes('security:manage'));
+
+  const downSql = fs.readFileSync(downFile, 'utf8');
+  assert.ok(downSql.includes('DELETE FROM admin_permissions'));
+});
+

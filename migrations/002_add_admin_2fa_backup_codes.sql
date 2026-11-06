@@ -3,3 +3,4 @@
 
 ALTER TABLE admin_users 
 ADD COLUMN IF NOT EXISTS two_factor_backup_codes JSONB DEFAULT '[]'::jsonb;
+

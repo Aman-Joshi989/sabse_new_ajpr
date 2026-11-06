@@ -264,3 +264,4 @@ export function verifyAndConsumeBackupCode(
   const remainingHashes = storedHashes.filter((_, idx) => idx !== matchIndex);
   return { valid: true, remainingHashes };
 }
+

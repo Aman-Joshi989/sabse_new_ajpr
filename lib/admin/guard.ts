@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { decrypt } from '@/lib/auth';
-import { getAdminUserByEmail, getAdminUserById } from '@/lib/db/admin-queries';
+import { getAdminUserByEmail, getAdminUserById, hasAdminPermission } from '@/lib/db/admin-queries';
 
 /**
  * Phase 2 & 3 Security Architecture:
@@ -111,6 +111,16 @@ async function verifyAdminIdentity(
       if (opts?.minRole) {
         if (adminRecord.role_slug !== 'superadmin' && adminRecord.role_slug !== opts.minRole) {
           return { authorized: false, status: 403 };
+        }
+      }
+
+      // Granular RBAC permission check
+      if (opts?.permission) {
+        if (adminRecord.role_slug !== 'superadmin' && adminRecord.hierarchy_tier !== 0) {
+          const hasPerm = await hasAdminPermission(adminRecord.id, opts.permission);
+          if (!hasPerm) {
+            return { authorized: false, status: 403 };
+          }
         }
       }
 

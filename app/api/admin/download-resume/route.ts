@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdminApi } from '@/lib/admin/guard';
 
 export async function GET(req: NextRequest) {
-  const adminCheck = await requireAdminApi(req);
+  const adminCheck = await requireAdminApi(req, { permission: 'resumes:download' });
   if (!adminCheck.authorized) {
     return adminCheck.response;
   }

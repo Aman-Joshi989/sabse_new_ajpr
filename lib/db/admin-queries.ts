@@ -97,6 +97,33 @@ export async function getAdminUserById(id: string): Promise<AdminUserRecord | nu
 }
 
 /**
+ * Loads all admin users and their assigned roles.
+ * Never returns password hashes or 2FA secrets.
+ */
+export async function listAdminUsers(): Promise<AdminUserRecord[]> {
+  const rows = await sql`
+    SELECT 
+      u.id,
+      u.email,
+      u.full_name,
+      u.role_id,
+      r.slug AS role_slug,
+      r.name AS role_name,
+      r.hierarchy_tier,
+      u.is_active,
+      u.two_factor_enabled,
+      u.session_version,
+      u.last_login_at,
+      u.created_at,
+      u.updated_at
+    FROM admin_users u
+    JOIN admin_roles r ON u.role_id = r.id
+    ORDER BY r.hierarchy_tier ASC, u.created_at ASC;
+  `;
+  return rows || [];
+}
+
+/**
  * Verifies that an admin user exists, is active, and the session version matches.
  * Used by requireAdmin() to enforce immediate session revocation.
  */
@@ -120,6 +147,54 @@ export async function verifyAdminSessionActive(
     console.error('Error verifying admin session in DB:', error);
     return { valid: false, reason: 'Database error' };
   }
+}
+
+/**
+ * Retrieves the list of permission slugs granted to an admin user.
+ * Superadmin (tier 0) returns wildcard ['*'] which satisfies any permission.
+ */
+export async function getAdminPermissions(adminId: string): Promise<string[]> {
+  try {
+    const admin = await getAdminUserById(adminId);
+    if (!admin) return [];
+
+    // Superadmin has absolute authority over all actions
+    if (admin.role_slug === 'superadmin' || admin.hierarchy_tier === 0) {
+      return ['*'];
+    }
+
+    const rows = await sql`
+      SELECT p.slug
+      FROM admin_role_permissions rp
+      JOIN admin_permissions p ON rp.permission_id = p.id
+      WHERE rp.role_id = ${admin.role_id};
+    `;
+
+    return (rows || []).map((r: any) => r.slug);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Checks whether an admin possesses a specific permission.
+ */
+export async function hasAdminPermission(
+  adminId: string,
+  permissionSlug: string
+): Promise<boolean> {
+  const permissions = await getAdminPermissions(adminId);
+  return permissions.includes('*') || permissions.includes(permissionSlug);
+}
+
+/**
+ * Validates strict hierarchy boundary:
+ * An administrator can only act upon (modify, promote, deactivate) a target
+ * if their hierarchy tier is strictly higher in authority (lower number).
+ * Tier 0 (superadmin) can act on tiers 1+, but tier 1 cannot act on tier 0 or tier 1.
+ */
+export function canAdminActOnTargetTier(actorTier: number, targetTier: number): boolean {
+  return actorTier < targetTier;
 }
 
 /**

@@ -3,8 +3,8 @@ import { requireAdminApi, assertSameOrigin } from '@/lib/admin/guard';
 import { insertAgentLog } from '@/lib/db/queries';
 
 export async function POST(req: NextRequest) {
-  // Defense in depth: Verify admin session
-  const adminCheck = await requireAdminApi(req);
+  // Defense in depth: Verify admin session and agents:trigger permission
+  const adminCheck = await requireAdminApi(req, { permission: 'agents:trigger' });
   if (!adminCheck.authorized) {
     return adminCheck.response;
   }

@@ -7,25 +7,42 @@ import {
   confirmTwoFactorEnrollmentAction,
   disableTwoFactorAction,
   regenerateBackupCodesAction,
+  toggleAdminUserActiveAction,
+  createAdminUserAction,
   SetupTwoFactorResult,
 } from './actions';
-import { AdminAuditLogEntry } from '@/lib/db/admin-queries';
+import { AdminAuditLogEntry, AdminUserRecord } from '@/lib/db/admin-queries';
 
 interface AdminSecurityClientProps {
   initialTwoFactorEnabled: boolean;
   initialBackupCodesCount: number;
   adminEmail: string;
+  actorTier: number;
   auditLogs: AdminAuditLogEntry[];
+  initialAdminUsers: AdminUserRecord[];
 }
 
 export default function AdminSecurityClient({
   initialTwoFactorEnabled,
   initialBackupCodesCount,
   adminEmail,
+  actorTier,
   auditLogs,
+  initialAdminUsers,
 }: AdminSecurityClientProps) {
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(initialTwoFactorEnabled);
   const [backupCodesCount, setBackupCodesCount] = useState(initialBackupCodesCount);
+  const [adminUsers, setAdminUsers] = useState<AdminUserRecord[]>(initialAdminUsers || []);
+  
+  // Create Admin Modal state
+  const [showAddAdminModal, setShowAddAdminModal] = useState(false);
+  const [newAdminEmail, setNewAdminEmail] = useState('');
+  const [newAdminPassword, setNewAdminPassword] = useState('');
+  const [newAdminName, setNewAdminName] = useState('');
+  const [newAdminRole, setNewAdminRole] = useState('operations_admin');
+  const [addAdminError, setAddAdminError] = useState('');
+  const [isAddingAdmin, setIsAddingAdmin] = useState(false);
+  const [togglingAdminId, setTogglingAdminId] = useState<string | null>(null);
   
   // Enrollment state
   const [isEnrolling, setIsEnrolling] = useState(false);
@@ -117,6 +134,41 @@ export default function AdminSecurityClient({
       setBackupCodesCount(res.plaintextBackupCodes?.length || 8);
       setNewBackupCodes(res.plaintextBackupCodes || []);
       setRegenPassword('');
+    }
+  };
+
+  const handleToggleActive = async (adminId: string, currentStatus: boolean) => {
+    setTogglingAdminId(adminId);
+    const res = await toggleAdminUserActiveAction(adminId, !currentStatus);
+    setTogglingAdminId(null);
+    if (res?.success) {
+      setAdminUsers((prev) =>
+        prev.map((u) => (u.id === adminId ? { ...u, is_active: !currentStatus } : u))
+      );
+    } else if (res?.error) {
+      alert(res.error);
+    }
+  };
+
+  const handleCreateAdmin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsAddingAdmin(true);
+    setAddAdminError('');
+    const res = await createAdminUserAction({
+      email: newAdminEmail,
+      password: newAdminPassword,
+      fullName: newAdminName,
+      roleSlug: newAdminRole,
+    });
+    setIsAddingAdmin(false);
+    if (res?.error) {
+      setAddAdminError(res.error);
+    } else {
+      setShowAddAdminModal(false);
+      setNewAdminEmail('');
+      setNewAdminPassword('');
+      setNewAdminName('');
+      window.location.reload();
     }
   };
 
@@ -367,6 +419,109 @@ export default function AdminSecurityClient({
         )}
       </div>
 
+      {/* Administrative Team & Role Hierarchy Card */}
+      <div className="bg-white dark:bg-[#292A2D] border border-slate-200 dark:border-[#3C4043] rounded-2xl p-6 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              Administrative Team &amp; RBAC Hierarchy
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Granular clearance tiers and active status controls. Lower tiers cannot modify higher tiers.
+            </p>
+          </div>
+          {actorTier === 0 && (
+            <button
+              onClick={() => setShowAddAdminModal(true)}
+              className="px-3.5 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-medium text-xs rounded-xl shadow-sm transition-all shrink-0 cursor-pointer"
+            >
+              + Add Administrator
+            </button>
+          )}
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs font-mono">
+            <thead>
+              <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-400">
+                <th className="py-2.5 px-3">Identity</th>
+                <th className="py-2.5 px-3">Role</th>
+                <th className="py-2.5 px-3">Tier</th>
+                <th className="py-2.5 px-3">2FA</th>
+                <th className="py-2.5 px-3">Status</th>
+                <th className="py-2.5 px-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
+              {adminUsers.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-6 text-center text-slate-400">No administrators loaded.</td>
+                </tr>
+              ) : (
+                adminUsers.map((admin) => {
+                  const canAct = actorTier < admin.hierarchy_tier;
+                  const isCurrentSelf = admin.email.toLowerCase() === adminEmail.toLowerCase();
+
+                  return (
+                    <tr key={admin.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                      <td className="py-2.5 px-3">
+                        <div className="font-bold text-slate-800 dark:text-slate-200">{admin.full_name || 'Admin'}</div>
+                        <div className="text-[11px] text-slate-400">{admin.email}</div>
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-500/10 text-blue-500">
+                          {admin.role_name || admin.role_slug}
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3 text-slate-500">
+                        Tier {admin.hierarchy_tier}
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                          admin.two_factor_enabled
+                            ? 'bg-emerald-500/10 text-emerald-500'
+                            : 'bg-amber-500/10 text-amber-500'
+                        }`}>
+                          {admin.two_factor_enabled ? 'Enrolled' : 'Off'}
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                          admin.is_active
+                            ? 'bg-emerald-500/10 text-emerald-500'
+                            : 'bg-red-500/10 text-red-500'
+                        }`}>
+                          {admin.is_active ? 'Active' : 'Disabled'}
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3 text-right">
+                        {canAct && !isCurrentSelf ? (
+                          <button
+                            onClick={() => handleToggleActive(admin.id, admin.is_active)}
+                            disabled={togglingAdminId === admin.id}
+                            className={`px-2.5 py-1 rounded text-[10px] font-bold uppercase transition-all ${
+                              admin.is_active
+                                ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20'
+                                : 'text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950/20'
+                            }`}
+                          >
+                            {togglingAdminId === admin.id ? 'Updating...' : admin.is_active ? 'Deactivate' : 'Activate'}
+                          </button>
+                        ) : (
+                          <span className="text-[10px] text-slate-400 italic">
+                            {isCurrentSelf ? 'Current Self' : 'Protected'}
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/* Audit Log Table */}
       <div className="bg-white dark:bg-[#292A2D] border border-slate-200 dark:border-[#3C4043] rounded-2xl p-6 shadow-sm space-y-4">
         <div className="flex items-center justify-between">
@@ -551,6 +706,91 @@ export default function AdminSecurityClient({
           </div>
         </div>
       )}
+      {/* Modal: Add Administrator */}
+      {showAddAdminModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              Provision New Administrator
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              New administrators must have an email listed in the <code className="font-mono text-emerald-500">ADMIN_EMAILS</code> environment allowlist.
+            </p>
+
+            <form onSubmit={handleCreateAdmin} className="space-y-3.5">
+              <div className="space-y-1">
+                <label className="text-[11px] font-mono text-slate-400 uppercase">Administrator Email</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="admin@ajprworld.com"
+                  value={newAdminEmail}
+                  onChange={(e) => setNewAdminEmail(e.target.value)}
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-mono outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-mono text-slate-400 uppercase">Full Name</label>
+                <input
+                  type="text"
+                  placeholder="Aman Joshi"
+                  value={newAdminName}
+                  onChange={(e) => setNewAdminName(e.target.value)}
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-mono outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-mono text-slate-400 uppercase">Temporary Password</label>
+                <input
+                  type="password"
+                  required
+                  placeholder="••••••••••••"
+                  value={newAdminPassword}
+                  onChange={(e) => setNewAdminPassword(e.target.value)}
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-mono outline-none focus:border-emerald-500"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-mono text-slate-400 uppercase">Clearance Role</label>
+                <select
+                  value={newAdminRole}
+                  onChange={(e) => setNewAdminRole(e.target.value)}
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-mono outline-none focus:border-emerald-500"
+                >
+                  <option value="operations_admin">Operations Administrator (Tier 1)</option>
+                  <option value="technical_auditor">Technical Auditor (Tier 5)</option>
+                  {actorTier === 0 && <option value="superadmin">Super Administrator (Tier 0)</option>}
+                </select>
+              </div>
+
+              {addAdminError && (
+                <div className="text-xs font-mono text-red-500">{addAdminError}</div>
+              )}
+
+              <div className="flex items-center justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => { setShowAddAdminModal(false); setAddAdminError(''); }}
+                  className="px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isAddingAdmin}
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-medium text-xs rounded-xl transition-all"
+                >
+                  {isAddingAdmin ? 'Creating...' : 'Provision Admin'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

@@ -1,14 +1,24 @@
 'use client';
 
-import React, { useActionState } from 'react';
+import React, { useState, useActionState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { adminLoginAction, AdminLoginState } from './actions';
+import { adminLoginAction, adminVerifyTwoFactorAction, AdminLoginState } from './actions';
 
-const initialState: AdminLoginState = {};
+const initialLoginState: AdminLoginState = {};
 
 export default function AdminLoginForm() {
-  const [state, formAction, isPending] = useActionState(adminLoginAction, initialState);
+  const [loginState, loginFormAction, isLoginPending] = useActionState(adminLoginAction, initialLoginState);
+  const [twoFactorState, twoFactorAction, isTwoFactorPending] = useActionState(adminVerifyTwoFactorAction, initialLoginState);
+  
+  const [showBackupCode, setShowBackupCode] = useState(false);
+  const [resetToLogin, setResetToLogin] = useState(false);
+
+  // If user clicks "Back to Password", reset challenge state
+  const isChallenging = !resetToLogin && (twoFactorState.requiresTwoFactor || loginState.requiresTwoFactor);
+  const activeChallengeToken = twoFactorState.challengeToken || loginState.challengeToken;
+  const currentEmail = twoFactorState.email || loginState.email;
+  const currentError = isChallenging ? (twoFactorState.error || loginState.error) : loginState.error;
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-300 font-sans relative overflow-hidden">
@@ -33,7 +43,9 @@ export default function AdminLoginForm() {
             <span className="font-semibold text-slate-300 tracking-wider">CENTRAL COMMAND GATEWAY</span>
           </div>
           <span className="text-slate-600">|</span>
-          <span className="text-slate-500 hidden sm:inline">AUTHENTICATION LAYER 0</span>
+          <span className="text-slate-500 hidden sm:inline">
+            {isChallenging ? 'AUTHENTICATION LAYER 2 (2FA)' : 'AUTHENTICATION LAYER 0'}
+          </span>
         </div>
         <div className="flex items-center gap-4 text-slate-500">
           <span className="hidden md:inline">SYSTEM STATUS: <span className="text-emerald-400 font-semibold">SECURE</span></span>
@@ -66,95 +78,179 @@ export default function AdminLoginForm() {
             
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono tracking-widest uppercase">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              Restricted Operations Area
+              {isChallenging ? 'Step 2: Two-Factor Verification' : 'Restricted Operations Area'}
             </div>
             
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-              Central Command Login
+              {isChallenging ? 'Two-Factor Challenge' : 'Central Command Login'}
             </h1>
             <p className="text-xs text-slate-400 leading-relaxed max-w-xs mx-auto">
-              Authoritative authentication for verified operations administrators and systems engineers.
+              {isChallenging
+                ? `Enter the 6-digit TOTP code from your authenticator app for ${currentEmail || 'admin'}.`
+                : 'Authoritative authentication for verified operations administrators and systems engineers.'}
             </p>
           </div>
 
-          {/* Form */}
-          <form action={formAction} className="space-y-4">
-            <div className="space-y-1.5">
-              <label 
-                htmlFor="admin-email" 
-                className="block text-[11px] font-mono uppercase tracking-wider text-slate-400 font-medium"
-              >
-                Administrator Identity
-              </label>
-              <div className="relative">
-                <input
-                  id="admin-email"
-                  name="email"
-                  type="email"
-                  autoComplete="username"
-                  required
-                  placeholder="admin@ajprworld.com"
-                  autoFocus
-                  className="w-full bg-slate-950/80 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600 outline-none transition-all font-mono"
-                />
-              </div>
-            </div>
+          {/* Form: Step 2 (2FA Challenge) */}
+          {isChallenging ? (
+            <form action={twoFactorAction} className="space-y-4">
+              <input type="hidden" name="challengeToken" value={activeChallengeToken || ''} />
 
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label 
+                    htmlFor="two-factor-code" 
+                    className="block text-[11px] font-mono uppercase tracking-wider text-slate-400 font-medium"
+                  >
+                    {showBackupCode ? 'Single-Use Backup Code' : '6-Digit TOTP Passcode'}
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowBackupCode(!showBackupCode)}
+                    className="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 transition-colors"
+                  >
+                    {showBackupCode ? 'Use Authenticator Code' : 'Use Recovery Code'}
+                  </button>
+                </div>
+
+                <div className="relative">
+                  <input
+                    id="two-factor-code"
+                    name="code"
+                    type="text"
+                    inputMode={showBackupCode ? 'text' : 'numeric'}
+                    pattern={showBackupCode ? '[2-9A-Za-z-]{8,9}' : '[0-9]{6}'}
+                    maxLength={showBackupCode ? 9 : 6}
+                    autoComplete="one-time-code"
+                    required
+                    placeholder={showBackupCode ? 'XXXX-XXXX' : '123456'}
+                    autoFocus
+                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-3 text-center text-lg tracking-[0.3em] font-mono text-emerald-400 placeholder:text-slate-700 outline-none transition-all uppercase"
+                  />
+                </div>
+              </div>
+
+              {currentError && (
+                <div 
+                  role="alert"
+                  className="p-3 rounded-xl bg-red-950/40 border border-red-500/30 text-red-400 text-xs font-mono flex items-start gap-2.5 animate-in fade-in duration-200"
+                >
+                  <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <div className="leading-tight">{currentError}</div>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isTwoFactorPending}
+                className="w-full relative group overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white font-mono text-xs font-bold uppercase tracking-widest py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-950/40 transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {isTwoFactorPending ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>VERIFYING PASSCODE...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>VERIFY & ENTER COMMAND</span>
+                    <span className="text-emerald-300 group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setResetToLogin(true)}
+                className="w-full text-center text-xs font-mono text-slate-500 hover:text-slate-400 py-1 transition-colors"
+              >
+                &larr; Cancel and return to login
+              </button>
+            </form>
+          ) : (
+            /* Form: Step 1 (Identity & Password) */
+            <form action={loginFormAction} className="space-y-4">
+              <div className="space-y-1.5">
                 <label 
-                  htmlFor="admin-password" 
+                  htmlFor="admin-email" 
                   className="block text-[11px] font-mono uppercase tracking-wider text-slate-400 font-medium"
                 >
-                  Passkey Credential
+                  Administrator Identity
                 </label>
+                <div className="relative">
+                  <input
+                    id="admin-email"
+                    name="email"
+                    type="email"
+                    autoComplete="username"
+                    required
+                    placeholder="admin@ajprworld.com"
+                    autoFocus
+                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600 outline-none transition-all font-mono"
+                  />
+                </div>
               </div>
-              <div className="relative">
-                <input
-                  id="admin-password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  placeholder="••••••••••••••••"
-                  className="w-full bg-slate-950/80 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600 outline-none transition-all font-mono"
-                />
-              </div>
-            </div>
 
-            {state?.error && (
-              <div 
-                role="alert"
-                className="p-3 rounded-xl bg-red-950/40 border border-red-500/30 text-red-400 text-xs font-mono flex items-start gap-2.5 animate-in fade-in duration-200"
-              >
-                <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <div className="leading-tight">{state.error}</div>
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label 
+                    htmlFor="admin-password" 
+                    className="block text-[11px] font-mono uppercase tracking-wider text-slate-400 font-medium"
+                  >
+                    Passkey Credential
+                  </label>
+                </div>
+                <div className="relative">
+                  <input
+                    id="admin-password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    placeholder="••••••••••••••••"
+                    className="w-full bg-slate-950/80 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600 outline-none transition-all font-mono"
+                  />
+                </div>
               </div>
-            )}
 
-            <button
-              type="submit"
-              disabled={isPending}
-              className="w-full relative group overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white font-mono text-xs font-bold uppercase tracking-widest py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-950/40 transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
-            >
-              {isPending ? (
-                <>
-                  <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              {currentError && (
+                <div 
+                  role="alert"
+                  className="p-3 rounded-xl bg-red-950/40 border border-red-500/30 text-red-400 text-xs font-mono flex items-start gap-2.5 animate-in fade-in duration-200"
+                >
+                  <svg className="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
-                  <span>VERIFYING CREDENTIALS...</span>
-                </>
-              ) : (
-                <>
-                  <span>ENTER CENTRAL COMMAND</span>
-                  <span className="text-emerald-300 group-hover:translate-x-0.5 transition-transform">&rarr;</span>
-                </>
+                  <div className="leading-tight">{currentError}</div>
+                </div>
               )}
-            </button>
-          </form>
+
+              <button
+                type="submit"
+                disabled={isLoginPending}
+                className="w-full relative group overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 text-white font-mono text-xs font-bold uppercase tracking-widest py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-950/40 transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {isLoginPending ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>VERIFYING CREDENTIALS...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>ENTER CENTRAL COMMAND</span>
+                    <span className="text-emerald-300 group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                  </>
+                )}
+              </button>
+            </form>
+          )}
 
           {/* Security Compliance Disclaimer */}
           <div className="pt-4 border-t border-slate-800/80 text-[11px] font-mono text-slate-500 space-y-1">
@@ -178,4 +274,3 @@ export default function AdminLoginForm() {
     </div>
   );
 }
-

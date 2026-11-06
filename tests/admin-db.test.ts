@@ -36,3 +36,17 @@ test('verifyAdminSessionActive rejects nonexistent or deactivated users safely',
   assert.equal(result.valid, false);
 });
 
+test('Migration 002 UP and DOWN files exist and define two_factor_backup_codes column', () => {
+  const upFile = path.resolve(process.cwd(), 'migrations/002_add_admin_2fa_backup_codes.sql');
+  const downFile = path.resolve(process.cwd(), 'migrations/002_add_admin_2fa_backup_codes_down.sql');
+
+  assert.equal(fs.existsSync(upFile), true);
+  assert.equal(fs.existsSync(downFile), true);
+
+  const upSql = fs.readFileSync(upFile, 'utf8');
+  assert.ok(upSql.includes('ADD COLUMN IF NOT EXISTS two_factor_backup_codes JSONB'));
+
+  const downSql = fs.readFileSync(downFile, 'utf8');
+  assert.ok(downSql.includes('DROP COLUMN IF EXISTS two_factor_backup_codes'));
+});
+

@@ -1,4 +1,5 @@
 import { sql } from './queries';
+import { decryptTotpSecret } from '@/lib/admin/totp';
 
 export interface AdminRole {
   id: string;
@@ -185,5 +186,106 @@ export async function getAdminAuditLogs(limit: number = 50): Promise<AdminAuditL
     LIMIT ${safeLimit};
   `;
   return rows || [];
+}
+
+/**
+ * Retrieves the 2FA configuration for an admin.
+ * Securely decrypts the stored TOTP secret.
+ */
+export async function getAdminTwoFactorState(adminId: string): Promise<{
+  enabled: boolean;
+  decryptedSecret: string | null;
+  backupCodes: string[];
+} | null> {
+  const rows = await sql`
+    SELECT two_factor_enabled, two_factor_secret, two_factor_backup_codes
+    FROM admin_users
+    WHERE id = ${adminId}
+    LIMIT 1;
+  `;
+  if (!rows || rows.length === 0) return null;
+  const row = rows[0];
+
+  let decryptedSecret: string | null = null;
+  if (row.two_factor_secret) {
+    try {
+      decryptedSecret = decryptTotpSecret(row.two_factor_secret);
+    } catch {
+      decryptedSecret = null;
+    }
+  }
+
+  let backupCodes: string[] = [];
+  if (Array.isArray(row.two_factor_backup_codes)) {
+    backupCodes = row.two_factor_backup_codes;
+  } else if (typeof row.two_factor_backup_codes === 'string') {
+    try {
+      backupCodes = JSON.parse(row.two_factor_backup_codes);
+    } catch {
+      backupCodes = [];
+    }
+  }
+
+  return {
+    enabled: Boolean(row.two_factor_enabled),
+    decryptedSecret,
+    backupCodes,
+  };
+}
+
+/**
+ * Enables 2FA for an admin after initial verification.
+ * Stores AES-256 encrypted secret and hashed backup codes.
+ */
+export async function enableAdminTwoFactor(
+  adminId: string,
+  encryptedSecret: string,
+  hashedBackupCodes: string[]
+): Promise<boolean> {
+  const backupJson = JSON.stringify(hashedBackupCodes);
+  await sql`
+    UPDATE admin_users
+    SET 
+      two_factor_enabled = true,
+      two_factor_secret = ${encryptedSecret},
+      two_factor_backup_codes = ${backupJson}::jsonb,
+      updated_at = NOW()
+    WHERE id = ${adminId};
+  `;
+  return true;
+}
+
+/**
+ * Disables 2FA for an admin user and clears secrets.
+ */
+export async function disableAdminTwoFactor(adminId: string): Promise<boolean> {
+  await sql`
+    UPDATE admin_users
+    SET 
+      two_factor_enabled = false,
+      two_factor_secret = NULL,
+      two_factor_backup_codes = '[]'::jsonb,
+      updated_at = NOW()
+    WHERE id = ${adminId};
+  `;
+  return true;
+}
+
+/**
+ * Updates remaining hashed backup codes after a code has been consumed.
+ */
+export async function updateAdminBackupCodes(
+  adminId: string,
+  remainingHashes: string[]
+): Promise<boolean> {
+  const backupJson = JSON.stringify(remainingHashes);
+  await sql`
+    UPDATE admin_users
+    SET 
+      two_factor_backup_codes = ${backupJson}::jsonb,
+      updated_at = NOW()
+    WHERE id = ${adminId};
+  `;
+  return true;
 }
 

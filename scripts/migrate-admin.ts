@@ -25,12 +25,18 @@ async function runMigration() {
     const client = await pool.connect();
 
     try {
-      const migrationFile = path.resolve(process.cwd(), 'migrations/001_create_admin_control_system.sql');
-      const migrationSql = fs.readFileSync(migrationFile, 'utf8');
+      const migrationsDir = path.resolve(process.cwd(), 'migrations');
+      const files = fs.readdirSync(migrationsDir)
+        .filter(f => f.endsWith('.sql') && !f.endsWith('_down.sql'))
+        .sort();
 
-      console.log('Executing Migration 001: Dedicated Admin Control System...');
-      await client.query(migrationSql);
-      console.log('Migration executed successfully!');
+      for (const file of files) {
+        const filePath = path.join(migrationsDir, file);
+        const sqlContent = fs.readFileSync(filePath, 'utf8');
+        console.log(`Executing migration ${file}...`);
+        await client.query(sqlContent);
+        console.log(`  ✓ Successfully applied ${file}`);
+      }
 
       // Verification queries
       const tablesRes = await client.query(`
@@ -44,9 +50,15 @@ async function runMigration() {
       console.log('\nVerified Created Tables:');
       tablesRes.rows.forEach(r => console.log(`  ✓ ${r.table_name}`));
 
-      const rolesRes = await client.query('SELECT slug, name, hierarchy_tier FROM admin_roles ORDER BY hierarchy_tier ASC;');
-      console.log('\nVerified Seeded Admin Roles:');
-      rolesRes.rows.forEach(r => console.log(`  ✓ ${r.slug} (${r.name}, tier: ${r.hierarchy_tier})`));
+      const colsRes = await client.query(`
+        SELECT column_name, data_type 
+        FROM information_schema.columns 
+        WHERE table_schema = 'public' 
+          AND table_name = 'admin_users'
+        ORDER BY ordinal_position;
+      `);
+      console.log('\nVerified admin_users Columns:');
+      colsRes.rows.forEach(c => console.log(`  ✓ ${c.column_name} (${c.data_type})`));
 
     } finally {
       client.release();

@@ -245,6 +245,10 @@ export async function requireAdmin(opts?: AdminGuardOptions): Promise<AdminSessi
   return adminUser!;
 }
 
+export type AdminApiAuthResult =
+  | { authorized: true; user: AdminSessionUser; response?: never }
+  | { authorized: false; user?: never; response: NextResponse };
+
 /**
  * Guard for Route Handlers (API endpoints under app/api/admin/** and app/api/agents/**).
  * Reads the session cookie from NextRequest, verifies admin authorization via DB,
@@ -253,12 +257,13 @@ export async function requireAdmin(opts?: AdminGuardOptions): Promise<AdminSessi
 export async function requireAdminApi(
   request: NextRequest,
   opts?: AdminGuardOptions
-): Promise<{ user: AdminSessionUser; response?: never } | { user?: never; response: NextResponse }> {
+): Promise<AdminApiAuthResult> {
   try {
     const sessionToken = request.cookies.get(SESSION_COOKIE_NAME)?.value;
 
     if (!sessionToken) {
       return {
+        authorized: false,
         response: NextResponse.json(
           { error: 'Unauthorized' },
           { status: 401 }
@@ -272,6 +277,7 @@ export async function requireAdminApi(
     const verification = await verifyAdminIdentity(user, opts);
     if (!verification.authorized || !verification.user) {
       return {
+        authorized: false,
         response: NextResponse.json(
           { error: verification.status === 401 ? 'Unauthorized' : 'Forbidden' },
           { status: verification.status }
@@ -279,9 +285,10 @@ export async function requireAdminApi(
       };
     }
 
-    return { user: verification.user };
+    return { authorized: true, user: verification.user };
   } catch {
     return {
+      authorized: false,
       response: NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }

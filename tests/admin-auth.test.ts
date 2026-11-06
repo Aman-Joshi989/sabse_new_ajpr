@@ -3,6 +3,21 @@ import assert from 'node:assert/strict';
 import { requireAdminApi } from '../lib/admin/guard';
 import { encrypt } from '../lib/auth';
 import { NextRequest } from 'next/server';
+import { GET as getResume } from '../app/api/admin/download-resume/route';
+import { POST as postTrigger } from '../app/api/admin/trigger-agent/route';
+
+test('Route handlers enforce requireAdminApi defense-in-depth', async () => {
+  const unauthReq = new NextRequest('https://example.com/api/admin/download-resume?url=https://xyz.blob.vercel-storage.com/resumes/test.pdf');
+  const res1 = await getResume(unauthReq);
+  assert.equal(res1.status, 401);
+
+  const unauthTriggerReq = new NextRequest('https://example.com/api/admin/trigger-agent', {
+    method: 'POST',
+    body: JSON.stringify({ agentId: 'test', action: 'blog' }),
+  });
+  const res2 = await postTrigger(unauthTriggerReq);
+  assert.equal(res2.status, 401);
+});
 
 test('requireAdminApi validates admin session and role hierarchy options', async () => {
   const orig = process.env.ADMIN_EMAILS;
@@ -78,6 +93,21 @@ test('requireAdminApi validates admin session and role hierarchy options', async
     // 6. Role Slug validation (superadmin satisfies minRole='operations_admin')
     const checkRole = await requireAdminApi(validReq, { minRole: 'operations_admin' });
     assert.equal(Boolean(checkRole.user), true);
+
+    // 7. Verify adminCheck.authorized discriminated union compatibility
+    const authedResult = await requireAdminApi(validReq);
+    if (!authedResult.authorized) {
+      assert.fail('Expected authorized=true for valid admin session');
+    } else {
+      assert.equal(authedResult.user.email, 'superadmin@example.com');
+    }
+
+    const unauthedResult = await requireAdminApi(unauthReq);
+    if (!unauthedResult.authorized) {
+      assert.equal(unauthedResult.response.status, 401);
+    } else {
+      assert.fail('Expected authorized=false for unauthenticated request');
+    }
   } finally {
     process.env.ADMIN_EMAILS = orig;
   }

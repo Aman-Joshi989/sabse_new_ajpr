@@ -17,3 +17,4 @@ WHERE slug IN (
     'users:manage', 'security:manage', 'audit:view', 
     'seo:manage', 'billing:manage'
 );
+

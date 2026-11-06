@@ -364,3 +364,95 @@ export async function updateAdminBackupCodes(
   return true;
 }
 
+export interface ThreatTelemetry {
+  threatLevel: 'NORMAL' | 'ELEVATED' | 'CRITICAL';
+  threatScore: number;
+  totalEvents24h: number;
+  flaggedEvents24h: number;
+  suspiciousIpsCount: number;
+  recentFlaggedActions: string[];
+}
+
+/**
+ * Calculates real-time threat detection telemetry from the immutable audit logs.
+ */
+export async function getThreatTelemetry(hours: number = 24): Promise<ThreatTelemetry> {
+  try {
+    const rows = await sql`
+      SELECT 
+        action,
+        ip_address,
+        created_at
+      FROM admin_audit_logs
+      WHERE created_at >= NOW() - INTERVAL '24 hours'
+      ORDER BY created_at DESC;
+    `;
+
+    const logs = rows || [];
+    const totalEvents24h = logs.length;
+
+    const flaggedActions = [
+      'ADMIN_LOGIN_REJECTED',
+      'ADMIN_LOGIN_FAILED',
+      'ADMIN_LOGIN_RATE_LIMITED',
+      'ADMIN_2FA_VERIFICATION_FAILED',
+      'ADMIN_2FA_RATE_LIMITED',
+      'ADMIN_HIERARCHY_VIOLATION_BLOCKED',
+    ];
+
+    const flaggedLogs = logs.filter((l: any) => flaggedActions.includes(l.action));
+    const flaggedEvents24h = flaggedLogs.length;
+
+    const suspiciousIps = new Set(
+      flaggedLogs.map((l: any) => l.ip_address).filter(Boolean)
+    );
+
+    // Compute Threat Score (0 to 100)
+    let threatScore = 0;
+    threatScore += flaggedEvents24h * 15;
+    threatScore += suspiciousIps.size * 20;
+    threatScore = Math.min(100, threatScore);
+
+    let threatLevel: 'NORMAL' | 'ELEVATED' | 'CRITICAL' = 'NORMAL';
+    if (threatScore >= 60 || flaggedEvents24h >= 5) {
+      threatLevel = 'CRITICAL';
+    } else if (threatScore >= 20 || flaggedEvents24h >= 1) {
+      threatLevel = 'ELEVATED';
+    }
+
+    const recentFlaggedActions = flaggedLogs.slice(0, 5).map((l: any) => l.action);
+
+    return {
+      threatLevel,
+      threatScore,
+      totalEvents24h,
+      flaggedEvents24h,
+      suspiciousIpsCount: suspiciousIps.size,
+      recentFlaggedActions,
+    };
+  } catch {
+    return {
+      threatLevel: 'NORMAL',
+      threatScore: 0,
+      totalEvents24h: 0,
+      flaggedEvents24h: 0,
+      suspiciousIpsCount: 0,
+      recentFlaggedActions: [],
+    };
+  }
+}
+
+/**
+ * Global Emergency Session Revocation Switch:
+ * Increments session_version across all admin_users simultaneously.
+ * Causes instant global session invalidation on the next request for all active admins.
+ */
+export async function revokeAllAdminSessions(): Promise<{ affectedCount: number }> {
+  const rows = await sql`
+    UPDATE admin_users
+    SET session_version = session_version + 1, updated_at = NOW()
+    RETURNING id;
+  `;
+  return { affectedCount: rows?.length || 0 };
+}
+

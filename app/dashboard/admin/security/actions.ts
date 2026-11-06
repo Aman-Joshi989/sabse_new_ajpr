@@ -19,6 +19,8 @@ import {
   listAdminUsers,
   getAdminUserById,
   canAdminActOnTargetTier,
+  revokeAllAdminSessions,
+  getAdminAuditLogs,
   AdminUserRecord,
 } from '@/lib/db/admin-queries';
 import { isEmailAuthorizedAdmin } from '@/lib/admin/guard';
@@ -385,6 +387,93 @@ export async function createAdminUserAction(data: {
       return { error: 'An administrator with this email already exists.' };
     }
     return { error: error.message || 'Failed to create administrator' };
+  }
+}
+
+/**
+ * Superadmin Panic Button:
+ * Instantly revokes ALL active sessions across all administrators globally.
+ * Restricted strictly to Tier 0 Superadministrators.
+ */
+export async function emergencyRevokeAllSessionsAction(): Promise<{ success?: boolean; affectedCount?: number; error?: string }> {
+  try {
+    const actor = await requireAdminForAction({ minRole: 'superadmin', minTier: 0 });
+    const reqHeaders = await headers();
+    const forwarded = reqHeaders.get('x-forwarded-for');
+    const ipAddress = forwarded ? forwarded.split(',')[0].trim() : (reqHeaders.get('x-real-ip') || '127.0.0.1');
+    const userAgent = reqHeaders.get('user-agent') || 'unknown';
+
+    const { affectedCount } = await revokeAllAdminSessions();
+
+    await createAdminAuditLog({
+      adminId: String(actor.id),
+      adminEmail: actor.email,
+      action: 'ADMIN_EMERGENCY_GLOBAL_SESSION_REVOCATION',
+      ipAddress,
+      userAgent,
+      metadata: { affectedCount, initiatedBy: actor.email },
+    });
+
+    return { success: true, affectedCount };
+  } catch (error: any) {
+    return { error: error.message || 'Unauthorized or failed to execute global session revocation' };
+  }
+}
+
+/**
+ * Exports immutable audit logs in CSV or JSON format with CSV injection sanitization.
+ * Protected by 'audit:view' permission.
+ */
+export async function exportAuditLogsAction(
+  format: 'csv' | 'json' = 'json',
+  limit: number = 200
+): Promise<{ success: boolean; data?: string; filename?: string; error?: string }> {
+  try {
+    const actor = await requireAdminForAction({ permission: 'audit:view' });
+    const logs = await getAdminAuditLogs(limit);
+
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const filename = `admin-audit-logs-${timestamp}.${format}`;
+
+    if (format === 'json') {
+      return {
+        success: true,
+        data: JSON.stringify(logs, null, 2),
+        filename,
+      };
+    }
+
+    // CSV format with CSV Injection formula mitigation (prepend single quote if begins with =, +, -, @)
+    const sanitizeCsvCell = (val: any): string => {
+      if (val === null || val === undefined) return '""';
+      let str = String(val);
+      if (/^[=+\-@\t\r]/.test(str)) {
+        str = `'${str}`;
+      }
+      return `"${str.replace(/"/g, '""')}"`;
+    };
+
+    const headersList = ['ID', 'Timestamp', 'Action', 'Identity', 'Target Type', 'Target ID', 'IP Address', 'User Agent'];
+    const rows = logs.map(l => [
+      sanitizeCsvCell(l.id),
+      sanitizeCsvCell(l.created_at),
+      sanitizeCsvCell(l.action),
+      sanitizeCsvCell(l.admin_email),
+      sanitizeCsvCell(l.target_type || ''),
+      sanitizeCsvCell(l.target_id || ''),
+      sanitizeCsvCell(l.ip_address || ''),
+      sanitizeCsvCell(l.user_agent || ''),
+    ].join(','));
+
+    const csvData = [headersList.join(','), ...rows].join('\n');
+
+    return {
+      success: true,
+      data: csvData,
+      filename,
+    };
+  } catch (error: any) {
+    return { success: false, error: error.message || 'Failed to export audit logs' };
   }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { requireAdmin } from '@/lib/admin/guard';
-import { getAdminTwoFactorState, getAdminAuditLogs, listAdminUsers } from '@/lib/db/admin-queries';
+import { getAdminTwoFactorState, getAdminAuditLogs, listAdminUsers, getThreatTelemetry } from '@/lib/db/admin-queries';
 import AdminSecurityClient from './AdminSecurityClient';
 
 export const metadata = {
@@ -25,9 +25,10 @@ export default async function AdminSecurityPage() {
     }
   }
 
-  const [auditLogs, adminUsers] = await Promise.all([
-    getAdminAuditLogs(25),
+  const [auditLogs, adminUsers, telemetry] = await Promise.all([
+    getAdminAuditLogs(50),
     listAdminUsers(),
+    getThreatTelemetry(24),
   ]);
 
   return (
@@ -39,6 +40,7 @@ export default async function AdminSecurityPage() {
         actorTier={admin.hierarchyTier ?? 0}
         auditLogs={auditLogs}
         initialAdminUsers={adminUsers}
+        telemetry={telemetry}
       />
     </div>
   );

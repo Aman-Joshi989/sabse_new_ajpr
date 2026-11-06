@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Shield, ShieldAlert, ShieldCheck, Key, Copy, Check, Download, AlertTriangle, RefreshCw, Lock } from 'lucide-react';
+import { Shield, ShieldAlert, ShieldCheck, Key, Copy, Check, Download, AlertTriangle, RefreshCw, Lock, Radio, FileText, AlertOctagon, Terminal } from 'lucide-react';
 import {
   startTwoFactorEnrollmentAction,
   confirmTwoFactorEnrollmentAction,
@@ -9,9 +9,11 @@ import {
   regenerateBackupCodesAction,
   toggleAdminUserActiveAction,
   createAdminUserAction,
+  emergencyRevokeAllSessionsAction,
+  exportAuditLogsAction,
   SetupTwoFactorResult,
 } from './actions';
-import { AdminAuditLogEntry, AdminUserRecord } from '@/lib/db/admin-queries';
+import { AdminAuditLogEntry, AdminUserRecord, ThreatTelemetry } from '@/lib/db/admin-queries';
 
 interface AdminSecurityClientProps {
   initialTwoFactorEnabled: boolean;
@@ -20,6 +22,7 @@ interface AdminSecurityClientProps {
   actorTier: number;
   auditLogs: AdminAuditLogEntry[];
   initialAdminUsers: AdminUserRecord[];
+  telemetry: ThreatTelemetry;
 }
 
 export default function AdminSecurityClient({
@@ -29,6 +32,7 @@ export default function AdminSecurityClient({
   actorTier,
   auditLogs,
   initialAdminUsers,
+  telemetry,
 }: AdminSecurityClientProps) {
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(initialTwoFactorEnabled);
   const [backupCodesCount, setBackupCodesCount] = useState(initialBackupCodesCount);
@@ -43,6 +47,13 @@ export default function AdminSecurityClient({
   const [addAdminError, setAddAdminError] = useState('');
   const [isAddingAdmin, setIsAddingAdmin] = useState(false);
   const [togglingAdminId, setTogglingAdminId] = useState<string | null>(null);
+
+  // Phase 6: Threat Detection & Audit Export State
+  const [auditFilter, setAuditFilter] = useState<'ALL' | 'AUTH' | '2FA' | 'HIERARCHY' | 'AGENTS' | 'EMERGENCY'>('ALL');
+  const [isExporting, setIsExporting] = useState(false);
+  const [showPanicModal, setShowPanicModal] = useState(false);
+  const [isRevokingAll, setIsRevokingAll] = useState(false);
+  const [panicMessage, setPanicMessage] = useState<string | null>(null);
   
   // Enrollment state
   const [isEnrolling, setIsEnrolling] = useState(false);
@@ -189,22 +200,181 @@ export default function AdminSecurityClient({
     URL.revokeObjectURL(url);
   };
 
+  const handleExport = async (format: 'csv' | 'json') => {
+    setIsExporting(true);
+    try {
+      const res = await exportAuditLogsAction(format, 500);
+      if (!res.success || !res.data) {
+        alert(res.error || 'Failed to export audit logs');
+        return;
+      }
+      const mimeType = format === 'csv' ? 'text/csv;charset=utf-8;' : 'application/json';
+      const blob = new Blob([res.data], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = res.filename || `admin-audit-logs-${Date.now()}.${format}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err: any) {
+      alert(err.message || 'Export error');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleEmergencyRevoke = async () => {
+    setIsRevokingAll(true);
+    try {
+      const res = await emergencyRevokeAllSessionsAction();
+      if (res.error) {
+        setPanicMessage(`Revocation failed: ${res.error}`);
+      } else {
+        setPanicMessage(`SUCCESS: Global session version incremented for ${res.affectedCount} admin account(s). All active sessions are terminated. Redirecting to login...`);
+        setTimeout(() => {
+          window.location.href = '/admin/login';
+        }, 2500);
+      }
+    } catch (err: any) {
+      setPanicMessage(`Revocation error: ${err.message}`);
+    } finally {
+      setIsRevokingAll(false);
+    }
+  };
+
+  const filteredAuditLogs = (auditLogs || []).filter((log) => {
+    if (auditFilter === 'ALL') return true;
+    if (auditFilter === 'AUTH') return log.action.includes('LOGIN') || log.action.includes('LOGOUT') || log.action.includes('AUTH');
+    if (auditFilter === '2FA') return log.action.includes('2FA');
+    if (auditFilter === 'HIERARCHY') return log.action.includes('HIERARCHY') || log.action.includes('USER');
+    if (auditFilter === 'AGENTS') return log.action.includes('AGENT');
+    if (auditFilter === 'EMERGENCY') return log.action.includes('EMERGENCY') || log.action.includes('REVOCATION');
+    return true;
+  });
+
   return (
     <div className="space-y-8 max-w-5xl">
       {/* Page Header */}
-      <div>
-        <div className="flex items-center gap-2 mb-1">
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            SECURITY SUITE
-          </span>
-          <span className="text-xs text-slate-500 font-mono">LEVEL 0 CENTRAL COMMAND</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              SECURITY SUITE
+            </span>
+            <span className="text-xs text-slate-500 font-mono">LEVEL 0 CENTRAL COMMAND</span>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Security & Access Controls
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Configure authoritative multi-factor authentication, single-use recovery keys, and inspect immutable audit logs.
+          </p>
         </div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-          Security & Access Controls
-        </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-          Configure authoritative multi-factor authentication, single-use recovery keys, and inspect immutable audit logs.
-        </p>
+
+        {actorTier === 0 && (
+          <button
+            onClick={() => { setShowPanicModal(true); setPanicMessage(null); }}
+            className="flex items-center gap-2 px-3.5 py-2 bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold rounded-xl shadow-lg shadow-red-600/20 transition-all cursor-pointer shrink-0 border border-red-500/30"
+          >
+            <AlertOctagon className="w-4 h-4" />
+            GLOBAL SESSION REVOCATION
+          </button>
+        )}
+      </div>
+
+      {/* Threat Detection & System Posture Banner */}
+      <div className={`border rounded-2xl p-6 transition-all ${
+        telemetry.threatLevel === 'CRITICAL'
+          ? 'bg-red-950/20 border-red-500/50 shadow-lg shadow-red-500/10'
+          : telemetry.threatLevel === 'ELEVATED'
+          ? 'bg-amber-950/20 border-amber-500/40 shadow-sm'
+          : 'bg-emerald-950/10 border-emerald-500/30'
+      }`}>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200/20 dark:border-slate-800">
+          <div className="flex items-center gap-3">
+            <div className={`p-2.5 rounded-xl ${
+              telemetry.threatLevel === 'CRITICAL'
+                ? 'bg-red-500/20 text-red-400 animate-pulse'
+                : telemetry.threatLevel === 'ELEVATED'
+                ? 'bg-amber-500/20 text-amber-400'
+                : 'bg-emerald-500/20 text-emerald-400'
+            }`}>
+              <Radio className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono uppercase tracking-wider text-slate-400">System Posture</span>
+                <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase border ${
+                  telemetry.threatLevel === 'CRITICAL'
+                    ? 'bg-red-500/20 text-red-400 border-red-500/40'
+                    : telemetry.threatLevel === 'ELEVATED'
+                    ? 'bg-amber-500/20 text-amber-400 border-amber-500/40'
+                    : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
+                }`}>
+                  {telemetry.threatLevel} THREAT LEVEL
+                </span>
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white mt-0.5">
+                {telemetry.threatLevel === 'CRITICAL'
+                  ? 'Active Threat Anomalies Detected'
+                  : telemetry.threatLevel === 'ELEVATED'
+                  ? 'Elevated Security Signals Present'
+                  : 'Zero Active Intrusions — Hardened Posture'}
+              </h3>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 shrink-0">
+            <div className="text-right">
+              <div className="text-[10px] font-mono text-slate-400 uppercase">24h Threat Score</div>
+              <div className="text-lg font-mono font-bold text-slate-900 dark:text-white">
+                {telemetry.threatScore}<span className="text-xs text-slate-500">/100</span>
+              </div>
+            </div>
+            <div className="w-24 h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all duration-500 ${
+                  telemetry.threatScore >= 60 ? 'bg-red-500' : telemetry.threatScore >= 20 ? 'bg-amber-500' : 'bg-emerald-500'
+                }`}
+                style={{ width: `${Math.max(5, telemetry.threatScore)}%` }}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
+          <div className="bg-white/50 dark:bg-slate-900/40 rounded-xl p-3 border border-slate-200/40 dark:border-slate-800/60">
+            <div className="text-[10px] font-mono uppercase text-slate-400">Total Audit Events (24h)</div>
+            <div className="text-base font-mono font-bold text-slate-900 dark:text-white mt-1">
+              {telemetry.totalEvents24h}
+            </div>
+          </div>
+          <div className="bg-white/50 dark:bg-slate-900/40 rounded-xl p-3 border border-slate-200/40 dark:border-slate-800/60">
+            <div className="text-[10px] font-mono uppercase text-slate-400">Flagged Anomaly Signals</div>
+            <div className={`text-base font-mono font-bold mt-1 ${telemetry.flaggedEvents24h > 0 ? 'text-red-400' : 'text-slate-900 dark:text-white'}`}>
+              {telemetry.flaggedEvents24h}
+            </div>
+          </div>
+          <div className="bg-white/50 dark:bg-slate-900/40 rounded-xl p-3 border border-slate-200/40 dark:border-slate-800/60">
+            <div className="text-[10px] font-mono uppercase text-slate-400">Suspicious IP Footprints</div>
+            <div className={`text-base font-mono font-bold mt-1 ${telemetry.suspiciousIpsCount > 0 ? 'text-amber-400' : 'text-slate-900 dark:text-white'}`}>
+              {telemetry.suspiciousIpsCount}
+            </div>
+          </div>
+        </div>
+
+        {telemetry.recentFlaggedActions && telemetry.recentFlaggedActions.length > 0 && (
+          <div className="mt-3 pt-3 border-t border-slate-200/20 dark:border-slate-800 flex items-center gap-2 flex-wrap">
+            <span className="text-[10px] font-mono text-slate-400 uppercase">Recent Flagged Signatures:</span>
+            {telemetry.recentFlaggedActions.map((act, i) => (
+              <span key={i} className="px-2 py-0.5 rounded bg-red-500/10 text-red-400 text-[10px] font-mono border border-red-500/20">
+                {act}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* 2FA Status Card */}
@@ -524,7 +694,7 @@ export default function AdminSecurityClient({
 
       {/* Audit Log Table */}
       <div className="bg-white dark:bg-[#292A2D] border border-slate-200 dark:border-[#3C4043] rounded-2xl p-6 shadow-sm space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
               Immutable Security Audit Log
@@ -533,6 +703,49 @@ export default function AdminSecurityClient({
               Live cryptographically recorded access ledger from <code className="font-mono text-emerald-500">admin_audit_logs</code>.
             </p>
           </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleExport('csv')}
+              disabled={isExporting}
+              className="flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-xs rounded-xl transition-all cursor-pointer disabled:opacity-50"
+            >
+              <Download className="w-3.5 h-3.5" />
+              CSV
+            </button>
+            <button
+              onClick={() => handleExport('json')}
+              disabled={isExporting}
+              className="flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-xs rounded-xl transition-all cursor-pointer disabled:opacity-50"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              JSON
+            </button>
+          </div>
+        </div>
+
+        {/* Audit Filter Tabs */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] font-mono">
+          {[
+            { id: 'ALL', label: 'All Events' },
+            { id: 'AUTH', label: 'Auth & Login' },
+            { id: '2FA', label: '2FA / TOTP' },
+            { id: 'HIERARCHY', label: 'Hierarchy & Users' },
+            { id: 'AGENTS', label: 'Autonomous Agents' },
+            { id: 'EMERGENCY', label: 'Emergency Panic' },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setAuditFilter(tab.id as any)}
+              className={`px-2.5 py-1 rounded-lg border transition-all cursor-pointer whitespace-nowrap ${
+                auditFilter === tab.id
+                  ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 border-slate-900 dark:border-slate-100 font-bold'
+                  : 'border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         <div className="overflow-x-auto">
@@ -547,12 +760,12 @@ export default function AdminSecurityClient({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
-              {auditLogs.length === 0 ? (
+              {filteredAuditLogs.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="py-6 text-center text-slate-400">No audit events recorded yet.</td>
+                  <td colSpan={5} className="py-6 text-center text-slate-400">No matching audit events found.</td>
                 </tr>
               ) : (
-                auditLogs.map((log) => (
+                filteredAuditLogs.map((log) => (
                   <tr key={log.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                     <td className="py-2.5 px-3 text-slate-500">
                       {new Date(log.created_at).toLocaleString()}
@@ -570,11 +783,11 @@ export default function AdminSecurityClient({
                       <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
                         log.action.includes('SUCCESS') || log.action.includes('ENABLED')
                           ? 'bg-emerald-500/10 text-emerald-500'
-                          : log.action.includes('FAILED') || log.action.includes('REJECTED') || log.action.includes('LIMITED')
+                          : log.action.includes('FAILED') || log.action.includes('REJECTED') || log.action.includes('LIMITED') || log.action.includes('EMERGENCY')
                           ? 'bg-red-500/10 text-red-500'
                           : 'bg-blue-500/10 text-blue-500'
                       }`}>
-                        {log.action.includes('SUCCESS') || log.action.includes('ENABLED') ? 'VERIFIED' : log.action.includes('FAILED') ? 'FLAGGED' : 'AUDITED'}
+                        {log.action.includes('SUCCESS') || log.action.includes('ENABLED') ? 'VERIFIED' : log.action.includes('FAILED') || log.action.includes('EMERGENCY') ? 'FLAGGED' : 'AUDITED'}
                       </span>
                     </td>
                   </tr>
@@ -787,6 +1000,70 @@ export default function AdminSecurityClient({
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Superadmin Global Revocation Panic Modal */}
+      {showPanicModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="w-full max-w-lg bg-white dark:bg-slate-900 border-2 border-red-500/50 rounded-2xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center gap-3 text-red-600 dark:text-red-400">
+              <AlertOctagon className="w-8 h-8 shrink-0 animate-pulse" />
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-red-500 font-bold">EMERGENCY PROTOCOL</span>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Global Administrator Session Revocation</h3>
+              </div>
+            </div>
+
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-xs font-mono text-red-600 dark:text-red-400 space-y-2">
+              <p className="font-bold">⚠️ CRITICAL ACTION WARNING:</p>
+              <p className="leading-relaxed">
+                This will immediately increment the <code className="bg-red-500/20 px-1 py-0.5 rounded">session_version</code> for ALL administrators in the database.
+              </p>
+              <ul className="list-disc list-inside space-y-1 text-[11px] text-slate-600 dark:text-slate-400">
+                <li>Every active administrative session globally will be terminated on their next HTTP request.</li>
+                <li>All administrators (including your current session) will be forced to re-authenticate with credentials and 2FA.</li>
+                <li>This is an immutable event logged in <code className="text-red-400 font-bold">admin_audit_logs</code>.</li>
+              </ul>
+            </div>
+
+            {panicMessage && (
+              <div className={`p-3 rounded-xl text-xs font-mono ${
+                panicMessage.includes('SUCCESS') ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/30' : 'bg-red-500/10 text-red-500 border border-red-500/30'
+              }`}>
+                {panicMessage}
+              </div>
+            )}
+
+            <div className="flex items-center justify-end gap-3 pt-3">
+              <button
+                type="button"
+                onClick={() => { setShowPanicModal(false); setPanicMessage(null); }}
+                disabled={isRevokingAll}
+                className="px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleEmergencyRevoke}
+                disabled={isRevokingAll}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-500 disabled:opacity-50 text-white font-mono text-xs font-bold rounded-xl shadow-lg shadow-red-600/30 transition-all cursor-pointer"
+              >
+                {isRevokingAll ? (
+                  <>
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    Executing Revocation...
+                  </>
+                ) : (
+                  <>
+                    <AlertOctagon className="w-3.5 h-3.5" />
+                    Confirm Global Session Invalidation
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Scale, CheckCircle2, XCircle, ArrowRight, ShieldCheck, DollarSign, Users, Award, HelpCircle, Sparkles, Zap, Code } from 'lucide-react';
+import { Scale } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
-import ToolLeadCapture from '@/components/ToolLeadCapture';
+import SmartSitesComparisonClient from './SmartSitesComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
@@ -118,183 +118,12 @@ export default function SmartSitesAlternativesPage() {
           </p>
         </div>
 
-        {/* AI Overview / Direct Extract: Quick Verdict Block */}
-        <div className="mb-12 p-6 sm:p-8 rounded-2xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 shadow-md">
-          <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wider mb-3">
-            <Sparkles className="w-4 h-4" /> Quick Verdict: Best SmartSites Alternatives at a Glance
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-4">
-            Which Agency Is the Best Alternative to SmartSites?
-          </h2>
-          <div className="space-y-3 text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed">
-            <p>
-              SmartSites is effective for traditional template-driven WordPress setups. However, businesses seeking higher conversion rates, modern JavaScript stacks, and transparent flat pricing choose from these top alternatives:
-            </p>
-            <ul className="space-y-2.5 pt-2">
-              <li className="flex items-start gap-2.5">
-                <span className="font-bold text-blue-600 dark:text-blue-400 shrink-0">1. AJPR World:</span>
-                <span><strong>Best overall choice.</strong> Delivers custom Next.js 16 web development with 100/100 Core Web Vitals, Generative Engine Optimization (GEO) for ChatGPT search citations, and flat monthly retainers ($1,500 – $3,500/mo) without long contracts.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="font-bold text-slate-700 dark:text-slate-300 shrink-0">2. WebFX:</span>
-                <span><strong>Best for enterprise scale.</strong> Massive 500+ person firm with extensive multi-channel corporate services, best suited for large enterprise marketing departments.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="font-bold text-slate-700 dark:text-slate-300 shrink-0">3. Disruptive Advertising:</span>
-                <span><strong>Best for paid social spend.</strong> Deep specialization in high-spend Meta and TikTok e-commerce performance marketing.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="font-bold text-slate-700 dark:text-slate-300 shrink-0">4. Single Grain:</span>
-                <span><strong>Best for venture-backed SaaS.</strong> Advanced digital marketing, brand podcasts, and organic acquisition for software companies.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="font-bold text-slate-700 dark:text-slate-300 shrink-0">5. Web Tonic:</span>
-                <span><strong>Best for local trade service.</strong> Focused on localized contractor directories and customer review collection.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Feature Comparison Table */}
-        <section className="mb-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-6">
-            Detailed Comparison: SmartSites vs AJPR World
-          </h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm">
-              <thead className="bg-slate-100 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold">
-                <tr>
-                  <th className="p-4">Criteria</th>
-                  <th className="p-4 w-1/4">SmartSites</th>
-                  <th className="p-4 w-1/4 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300">AJPR World</th>
-                  <th className="p-4 w-1/4">Traditional Agencies</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-sm text-slate-600 dark:text-slate-300">
-                <tr>
-                  <td className="p-4 font-semibold text-slate-900 dark:text-white">Web Architecture</td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">WordPress templates, Shopify themes</td>
-                  <td className="p-4 bg-blue-50/50 dark:bg-blue-950/20 font-medium text-slate-900 dark:text-white flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> Custom Next.js 16 + Webflow
-                  </td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">WordPress / PHP builders</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-semibold text-slate-900 dark:text-white">Page Speed & Core Web Vitals</td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">Average plugin bloat (40–70 scores)</td>
-                  <td className="p-4 bg-blue-50/50 dark:bg-blue-950/20 font-medium text-slate-900 dark:text-white flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> Guaranteed 95–100 Google Lighthouse scores
-                  </td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">Standard optimization plugins</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-semibold text-slate-900 dark:text-white">AI Search Citations (GEO)</td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">Not typically included in standard packages</td>
-                  <td className="p-4 bg-blue-50/50 dark:bg-blue-950/20 font-medium text-slate-900 dark:text-white flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> Full ChatGPT, Perplexity & SGE citation engine
-                  </td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">Standard SEO only</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-semibold text-slate-900 dark:text-white">Team Seniority & Access</td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">Assigned account manager liaison</td>
-                  <td className="p-4 bg-blue-50/50 dark:bg-blue-950/20 font-medium text-slate-900 dark:text-white flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> Direct access to lead software & SEO architects
-                  </td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">Tiered customer success team</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-semibold text-slate-900 dark:text-white">Contract Commitments</td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">Standard multi-month agreements</td>
-                  <td className="p-4 bg-blue-50/50 dark:bg-blue-950/20 font-medium text-slate-900 dark:text-white flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> 100% Sprint-based / Month-to-month
-                  </td>
-                  <td className="p-4 text-slate-600 dark:text-slate-400">6–12 month agreements</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {/* Lead Capture Embed */}
-        <section className="mb-16">
-          <ToolLeadCapture
-            title="Download the 2026 PPC & Web Architecture Agency RFP Toolkit"
-            subtitle="Evaluating SmartSites vs modern technical agencies? Get our objective comparison framework with transparent billable rates, deliverable scopes, and technical speed checklists."
-            badge="SmartSites RFP & Speed Audit Kit"
-            ctaText="Email My RFP & Tech Comparison Kit"
-            toolSource="smartsites_alternatives_comparison"
-            reportSummary={{
-              headline: "SmartSites vs Modern Next.js Agency Comparison (2026)",
-              metrics: {
-                "Page": "SmartSites Alternatives Evaluation",
-                "Top Alternative": "AJPR World (Next.js 16 & GEO)",
-                "Performance Advantage": "Sub-1s LCP vs Standard WordPress",
-                "Contract Commitment": "Month-to-month sprint agility"
-              }
-            }}
-          />
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-8 flex items-center gap-3">
-            <HelpCircle className="w-7 h-7 text-blue-600" />
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-6">
-            {faqs.map((faq, idx) => (
-              <div key={idx} className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                  {faq.question}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Cross Links */}
-        <div className="border-t border-slate-200 dark:border-slate-800 pt-10 mb-16">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">
-            Related Agency Comparisons & Solutions
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/compare/webtonic-alternatives" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-              Web Tonic Alternatives Review →
-            </Link>
-            <Link href="/compare/webfx-alternatives" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-              WebFX Alternatives & Pricing →
-            </Link>
-            <Link href="/compare/single-grain-alternatives" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-              Single Grain Alternatives →
-            </Link>
-            <Link href="/solutions/nextjs-mvp-agency" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-              Next.js MVP Development Agency →
-            </Link>
-            <Link href="/pricing/ppc-cost" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-              PPC Management Cost Guide →
-            </Link>
-          </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="bg-gradient-to-br from-blue-600 to-slate-950 rounded-3xl p-8 sm:p-12 text-white text-center shadow-xl">
-          <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">Want Clean Code and Proven Lead Gen?</h2>
-          <p className="text-blue-100 max-w-xl mx-auto mb-8 text-base">
-            Book a 30-minute technical roadmap session. We review your current conversion metrics, identify speed bottlenecks, and outline a custom sprint plan.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-slate-900 font-bold hover:bg-blue-50 transition-all shadow-lg"
-          >
-            Schedule Free Strategy Review <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+        {/* Interactive Masterclass Comparison Client */}
+        <SmartSitesComparisonClient
+          topAlternatives={topSmartsitesAlternatives}
+          faqs={faqs}
+        />
       </div>
     </div>
   );
 }
-

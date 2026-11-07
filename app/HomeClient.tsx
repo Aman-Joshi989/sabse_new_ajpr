@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import HeroSection from '@/components/sections/HeroSection'
+import CoreValuesSection from '@/components/sections/CoreValuesSection'
 import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
 import { trackBookCall } from '@/lib/analytics'
 import {
@@ -1059,7 +1060,10 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           </div>
         </section>
 
-        {/* 8. FREQUENTLY ASKED QUESTIONS */}
+        {/* 8. CORE VALUES */}
+        <CoreValuesSection />
+
+        {/* 9. FREQUENTLY ASKED QUESTIONS */}
         <section className="py-20 bg-slate-50/50 dark:bg-[#070c18] border-y border-slate-200 dark:border-slate-800">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <div className="text-center mb-16">

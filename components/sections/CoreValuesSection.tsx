@@ -4,6 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { 
   Sprout, 
+  Check, 
   CheckCircle2, 
   Sparkles, 
   ShieldCheck, 
@@ -160,7 +161,7 @@ export default function CoreValuesSection({
                   >
                     <div className="flex items-center gap-3.5">
                       <div className="w-6 h-6 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 flex items-center justify-center shrink-0 shadow-sm">
-                        <CheckCircle2 className="w-4 h-4 fill-current text-white dark:text-slate-950" />
+                        <Check className="w-3.5 h-3.5 stroke-[3.5] text-white dark:text-slate-950" />
                       </div>
                       <span className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 group-hover:text-red-600 dark:group-hover:text-rose-400 transition-colors">
                         {val.name}

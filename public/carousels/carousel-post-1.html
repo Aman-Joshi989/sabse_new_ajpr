@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The GEO Playbook: Winning AI Search — AJPR World Carousel</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06080D;
+      color: #F8FAFC;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 40px;
+    }
+
+    .print-bar {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      background: #111827;
+      border: 1px solid #374151;
+      padding: 12px 24px;
+      border-radius: 999px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+    }
+
+    .btn {
+      background: #2563EB;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #1D4ED8; }
+
+    /* Each slide is strictly 1080px x 1350px (4:5 LinkedIn ratio) */
+    .slide-page {
+      width: 1080px;
+      height: 1350px;
+      background: radial-gradient(circle at top right, #1E293B 0%, #090D16 60%, #030712 100%);
+      border: 1px solid #1E293B;
+      border-radius: 32px;
+      padding: 90px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 30px;
+    }
+
+    .brand-tag {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      background: #2563EB;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+    .brand-name {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #F8FAFC;
+    }
+    .brand-sub {
+      font-size: 16px;
+      color: #94A3B8;
+      font-weight: 500;
+    }
+
+    .slide-counter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      color: #60A5FA;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      padding: 8px 18px;
+      border-radius: 999px;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px 0;
+    }
+
+    .headline {
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: #FFFFFF;
+    }
+
+    .subheadline {
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #94A3B8;
+    }
+
+    .bullet-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 10px;
+    }
+
+    .bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 24px 28px;
+      border-radius: 20px;
+    }
+    .bullet-icon {
+      color: #38BDF8;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .bullet-text {
+      font-size: 28px;
+      font-weight: 600;
+      color: #E2E8F0;
+      line-height: 1.35;
+    }
+
+    .takeaway-box {
+      background: rgba(37, 99, 235, 0.15);
+      border-left: 6px solid #2563EB;
+      padding: 28px 32px;
+      border-radius: 0 20px 20px 0;
+      font-size: 28px;
+      font-weight: 700;
+      color: #60A5FA;
+    }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid rgba(255, 255, 255, 0.08);
+      padding-top: 30px;
+    }
+    .footer-note {
+      font-size: 20px;
+      color: #64748B;
+      font-weight: 600;
+    }
+    .footer-cta {
+      font-size: 22px;
+      font-weight: 800;
+      color: #38BDF8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    @media print {
+      body { background: transparent; padding: 0; }
+      .print-bar { display: none; }
+      .slide-page {
+        page-break-after: always;
+        break-after: page;
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+      }
+      @page {
+        size: 1080px 1350px;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-bar">
+    <span style="font-size: 14px; font-weight: 600; color: #94A3B8;">
+      Deck: <strong>The GEO Playbook: Winning AI Search</strong> (5 slides)
+    </span>
+    <button class="btn" onclick="window.print()">
+      🖨️ Print to PDF (LinkedIn Carousel)
+    </button>
+  </div>
+
+  
+    <div class="slide-page">
+      <div class="slide-header">
+        <div class="brand-tag">
+          <div class="brand-logo">AJ</div>
+          <div>
+            <div class="brand-name">AJPR World</div>
+            <div class="brand-sub">Growth Engineering & Systems</div>
+          </div>
+        </div>
+        <div class="slide-counter">1 / 5</div>
+      </div>
+
+      <div class="slide-body">
+        <h1 class="headline">The GEO Playbook for 2026</h1>
+        <p class="subheadline">How high-growth B2B companies get cited in ChatGPT, Claude, and Perplexity answers.</p>
+
+        
+
+        
+          <div class="takeaway-box">Swipe to see the 4 extraction signals →</div>
+        
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-note">Aman Joshi • Founder & Systems Architect</div>
+        <div class="footer-cta">Swipe next →</div>
+      </div>
+    </div>
+  
+    <div class="slide-page">
+      <div class="slide-header">
+        <div class="brand-tag">
+          <div class="brand-logo">AJ</div>
+          <div>
+            <div class="brand-name">AJPR World</div>
+            <div class="brand-sub">Growth Engineering & Systems</div>
+          </div>
+        </div>
+        <div class="slide-counter">2 / 5</div>
+      </div>
+
+      <div class="slide-body">
+        <h1 class="headline">The Shift: 10 Blue Links vs AI Synthesis</h1>
+        <p class="subheadline">What changed:</p>
+
+        
+          <div class="bullet-list">
+            
+              <div class="bullet-item">
+                <span class="bullet-icon">→</span>
+                <span class="bullet-text">Traditional: User clicks 3-5 links and reads blogs</span>
+              </div>
+            
+              <div class="bullet-item">
+                <span class="bullet-icon">→</span>
+                <span class="bullet-text">AI Search: LLM reads 100 pages and cites the top 2 authorities</span>
+              </div>
+            
+              <div class="bullet-item">
+                <span class="bullet-icon">→</span>
+                <span class="bullet-text">Result: Less vanity traffic, 3x higher conversion intent</span>
+              </div>
+            
+          </div>
+        
+
+        
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-note">Aman Joshi • Founder & Systems Architect</div>
+        <div class="footer-cta">Swipe next →</div>
+      </div>
+    </div>
+  
+    <div class="slide-page">
+      <div class="slide-header">
+        <div class="brand-tag">
+          <div class="brand-logo">AJ</div>
+          <div>
+            <div class="brand-name">AJPR World</div>
+            <div class="brand-sub">Growth Engineering & Systems</div>
+          </div>
+        </div>
+        <div class="slide-counter">3 / 5</div>
+      </div>
+
+      <div class="slide-body">
+        <h1 class="headline">Signal 1 & 2: Machine Extraction</h1>
+        <p class="subheadline">Technical setup:</p>
+
+        
+          <div class="bullet-list">
+            
+              <div class="bullet-item">
+                <span class="bullet-icon">→</span>
+                <span class="bullet-text">1. Dual Author Schema: Verified editorial credentials</span>
+              </div>
+            
+              <div class="bullet-item">
+                <span class="bullet-icon">→</span>
+                <span class="bullet-text">2. Answer Block: 4-bullet concise answer above the fold</span>
+              </div>
+            
+          </div>
+        
+
+        
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-note">Aman Joshi • Founder & Systems Architect</div>
+        <div class="footer-cta">Swipe next →</div>
+      </div>
+    </div>
+  
+    <div class="slide-page">
+      <div class="slide-header">
+        <div class="brand-tag">
+          <div class="brand-logo">AJ</div>
+          <div>
+            <div class="brand-name">AJPR World</div>
+            <div class="brand-sub">Growth Engineering & Systems</div>
+          </div>
+        </div>
+        <div class="slide-counter">4 / 5</div>
+      </div>
+
+      <div class="slide-body">
+        <h1 class="headline">Signal 3 & 4: Data Authority</h1>
+        <p class="subheadline">Content architecture:</p>
+
+        
+          <div class="bullet-list">
+            
+              <div class="bullet-item">
+                <span class="bullet-icon">→</span>
+                <span class="bullet-text">3. Proprietary Datasets: Original numerical research</span>
+              </div>
+            
+              <div class="bullet-item">
+                <span class="bullet-icon">→</span>
+                <span class="bullet-text">4. Nested JSON-LD: Machine-readable entity mapping</span>
+              </div>
+            
+          </div>
+        
+
+        
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-note">Aman Joshi • Founder & Systems Architect</div>
+        <div class="footer-cta">Swipe next →</div>
+      </div>
+    </div>
+  
+    <div class="slide-page">
+      <div class="slide-header">
+        <div class="brand-tag">
+          <div class="brand-logo">AJ</div>
+          <div>
+            <div class="brand-name">AJPR World</div>
+            <div class="brand-sub">Growth Engineering & Systems</div>
+          </div>
+        </div>
+        <div class="slide-counter">5 / 5</div>
+      </div>
+
+      <div class="slide-body">
+        <h1 class="headline">Audit Your Generative Visibility</h1>
+        <p class="subheadline">AJPR World helps enterprise brands engineer organic and AI search dominance.</p>
+
+        
+
+        
+          <div class="takeaway-box">Follow AJPR World for more systems architecture.</div>
+        
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-note">Aman Joshi • Founder & Systems Architect</div>
+        <div class="footer-cta">ajprworld.com/audit</div>
+      </div>
+    </div>
+  
+
+</body>
+</html>

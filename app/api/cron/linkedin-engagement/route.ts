@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { publishToLinkedIn } from '@/lib/linkedin';
-import { CURATED_LINKEDIN_POSTS } from '@/lib/linkedin-posts';
+import { executeGrowthPublish, AJPR_GROWTH_POSTS } from '@/lib/linkedin-growth-engine';
 import { insertAgentLog } from '@/lib/db/queries';
 
 export const dynamic = 'force-dynamic';
@@ -22,55 +20,66 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    console.log('[LinkedIn Engine] Starting autonomous high-reach publish cycle...');
-    const companyId = process.env.LINKEDIN_COMPANY_ID || '12345678';
+    console.log('[LinkedIn Growth Engine] Starting autonomous publish cycle...');
     const postIndexParam = req.nextUrl.searchParams.get('index');
+    const targetParam = (req.nextUrl.searchParams.get('target') || 'both') as 'company' | 'person' | 'both';
     
     // Choose curated post based on current day or index param
-    let postToPublish = CURATED_LINKEDIN_POSTS[0];
+    let chosenIndex = 0;
     if (postIndexParam !== null) {
-      const idx = parseInt(postIndexParam, 10);
-      if (!isNaN(idx) && CURATED_LINKEDIN_POSTS[idx]) {
-        postToPublish = CURATED_LINKEDIN_POSTS[idx];
+      const parsed = parseInt(postIndexParam, 10);
+      if (!isNaN(parsed) && AJPR_GROWTH_POSTS[parsed]) {
+        chosenIndex = parsed;
       }
     } else {
-      // Pick random from curated queue
-      postToPublish = CURATED_LINKEDIN_POSTS[Math.floor(Math.random() * CURATED_LINKEDIN_POSTS.length)];
+      chosenIndex = Math.floor(Math.random() * AJPR_GROWTH_POSTS.length);
     }
 
-    const fullPostText = `${postToPublish.text}\n\n${postToPublish.hashtags.join(' ')}`;
+    const postToPublish = AJPR_GROWTH_POSTS[chosenIndex];
+    console.log(`[LinkedIn Growth Engine] Publishing theme: ${postToPublish.theme} (Target: ${targetParam})`);
+    
+    try {
+      await insertAgentLog('hermes', `Publishing LinkedIn Growth post: "${postToPublish.theme}"`);
+    } catch (e) {
+      console.warn('Notice logging to agent table:', e);
+    }
 
-    console.log(`[LinkedIn Engine] Publishing theme: ${postToPublish.theme}`);
-    await insertAgentLog('hermes', `Publishing LinkedIn post: "${postToPublish.theme}"`);
-
-    const postResult = await publishToLinkedIn({
-      text: fullPostText,
-      companyId: companyId,
-      target: 'both', // Publishes to company page and personal profile
+    const postResult = await executeGrowthPublish({
+      postIndex: chosenIndex,
+      target: targetParam,
     });
 
     if (postResult.success) {
-      await insertAgentLog('hermes', `Successfully published to LinkedIn: "${postToPublish.theme}"`);
+      try {
+        await insertAgentLog('hermes', `Successfully published to LinkedIn: "${postToPublish.theme}"`);
+      } catch (e) {}
+
       return NextResponse.json({ 
         success: true, 
         theme: postToPublish.theme, 
         published: true, 
+        target: postResult.publishedTo,
         data: postResult.data,
-        firstComment: postToPublish.firstComment 
+        firstComment: postToPublish.firstComment,
+        carouselTitle: postToPublish.carousel.title,
       }, { status: 200 });
     } else {
-      console.warn('LinkedIn publish returned warning/error:', postResult.error);
-      await insertAgentLog('hermes', `LinkedIn publish notice: ${postResult.error}`, 'warn');
+      console.warn('LinkedIn publish returned notice:', postResult.error);
+      try {
+        await insertAgentLog('hermes', `LinkedIn publish notice: ${postResult.error}`, 'warn');
+      } catch (e) {}
+
       return NextResponse.json({ 
         success: false, 
         theme: postToPublish.theme, 
         error: postResult.error,
-        previewText: fullPostText,
-        firstComment: postToPublish.firstComment
+        previewText: postToPublish.body.slice(0, 300) + '...',
+        firstComment: postToPublish.firstComment,
+        carouselTitle: postToPublish.carousel.title,
       }, { status: 200 });
     }
   } catch (error: any) {
-    console.error('[LinkedIn Engine Error]', error);
+    console.error('[LinkedIn Growth Engine Error]', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

@@ -1,0 +1,306 @@
+#!/usr/bin/env tsx
+/**
+ * AJPR WORLD — LINKEDIN PDF CAROUSEL GENERATOR
+ * 
+ * Generates high-converting 1080x1350 (4:5 ratio) carousel decks ready for LinkedIn PDF uploads.
+ * 
+ * Usage:
+ *   npx tsx scripts/generate_linkedin_carousel.ts <postIndex>
+ *   npx tsx scripts/generate_linkedin_carousel.ts 0
+ */
+
+import fs from 'fs';
+import path from 'path';
+import { AJPR_GROWTH_POSTS } from '../lib/linkedin-growth-engine';
+
+const postIndex = parseInt(process.argv[2] || '0', 10);
+const post = AJPR_GROWTH_POSTS[postIndex] || AJPR_GROWTH_POSTS[0];
+
+const outputDir = path.join(process.cwd(), 'public', 'carousels');
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });
+}
+
+const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${post.carousel.title} — AJPR World Carousel</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06080D;
+      color: #F8FAFC;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 40px;
+    }
+
+    .print-bar {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      background: #111827;
+      border: 1px solid #374151;
+      padding: 12px 24px;
+      border-radius: 999px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+    }
+
+    .btn {
+      background: #2563EB;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #1D4ED8; }
+
+    /* Each slide is strictly 1080px x 1350px (4:5 LinkedIn ratio) */
+    .slide-page {
+      width: 1080px;
+      height: 1350px;
+      background: radial-gradient(circle at top right, #1E293B 0%, #090D16 60%, #030712 100%);
+      border: 1px solid #1E293B;
+      border-radius: 32px;
+      padding: 90px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 30px;
+    }
+
+    .brand-tag {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      background: #2563EB;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+    .brand-name {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #F8FAFC;
+    }
+    .brand-sub {
+      font-size: 16px;
+      color: #94A3B8;
+      font-weight: 500;
+    }
+
+    .slide-counter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      color: #60A5FA;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      padding: 8px 18px;
+      border-radius: 999px;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px 0;
+    }
+
+    .headline {
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: #FFFFFF;
+    }
+
+    .subheadline {
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #94A3B8;
+    }
+
+    .bullet-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 10px;
+    }
+
+    .bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 24px 28px;
+      border-radius: 20px;
+    }
+    .bullet-icon {
+      color: #38BDF8;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .bullet-text {
+      font-size: 28px;
+      font-weight: 600;
+      color: #E2E8F0;
+      line-height: 1.35;
+    }
+
+    .takeaway-box {
+      background: rgba(37, 99, 235, 0.15);
+      border-left: 6px solid #2563EB;
+      padding: 28px 32px;
+      border-radius: 0 20px 20px 0;
+      font-size: 28px;
+      font-weight: 700;
+      color: #60A5FA;
+    }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid rgba(255, 255, 255, 0.08);
+      padding-top: 30px;
+    }
+    .footer-note {
+      font-size: 20px;
+      color: #64748B;
+      font-weight: 600;
+    }
+    .footer-cta {
+      font-size: 22px;
+      font-weight: 800;
+      color: #38BDF8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    @media print {
+      body { background: transparent; padding: 0; }
+      .print-bar { display: none; }
+      .slide-page {
+        page-break-after: always;
+        break-after: page;
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+      }
+      @page {
+        size: 1080px 1350px;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-bar">
+    <span style="font-size: 14px; font-weight: 600; color: #94A3B8;">
+      Deck: <strong>${post.carousel.title}</strong> (${post.carousel.slides.length} slides)
+    </span>
+    <button class="btn" onclick="window.print()">
+      🖨️ Print to PDF (LinkedIn Carousel)
+    </button>
+  </div>
+
+  ${post.carousel.slides.map(s => `
+    <div class="slide-page">
+      <div class="slide-header">
+        <div class="brand-tag">
+          <div class="brand-logo">AJ</div>
+          <div>
+            <div class="brand-name">AJPR World</div>
+            <div class="brand-sub">Growth Engineering & Systems</div>
+          </div>
+        </div>
+        <div class="slide-counter">${s.slideNumber} / ${post.carousel.slides.length}</div>
+      </div>
+
+      <div class="slide-body">
+        <h1 class="headline">${s.headline}</h1>
+        ${s.subheadline ? `<p class="subheadline">${s.subheadline}</p>` : ''}
+
+        ${s.bullets && s.bullets.length > 0 ? `
+          <div class="bullet-list">
+            ${s.bullets.map(b => `
+              <div class="bullet-item">
+                <span class="bullet-icon">→</span>
+                <span class="bullet-text">${b}</span>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        ${s.takeaway ? `
+          <div class="takeaway-box">${s.takeaway}</div>
+        ` : ''}
+      </div>
+
+      <div class="slide-footer">
+        <div class="footer-note">Aman Joshi • Founder & Systems Architect</div>
+        <div class="footer-cta">${s.slideNumber === post.carousel.slides.length ? 'ajprworld.com/audit' : 'Swipe next →'}</div>
+      </div>
+    </div>
+  `).join('')}
+
+</body>
+</html>`;
+
+const outputPath = path.join(outputDir, `carousel-post-${postIndex}.html`);
+fs.writeFileSync(outputPath, htmlContent, 'utf-8');
+
+console.log('=============================================================');
+console.log('   🎨 AJPR WORLD CAROUSEL SLIDE DECK GENERATED!');
+console.log('=============================================================');
+console.log(`   Post Index:   #${postIndex}`);
+console.log(`   Title:        "${post.carousel.title}"`);
+console.log(`   Slides:       ${post.carousel.slides.length} slides (1080x1350 4:5 ratio)`);
+console.log(`   Output File:  ${outputPath}`);
+console.log('\n👉 To convert to a LinkedIn PDF Carousel:');
+console.log(`   1. Open in Chrome: file://${outputPath}`);
+console.log('   2. Click "Print to PDF" -> Save as PDF');
+console.log('   3. Upload the PDF directly to LinkedIn as a Document Post!\n');

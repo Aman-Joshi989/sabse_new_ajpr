@@ -49,37 +49,37 @@ export default async function GlossaryIndexPage() {
   const sortedLetters = Object.keys(groupedTerms).sort()
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-500/30 pt-24 pb-16">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 font-sans selection:bg-blue-500/30 pt-24 pb-16 transition-colors duration-300">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <header className="mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500 mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-500 mb-4">
             Tech & AI Glossary
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             A comprehensive dictionary defining the modern stack: Artificial Intelligence, Serverless Architecture, Programmatic SEO, and Startup Growth strategies.
           </p>
         </header>
 
         <div className="space-y-12">
           {sortedLetters.length === 0 ? (
-            <div className="text-center text-slate-500 py-12">Building the glossary... Check back soon.</div>
+            <div className="text-center text-slate-400 dark:text-slate-500 py-12">Building the glossary... Check back soon.</div>
           ) : (
             sortedLetters.map(letter => (
               <section key={letter} className="scroll-mt-24" id={letter}>
-                <h2 className="text-2xl font-bold text-slate-100 mb-6 border-b border-slate-800 pb-2">{letter}</h2>
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 border-b border-slate-200 dark:border-slate-800 pb-2">{letter}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {groupedTerms[letter].map((term: any) => (
                     <Link 
                       key={term.slug}
                       href={`/glossary/${term.slug}`}
-                      className="group flex items-center p-4 rounded-xl bg-slate-900/50 border border-slate-800/50 hover:bg-slate-800 hover:border-slate-700 transition-all duration-300"
+                      className="group flex items-center p-4 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-blue-400 dark:hover:border-slate-700 shadow-sm dark:shadow-none transition-all duration-300"
                     >
                       <div>
-                        <h3 className="font-semibold text-slate-200 group-hover:text-blue-400 transition-colors">
+                        <h3 className="font-semibold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                           {term.term}
                         </h3>
-                        <p className="text-sm text-slate-500 mt-1 line-clamp-2">
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
                           {term.definition}
                         </p>
                       </div>

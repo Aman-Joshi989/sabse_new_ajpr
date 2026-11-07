@@ -409,18 +409,18 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         </section>
 
         {/* 4. THE 5 OPERATIONAL BOTTLENECKS WE ELIMINATE */}
-        <section className="py-20 bg-slate-900 text-white relative overflow-hidden border-y border-slate-800">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none"></div>
+        <section className="py-20 bg-slate-100/80 dark:bg-slate-900 text-slate-900 dark:text-white relative overflow-hidden border-y border-slate-200 dark:border-slate-800 transition-colors duration-300">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 dark:from-blue-900/20 via-transparent to-transparent pointer-events-none"></div>
           
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
             <div className="max-w-3xl mb-16">
-              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Engineering Outcomes
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-white mb-6 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
                 The 5 Operational Bottlenecks <br className="hidden md:block" />We Eliminate for US Businesses.
               </h2>
-              <p className="text-lg text-slate-300 font-medium leading-relaxed">
+              <p className="text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
                 Most founders, agency owners, and growing companies lose 20–40% of their operational velocity to administrative drag, SaaS clutter, and delayed software execution. Here is how our engineering eliminates each bottleneck.
               </p>
             </div>
@@ -482,37 +482,37 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 return (
                   <div 
                     key={idx}
-                    className="p-8 rounded-2xl bg-slate-800/40 border border-slate-700/60 hover:border-blue-500/60 transition-all duration-300 flex flex-col justify-between group"
+                    className="p-8 rounded-2xl bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 hover:border-blue-500/60 transition-all duration-300 flex flex-col justify-between group shadow-sm dark:shadow-none"
                   >
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <span className="text-blue-400 font-mono text-sm font-bold">{item.number}</span>
-                        <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center border border-slate-700 group-hover:bg-blue-600 transition-colors">
-                          <Icon className="w-5 h-5 text-slate-300 group-hover:text-white transition-colors" />
+                        <span className="text-blue-600 dark:text-blue-400 font-mono text-sm font-bold">{item.number}</span>
+                        <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-slate-200 dark:border-slate-700 group-hover:bg-blue-600 transition-colors">
+                          <Icon className="w-5 h-5 text-slate-600 dark:text-slate-300 group-hover:text-white transition-colors" />
                         </div>
                       </div>
 
-                      <h3 className="text-xl font-bold text-white tracking-tight">
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
                         {item.title}
                       </h3>
 
-                      <div className="inline-block px-3 py-1 rounded-md bg-red-950/40 border border-red-800/50 text-red-400 text-xs font-bold font-mono">
+                      <div className="inline-block px-3 py-1 rounded-md bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400 text-xs font-bold font-mono">
                         {item.stat}
                       </div>
 
-                      <p className="text-xs text-slate-400 leading-relaxed">
-                        <strong className="text-slate-300">The Problem:</strong> {item.problem}
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <strong className="text-slate-800 dark:text-slate-300">The Problem:</strong> {item.problem}
                       </p>
 
-                      <p className="text-xs text-slate-300 leading-relaxed pt-1">
-                        <strong className="text-blue-400">Our Solution:</strong> {item.solution}
+                      <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed pt-1">
+                        <strong className="text-blue-600 dark:text-blue-400">Our Solution:</strong> {item.solution}
                       </p>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-slate-700/60">
+                    <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700/60">
                       <Link 
                         href={item.link}
-                        className="inline-flex items-center text-xs font-bold text-blue-400 hover:text-blue-300 group-hover:translate-x-1 transition-all gap-1.5"
+                        className="inline-flex items-center text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 group-hover:translate-x-1 transition-all gap-1.5"
                       >
                         {item.linkText} <ArrowRight className="w-3.5 h-3.5" />
                       </Link>

@@ -98,20 +98,20 @@ export default async function ProgrammaticSolutionPage(props: Props) {
       />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 bg-slate-950 text-white overflow-hidden border-b border-slate-800">
+      <section className="relative pt-32 pb-24 bg-slate-100/80 dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="container mx-auto px-4 max-w-5xl relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-bold uppercase tracking-widest mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-blue-400" /> High-Velocity Engineering Pod
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 dark:border-blue-500/30 text-blue-600 dark:text-blue-300 text-xs font-bold uppercase tracking-widest mb-6">
+            <Sparkles className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> High-Velocity Engineering Pod
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight leading-tight text-slate-900 dark:text-white">
             {solution.headline}
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-normal">
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-normal">
             {solution.subheadline}
           </p>
 

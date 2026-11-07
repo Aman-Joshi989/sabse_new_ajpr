@@ -367,7 +367,7 @@ export default function ActionFigureClient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-100 font-sans selection:bg-blue-600 selection:text-white pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-600 selection:text-white pt-24 pb-20 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-[140px]" />
@@ -376,27 +376,27 @@ export default function ActionFigureClient() {
 
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-8">
-          <Link href="/" className="hover:text-white transition-colors">Home</Link>
+        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400 mb-8">
+          <Link href="/" className="hover:text-slate-900 dark:hover:text-white transition-colors">Home</Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <Link href="/tools" className="hover:text-white transition-colors">Tools</Link>
+          <Link href="/tools" className="hover:text-slate-900 dark:hover:text-white transition-colors">Tools</Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-blue-400">AI Action Figure Generator</span>
+          <span className="text-blue-600 dark:text-blue-400">AI Action Figure Generator</span>
         </div>
 
         {/* Page Hero Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
+            <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
             Viral Collectible Studio // 100% Free
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6">
             AI Action Figure & <br />
-            <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 dark:from-blue-400 dark:via-indigo-300 dark:to-purple-400 bg-clip-text text-transparent">
               Toy Box Generator
             </span>
           </h1>
-          <p className="text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
             Turn yourself, your teammates, or your heroes into iconic mint-in-box 3D action figures sealed in vacuum-formed blister packaging with custom collectible accessories.
           </p>
         </div>
@@ -409,15 +409,15 @@ export default function ActionFigureClient() {
             
             {/* Box Header Toolbar */}
             <div className="w-full flex items-center justify-between mb-4 px-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 Live Mint-in-Box Preview
               </span>
               <button
                 onClick={() => setIsFlipped(!isFlipped)}
-                className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all hover:scale-105"
+                className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm transition-all hover:scale-105"
               >
-                <RotateCw className="w-3.5 h-3.5 text-blue-400" />
+                <RotateCw className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                 {isFlipped ? 'View Front of Box' : 'Flip to Back of Box'}
               </button>
             </div>
@@ -607,9 +607,9 @@ export default function ActionFigureClient() {
 
               <button
                 onClick={handleCopyPrompt}
-                className="flex items-center justify-center gap-2 py-3 px-4 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-sm rounded-xl transition-all hover:scale-[1.02] active:scale-95"
+                className="flex items-center justify-center gap-2 py-3 px-4 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm font-bold text-sm rounded-xl transition-all hover:scale-[1.02] active:scale-95"
               >
-                {copiedPrompt ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-blue-400" />}
+                {copiedPrompt ? <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-4 h-4 text-blue-600 dark:text-blue-400" />}
                 {copiedPrompt ? 'Copied!' : 'Copy AI Prompt'}
               </button>
             </div>
@@ -619,8 +619,8 @@ export default function ActionFigureClient() {
           <div className="lg:col-span-6 xl:col-span-7 space-y-8">
             
             {/* Step 1: Choose Archetype Preset */}
-            <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm">
-              <div className="flex items-center gap-2 text-sm font-bold text-white mb-4">
+            <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 backdrop-blur-sm shadow-sm">
+              <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white mb-4">
                 <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs">1</span>
                 Choose a Collectible Archetype
               </div>
@@ -635,23 +635,23 @@ export default function ActionFigureClient() {
                       className={`p-3 rounded-xl border text-left transition-all relative overflow-hidden group ${
                         isSelected 
                           ? 'border-blue-500 bg-blue-500/10 shadow-[0_0_15px_rgba(59,130,246,0.3)]' 
-                          : 'border-slate-800 bg-slate-950 hover:border-slate-700 hover:bg-slate-900'
+                          : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-900'
                       }`}
                     >
-                      <div className="relative w-full aspect-3/4 rounded-lg overflow-hidden mb-2 bg-slate-900">
+                      <div className="relative w-full aspect-3/4 rounded-lg overflow-hidden mb-2 bg-slate-100 dark:bg-slate-900">
                         <Image src={p.image} alt={p.name} fill className="object-cover" unoptimized />
                       </div>
-                      <h4 className="text-xs font-black text-white truncate">{p.name}</h4>
-                      <p className="text-[10px] text-slate-400 truncate">{p.role}</p>
+                      <h4 className="text-xs font-black text-slate-900 dark:text-white truncate">{p.name}</h4>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{p.role}</p>
                     </button>
                   );
                 })}
               </div>
 
               {/* Upload Custom Portrait Option */}
-              <div className="mt-4 pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
-                <div className="text-xs text-slate-400 text-center sm:text-left">
-                  <span className="text-white font-bold block">Want your own face in the box?</span>
+              <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="text-xs text-slate-500 dark:text-slate-400 text-center sm:text-left">
+                  <span className="text-slate-900 dark:text-white font-bold block">Want your own face in the box?</span>
                   Upload any photo or portrait to drop yourself into the blister pack.
                 </div>
                 <input 
@@ -663,61 +663,61 @@ export default function ActionFigureClient() {
                 />
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-xs font-bold rounded-xl transition-all hover:scale-105"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-xs font-bold rounded-xl transition-all hover:scale-105 shadow-sm"
                 >
-                  <Upload className="w-3.5 h-3.5 text-blue-400" />
+                  <Upload className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                   Upload Photo
                 </button>
               </div>
             </div>
 
             {/* Step 2: Customize Character & Packaging */}
-            <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm space-y-5">
-              <div className="flex items-center gap-2 text-sm font-bold text-white">
+            <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 backdrop-blur-sm shadow-sm space-y-5">
+              <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
                 <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs">2</span>
                 Action Figure Identity & Box Details
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-bold text-slate-300 mb-1.5 block">Character Name</label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 block">Character Name</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Aman Joshi"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-slate-300 mb-1.5 block">Professional Title / Subtitle</label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 block">Professional Title / Subtitle</label>
                   <input
                     type="text"
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                     placeholder="e.g. Systems Architect"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-slate-300 mb-1.5 block">Series Collection Name</label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 block">Series Collection Name</label>
                   <input
                     type="text"
                     value={series}
                     onChange={(e) => setSeries(e.target.value)}
                     placeholder="e.g. Tech Titans Vol. 1"
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-slate-300 mb-1.5 block">Packaging Box Theme</label>
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 block">Packaging Box Theme</label>
                   <select
                     value={theme}
                     onChange={(e) => setTheme(e.target.value as BoxTheme)}
-                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
                   >
                     <option value="retro-hasbro">80s/90s Retro Hasbro</option>
                     <option value="cyberpunk-neon">Cyberpunk 2077 Neon</option>
@@ -729,36 +729,36 @@ export default function ActionFigureClient() {
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-300 mb-1.5 block">Outfit & Pose Description</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 block">Outfit & Pose Description</label>
                 <input
                   type="text"
                   value={outfit}
                   onChange={(e) => setOutfit(e.target.value)}
                   placeholder="e.g. black minimalist founder hoodie, dark jeans, and clean sneakers"
-                  className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-300 mb-1.5 block">Back of Box Bio / Origin Story</label>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 block">Back of Box Bio / Origin Story</label>
                 <textarea
                   rows={2}
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="Tell your character's heroic backstory..."
-                  className="w-full px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-blue-500 transition-colors resize-none"
+                  className="w-full px-3.5 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 transition-colors resize-none"
                 />
               </div>
             </div>
 
             {/* Step 3: Choose Blister Pack Accessories */}
-            <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm">
+            <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 backdrop-blur-sm shadow-sm">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2 text-sm font-bold text-white">
+                <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
                   <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs">3</span>
                   Select Collectible Accessories ({accessories.length}/4)
                 </div>
-                <span className="text-[11px] text-slate-400">Picks snap into the plastic trays</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">Picks snap into the plastic trays</span>
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -771,7 +771,7 @@ export default function ActionFigureClient() {
                       className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
                         isSelected 
                           ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20 scale-105' 
-                          : 'bg-slate-950 text-slate-400 border border-slate-800 hover:border-slate-700 hover:text-slate-200'
+                          : 'bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:text-slate-900 dark:hover:text-slate-200'
                       }`}
                     >
                       {isSelected && <Check className="w-3 h-3" />}
@@ -783,14 +783,14 @@ export default function ActionFigureClient() {
             </div>
 
             {/* Step 4: AI Generation & Prompt Output */}
-            <div className="bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 border border-blue-500/30 rounded-2xl p-6 shadow-xl">
+            <div className="bg-gradient-to-br from-blue-50 via-slate-50 to-indigo-50 dark:from-slate-900 dark:via-slate-950 dark:to-blue-950 border border-blue-200 dark:border-blue-500/30 rounded-2xl p-6 shadow-sm dark:shadow-xl">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
                 <div>
-                  <h3 className="text-base font-black text-white flex items-center gap-2">
-                    <Wand2 className="w-5 h-5 text-blue-400" />
+                  <h3 className="text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
+                    <Wand2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     AI Action Figure Generation
                   </h3>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     Render photorealistic packaging with DALL-E 3 or copy the engineered prompt for Midjourney / Flux.
                   </p>
                 </div>
@@ -806,14 +806,14 @@ export default function ActionFigureClient() {
               </div>
 
               {/* Real Prompt Preview */}
-              <div className="mt-4 p-3.5 bg-black/70 rounded-xl border border-slate-800 text-xs font-mono text-slate-300 leading-relaxed relative group">
+              <div className="mt-4 p-3.5 bg-white/90 dark:bg-black/70 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-800 dark:text-slate-300 leading-relaxed relative group shadow-inner">
                 <div className="flex items-center justify-between text-[10px] text-slate-500 mb-2 uppercase tracking-wider font-bold">
                   <span>Engineered Midjourney & Flux Prompt:</span>
                   <button 
                     onClick={handleCopyPrompt}
-                    className="text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 flex items-center gap-1"
                   >
-                    {copiedPrompt ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                    {copiedPrompt ? <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3 h-3" />}
                     {copiedPrompt ? 'Copied' : 'Copy'}
                   </button>
                 </div>
@@ -825,41 +825,41 @@ export default function ActionFigureClient() {
         </div>
 
         {/* How It Works & Pro Tips Section */}
-        <div className="mt-24 pt-16 border-t border-slate-800">
+        <div className="mt-24 pt-16 border-t border-slate-200 dark:border-slate-800">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h3 className="text-2xl font-bold text-white mb-3">How to Get Viral AI Action Figures</h3>
-            <p className="text-sm text-slate-400">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">How to Get Viral AI Action Figures</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               Tips on getting the most authentic packaging reflections, toy joints, and collectible box art.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-800">
-              <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-4">
+            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4">
                 <Laptop className="w-5 h-5" />
               </div>
-              <h4 className="text-base font-bold text-white mb-2">1. The Blister Pack Formula</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">1. The Blister Pack Formula</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Keywords like &quot;mint-in-box&quot;, &quot;clear molded plastic blister bubble&quot;, and &quot;printed cardboard card with peg hanger&quot; are essential for generating authentic toy store rack aesthetics.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-800">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4">
+            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-4">
                 <Sparkles className="w-5 h-5" />
               </div>
-              <h4 className="text-base font-bold text-white mb-2">2. Hyper-Specific Accessories</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">2. Hyper-Specific Accessories</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Adding unique professional items (e.g. &quot;M3 Max laptop&quot;, &quot;AirPods Max&quot;, &quot;cold brew cup&quot;) into separate vacuum-molded plastic trays instantly grounds the toy into an iconic collectible.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-800">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4">
+            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-4">
                 <Award className="w-5 h-5" />
               </div>
-              <h4 className="text-base font-bold text-white mb-2">3. Studio Lighting & Specular Gloss</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">3. Studio Lighting & Specular Gloss</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                 Our engine automatically appends &quot;studio product photography&quot; and &quot;authentic plastic reflections&quot; so AI models render convincing shine on the vacuum-formed bubble.
               </p>
             </div>
@@ -867,7 +867,7 @@ export default function ActionFigureClient() {
         </div>
 
         {/* CTA Banner: Need Custom AI Apps? */}
-        <div className="mt-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 border border-blue-500/30 text-center relative overflow-hidden">
+        <div className="mt-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-blue-900/30 via-slate-900 to-indigo-900/30 border border-blue-500/30 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
           <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-4">
             Want to Build Custom AI Tools & Interactive Apps for Your Brand?

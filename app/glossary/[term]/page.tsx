@@ -58,7 +58,7 @@ export default async function GlossaryTermPage({ params }: { params: Promise<{ t
   const otherTerms = allTerms.filter((t: any) => t.slug !== termSlug).slice(0, 3)
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans pt-24 pb-16">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 font-sans pt-24 pb-16 transition-colors duration-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
@@ -67,36 +67,36 @@ export default async function GlossaryTermPage({ params }: { params: Promise<{ t
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb */}
-        <nav className="flex items-center space-x-2 text-sm text-slate-400 mb-8">
-          <Link href="/glossary" className="hover:text-blue-400 transition-colors flex items-center">
+        <nav className="flex items-center space-x-2 text-sm text-slate-500 dark:text-slate-400 mb-8">
+          <Link href="/glossary" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center">
             <ArrowLeft className="w-4 h-4 mr-1" />
             Glossary Index
           </Link>
           <ChevronRight className="w-4 h-4" />
-          <span className="text-slate-300">{termData.term}</span>
+          <span className="text-slate-700 dark:text-slate-300">{termData.term}</span>
         </nav>
 
-        <article className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 md:p-10 mb-12 shadow-xl shadow-black/50">
+        <article className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-10 mb-12 shadow-xl shadow-slate-200/50 dark:shadow-black/50">
           <div className="flex items-center space-x-3 mb-6">
             <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
-              <BookOpen className="w-5 h-5 text-blue-400" />
+              <BookOpen className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               {termData.term}
             </h1>
           </div>
 
-          <div className="prose prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-800 prose-a:text-blue-400 hover:prose-a:text-blue-300">
-            <p className="text-xl text-slate-300 font-medium leading-relaxed border-l-4 border-blue-500 pl-4 mb-8">
+          <div className="prose dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-slate-100 dark:prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-200 dark:prose-pre:border-slate-800 prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:underline">
+            <p className="text-xl text-slate-800 dark:text-slate-300 font-medium leading-relaxed border-l-4 border-blue-600 dark:border-blue-500 pl-4 mb-8">
               {termData.definition}
             </p>
             
             {/* Render Markdown Explanation */}
             <div dangerouslySetInnerHTML={{ 
               __html: termData.detailed_explanation
-                .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mt-8 mb-4">$1</h3>')
-                .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-10 mb-6 border-b border-slate-800 pb-2">$1</h2>')
-                .replace(/^\> (.*$)/gim, '<blockquote class="border-l-4 border-blue-500 pl-4 my-6 text-slate-300 italic">$1</blockquote>')
+                .replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mt-8 mb-4 text-slate-900 dark:text-white">$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-10 mb-6 border-b border-slate-200 dark:border-slate-800 pb-2 text-slate-900 dark:text-white">$1</h2>')
+                .replace(/^\> (.*$)/gim, '<blockquote class="border-l-4 border-blue-600 dark:border-blue-500 pl-4 my-6 text-slate-700 dark:text-slate-300 italic">$1</blockquote>')
                 .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
                 .replace(/\n/gi, "<br />")
             }} />
@@ -104,16 +104,16 @@ export default async function GlossaryTermPage({ params }: { params: Promise<{ t
         </article>
 
         {/* SEO Silo: Link to Services */}
-        <div className="bg-gradient-to-r from-blue-900/20 to-indigo-900/20 border border-blue-800/30 rounded-2xl p-8 text-center mb-12">
-          <h3 className="text-2xl font-bold text-white mb-4">Leverage {termData.term} in Your Startup</h3>
-          <p className="text-slate-400 mb-6 max-w-xl mx-auto">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800/30 rounded-2xl p-8 text-center mb-12 shadow-sm dark:shadow-none">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Leverage {termData.term} in Your Startup</h3>
+          <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-xl mx-auto">
             AJPR World specializes in implementing advanced technologies like {termData.term} for fast-growing startups and enterprises.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link href="/book-call" className="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-full transition-colors w-full sm:w-auto">
+            <Link href="/book-call" className="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-full transition-colors w-full sm:w-auto shadow-md shadow-blue-500/20">
               Book a Strategy Call
             </Link>
-            <Link href="/services" className="bg-slate-800 hover:bg-slate-700 text-white font-medium px-6 py-3 rounded-full transition-colors w-full sm:w-auto border border-slate-700">
+            <Link href="/services" className="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-medium px-6 py-3 rounded-full transition-colors w-full sm:w-auto border border-slate-300 dark:border-slate-700">
               View Our Services
             </Link>
           </div>
@@ -122,15 +122,15 @@ export default async function GlossaryTermPage({ params }: { params: Promise<{ t
         {/* Keep Reading */}
         {otherTerms.length > 0 && (
           <div>
-            <h3 className="text-lg font-semibold text-slate-200 mb-4 border-b border-slate-800 pb-2">Keep Exploring</h3>
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-200 mb-4 border-b border-slate-200 dark:border-slate-800 pb-2">Keep Exploring</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {otherTerms.map((t: any) => (
                 <Link 
                   key={t.slug}
                   href={`/glossary/${t.slug}`}
-                  className="p-4 rounded-xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800 transition-colors"
+                  className="p-4 rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 shadow-sm dark:shadow-none transition-colors group"
                 >
-                  <h4 className="font-medium text-slate-200 group-hover:text-blue-400 truncate">{t.term}</h4>
+                  <h4 className="font-medium text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">{t.term}</h4>
                 </Link>
               ))}
             </div>

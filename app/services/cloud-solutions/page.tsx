@@ -65,12 +65,12 @@ export default function CloudSolutionsPage() {
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
             
             {/* Hero Section */}
-            <section className="relative py-32 overflow-hidden bg-slate-900">
+            <section className="relative py-32 overflow-hidden bg-slate-100/80 dark:bg-slate-900 text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900 via-slate-900 to-black opacity-80"></div>
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 dark:from-blue-900 via-transparent dark:via-slate-900 to-transparent dark:to-black opacity-80"></div>
                      {/* Animated CSS Background Elements */}
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[100px] animate-pulse"></div>
-                    <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[100px] animate-pulse animation-delay-2000"></div>
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-[100px] animate-pulse"></div>
+                    <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/10 dark:bg-purple-500/20 rounded-full blur-[100px] animate-pulse animation-delay-2000"></div>
                     
                     {/* Floating Icons as Abstract Art */}
                     <div className="absolute top-20 right-20 text-blue-500/10 animate-float hidden md:block">
@@ -85,14 +85,14 @@ export default function CloudSolutionsPage() {
                 </div>
 
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <Badge className="mb-6 bg-blue-500/20 text-blue-300 border-blue-500/30 hover:bg-blue-500/30 transition-colors px-4 py-1 text-sm">
+                    <Badge className="mb-6 bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-300 border-blue-500/20 dark:border-blue-500/30 hover:bg-blue-500/30 transition-colors px-4 py-1 text-sm">
                         Next-Gen Cloud Storage
                     </Badge>
-                    <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tight animate-fade-up leading-tight">
+                    <h1 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight animate-fade-up leading-tight">
                         Secure. Scalable. <br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400">Sovereign Cloud.</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 dark:from-blue-400 dark:via-cyan-400 dark:to-teal-400">Sovereign Cloud.</span>
                     </h1>
-                    <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-up animation-delay-200">
+                    <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-up animation-delay-200">
                         Experience higher speeds with locally hosted servers. 
                         Military-grade encryption meets Indian data sovereignty.
                     </p>
@@ -100,7 +100,7 @@ export default function CloudSolutionsPage() {
                         <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-6 text-lg shadow-lg shadow-blue-500/30" asChild>
                             <Link href="/contact">Get Started Free</Link>
                         </Button>
-                        <Button size="lg" variant="outline" className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 rounded-full px-8 py-6 text-lg" asChild>
+                        <Button size="lg" variant="outline" className="border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full px-8 py-6 text-lg" asChild>
                             <Link href="#comparison">View Pricing</Link>
                         </Button>
                     </div>

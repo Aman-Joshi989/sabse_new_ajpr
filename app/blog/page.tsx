@@ -124,22 +124,22 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       
-      {/* Premium Dark Hero Section */}
-      <section className="relative pt-32 pb-24 overflow-hidden bg-slate-950">
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-24 overflow-hidden bg-slate-100/80 dark:bg-slate-950 text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div className="absolute top-0 right-0 w-[80%] h-[150%] bg-[radial-gradient(circle_at_70%_0%,rgba(59,130,246,0.15)_0%,transparent_50%)] pointer-events-none"></div>
         <div className="absolute top-40 -left-20 w-[60%] h-[120%] bg-[radial-gradient(circle_at_30%_80%,rgba(139,92,246,0.1)_0%,transparent_50%)] pointer-events-none"></div>
-        <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/djp3uolnn/image/upload/v1723528256/grid-pattern_qayf0d.png')] opacity-20 bg-[length:32px_32px] pointer-events-none mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/djp3uolnn/image/upload/v1723528256/grid-pattern_qayf0d.png')] opacity-10 dark:opacity-20 bg-[length:32px_32px] pointer-events-none mix-blend-overlay"></div>
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent pointer-events-none"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-8 animate-fade-in max-w-4xl mx-auto">
-            <div className="inline-flex px-4 py-1.5 bg-white/5 border border-white/10 backdrop-blur-xl rounded-full text-xs font-bold tracking-widest text-blue-300 uppercase mb-8 shadow-[0_0_20px_rgba(59,130,246,0.1)]">
+            <div className="inline-flex px-4 py-1.5 bg-blue-500/10 dark:bg-white/5 border border-blue-500/20 dark:border-white/10 backdrop-blur-xl rounded-full text-xs font-bold tracking-widest text-blue-600 dark:text-blue-300 uppercase mb-8 shadow-sm">
               Engineering & Growth Insights
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-slate-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-white dark:via-white dark:to-white/60">
               The Growth Journal
             </h1>
-            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed">
               Actionable tactics on custom web development, AI automation frameworks, and dominating local search rankings. Built for startups and scaling brands.
             </p>
           </div>

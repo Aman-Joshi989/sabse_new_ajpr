@@ -133,38 +133,38 @@ export default function LeadForm() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }} 
         animate={{ opacity: 1, scale: 1 }}
-        className="text-center p-8 sm:p-10 bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl space-y-6"
+        className="text-center p-8 sm:p-10 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl space-y-6"
       >
-        <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
+        <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
           <CheckCircle2 className="w-8 h-8" />
         </div>
         
         <div>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-3">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider mb-3">
             <Sparkles className="w-3.5 h-3.5" /> Technical Scope Queued
           </span>
-          <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+          <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
             Audit Request Received!
           </h3>
-          <p className="text-sm text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
-            Thank you, <strong className="text-white font-semibold">{formData.name}</strong>. Our senior engineering pod is preparing your tailored Technical & SEO review for <span className="text-blue-400 font-medium">{formData.email}</span>.
+          <p className="text-sm text-slate-600 dark:text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
+            Thank you, <strong className="text-slate-900 dark:text-white font-semibold">{formData.name}</strong>. Our senior engineering pod is preparing your tailored Technical & SEO review for <span className="text-blue-600 dark:text-blue-400 font-medium">{formData.email}</span>.
           </p>
         </div>
 
         {/* 3 Step Timeline of what happens next */}
-        <div className="text-left bg-slate-950/70 border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">What Happens Next</h4>
-          <div className="space-y-2.5 text-xs sm:text-sm text-slate-300">
+        <div className="text-left bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">What Happens Next</h4>
+          <div className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
             <div className="flex items-start gap-2.5">
-              <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+              <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
               <span><strong>Deep Scan:</strong> We analyze your Core Web Vitals, API latency, and search footprint.</span>
             </div>
             <div className="flex items-start gap-2.5">
-              <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+              <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
               <span><strong>Actionable Plan:</strong> Senior architect authors a 3-page roadmap with sprint estimates.</span>
             </div>
             <div className="flex items-start gap-2.5">
-              <span className="w-5 h-5 rounded-full bg-emerald-600/20 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+              <span className="w-5 h-5 rounded-full bg-emerald-600/20 text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
               <span><strong>Direct Delivery:</strong> Delivered to your inbox within 24 hours (zero sales spam).</span>
             </div>
           </div>
@@ -195,7 +195,7 @@ export default function LeadForm() {
                 utm_campaign: ''
               });
             }}
-            className="text-xs text-slate-400 hover:text-slate-200 transition-colors underline pt-1 block mx-auto"
+            className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors underline pt-1 block mx-auto"
           >
             Submit another project audit
           </button>
@@ -205,18 +205,18 @@ export default function LeadForm() {
   }
 
   return (
-    <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl relative">
+    <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl relative text-slate-900 dark:text-slate-100 transition-colors duration-300">
       
       {/* Client-Friendly Step Header */}
       <div className="mb-6 sm:mb-8">
         <div className="flex items-center justify-between text-xs font-semibold mb-3">
-          <span className={step >= 1 ? "text-blue-400 font-bold" : "text-slate-500"}>
+          <span className={step >= 1 ? "text-blue-600 dark:text-blue-400 font-bold" : "text-slate-400 dark:text-slate-500"}>
             01 Contact
           </span>
-          <span className={step >= 2 ? "text-blue-400 font-bold" : "text-slate-500"}>
+          <span className={step >= 2 ? "text-blue-600 dark:text-blue-400 font-bold" : "text-slate-400 dark:text-slate-500"}>
             02 Tech & Team
           </span>
-          <span className={step >= 3 ? "text-blue-400 font-bold" : "text-slate-500"}>
+          <span className={step >= 3 ? "text-blue-600 dark:text-blue-400 font-bold" : "text-slate-400 dark:text-slate-500"}>
             03 Budget & Scope
           </span>
         </div>
@@ -227,7 +227,7 @@ export default function LeadForm() {
               className={`h-2 flex-1 rounded-full transition-all duration-300 ${
                 step >= num 
                   ? 'bg-gradient-to-r from-blue-600 to-indigo-500 shadow-sm shadow-blue-500/30' 
-                  : 'bg-slate-800'
+                  : 'bg-slate-200 dark:bg-slate-800'
               }`} 
             />
           ))}
@@ -247,8 +247,8 @@ export default function LeadForm() {
             {step === 1 && (
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="name" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <User className="w-3.5 h-3.5 text-blue-400" /> Full Name
+                  <Label htmlFor="name" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <User className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Full Name
                   </Label>
                   <Input 
                     id="name"
@@ -257,13 +257,13 @@ export default function LeadForm() {
                     onChange={handleChange} 
                     placeholder="Alex Morgan" 
                     autoFocus
-                    className="bg-slate-950 border-slate-800 text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-500"
+                    className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="email" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <Mail className="w-3.5 h-3.5 text-blue-400" /> Work Email
+                  <Label htmlFor="email" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <Mail className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Work Email
                   </Label>
                   <Input 
                     id="email"
@@ -272,9 +272,9 @@ export default function LeadForm() {
                     value={formData.email} 
                     onChange={handleChange} 
                     placeholder="alex@company.com" 
-                    className="bg-slate-950 border-slate-800 text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-500"
+                    className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
                   />
-                  <p className="text-[11px] text-slate-400 mt-1.5">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
                     🔒 We deliver your confidential audit report directly to this email.
                   </p>
                 </div>
@@ -306,15 +306,15 @@ export default function LeadForm() {
             {step === 2 && (
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="companySize" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <Building2 className="w-3.5 h-3.5 text-blue-400" /> Company / Team Size
+                  <Label htmlFor="companySize" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <Building2 className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Company / Team Size
                   </Label>
                   <select 
                     id="companySize"
                     name="companySize" 
                     value={formData.companySize} 
                     onChange={handleChange}
-                    className="w-full bg-slate-950 border border-slate-800 text-white h-12 rounded-xl px-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl px-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select company size...</option>
                     <option value="1">Solo Founder (1)</option>
@@ -326,8 +326,8 @@ export default function LeadForm() {
                 </div>
 
                 <div>
-                  <Label htmlFor="techStack" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-blue-400" /> Current Tech Stack or Website URL
+                  <Label htmlFor="techStack" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Current Tech Stack or Website URL
                   </Label>
                   <Input 
                     id="techStack"
@@ -335,9 +335,9 @@ export default function LeadForm() {
                     value={formData.techStack} 
                     onChange={handleChange} 
                     placeholder="e.g. Next.js, Postgres, or yoursite.com" 
-                    className="bg-slate-950 border-slate-800 text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-500"
+                    className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
                   />
-                  <p className="text-[11px] text-slate-400 mt-1.5">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
                     Sharing your URL helps our architects perform live Lighthouse & TTFB audits.
                   </p>
                 </div>
@@ -347,7 +347,7 @@ export default function LeadForm() {
                     type="button" 
                     variant="outline" 
                     onClick={prevStep} 
-                    className="h-12 px-4 border-slate-700 bg-slate-800/60 hover:bg-slate-800 text-slate-200 rounded-xl"
+                    className="h-12 px-4 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl"
                   >
                     <ChevronLeft className="w-4 h-4 mr-1" /> Back
                   </Button>
@@ -366,15 +366,15 @@ export default function LeadForm() {
             {step === 3 && (
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="budget" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <DollarSign className="w-3.5 h-3.5 text-blue-400" /> Estimated Project Budget
+                  <Label htmlFor="budget" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <DollarSign className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Estimated Project Budget
                   </Label>
                   <select 
                     id="budget"
                     name="budget" 
                     value={formData.budget} 
                     onChange={handleChange}
-                    className="w-full bg-slate-950 border border-slate-800 text-white h-12 rounded-xl px-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl px-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select budget range...</option>
                     <option value="<5k">Under $5,000 (Rapid MVP / Starter Sprint)</option>
@@ -383,17 +383,17 @@ export default function LeadForm() {
                     <option value="35k+">$35,000+ (Enterprise Scale & Infrastructure)</option>
                     <option value="flexible">Flexible / Need Technical Scope First</option>
                   </select>
-                  <p className="text-[11px] text-slate-400 mt-1.5">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
                     We tailor our sprint recommendations directly to your financial constraints.
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 space-y-1">
-                  <div className="flex items-center gap-2 text-emerald-400 font-semibold">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold">
                     <ShieldCheck className="w-4 h-4 shrink-0" />
                     <span>100% Free • No Obligation • Mutual NDA</span>
                   </div>
-                  <p className="text-slate-400 text-[11px]">
+                  <p className="text-slate-500 dark:text-slate-400 text-[11px]">
                     Receive an unvarnished technical assessment detailing hidden performance bottlenecks and exact next steps.
                   </p>
                 </div>
@@ -404,7 +404,7 @@ export default function LeadForm() {
                     variant="outline" 
                     onClick={prevStep} 
                     disabled={loading}
-                    className="h-12 px-4 border-slate-700 bg-slate-800/60 hover:bg-slate-800 text-slate-200 rounded-xl"
+                    className="h-12 px-4 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl"
                   >
                     <ChevronLeft className="w-4 h-4 mr-1" /> Back
                   </Button>
@@ -431,12 +431,12 @@ export default function LeadForm() {
       </form>
 
       {/* Trust Subtext */}
-      <div className="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+      <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-medium">
         <span className="flex items-center gap-1.5">
-          <Lock className="w-3.5 h-3.5 text-slate-500" /> Confidential & Secure
+          <Lock className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" /> Confidential & Secure
         </span>
         <span className="flex items-center gap-1.5">
-          <Zap className="w-3.5 h-3.5 text-amber-400" /> ~24h Turnaround
+          <Zap className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" /> ~24h Turnaround
         </span>
       </div>
 

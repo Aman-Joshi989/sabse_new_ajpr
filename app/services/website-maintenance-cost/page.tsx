@@ -83,19 +83,19 @@ export default function WebsiteMaintenanceCostPage() {
       <FAQSchema faqs={costFaqs} />
 
       {/* Hero Header */}
-      <section className="relative pt-32 pb-20 bg-slate-950 overflow-hidden text-white border-b border-slate-800">
+      <section className="relative pt-32 pb-20 bg-slate-100/80 dark:bg-slate-950 overflow-hidden text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center">
-          <Badge className="mb-6 bg-blue-500/20 text-blue-300 border-blue-500/30 px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-full">
+          <Badge className="mb-6 bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-300 border-blue-500/20 dark:border-blue-500/30 px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-full">
             2026 Pricing & Retainer Benchmark
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight">
+          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight text-slate-900 dark:text-white">
             How Much Does Website Maintenance Cost in 2026? <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-indigo-600 dark:from-blue-400 dark:via-cyan-400 dark:to-indigo-400">
               The Complete Pricing Guide
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
             Understand standard website maintenance costs, retainer tiers, and the true cost of unexpected downtime. Real data, transparent pricing, and zero sales fluff.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -104,7 +104,7 @@ export default function WebsiteMaintenanceCostPage() {
                 View Flat-Rate Packages <ArrowRight className="w-4 h-4 ml-1" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 font-semibold text-sm" asChild>
+            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 font-semibold text-sm" asChild>
               <Link href="/book-call">Get Custom Assessment</Link>
             </Button>
           </div>

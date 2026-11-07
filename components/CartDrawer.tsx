@@ -485,20 +485,20 @@ export default function CartDrawer() {
 
     {/* 100% Manual Payment & Invoicing Instructions Sheet */}
       <Dialog open={isPaymentSheetOpen} onOpenChange={setIsPaymentSheetOpen}>
-        <DialogContent className="sm:max-w-[560px] p-6 bg-slate-950 text-white border border-slate-800 max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-[560px] p-6 bg-white dark:bg-slate-950 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 max-h-[90vh] overflow-y-auto shadow-2xl">
           <DialogHeader>
             <div className="flex items-center gap-2 mb-1">
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                 Order Registered
               </span>
               <span className="text-xs text-slate-500 font-mono">
                 {activeOrder?.referenceId}
               </span>
             </div>
-            <DialogTitle className="text-2xl font-bold text-white">
+            <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-white">
               Complete Your Payment
             </DialogTitle>
-            <DialogDescription className="text-slate-400 text-sm">
+            <DialogDescription className="text-slate-600 dark:text-slate-400 text-sm">
               Please send your payment using any of the manual methods below. Your engineering pod will verify and kick off work.
             </DialogDescription>
           </DialogHeader>
@@ -506,34 +506,34 @@ export default function CartDrawer() {
           {activeOrder && (
             <div className="space-y-5 py-3">
               {/* Order Summary Pill */}
-              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex justify-between items-center">
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex justify-between items-center shadow-sm">
                 <div>
-                  <div className="text-xs text-slate-400">Payable Amount ({activeOrder.paymentType === 'full' ? '100% Full' : '50% Advance'}):</div>
-                  <div className="text-2xl font-black text-white mt-0.5">
-                    {formatPrice(activeOrder.amount)} <span className="text-sm font-normal text-slate-400">{activeOrder.currency}</span>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Payable Amount ({activeOrder.paymentType === 'full' ? '100% Full' : '50% Advance'}):</div>
+                  <div className="text-2xl font-black text-slate-900 dark:text-white mt-0.5">
+                    {formatPrice(activeOrder.amount)} <span className="text-sm font-normal text-slate-500 dark:text-slate-400">{activeOrder.currency}</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs text-slate-400">Order Reference:</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Order Reference:</div>
                   <button 
                     onClick={() => copyToClipboard(activeOrder.referenceId, 'ref')}
-                    className="flex items-center gap-1 font-mono text-xs text-blue-400 hover:text-blue-300 font-bold bg-slate-800 px-2.5 py-1 rounded-md border border-slate-700 mt-1"
+                    className="flex items-center gap-1 font-mono text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 font-bold bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700 mt-1 shadow-sm"
                   >
                     {activeOrder.referenceId}
-                    {copiedField === 'ref' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                    {copiedField === 'ref' ? <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3 h-3" />}
                   </button>
                 </div>
               </div>
 
               {/* Payment Method Selector Tabs */}
-              <div className="grid grid-cols-3 gap-2 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800">
+              <div className="grid grid-cols-3 gap-2 bg-slate-100 dark:bg-slate-900/80 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={() => setPaymentTab('skydo')}
                   className={`py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                     paymentTab === 'skydo' 
                       ? 'bg-blue-600 text-white shadow-md' 
-                      : 'text-slate-400 hover:text-white'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <CreditCard className="w-3.5 h-3.5" />
@@ -545,7 +545,7 @@ export default function CartDrawer() {
                   className={`py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                     paymentTab === 'wire' 
                       ? 'bg-blue-600 text-white shadow-md' 
-                      : 'text-slate-400 hover:text-white'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <Landmark className="w-3.5 h-3.5" />
@@ -557,7 +557,7 @@ export default function CartDrawer() {
                   className={`py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                     paymentTab === 'upi' 
                       ? 'bg-blue-600 text-white shadow-md' 
-                      : 'text-slate-400 hover:text-white'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <Smartphone className="w-3.5 h-3.5" />
@@ -567,13 +567,13 @@ export default function CartDrawer() {
 
               {/* Tab 1: Skydo Payment Link */}
               {paymentTab === 'skydo' && (
-                <div className="space-y-4 p-4 bg-slate-900/60 rounded-xl border border-slate-800">
-                  <div className="flex items-center justify-between text-xs text-slate-300">
-                    <span className="font-semibold text-white">Skydo International Payment Link</span>
-                    <span className="text-emerald-400 font-medium">Visa • Mastercard • Amex</span>
+                <div className="space-y-4 p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                  <div className="flex items-center justify-between text-xs text-slate-700 dark:text-slate-300">
+                    <span className="font-semibold text-slate-900 dark:text-white">Skydo International Payment Link</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-medium">Visa • Mastercard • Amex</span>
                   </div>
-                  <p className="text-slate-400 text-xs leading-relaxed">
-                    Click below to open our official Skydo payment portal. Enter your reference ID <code className="text-blue-400 font-bold">{activeOrder.referenceId}</code> when completing payment.
+                  <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed">
+                    Click below to open our official Skydo payment portal. Enter your reference ID <code className="text-blue-600 dark:text-blue-400 font-bold">{activeOrder.referenceId}</code> when completing payment.
                   </p>
                   <a
                     href={skydoCheckoutUrl}
@@ -589,30 +589,30 @@ export default function CartDrawer() {
 
               {/* Tab 2: Direct US ACH / Wire */}
               {paymentTab === 'wire' && (
-                <div className="space-y-3 p-4 bg-slate-900/60 rounded-xl border border-slate-800 text-xs">
-                  <div className="flex justify-between items-center text-slate-300">
-                    <span className="font-bold text-white">US ACH & Domestic Wire Transfer</span>
-                    <span className="text-blue-400">0% Processing Fee</span>
+                <div className="space-y-3 p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 text-xs shadow-sm">
+                  <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
+                    <span className="font-bold text-slate-900 dark:text-white">US ACH & Domestic Wire Transfer</span>
+                    <span className="text-blue-600 dark:text-blue-400">0% Processing Fee</span>
                   </div>
-                  <p className="text-slate-400 text-[11px] leading-relaxed">
+                  <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
                     For enterprise retainers and international clients, transfer directly via local US ACH wire to our virtual account partner:
                   </p>
-                  <div className="space-y-2 p-3 bg-slate-950 rounded-lg border border-slate-800 font-mono text-[11px]">
+                  <div className="space-y-2 p-3 bg-white dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-[11px] shadow-inner">
                     <div className="flex justify-between">
                       <span className="text-slate-500">Beneficiary:</span>
-                      <span className="text-slate-200">Aman Joshi / AJPR World</span>
+                      <span className="text-slate-800 dark:text-slate-200">Aman Joshi / AJPR World</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">Partner Bank:</span>
-                      <span className="text-slate-200">Community Federal Savings Bank</span>
+                      <span className="text-slate-800 dark:text-slate-200">Community Federal Savings Bank</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">Routing / Account:</span>
-                      <span className="text-blue-400">Available on invoice / Skydo link</span>
+                      <span className="text-blue-600 dark:text-blue-400">Available on invoice / Skydo link</span>
                     </div>
-                    <div className="flex justify-between pt-1 border-t border-slate-800">
+                    <div className="flex justify-between pt-1 border-t border-slate-100 dark:border-slate-800">
                       <span className="text-slate-500">Memo / Reference:</span>
-                      <span className="text-emerald-400 font-bold">{activeOrder.referenceId}</span>
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">{activeOrder.referenceId}</span>
                     </div>
                   </div>
                 </div>
@@ -620,30 +620,30 @@ export default function CartDrawer() {
 
               {/* Tab 3: UPI / India Domestic */}
               {paymentTab === 'upi' && (
-                <div className="space-y-3 p-4 bg-slate-900/60 rounded-xl border border-slate-800 text-xs">
-                  <div className="flex justify-between items-center text-slate-300">
-                    <span className="font-bold text-white">Domestic UPI / IMPS Transfer</span>
-                    <span className="text-emerald-400">Instant Verification</span>
+                <div className="space-y-3 p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800 text-xs shadow-sm">
+                  <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
+                    <span className="font-bold text-slate-900 dark:text-white">Domestic UPI / IMPS Transfer</span>
+                    <span className="text-emerald-600 dark:text-emerald-400">Instant Verification</span>
                   </div>
-                  <div className="p-3 bg-slate-950 rounded-lg border border-slate-800 space-y-2">
+                  <div className="p-3 bg-white dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 space-y-2 shadow-inner">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-400 text-[11px]">UPI ID:</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px]">UPI ID:</span>
                       <button
                         type="button"
                         onClick={() => copyToClipboard('9997205257@paytm', 'upi')}
-                        className="flex items-center gap-1 font-mono text-blue-400 hover:text-blue-300 font-bold bg-slate-900 px-2 py-1 rounded border border-slate-800"
+                        className="flex items-center gap-1 font-mono text-blue-600 dark:text-blue-400 hover:text-blue-500 font-bold bg-slate-100 dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800"
                       >
                         9997205257@paytm
-                        {copiedField === 'upi' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                        {copiedField === 'upi' ? <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3 h-3" />}
                       </button>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-400 text-[11px]">Phone / GPay / Paytm:</span>
-                      <span className="font-mono text-slate-200">+91 9997205257</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px]">Phone / GPay / Paytm:</span>
+                      <span className="font-mono text-slate-800 dark:text-slate-200">+91 9997205257</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-400 text-[11px]">Beneficiary:</span>
-                      <span className="text-slate-200">Aman Joshi (AJPR World)</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px]">Beneficiary:</span>
+                      <span className="text-slate-800 dark:text-slate-200">Aman Joshi (AJPR World)</span>
                     </div>
                   </div>
                 </div>
@@ -651,7 +651,7 @@ export default function CartDrawer() {
 
               {/* Transaction Reference / UTR Input */}
               <div className="space-y-2 pt-1">
-                <Label htmlFor="txRef" className="text-xs text-slate-300">
+                <Label htmlFor="txRef" className="text-xs text-slate-700 dark:text-slate-300">
                   Transaction Reference / UTR Number / Notes (Optional)
                 </Label>
                 <Input
@@ -659,16 +659,16 @@ export default function CartDrawer() {
                   placeholder="e.g. UTR12345678, Skydo Receipt #, or 'Invoice requested'"
                   value={transactionRef}
                   onChange={(e) => setTransactionRef(e.target.value)}
-                  className="bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 text-xs h-10"
+                  className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 text-xs h-10"
                 />
               </div>
             </div>
           )}
 
-          <DialogFooter className="flex-col sm:flex-row gap-2 pt-3 border-t border-slate-800">
+          <DialogFooter className="flex-col sm:flex-row gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
             <Button
               variant="outline"
-              className="w-full sm:w-auto border-slate-700 text-slate-300 hover:bg-slate-800 text-xs"
+              className="w-full sm:w-auto border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs"
               onClick={() => {
                 setIsPaymentSheetOpen(false)
                 setIsCartOpen(false)

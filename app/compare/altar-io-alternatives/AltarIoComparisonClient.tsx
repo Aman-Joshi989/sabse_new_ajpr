@@ -376,11 +376,11 @@ export default function AltarIoComparisonClient({
             </p>
           </div>
 
-          <div className="flex items-center gap-2 p-1 rounded-xl bg-slate-950 border border-slate-800 shrink-0">
+          <div className="flex items-center gap-2 p-1 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shrink-0">
             <button
               onClick={() => setArchTab('ajpr')}
               className={`px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer ${
-                archTab === 'ajpr' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'
+                archTab === 'ajpr' ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               AJPR World (Edge AI)
@@ -388,7 +388,7 @@ export default function AltarIoComparisonClient({
             <button
               onClick={() => setArchTab('legacy')}
               className={`px-3 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer ${
-                archTab === 'legacy' ? 'bg-rose-600 text-white' : 'text-slate-400 hover:text-white'
+                archTab === 'legacy' ? 'bg-rose-600 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               Altar.io / Legacy Agency
@@ -397,26 +397,26 @@ export default function AltarIoComparisonClient({
         </div>
 
         {archTab === 'ajpr' ? (
-          <div className="grid md:grid-cols-2 gap-6 p-6 rounded-2xl bg-slate-950 border border-blue-500/30">
+          <div className="grid md:grid-cols-2 gap-6 p-6 rounded-2xl bg-blue-50/50 dark:bg-slate-950 border border-blue-200 dark:border-blue-500/30">
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-blue-400 font-mono text-xs uppercase font-bold">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Modern Sub-Second AI Architecture
+              <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-mono text-xs uppercase font-bold">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Modern Sub-Second AI Architecture
               </div>
-              <ul className="space-y-3 text-xs text-slate-300">
+              <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2">
-                  <span className="font-mono text-blue-400 font-bold shrink-0">01. Next.js 16 App Router:</span>
+                  <span className="font-mono text-blue-600 dark:text-blue-400 font-bold shrink-0">01. Next.js 16 App Router:</span>
                   <span>Server Components stream responses with sub-45ms TTFB and zero client bundle bloat.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-mono text-blue-400 font-bold shrink-0">02. PostgreSQL + pgvector:</span>
+                  <span className="font-mono text-blue-600 dark:text-blue-400 font-bold shrink-0">02. PostgreSQL + pgvector:</span>
                   <span>HNSW indexing for instant cosine similarity vector queries without expensive third-party vector lock-in.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-mono text-blue-400 font-bold shrink-0">03. Semantic Caching Layer:</span>
+                  <span className="font-mono text-blue-600 dark:text-blue-400 font-bold shrink-0">03. Semantic Caching Layer:</span>
                   <span>Deduplicates recurring user queries, saving 40% to 60% on OpenAI / Anthropic token costs.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="font-mono text-blue-400 font-bold shrink-0">04. Generative Engine Optimization:</span>
+                  <span className="font-mono text-blue-600 dark:text-blue-400 font-bold shrink-0">04. Generative Engine Optimization:</span>
                   <span>Built-in ItemList & FAQ JSON-LD graphs ensure AI search engines (Perplexity, ChatGPT) cite your app.</span>
                 </li>
               </ul>
@@ -437,12 +437,12 @@ export default function AltarIoComparisonClient({
             </div>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 gap-6 p-6 rounded-2xl bg-slate-950 border border-rose-500/30">
+          <div className="grid md:grid-cols-2 gap-6 p-6 rounded-2xl bg-rose-50/50 dark:bg-slate-950 border border-rose-200 dark:border-rose-500/30">
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-rose-400 font-mono text-xs uppercase font-bold">
-                <XCircle className="w-4 h-4 text-rose-400" /> Traditional Monolithic Architecture
+              <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-mono text-xs uppercase font-bold">
+                <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" /> Traditional Monolithic Architecture
               </div>
-              <ul className="space-y-3 text-xs text-slate-300">
+              <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-2">
                   <span className="font-mono text-rose-400 font-bold shrink-0">01. Heavy Monolithic Backends:</span>
                   <span>Heavy containerized Django/Express APIs with 600ms+ cold starts and high server idle expenses.</span>

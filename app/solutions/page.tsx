@@ -52,18 +52,18 @@ export default function SolutionsIndexPage() {
     <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-100 font-sans pb-24">
       <BreadcrumbSchema items={breadcrumbs} />
 
-      <section className="relative pt-32 pb-20 bg-slate-950 text-white overflow-hidden border-b border-slate-800 text-center">
+      <section className="relative pt-32 pb-20 bg-slate-100/80 dark:bg-slate-950 text-slate-900 dark:text-white overflow-hidden border-b border-slate-200 dark:border-slate-800 text-center transition-colors duration-300">
         <div className="container mx-auto px-4 max-w-4xl relative z-10">
-          <Badge className="mb-6 bg-blue-500/20 text-blue-300 border-blue-500/30 px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-full">
+          <Badge className="mb-6 bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-300 border-blue-500/20 dark:border-blue-500/30 px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-full">
             Specialized Tech Stack Pods
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight">
+          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight text-slate-900 dark:text-white">
             Targeted Engineering Solutions <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-indigo-600 dark:from-blue-400 dark:via-cyan-400 dark:to-indigo-400">
               For Fast-Moving Founders
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
             Choose your target stack or business requirement. We build and deploy production-grade software in 2 to 4 weeks with complete IP ownership.
           </p>
           <div className="flex gap-4 justify-center">

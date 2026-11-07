@@ -1259,13 +1259,22 @@ export async function getProductBySlug(slug: string) {
 }
 
 export async function saveSalesLead(data: any) {
-  const { name, email, companySize, budget, techStack, utm_source, utm_medium, utm_campaign } = data;
-  const result = await sql`
-    INSERT INTO sales_leads (name, email, company_size, budget, tech_stack, status, utm_source, utm_medium, utm_campaign)
-    VALUES (${name}, ${email}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new', ${utm_source || null}, ${utm_medium || null}, ${utm_campaign || null})
-    RETURNING *;
-  `;
-  return result[0];
+  const { name, email, companySize, budget, techStack, utm_source, utm_medium, utm_campaign, reference_id } = data;
+  try {
+    const result = await sql`
+      INSERT INTO sales_leads (name, email, company_size, budget, tech_stack, status, utm_source, utm_medium, utm_campaign, reference_id)
+      VALUES (${name}, ${email}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new', ${utm_source || null}, ${utm_medium || null}, ${utm_campaign || null}, ${reference_id || null})
+      RETURNING *;
+    `;
+    return result[0];
+  } catch {
+    const result = await sql`
+      INSERT INTO sales_leads (name, email, company_size, budget, tech_stack, status, utm_source, utm_medium, utm_campaign)
+      VALUES (${name}, ${email}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new', ${utm_source || null}, ${utm_medium || null}, ${utm_campaign || null})
+      RETURNING *;
+    `;
+    return result[0];
+  }
 }
 
 export async function getSalesLeads() {

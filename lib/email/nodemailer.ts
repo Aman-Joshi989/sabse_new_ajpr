@@ -1,20 +1,27 @@
 import nodemailer from 'nodemailer';
-import * as dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
 
-// Create a reusable transporter using Gmail SMTP
+const rawUser = process.env.GMAIL_USER || 'ajprworld@gmail.com';
+const rawPass = process.env.GMAIL_PASS || '';
+
+const user = rawUser.replace(/['"]/g, '').trim();
+const pass = rawPass.replace(/['"\s]/g, '').trim();
+
+// Create a reusable transporter using Gmail SMTP with timeouts
 export const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS, // This should be an App Password, not the regular account password
+    user,
+    pass,
   },
+  connectionTimeout: 8000,
+  greetingTimeout: 8000,
+  socketTimeout: 8000,
 });
 
-export const sendColdEmail = async (to: string, subject: string, htmlBody: string) => {
+export const sendColdEmail = async (to: string, subject: string, htmlBody: string): Promise<boolean> => {
   try {
     const info = await transporter.sendMail({
-      from: `"AJPR World Team" <${process.env.GMAIL_USER}>`,
+      from: `"AJPR World Team" <${user}>`,
       to,
       subject,
       html: htmlBody,

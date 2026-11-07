@@ -1,20 +1,20 @@
 import { NextResponse } from 'next/server';
 import { saveSalesLead } from '@/lib/db/queries';
-import { sendEmail } from '@/lib/zeptomail'; // Fallback to console if zeptomail not configured
+import { dispatchContactEmails, generateReferenceId } from '@/lib/email/contact-mailer';
 
-// Simple in-memory rate limiter (For production, use Redis)
+// Simple in-memory rate limiter
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
 
 export async function POST(req: Request) {
   try {
-    // Basic IP tracking for rate limit (fallback if x-forwarded-for is absent)
+    // Basic IP tracking for rate limit
     const ip = req.headers.get('x-forwarded-for') || 'unknown';
     const now = Date.now();
     const rateLimit = rateLimitMap.get(ip);
     
-    // Max 5 requests per 15 minutes per IP
+    // Max 10 requests per 15 minutes per IP
     if (rateLimit && now - rateLimit.timestamp < 15 * 60 * 1000) {
-      if (rateLimit.count > 5) {
+      if (rateLimit.count > 10) {
         return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
       }
       rateLimitMap.set(ip, { count: rateLimit.count + 1, timestamp: rateLimit.timestamp });
@@ -27,50 +27,59 @@ export async function POST(req: Request) {
     // Security: Honeypot Check
     if (data.honeypot && data.honeypot.length > 0) {
       // It's a bot, pretend it was successful to trick them
-      return NextResponse.json({ success: true, lead: null }, { status: 200 });
+      return NextResponse.json({ success: true, lead: null, referenceId: 'AJPR-BOT' }, { status: 200 });
     }
 
-    // Input Validation (Basic sanity checks)
+    // Input Validation
     if (!data.name || !data.email) {
       return NextResponse.json({ error: 'Name and Email are required' }, { status: 400 });
     }
-    
-    // Save to database
-    const lead = await saveSalesLead(data);
 
-    // Try to send email notification to admin (non-blocking)
+    const isToolReport = data.utm_medium === 'interactive_tool_lead_capture';
+    const referenceId = generateReferenceId(isToolReport ? 'AJPR-TOOL' : 'AJPR-AUD');
+
+    // Save to database
+    let lead: any = null;
     try {
-      const emailContent = `
-        New Lead Submission:
-        Name: ${data.name}
-        Email: ${data.email}
-        Company Size: ${data.companySize}
-        Tech Stack: ${data.techStack}
-        Budget: ${data.budget}
-        
-        --- Tracking Data ---
-        Source: ${data.utm_source || 'direct'}
-        Medium: ${data.utm_medium || 'N/A'}
-        Campaign: ${data.utm_campaign || 'N/A'}
-      `;
-      // Assuming sendEmail exists. If not, this is a placeholder.
-      if (typeof sendEmail === 'function') {
-        await sendEmail({
-          to: 'hello@ajprworld.com',
-          subject: 'New High-Ticket Lead - AJPR World',
-          text: emailContent,
-          html: `<pre>${emailContent}</pre>`
-        });
-      } else {
-         console.log("Email service not initialized. Lead:", emailContent);
-      }
-    } catch (emailError) {
-      console.error('Failed to send notification email:', emailError);
+      lead = await saveSalesLead({
+        ...data,
+        reference_id: referenceId,
+      });
+    } catch (dbErr: any) {
+      console.warn('[Leads API] Database insert notice:', dbErr?.message || dbErr);
     }
 
-    return NextResponse.json({ success: true, lead }, { status: 200 });
+    // Dispatch asynchronous notification to Customer & Admin
+    let emailResult = { customerSent: false, adminSent: false };
+    try {
+      emailResult = await dispatchContactEmails({
+        referenceId,
+        name: data.name.trim(),
+        email: data.email.trim(),
+        phone: data.phone?.trim() || '',
+        companyName: data.company?.trim() || data.companySize?.trim() || '',
+        companySize: data.companySize?.trim() || '',
+        budgetRange: data.budget?.trim() || '',
+        techStack: data.techStack?.trim() || '',
+        buildingText: data.techStack || 'Free Technical & SEO Audit Request',
+        type: isToolReport ? 'tool_report' : 'audit',
+        utmSource: data.utm_source || 'direct',
+        utmMedium: data.utm_medium || 'lead_form',
+        utmCampaign: data.utm_campaign || 'website',
+      });
+    } catch (mailErr: any) {
+      console.error('[Leads API] Outbound email error:', mailErr?.message || mailErr);
+    }
+
+    return NextResponse.json({
+      success: true,
+      lead,
+      referenceId,
+      clientEmailSent: emailResult.customerSent,
+      adminEmailSent: emailResult.adminSent,
+    }, { status: 200 });
   } catch (error: any) {
     console.error('Error saving lead:', error);
-    return NextResponse.json({ error: error.message || 'Failed to save lead' }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Failed to process lead' }, { status: 500 });
   }
 }

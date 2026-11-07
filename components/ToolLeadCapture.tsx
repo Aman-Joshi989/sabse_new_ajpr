@@ -29,6 +29,7 @@ export default function ToolLeadCapture({
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [company, setCompany] = useState('');
+    const [referenceId, setReferenceId] = useState('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     const finalTitle = title || (toolName ? `Request Your Free ${toolName}` : "Request Your Free Action Plan");
@@ -74,6 +75,10 @@ export default function ToolLeadCapture({
             });
 
             if (res.ok) {
+                const resData = await res.json().catch(() => ({}));
+                if (resData.referenceId) {
+                    setReferenceId(resData.referenceId);
+                }
                 setStatus('success');
                 toast.success('Your report request has been received!');
             } else {
@@ -93,9 +98,14 @@ export default function ToolLeadCapture({
                 <div className="w-12 h-12 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center mx-auto border border-green-500/30">
                     <CheckCircle className="w-6 h-6" />
                 </div>
+                {referenceId && (
+                    <div className="inline-block bg-green-900/60 text-green-300 border border-green-700/60 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Ref: #{referenceId}
+                    </div>
+                )}
                 <h3 className="text-xl font-bold text-white">Report Requested!</h3>
                 <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                    Thank you, <strong className="text-white">{name}</strong>! We’ve logged your audit details for <span className="text-green-400">{email}</span>. Our Lead Architect is preparing your personalized breakdown.
+                    Thank you, <strong className="text-white">{name}</strong>! We’ve dispatched a confirmation to <span className="text-green-400">{email}</span>. Our Lead Architect is preparing your personalized breakdown.
                 </p>
                 <div className="pt-2">
                     <a

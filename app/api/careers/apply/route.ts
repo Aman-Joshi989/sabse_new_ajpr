@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
 import { sql } from '@/lib/db/queries';
-import { sendEmail } from '@/lib/zeptomail'; 
+import { dispatchCareerApplicationEmails } from '@/lib/email/contact-mailer';
 
 export async function POST(req: Request) {
   try {
@@ -40,7 +40,6 @@ export async function POST(req: Request) {
         resume_url = blob.url;
       } catch (uploadError: any) {
         console.error('Error uploading to Vercel Blob (make sure BLOB_READ_WRITE_TOKEN is set):', uploadError);
-        // We continue even if upload fails, just leave resume_url empty or log the error
       }
     }
 
@@ -53,36 +52,19 @@ export async function POST(req: Request) {
       )
     `;
 
-    // Send Notification Email
+    // Send notifications to both candidate and admin
     try {
-      const emailContent = `
-        New Job Application: ${role_applied_for}
-        
-        Name: ${name}
-        Email: ${email}
-        Phone: ${phone}
-        LinkedIn: ${linkedin_url}
-        Resume: ${resume_url || 'No file uploaded'}
-        
-        Cover Letter: 
-        ${cover_letter}
-        
-        --- Tracking Data ---
-        Source: ${utm_source || 'direct'}
-        Medium: ${utm_medium || 'N/A'}
-        Campaign: ${utm_campaign || 'N/A'}
-      `;
-
-      if (typeof sendEmail === 'function') {
-        await sendEmail({
-          to: 'hello@ajprworld.com',
-          subject: `New Application: ${role_applied_for} - ${name}`,
-          text: emailContent,
-          html: `<pre>${emailContent}</pre>`
-        });
-      }
+      await dispatchCareerApplicationEmails({
+        name,
+        email,
+        phone,
+        role: role_applied_for,
+        linkedinUrl: linkedin_url,
+        resumeUrl: resume_url,
+        coverLetter: cover_letter,
+      });
     } catch (emailError) {
-      console.error('Failed to send notification email:', emailError);
+      console.error('Failed to send application emails:', emailError);
     }
 
     return NextResponse.json({ success: true }, { status: 200 });

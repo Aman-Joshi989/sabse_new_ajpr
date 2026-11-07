@@ -27,6 +27,7 @@ export default function LeadForm() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [referenceId, setReferenceId] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -104,11 +105,15 @@ export default function LeadForm() {
         body: JSON.stringify(formData)
       });
       
+      const resData = await response.json().catch(() => ({}));
+      
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Submission failed');
+        throw new Error(resData.error || 'Submission failed');
       }
       
+      if (resData.referenceId) {
+        setReferenceId(resData.referenceId);
+      }
       setIsSuccess(true);
       toast.success('Your audit request has been received!');
       
@@ -140,14 +145,21 @@ export default function LeadForm() {
         </div>
         
         <div>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider mb-3">
-            <Sparkles className="w-3.5 h-3.5" /> Technical Scope Queued
-          </span>
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-3">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5" /> Technical Scope Queued
+            </span>
+            {referenceId && (
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold tracking-wider">
+                Ref: #{referenceId}
+              </span>
+            )}
+          </div>
           <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
             Audit Request Received!
           </h3>
           <p className="text-sm text-slate-600 dark:text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
-            Thank you, <strong className="text-slate-900 dark:text-white font-semibold">{formData.name}</strong>. Our senior engineering pod is preparing your tailored Technical & SEO review for <span className="text-blue-600 dark:text-blue-400 font-medium">{formData.email}</span>.
+            Thank you, <strong className="text-slate-900 dark:text-white font-semibold">{formData.name}</strong>. A confirmation email has been dispatched to <span className="text-blue-600 dark:text-blue-400 font-medium">{formData.email}</span>. Our senior engineering pod is preparing your tailored Technical & SEO review.
           </p>
         </div>
 

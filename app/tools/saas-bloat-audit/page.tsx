@@ -90,7 +90,7 @@ export default function SaasBloatAuditPage() {
                         &larr; All Free Tools
                     </Link>
                     <span className="px-3 py-1 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 rounded-full text-xs font-bold uppercase tracking-wider">
-                        Solves Problem #3: SaaS Bloat
+                        Subscription & License Waste Audit
                     </span>
                 </div>
 
@@ -103,7 +103,7 @@ export default function SaasBloatAuditPage() {
                         SaaS Bloat & Subscription Cost Auditor
                     </h1>
                     <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                        51% of paid SaaS licenses go completely unused in US businesses. Check the software subscriptions your team currently pays for to uncover your annual wasted capital and see the consolidation blueprint.
+                        Over 50% of paid SaaS licenses go completely unused across modern businesses. Check the software subscriptions your team currently pays for to uncover your annual wasted capital and see the consolidation blueprint.
                     </p>
                 </div>
 

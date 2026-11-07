@@ -26,7 +26,7 @@ export function PortfolioCard({
     stats = [],
     tags = [],
     author = "AJPR",
-    date = "2024",
+    date = "2026",
     href,
     className = "",
     isFeatured = false

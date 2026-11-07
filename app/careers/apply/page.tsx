@@ -133,7 +133,7 @@ function ApplicationForm() {
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     className="h-12 rounded-xl bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800" 
-                    placeholder="John Doe" 
+                    placeholder="Alex Morgan" 
                   />
                 </div>
                 <div className="space-y-2">
@@ -145,7 +145,7 @@ function ApplicationForm() {
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     className="h-12 rounded-xl bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800" 
-                    placeholder="john@example.com" 
+                    placeholder="alex@company.com" 
                   />
                 </div>
               </div>

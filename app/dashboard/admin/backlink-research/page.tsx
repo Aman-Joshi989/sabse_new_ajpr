@@ -78,7 +78,7 @@ export default function BacklinkResearchPage() {
           <div className="flex-1 w-full space-y-1.5">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Target Keyword</label>
             <Input 
-              placeholder="e.g. best seo tools 2024" 
+              placeholder="e.g. best seo tools 2026" 
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               className="bg-gray-50 dark:bg-[#202124] border-[#DADCE0] dark:border-[#3C4043]"

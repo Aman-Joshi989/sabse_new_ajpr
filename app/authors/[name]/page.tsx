@@ -80,13 +80,31 @@ export default async function AuthorProfilePage({ params }: { params: Promise<{ 
               An expert contributor at AJPR World, specializing in technical solutions, web architecture, and digital strategy.
             </p>
             <div className="flex justify-center md:justify-start gap-4">
-              <a href="#" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+              <a 
+                href="https://twitter.com/AjprWorld" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="AJPR World Twitter"
+                className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              >
                 <Twitter className="w-5 h-5 text-slate-600 dark:text-slate-300" />
               </a>
-              <a href="#" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+              <a 
+                href="https://www.linkedin.com/company/ajpr-world" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="AJPR World LinkedIn"
+                className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              >
                 <Linkedin className="w-5 h-5 text-slate-600 dark:text-slate-300" />
               </a>
-              <a href="#" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+              <a 
+                href="https://github.com/Aman-Joshi989" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="AJPR World GitHub"
+                className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              >
                 <Github className="w-5 h-5 text-slate-600 dark:text-slate-300" />
               </a>
             </div>

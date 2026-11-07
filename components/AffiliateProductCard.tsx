@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Check, Star, ArrowRight } from 'lucide-react';
+import { Check, Star, ArrowRight, Layers } from 'lucide-react';
 
 interface AffiliateProductCardProps {
   productName: string;
@@ -49,7 +49,10 @@ export const AffiliateProductCard = ({
           {image ? (
             <img src={image} alt={productName} className="max-w-full max-h-full object-contain" />
           ) : (
-            <span className="text-slate-400 text-sm text-center">Product Image</span>
+            <div className="text-center p-2">
+              <Layers className="w-10 h-10 text-slate-400 dark:text-slate-500 mx-auto mb-1" />
+              <span className="text-slate-400 dark:text-slate-500 text-[11px] font-semibold uppercase tracking-wider block">{productName}</span>
+            </div>
           )}
         </div>
 

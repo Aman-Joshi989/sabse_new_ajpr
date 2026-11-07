@@ -381,7 +381,7 @@ export default function ClientResponseGeneratorPage() {
                         &larr; All Free Tools
                     </Link>
                     <span className="px-3 py-1 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50 rounded-full text-xs font-bold uppercase tracking-wider">
-                        Solves Problem #1: The Admin Drag
+                        Client Communication & Scope Defense
                     </span>
                 </div>
 

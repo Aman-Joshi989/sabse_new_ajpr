@@ -16,7 +16,75 @@ interface Product {
   features: any;
 }
 
-export default function PricingClient({ products }: { products: Product[] }) {
+const DEFAULT_PRODUCTS: Product[] = [
+  {
+    id: 1,
+    name: "AI MVP 2–4 Week Sprint",
+    slug: "ai-mvp-sprint",
+    description: "Production-ready custom AI agent system, Next.js 16 architecture, and full vector database integration.",
+    price: 4500,
+    currency: "USD",
+    features: [
+      "2 to 4 Week Rapid Deployment",
+      "Next.js 16 & TypeScript Architecture",
+      "Vector Embeddings & RAG Ingestion",
+      "PostgreSQL Database & Auth",
+      "100% Full IP & GitHub Transfer",
+      "30-Day Post-Launch Support"
+    ]
+  },
+  {
+    id: 2,
+    name: "Autonomous Agent Swarms",
+    slug: "ai-agent-swarms",
+    description: "Multi-agent orchestration, CRM synchronization, automated inbound lead triage, and custom tooling.",
+    price: 7500,
+    currency: "USD",
+    features: [
+      "Custom Multi-Agent Orchestration",
+      "Automated Inbound Lead Qualification",
+      "CRM & Slack/WhatsApp Integration",
+      "Human-in-the-Loop Guardrails",
+      "Enterprise Rate Limit Handling",
+      "99.9% Uptime Deployment"
+    ]
+  },
+  {
+    id: 3,
+    name: "Full-Stack Web Engineering",
+    slug: "web-engineering-sprint",
+    description: "Sub-second Next.js web application, custom backend API, responsive design system, and 99+ Core Web Vitals.",
+    price: 3500,
+    currency: "USD",
+    features: [
+      "Sub-150ms TTFB Global Edge Stack",
+      "Next.js App Router & Tailwind CSS",
+      "PostgreSQL / Supabase Database Architecture",
+      "Automated CI/CD Deployment Gates",
+      "Full Source Code & Git Ownership",
+      "14 to 21 Day Delivery Window"
+    ]
+  },
+  {
+    id: 4,
+    name: "Growth & SEO Engineering",
+    slug: "growth-seo-retainer",
+    description: "Generative Engine Optimization (GEO), programmatic SEO hubs, Core Web Vitals maintenance, and high-converting funnel optimization.",
+    price: 1500,
+    currency: "USD",
+    features: [
+      "Generative Engine Optimization (GEO)",
+      "Programmatic Next.js Search Hubs",
+      "JSON-LD Schema & AI Search Citations",
+      "Sub-Second Latency Maintenance",
+      "Bi-Weekly Engineering Sprints",
+      "Direct Senior Architect Slack Access"
+    ]
+  }
+];
+
+export default function PricingClient({ products = [] }: { products?: Product[] }) {
+  const activeProducts = products && products.length > 0 ? products : DEFAULT_PRODUCTS;
   const { addToCart, setIsCartOpen } = useCart();
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
@@ -42,16 +110,16 @@ export default function PricingClient({ products }: { products: Product[] }) {
 
   const [selectedCategory, setSelectedCategory] = useState<'ai' | 'engineering'>('ai');
 
-  const aiProducts = products.filter(p => 
+  const aiProducts = activeProducts.filter(p => 
     p.slug.startsWith('ai-') || p.slug.includes('business-system')
   );
-  const engineeringProducts = products.filter(p => 
+  const engineeringProducts = activeProducts.filter(p => 
     !p.slug.startsWith('ai-') && !p.slug.includes('business-system')
   );
 
   const displayedProducts = selectedCategory === 'ai' 
-    ? (aiProducts.length > 0 ? aiProducts : products)
-    : (engineeringProducts.length > 0 ? engineeringProducts : products);
+    ? (aiProducts.length > 0 ? aiProducts : activeProducts)
+    : (engineeringProducts.length > 0 ? engineeringProducts : activeProducts);
 
   return (
     <div className="py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 min-h-screen">

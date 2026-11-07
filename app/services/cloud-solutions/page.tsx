@@ -12,47 +12,43 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-// Competitor Data
+// Competitor Architecture Data
 const comparisonData = [
     {
-        service: 'AWS S3',
-        logo: '/logo/logo_google_one.svg', // using placeholder
-        color: 'text-blue-500',
-        free: 'Pay as you go',
-        plan100: 'Variable',
-        plan2TB: 'Variable',
-        usp: 'Complex Ecosystem',
+        service: 'AWS S3 & EC2',
+        color: 'text-amber-500',
+        pricingModel: 'Complex Pay-As-You-Go',
+        startupTier: 'Variable Data Egress Costs',
+        enterpriseTier: 'High Reserved Instances',
+        usp: 'Massive Global Footprint, Complex Setup',
         icon: Cloud
     },
     {
-        service: 'Azure',
-        logo: '/logo/logo_jiocloud.svg', // using placeholder
-        color: 'text-blue-700',
-        free: 'Pay as you go',
-        plan100: 'Variable',
-        plan2TB: 'Variable',
-        usp: 'Enterprise Legacy',
-        icon: Cloud
+        service: 'Microsoft Azure',
+        color: 'text-blue-600',
+        pricingModel: 'Enterprise Licensing',
+        startupTier: 'Opaque Cost Tiers',
+        enterpriseTier: 'Contract Lock-In',
+        usp: 'Enterprise Legacy Ecosystem',
+        icon: Server
     },
     {
-        service: 'Google Cloud',
-        logo: '/logo/logo_zoho.svg', // using placeholder
-        color: 'text-yellow-600',
-        free: 'Pay as you go',
-        plan100: 'Variable',
-        plan2TB: 'Variable',
-        usp: 'Data Analytics Focus',
+        service: 'Google Cloud Platform',
+        color: 'text-emerald-600',
+        pricingModel: 'Usage-Based Invoicing',
+        startupTier: 'Unpredictable Scaling Fees',
+        enterpriseTier: 'Custom Enterprise Agreement',
+        usp: 'Big Data & AI Infrastructure',
         icon: Database
     },
     {
-        service: 'AJPR Sovereign Cloud',
-        logo: '/logo/ajpr-logo.png',
+        service: 'AJPR Sovereign Cloud & DevOps',
         color: 'text-blue-600',
         isHighlight: true,
-        free: 'Free Migration',
-        plan100: 'Fixed Custom Quote',
-        plan2TB: 'Dedicated Servers',
-        usp: 'Flat Predictable Cost, Dedicated Support',
+        pricingModel: 'Transparent Flat Retainer',
+        startupTier: 'Fixed Predictable Quote',
+        enterpriseTier: 'Dedicated High-Availability Node',
+        usp: 'Flat Predictable Cost, 100% IP & 24/7 SLA',
         icon: Shield
     }
 ]
@@ -142,24 +138,19 @@ export default function CloudSolutionsPage() {
                                             }`}
                                     >
                                         <div className="col-span-1 flex items-center space-x-3">
-                                            <div className={`relative h-10 w-10 flex-shrink-0 bg-white rounded-full overflow-hidden border border-slate-200 dark:border-slate-700`}>
-                                                <Image 
-                                                    src={item.logo} 
-                                                    alt={`${item.service} Logo`} 
-                                                    fill
-                                                    className="object-contain p-1"
-                                                />
+                                            <div className={`h-10 w-10 flex-shrink-0 rounded-xl flex items-center justify-center ${item.isHighlight ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'}`}>
+                                                <item.icon className="h-5 w-5" />
                                             </div>
-                                            <span className={`font-bold ${item.isHighlight ? 'text-blue-700 dark:text-blue-400 text-lg' : 'text-slate-700 dark:text-slate-300'}`}>
+                                            <span className={`font-bold ${item.isHighlight ? 'text-blue-700 dark:text-blue-400 text-base' : 'text-slate-700 dark:text-slate-300 text-sm'}`}>
                                                 {item.service}
                                             </span>
-                                            {item.isHighlight && <Badge className="bg-blue-500 text-white text-[10px] ml-2">BEST VALUE</Badge>}
+                                            {item.isHighlight && <Badge className="bg-blue-500 text-white text-[10px] ml-1">RECOMMENDED</Badge>}
                                         </div>
-                                        <div className="col-span-1 font-medium text-slate-600 dark:text-slate-400">{item.free}</div>
-                                        <div className="col-span-1 font-medium text-slate-600 dark:text-slate-400">{item.plan100}</div>
-                                        <div className="col-span-1 font-medium text-slate-600 dark:text-slate-400">{item.plan2TB}</div>
-                                        <div className="col-span-2 font-medium text-slate-600 dark:text-slate-400 flex items-center">
-                                            {item.isHighlight && <CheckCircle className="h-4 w-4 text-green-500 mr-2" />}
+                                        <div className="col-span-1 font-medium text-slate-600 dark:text-slate-400 text-xs sm:text-sm">{item.pricingModel}</div>
+                                        <div className="col-span-1 font-medium text-slate-600 dark:text-slate-400 text-xs sm:text-sm">{item.startupTier}</div>
+                                        <div className="col-span-1 font-medium text-slate-600 dark:text-slate-400 text-xs sm:text-sm">{item.enterpriseTier}</div>
+                                        <div className="col-span-2 font-medium text-slate-600 dark:text-slate-400 flex items-center text-xs sm:text-sm">
+                                            {item.isHighlight && <CheckCircle className="h-4 w-4 text-emerald-500 mr-2 shrink-0" />}
                                             {item.usp}
                                         </div>
                                     </div>
@@ -170,7 +161,7 @@ export default function CloudSolutionsPage() {
                 </div>
             </section>
 
-             {/* Features Grid - Minimalist placeholders since image gen failed */}
+             {/* Enterprise Infrastructure Capabilities */}
              <section className="py-24 bg-white dark:bg-slate-950">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-3 gap-8">

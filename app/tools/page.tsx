@@ -41,8 +41,8 @@ export const metadata: Metadata = {
 const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    'name': 'Free Productivity & Automation Tools for US Businesses',
-    'description': 'Interactive calculators, generators, and audit tools designed for US business owners.',
+    'name': 'Free Productivity & Automation Tools for Founders & Growth Teams',
+    'description': 'Interactive calculators, generators, and audit tools designed for business owners and engineering teams.',
     'itemListElement': [
         {
             '@type': 'SoftwareApplication',
@@ -65,7 +65,7 @@ const jsonLd = {
         {
             '@type': 'SoftwareApplication',
             'position': 3,
-            'name': 'US Business Admin Cost & Automation ROI Calculator',
+            'name': 'Business Admin Cost & Automation ROI Calculator',
             'applicationCategory': 'FinanceApplication',
             'operatingSystem': 'All',
             'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
@@ -117,7 +117,7 @@ const toolsList: ToolCard[] = [
         slug: '/tools/agency-pricing-calculator',
         title: 'Agency Pricing & 12-Month Marketing ROI Calculator',
         description: 'Model realistic monthly SEO and PPC retainers against your target revenue and average customer value. Compare in-house hires vs. agency ROI.',
-        solves: 'Solves Problem #0: Retainer blind spots & agency budget planning',
+        solves: 'Retainer blind spots & agency budget planning',
         badge: 'Pricing & ROI Modeling',
         icon: TrendingUp,
         color: 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/60',
@@ -127,7 +127,7 @@ const toolsList: ToolCard[] = [
         slug: '/tools/client-response-generator',
         title: 'Instant Client Response & Difficult Email Drafter',
         description: 'Tackle scope creep, overdue invoices, and rate objections in seconds with battle-tested assertive, diplomatic, and executive email templates.',
-        solves: 'Solves Problem #1: The 11 hr/week inbox black hole',
+        solves: 'High inbox overhead & difficult client communication',
         badge: 'Inbox & Communication',
         icon: Mail,
         color: 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-900/60',
@@ -135,9 +135,9 @@ const toolsList: ToolCard[] = [
     },
     {
         slug: '/tools/admin-cost-calculator',
-        title: 'US Business Admin Cost & Automation ROI Calculator',
+        title: 'Business Admin Cost & Automation ROI Calculator',
         description: 'Calculate exactly how many billable dollars and payroll hours your business loses each month to manual busywork, and see your return on autonomous AI workflows.',
-        solves: 'Solves Problem #2 & #4: Wearing 5 hats & high labor drag',
+        solves: 'Manual administrative overhead & payroll drag',
         badge: 'Financial & ROI',
         icon: Calculator,
         color: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/60',
@@ -147,7 +147,7 @@ const toolsList: ToolCard[] = [
         slug: '/tools/saas-bloat-audit',
         title: 'SaaS Bloat & Subscription Cost Auditor',
         description: 'Audit your active software subscriptions (HubSpot, Zapier, Calendly, Airtable) to uncover annual wasted license spend and see the consolidation blueprint.',
-        solves: 'Solves Problem #3: Paying $1,500/mo for broken app silos',
+        solves: 'Wasted software spend & redundant SaaS subscriptions',
         badge: 'Software Optimization',
         icon: Layers,
         color: 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-900/60',
@@ -157,7 +157,7 @@ const toolsList: ToolCard[] = [
         slug: '/tools/ai-cost-estimator',
         title: 'AI MVP Architecture & Cost Estimator',
         description: 'Interactive AI architect that analyzes your product or automation concept to generate a production tech stack, development timeline, and cost estimate.',
-        solves: 'Solves Problem #5: The AI Adoption Gap',
+        solves: 'Architecture planning & AI adoption cost predictability',
         badge: 'AI & Engineering',
         icon: Bot,
         color: 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/60',
@@ -167,7 +167,7 @@ const toolsList: ToolCard[] = [
         slug: '/tools/action-figure-generator',
         title: 'AI Action Figure & Toy Box Studio',
         description: 'Design and generate custom mint-in-box 3D action figures sealed in retro blister packaging with custom accessories, power stats, and Midjourney / DALL-E prompts.',
-        solves: 'Viral Brand Marketing & Custom AI Avatars',
+        solves: 'Viral brand marketing & custom generative avatars',
         badge: 'Viral & Creative AI',
         icon: Wand2,
         color: 'text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/40 border-cyan-200 dark:border-cyan-900/60',
@@ -190,7 +190,7 @@ export default function ToolsHubPage() {
                         <Zap className="w-3.5 h-3.5" /> 100% Free Utilities &bull; No Sign-Up Required
                     </div>
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15] mb-6">
-                        Tools Built to Make Work Easy for US Founders & Teams
+                        Tools Built to Eliminate Operational Chaos for Founders & Teams
                     </h1>
                     <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
                         Practical, interactive utilities to eliminate administrative busywork, quantify software waste, and build high-leverage business systems.

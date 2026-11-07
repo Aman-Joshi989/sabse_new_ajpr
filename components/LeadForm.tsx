@@ -121,7 +121,7 @@ export default function LeadForm() {
                   name="name" 
                   value={formData.name} 
                   onChange={handleChange} 
-                  placeholder="John Doe" 
+                  placeholder="Alex Morgan" 
                   className="bg-slate-950 border-slate-800 text-white mt-1 h-12"
                 />
               </div>
@@ -132,7 +132,7 @@ export default function LeadForm() {
                   type="email"
                   value={formData.email} 
                   onChange={handleChange} 
-                  placeholder="john@company.com" 
+                  placeholder="alex@company.com" 
                   className="bg-slate-950 border-slate-800 text-white mt-1 h-12"
                 />
               </div>

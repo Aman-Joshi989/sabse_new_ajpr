@@ -40,7 +40,7 @@ export default function AdminCostCalculatorPage() {
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
-        'name': 'US Business Admin Cost & Automation ROI Calculator',
+        'name': 'Business Admin Cost & Automation ROI Calculator',
         'applicationCategory': 'FinanceApplication',
         'operatingSystem': 'All',
         'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
@@ -65,7 +65,7 @@ export default function AdminCostCalculatorPage() {
                         &larr; All Free Tools
                     </Link>
                     <span className="px-3 py-1 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-900/50 rounded-full text-xs font-bold uppercase tracking-wider">
-                        Solves Problem #2 & #4: Labor Drag
+                        Operational Efficiency Audit
                     </span>
                 </div>
 
@@ -75,10 +75,10 @@ export default function AdminCostCalculatorPage() {
                         <DollarSign className="w-3.5 h-3.5" /> Stop Burning Billable Hours on Maintenance
                     </div>
                     <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-4">
-                        US Business Admin Cost & Automation ROI Calculator
+                        Business Admin Cost & Automation ROI Calculator
                     </h1>
                     <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                        The average US business owner wears 5 operational hats every day, losing up to 40% of their productive capacity. Calculate your exact annual capital drag below and discover how much you save with automated systems.
+                        The average business owner and engineering lead loses up to 40% of their productive capacity to repetitive operational busywork. Calculate your exact annual capital drag below and discover how much you save with automated systems.
                     </p>
                 </div>
 

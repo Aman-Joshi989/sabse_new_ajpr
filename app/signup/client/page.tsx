@@ -116,7 +116,7 @@ export default function ClientSignup() {
                 name="name"
                 required
                 className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-slate-900 dark:text-white text-sm"
-                placeholder="Jane Doe"
+                placeholder="Alex Morgan"
               />
             </div>
 

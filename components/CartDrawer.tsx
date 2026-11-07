@@ -420,7 +420,7 @@ export default function CartDrawer() {
               <Input
                 id="name"
                 name="name"
-                placeholder="John Doe"
+                placeholder="Alex Morgan"
                 value={orderDetails.name}
                 onChange={handleInputChange}
                 required
@@ -433,7 +433,7 @@ export default function CartDrawer() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="john@company.com"
+                  placeholder="alex@company.com"
                   value={orderDetails.email}
                   onChange={handleInputChange}
                   required
@@ -457,7 +457,7 @@ export default function CartDrawer() {
               <Input
                 id="company"
                 name="company"
-                placeholder="Acme Inc. / https://example.com"
+                placeholder="Acme Corp / https://acme.com"
                 value={orderDetails.company}
                 onChange={handleInputChange}
               />

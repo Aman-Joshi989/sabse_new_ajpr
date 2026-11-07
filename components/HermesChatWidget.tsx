@@ -221,7 +221,7 @@ export default function HermesChatWidget() {
                       value={leadName}
                       onChange={(e) => setLeadName(e.target.value)}
                       className="w-full px-3 py-2 bg-white dark:bg-[#292A2D] border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:text-white"
-                      placeholder="John Doe"
+                      placeholder="Alex Morgan"
                     />
                   </div>
                   <div>
@@ -232,7 +232,7 @@ export default function HermesChatWidget() {
                       value={leadEmail}
                       onChange={(e) => setLeadEmail(e.target.value)}
                       className="w-full px-3 py-2 bg-white dark:bg-[#292A2D] border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 dark:text-white"
-                      placeholder="john@company.com"
+                      placeholder="alex@company.com"
                     />
                   </div>
                   <div>

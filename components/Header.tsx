@@ -93,7 +93,7 @@ export default function Header({ services }: { services?: any[] }) {
 
     const resourceLinks = [
         { name: 'Engineering Solutions Hub', href: '/solutions', icon_name: 'Layers', desc: 'High-velocity 4-week tech stack sprints' },
-        { name: 'Free US Business Tools', href: '/tools', icon_name: 'Cpu', desc: 'Calculators, audit tools & generators' },
+        { name: 'Interactive Business Tools', href: '/tools', icon_name: 'Cpu', desc: 'Calculators, audit tools & generators' },
         { name: 'RuFlo Swarm Simulator', href: '/demo-ruflo', icon_name: 'Bot', desc: 'Live autonomous multi-agent simulator' },
         { name: 'AI Agent Playground', href: '/chat-agents', icon_name: 'Code2', desc: 'Test live AI intelligence prototypes' },
         { name: 'Engineering Insights & Blog', href: '/blog', icon_name: 'Briefcase', desc: 'Technical playbooks & growth case studies' },

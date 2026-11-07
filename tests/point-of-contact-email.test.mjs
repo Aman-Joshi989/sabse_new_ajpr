@@ -66,3 +66,4 @@ test('Multi-provider resilience includes Resend, Gmail SMTP, Custom SMTP, ZeptoM
   assert.ok(content.includes('recordOutboxEntry'), 'Database outbox persistence missing');
   assert.ok(content.includes('email_outbox'), 'email_outbox table definition missing');
 });
+

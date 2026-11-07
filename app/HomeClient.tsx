@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import HeroSection from '@/components/sections/HeroSection'
 import CoreValuesSection from '@/components/sections/CoreValuesSection'
+import AccountabilityPledgeSection from '@/components/sections/AccountabilityPledgeSection'
 import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
 import { trackBookCall } from '@/lib/analytics'
 import {
@@ -245,6 +246,9 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             </div>
           </div>
         </section>
+
+        {/* 3.2 THE TOTAL ACCOUNTABILITY PLEDGE */}
+        <AccountabilityPledgeSection />
 
         {/* 3.5 INTERACTIVE SCOPE & SPRINT PLANNER */}
         <section className="py-16 md:py-20 bg-slate-50/70 dark:bg-[#070c18] border-y border-slate-200/80 dark:border-slate-800/80 relative">

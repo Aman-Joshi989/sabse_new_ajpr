@@ -20,6 +20,7 @@ import {
   Building2
 } from 'lucide-react'
 import CoreValuesSection from '@/components/sections/CoreValuesSection'
+import AccountabilityPledgeSection from '@/components/sections/AccountabilityPledgeSection'
 
 // Animation Variants
 const containerVariants = {
@@ -265,6 +266,9 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
 
         {/* 5. CORE VALUES */}
         <CoreValuesSection />
+
+        {/* 5.5 TOTAL ACCOUNTABILITY PLEDGE */}
+        <AccountabilityPledgeSection />
 
         {/* 6. WHO WE HELP */}
         <section className="py-32 relative bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-white/10">

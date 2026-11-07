@@ -89,8 +89,8 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                 <div className="flex flex-col md:flex-row justify-between mb-24 gap-12">
 
                     {/* Brand / Logo Section */}
-                    <div className="md:w-1/4">
-                        <Link href="/" className="inline-block mb-6 relative w-32 h-12">
+                    <div className="md:w-1/4 space-y-4">
+                        <Link href="/" className="inline-block relative w-32 h-12">
                             <Image
                                 src={logoSrc}
                                 alt="AJPR World"
@@ -98,6 +98,13 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                                 className="object-contain"
                             />
                         </Link>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                            Boutique full-stack web engineering & autonomous AI systems pod. We assume 100% responsibility for your software stability, delivery timelines, and intellectual property.
+                        </p>
+                        <div className="text-xs text-slate-600 dark:text-slate-300 font-medium space-y-1 pt-1">
+                            <div>Direct: <a href="mailto:hello@ajprworld.com" className="text-blue-600 dark:text-blue-400 hover:underline">hello@ajprworld.com</a></div>
+                            <div>Scoping: <Link href="/book-call" className="text-emerald-600 dark:text-emerald-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
+                        </div>
                     </div>
 
                     {/* Links Columns */}

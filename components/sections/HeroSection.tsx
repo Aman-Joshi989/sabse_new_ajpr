@@ -48,7 +48,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
 
                     {/* Subtitle - Eliminates customer confusion immediately */}
                     <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal mb-8 animate-fade-up">
-                        Direct senior engineering for ambitious companies. No junior hand-offs, no bloated $15k/mo agency retainers—just battle-tested web software, custom AI MVPs, and automated growth systems shipped in 14 to 30 days.
+                        Direct senior engineering for ambitious companies. We assume 100% responsibility for your system architecture, delivery timeline, and code ownership. No junior hand-offs, no retainer traps—just production-grade Next.js & AI software shipped in 14 to 30 days.
                     </p>
 
                     {/* Dual Frictionless CTAs */}
@@ -109,8 +109,8 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                                 <ShieldCheck className="w-4 h-4" />
                             </div>
                             <div>
-                                <div className="text-xs font-bold text-slate-900 dark:text-white">Sub-150ms TTFB</div>
-                                <div className="text-[11px] text-slate-500 dark:text-slate-400">99+ Core Web Vitals</div>
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">30-Day Bug Warranty</div>
+                                <div className="text-[11px] text-slate-500 dark:text-slate-400">Total stability guarantee</div>
                             </div>
                         </div>
 

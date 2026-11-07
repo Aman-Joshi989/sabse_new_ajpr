@@ -191,7 +191,12 @@ async function sendRawEmail(params: {
   const resendApiKey = process.env.RESEND_API_KEY?.trim();
   if (resendApiKey && !resendApiKey.includes('SENSITIVE') && resendApiKey.length > 10) {
     try {
-      const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+      const rawFrom = process.env.RESEND_FROM_EMAIL?.trim();
+      let fromAddress = `${fromName} <onboarding@resend.dev>`;
+      if (rawFrom) {
+        fromAddress = rawFrom.includes('<') && rawFrom.includes('>') ? rawFrom : `${fromName} <${rawFrom}>`;
+      }
+
       const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
@@ -199,7 +204,7 @@ async function sendRawEmail(params: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: `${fromName} <${fromEmail}>`,
+          from: fromAddress,
           to: [params.to],
           reply_to: params.replyTo || adminEmail,
           subject: params.subject,

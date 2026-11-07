@@ -129,7 +129,7 @@ export default async function ServicesPage() {
                                                 <span className="font-black text-slate-900 dark:text-white text-lg tracking-tight">{displayPrice}</span> <br /> {s.delivery_time}
                                             </div>
                                             <div className="flex gap-2">
-                                                <Button size="sm" variant="outline" className="h-10 px-4 text-xs font-bold border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800" asChild>
+                                                <Button size="sm" variant="outline" className="h-10 px-4 text-xs font-bold border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors" asChild>
                                                     <Link href={`/services/${s.slug}`}>
                                                         Details
                                                     </Link>

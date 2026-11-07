@@ -67,11 +67,11 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                         <Button 
                             size="lg" 
                             variant="outline" 
-                            className="h-12 px-8 text-sm md:text-base rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 font-semibold transition-all w-full sm:w-auto gap-2"
+                            className="h-12 px-8 text-sm md:text-base rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold transition-all w-full sm:w-auto gap-2"
                             asChild
                         >
                             <Link href="/pricing">
-                                <DollarSign className="w-4 h-4 text-slate-500" />
+                                <DollarSign className="w-4 h-4 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white" />
                                 View Pricing & Sprints
                             </Link>
                         </Button>

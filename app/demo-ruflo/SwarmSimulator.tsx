@@ -238,7 +238,7 @@ export default function SwarmSimulator() {
               type="button"
               size="lg"
               variant="outline"
-              className={`border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-300 font-bold px-6 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-all ${!isRunning ? 'opacity-50 pointer-events-none cursor-not-allowed' : ''}`}
+              className={`border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-300 font-bold px-6 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-all ${!isRunning ? 'opacity-50 pointer-events-none cursor-not-allowed' : ''}`}
               onClick={handleStopSimulation}
               aria-disabled={!isRunning}
             >

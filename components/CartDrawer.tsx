@@ -668,7 +668,7 @@ export default function CartDrawer() {
           <DialogFooter className="flex-col sm:flex-row gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
             <Button
               variant="outline"
-              className="w-full sm:w-auto border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs"
+              className="w-full sm:w-auto border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white text-xs transition-colors"
               onClick={() => {
                 setIsPaymentSheetOpen(false)
                 setIsCartOpen(false)

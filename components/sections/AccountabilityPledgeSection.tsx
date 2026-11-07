@@ -190,7 +190,7 @@ export default function AccountabilityPledgeSection() {
               <Button 
                 asChild
                 variant="outline"
-                className="h-12 rounded-2xl border-slate-700 bg-slate-800/70 hover:bg-slate-800 text-slate-200 text-xs font-semibold"
+                className="h-12 rounded-2xl border-slate-700 bg-slate-800/70 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-semibold transition-colors"
               >
                 <Link href="/pricing">
                   Review Transparent Sprint Pricing ($4,500+)

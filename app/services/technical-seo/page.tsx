@@ -99,7 +99,7 @@ export default function TechnicalSeoPage() {
             <Button size="lg" className="h-12 px-8 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30" asChild>
               <Link href="/book-call">Get Technical SEO Audit</Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 font-semibold text-sm" asChild>
+            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold text-sm transition-colors" asChild>
               <Link href="/pricing/seo-cost">Review SEO Pricing</Link>
             </Button>
           </div>
@@ -180,7 +180,7 @@ export default function TechnicalSeoPage() {
             <Button size="lg" className="h-12 px-8 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30" asChild>
               <Link href="/book-call">Book Strategy Call</Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 font-semibold text-sm" asChild>
+            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white font-semibold text-sm transition-colors" asChild>
               <Link href="/pricing">View Pricing & Sprints</Link>
             </Button>
           </div>

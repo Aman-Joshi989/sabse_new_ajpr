@@ -63,7 +63,7 @@ export default function RoofingLandingPage() {
                                 </Button>
                             </Link>
                             <Link href="#system">
-                                <Button variant="outline" className="h-14 px-8 text-base font-bold border-slate-300 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 w-full sm:w-auto">
+                                <Button variant="outline" className="h-14 px-8 text-base font-bold border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors w-full sm:w-auto">
                                     See How We Do It
                                 </Button>
                             </Link>
@@ -220,7 +220,7 @@ export default function RoofingLandingPage() {
                         
                         <div className="pt-6">
                             <Link href="/book-call">
-                                <Button className="h-16 px-10 text-lg font-bold bg-white text-blue-600 hover:bg-slate-100 hover:scale-105 transition-all duration-300 rounded-2xl shadow-xl group">
+                                <Button className="h-16 px-10 text-lg font-bold bg-white text-blue-600 hover:bg-slate-100 hover:text-blue-700 hover:scale-105 transition-all duration-300 rounded-2xl shadow-xl group">
                                     <Calendar className="w-6 h-6 mr-3 text-blue-600" />
                                     Schedule Discovery Call
                                     <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />

@@ -104,7 +104,7 @@ export default function WebsiteMaintenanceCostPage() {
                 View Flat-Rate Packages <ArrowRight className="w-4 h-4 ml-1" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 font-semibold text-sm" asChild>
+            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold text-sm transition-colors" asChild>
               <Link href="/book-call">Get Custom Assessment</Link>
             </Button>
           </div>
@@ -232,12 +232,12 @@ export default function WebsiteMaintenanceCostPage() {
             Eliminate unexpected invoices. Our transparent monthly website maintenance services start at flat predictable rates with zero lock-in contracts.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50 font-black px-8 py-4 rounded-xl shadow-lg" asChild>
+            <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50 hover:text-blue-950 font-black px-8 py-4 rounded-xl shadow-lg transition-colors" asChild>
               <Link href="/services/website-security-maintenance#maintenance-cost">
                 Explore Maintenance Packages ($149–$899/mo)
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-blue-400/40 text-white hover:bg-white/10 font-bold px-8 py-4 rounded-xl" asChild>
+            <Button size="lg" variant="outline" className="border-blue-400/40 text-white hover:bg-white/10 hover:text-white font-bold px-8 py-4 rounded-xl transition-colors" asChild>
               <Link href="/book-call">Book Strategy Call</Link>
             </Button>
           </div>

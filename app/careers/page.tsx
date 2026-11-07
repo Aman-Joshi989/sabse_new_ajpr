@@ -213,7 +213,7 @@ function CareersContent() {
                   We are always looking for ambitious developers, automation specialists, and domain experts. Send us your CV for future openings.
                 </p>
               </div>
-              <Button asChild variant="outline" className="rounded-xl font-bold px-8 h-12 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white w-full">
+              <Button asChild variant="outline" className="rounded-xl font-bold px-8 h-12 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-colors w-full">
                 <Link href={getApplyLink("Open Application")}>Send Open Application</Link>
               </Button>
             </div>

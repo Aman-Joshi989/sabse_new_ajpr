@@ -122,7 +122,7 @@ export default async function ProgrammaticSolutionPage(props: Props) {
                 Explore Pricing & Sprints <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-13 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 font-semibold text-sm" asChild>
+            <Button size="lg" variant="outline" className="h-13 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white font-semibold text-sm transition-colors" asChild>
               <Link href="/book-call">
                 Book Architecture Call
               </Link>
@@ -297,7 +297,7 @@ export default async function ProgrammaticSolutionPage(props: Props) {
                 View Pricing & Sprints <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 font-semibold text-sm" asChild>
+            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white font-semibold text-sm transition-colors" asChild>
               <Link href="/book-call">
                 Book 15-Min Strategy Call
               </Link>

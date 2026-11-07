@@ -100,7 +100,7 @@ export default function CloudSolutionsPage() {
                         <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8 py-6 text-lg shadow-lg shadow-blue-500/30" asChild>
                             <Link href="/contact">Get Started Free</Link>
                         </Button>
-                        <Button size="lg" variant="outline" className="border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full px-8 py-6 text-lg" asChild>
+                        <Button size="lg" variant="outline" className="border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full px-8 py-6 text-lg transition-colors" asChild>
                             <Link href="#comparison">View Pricing</Link>
                         </Button>
                     </div>

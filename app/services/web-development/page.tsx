@@ -65,7 +65,7 @@ export default function WebDevelopmentPage() {
                             Book Free Strategy Call <ArrowRight className="ml-2 h-5 w-5" />
                         </Link>
                     </Button>
-                    <Button size="lg" variant="outline" className="px-8 py-4 rounded-xl border-slate-300 dark:border-slate-700 font-semibold" asChild>
+                    <Button size="lg" variant="outline" className="px-8 py-4 rounded-xl border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold transition-colors" asChild>
                         <Link href="/pricing">View Transparent Sprints</Link>
                     </Button>
                 </div>

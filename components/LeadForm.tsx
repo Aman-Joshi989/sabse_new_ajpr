@@ -347,7 +347,7 @@ export default function LeadForm() {
                     type="button" 
                     variant="outline" 
                     onClick={prevStep} 
-                    className="h-12 px-4 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl"
+                    className="h-12 px-4 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
                   >
                     <ChevronLeft className="w-4 h-4 mr-1" /> Back
                   </Button>
@@ -404,7 +404,7 @@ export default function LeadForm() {
                     variant="outline" 
                     onClick={prevStep} 
                     disabled={loading}
-                    className="h-12 px-4 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl"
+                    className="h-12 px-4 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
                   >
                     <ChevronLeft className="w-4 h-4 mr-1" /> Back
                   </Button>

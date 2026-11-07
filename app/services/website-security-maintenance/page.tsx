@@ -119,7 +119,7 @@ export default function WebsiteSecurityMaintenancePage() {
             <Button size="lg" className="h-12 px-8 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30" asChild>
               <Link href="/book-call">Schedule Free Security Audit</Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 font-semibold text-sm" asChild>
+            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white font-semibold text-sm transition-colors" asChild>
               <a href="#maintenance-cost">View Maintenance Costs & Retainers</a>
             </Button>
           </div>
@@ -271,7 +271,7 @@ export default function WebsiteSecurityMaintenancePage() {
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600" /> <strong>Under 15-Minute Critical Incident SLA</strong></li>
                 </ul>
               </div>
-              <Button variant="outline" className="w-full mt-8 rounded-xl border-slate-300 dark:border-slate-700 font-bold" asChild>
+              <Button variant="outline" className="w-full mt-8 rounded-xl border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 font-bold text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white" asChild>
                 <Link href="/book-call">Contact Engineering</Link>
               </Button>
             </div>
@@ -390,7 +390,7 @@ export default function WebsiteSecurityMaintenancePage() {
             <Button size="lg" className="h-12 px-8 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30" asChild>
               <Link href="/book-call">Schedule 30-Min Strategy Call</Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 font-semibold text-sm" asChild>
+            <Button size="lg" variant="outline" className="h-12 px-8 rounded-full border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white font-semibold text-sm transition-colors" asChild>
               <Link href="/contact">Request Custom Quote</Link>
             </Button>
           </div>

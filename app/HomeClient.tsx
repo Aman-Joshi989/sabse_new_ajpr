@@ -567,7 +567,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 </p>
               </div>
               <div className="hidden md:block shrink-0">
-                 <Button variant="outline" className="h-12 px-6 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0a0f1c] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold" asChild>
+                 <Button variant="outline" className="h-12 px-6 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0a0f1c] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold" asChild>
                     <Link href="/services">View All Solutions</Link>
                  </Button>
               </div>
@@ -625,7 +625,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             </div>
             
             <div className="mt-12 text-center md:hidden">
-                 <Button variant="outline" className="h-12 w-full px-6 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0a0f1c] text-slate-700 dark:text-slate-300 font-semibold" asChild>
+                 <Button variant="outline" className="h-12 w-full px-6 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0a0f1c] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold" asChild>
                     <Link href="/services">View All Solutions</Link>
                  </Button>
             </div>
@@ -790,7 +790,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                   </ul>
                 </div>
                 <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
-                  <Button variant="outline" className="w-full h-11 rounded-xl border-slate-300 dark:border-slate-700 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-white" asChild>
+                  <Button variant="outline" className="w-full h-11 rounded-xl border-slate-300 dark:border-slate-700 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-white hover:text-slate-900 dark:hover:text-white" asChild>
                     <Link href="/book-call?topic=Growth%20Retainer" onClick={() => trackBookCall('home_pricing_growth_retainer')}>Explore Growth Retainer</Link>
                   </Button>
                 </div>
@@ -1129,7 +1129,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               <Button size="lg" className="h-14 px-10 text-base rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold transition-all shadow-xl w-full sm:w-auto" asChild>
                 <Link href="/book-call" onClick={() => trackBookCall('home_bottom_cta')}>Book Free Strategy Call <ArrowRight className="w-5 h-5 ml-2"/></Link>
               </Button>
-              <Button size="lg" variant="outline" className="h-14 px-8 text-base rounded-full border-slate-300 dark:border-slate-700 font-semibold w-full sm:w-auto" asChild>
+              <Button size="lg" variant="outline" className="h-14 px-8 text-base rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold w-full sm:w-auto" asChild>
                 <Link href="/pricing">Explore Pricing & Sprints</Link>
               </Button>
             </div>

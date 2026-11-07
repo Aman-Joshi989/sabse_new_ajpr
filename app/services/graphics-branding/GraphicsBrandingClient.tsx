@@ -87,7 +87,7 @@ export default function GraphicsBrandingClient() {
                                 <ArrowRight className="w-5 h-5 ml-2" />
                             </Link>
                         </Button>
-                        <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 py-6 text-lg rounded-full border-slate-300 dark:border-slate-700" asChild>
+                        <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 py-6 text-lg rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold transition-colors" asChild>
                             <Link href="#portfolio">View Our Work</Link>
                         </Button>
                     </div>

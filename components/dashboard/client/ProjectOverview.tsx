@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-export default function ProjectOverview({ title, status }: { title: string, status: string }) {
+export default function ProjectOverview({ title, status, demoUrl }: { title: string, status: string, demoUrl?: string }) {
   return (
     <div className="flex flex-wrap justify-between items-center gap-6 mb-12">
       <div className="flex flex-col gap-2">
@@ -20,14 +20,17 @@ export default function ProjectOverview({ title, status }: { title: string, stat
       <div className="flex items-center gap-3">
         <Link
           className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl text-sm font-black shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all hover:scale-105 active:scale-95"
-          href="/demo-shining"
+          href={demoUrl || "/demo-ruflo"}
           target="_blank"
         >
           VIEW DEMO
         </Link>
-        <button className="flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-xl text-sm font-black shadow-sm hover:shadow-md transition-all hover:bg-slate-50 dark:hover:bg-slate-700">
+        <Link 
+          href="/dashboard/client?tab=brief"
+          className="flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 px-6 py-3 rounded-xl text-sm font-black shadow-sm hover:shadow-md transition-all"
+        >
           PROJECT BRIEF
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -463,7 +463,7 @@ export default function Header({ services }: { services?: any[] }) {
                                     <Button className="w-full h-11 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-md transition-all text-sm" asChild>
                                         <Link href="/book-call" onClick={() => trackBookCall('header_mobile')}>Book Strategy Call</Link>
                                     </Button>
-                                    <Button variant="outline" className="w-full h-11 rounded-xl border-slate-200 dark:border-slate-800 font-semibold text-slate-700 dark:text-slate-300 text-sm" asChild>
+                                    <Button variant="outline" className="w-full h-11 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white text-sm" asChild>
                                         <Link href="/contact">Contact & Inquiry</Link>
                                     </Button>
                                 </div>

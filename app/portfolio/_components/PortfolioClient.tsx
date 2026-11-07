@@ -110,10 +110,10 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
               <div
                 className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animation-delay-400"
               >
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-500 h-14 px-8 rounded-xl text-base font-bold text-slate-900 dark:text-white shadow-lg shadow-blue-900/20 transition-all hover:-translate-y-1" asChild>
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-500 h-14 px-8 rounded-xl text-base font-bold text-white shadow-lg shadow-blue-900/20 transition-all hover:-translate-y-1" asChild>
                   <Link href="#case-studies">View Case Studies</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="h-14 px-8 rounded-xl text-base font-bold bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white backdrop-blur-md transition-all" asChild>
+                <Button size="lg" variant="outline" className="h-14 px-8 rounded-xl text-base font-bold bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white hover:text-slate-900 dark:hover:text-white backdrop-blur-md transition-all" asChild>
                   <Link href="/book-call">Book Strategy Call <ArrowUpRight className="ml-2 w-4 h-4" /></Link>
                 </Button>
               </div>
@@ -316,10 +316,10 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
               <p className="text-xl text-slate-600 dark:text-slate-300 mb-12 font-medium leading-relaxed">We focus on long-term execution partnerships, accepting a limited number of ambitious clients.</p>
 
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-500 h-16 px-10 rounded-xl text-lg font-bold text-slate-900 dark:text-white shadow-lg shadow-blue-900/20 transition-all hover:-translate-y-1" asChild>
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-500 h-16 px-10 rounded-xl text-lg font-bold text-white shadow-lg shadow-blue-900/20 transition-all hover:-translate-y-1" asChild>
                   <Link href="/contact">Apply for Partnership</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="h-16 px-10 rounded-xl text-lg font-bold bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white backdrop-blur-md transition-all hover:-translate-y-1" asChild>
+                <Button size="lg" variant="outline" className="h-16 px-10 rounded-xl text-lg font-bold bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white hover:text-slate-900 dark:hover:text-white backdrop-blur-md transition-all hover:-translate-y-1" asChild>
                   <Link href="/book-call">Schedule Strategy Call</Link>
                 </Button>
               </div>

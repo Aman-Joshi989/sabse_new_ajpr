@@ -2,7 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { 
+  ChevronRight, 
+  ChevronLeft, 
+  ArrowRight, 
+  CheckCircle2, 
+  Lock, 
+  Zap, 
+  Loader2, 
+  ShieldCheck, 
+  Sparkles,
+  Building2,
+  Mail,
+  User,
+  Cpu,
+  DollarSign
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -40,16 +55,46 @@ export default function LeadForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const nextStep = () => {
-    if (step === 1 && (!formData.name || !formData.email)) {
-      toast.error('Please enter your name and email');
-      return;
+  const validateStep1 = () => {
+    if (!formData.name.trim()) {
+      toast.error('Please enter your full name');
+      return false;
     }
-    setStep((prev) => prev + 1);
+    if (!formData.email.trim()) {
+      toast.error('Please enter your work email');
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      toast.error('Please provide a valid email address (e.g., alex@company.com)');
+      return false;
+    }
+    return true;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const nextStep = () => {
+    if (step === 1 && !validateStep1()) {
+      return;
+    }
+    setStep((prev) => Math.min(prev + 1, 3));
+  };
+
+  const prevStep = () => {
+    setStep((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    if (step === 1) {
+      if (validateStep1()) nextStep();
+      return;
+    }
+    if (step === 2) {
+      nextStep();
+      return;
+    }
+
     setLoading(true);
     
     try {
@@ -59,7 +104,10 @@ export default function LeadForm() {
         body: JSON.stringify(formData)
       });
       
-      if (!response.ok) throw new Error('Submission failed');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Submission failed');
+      }
       
       setIsSuccess(true);
       toast.success('Your audit request has been received!');
@@ -73,8 +121,8 @@ export default function LeadForm() {
           company_size: formData.companySize
         });
       }
-    } catch (error) {
-      toast.error('Something went wrong. Please try again.');
+    } catch (error: any) {
+      toast.error(error.message || 'Something went wrong. Please email hello@ajprworld.com directly.');
     } finally {
       setLoading(false);
     }
@@ -83,139 +131,315 @@ export default function LeadForm() {
   if (isSuccess) {
     return (
       <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }} 
+        initial={{ opacity: 0, scale: 0.95 }} 
         animate={{ opacity: 1, scale: 1 }}
-        className="text-center p-8 bg-slate-900 rounded-3xl border border-slate-800"
+        className="text-center p-8 sm:p-10 bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl space-y-6"
       >
-        <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
-        <h3 className="text-2xl font-bold text-white mb-2">Request Received!</h3>
-        <p className="text-slate-400 mb-6">Our senior engineers are reviewing your details. We'll be in touch within 24 hours.</p>
-        <Button onClick={() => window.location.href = '/book-call'} className="w-full bg-blue-600 hover:bg-blue-500">
-          Book Intro Call Now <ArrowRight className="w-4 h-4 ml-2" />
-        </Button>
+        <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
+          <CheckCircle2 className="w-8 h-8" />
+        </div>
+        
+        <div>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-3">
+            <Sparkles className="w-3.5 h-3.5" /> Technical Scope Queued
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            Audit Request Received!
+          </h3>
+          <p className="text-sm text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
+            Thank you, <strong className="text-white font-semibold">{formData.name}</strong>. Our senior engineering pod is preparing your tailored Technical & SEO review for <span className="text-blue-400 font-medium">{formData.email}</span>.
+          </p>
+        </div>
+
+        {/* 3 Step Timeline of what happens next */}
+        <div className="text-left bg-slate-950/70 border border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">What Happens Next</h4>
+          <div className="space-y-2.5 text-xs sm:text-sm text-slate-300">
+            <div className="flex items-start gap-2.5">
+              <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+              <span><strong>Deep Scan:</strong> We analyze your Core Web Vitals, API latency, and search footprint.</span>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+              <span><strong>Actionable Plan:</strong> Senior architect authors a 3-page roadmap with sprint estimates.</span>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <span className="w-5 h-5 rounded-full bg-emerald-600/20 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+              <span><strong>Direct Delivery:</strong> Delivered to your inbox within 24 hours (zero sales spam).</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-3 pt-2">
+          <Button 
+            onClick={() => window.location.href = '/book-call'} 
+            className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30"
+          >
+            Want Immediate Review? Book Strategy Call <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setIsSuccess(false);
+              setStep(1);
+              setFormData({
+                name: '',
+                email: '',
+                companySize: '',
+                budget: '',
+                techStack: '',
+                honeypot: '',
+                utm_source: '',
+                utm_medium: '',
+                utm_campaign: ''
+              });
+            }}
+            className="text-xs text-slate-400 hover:text-slate-200 transition-colors underline pt-1 block mx-auto"
+          >
+            Submit another project audit
+          </button>
+        </div>
       </motion.div>
     );
   }
 
   return (
-    <div className="bg-slate-900 rounded-3xl p-8 border border-slate-800 shadow-2xl">
-      <div className="flex mb-8">
-        {[1, 2, 3].map((num) => (
-          <div key={num} className={`h-2 flex-1 mx-1 rounded-full ${step >= num ? 'bg-blue-600' : 'bg-slate-800'}`} />
-        ))}
+    <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl relative">
+      
+      {/* Client-Friendly Step Header */}
+      <div className="mb-6 sm:mb-8">
+        <div className="flex items-center justify-between text-xs font-semibold mb-3">
+          <span className={step >= 1 ? "text-blue-400 font-bold" : "text-slate-500"}>
+            01 Contact
+          </span>
+          <span className={step >= 2 ? "text-blue-400 font-bold" : "text-slate-500"}>
+            02 Tech & Team
+          </span>
+          <span className={step >= 3 ? "text-blue-400 font-bold" : "text-slate-500"}>
+            03 Budget & Scope
+          </span>
+        </div>
+        <div className="flex gap-2">
+          {[1, 2, 3].map((num) => (
+            <div 
+              key={num} 
+              className={`h-2 flex-1 rounded-full transition-all duration-300 ${
+                step >= num 
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-500 shadow-sm shadow-blue-500/30' 
+                  : 'bg-slate-800'
+              }`} 
+            />
+          ))}
+        </div>
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={step}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.2 }}
-        >
-          {step === 1 && (
-            <div className="space-y-4">
-              <div>
-                <Label className="text-slate-300">Full Name</Label>
-                <Input 
-                  name="name" 
-                  value={formData.name} 
-                  onChange={handleChange} 
-                  placeholder="Alex Morgan" 
-                  className="bg-slate-950 border-slate-800 text-white mt-1 h-12"
-                />
-              </div>
-              <div>
-                <Label className="text-slate-300">Work Email</Label>
-                <Input 
-                  name="email" 
-                  type="email"
-                  value={formData.email} 
-                  onChange={handleChange} 
-                  placeholder="alex@company.com" 
-                  className="bg-slate-950 border-slate-800 text-white mt-1 h-12"
-                />
-              </div>
-              {/* Honeypot field (hidden from humans, filled by bots) */}
-              <div className="absolute opacity-0 -z-10" aria-hidden="true">
-                <Label htmlFor="honeypot">Leave this empty</Label>
-                <Input 
-                  id="honeypot"
-                  name="honeypot" 
-                  value={formData.honeypot} 
-                  onChange={handleChange} 
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-              </div>
-              <Button onClick={nextStep} className="w-full h-12 bg-blue-600 hover:bg-blue-500 mt-4">
-                Next <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          )}
+      <form onSubmit={handleSubmit}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            {/* Step 1: Contact Information */}
+            {step === 1 && (
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="name" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <User className="w-3.5 h-3.5 text-blue-400" /> Full Name
+                  </Label>
+                  <Input 
+                    id="name"
+                    name="name" 
+                    value={formData.name} 
+                    onChange={handleChange} 
+                    placeholder="Alex Morgan" 
+                    autoFocus
+                    className="bg-slate-950 border-slate-800 text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-500"
+                  />
+                </div>
 
-          {step === 2 && (
-            <div className="space-y-4">
-              <div>
-                <Label className="text-slate-300">Company Size</Label>
-                <select 
-                  name="companySize" 
-                  value={formData.companySize} 
-                  onChange={handleChange}
-                  className="w-full bg-slate-950 border border-slate-800 text-white mt-1 h-12 rounded-md px-3"
-                >
-                  <option value="">Select size...</option>
-                  <option value="1-10">1-10 Employees</option>
-                  <option value="11-50">11-50 Employees</option>
-                  <option value="51-200">51-200 Employees</option>
-                  <option value="201+">201+ Employees</option>
-                </select>
-              </div>
-              <div>
-                <Label className="text-slate-300">Current Tech Stack</Label>
-                <Input 
-                  name="techStack" 
-                  value={formData.techStack} 
-                  onChange={handleChange} 
-                  placeholder="e.g. Next.js, Postgres, AWS" 
-                  className="bg-slate-950 border-slate-800 text-white mt-1 h-12"
-                />
-              </div>
-              <Button onClick={nextStep} className="w-full h-12 bg-blue-600 hover:bg-blue-500 mt-4">
-                Next <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          )}
+                <div>
+                  <Label htmlFor="email" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <Mail className="w-3.5 h-3.5 text-blue-400" /> Work Email
+                  </Label>
+                  <Input 
+                    id="email"
+                    name="email" 
+                    type="email"
+                    value={formData.email} 
+                    onChange={handleChange} 
+                    placeholder="alex@company.com" 
+                    className="bg-slate-950 border-slate-800 text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-500"
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1.5">
+                    🔒 We deliver your confidential audit report directly to this email.
+                  </p>
+                </div>
 
-          {step === 3 && (
-            <div className="space-y-4">
-              <div>
-                <Label className="text-slate-300">Estimated Project Budget</Label>
-                <select 
-                  name="budget" 
-                  value={formData.budget} 
-                  onChange={handleChange}
-                  className="w-full bg-slate-950 border border-slate-800 text-white mt-1 h-12 rounded-md px-3"
+                {/* Honeypot field (hidden from humans, filled by bots) */}
+                <div className="absolute opacity-0 -z-10" aria-hidden="true">
+                  <Label htmlFor="honeypot">Leave this empty</Label>
+                  <Input 
+                    id="honeypot"
+                    name="honeypot" 
+                    value={formData.honeypot} 
+                    onChange={handleChange} 
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
+                <Button 
+                  type="button" 
+                  onClick={nextStep} 
+                  className="w-full h-12 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl mt-4 shadow-lg shadow-blue-600/20"
                 >
-                  <option value="">Select budget...</option>
-                  <option value="<10k">Under $10,000</option>
-                  <option value="10k-50k">$10,000 - $50,000</option>
-                  <option value="50k-100k">$50,000 - $100,000</option>
-                  <option value="100k+">$100,000+</option>
-                </select>
+                  Continue to Tech Architecture <ChevronRight className="w-4 h-4 ml-1.5" />
+                </Button>
               </div>
-              
-              <Button 
-                onClick={handleSubmit} 
-                disabled={loading}
-                className="w-full h-12 bg-blue-600 hover:bg-blue-500 mt-4"
-              >
-                {loading ? 'Submitting...' : 'Request Free Audit'}
-              </Button>
-            </div>
-          )}
-        </motion.div>
-      </AnimatePresence>
+            )}
+
+            {/* Step 2: Architecture & Company Context */}
+            {step === 2 && (
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="companySize" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <Building2 className="w-3.5 h-3.5 text-blue-400" /> Company / Team Size
+                  </Label>
+                  <select 
+                    id="companySize"
+                    name="companySize" 
+                    value={formData.companySize} 
+                    onChange={handleChange}
+                    className="w-full bg-slate-950 border border-slate-800 text-white h-12 rounded-xl px-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select company size...</option>
+                    <option value="1">Solo Founder (1)</option>
+                    <option value="2-10">Early Stage Team (2–10)</option>
+                    <option value="11-50">Growing Business (11–50)</option>
+                    <option value="51-200">Scaleup / Mid-Market (51–200)</option>
+                    <option value="200+">Enterprise (200+)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <Label htmlFor="techStack" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-blue-400" /> Current Tech Stack or Website URL
+                  </Label>
+                  <Input 
+                    id="techStack"
+                    name="techStack" 
+                    value={formData.techStack} 
+                    onChange={handleChange} 
+                    placeholder="e.g. Next.js, Postgres, or yoursite.com" 
+                    className="bg-slate-950 border-slate-800 text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-500"
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1.5">
+                    Sharing your URL helps our architects perform live Lighthouse & TTFB audits.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3 pt-2">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={prevStep} 
+                    className="h-12 px-4 border-slate-700 bg-slate-800/60 hover:bg-slate-800 text-slate-200 rounded-xl"
+                  >
+                    <ChevronLeft className="w-4 h-4 mr-1" /> Back
+                  </Button>
+                  <Button 
+                    type="button" 
+                    onClick={nextStep} 
+                    className="flex-1 h-12 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/20"
+                  >
+                    Continue to Scope & Budget <ChevronRight className="w-4 h-4 ml-1.5" />
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Step 3: Scope & Budget Tier */}
+            {step === 3 && (
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="budget" className="text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+                    <DollarSign className="w-3.5 h-3.5 text-blue-400" /> Estimated Project Budget
+                  </Label>
+                  <select 
+                    id="budget"
+                    name="budget" 
+                    value={formData.budget} 
+                    onChange={handleChange}
+                    className="w-full bg-slate-950 border border-slate-800 text-white h-12 rounded-xl px-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select budget range...</option>
+                    <option value="<5k">Under $5,000 (Rapid MVP / Starter Sprint)</option>
+                    <option value="5k-15k">$5,000 – $15,000 (Production Web App / AI Workflow)</option>
+                    <option value="15k-35k">$15,000 – $35,000 (Custom Multi-Agent Architecture)</option>
+                    <option value="35k+">$35,000+ (Enterprise Scale & Infrastructure)</option>
+                    <option value="flexible">Flexible / Need Technical Scope First</option>
+                  </select>
+                  <p className="text-[11px] text-slate-400 mt-1.5">
+                    We tailor our sprint recommendations directly to your financial constraints.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 space-y-1">
+                  <div className="flex items-center gap-2 text-emerald-400 font-semibold">
+                    <ShieldCheck className="w-4 h-4 shrink-0" />
+                    <span>100% Free • No Obligation • Mutual NDA</span>
+                  </div>
+                  <p className="text-slate-400 text-[11px]">
+                    Receive an unvarnished technical assessment detailing hidden performance bottlenecks and exact next steps.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3 pt-2">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={prevStep} 
+                    disabled={loading}
+                    className="h-12 px-4 border-slate-700 bg-slate-800/60 hover:bg-slate-800 text-slate-200 rounded-xl"
+                  >
+                    <ChevronLeft className="w-4 h-4 mr-1" /> Back
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    disabled={loading}
+                    className="flex-1 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30"
+                  >
+                    {loading ? (
+                      <span className="flex items-center gap-2">
+                        <Loader2 className="w-4 h-4 animate-spin" /> Submitting Request...
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        Request Free Technical Audit <ArrowRight className="w-4 h-4" />
+                      </span>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </form>
+
+      {/* Trust Subtext */}
+      <div className="mt-6 pt-5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+        <span className="flex items-center gap-1.5">
+          <Lock className="w-3.5 h-3.5 text-slate-500" /> Confidential & Secure
+        </span>
+        <span className="flex items-center gap-1.5">
+          <Zap className="w-3.5 h-3.5 text-amber-400" /> ~24h Turnaround
+        </span>
+      </div>
+
     </div>
   );
 }

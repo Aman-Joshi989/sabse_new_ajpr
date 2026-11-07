@@ -990,6 +990,20 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                   WebFX Alternatives & Retainer Audit
                 </Link>
                 <Link
+                  href="/compare/smartsites-alternatives"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-slate-200 dark:border-slate-800"
+                >
+                  <ArrowUpRight className="w-3 h-3 text-blue-500" />
+                  SmartSites Alternatives (PPC & CWV Audit)
+                </Link>
+                <Link
+                  href="/compare/single-grain-alternatives"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-slate-200 dark:border-slate-800"
+                >
+                  <ArrowUpRight className="w-3 h-3 text-blue-500" />
+                  Single Grain Alternatives (SaaS & Tech SEO)
+                </Link>
+                <Link
                   href="/services/website-security-maintenance"
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border border-slate-200 dark:border-slate-800"
                 >

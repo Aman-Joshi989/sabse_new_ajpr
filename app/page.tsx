@@ -70,6 +70,18 @@ export default async function HomePage() {
             url: "https://ajprworld.com/compare",
             position: 6,
           },
+          {
+            name: "Rootstrap Alternatives: 2026 AI Product Studio Evaluation",
+            description: "Comparing Rootstrap $50k–$150k enterprise quotes against AJPR World 2–4 week AI MVP sprints ($4,500) and Next.js 16 architectures.",
+            url: "https://ajprworld.com/compare/rootstrap-alternatives",
+            position: 7,
+          },
+          {
+            name: "Altar.io Alternatives: 2026 Startup Studio Evaluation",
+            description: "Evaluate Altar.io discovery workshops ($40k–$90k) against AJPR World 2–4 week production AI MVP delivery, full TypeScript stack, and zero discovery bloat.",
+            url: "https://ajprworld.com/compare/altar-io-alternatives",
+            position: 8,
+          },
         ]}
       />
       <HomeClient 

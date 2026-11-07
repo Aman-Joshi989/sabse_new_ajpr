@@ -614,6 +614,16 @@ export default function RootstrapComparisonClient({
         <ToolLeadCapture
           title="Download the 2026 AI Product Studio Selection Guide & RFP Checklist"
           subtitle="Get our 12-point engineering scope checklist, vector database cost calculator, and vendor evaluation matrix used by 50+ startup founders."
+          badge="Free Engineering Guide"
+          ctaText="Download Studio Selection Guide & Checklist"
+          toolSource="compare-rootstrap-alternatives"
+          reportSummary={{
+            headline: "Rootstrap Alternative & AI MVP Studio Evaluation (2026)",
+            metrics: {
+              "Target Agency": "Rootstrap Enterprise Sprints",
+              "Alternative Model": "AJPR World 2–4 Week AI Sprints ($4,500)"
+            }
+          }}
         />
       </section>
 

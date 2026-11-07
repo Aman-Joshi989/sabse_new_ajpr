@@ -514,8 +514,18 @@ export default function WebTonicComparisonClient({
 
       {/* 6. Lead Capture Tool */}
       <ToolLeadCapture
-        toolName="Web Tonic Competitor & Speed Audit"
+        title="Request Your Free Website Speed & Conversion Audit"
+        subtitle="Uncover hidden latency bottlenecks in template websites and see the incremental revenue gained from sub-second Next.js engineering."
+        badge="Free Web Speed Audit"
         ctaText="Get Free Website Speed & Conversion Audit"
+        toolSource="compare-webtonic-alternatives"
+        reportSummary={{
+          headline: "Web Tonic vs Full-Stack Next.js Evaluation (2026)",
+          metrics: {
+            "Competitor Target": "Web Tonic Template Builds",
+            "Alternative Model": "AJPR World Custom Edge Engineering"
+          }
+        }}
       />
 
       {/* 7. FAQs */}
@@ -564,3 +574,4 @@ export default function WebTonicComparisonClient({
     </div>
   );
 }
+

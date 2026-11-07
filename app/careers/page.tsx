@@ -9,7 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { 
   Briefcase, MapPin, Clock, ArrowRight, Sparkles, 
-  Users, Target, Trophy, Laptop, ShieldCheck, Heart 
+  Users, Target, Trophy, Laptop, ShieldCheck, Heart,
+  Sprout, Scale, Eye, Compass, TrendingUp
 } from 'lucide-react'
 
 const openings = [
@@ -41,19 +42,34 @@ const openings = [
 
 const values = [
   {
-    icon: <Target className="w-5 h-5 text-blue-500" />,
-    title: "Client-Centric Results",
-    desc: "We focus on real business impact, eliminating waste and delivering high-value software."
+    icon: <Sparkles className="w-5 h-5 text-amber-500" />,
+    title: "Inspiration",
+    desc: "We bring fresh creative energy and frontier AI architectures, rejecting stale templates."
   },
   {
-    icon: <Users className="w-5 h-5 text-purple-500" />,
-    title: "Collaborative Swarms",
-    desc: "We work in small, hyper-focused engineering groups that coordinate with precision."
+    icon: <ShieldCheck className="w-5 h-5 text-rose-500" />,
+    title: "Disciplined",
+    desc: "Zero tolerance for sloppy code. 100% type safety, rigorous tests, and on-time sprint delivery."
   },
   {
-    icon: <Trophy className="w-5 h-5 text-amber-500" />,
-    title: "Continuous Mastery",
-    desc: "We support ongoing learning, technical certifications, and experimenting with new tech stacks."
+    icon: <Scale className="w-5 h-5 text-purple-500" />,
+    title: "Accountability",
+    desc: "Complete end-to-end ownership. We stand behind everything we build without excuses."
+  },
+  {
+    icon: <Eye className="w-5 h-5 text-blue-500" />,
+    title: "Transparency",
+    desc: "Open repositories, transparent milestone pricing, and unvarnished performance metrics."
+  },
+  {
+    icon: <Compass className="w-5 h-5 text-emerald-500" />,
+    title: "Aligned",
+    desc: "Our technical execution is 100% locked to client business revenue and commercial targets."
+  },
+  {
+    icon: <TrendingUp className="w-5 h-5 text-orange-500" />,
+    title: "Results Oriented",
+    desc: "Obsessed with real commercial impact: sub-second speeds, top SERPs, and pipeline conversion."
   }
 ]
 
@@ -119,15 +135,24 @@ function CareersContent() {
 
       {/* Core Values Strip */}
       <section className="py-16 border-y border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/20 backdrop-blur-sm">
-        <div className="w-[80%] mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
+        <div className="w-[85%] max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-red-600 to-rose-700 flex items-center justify-center text-white shadow-md">
+              <Sprout className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Our 6 Core Values</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">The non-negotiable principles guiding every engineer and team member.</p>
+            </div>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((val, idx) => (
-              <div key={idx} className="space-y-4">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+              <div key={idx} className="p-5 rounded-2xl bg-white dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 space-y-3 shadow-sm hover:shadow-md transition-shadow">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700/60 flex items-center justify-center">
                   {val.icon}
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">{val.title}</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">{val.desc}</p>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">{val.title}</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">{val.desc}</p>
               </div>
             ))}
           </div>

@@ -558,8 +558,18 @@ export default function SmartSitesComparisonClient({
 
       {/* 6. Lead Capture & Strategy Session */}
       <ToolLeadCapture
-        toolName="SmartSites Competitor & Speed Audit"
+        title="Request Your Free Website Speed & Conversion Audit"
+        subtitle="Calculate how much paid ad traffic bounces due to slow WordPress page latency and see the ROI of a sub-second Next.js rebuild."
+        badge="Free Speed & Ad Audit"
         ctaText="Get Custom Next.js Speed & PPC Audit"
+        toolSource="compare-smartsites-alternatives"
+        reportSummary={{
+          headline: "SmartSites vs Sub-Second Next.js Performance (2026)",
+          metrics: {
+            "Competitor Target": "SmartSites PPC / WordPress",
+            "Alternative Model": "AJPR World 0.4s Edge Stack"
+          }
+        }}
       />
 
       {/* 7. FAQs */}

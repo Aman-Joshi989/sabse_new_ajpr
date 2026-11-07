@@ -617,6 +617,16 @@ export default function AltarIoComparisonClient({
         <ToolLeadCapture
           title="Download the 2026 AI Product Studio Selection Guide & RFP Checklist"
           subtitle="Get our 12-point engineering scope checklist, vector database cost calculator, and vendor evaluation matrix used by 50+ startup founders."
+          badge="Free Engineering Guide"
+          ctaText="Download Studio Selection Guide & Checklist"
+          toolSource="compare-altar-io-alternatives"
+          reportSummary={{
+            headline: "Altar.io Alternative & MVP Studio Evaluation (2026)",
+            metrics: {
+              "Target Agency": "Altar.io Discovery Workshops",
+              "Alternative Model": "AJPR World 2–4 Week AI Sprints ($4,500)"
+            }
+          }}
         />
       </section>
 

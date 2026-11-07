@@ -411,8 +411,18 @@ export default function AgencyMatchmakerClient({
 
       {/* 4. Lead Capture Tool */}
       <ToolLeadCapture
-        toolName="Agency Proposal & Contract Audit"
+        title="Request Your Free Agency Proposal & Contract Audit"
+        subtitle="Submit your existing agency proposal or retainer contract for an objective, confidential technical and pricing review."
+        badge="Free Contract Audit"
         ctaText="Submit Agency Proposal for Free Technical Review"
+        toolSource="compare-agency-matchmaker"
+        reportSummary={{
+          headline: "Agency Proposal & Architecture Review (2026)",
+          metrics: {
+            "Audit Target": "Competitive Agency Review",
+            "Scope": "Contract Terms & Tech Stack Evaluation"
+          }
+        }}
       />
 
       {/* 5. Bottom Conversion CTA Banner */}

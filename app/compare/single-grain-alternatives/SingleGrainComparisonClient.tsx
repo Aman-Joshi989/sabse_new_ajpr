@@ -527,8 +527,18 @@ export default function SingleGrainComparisonClient({
 
       {/* 6. Lead Capture Tool */}
       <ToolLeadCapture
-        toolName="Single Grain Competitor & Programmatic SEO Audit"
+        title="Request Your Free SaaS Programmatic SEO Audit"
+        subtitle="Discover how to 10x your organic search footprint with Next.js 16 programmatic hubs and Generative Engine Optimization."
+        badge="Free Programmatic SEO Audit"
         ctaText="Get Custom Programmatic SEO & Architecture Audit"
+        toolSource="compare-single-grain-alternatives"
+        reportSummary={{
+          headline: "Single Grain vs Technical SEO Engineering (2026)",
+          metrics: {
+            "Competitor Target": "Single Grain Content Retainers",
+            "Alternative Model": "AJPR World Programmatic Engine"
+          }
+        }}
       />
 
       {/* 7. FAQs */}
@@ -577,3 +587,4 @@ export default function SingleGrainComparisonClient({
     </div>
   );
 }
+

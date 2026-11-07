@@ -526,8 +526,18 @@ export default function WebFxComparisonClient({
 
       {/* 6. Lead Capture & Proposal Audit */}
       <ToolLeadCapture
-        toolName="WebFX Competitor & Lock-in Audit"
+        title="Request Your Free WebFX Contract & Attribution Audit"
+        subtitle="Uncover proprietary software lock-in risks, review your retainer terms, and see how much you save with 100% owned data."
+        badge="Free WebFX Audit"
         ctaText="Get Free Agency Contract & Attribution Audit"
+        toolSource="compare-webfx-alternatives"
+        reportSummary={{
+          headline: "WebFX Alternative & Lock-in Analysis (2026)",
+          metrics: {
+            "Competitor Target": "WebFX / MarketingCloudFX",
+            "Alternative Model": "AJPR World Sovereign Stack"
+          }
+        }}
       />
 
       {/* 7. FAQs */}

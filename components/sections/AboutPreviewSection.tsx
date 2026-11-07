@@ -8,35 +8,54 @@ import Link from 'next/link'
 import {
     Users, Target, Award, MapPin, Calendar, Building,
     Lightbulb, Heart, Zap, Globe, Star, TrendingUp,
-    Code2, Palette, Cloud, ArrowRight, CheckCircle
+    Code2, Palette, Cloud, ArrowRight, CheckCircle,
+    Sprout, CheckCircle2, Sparkles, ShieldCheck, Scale, Eye, Compass
 } from 'lucide-react'
 
 // Team members removed as per user request
 
 const companyValues = [
     {
-        icon: Lightbulb,
-        title: 'Innovation First',
-        description: 'We embrace cutting-edge technologies and creative solutions to solve complex problems.',
-        gradient: 'from-yellow-400 to-orange-500'
+        icon: Sparkles,
+        title: 'Inspiration',
+        tagline: 'Bold Innovation & Modern Stacks',
+        description: 'We reject cookie-cutter templates, bringing fresh creative energy and frontier AI architectures that set you apart.',
+        gradient: 'from-amber-500 to-rose-500'
     },
     {
-        icon: Heart,
-        title: 'Client-Centric',
-        description: 'Your success is our success. We prioritize understanding and exceeding client expectations.',
-        gradient: 'from-pink-400 to-red-500'
+        icon: ShieldCheck,
+        title: 'Disciplined',
+        tagline: 'Rigorous Engineering & Testing',
+        description: 'World-class systems require strict discipline—100% type safety, automated CI/CD test gates, and clean maintainable code.',
+        gradient: 'from-rose-600 to-red-600'
     },
     {
-        icon: Award,
-        title: 'Excellence Driven',
-        description: 'We maintain the highest standards in code quality, design, and project delivery.',
-        gradient: 'from-purple-400 to-indigo-500'
+        icon: Scale,
+        title: 'Accountability',
+        tagline: 'End-to-End Outcome Ownership',
+        description: 'We own the results from conception to launch. No excuses or finger-pointing—just dependable, senior-level follow-through.',
+        gradient: 'from-red-600 to-purple-600'
     },
     {
-        icon: Users,
-        title: 'Team Collaboration',
-        description: 'We believe in the power of diverse perspectives and collaborative problem-solving.',
-        gradient: 'from-blue-400 to-cyan-500'
+        icon: Eye,
+        title: 'Transparency',
+        tagline: '100% Open Repositories & Pricing',
+        description: 'Unvarnished honesty in all we do. Full client repository ownership, transparent sprints, and zero hidden markups.',
+        gradient: 'from-blue-600 to-cyan-500'
+    },
+    {
+        icon: Compass,
+        title: 'Aligned',
+        tagline: 'One Mission: Client Revenue',
+        description: 'We act as an integrated engineering partner whose technical decisions are locked to your commercial growth goals.',
+        gradient: 'from-emerald-500 to-teal-600'
+    },
+    {
+        icon: TrendingUp,
+        title: 'Results Oriented',
+        tagline: 'Sub-Second Speeds & Higher Conversions',
+        description: 'We measure success in tangible business metrics: sub-second latency, top search ranks, and measurable pipeline ROI.',
+        gradient: 'from-orange-500 to-red-600'
     }
 ]
 
@@ -151,23 +170,32 @@ export default function AboutPreviewSection() {
                 {/* Company Values */}
                 <div className={`mb-20 transition-all duration-1000 ${isVisible ? 'animate-fade-up animation-delay-800' : 'opacity-0'}`}>
                     <div className="text-center mb-12">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-950/40 border border-rose-200/70 dark:border-rose-900/60 text-red-600 dark:text-rose-400 text-xs font-bold uppercase tracking-wider mb-4">
+                            <Sprout className="w-3.5 h-3.5" />
+                            <span>The AJPR Operating Code</span>
+                        </div>
                         <h3 className="text-3xl md:text-4xl font-bold mb-4">Our Core Values</h3>
-                        <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-                            These principles guide everything we do and define who we are as a company.
+                        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+                            The six foundational principles that govern our engineering discipline, client trust, and market leadership.
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {companyValues.map((value, index) => {
                             const IconComponent = value.icon
                             return (
-                                <Card key={index} className="group hover-lift p-6 text-center bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-                                    <CardContent className="p-0 space-y-4">
-                                        <div className={`mx-auto w-fit p-4 rounded-2xl bg-gradient-to-r ${value.gradient} text-white group-hover:scale-110 transition-transform duration-300`}>
-                                            <IconComponent className="h-8 w-8" />
+                                <Card key={index} className="group hover-lift p-6 text-center bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl">
+                                    <CardContent className="p-0 space-y-3">
+                                        <div className={`mx-auto w-fit p-3.5 rounded-2xl bg-gradient-to-r ${value.gradient} text-white group-hover:scale-110 transition-transform duration-300 shadow-md`}>
+                                            <IconComponent className="h-7 w-7" />
                                         </div>
-                                        <h4 className="text-xl font-bold">{value.title}</h4>
-                                        <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                        <h4 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-rose-400 transition-colors">
+                                            {value.title}
+                                        </h4>
+                                        <p className="text-xs font-semibold text-red-600/90 dark:text-rose-400/90">
+                                            {value.tagline}
+                                        </p>
+                                        <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
                                             {value.description}
                                         </p>
                                     </CardContent>

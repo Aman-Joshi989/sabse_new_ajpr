@@ -19,6 +19,7 @@ import {
   UserCircle,
   Building2
 } from 'lucide-react'
+import CoreValuesSection from '@/components/sections/CoreValuesSection'
 
 // Animation Variants
 const containerVariants = {
@@ -262,7 +263,10 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
           </div>
         </section>
 
-        {/* 5. WHO WE HELP */}
+        {/* 5. CORE VALUES */}
+        <CoreValuesSection />
+
+        {/* 6. WHO WE HELP */}
         <section className="py-32 relative bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-white/10">
           <div className="container mx-auto px-4 max-w-7xl">
             <div className="text-center mb-20">

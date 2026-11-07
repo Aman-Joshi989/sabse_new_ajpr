@@ -5,15 +5,16 @@ import { Mail, CheckCircle, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ToolLeadCaptureProps {
-    title: string;
-    subtitle: string;
+    title?: string;
+    subtitle?: string;
     badge?: string;
     ctaText?: string;
-    toolSource: string;
-    reportSummary: {
+    toolSource?: string;
+    reportSummary?: {
         headline: string;
         metrics?: Record<string, string | number>;
     };
+    toolName?: string;
 }
 
 export default function ToolLeadCapture({
@@ -22,12 +23,24 @@ export default function ToolLeadCapture({
     badge = "Free Action Plan",
     ctaText = "Email Me My Custom Report",
     toolSource,
-    reportSummary
+    reportSummary,
+    toolName
 }: ToolLeadCaptureProps) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [company, setCompany] = useState('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+    const finalTitle = title || (toolName ? `Request Your Free ${toolName}` : "Request Your Free Action Plan");
+    const finalSubtitle = subtitle || "Discover exactly where your competitors outrank you and how our engineering pod can help you scale.";
+    const finalToolSource = toolSource || (toolName ? toolName.toLowerCase().replace(/[^a-z0-9]+/g, '-') : "general-lead-capture");
+    const finalReportSummary = reportSummary || {
+        headline: toolName || "Competitive Agency Audit",
+        metrics: {
+            "Audit Target": toolName || "Digital Agency Evaluation",
+            "Date": new Date().toISOString().split('T')[0]
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,17 +52,17 @@ export default function ToolLeadCapture({
         setStatus('loading');
 
         try {
-            const metricsText = reportSummary.metrics 
-                ? Object.entries(reportSummary.metrics).map(([k, v]) => `${k}: ${v}`).join(' | ')
+            const metricsText = finalReportSummary.metrics 
+                ? Object.entries(finalReportSummary.metrics).map(([k, v]) => `${k}: ${v}`).join(' | ')
                 : '';
 
             const payload = {
                 name: name.trim(),
                 email: email.trim(),
                 companySize: company.trim() || 'Not specified',
-                budget: reportSummary.headline,
-                techStack: metricsText || toolSource,
-                utm_source: toolSource,
+                budget: finalReportSummary.headline,
+                techStack: metricsText || finalToolSource,
+                utm_source: finalToolSource,
                 utm_medium: 'interactive_tool_lead_capture',
                 utm_campaign: 'productivity_suite'
             };
@@ -68,7 +81,7 @@ export default function ToolLeadCapture({
                 toast.error(data.error || 'Failed to submit. Please try again.');
                 setStatus('error');
             }
-        } catch (err) {
+        } catch {
             toast.error('A network error occurred. Please try again.');
             setStatus('error');
         }
@@ -103,10 +116,10 @@ export default function ToolLeadCapture({
                     <Sparkles className="w-3 h-3 text-blue-500" /> {badge}
                 </div>
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-                    {title}
+                    {finalTitle}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {subtitle}
+                    {finalSubtitle}
                 </p>
             </div>
 
@@ -148,29 +161,31 @@ export default function ToolLeadCapture({
                         type="text"
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
-                        placeholder="e.g. Acme Media or acme.com"
+                        placeholder="e.g. acme.com"
                         className="w-full px-3.5 py-2.5 rounded-xl text-xs bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                     />
                 </div>
 
-                <button
-                    type="submit"
-                    disabled={status === 'loading'}
-                    className="w-full mt-2 py-3 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all shadow-md shadow-blue-600/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                >
-                    {status === 'loading' ? (
-                        <>
-                            <Loader2 className="w-4 h-4 animate-spin" /> Preparing Report...
-                        </>
-                    ) : (
-                        <>
-                            {ctaText} <ArrowRight className="w-4 h-4" />
-                        </>
-                    )}
-                </button>
+                <div className="pt-2">
+                    <button
+                        type="submit"
+                        disabled={status === 'loading'}
+                        className="w-full sm:w-auto px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    >
+                        {status === 'loading' ? (
+                            <>
+                                <Loader2 className="w-3.5 h-3.5 animate-spin" /> Submitting Request...
+                            </>
+                        ) : (
+                            <>
+                                <Mail className="w-3.5 h-3.5" /> {ctaText} <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                            </>
+                        )}
+                    </button>
+                </div>
 
-                <p className="text-[10px] text-center text-slate-400 mt-2">
-                    🔒 Zero spam. We send your custom breakdown directly to your inbox.
+                <p className="text-[10px] text-slate-400 dark:text-slate-500 pt-1">
+                    Zero spam guarantee. We analyze your scope and deliver an honest technical assessment within 24 hours.
                 </p>
             </form>
         </div>

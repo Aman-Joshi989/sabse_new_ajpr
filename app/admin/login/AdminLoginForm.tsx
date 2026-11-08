@@ -188,7 +188,7 @@ export default function AdminLoginForm() {
                     type="email"
                     autoComplete="username"
                     required
-                    placeholder="admin@ajprworld.com"
+                    placeholder="e.g. admin@ajprworld.com"
                     autoFocus
                     className="w-full bg-slate-950/80 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600 outline-none transition-all font-mono"
                   />
@@ -211,7 +211,7 @@ export default function AdminLoginForm() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    placeholder="••••••••••••••••"
+                    placeholder="Enter passkey / password..."
                     className="w-full bg-slate-950/80 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder:text-slate-600 outline-none transition-all font-mono"
                   />
                 </div>

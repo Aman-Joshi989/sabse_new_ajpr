@@ -48,7 +48,7 @@ import {
   YAxis,
   Tooltip,
 } from 'recharts';
-import { AJPR_GROWTH_POSTS, GrowthProgramPost } from '@/lib/linkedin-growth-engine';
+import { AJPR_GROWTH_POSTS, GrowthProgramPost } from '@/lib/linkedin-growth-posts';
 
 export default function SocialMediaPage() {
   // Navigation & Lead Agent State

@@ -26,7 +26,17 @@ export default function ExitIntentPopup() {
   const shouldDisable = isExcludedRoute || !!user
 
   useEffect(() => {
-    if (shouldDisable) return
+    // Defense-in-depth: check both pathname and window.location
+    const currentPath = pathname || (typeof window !== 'undefined' ? window.location.pathname : '')
+    const isExcluded = 
+      !currentPath ||
+      currentPath.startsWith('/dashboard') ||
+      currentPath.startsWith('/admin') ||
+      currentPath === '/login' ||
+      currentPath === '/register' ||
+      currentPath.startsWith('/checkout')
+
+    if (isExcluded || !!user || shouldDisable) return
 
     // Check if we've already shown or dismissed it this session
     if (sessionStorage.getItem('exitIntentShown') || localStorage.getItem('exitIntentDismissed')) return

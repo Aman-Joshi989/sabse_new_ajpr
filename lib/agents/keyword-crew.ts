@@ -58,7 +58,7 @@ async function searchExplorerNode(state: KeywordCrewState) {
 async function intentAnalyzerNode(state: KeywordCrewState) {
   console.log("🧠 [IntentAnalyzer] Analyzing search data for:", state.seedTopic);
   
-  const llm = createLLM(0.7).withStructuredOutput(z.object({
+  const llm = createLLM(0.7, 'gpt-4o-mini').withStructuredOutput(z.object({
     keywords: z.array(z.object({
       keyword: z.string(),
       intent: z.enum(["Informational", "Navigational", "Commercial", "Transactional"]),

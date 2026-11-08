@@ -18,8 +18,22 @@ export function isModelAccessError(err: any): boolean {
     msg.includes('does not have access to model') ||
     msg.includes('403') ||
     msg.includes('model_not_found') ||
+    msg.includes('permission_denied') ||
     (msg.includes('The model') && msg.includes('does not exist'))
   );
+}
+
+/**
+ * Resolve model name with strict security against restricted project keys.
+ * If gpt-4o is passed or set in environment variables, it is automatically
+ * sanitized to gpt-4o-mini because project keys (proj_*) on tier 1 lack gpt-4o permissions.
+ */
+export function resolveSafeModel(requestedModel?: string): string {
+  const candidate = (requestedModel || process.env.OPENAI_MODEL || FALLBACK_MODEL).trim();
+  if (candidate === 'gpt-4o' || candidate === 'gpt-4' || candidate.startsWith('gpt-4o-2024')) {
+    return FALLBACK_MODEL;
+  }
+  return candidate;
 }
 
 /**
@@ -32,12 +46,10 @@ export const createLLM = (temperature = 0.7, requestedModel?: string) => {
     throw new Error("OPENAI_API_KEY is missing in your .env file.");
   }
 
-  // 1. Determine active model:
-  // Priority: OPENAI_MODEL env var -> explicit requestedModel (if not 'gpt-4o') -> default 'gpt-4o-mini'
-  const primaryModel = process.env.OPENAI_MODEL || 
-    (requestedModel && requestedModel !== 'gpt-4o' ? requestedModel : FALLBACK_MODEL);
+  const primaryModel = resolveSafeModel(requestedModel);
 
   const createInstance = (model: string) => new ChatOpenAI({
+    model: model,
     modelName: model,
     temperature,
     openAIApiKey: process.env.OPENAI_API_KEY,
@@ -54,7 +66,7 @@ export const createLLM = (temperature = 0.7, requestedModel?: string) => {
             return await target.invoke(input, options);
           } catch (err: any) {
             if (isModelAccessError(err) && primaryModel !== FALLBACK_MODEL) {
-              console.warn(`[createLLM] Model '${primaryModel}' threw 403 access restriction. Auto-falling back to '${FALLBACK_MODEL}'...`);
+              console.warn(`[createLLM] Model '${primaryModel}' threw access error. Auto-falling back to '${FALLBACK_MODEL}'...`);
               const fallbackInstance = createInstance(FALLBACK_MODEL);
               return await fallbackInstance.invoke(input, options);
             }
@@ -74,7 +86,7 @@ export const createLLM = (temperature = 0.7, requestedModel?: string) => {
                     return await sTarget.invoke(input, options);
                   } catch (err: any) {
                     if (isModelAccessError(err) && primaryModel !== FALLBACK_MODEL) {
-                      console.warn(`[createLLM] withStructuredOutput: Model '${primaryModel}' threw 403 access restriction. Auto-falling back to '${FALLBACK_MODEL}'...`);
+                      console.warn(`[createLLM] withStructuredOutput: Model '${primaryModel}' threw access error. Auto-falling back to '${FALLBACK_MODEL}'...`);
                       const fallbackInstance = createInstance(FALLBACK_MODEL);
                       const structuredFallback = fallbackInstance.withStructuredOutput(schema, config);
                       return await structuredFallback.invoke(input, options);

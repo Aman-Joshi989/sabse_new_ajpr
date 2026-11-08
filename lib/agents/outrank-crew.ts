@@ -63,7 +63,7 @@ async function reconNode(state: OutrankCrewState) {
 async function strategistNode(state: OutrankCrewState) {
   console.log("🧠 [Strategist] Finding content gaps for:", state.competitorUrl);
   
-  const llm = createLLM(0.7).withStructuredOutput(z.object({
+  const llm = createLLM(0.7, 'gpt-4o-mini').withStructuredOutput(z.object({
     weaknesses: z.array(z.string()).describe("List of what the competitor missed or did poorly."),
     targetKeyword: z.string().describe("The best high-intent long-tail keyword we should target to steal their traffic.")
   }));
@@ -92,7 +92,7 @@ async function strategistNode(state: OutrankCrewState) {
  */
 async function executionerNode(state: OutrankCrewState) {
   console.log("✍️ [Executioner] Writing superior content for keyword:", state.targetKeyword);
-  const llm = createLLM(0.7);
+  const llm = createLLM(0.7, 'gpt-4o-mini');
   
   const prompt = `You are an elite Technical SEO Copywriter. 
   Our goal is to absolutely destroy the competitor at "${state.competitorUrl}" for the keyword "${state.targetKeyword}".

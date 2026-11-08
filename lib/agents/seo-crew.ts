@@ -54,7 +54,7 @@ export type SEOCrewState = typeof GraphAnnotation.State;
  */
 async function researcherNode(state: SEOCrewState) {
   console.log("🕵️‍♂️ [Researcher] Analyzing keywords for:", state.targetTopic);
-  const llm = createLLM(0.7).withStructuredOutput(z.object({
+  const llm = createLLM(0.7, 'gpt-4o-mini').withStructuredOutput(z.object({
     keywords: z.array(z.string()),
     searchIntent: z.string()
   }));
@@ -84,7 +84,7 @@ async function analystNode(state: SEOCrewState) {
       scrapedData = "No competitor URL provided. Relying on general LLM knowledge.";
   }
 
-  const llm = createLLM(0.4);
+  const llm = createLLM(0.4, 'gpt-4o-mini');
   const prompt = `You are a Competitor Analyst. 
   Target Topic: ${state.targetTopic}
   Keywords: ${state.keywords.join(", ")}
@@ -107,7 +107,7 @@ async function analystNode(state: SEOCrewState) {
  */
 async function copywriterNode(state: SEOCrewState) {
   console.log("✍️ [Copywriter] Generating SEO copy for:", state.targetRoute);
-  const llm = createLLM(0.7).withStructuredOutput(z.object({
+  const llm = createLLM(0.7, 'gpt-4o-mini').withStructuredOutput(z.object({
     title: z.string(),
     description: z.string()
   }));

@@ -60,7 +60,7 @@ async function prospectorNode(state: BacklinkCrewState) {
 async function analyzerNode(state: BacklinkCrewState) {
   console.log("🧠 [OpportunityAnalyzer] Analyzing top domains for:", state.seedKeyword);
   
-  const llm = createLLM(0.7).withStructuredOutput(z.object({
+  const llm = createLLM(0.7, 'gpt-4o-mini').withStructuredOutput(z.object({
     opportunities: z.array(z.object({
       domainOrTitle: z.string(),
       siteType: z.enum(["Blog", "News", "Resource Page", "Directory", "Competitor", "Other"]),

@@ -43,7 +43,7 @@ export type SocialLeadCrewState = typeof SocialLeadGraphAnnotation.State;
 async function keywordSniperNode(state: SocialLeadCrewState) {
   console.log("🎯 [Keyword Sniper] Targeting niche:", state.targetNiche);
   
-  const llm = createLLM(0.7).withStructuredOutput(z.object({
+  const llm = createLLM(0.7, 'gpt-4o-mini').withStructuredOutput(z.object({
     queries: z.array(z.string()).describe("List of exact-match search queries for Twitter/LinkedIn.")
   }));
   
@@ -99,7 +99,7 @@ async function platformScraperNode(state: SocialLeadCrewState) {
 async function leadQualifierNode(state: SocialLeadCrewState) {
   console.log("💎 [Lead Qualifier] Qualifying leads and drafting DMs...");
   
-  const llm = createLLM(0.7).withStructuredOutput(z.object({
+  const llm = createLLM(0.7, 'gpt-4o-mini').withStructuredOutput(z.object({
     leads: z.array(z.object({
       nameOrSource: z.string().describe("Name of the poster or the platform URL."),
       postSnippet: z.string().describe("What they asked for."),

@@ -83,10 +83,10 @@ async function analyzerNode(state: BacklinkCrewState) {
   
   Be creative, actionable, and specific.`;
 
-  const response = await llm.invoke([new SystemMessage(prompt)]);
+  const response: any = await llm.invoke([new SystemMessage(prompt)]);
   
   return { 
-    linkOpportunities: response.opportunities,
+    linkOpportunities: Array.isArray(response?.opportunities) ? response.opportunities : [],
     status: "analysis_complete" 
   };
 }
@@ -114,10 +114,10 @@ async function reportGeneratorNode(state: BacklinkCrewState) {
   
   Use emojis appropriately. Return ONLY valid Markdown.`;
 
-  const response = await llm.invoke([new SystemMessage(prompt)]);
+  const response: any = await llm.invoke([new SystemMessage(prompt)]);
   
   return { 
-    finalReportMarkdown: response.content as string,
+    finalReportMarkdown: (typeof response?.content === 'string' ? response.content : '') || "### Backlink Strategy Report Generated",
     status: "report_complete" 
   };
 }

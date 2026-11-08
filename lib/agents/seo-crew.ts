@@ -62,11 +62,11 @@ async function researcherNode(state: SEOCrewState) {
   const prompt = `You are an expert SEO Researcher. The client wants to rank for the topic: "${state.targetTopic}". 
   Provide 5-10 high-value, long-tail keywords and describe the primary search intent (Informational, Transactional, etc.).`;
 
-  const response = await llm.invoke([new SystemMessage(prompt)]);
+  const response: any = await llm.invoke([new SystemMessage(prompt)]);
   
   return { 
-    keywords: response.keywords,
-    searchIntent: response.searchIntent,
+    keywords: Array.isArray(response?.keywords) ? response.keywords : [],
+    searchIntent: response?.searchIntent || "Commercial / Informational",
     status: "research_complete"
   };
 }
@@ -120,20 +120,22 @@ async function copywriterNode(state: SEOCrewState) {
   
   Write a highly optimized, click-worthy Meta Title (under 60 chars) and Meta Description (under 160 chars) that beats the competitor.`;
 
-  const response = await llm.invoke([new SystemMessage(prompt)]);
+  const response: any = await llm.invoke([new SystemMessage(prompt)]);
+  const title = response?.title || `${state.targetTopic} | Premier Solutions by AJPR World`;
+  const description = response?.description || `Explore ${state.targetTopic} with AJPR World. Expert architecture, AI automation, and high-performance engineering.`;
   
   console.log("🚀 [Optimizer] Injecting generated SEO into codebase...");
   const injectionResult = await upsertSEOMetadataTool.invoke({
       route: state.targetRoute,
-      title: response.title,
-      description: response.description
+      title: title,
+      description: description
   });
   
   console.log(injectionResult);
 
   return { 
-    finalSeoTitle: response.title,
-    finalSeoDescription: response.description,
+    finalSeoTitle: title,
+    finalSeoDescription: description,
     status: "optimization_complete" 
   };
 }

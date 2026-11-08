@@ -9,14 +9,20 @@ export const webScraperTool = new DynamicStructuredTool({
   name: "scrape_web_page",
   description: "Scrapes the main text content, headers, and title from a given URL. Useful for competitor analysis.",
   schema: z.object({
-    url: z.string().url().describe("The full URL of the webpage to scrape.")
+    url: z.string().describe("The full URL of the webpage to scrape.")
   }),
-  func: async ({ url }) => {
+  func: async ({ url }: { url: string }) => {
     try {
-      const response = await fetch(url, {
+      let targetUrl = url.trim();
+      if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+        targetUrl = 'https://' + targetUrl;
+      }
+      const response = await fetch(targetUrl, {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-        }
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+        },
+        redirect: 'follow',
       });
       
       if (!response.ok) {

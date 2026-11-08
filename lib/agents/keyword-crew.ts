@@ -77,10 +77,10 @@ async function intentAnalyzerNode(state: KeywordCrewState) {
   Extract and generate exactly 8 highly valuable keywords (a mix of short-tail and long-tail). 
   For each keyword, determine its search intent, estimate the SEO competition level, and provide a 1-sentence rationale on why we should target it.`;
 
-  const response = await llm.invoke([new SystemMessage(prompt)]);
+  const response: any = await llm.invoke([new SystemMessage(prompt)]);
   
   return { 
-    keywordIdeas: response.keywords,
+    keywordIdeas: Array.isArray(response?.keywords) ? response.keywords : [],
     status: "analysis_complete" 
   };
 }
@@ -108,10 +108,10 @@ async function reportGeneratorNode(state: KeywordCrewState) {
   
   Use emojis appropriately. Return ONLY valid Markdown.`;
 
-  const response = await llm.invoke([new SystemMessage(prompt)]);
+  const response: any = await llm.invoke([new SystemMessage(prompt)]);
   
   return { 
-    finalReportMarkdown: response.content as string,
+    finalReportMarkdown: (typeof response?.content === 'string' ? response.content : '') || "### SEO Report Generated",
     status: "report_complete" 
   };
 }

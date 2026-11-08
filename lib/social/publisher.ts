@@ -269,7 +269,7 @@ export async function broadcastSocialPost(
         try {
           const firstLine = content.split('\n')[0].replace(/[#*]/g, '').trim().slice(0, 80);
           const postUrl = articleUrl || 'https://ajprworld.com';
-          const gbpRes = await createLocalPost(firstLine, content, postUrl);
+          const gbpRes: any = await createLocalPost(firstLine, content, postUrl);
           if (gbpRes) {
             receipts.gbp.success = true;
             receipts.gbp.postId = gbpRes.name || 'gbp-post';
@@ -488,3 +488,4 @@ export async function getRecentSocialBroadcasts(limit = 10): Promise<any[]> {
     await pool.end();
   }
 }
+

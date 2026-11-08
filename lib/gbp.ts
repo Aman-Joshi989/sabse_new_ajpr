@@ -15,7 +15,7 @@ export async function getGBPAuthClient() {
 /**
  * Creates a local post (like an offer or a standard post) on the specified Google Business Profile location.
  */
-export async function createLocalPost(title: string, summary: string, postUrl: string) {
+export async function createLocalPost(title: string, summary: string, postUrl: string): Promise<any> {
   const accountId = process.env.GBP_ACCOUNT_ID;
   const locationId = process.env.GBP_LOCATION_ID;
 

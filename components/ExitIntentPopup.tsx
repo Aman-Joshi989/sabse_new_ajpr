@@ -1,21 +1,38 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { useAuth } from '@/components/providers/AuthProvider'
 import { X, ArrowRight, Zap, Target } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export default function ExitIntentPopup() {
+  const pathname = usePathname()
+  const { user } = useAuth()
   const [isVisible, setIsVisible] = useState(false)
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
+  // Suppress exit-intent popup on dashboard, admin, auth, or checkout routes, or for logged-in users
+  const isExcludedRoute = 
+    !pathname ||
+    pathname.startsWith('/dashboard') ||
+    pathname.startsWith('/admin') ||
+    pathname === '/login' ||
+    pathname === '/register' ||
+    pathname.startsWith('/checkout')
+
+  const shouldDisable = isExcludedRoute || !!user
+
   useEffect(() => {
-    // Check if we've already shown it this session
-    if (sessionStorage.getItem('exitIntentShown')) return
+    if (shouldDisable) return
+
+    // Check if we've already shown or dismissed it this session
+    if (sessionStorage.getItem('exitIntentShown') || localStorage.getItem('exitIntentDismissed')) return
 
     const handleMouseLeave = (e: MouseEvent) => {
-      // If mouse moves up towards the address bar
+      // If mouse moves up towards the address bar or outside viewport
       if (e.clientY <= 0 || e.clientX <= 0 || (e.clientX >= window.innerWidth || e.clientY >= window.innerHeight)) {
         setIsVisible(true)
         sessionStorage.setItem('exitIntentShown', 'true')
@@ -28,7 +45,13 @@ export default function ExitIntentPopup() {
     return () => {
       document.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [])
+  }, [shouldDisable])
+
+  const handleClose = () => {
+    setIsVisible(false)
+    sessionStorage.setItem('exitIntentShown', 'true')
+    localStorage.setItem('exitIntentDismissed', 'true')
+  }
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,6 +67,8 @@ export default function ExitIntentPopup() {
       if (res.ok) {
         setStatus('success')
         setEmail('')
+        sessionStorage.setItem('exitIntentShown', 'true')
+        localStorage.setItem('exitIntentDismissed', 'true')
         setTimeout(() => setIsVisible(false), 3000)
       } else {
         setStatus('error')
@@ -55,7 +80,7 @@ export default function ExitIntentPopup() {
     }
   }
 
-  if (!isVisible) return null
+  if (shouldDisable || !isVisible) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
@@ -66,7 +91,7 @@ export default function ExitIntentPopup() {
         <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-teal-500/20 rounded-full blur-[80px] pointer-events-none"></div>
 
         <button 
-          onClick={() => setIsVisible(false)}
+          onClick={handleClose}
           className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 rounded-full transition-colors z-[60] cursor-pointer"
         >
           <X className="w-5 h-5" />
@@ -111,7 +136,7 @@ export default function ExitIntentPopup() {
           <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
             <a 
               href="/tools" 
-              onClick={() => setIsVisible(false)}
+              onClick={handleClose}
               className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center justify-center gap-1"
             >
               <span>⚡ Or calculate your lost admin payroll instantly with our Free Tools</span>
@@ -120,7 +145,7 @@ export default function ExitIntentPopup() {
           </div>
           
           <button 
-            onClick={() => setIsVisible(false)}
+            onClick={handleClose}
             className="mt-4 text-xs text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium transition-colors"
           >
             No thanks, I prefer letting my competitors win.

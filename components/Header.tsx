@@ -147,8 +147,8 @@ export default function Header({ services }: { services?: any[] }) {
         ? "/logo/ajpr-logo-white.png"
         : "/logo/ajpr-logo.png"
 
-    // Hide global header on dashboard and login routes
-    if (pathname.startsWith('/dashboard') || pathname === '/login') {
+    // Hide global header on dashboard and admin/login routes
+    if (pathname.startsWith('/dashboard') || pathname.startsWith('/admin') || pathname === '/login') {
         return null;
     }
 

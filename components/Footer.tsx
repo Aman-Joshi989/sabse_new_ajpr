@@ -72,9 +72,10 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         ? "/logo/ajpr-logo-white.png"
         : "/logo/ajpr-logo.png"
 
-    // Hide global footer on dashboard, login, and full-screen routes
+    // Hide global footer on dashboard, admin, login, and full-screen routes
     if (
         pathname.startsWith('/dashboard') ||
+        pathname.startsWith('/admin') ||
         pathname === '/login' ||
         pathname === '/chat-agents'
     ) {

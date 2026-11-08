@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useChat, UIMessage } from '@ai-sdk/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, X, Send, Loader2, Network, UserCheck, MessageCircle, Calendar, Phone, Mail } from 'lucide-react';
@@ -77,6 +78,7 @@ function RealAgentCard({ leadName, leadEmail }: { leadName?: string; leadEmail?:
 }
 
 export default function HermesChatWidget() {
+  const pathname = usePathname();
   const { isCartOpen } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
@@ -141,7 +143,7 @@ export default function HermesChatWidget() {
     }
   };
 
-  if (isCartOpen) {
+  if (isCartOpen || pathname?.startsWith('/dashboard') || pathname?.startsWith('/admin')) {
     return null;
   }
 

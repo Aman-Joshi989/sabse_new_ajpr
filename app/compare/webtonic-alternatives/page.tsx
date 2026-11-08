@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Scale } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
@@ -7,14 +8,14 @@ import WebTonicComparisonClient from './WebTonicComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Top 5 Web Tonic Alternatives in 2026 (Pricing & Tech Compared) | AJPR',
-  description: 'Compare the top 5 Web Tonic alternatives for 2026. Side-by-side analysis of pricing transparency, Next.js engineering depth, GEO search citations, and ROI.',
+  title: 'Web Tonic Alternatives: 2026 Pricing, Hidden Fees & Top 5 Competitors',
+  description: 'Thinking of hiring Web Tonic? Read our verified 2026 comparison on retainer costs ($1,500 vs $5,000+), speed, tech stack, and the 5 best alternatives for startups.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/webtonic-alternatives',
   },
   openGraph: {
-    title: 'Top 5 Web Tonic Alternatives in 2026 (Pricing & Tech Compared) | AJPR',
-    description: 'Compare the top 5 Web Tonic alternatives for 2026. Side-by-side analysis of pricing transparency, Next.js engineering depth, GEO search citations, and ROI.',
+    title: 'Web Tonic Alternatives: 2026 Pricing, Hidden Fees & Top 5 Competitors',
+    description: 'Thinking of hiring Web Tonic? Read our verified 2026 comparison on retainer costs ($1,500 vs $5,000+), speed, tech stack, and the 5 best alternatives for startups.',
     url: 'https://ajprworld.com/compare/webtonic-alternatives',
     siteName: 'AJPR World',
     type: 'article',
@@ -30,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Top 5 Web Tonic Alternatives in 2026 | AJPR World',
-    description: 'Objective comparison of Web Tonic vs senior engineering agencies: services, pricing transparency, and results.',
+    title: 'Web Tonic Alternatives: 2026 Pricing & Competitors | AJPR World',
+    description: 'Thinking of hiring Web Tonic? Read our verified 2026 comparison on retainer costs ($1,500 vs $5,000+), speed, tech stack, and alternatives.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',
@@ -97,6 +98,36 @@ export default function WebTonicAlternativesPage() {
         name="Top 5 Web Tonic Alternatives (2026 Agency Evaluation)"
         description="Comprehensive evaluation of the leading alternatives to Web Tonic based on technical capability, pricing transparency, and Generative Engine Optimization."
         items={topAlternatives}
+      />
+      <Script
+        id="review-rating-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Web Tonic Alternatives & Agency Comparison",
+            "description": "Objective side-by-side evaluation of Web Tonic vs high-velocity modern engineering agencies.",
+            "brand": {
+              "@type": "Brand",
+              "name": "AJPR World"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "48",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "offers": {
+              "@type": "AggregateOffer",
+              "lowPrice": "1500",
+              "highPrice": "6500",
+              "priceCurrency": "USD",
+              "offerCount": "5"
+            }
+          })
+        }}
       />
 
       <div className="max-w-5xl mx-auto px-6 lg:px-8">

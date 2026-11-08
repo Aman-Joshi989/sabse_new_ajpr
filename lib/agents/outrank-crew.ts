@@ -3,6 +3,7 @@ import { SystemMessage } from "@langchain/core/messages";
 import { createLLM } from "./llm-client";
 import { webScraperTool } from "./tools/web-scraper";
 import { createBlog } from "@/lib/db/queries";
+import { submitToIndexNow } from "@/lib/indexnow";
 import { z } from "zod";
 
 // --- 1. Define State ---
@@ -152,6 +153,13 @@ async function executionerNode(state: OutrankCrewState) {
     console.error("Failed to publish blog:", dbErr);
   }
 
+  // Submit to IndexNow immediately for rapid crawler discovery (Bing/Yandex/Seznam)
+  try {
+    await submitToIndexNow(`/blog/${slug}`);
+  } catch (indexErr) {
+    console.error("IndexNow submission notice:", indexErr);
+  }
+
   // Generate a report for the user
   const report = `## 🏆 Competitor Outranked!
   
@@ -165,6 +173,7 @@ ${state.weaknesses.map((w: string) => `- 💥 ${w}`).join("\n")}
 ✅ **Successfully wrote and published a superior 1,500+ word article to your live database.**
 - **Live Article Path:** \`/blog/${slug}\`
 - **Title:** ${title}
+- **Search Engine Pings:** Submitted to IndexNow protocol (instant search crawl trigger).
 
 The search engines will index this shortly, and you will begin stealing their organic traffic.`;
 

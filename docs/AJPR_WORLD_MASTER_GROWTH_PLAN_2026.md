@@ -100,3 +100,4 @@ AJPR World is not a traditional marketing agency. It is a **Growth Engineering P
 4. **Automated Carousel Slide Generator**: [`scripts/generate_linkedin_carousel.ts`](file:///Users/amanjoshi/Desktop/sabse_new_ajpr/scripts/generate_linkedin_carousel.ts)
 5. **Headless API Endpoint**: [`app/api/linkedin/growth/route.ts`](file:///Users/amanjoshi/Desktop/sabse_new_ajpr/app/api/linkedin/growth/route.ts)
 6. **Social Command Center**: [`app/dashboard/admin/social-media/page.tsx`](file:///Users/amanjoshi/Desktop/sabse_new_ajpr/app/dashboard/admin/social-media/page.tsx)
+

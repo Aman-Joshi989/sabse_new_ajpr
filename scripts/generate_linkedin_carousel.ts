@@ -304,3 +304,4 @@ console.log('\n👉 To convert to a LinkedIn PDF Carousel:');
 console.log(`   1. Open in Chrome: file://${outputPath}`);
 console.log('   2. Click "Print to PDF" -> Save as PDF');
 console.log('   3. Upload the PDF directly to LinkedIn as a Document Post!\n');
+

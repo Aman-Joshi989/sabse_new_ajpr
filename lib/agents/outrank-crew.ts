@@ -149,7 +149,7 @@ async function executionerNode(state: OutrankCrewState) {
 **Keyword Stolen:** \`${state.targetKeyword}\`
 
 ### What we exploited:
-${state.weaknesses.map(w => `- 💥 ${w}`).join("\n")}
+${state.weaknesses.map((w: string) => `- 💥 ${w}`).join("\n")}
 
 ### Action Taken:
 ✅ **Successfully wrote and published a superior 1,500+ word article to your live database.**

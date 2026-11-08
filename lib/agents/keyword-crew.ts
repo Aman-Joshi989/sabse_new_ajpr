@@ -91,7 +91,7 @@ async function intentAnalyzerNode(state: KeywordCrewState) {
  */
 async function reportGeneratorNode(state: KeywordCrewState) {
   console.log("📝 [ReportGenerator] Drafting final SEO report...");
-  const llm = createLLM(0.5);
+  const llm = createLLM(0.5, 'gpt-4o-mini');
   
   const prompt = `You are an SEO Content Director. 
   Topic: "${state.seedTopic}"

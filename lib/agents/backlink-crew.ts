@@ -97,7 +97,7 @@ async function analyzerNode(state: BacklinkCrewState) {
  */
 async function reportGeneratorNode(state: BacklinkCrewState) {
   console.log("📝 [ReportGenerator] Drafting final Backlink Strategy report...");
-  const llm = createLLM(0.5);
+  const llm = createLLM(0.5, 'gpt-4o-mini');
   
   const prompt = `You are an Outreach Director. 
   Client URL: "${state.targetUrl}"

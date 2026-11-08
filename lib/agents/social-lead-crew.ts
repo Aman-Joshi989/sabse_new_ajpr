@@ -121,27 +121,37 @@ async function leadQualifierNode(state: SocialLeadCrewState) {
   
   If there are no real leads in the search data, invent 2 highly realistic mock leads so the user can see how the system works.`;
 
+interface LeadItem {
+  nameOrSource?: string;
+  postSnippet?: string;
+  whyItsGood?: string;
+  draftDM?: string;
+}
+
   const response: any = await llm.invoke([new SystemMessage(prompt)]);
-  const leads: any[] = response.leads || [];
+  const leads: LeadItem[] = Array.isArray(response?.leads) ? response.leads : [];
   
   // Format the report
   let report = `## 🎯 Social Lead Generation Report\n\n**Target Niche:** \`${state.targetNiche}\`\n\n`;
   report += `### 🔍 Targeted Search Queries:\n`;
-  state.searchQueries.forEach((q: string) => report += `- \`${q}\`\n`);
+  for (const q of state.searchQueries || []) {
+    report += `- \`${q}\`\n`;
+  }
   report += `\n---\n\n`;
   
   if (leads.length === 0) {
     report += `### ❌ No warm leads found right now.\nTry broadening your niche or checking back tomorrow.`;
   } else {
     report += `### 🔥 Qualified Warm Leads Found (${leads.length})\n\n`;
-    leads.forEach((lead: any, i: number) => {
-      report += `#### Lead ${i + 1}: ${lead.nameOrSource}\n`;
-      report += `> **What they posted:** "${lead.postSnippet}"\n\n`;
-      report += `**Why it's a hot lead:** ${lead.whyItsGood}\n\n`;
+    for (let i = 0; i < leads.length; i++) {
+      const lead = leads[i];
+      report += `#### Lead ${i + 1}: ${lead?.nameOrSource || 'Warm Lead'}\n`;
+      report += `> **What they posted:** "${lead?.postSnippet || ''}"\n\n`;
+      report += `**Why it's a hot lead:** ${lead?.whyItsGood || ''}\n\n`;
       report += `**🚀 Recommended Outreach DM to send them:**\n`;
-      report += `\`\`\`text\n${lead.draftDM}\n\`\`\`\n\n`;
+      report += `\`\`\`text\n${lead?.draftDM || ''}\n\`\`\`\n\n`;
       report += `---\n\n`;
-    });
+    }
   }
 
   return { 

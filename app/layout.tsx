@@ -12,6 +12,7 @@ import { LocalBusinessSchema } from '@/components/schema/LocalBusinessSchema';
 import { getSiteSettings, getPublishedServices, getBlogs } from '@/lib/db/queries';
 import LayoutClientEffect from '@/components/LayoutClientEffect';
 import FontLoader from '@/components/FontLoader';
+import MobileActionDock from '@/components/MobileActionDock';
 
 // Enable ISR: cache layout data for 24h to prevent Vercel ISR Write limits
 export const revalidate = 86400;
@@ -190,9 +191,10 @@ export default async function RootLayout({
             <CartProvider>
               <LayoutClientEffect />
               <Header services={services} />
-              <main className='min-h-screen'>
+              <main className='min-h-screen pb-16 md:pb-0'>
                 {children}
               </main>
+              <MobileActionDock />
               <ExitIntentPopup />
               <Footer services={services} blogs={blogs} />
               <Toaster />

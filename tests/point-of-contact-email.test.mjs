@@ -67,3 +67,18 @@ test('Multi-provider resilience includes Resend, Gmail SMTP, Custom SMTP, ZeptoM
   assert.ok(content.includes('email_outbox'), 'email_outbox table definition missing');
 });
 
+test('HeroSection and MobileActionDock provide interactive engagement hooks to slash bounce rate', () => {
+  const heroContent = fs.readFileSync(path.resolve(process.cwd(), 'components/sections/HeroSection.tsx'), 'utf8');
+  assert.ok(heroContent.includes('handleQuickScan'), 'HeroSection missing interactive quick scan handler');
+  assert.ok(heroContent.includes('/pricing/website-cost'), 'HeroSection missing website cost calculator jumper');
+  assert.ok(heroContent.includes('/tools/saas-bloat-audit'), 'HeroSection missing saas bloat audit jumper');
+  assert.ok(heroContent.includes('/compare'), 'HeroSection missing agency compare jumper');
+
+  const dockContent = fs.readFileSync(path.resolve(process.cwd(), 'components/MobileActionDock.tsx'), 'utf8');
+  assert.ok(dockContent.includes('/free-audit'), 'MobileActionDock missing free audit link');
+  assert.ok(dockContent.includes('/pricing/website-cost'), 'MobileActionDock missing calculator link');
+  assert.ok(dockContent.includes('/compare'), 'MobileActionDock missing compare link');
+  assert.ok(dockContent.includes('/book-call'), 'MobileActionDock missing book call link');
+});
+
+

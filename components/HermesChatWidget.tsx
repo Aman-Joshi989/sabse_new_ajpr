@@ -156,7 +156,7 @@ export default function HermesChatWidget() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-[60] p-4 bg-indigo-600 text-white rounded-full shadow-2xl hover:bg-indigo-700 transition-colors ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
+        className={`fixed bottom-20 right-4 md:bottom-6 md:right-6 z-[60] p-3.5 md:p-4 bg-indigo-600 text-white rounded-full shadow-2xl hover:bg-indigo-700 transition-colors ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
       >
         <Bot className="w-6 h-6" />
         <span className="absolute -top-2 -right-2 flex h-4 w-4">

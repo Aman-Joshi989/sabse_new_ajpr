@@ -16,7 +16,8 @@ import {
   Mail,
   User,
   Cpu,
-  DollarSign
+  DollarSign,
+  Globe
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,6 +29,7 @@ export default function LeadForm() {
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [referenceId, setReferenceId] = useState('');
+  const [targetDomain, setTargetDomain] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -43,12 +45,24 @@ export default function LeadForm() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
-      setFormData(prev => ({
-        ...prev,
-        utm_source: urlParams.get('utm_source') || '',
-        utm_medium: urlParams.get('utm_medium') || '',
-        utm_campaign: urlParams.get('utm_campaign') || ''
-      }));
+      const domain = urlParams.get('domain') || urlParams.get('website') || '';
+      if (domain) {
+        setTargetDomain(domain);
+        setFormData(prev => ({
+          ...prev,
+          techStack: prev.techStack ? `${prev.techStack} | Target: ${domain}` : `Target Website: ${domain}`,
+          utm_source: urlParams.get('utm_source') || 'quick_scan_hook',
+          utm_medium: urlParams.get('utm_medium') || 'hero_scan',
+          utm_campaign: urlParams.get('utm_campaign') || 'free_audit'
+        }));
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          utm_source: urlParams.get('utm_source') || '',
+          utm_medium: urlParams.get('utm_medium') || '',
+          utm_campaign: urlParams.get('utm_campaign') || ''
+        }));
+      }
     }
   }, []);
 
@@ -258,6 +272,17 @@ export default function LeadForm() {
             {/* Step 1: Contact Information */}
             {step === 1 && (
               <div className="space-y-4">
+                {targetDomain && (
+                  <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-between text-xs font-semibold">
+                    <span className="flex items-center gap-1.5 truncate mr-2">
+                      <Globe className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                      Target: <strong className="text-slate-900 dark:text-white truncate">{targetDomain}</strong>
+                    </span>
+                    <span className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full text-[10px] uppercase font-bold shrink-0">
+                      Triage Queued
+                    </span>
+                  </div>
+                )}
                 <div>
                   <Label htmlFor="name" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
                     <User className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Full Name

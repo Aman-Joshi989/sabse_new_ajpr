@@ -14,17 +14,17 @@ import {
     Globe, 
     Sparkles, 
     Calculator,
-    GitMerge
+    GitMerge,
+    Cpu
 } from 'lucide-react';
 import AnimatedServiceText from './AnimatedServiceText';
 
 const defaultServices = [
-    "Web Applications",
-    "AI Agents & MVPs",
-    "SaaS Platforms",
-    "Growth Systems",
-    "Cloud Architecture",
-    "API Infrastructure"
+    "Autonomous AI Systems",
+    "Next.js Web Platforms",
+    "Custom SaaS MVPs",
+    "Enterprise Automation",
+    "High-Velocity Tech Stacks"
 ];
 
 interface HeroSectionProps {
@@ -56,29 +56,29 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
             {/* Subtle Vercel-style Grid Background */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] pointer-events-none"></div>
             
-            {/* Soft Ambient Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-blue-500/10 dark:bg-blue-500/15 blur-[120px] rounded-full pointer-events-none"></div>
+            {/* Ambient Dual Orbs */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[380px] bg-gradient-to-b from-blue-600/15 via-indigo-600/10 to-transparent blur-[140px] rounded-full pointer-events-none"></div>
 
             <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
                     
                     {/* Live Availability Badge */}
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/60 text-xs font-semibold text-slate-800 dark:text-slate-300 mb-6 shadow-xs animate-fade-up">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/70 text-xs font-semibold text-slate-800 dark:text-slate-200 mb-6 shadow-xs animate-fade-up">
                         <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span>Now Booking Q3/Q4 Sprints &bull; 2–4 Week Delivery &bull; Senior Engineers Only</span>
+                        <span>Now Booking Q4 Sprints &bull; 14–30 Day Delivery &bull; Senior Architects Only</span>
                     </div>
 
                     {/* Main Heading */}
-                    <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12] mb-6">
-                        We Engineer Scalable <br />
-                        <span className="relative inline-flex justify-center w-full max-w-[800px] mx-auto mt-1 overflow-hidden align-bottom min-h-[1.4em]">
+                    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.08] mb-6">
+                        We Engineer Scalable <br className="hidden sm:inline" />
+                        <span className="relative inline-flex justify-center w-full max-w-[850px] mx-auto mt-1 overflow-hidden align-bottom min-h-[1.35em]">
                             <AnimatedServiceText services={displayServices} />
                         </span>
                     </h1>
 
-                    {/* Subtitle - Eliminates customer confusion immediately */}
+                    {/* Subtitle */}
                     <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal mb-8 animate-fade-up">
-                        Direct senior engineering for ambitious companies. We assume 100% responsibility for your system architecture, delivery timeline, and code ownership. No junior hand-offs, no retainer traps—just production-grade Next.js & AI software shipped in 14 to 30 days.
+                        Direct senior software engineering for ambitious companies. We design, architect, and ship production-grade Next.js 16 platforms, autonomous AI systems, and custom SaaS products in 14 to 30 days—with 100% code ownership and fixed sprint pricing.
                     </p>
 
                     {/* Interactive Instant Domain Diagnostic Scanner (Hero Conversion Hook) */}
@@ -129,6 +129,13 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                                 SaaS Bloat Audit
                             </Link>
                             <Link 
+                                href="/ai-systems" 
+                                className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 border border-slate-200 dark:border-slate-700/80 transition-all flex items-center gap-1.5 font-medium shadow-2xs"
+                            >
+                                <Cpu className="w-3 h-3 text-indigo-500" />
+                                AI Systems
+                            </Link>
+                            <Link 
                                 href="/compare" 
                                 className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/60 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 border border-slate-200 dark:border-slate-700/80 transition-all flex items-center gap-1.5 font-medium shadow-2xs"
                             >
@@ -166,18 +173,18 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
 
                     {/* Trust & Guarantee Strip */}
                     <div className="mt-10 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
-                        <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50/60 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800/50">
-                            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950/60 flex items-center justify-center text-blue-600 shrink-0">
+                        <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800/60 shadow-2xs">
+                            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950/70 flex items-center justify-center text-blue-600 shrink-0">
                                 <Zap className="w-4 h-4" />
                             </div>
                             <div>
-                                <div className="text-xs font-bold text-slate-900 dark:text-white">2–4 Week Delivery</div>
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">14–30 Day Delivery</div>
                                 <div className="text-[11px] text-slate-500 dark:text-slate-400">Guaranteed MVP sprint</div>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50/60 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800/50">
-                            <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 shrink-0">
+                        <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800/60 shadow-2xs">
+                            <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/70 flex items-center justify-center text-emerald-600 shrink-0">
                                 <Lock className="w-4 h-4" />
                             </div>
                             <div>
@@ -186,8 +193,8 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50/60 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800/50">
-                            <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950/60 flex items-center justify-center text-purple-600 shrink-0">
+                        <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800/60 shadow-2xs">
+                            <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950/70 flex items-center justify-center text-purple-600 shrink-0">
                                 <ShieldCheck className="w-4 h-4" />
                             </div>
                             <div>
@@ -196,13 +203,13 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50/60 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800/50">
-                            <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 shrink-0">
+                        <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800/60 shadow-2xs">
+                            <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950/70 flex items-center justify-center text-amber-600 shrink-0">
                                 <DollarSign className="w-4 h-4" />
                             </div>
                             <div>
-                                <div className="text-xs font-bold text-slate-900 dark:text-white">Flat Pricing</div>
-                                <div className="text-[11px] text-slate-500 dark:text-slate-400">Zero hidden change orders</div>
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">Fixed Flat Pricing</div>
+                                <div className="text-[11px] text-slate-500 dark:text-slate-400">Zero hourly creep</div>
                             </div>
                         </div>
                     </div>
@@ -212,8 +219,8 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
             
             {/* Custom Keyframes */}
             <style jsx global>{`
-                @keyframes slideUpFade {
-                    0% { opacity: 0; transform: translateY(16px); }
+                @keyframes heroSlideFade {
+                    0% { opacity: 0; transform: translateY(18px); }
                     100% { opacity: 1; transform: translateY(0); }
                 }
             `}</style>

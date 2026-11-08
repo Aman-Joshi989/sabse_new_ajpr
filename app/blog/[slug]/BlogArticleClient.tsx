@@ -212,14 +212,14 @@ Source Article: ${post.title} (${articleUrl})`,
                   Verified By
                 </span>
                 <div className="flex items-center gap-3">
-                  <div className="relative w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-amber-500 to-rose-600 border border-slate-300 dark:border-slate-700 shrink-0 flex items-center justify-center text-white font-bold text-xs">
-                    ZS
+                  <div className="relative w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-600 border border-slate-300 dark:border-slate-700 shrink-0 flex items-center justify-center text-white font-bold text-xs">
+                    AJ
                   </div>
                   <div>
                     <span className="font-bold text-sm text-slate-900 dark:text-white block leading-tight">
-                      Zahra Sanati
+                      AJPR Engineering Board
                     </span>
-                    <span className="text-xs text-slate-500 dark:text-slate-400">Senior Growth Architect</span>
+                    <span className="text-xs text-slate-500 dark:text-slate-400">Technical Peer Review</span>
                   </div>
                 </div>
               </div>

@@ -200,8 +200,8 @@ export default async function BlogPost(props: Props) {
             url: 'https://ajprworld.com/aman-joshi'
         },
         editor: {
-            '@type': 'Person',
-            name: 'Zahra Sanati'
+            '@type': 'Organization',
+            name: 'AJPR Engineering Board'
         },
         publisher: {
             '@type': 'Organization',

@@ -13,7 +13,7 @@ import {
   exportAuditLogsAction,
   SetupTwoFactorResult,
 } from './actions';
-import { AdminAuditLogEntry, AdminUserRecord, ThreatTelemetry } from '@/lib/db/admin-queries';
+import type { AdminAuditLogEntry, AdminUserRecord, ThreatTelemetry } from '@/lib/db/admin-queries';
 
 interface AdminSecurityClientProps {
   initialTwoFactorEnabled: boolean;

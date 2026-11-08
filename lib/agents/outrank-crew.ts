@@ -119,8 +119,14 @@ async function executionerNode(state: OutrankCrewState) {
   Return ONLY the raw Markdown content.`;
 
   const response: any = await llm.invoke([new SystemMessage(prompt)]);
-  const rawMarkdown = (typeof response?.content === 'string' ? response.content : '') ||
+  let rawMarkdown = (typeof response?.content === 'string' ? response.content : '') ||
     `# How to Dominate ${state.targetKeyword}\n\nIn 2026, building scalable systems requires modern AI integration, rapid execution, and technical excellence. Contact AJPR World to scale your technology stack.`;
+
+  // Strip wrapping code fences if the LLM wrapped the output in ```markdown
+  rawMarkdown = rawMarkdown.trim()
+    .replace(/^```(?:markdown|md)?\s*\r?\n?/i, '')
+    .replace(/\r?\n?```\s*$/i, '')
+    .trim();
 
   // Extract H1 for Title
   const titleMatch = rawMarkdown.match(/^#\s+(.+)$/m);

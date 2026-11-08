@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { 
@@ -9,6 +9,7 @@ import {
   Linkedin, Twitter, BookOpen, Clock, Calendar, ArrowLeft, ArrowRight
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface HeadingItem {
   level: number;
@@ -45,6 +46,14 @@ export default function BlogArticleClient({
   const [showEditorialModal, setShowEditorialModal] = useState(false);
   const [showMethodologyModal, setShowMethodologyModal] = useState(false);
   const [showAuditModal, setShowAuditModal] = useState(false);
+
+  // Defensively strip code block fences to prevent raw terminal dumps
+  const sanitizedContent = useMemo(() => {
+    let text = (contentWithLinks || '').trim();
+    text = text.replace(/^```(?:markdown|md)?\s*\r?\n?/i, '');
+    text = text.replace(/\r?\n?```\s*$/i, '');
+    return text.trim();
+  }, [contentWithLinks]);
 
   // Diagnostic Audit Lead Form State
   const [auditForm, setAuditForm] = useState({
@@ -360,6 +369,7 @@ Source Article: ${post.title} (${articleUrl})`,
         {/* Article Body Content (Clean Editorial Typography) */}
         <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-black prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-white prose-p:leading-relaxed prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-a:text-[#E05A36] dark:prose-a:text-orange-400 hover:prose-a:underline prose-li:marker:text-[#E05A36]">
           <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
             components={{
               h2: ({ children }) => {
                 const text = String(children);
@@ -378,10 +388,32 @@ Source Article: ${post.title} (${articleUrl})`,
                     {children}
                   </h3>
                 );
-              }
+              },
+              blockquote: ({ children }) => (
+                <blockquote className="border-l-4 border-orange-500 bg-orange-50/40 dark:bg-orange-950/20 rounded-r-xl p-4 my-6 text-slate-800 dark:text-slate-200 italic shadow-sm">
+                  {children}
+                </blockquote>
+              ),
+              table: ({ children }) => (
+                <div className="overflow-x-auto my-8 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                  <table className="w-full text-left text-sm divide-y divide-slate-200 dark:divide-slate-800">
+                    {children}
+                  </table>
+                </div>
+              ),
+              th: ({ children }) => (
+                <th className="bg-slate-100 dark:bg-slate-800/60 p-3 font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                  {children}
+                </th>
+              ),
+              td: ({ children }) => (
+                <td className="p-3 text-slate-700 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800">
+                  {children}
+                </td>
+              ),
             }}
           >
-            {contentWithLinks}
+            {sanitizedContent}
           </ReactMarkdown>
         </div>
 

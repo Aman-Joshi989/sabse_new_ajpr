@@ -75,6 +75,16 @@ function injectInternalLinks(markdown: string) {
     return modified;
 }
 
+function cleanMarkdownFences(raw: string): string {
+    if (!raw) return '';
+    let text = raw.trim();
+    // Strip leading ```markdown or ```md or ```
+    text = text.replace(/^```(?:markdown|md)?\s*\r?\n?/i, '');
+    // Strip trailing ```
+    text = text.replace(/\r?\n?```\s*$/i, '');
+    return text.trim();
+}
+
 function extractHeadings(markdown: string) {
     const headingRegex = /^(#{2,3})\s+(.+)$/gm;
     const headings = [];
@@ -150,7 +160,8 @@ export default async function BlogPost(props: Props) {
         ? new Date(post.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
         : formattedDate;
 
-    const content = post.content || '';
+    const rawContent = post.content || '';
+    const content = cleanMarkdownFences(rawContent);
     const wordCount = content.trim().split(/\s+/).length;
     const readingTime = Math.max(3, Math.ceil(wordCount / 220));
 

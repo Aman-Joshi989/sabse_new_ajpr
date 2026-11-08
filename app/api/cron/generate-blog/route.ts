@@ -3,6 +3,7 @@ import { createBlog, getBlogs, insertAgentLog } from '@/lib/db/queries';
 import { revalidatePath } from 'next/cache';
 import { createLocalPost } from '@/lib/gbp';
 import { triggerSocialSyndication } from '@/lib/syndication';
+import { broadcastSocialPost } from '@/lib/social/publisher';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // --- GEMINI HELPER FUNCTION ---
@@ -404,29 +405,25 @@ Visit [ajprworld.com](https://ajprworld.com) to book a free strategy call.`;
     const wordCount = (blogTitle + ' ' + blogContent).split(/\s+/).length;
     console.log(`[Cron] Published: "${blogTitle}" (${wordCount} words)`);
 
-    // --- AYRSHARE AUTO-POST TRIGGER ---
-    const apiKeyAyrshare = process.env.AYRSHARE_API_KEY;
-    if (apiKeyAyrshare) {
-      try {
-        console.log('[Cron] Auto-posting to social media via Ayrshare...');
-        const socialPost = `New article on the blog! 🚀\n\n${blogTitle}\n\nRead the full guide here: https://ajprworld.com/blog/${slug}\n\n#AI #Startup #Tech`;
-        await fetch('https://app.ayrshare.com/api/post', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${apiKeyAyrshare}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            post: socialPost,
-            platforms: ['linkedin', 'facebook', 'gmb'],
-          })
-        });
-        console.log('[Cron] Social post sent successfully via Ayrshare');
-      } catch (e) {
-        console.error('[Cron] Failed to auto-post to social media:', e);
-      }
+    // --- NATIVE SOCIAL BROADCAST TRIGGER ---
+    try {
+      console.log('[Cron] Broadcasting new blog to native social channels...');
+      const socialPost = `New engineering breakdown published at AJPR World! 🚀\n\n"${blogTitle}"\n\n${blogExcerpt || ''}\n\n#SoftwareEngineering #StartupGrowth #B2B #AJPRWorld`;
+      const firstComment = `📌 Read the complete breakdown here: https://ajprworld.com/blog/${slug}`;
+      await broadcastSocialPost({
+        content: socialPost,
+        firstComment,
+        platforms: ['linkedin', 'facebook', 'gbp'],
+        articleUrl: blogUrl,
+        articleTitle: blogTitle,
+        target: 'company',
+        author: 'AJPR SEO Engine',
+      });
+      console.log('[Cron] Native multi-channel social broadcast sent successfully');
+    } catch (e) {
+      console.error('[Cron] Failed to broadcast social post:', e);
     }
-    // ----------------------------------
+    // ---------------------------------------
 
     await insertAgentLog('athena', `Successfully published SEO blog: "${blogTitle}"`);
 

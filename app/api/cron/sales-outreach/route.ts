@@ -8,7 +8,7 @@ export const maxDuration = 300;
 
 // Configuration
 const ZEPTO_URL = "https://api.zeptomail.in/v1.1/email";
-const ZEPTO_TOKEN = process.env.AYRSHARE_API_KEY || "Zoho-enczapikey PHtE6r1bQ+293mEs8RRR5fDpRMGsMt9//uNjKVRP449HDqcCG01X+d16kzbi+kh5VaNCEqLJyY1rt+iftunUdGvtZ24YXmqyqK3sx/VYSPOZsbq6x00asFwTdULYVYDtcNFr1iTRvNmX";
+const ZEPTO_TOKEN = process.env.ZEPTOMAIL_TOKEN || "Zoho-enczapikey PHtE6r1bQ+293mEs8RRR5fDpRMGsMt9//uNjKVRP449HDqcCG01X+d16kzbi+kh5VaNCEqLJyY1rt+iftunUdGvtZ24YXmqyqK3sx/VYSPOZsbq6x00asFwTdULYVYDtcNFr1iTRvNmX";
 const zeptoClient = new SendMailClient({ url: ZEPTO_URL, token: ZEPTO_TOKEN });
 
 async function generateColdEmail(lead: any) {

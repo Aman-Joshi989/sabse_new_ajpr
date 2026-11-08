@@ -226,6 +226,24 @@ export async function ensureDbInitialized() {
         );
       `;
 
+      // 9.1 Ensure social_posts table exists for multi-channel broadcasts and audit ledger
+      await sql`
+        CREATE TABLE IF NOT EXISTS social_posts (
+          id SERIAL PRIMARY KEY,
+          content TEXT NOT NULL,
+          first_comment TEXT,
+          platforms JSONB NOT NULL DEFAULT '[]',
+          target VARCHAR(50) DEFAULT 'company',
+          status VARCHAR(50) NOT NULL DEFAULT 'published',
+          receipts JSONB DEFAULT '{}',
+          article_url TEXT,
+          media_urls JSONB DEFAULT '[]',
+          author VARCHAR(100) DEFAULT 'Admin',
+          created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        );
+      `;
+
       // 10. Ensure programmatic_seo table exists for AI-generated localized content
       await sql`
         CREATE TABLE IF NOT EXISTS programmatic_seo (

@@ -19,7 +19,7 @@ Review standard web security postures. Generate a daily threat intelligence repo
 Recommend immediate actions if the threat level is elevated. Ensure your tone is highly professional, vigilant, and authoritative. Date: 2026.`;
 
         const { text: report } = await generateText({
-            model: openai('gpt-4o'),
+            model: openai(process.env.OPENAI_MODEL || 'gpt-4o-mini'),
             prompt: prompt,
             system: 'You are Agent Aegis, a highly advanced autonomous cybersecurity AI responsible for protecting corporate infrastructure from chaos and cyber threats.',
         });

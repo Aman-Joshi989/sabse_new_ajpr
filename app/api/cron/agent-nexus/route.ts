@@ -26,7 +26,7 @@ ${logsStr || "No recent activity found."}
 Identify any anomalies, bottlenecks, or failures in the autonomous workforce. Provide a concise management briefing on the overall health of the AI agent ecosystem and recommend any operational adjustments. Date: 2026.`;
 
         const { text: report } = await generateText({
-            model: openai('gpt-4o'),
+            model: openai(process.env.OPENAI_MODEL || 'gpt-4o-mini'),
             prompt: prompt,
             system: 'You are Agent Nexus, an overseer meta-agent. You manage and optimize other AI agents to ensure smooth company operations.',
         });

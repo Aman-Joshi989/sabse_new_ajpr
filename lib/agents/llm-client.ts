@@ -49,14 +49,14 @@ export const createLLM = (temperature = 0.7, requestedModel?: string) => {
   return new Proxy(primaryLLM, {
     get(target: any, prop: string | symbol, receiver: any) {
       if (prop === 'invoke') {
-        return async (...args: any[]) => {
+        return async (input: any, options?: any) => {
           try {
-            return await target.invoke(...args);
+            return await target.invoke(input, options);
           } catch (err: any) {
             if (isModelAccessError(err) && primaryModel !== FALLBACK_MODEL) {
               console.warn(`[createLLM] Model '${primaryModel}' threw 403 access restriction. Auto-falling back to '${FALLBACK_MODEL}'...`);
               const fallbackInstance = createInstance(FALLBACK_MODEL);
-              return await fallbackInstance.invoke(...args);
+              return await fallbackInstance.invoke(input, options);
             }
             throw err;
           }
@@ -69,15 +69,15 @@ export const createLLM = (temperature = 0.7, requestedModel?: string) => {
           return new Proxy(structuredPrimary, {
             get(sTarget: any, sProp: string | symbol, sReceiver: any) {
               if (sProp === 'invoke') {
-                return async (...args: any[]) => {
+                return async (input: any, options?: any) => {
                   try {
-                    return await sTarget.invoke(...args);
+                    return await sTarget.invoke(input, options);
                   } catch (err: any) {
                     if (isModelAccessError(err) && primaryModel !== FALLBACK_MODEL) {
                       console.warn(`[createLLM] withStructuredOutput: Model '${primaryModel}' threw 403 access restriction. Auto-falling back to '${FALLBACK_MODEL}'...`);
                       const fallbackInstance = createInstance(FALLBACK_MODEL);
                       const structuredFallback = fallbackInstance.withStructuredOutput(schema, config);
-                      return await structuredFallback.invoke(...args);
+                      return await structuredFallback.invoke(input, options);
                     }
                     throw err;
                   }

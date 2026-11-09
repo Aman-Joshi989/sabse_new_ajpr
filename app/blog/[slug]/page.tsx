@@ -78,11 +78,13 @@ function injectInternalLinks(markdown: string) {
 function cleanMarkdownFences(raw: string): string {
     if (!raw) return '';
     let text = raw.trim();
-    // Strip leading ```markdown or ```md or ```
-    text = text.replace(/^```(?:markdown|md)?\s*\r?\n?/i, '');
-    // Strip trailing ```
-    text = text.replace(/\r?\n?```\s*$/i, '');
-    return text.trim();
+    while (/^```(?:markdown|md)?\s*\r?\n?/i.test(text)) {
+        text = text.replace(/^```(?:markdown|md)?\s*\r?\n?/i, '').trim();
+    }
+    while (/\r?\n?```\s*$/i.test(text)) {
+        text = text.replace(/\r?\n?```\s*$/i, '').trim();
+    }
+    return text;
 }
 
 function extractHeadings(markdown: string) {

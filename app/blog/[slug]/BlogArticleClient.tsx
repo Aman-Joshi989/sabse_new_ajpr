@@ -50,9 +50,13 @@ export default function BlogArticleClient({
   // Defensively strip code block fences to prevent raw terminal dumps
   const sanitizedContent = useMemo(() => {
     let text = (contentWithLinks || '').trim();
-    text = text.replace(/^```(?:markdown|md)?\s*\r?\n?/i, '');
-    text = text.replace(/\r?\n?```\s*$/i, '');
-    return text.trim();
+    while (/^```(?:markdown|md)?\s*\r?\n?/i.test(text)) {
+      text = text.replace(/^```(?:markdown|md)?\s*\r?\n?/i, '').trim();
+    }
+    while (/\r?\n?```\s*$/i.test(text)) {
+      text = text.replace(/\r?\n?```\s*$/i, '').trim();
+    }
+    return text;
   }, [contentWithLinks]);
 
   // Diagnostic Audit Lead Form State

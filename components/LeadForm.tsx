@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ChevronRight, 
-  ChevronLeft, 
   ArrowRight, 
   CheckCircle2, 
   Lock, 
@@ -18,25 +16,33 @@ import {
   Cpu,
   DollarSign,
   Receipt,
-  Globe
+  Globe,
+  MessageCircle,
+  Phone,
+  Clock,
+  Calendar
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { useRegion } from '@/components/providers/RegionProvider';
+import Link from 'next/link';
 
 export default function LeadForm() {
   const { isIndia } = useRegion();
-  const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [referenceId, setReferenceId] = useState('');
   const [targetDomain, setTargetDomain] = useState('');
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    companySize: '',
+    phone: '',
+    projectGoal: '',
+    companySize: '2-10',
     budget: '',
     techStack: '',
     honeypot: '',
@@ -53,7 +59,8 @@ export default function LeadForm() {
         setTargetDomain(domain);
         setFormData(prev => ({
           ...prev,
-          techStack: prev.techStack ? `${prev.techStack} | Target: ${domain}` : `Target Website: ${domain}`,
+          techStack: domain,
+          projectGoal: prev.projectGoal || `Technical audit for ${domain}`,
           utm_source: urlParams.get('utm_source') || 'quick_scan_hook',
           utm_medium: urlParams.get('utm_medium') || 'hero_scan',
           utm_campaign: urlParams.get('utm_campaign') || 'free_audit'
@@ -69,57 +76,47 @@ export default function LeadForm() {
     }
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const validateStep1 = () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (!formData.name.trim()) {
       toast.error('Please enter your full name');
-      return false;
+      return;
     }
     if (!formData.email.trim()) {
       toast.error('Please enter your work email');
-      return false;
+      return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email.trim())) {
       toast.error('Please provide a valid email address (e.g., alex@company.com)');
-      return false;
-    }
-    return true;
-  };
-
-  const nextStep = () => {
-    if (step === 1 && !validateStep1()) {
-      return;
-    }
-    setStep((prev) => Math.min(prev + 1, 3));
-  };
-
-  const prevStep = () => {
-    setStep((prev) => Math.max(prev - 1, 1));
-  };
-
-  const handleSubmit = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-
-    if (step === 1) {
-      if (validateStep1()) nextStep();
-      return;
-    }
-    if (step === 2) {
-      nextStep();
       return;
     }
 
     setLoading(true);
     
     try {
+      const submissionPayload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || '',
+        companySize: formData.companySize || '2-10',
+        budget: formData.budget || (isIndia ? '₹1.5L – ₹4L' : '$5k – $15k'),
+        techStack: formData.techStack ? `${formData.techStack} | Goal: ${formData.projectGoal}` : formData.projectGoal || 'Full-stack software scoping',
+        honeypot: formData.honeypot,
+        utm_source: formData.utm_source,
+        utm_medium: formData.utm_medium,
+        utm_campaign: formData.utm_campaign
+      };
+
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(submissionPayload)
       });
       
       const resData = await response.json().catch(() => ({}));
@@ -132,9 +129,9 @@ export default function LeadForm() {
         setReferenceId(resData.referenceId);
       }
       setIsSuccess(true);
-      toast.success('Your audit request has been received!');
+      toast.success('Your audit & scoping request has been received!');
       
-      // Fire GTM Event
+      // Fire GTM / Analytics Event
       if (typeof window !== 'undefined' && (window as any).dataLayer) {
         (window as any).dataLayer.push({
           event: 'generate_lead',
@@ -153,7 +150,7 @@ export default function LeadForm() {
   if (isSuccess) {
     return (
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }} 
+        initial={{ opacity: 0, scale: 0.96 }} 
         animate={{ opacity: 1, scale: 1 }}
         className="text-center p-8 sm:p-10 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl space-y-6"
       >
@@ -167,34 +164,34 @@ export default function LeadForm() {
               <Sparkles className="w-3.5 h-3.5" /> Technical Scope Queued
             </span>
             {referenceId && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold tracking-wider">
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold tracking-wider font-mono">
                 Ref: #{referenceId}
               </span>
             )}
           </div>
           <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            Audit Request Received!
+            Scope Request Received!
           </h3>
           <p className="text-sm text-slate-600 dark:text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
-            Thank you, <strong className="text-slate-900 dark:text-white font-semibold">{formData.name}</strong>. A confirmation email has been dispatched to <span className="text-blue-600 dark:text-blue-400 font-medium">{formData.email}</span>. Our senior engineering pod is preparing your tailored Technical & SEO review.
+            Thank you, <strong className="text-slate-900 dark:text-white font-semibold">{formData.name}</strong>. A confirmation has been dispatched to <span className="text-blue-600 dark:text-blue-400 font-medium">{formData.email}</span>. Lead Systems Architect Aman Joshi is reviewing your technical requirements.
           </p>
         </div>
 
-        {/* 3 Step Timeline of what happens next */}
+        {/* 3 Step Timeline */}
         <div className="text-left bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3">
           <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">What Happens Next</h4>
           <div className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
             <div className="flex items-start gap-2.5">
               <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
-              <span><strong>Deep Scan:</strong> We analyze your Core Web Vitals, API latency, and search footprint.</span>
+              <span><strong>Architect Review:</strong> We inspect your target stack, API requirements, and performance profile.</span>
             </div>
             <div className="flex items-start gap-2.5">
               <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
-              <span><strong>Actionable Plan:</strong> Senior architect authors a 3-page roadmap with sprint estimates.</span>
+              <span><strong>Clear Sprint Scope:</strong> We author a concise roadmap with fixed sprint pricing and delivery dates.</span>
             </div>
             <div className="flex items-start gap-2.5">
               <span className="w-5 h-5 rounded-full bg-emerald-600/20 text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
-              <span><strong>Direct Delivery:</strong> Delivered to your inbox within 24 hours (zero sales spam).</span>
+              <span><strong>Direct Delivery:</strong> Delivered to your inbox within 24 hours. Zero aggressive sales follow-ups.</span>
             </div>
           </div>
         </div>
@@ -202,20 +199,34 @@ export default function LeadForm() {
         <div className="space-y-3 pt-2">
           <Button 
             onClick={() => window.location.href = '/book-call'} 
-            className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30"
+            className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30 gap-2"
           >
-            {isIndia ? 'Want Immediate Review? Book Architecture Call (IST)' : 'Want Immediate Review? Book Strategy Call'} <ArrowRight className="w-4 h-4 ml-2" />
+            <Calendar className="w-4 h-4" />
+            {isIndia ? 'Need Immediate Discussion? Book Architecture Call (IST)' : 'Prefer an Immediate Call? Book 30-Min Session'} 
+            <ArrowRight className="w-4 h-4 ml-1" />
           </Button>
+
+          {isIndia && (
+            <a
+              href="https://wa.me/919997424915?text=Hi%20Aman,%20I%20just%20submitted%20a%20project%20scope%20request%20on%20AJPR%20World%20and%20would%20like%20to%20connect."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 w-full h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-all shadow-md"
+            >
+              <MessageCircle className="w-4 h-4" /> Chat on WhatsApp Now (+91 99974 24915)
+            </a>
+          )}
 
           <button
             type="button"
             onClick={() => {
               setIsSuccess(false);
-              setStep(1);
               setFormData({
                 name: '',
                 email: '',
-                companySize: '',
+                phone: '',
+                projectGoal: '',
+                companySize: '2-10',
                 budget: '',
                 techStack: '',
                 honeypot: '',
@@ -226,7 +237,7 @@ export default function LeadForm() {
             }}
             className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors underline pt-1 block mx-auto"
           >
-            Submit another project audit
+            Submit another project inquiry
           </button>
         </div>
       </motion.div>
@@ -236,260 +247,223 @@ export default function LeadForm() {
   return (
     <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl relative text-slate-900 dark:text-slate-100 transition-colors duration-300">
       
-      {/* Client-Friendly Step Header */}
-      <div className="mb-6 sm:mb-8">
-        <div className="flex items-center justify-between text-xs font-semibold mb-3">
-          <span className={step >= 1 ? "text-blue-600 dark:text-blue-400 font-bold" : "text-slate-400 dark:text-slate-500"}>
-            01 Contact
-          </span>
-          <span className={step >= 2 ? "text-blue-600 dark:text-blue-400 font-bold" : "text-slate-400 dark:text-slate-500"}>
-            02 Tech & Team
-          </span>
-          <span className={step >= 3 ? "text-blue-600 dark:text-blue-400 font-bold" : "text-slate-400 dark:text-slate-500"}>
-            03 Budget & Scope
-          </span>
+      {/* Real Architect Persona Header */}
+      <div className="flex items-center gap-3.5 pb-6 border-b border-slate-200/80 dark:border-slate-800/80 mb-6">
+        <div className="relative">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-base shadow-md ring-2 ring-blue-500/20">
+            AJ
+          </div>
+          <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full" title="Online & Available"></span>
         </div>
-        <div className="flex gap-2">
-          {[1, 2, 3].map((num) => (
-            <div 
-              key={num} 
-              className={`h-2 flex-1 rounded-full transition-all duration-300 ${
-                step >= num 
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-500 shadow-sm shadow-blue-500/30' 
-                  : 'bg-slate-200 dark:bg-slate-800'
-              }`} 
-            />
-          ))}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">Aman Joshi</span>
+            <span className="text-[10px] bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full font-semibold uppercase">Lead Architect</span>
+          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+            Direct scoping within 24 hours &bull; Zero sales reps
+          </p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={step}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.2 }}
+      {/* Target Domain pill if scanned from hero */}
+      {targetDomain && (
+        <div className="mb-5 p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-between text-xs font-semibold">
+          <span className="flex items-center gap-1.5 truncate mr-2">
+            <Globe className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+            Target Domain: <strong className="text-slate-900 dark:text-white truncate">{targetDomain}</strong>
+          </span>
+          <span className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full text-[10px] uppercase font-bold shrink-0">
+            Audit Queued
+          </span>
+        </div>
+      )}
+
+      {/* Single Streamlined High-Velocity Form */}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        
+        {/* Row 1: Name and Email */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="lead-name" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+              <User className="w-3.5 h-3.5 text-blue-500" /> Full Name *
+            </Label>
+            <Input 
+              id="lead-name"
+              name="name" 
+              value={formData.name} 
+              onChange={handleChange} 
+              placeholder="Alex Morgan" 
+              required
+              className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="lead-email" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+              <Mail className="w-3.5 h-3.5 text-blue-500" /> Work Email *
+            </Label>
+            <Input 
+              id="lead-email"
+              name="email" 
+              type="email"
+              value={formData.email} 
+              onChange={handleChange} 
+              placeholder="alex@company.com" 
+              required
+              className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
+        {/* Row 2: Phone / WhatsApp (Optional but high intent) */}
+        <div>
+          <Label htmlFor="lead-phone" className="text-slate-700 dark:text-slate-300 flex items-center justify-between text-xs font-bold uppercase tracking-wider mb-1.5">
+            <span className="flex items-center gap-1.5">
+              {isIndia ? <MessageCircle className="w-3.5 h-3.5 text-emerald-500" /> : <Phone className="w-3.5 h-3.5 text-blue-500" />}
+              {isIndia ? 'WhatsApp / Phone Number' : 'Phone / WhatsApp (Optional)'}
+            </span>
+            <span className="text-[10px] font-normal text-slate-400 lowercase">{isIndia ? 'for instant WhatsApp reply' : 'optional'}</span>
+          </Label>
+          <Input 
+            id="lead-phone"
+            name="phone" 
+            value={formData.phone} 
+            onChange={handleChange} 
+            placeholder={isIndia ? '+91 98765 43210' : '+1 (555) 000-0000'}
+            className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Row 3: Project Goal / Scope */}
+        <div>
+          <Label htmlFor="lead-goal" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+            <Cpu className="w-3.5 h-3.5 text-blue-500" /> What do you need built or reviewed? *
+          </Label>
+          <Textarea 
+            id="lead-goal"
+            name="projectGoal" 
+            value={formData.projectGoal} 
+            onChange={handleChange} 
+            rows={3}
+            placeholder={isIndia ? "e.g. Next.js web application, WhatsApp AI concierge, or website audit..." : "e.g. Next.js SaaS MVP, automated AI agent workflows, or custom web platform..."}
+            className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 resize-none text-sm"
+          />
+        </div>
+
+        {/* Row 4: Budget Range */}
+        <div>
+          <Label htmlFor="lead-budget" className="text-slate-700 dark:text-slate-300 flex items-center justify-between text-xs font-bold uppercase tracking-wider mb-1.5">
+            <span className="flex items-center gap-1.5">
+              {isIndia ? <Receipt className="w-3.5 h-3.5 text-blue-500" /> : <DollarSign className="w-3.5 h-3.5 text-blue-500" />} Estimated Budget
+            </span>
+            <span className="text-[10px] font-normal text-slate-400 lowercase">helps scope sprint</span>
+          </Label>
+          <select 
+            id="lead-budget"
+            name="budget" 
+            value={formData.budget} 
+            onChange={handleChange}
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl px-3 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500"
           >
-            {/* Step 1: Contact Information */}
-            {step === 1 && (
-              <div className="space-y-4">
-                {targetDomain && (
-                  <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-between text-xs font-semibold">
-                    <span className="flex items-center gap-1.5 truncate mr-2">
-                      <Globe className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-                      Target: <strong className="text-slate-900 dark:text-white truncate">{targetDomain}</strong>
-                    </span>
-                    <span className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full text-[10px] uppercase font-bold shrink-0">
-                      Triage Queued
-                    </span>
-                  </div>
-                )}
-                <div>
-                  <Label htmlFor="name" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <User className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Full Name
-                  </Label>
-                  <Input 
-                    id="name"
-                    name="name" 
-                    value={formData.name} 
-                    onChange={handleChange} 
-                    placeholder="Alex Morgan" 
-                    autoFocus
-                    className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="email" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <Mail className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Work Email
-                  </Label>
-                  <Input 
-                    id="email"
-                    name="email" 
-                    type="email"
-                    value={formData.email} 
-                    onChange={handleChange} 
-                    placeholder="alex@company.com" 
-                    className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
-                  />
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
-                    🔒 We deliver your confidential audit report directly to this email.
-                  </p>
-                </div>
-
-                {/* Honeypot field (hidden from humans, filled by bots) */}
-                <div className="absolute opacity-0 -z-10" aria-hidden="true">
-                  <Label htmlFor="honeypot">Leave this empty</Label>
-                  <Input 
-                    id="honeypot"
-                    name="honeypot" 
-                    value={formData.honeypot} 
-                    onChange={handleChange} 
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                <Button 
-                  type="button" 
-                  onClick={nextStep} 
-                  className="w-full h-12 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl mt-4 shadow-lg shadow-blue-600/20"
-                >
-                  Continue to Tech Architecture <ChevronRight className="w-4 h-4 ml-1.5" />
-                </Button>
-              </div>
+            <option value="">Select an estimated budget range...</option>
+            {isIndia ? (
+              <>
+                <option value="<1.5L">Under ₹1,50,000 (Rapid MVP / Starter Sprint)</option>
+                <option value="1.5L-4L">₹1,50,000 – ₹4,00,000 (Production Web App / AI System)</option>
+                <option value="4L-10L">₹4,00,000 – ₹10,00,000 (Custom Multi-Agent Architecture)</option>
+                <option value="10L+">₹10,00,000+ (Enterprise Multi-Tenant Infrastructure)</option>
+                <option value="Flexible">Flexible / Need technical recommendation first</option>
+              </>
+            ) : (
+              <>
+                <option value="<5k">Under $5,000 (Rapid MVP / Starter Sprint)</option>
+                <option value="5k-15k">$5,000 – $15,000 (Production Web App / AI System)</option>
+                <option value="15k-35k">$15,000 – $35,000 (Custom Multi-Agent Architecture)</option>
+                <option value="35k+">$35,000+ (Enterprise Scale & SLA)</option>
+                <option value="Flexible">Flexible / Need technical recommendation first</option>
+              </>
             )}
+          </select>
+        </div>
 
-            {/* Step 2: Architecture & Company Context */}
-            {step === 2 && (
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="companySize" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <Building2 className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Company / Team Size
-                  </Label>
-                  <select 
-                    id="companySize"
-                    name="companySize" 
-                    value={formData.companySize} 
-                    onChange={handleChange}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl px-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="">Select company size...</option>
-                    <option value="1">Solo Founder (1)</option>
-                    <option value="2-10">Early Stage Team (2–10)</option>
-                    <option value="11-50">Growing Business (11–50)</option>
-                    <option value="51-200">Scaleup / Mid-Market (51–200)</option>
-                    <option value="200+">Enterprise (200+)</option>
-                  </select>
-                </div>
+        {/* Honeypot field (hidden from humans, filled by bots) */}
+        <div className="absolute opacity-0 -z-10" aria-hidden="true">
+          <Label htmlFor="lead-honeypot">Leave this empty</Label>
+          <Input 
+            id="lead-honeypot"
+            name="honeypot" 
+            value={formData.honeypot} 
+            onChange={handleChange} 
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
 
-                <div>
-                  <Label htmlFor="techStack" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Current Tech Stack or Website URL
-                  </Label>
-                  <Input 
-                    id="techStack"
-                    name="techStack" 
-                    value={formData.techStack} 
-                    onChange={handleChange} 
-                    placeholder="e.g. Next.js, Postgres, or yoursite.com" 
-                    className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
-                  />
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
-                    Sharing your URL helps our architects perform live Lighthouse & TTFB audits.
-                  </p>
-                </div>
+        {/* Guarantee Banner */}
+        <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 text-xs text-slate-700 dark:text-slate-300 flex items-center justify-between">
+          <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold text-[11px]">
+            <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+            100% Confidential &bull; Mutual NDA
+          </span>
+          <span className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+            <Clock className="w-3 h-3 text-amber-500" /> ~24h Response
+          </span>
+        </div>
 
-                <div className="flex items-center gap-3 pt-2">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={prevStep} 
-                    className="h-12 px-4 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
-                  >
-                    <ChevronLeft className="w-4 h-4 mr-1" /> Back
-                  </Button>
-                  <Button 
-                    type="button" 
-                    onClick={nextStep} 
-                    className="flex-1 h-12 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/20"
-                  >
-                    Continue to Scope & Budget <ChevronRight className="w-4 h-4 ml-1.5" />
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 3: Scope & Budget Tier */}
-            {step === 3 && (
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="budget" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    {isIndia ? <Receipt className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> : <DollarSign className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />} Estimated Project Budget
-                  </Label>
-                  <select 
-                    id="budget"
-                    name="budget" 
-                    value={formData.budget} 
-                    onChange={handleChange}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl px-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="">Select budget range...</option>
-                    {isIndia ? (
-                      <>
-                        <option value="<1.5L">Under ₹1,50,000 (Rapid MVP / Starter Sprint)</option>
-                        <option value="1.5L-4L">₹1,50,000 – ₹4,00,000 (Production Web App / AI Workflow)</option>
-                        <option value="4L-10L">₹4,00,000 – ₹10,00,000 (Custom Multi-Agent Architecture)</option>
-                        <option value="10L+">₹10,00,000+ (Enterprise Scale & Infrastructure)</option>
-                        <option value="flexible">Flexible / Need Technical Scope First</option>
-                      </>
-                    ) : (
-                      <>
-                        <option value="<5k">Under $5,000 (Rapid MVP / Starter Sprint)</option>
-                        <option value="5k-15k">$5,000 – $15,000 (Production Web App / AI Workflow)</option>
-                        <option value="15k-35k">$15,000 – $35,000 (Custom Multi-Agent Architecture)</option>
-                        <option value="35k+">$35,000+ (Enterprise Scale & Infrastructure)</option>
-                        <option value="flexible">Flexible / Need Technical Scope First</option>
-                      </>
-                    )}
-                  </select>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
-                    We tailor our sprint recommendations directly to your financial constraints.
-                  </p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 text-xs text-slate-700 dark:text-slate-300 space-y-1">
-                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold">
-                    <ShieldCheck className="w-4 h-4 shrink-0" />
-                    <span>100% Free • No Obligation • Mutual NDA</span>
-                  </div>
-                  <p className="text-slate-500 dark:text-slate-400 text-[11px]">
-                    Receive an unvarnished technical assessment detailing hidden performance bottlenecks and exact next steps.
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3 pt-2">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={prevStep} 
-                    disabled={loading}
-                    className="h-12 px-4 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
-                  >
-                    <ChevronLeft className="w-4 h-4 mr-1" /> Back
-                  </Button>
-                  <Button 
-                    type="submit" 
-                    disabled={loading}
-                    className="flex-1 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30"
-                  >
-                    {loading ? (
-                      <span className="flex items-center gap-2">
-                        <Loader2 className="w-4 h-4 animate-spin" /> Submitting Request...
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        Request Free Technical Audit <ArrowRight className="w-4 h-4" />
-                      </span>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+        {/* Submit Button */}
+        <Button 
+          type="submit" 
+          disabled={loading}
+          className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/25 transition-all text-sm gap-2"
+        >
+          {loading ? (
+            <span className="flex items-center gap-2">
+              <Loader2 className="w-4 h-4 animate-spin" /> Submitting Request...
+            </span>
+          ) : (
+            <span className="flex items-center gap-2">
+              Get Fixed-Scope Architecture Review <ArrowRight className="w-4 h-4" />
+            </span>
+          )}
+        </Button>
       </form>
 
-      {/* Trust Subtext */}
-      <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-        <span className="flex items-center gap-1.5">
-          <Lock className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" /> Confidential & Secure
-        </span>
-        <span className="flex items-center gap-1.5">
-          <Zap className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" /> ~24h Turnaround
-        </span>
+      {/* Alternative Fast-Track Strip (Zero-Friction Contacts) */}
+      <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-800/80">
+        <div className="text-[11px] uppercase tracking-wider font-bold text-slate-400 text-center mb-3">
+          Or connect directly without forms:
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          {isIndia ? (
+            <a
+              href="https://wa.me/919997424915?text=Hi%20Aman,%20I'd%20like%20to%20discuss%20a%20project%20for%20my%20business."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-100 transition-colors"
+            >
+              <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>WhatsApp: +91 99974 24915</span>
+            </a>
+          ) : (
+            <a
+              href="mailto:hello@ajprworld.com?subject=Project%20Inquiry%20via%20Website"
+              className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/70 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+            >
+              <Mail className="w-4 h-4 text-blue-500" />
+              <span>Email: hello@ajprworld.com</span>
+            </a>
+          )}
+
+          <Link
+            href="/book-call"
+            className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-blue-700 dark:text-blue-300 text-xs font-bold hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors"
+          >
+            <Calendar className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <span>Book 30-Min Strategy Call</span>
+          </Link>
+        </div>
       </div>
 
     </div>

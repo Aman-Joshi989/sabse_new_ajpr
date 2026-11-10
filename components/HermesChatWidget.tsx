@@ -105,9 +105,6 @@ function RealAgentCard({ leadName, leadEmail, isIndia }: { leadName?: string; le
     </div>
   );
 }
-    </div>
-  );
-}
 
 export default function HermesChatWidget() {
   const pathname = usePathname();

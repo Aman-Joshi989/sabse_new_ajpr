@@ -337,17 +337,17 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     let title = seoData?.meta_title;
     if (!title) {
         if (isSingaporePpc) {
-            title = 'PPC Services & PPC Agency Singapore (2026) | AJPR World';
+            title = 'PPC Agency & Paid Search Management Singapore | AJPR World';
         } else if (isSingaporeAi) {
-            title = 'Business Process Automation & AI Solutions Singapore | AJPR World';
+            title = 'Business Process Automation & AI Systems Singapore | AJPR World';
         } else if (isLondonMvp) {
-            title = 'Startup MVP Development & Custom Software London (2026) | AJPR World';
+            title = 'Startup MVP Development & Custom Next.js Software London | AJPR World';
         } else if (isHaldwani && isDigitalMarketing) {
-            title = '★★★★★ Best Digital Marketing Company in Haldwani (2026) | AJPR World';
+            title = 'Best Digital Marketing & SEO Company in Haldwani | AJPR World';
         } else if (isHaldwani) {
-            title = `Best ${serviceName} in Haldwani, Uttarakhand (2026) | AJPR World`;
+            title = `Top ${serviceName} in Haldwani, Uttarakhand | AJPR World`;
         } else if (isIndia) {
-            title = `Best ${serviceName} in ${cityName}, ${localMetro?.state || 'Uttarakhand'} | AJPR World`;
+            title = `Top ${serviceName} in ${cityName}, ${localMetro?.state || 'Uttarakhand'} | AJPR World`;
         } else {
             title = `${serviceName} in ${cityName} | AJPR World`;
         }
@@ -356,20 +356,18 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     let description = seoData?.meta_description;
     if (!description) {
         if (isSingaporePpc) {
-            description = '★★★★★ 4.9 Rating (38 Reviews). Top PPC agency in Singapore. High-ROAS Google Ads, paid search management, and conversion rate engineering for APAC brands.';
+            description = 'Top PPC management in Singapore. High-ROAS Google Ads, paid search architecture, and conversion rate engineering for growing APAC brands.';
         } else if (isSingaporeAi) {
-            description = '★★★★★ 4.9 Rating (34 Reviews). Autonomous business process automation, AI workflow engineering, and enterprise systems integration in Singapore.';
+            description = 'Business process automation, AI workflow engineering, and custom systems integration for companies in Singapore.';
         } else if (isLondonMvp) {
-            description = '★★★★★ 4.9 Rating (42 Reviews). Premier startup MVP development and custom Next.js software engineering in London. Rapid 2–4 week sprints with 100% IP transfer.';
+            description = 'Startup MVP development and custom Next.js software engineering in London. Rapid 2–4 week sprints with 100% code ownership.';
         } else if (isHaldwani && isDigitalMarketing) {
-            description = '★★★★★ 4.9 Rating (46 Reviews). Looking for the top digital marketing company in Haldwani? AJPR World delivers data-backed SEO, high-ROAS Google & Meta Ads, AI automation, and custom Next.js websites. Serving Tikonia, Kaladhungi Rd, Kathgodam & Kumaon.';
+            description = 'Looking for the best digital marketing company in Haldwani? AJPR World delivers data-backed SEO, high-ROAS Google Ads, and custom Next.js websites for local businesses in Nainital & Kumaon.';
         } else if (isIndia) {
-            description = `★★★★★ 4.9 Rating. Top-rated ${serviceName.toLowerCase()} in ${cityName}, ${localMetro?.state || 'Uttarakhand'}. We engineer data-driven SEO, high-ROAS PPC, and custom websites that drive real revenue.`;
+            description = `Data-driven ${serviceName.toLowerCase()} in ${cityName}, ${localMetro?.state || 'Uttarakhand'}. We engineer SEO, Google Ads, and custom software that drive measurable revenue.`;
         } else {
-            description = `★★★★★ 4.9 Rating. Top-rated ${serviceName} in ${cityName}. We engineer data-driven SEO, high-ROAS PPC, and custom websites that drive real revenue.`;
+            description = `Professional ${serviceName.toLowerCase()} in ${cityName}. We engineer scalable software, high-converting web applications, and search growth.`;
         }
-    } else if (!description.startsWith('★')) {
-        description = `★★★★★ 4.9 Rating. ${description}`;
     }
 
     return {

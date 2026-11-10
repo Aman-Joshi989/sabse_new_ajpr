@@ -35,18 +35,18 @@ const DEFAULT_PRODUCTS: Product[] = [
   },
   {
     id: 2,
-    name: "Autonomous Agent Swarms",
-    slug: "ai-agent-swarms",
-    description: "Multi-agent orchestration, CRM synchronization, automated inbound lead triage, and custom tooling.",
+    name: "AI Business Automation Systems",
+    slug: "ai-business-automation",
+    description: "Automated workflow pipelines, CRM synchronization, inbound lead triage, and custom API integrations.",
     price: 7500,
     currency: "USD",
     features: [
-      "Custom Multi-Agent Orchestration",
+      "Custom Automated Workflow Pipelines",
       "Automated Inbound Lead Qualification",
-      "CRM & Slack/WhatsApp Integration",
-      "Human-in-the-Loop Guardrails",
-      "Enterprise Rate Limit Handling",
-      "99.9% Uptime Deployment"
+      "CRM & Slack / WhatsApp Integration",
+      "Deterministic Business Logic & Guardrails",
+      "API Rate-Limiting & Cost Governance",
+      "Production Deployment & Monitoring"
     ]
   },
   {

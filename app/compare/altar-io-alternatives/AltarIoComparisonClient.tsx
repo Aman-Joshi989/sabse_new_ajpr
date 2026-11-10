@@ -240,7 +240,7 @@ export default function AltarIoComparisonClient({
         <div className="grid sm:grid-cols-3 gap-3">
           {[
             { id: 'lean', title: 'Lean AI MVP', subtitle: 'RAG / AI Utility', price: '$4,500' },
-            { id: 'agent', title: 'AI Agent Swarm', subtitle: 'Autonomous Workflows', price: '$7,500' },
+            { id: 'agent', title: 'AI Automation System', subtitle: 'Automated Workflows', price: '$7,500' },
             { id: 'saas', title: 'Full AI SaaS', subtitle: 'Multi-Tenant & Stripe', price: '$12,500' },
           ].map((scope) => (
             <button

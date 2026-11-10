@@ -143,7 +143,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 
     const rawDesc = getRobustMetaDescription(service.description || '', service.features || '');
-    const safeDesc = rawDesc.startsWith('★') ? rawDesc : `★★★★★ 4.9 Rating. ${rawDesc}`.slice(0, 160);
+    const safeDesc = rawDesc.slice(0, 160);
     const seoTitle = getSeoTitle(service.title, displayLocation);
 
     return {

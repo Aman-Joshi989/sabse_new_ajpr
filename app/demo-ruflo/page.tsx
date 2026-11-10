@@ -11,8 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
       const seo = await getSeoMetadata('/demo-ruflo');
       return {
         alternates: { canonical: 'https://ajprworld.com/demo-ruflo' },
-        title: seo?.title,
-        description: seo?.description,
+        robots: { index: false, follow: false },
+        title: seo?.title || 'Swarm Simulator Demo | AJPR World',
+        description: seo?.description || 'Internal interactive prototype simulator.',
         openGraph: {
           title: seo?.title,
           description: seo?.description,

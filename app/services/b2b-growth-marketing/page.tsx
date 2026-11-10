@@ -14,14 +14,14 @@ export const revalidate = 86400; // Cache for 24 hours
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'B2B Growth Marketing Agency (2026) | Elite B2B Growth Agency | AJPR',
-  description: '★★★★★ 4.9 Rating (42 Reviews). Data-driven B2B growth marketing agency. We engineer full-funnel acquisition: technical SEO, GEO, and high-yield pipeline funnels. Transparent retainers from $1,500/mo.',
+  title: 'B2B Growth Marketing & Pipeline Engineering | AJPR World',
+  description: 'Data-driven B2B growth marketing services. We engineer full-funnel acquisition, technical SEO infrastructure, and high-yield pipeline funnels with transparent retainers.',
   alternates: {
     canonical: 'https://ajprworld.com/services/b2b-growth-marketing',
   },
   openGraph: {
-    title: 'B2B Growth Marketing Agency (2026) | Elite B2B Growth Agency | AJPR',
-    description: '★★★★★ 4.9 Rating (42 Reviews). Data-driven B2B growth marketing agency. We engineer full-funnel acquisition: technical SEO, GEO, and high-yield pipeline funnels.',
+    title: 'B2B Growth Marketing & Pipeline Engineering | AJPR World',
+    description: 'Data-driven B2B growth marketing. We engineer full-funnel acquisition, technical SEO infrastructure, and high-yield customer acquisition funnels.',
     url: 'https://ajprworld.com/services/b2b-growth-marketing',
     siteName: 'AJPR World',
     type: 'website',
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'B2B Growth Marketing Agency (2026) | AJPR World',
-    description: '★★★★★ 4.9 Rating. Scale qualified pipeline, lower CAC, and dominate search engines with senior B2B growth engineers.',
+    title: 'B2B Growth Marketing & Pipeline Engineering | AJPR World',
+    description: 'Scale qualified pipeline, lower CAC, and drive high-intent search acquisition with senior growth engineers.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',

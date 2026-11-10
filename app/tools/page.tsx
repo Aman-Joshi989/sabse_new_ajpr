@@ -12,7 +12,6 @@ import {
     ShieldCheck,
     CheckCircle2,
     Zap,
-    Wand2,
     TrendingUp
 } from 'lucide-react';
 
@@ -88,15 +87,6 @@ const jsonLd = {
             'operatingSystem': 'All',
             'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
             'url': 'https://ajprworld.com/tools/ai-cost-estimator'
-        },
-        {
-            '@type': 'SoftwareApplication',
-            'position': 6,
-            'name': 'AI Action Figure & Toy Box Studio',
-            'applicationCategory': 'DesignApplication',
-            'operatingSystem': 'All',
-            'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
-            'url': 'https://ajprworld.com/tools/action-figure-generator'
         }
     ]
 };
@@ -162,16 +152,6 @@ const toolsList: ToolCard[] = [
         icon: Bot,
         color: 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-900/60',
         timeToValue: 'Interactive Chat'
-    },
-    {
-        slug: '/tools/action-figure-generator',
-        title: 'AI Action Figure & Toy Box Studio',
-        description: 'Design and generate custom mint-in-box 3D action figures sealed in retro blister packaging with custom accessories, power stats, and Midjourney / DALL-E prompts.',
-        solves: 'Viral brand marketing & custom generative avatars',
-        badge: 'Viral & Creative AI',
-        icon: Wand2,
-        color: 'text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/40 border-cyan-200 dark:border-cyan-900/60',
-        timeToValue: 'Instant (10 sec)'
     }
 ];
 

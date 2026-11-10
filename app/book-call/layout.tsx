@@ -11,8 +11,8 @@ export default function BookCallLayout({
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoMetadata('/book-call').catch(() => null);
-  const defaultTitle = 'Book a Strategy Call | 30-Min Senior Engineering Review | AJPR World';
-  const defaultDesc = '★★★★★ 4.9 Rating. Book a direct 30-minute technical roadmap call with AJPR World senior architects. Discuss AI MVPs, Next.js architecture, and SEO retainers.';
+  const defaultTitle = 'Book a Technical Strategy Call | Senior Engineering Architecture | AJPR World';
+  const defaultDesc = 'Schedule a direct 30-minute technical roadmap call with Aman Joshi and our senior engineering team. Discuss your software architecture, MVP timeline, and project scope.';
   const title = seo?.title || defaultTitle;
   const description = seo?.description || defaultDesc;
 

@@ -56,7 +56,7 @@ export default async function SitemapPage() {
   const corePages = [
     { title: 'Home', url: '/', desc: 'Next.js 16 software & growth engineering' },
     { title: 'About Us', url: '/about', desc: 'Our engineering leadership and thesis' },
-    { title: 'AI Systems & Swarms', url: '/ai-systems', desc: 'Autonomous multi-agent workflows' },
+    { title: 'AI Systems & Automation', url: '/ai-systems', desc: 'Autonomous business workflows and AI systems' },
     { title: 'Portfolio & Case Studies', url: '/portfolio', desc: 'Verified client builds and ROI data' },
     { title: 'Pricing & Retainers', url: '/pricing', desc: 'Transparent sprint & retainer pricing' },
     { title: 'Free Growth Audit', url: '/free-audit', desc: 'Senior architectural & SEO audit' },

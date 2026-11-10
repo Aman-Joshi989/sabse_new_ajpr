@@ -26,14 +26,14 @@ const websitePricingTiers = [
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Website Cost in 2026: Web Design & Dev Pricing Guide | AJPR',
-  description: '★★★★★ 4.9 Rating (52 Reviews). How much does a custom website cost in 2026? Review real project tiers from $3,500 startup sites to $30,000+ custom web apps with transparent deliverables.',
+  title: 'Website Cost in 2026: Web Design & Development Pricing Guide | AJPR World',
+  description: 'How much does a custom website cost in 2026? A transparent pricing breakdown from $3,500 startup web builds to $20,000+ custom web apps with real deliverables.',
   alternates: {
     canonical: 'https://ajprworld.com/pricing/website-cost',
   },
   openGraph: {
-    title: 'Website Cost in 2026: Web Design & Dev Pricing Guide | AJPR',
-    description: '★★★★★ 4.9 Rating (52 Reviews). How much does a custom website cost in 2026? Review real project tiers from $3,500 startup sites to $30,000+ custom web apps with transparent deliverables.',
+    title: 'Website Cost in 2026: Web Design & Development Pricing Guide | AJPR World',
+    description: 'How much does a custom website cost in 2026? A transparent pricing breakdown from $3,500 startup web builds to $20,000+ custom web apps with real deliverables.',
     url: 'https://ajprworld.com/pricing/website-cost',
     siteName: 'AJPR World',
     type: 'article',
@@ -49,8 +49,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Website Cost in 2026: Web Design Pricing Guide | AJPR',
-    description: '★★★★★ 4.9 Rating. Real web design costs and transparent agency tiers for US startups and growing enterprises.',
+    title: 'Website Cost in 2026: Web Design & Development Pricing Guide | AJPR World',
+    description: 'Real web design costs and transparent software tiers for founders, startups, and growing enterprises.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',
@@ -332,10 +332,10 @@ export default function WebsiteCostPage() {
               description: "Audit your website Core Web Vitals, mobile responsiveness, and security headers in 60s."
             },
             {
-              badge: "Open Source Lab",
-              title: "RuFlo AI Swarm Simulator",
-              href: "/demo-ruflo",
-              description: "Interactive visual simulator for high-throughput autonomous AI agent networks."
+              badge: "Interactive Estimator",
+              title: "AI Architecture & Cost Estimator",
+              href: "/tools/ai-cost-estimator",
+              description: "Interactive architect estimating software tech stack, timeline, and development investment."
             }
           ]}
         />

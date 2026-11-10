@@ -6,14 +6,14 @@ import { FAQSchema } from '@/components/schema/FAQSchema';
 import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
 
 export const metadata: Metadata = {
-  title: 'Generative Engine Optimization (GEO) Agency (2026) | AJPR World',
-  description: '★★★★★ 4.9 Rating (42 Reviews). Optimize your brand for ChatGPT, Google AI Overviews, and Perplexity. Generative Engine Optimization strategies backed by knowledge graph citations.',
+  title: 'Generative Engine Optimization (GEO) & AI Search Citation | AJPR World',
+  description: 'Optimize your brand authority for ChatGPT, Google AI Overviews, and Perplexity. Generative Engine Optimization strategies backed by entity graph citations.',
   alternates: {
     canonical: 'https://ajprworld.com/services/geo-optimization',
   },
   openGraph: {
-    title: 'Generative Engine Optimization (GEO) Agency (2026) | AJPR World',
-    description: '★★★★★ 4.9 Rating (42 Reviews). Optimize your brand for ChatGPT, Google AI Overviews, and Perplexity. Generative Engine Optimization strategies backed by knowledge graph citations.',
+    title: 'Generative Engine Optimization (GEO) & AI Search Citation | AJPR World',
+    description: 'Optimize your brand authority for ChatGPT, Google AI Overviews, and Perplexity. Generative Engine Optimization strategies backed by entity graph citations.',
     url: 'https://ajprworld.com/services/geo-optimization',
     siteName: 'AJPR World',
     type: 'article',

@@ -335,7 +335,7 @@ export default function StartupGrowthKitPage() {
               Transparent Retainer & Project Pricing →
             </Link>
             <Link href="/ai-systems" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800">
-              AI Automation & Swarm Systems →
+              AI Automation & Business Systems →
             </Link>
             <Link href="/tools" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800">
               Free Founder & Admin Tools →

@@ -13,8 +13,8 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Website Maintenance Services & 24/7 Security Engineering (2026) | AJPR World',
-  description: '★★★★★ 4.9 Rating (47 Reviews). Enterprise website maintenance services and proactive security engineering: zero-day patching, 24/7 uptime monitoring, automated backups, and guaranteed SLAs.',
+  title: 'Website Maintenance Services & 24/7 Security Engineering | AJPR World',
+  description: 'Proactive website maintenance and security engineering: automated updates, zero-day patching, 24/7 uptime monitoring, and guaranteed SLAs for web applications.',
   keywords: [
     'website maintenance services',
     'website maintenance cost',
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     canonical: 'https://ajprworld.com/services/website-security-maintenance',
   },
   openGraph: {
-    title: 'Website Maintenance Services & 24/7 Security Engineering (2026) | AJPR World',
-    description: '★★★★★ 4.9 Rating (47 Reviews). Enterprise website maintenance services and proactive security engineering: zero-day vulnerability patching, 24/7 uptime monitoring, automated backups, and guaranteed SLAs.',
+    title: 'Website Maintenance Services & 24/7 Security Engineering | AJPR World',
+    description: 'Proactive website maintenance and security engineering: automated updates, zero-day patching, 24/7 uptime monitoring, and guaranteed SLAs for web applications.',
     url: 'https://ajprworld.com/services/website-security-maintenance',
     siteName: 'AJPR World',
     type: 'website',

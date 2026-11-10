@@ -62,13 +62,11 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         { name: 'Free Technical Audit', href: '/free-audit' },
         { name: 'Agency ROI Calculator', href: '/tools/agency-pricing-calculator' },
         { name: 'Engineering Solutions', href: '/solutions' },
-        { name: 'AI Systems & Swarms', href: '/ai-systems' },
-        { name: 'RuFlo Swarm Simulator', href: '/demo-ruflo' },
-        { name: 'SEO & International Pricing', href: '/pricing/seo-cost' },
+        { name: 'AI Automation & Workflows', href: '/ai-systems' },
+        { name: 'SEO & Growth Retainers', href: '/pricing/seo-cost' },
         { name: 'PPC Management Cost', href: '/pricing/ppc-cost' },
         { name: 'Website Cost Guide', href: '/pricing/website-cost' },
         { name: 'B2B Growth Marketing', href: '/services/b2b-growth-marketing' },
-        { name: 'Startup Growth Kit', href: '/startup-growth-kit' },
         { name: 'Tech & AI Glossary', href: '/glossary' },
     ];
 

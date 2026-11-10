@@ -11,13 +11,13 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
   title: 'Engineering Solutions & Tech Stack Sprints | AJPR World',
-  description: 'Explore custom software development and AI engineering solutions tailored for modern tech stacks: Next.js, Python FastAPI, AI Agent Swarms, and Cloud DevOps.',
+  description: 'Explore custom software development and AI engineering solutions tailored for modern tech stacks: Next.js, Python FastAPI, automated AI workflows, and Cloud DevOps.',
   alternates: {
     canonical: 'https://ajprworld.com/solutions',
   },
   openGraph: {
     title: 'Engineering Solutions & Tech Stack Sprints | AJPR World',
-    description: 'Explore custom software development and AI engineering solutions tailored for modern tech stacks: Next.js, Python FastAPI, AI Agent Swarms, and Cloud DevOps.',
+    description: 'Explore custom software development and AI engineering solutions tailored for modern tech stacks: Next.js, Python FastAPI, automated AI workflows, and Cloud DevOps.',
     url: 'https://ajprworld.com/solutions',
     siteName: 'AJPR World',
     type: 'website',

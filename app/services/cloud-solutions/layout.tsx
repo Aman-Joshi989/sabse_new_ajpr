@@ -34,8 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
     seo = null;
   }
   
-  const title = seo?.title || 'Cloud & DevOps Engineering Services (2026) | AWS, GCP & Architecture | AJPR World';
-  const description = seo?.description || '★★★★★ 4.9 Rating (37 Reviews). Enterprise cloud architecture, Docker & Kubernetes containerization, automated CI/CD pipelines, and high-availability infrastructure.';
+  const title = seo?.title || 'Cloud Infrastructure & DevOps Engineering | AWS, GCP & Architecture | AJPR World';
+  const description = seo?.description || 'Cloud architecture, Docker and Kubernetes containerization, automated CI/CD pipelines, and high-availability database infrastructure.';
   
   return {
     metadataBase: new URL('https://ajprworld.com'),

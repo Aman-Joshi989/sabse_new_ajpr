@@ -12,7 +12,7 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
   title: 'Website Maintenance Cost in 2026: Pricing Guide & Monthly Retainers | AJPR World',
-  description: '★★★★★ 4.9 Rating (49 Reviews). How much does website maintenance cost? Comprehensive 2026 pricing guide covering small business vs custom Next.js web applications, monthly retainers ($149–$899/mo), and hidden cost factors.',
+  description: 'How much does website maintenance cost? Comprehensive 2026 pricing guide covering small business vs custom Next.js web applications, monthly retainers ($149–$899/mo), and hidden cost factors.',
   keywords: [
     'website maintenance cost',
     'how much does website maintenance cost',

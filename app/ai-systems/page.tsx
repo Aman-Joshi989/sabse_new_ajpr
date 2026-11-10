@@ -2,23 +2,23 @@ import { Metadata } from 'next';
 import AiSystemsClient from '@/app/ai-systems/AiSystemsClient';
 
 export const metadata: Metadata = {
-  title: 'AI Automation & Autonomous AI Agent Systems (2026) | AJPR World',
-  description: '★★★★★ 4.9 Rating (36 Reviews). Turn repetitive business processes into intelligent, automated operating systems. AJPR World builds LeadOS, SupportOS, and OpsOS powered by AI agents with deterministic guardrails.',
-  keywords: 'AI automation agency, AI agent development, n8n automation, LeadOS, WhatsApp AI sales agent, AI business systems, AI lead qualification, AJPR World',
+  title: 'AI Automation & Custom Business AI Systems | AJPR World',
+  description: 'Custom AI automation and intelligent workflows for business. We build practical AI customer support, lead routing, and internal tooling that save hours of manual work.',
+  keywords: 'AI automation agency, AI agent development, business automation, AI workflows, WhatsApp AI sales agent, AJPR World',
   alternates: {
     canonical: 'https://ajprworld.com/ai-systems',
   },
   openGraph: {
-    title: 'AI Automation & Autonomous AI Agent Systems (2026) | AJPR World',
-    description: '★★★★★ 4.9 Rating (36 Reviews). We architect production-grade AI Operating Systems that turn repetitive business operations into automated revenue engines.',
+    title: 'AI Automation & Custom Business AI Systems | AJPR World',
+    description: 'We build production-grade AI systems and automated workflows that eliminate repetitive manual operations.',
     url: 'https://ajprworld.com/ai-systems',
     type: 'website',
     images: ['https://ajprworld.com/og-image.jpg']
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Automation & Autonomous AI Agent Systems (2026) | AJPR World',
-    description: '★★★★★ 4.9 Rating. Stop buying $50 disconnected Zapier workflows. We architect production-grade AI Operating Systems for business.',
+    title: 'AI Automation & Custom Business AI Systems | AJPR World',
+    description: 'Production-grade AI systems and automated workflows built for real business efficiency.',
     creator: '@ajprworld',
     images: ['https://ajprworld.com/og-image.jpg']
   }

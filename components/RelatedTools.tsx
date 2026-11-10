@@ -6,8 +6,7 @@ import {
     Layers, 
     Bot, 
     ArrowRight, 
-    TrendingUp, 
-    Wand2 
+    TrendingUp 
 } from 'lucide-react';
 
 interface RelatedToolsProps {
@@ -49,13 +48,6 @@ const ALL_TOOLS = [
         description: 'Interactive AI architect scoping production stack and budget.',
         icon: Bot,
         badge: 'AI Estimator'
-    },
-    {
-        slug: '/tools/action-figure-generator',
-        title: 'AI Action Figure Toy Box Studio',
-        description: 'Generate blister pack action figures and Midjourney prompts.',
-        icon: Wand2,
-        badge: 'Creative AI'
     }
 ];
 

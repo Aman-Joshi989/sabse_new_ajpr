@@ -10,14 +10,14 @@ import { getPublishedServices } from '@/lib/db/queries'
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '2026 Technology Services: Software, AI MVPs & SEO | AJPR World',
-  description: '★★★★★ 4.9 Rating (64 Reviews). Explore AJPR World premium engineering services: custom Next.js web applications, AI automation, cloud DevOps & technical SEO retainers.',
+  title: 'Engineering & Technology Services | AJPR World',
+  description: 'Explore AJPR World engineering services: custom Next.js web applications, SaaS platform architecture, business automation, and high-performance software systems.',
   alternates: {
     canonical: 'https://ajprworld.com/services',
   },
   openGraph: {
-    title: `2026 Technology Services: Software, AI MVPs & SEO | AJPR World`,
-    description: `★★★★★ 4.9 Rating (64 Reviews). We engineer growth. Explore our premium services including custom web development, SaaS product engineering, AI voice agents, and technical SEO.`,
+    title: 'Engineering & Technology Services | AJPR World',
+    description: 'Direct senior engineering: custom web development, SaaS product architectures, and automated business workflows.',
     url: 'https://ajprworld.com/services',
     type: 'website',
     images: ['https://ajprworld.com/og-image.jpg']

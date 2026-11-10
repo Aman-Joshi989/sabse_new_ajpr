@@ -7,14 +7,14 @@ import AgencyMatchmakerClient from './AgencyMatchmakerClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Top Agency Comparisons & Alternatives (2026 Reviews) | AJPR World',
-  description: '★★★★★ 4.9 Rating (56 Reviews). Objective, data-driven comparisons of top digital agencies: Web Tonic, WebFX, Rootstrap, Altar.io, DigiPhlox alternatives, fees & ROI.',
+  title: 'Agency Comparisons & Alternatives Hub (2026 Guide) | AJPR World',
+  description: 'Objective, transparent comparisons of digital agencies and software studios: Web Tonic, WebFX, Rootstrap, Altar.io, and regional alternatives, pricing & trade-offs.',
   alternates: {
     canonical: 'https://ajprworld.com/compare',
   },
   openGraph: {
-    title: 'Top Agency Comparisons & Alternatives (2026 Reviews) | AJPR World',
-    description: '★★★★★ 4.9 Rating (56 Reviews). Objective, data-driven comparisons of top digital agencies: Web Tonic, WebFX, Rootstrap, Altar.io, DigiPhlox alternatives, fees & ROI.',
+    title: 'Agency Comparisons & Alternatives Hub (2026 Guide) | AJPR World',
+    description: 'Objective, transparent comparisons of digital agencies and software studios: Web Tonic, WebFX, Rootstrap, Altar.io, and regional alternatives, pricing & trade-offs.',
     url: 'https://ajprworld.com/compare',
     siteName: 'AJPR World',
     type: 'website',
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Top Agency Comparisons & Alternatives (2026 Reviews) | AJPR World',
-    description: '★★★★★ 4.9 Rating. Objective, data-driven comparisons of top digital marketing agencies and software studios.',
+    title: 'Agency Comparisons & Alternatives Hub (2026 Guide) | AJPR World',
+    description: 'Objective, transparent comparisons of digital marketing agencies and software studios.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',

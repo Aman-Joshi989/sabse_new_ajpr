@@ -11,14 +11,14 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Technical SEO Services & Core Web Vitals Optimization (2026) | AJPR World',
-  description: '★★★★★ 4.9 Rating (44 Reviews). Enterprise technical SEO services: Core Web Vitals optimization, semantic JSON-LD schema architecture, crawl budget efficiency, and SSR/Next.js indexing.',
+  title: 'Technical SEO Services & Core Web Vitals Optimization | AJPR World',
+  description: 'Technical SEO engineering: Core Web Vitals optimization, semantic JSON-LD schema architecture, crawl efficiency, and Next.js server-side indexing.',
   alternates: {
     canonical: 'https://ajprworld.com/services/technical-seo',
   },
   openGraph: {
-    title: 'Technical SEO Services & Core Web Vitals Optimization (2026) | AJPR World',
-    description: '★★★★★ 4.9 Rating (44 Reviews). Enterprise technical SEO services: Core Web Vitals optimization, semantic JSON-LD schema architecture, crawl budget efficiency, and SSR/Next.js indexing.',
+    title: 'Technical SEO Services & Core Web Vitals Optimization | AJPR World',
+    description: 'Technical SEO engineering: Core Web Vitals optimization, semantic JSON-LD schema architecture, crawl efficiency, and Next.js server-side indexing.',
     url: 'https://ajprworld.com/services/technical-seo',
     siteName: 'AJPR World',
     type: 'website',
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Technical SEO Services (2026) | AJPR World',
-    description: '★★★★★ 4.9 Rating. Fix indexing bottlenecks, pass Core Web Vitals, and dominate search engines with senior technical SEO engineering.',
+    title: 'Technical SEO Services | AJPR World',
+    description: 'Fix indexing bottlenecks, pass Core Web Vitals, and build scalable organic search infrastructure.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',

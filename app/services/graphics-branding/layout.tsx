@@ -15,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
     seo = null;
   }
   
-  const title = seo?.title || 'Brand Identity & UI/UX Design Studio (2026) | AJPR World';
-  const description = seo?.description || '★★★★★ 4.9 Rating (35 Reviews). Modern brand strategy, high-fidelity UI/UX design systems, Figma component libraries, and visual identity for tech companies.';
+  const title = seo?.title || 'UI/UX Design Systems & Brand Identity | AJPR World';
+  const description = seo?.description || 'Modern product design, high-fidelity UI/UX design systems, Figma component libraries, and visual identity for software and web applications.';
   
   return {
     title,

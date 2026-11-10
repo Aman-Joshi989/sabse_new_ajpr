@@ -55,12 +55,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const isPlaceholder = dbTitle && dbTitle.includes('Ultimate Guide to About Page');
   
   const title = (!dbTitle || isPlaceholder) 
-    ? 'About AJPR World: Custom AI MVPs & Senior Software Engineering (2026)' 
+    ? 'About AJPR World | Senior Software Engineering & AI Studio' 
     : dbTitle;
     
-  const defaultDesc = '★★★★★ 4.9 Rating (64 Reviews). Learn about AJPR World, an agile senior engineering studio building custom AI MVPs, Next.js web applications, and Generative Engine Optimization in 2–4 weeks.';
-  const rawDesc = seo?.description || defaultDesc;
-  const description = rawDesc.startsWith('★') ? rawDesc : `★★★★★ 4.9 Rating. ${rawDesc}`;
+  const defaultDesc = 'AJPR World is a senior software engineering studio founded by Aman Joshi. We build production Next.js platforms, custom AI systems, and high-performance digital products.';
+  const description = seo?.description || defaultDesc;
 
   return {
     alternates: { canonical: 'https://ajprworld.com/about' },

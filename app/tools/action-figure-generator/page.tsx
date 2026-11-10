@@ -5,6 +5,10 @@ import ActionFigureClient from './ActionFigureClient';
 export const metadata: Metadata = {
   title: 'AI Action Figure Generator | AJPR World',
   description: 'Design and generate custom mint-in-box 3D action figures with blister packaging, collectible accessories, power stats, and AI generator prompts.',
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: 'https://ajprworld.com/tools/action-figure-generator',
   },

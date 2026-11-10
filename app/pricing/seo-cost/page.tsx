@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Script from 'next/script';
-import { CheckCircle2, ArrowRight, DollarSign, TrendingUp, HelpCircle, ShieldCheck, Sparkles, BarChart3 } from 'lucide-react';
+import { CheckCircle2, ArrowRight, DollarSign, TrendingUp, HelpCircle, ShieldCheck, Sparkles, BarChart3, Globe } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
 
@@ -339,6 +339,58 @@ export default function SeoCostPage() {
                   <td className="p-4 text-blue-600 font-bold">$4,000 – $15,000 / sprint</td>
                   <td className="p-4">Establishing authority in a new vertical or topic</td>
                   <td className="p-4">Pillar page + 8 supporting long-form guides + internal linking</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Section: International SEO Price & Global Retainers */}
+        <section className="mb-16">
+          <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wider mb-2">
+            <Globe className="w-4 h-4" /> Global Market Benchmarks
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4">
+            International SEO Price & Retainers by Region (2026)
+          </h2>
+          <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+            International SEO prices vary depending on whether your business targets single-language multi-country markets (e.g. US + UK + Singapore) or complex multi-lingual architectures requiring localized translation, ccTLD routing, and hreflang tag configuration:
+          </p>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+              <thead className="bg-slate-100 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold">
+                <tr>
+                  <th className="p-4">Target Region</th>
+                  <th className="p-4">Average International SEO Price</th>
+                  <th className="p-4">Architecture Scope</th>
+                  <th className="p-4">AJPR Global Flat Retainer</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-sm text-slate-600 dark:text-slate-300">
+                <tr>
+                  <td className="p-4 font-semibold text-slate-900 dark:text-white">US & Canada Focus</td>
+                  <td className="p-4 text-blue-600 font-bold">$3,500 – $7,500 / mo</td>
+                  <td className="p-4">National high-intent search, Generative AI (GEO), digital PR</td>
+                  <td className="p-4 font-semibold text-emerald-600 dark:text-emerald-400">$3,500 / mo flat</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-semibold text-slate-900 dark:text-white">UK & Western Europe</td>
+                  <td className="p-4 text-blue-600 font-bold">£2,500 – £6,500 / mo</td>
+                  <td className="p-4">Subfolder localization, hreflang tags, GDPR compliance</td>
+                  <td className="p-4 font-semibold text-emerald-600 dark:text-emerald-400">$3,500 / mo flat</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-semibold text-slate-900 dark:text-white">Singapore & APAC Hubs</td>
+                  <td className="p-4 text-blue-600 font-bold">S$4,500 – S$9,500 / mo</td>
+                  <td className="p-4">Cross-border Southeast Asian e-commerce, Google + AI search</td>
+                  <td className="p-4 font-semibold text-emerald-600 dark:text-emerald-400">$3,500 / mo flat</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-semibold text-slate-900 dark:text-white">Multi-Lingual Global Enterprise</td>
+                  <td className="p-4 text-blue-600 font-bold">$8,000 – $20,000 / mo</td>
+                  <td className="p-4">10+ localized languages, programmatic hreflang, global CDN caching</td>
+                  <td className="p-4 font-semibold text-emerald-600 dark:text-emerald-400">$7,500 / mo flat</td>
                 </tr>
               </tbody>
             </table>

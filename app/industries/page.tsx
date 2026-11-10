@@ -140,22 +140,22 @@ export default function IndustriesPage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             <Link
-              href="/roofing-contractors"
+              href="/services/web-development"
               className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-xl transition-all group flex flex-col justify-between"
             >
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-full mb-3 inline-block">
-                  Trade Specialization
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500 bg-blue-500/10 px-2.5 py-1 rounded-full mb-3 inline-block">
+                  Next.js Full-Stack
                 </span>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors mb-2">
-                  Roofing Contractors Web & Lead Engine
+                  Custom Web &amp; SaaS Engineering
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                  Capture exclusive local homeowner estimates without paying high commissions for shared leads on Angi or HomeAdvisor.
+                  Production-grade Next.js platforms, Supabase architectures, and custom web portals built in 2–4 week sprints with 100% code ownership.
                 </p>
               </div>
               <span className="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                Explore Roofing Engine &rarr;
+                Explore Custom Engineering &rarr;
               </span>
             </Link>
 

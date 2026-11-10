@@ -3,6 +3,10 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
     title: 'Web Design & SEO for Roofing Contractors | AJPR World',
     description: 'Generate exclusive roofing leads with high-converting web design and local SEO systems tailored for US roofing contractors to dominate their local market.',
+    robots: {
+        index: false,
+        follow: false,
+    },
     alternates: {
         canonical: 'https://ajprworld.com/roofing-contractors',
     },

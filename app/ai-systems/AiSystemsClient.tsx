@@ -169,7 +169,7 @@ export default function AiSystemsClient() {
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
-            Stop buying $50 disconnected Zapier workflows from commodity gig marketplaces. We architect <strong>production-grade AI Operating Systems</strong> that connect your ads, forms, WhatsApp, CRM, and documents into unified revenue engines with deterministic human guardrails.
+            Stop buying $50 disconnected Zapier workflows from commodity gig marketplaces. We architect <strong>production-grade AI Operating Systems</strong> that connect your ads, forms, WhatsApp, CRM, and documents into unified revenue engines with strict human-in-the-loop approvals.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
@@ -303,7 +303,7 @@ export default function AiSystemsClient() {
 
                   <div className={`flex items-center gap-3 p-2 rounded-lg transition-colors ${simulationStep >= 3 ? 'bg-purple-500/10 border border-purple-500/30 text-purple-300' : 'text-slate-600'}`}>
                     <span className="w-5 h-5 rounded-full flex items-center justify-center bg-purple-500/20 text-xs font-bold shrink-0">3</span>
-                    <span>Deterministic Scoring Engine & Guardrail Validation</span>
+                    <span>Automated Scoring Engine &amp; Rule Validation</span>
                     {simulationStep >= 3 && <Check className="w-4 h-4 ml-auto text-purple-400" />}
                   </div>
 
@@ -556,7 +556,7 @@ export default function AiSystemsClient() {
               The 4-Layer Architecture: Why Enterprise Clients Hire AJPR
             </h2>
             <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-2">
-              Unlike amateur freelancers who deploy fragile single-prompt scripts, our systems combine low-code orchestration (n8n/Make) with deterministic code (FastAPI/Postgres) and human-in-the-loop approvals.
+              Unlike amateur freelancers who deploy fragile single-prompt scripts, our systems combine low-code orchestration (n8n/Make) with robust backend code (FastAPI/Postgres) and human-in-the-loop approvals.
             </p>
           </div>
 
@@ -600,9 +600,9 @@ export default function AiSystemsClient() {
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-bold text-slate-900 dark:text-white text-sm">Deterministic Human-in-the-Loop Guardrails</h4>
+              <h4 className="font-bold text-slate-900 dark:text-white text-sm">Human-in-the-Loop Safety Guardrails</h4>
               <p className="text-slate-600 dark:text-slate-300 text-xs mt-0.5 leading-relaxed">
-                We enforce strict guardrails: High-stakes operations (e.g. refunds &gt; $500, legal document signings, custom enterprise discount approvals) require a 1-click human verification checkpoint via WhatsApp or Slack before execution.
+                We enforce strict safety protocols: High-stakes operations (e.g. refunds &gt; $500, legal document signings, custom enterprise discount approvals) require a 1-click human verification checkpoint via WhatsApp or Slack before execution.
               </p>
             </div>
           </div>

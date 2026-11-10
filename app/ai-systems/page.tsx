@@ -37,7 +37,7 @@ const jsonLd = {
         name: 'AJPR World',
         url: 'https://ajprworld.com'
       },
-      description: 'Turn repetitive business processes into intelligent, automated operating systems. AJPR World builds LeadOS, SupportOS, and OpsOS powered by n8n, WhatsApp API, and enterprise AI agents with deterministic guardrails.',
+      description: 'Turn repetitive business processes into intelligent, automated operating systems. AJPR World builds automated business operating systems (LeadOS, SupportOS, OpsOS) connecting your CRM, communication channels, and workflows with human-in-the-loop approvals.',
       aggregateRating: {
         '@type': 'AggregateRating',
         ratingValue: '4.9',

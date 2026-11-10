@@ -411,7 +411,7 @@ export default function BookCallPage() {
                                         <div className="grid md:grid-cols-2 gap-4">
                                             <div className="space-y-1.5">
                                                 <Label htmlFor="companyName" className="text-xs uppercase tracking-wide font-bold text-slate-400">Company Name</Label>
-                                                <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} className="h-11 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-200 dark:border-white/10 rounded-lg focus:ring-blue-500" placeholder="Your Company Name" />
+                                                <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} className="h-11 bg-slate-50 dark:bg-[#0B0F19]/50 border-slate-200 dark:border-white/10 rounded-lg focus:ring-blue-500" placeholder="e.g. Acme Labs or Startup Name" />
                                             </div>
                                             <div className="space-y-1.5">
                                                 <Label htmlFor="websiteUrl" className="text-xs uppercase tracking-wide font-bold text-slate-400">Website URL</Label>

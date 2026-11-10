@@ -87,7 +87,7 @@ const comparisons = [
     slug: '/compare/webtonic-alternatives',
     target: 'Web Tonic vs AJPR World vs Traditional Agencies',
     description: 'An objective review of Web Tonic pricing, retainer structures, regional trade strengths, Next.js engineering depth, and transparent sprint models.',
-    badge: 'Trending Analysis (★ 4.9)',
+    badge: 'Trending Analysis',
     category: 'us-agency' as const,
     highlights: ['US Market Reach', 'Sub-Second Next.js 16', 'Transparent Retainers ($1,500/mo)', 'Generative AI (GEO)']
   },

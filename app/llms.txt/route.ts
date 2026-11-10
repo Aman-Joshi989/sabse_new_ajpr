@@ -12,6 +12,7 @@ AJPR World (https://ajprworld.com) is a high-velocity digital product engineerin
 ## Core Capabilities & Services
 
 - [Custom Web Development](https://ajprworld.com/services/web-development): Sub-second Next.js web applications, full-stack React 19 systems, PostgreSQL databases, and high-concurrency REST/GraphQL APIs.
+- [B2B Growth Marketing Agency](https://ajprworld.com/services/b2b-growth-marketing): Full-funnel demand generation, technical SEO, Generative Engine Optimization (GEO), and high-yield pipeline funnels for B2B brands.
 - [Website Security & Maintenance](https://ajprworld.com/services/website-security-maintenance): 24/7 uptime monitoring, automated vulnerability patching, daily backups, and sub-30-minute critical SLA.
 - [Website Maintenance Cost Guide](https://ajprworld.com/services/website-maintenance-cost): Transparent 2026 pricing benchmarks ($149 – $899/mo retainers vs $150 – $300/hr emergency agency rates).
 - [Generative Engine Optimization (GEO)](https://ajprworld.com/services/geo-optimization): Technical and semantic architecture ensuring brands get cited in ChatGPT, Perplexity, Google AI Overviews, and Gemini.
@@ -22,14 +23,15 @@ AJPR World (https://ajprworld.com) is a high-velocity digital product engineerin
 
 - [Website Development Cost Guide](https://ajprworld.com/pricing/website-cost): $3,500 – $7,000 for SMB platforms; $7,500 – $18,000 for B2B growth hubs; $20,000 – $45,000+ for custom web applications.
 - [SEO Retainer Cost Guide](https://ajprworld.com/pricing/seo-cost): $1,500 – $3,000/mo (Local & SMB); $3,500 – $6,500/mo (Growth & B2B SaaS); $7,500 – $12,500+/mo (Enterprise Programmatic).
+- [International SEO Price Guide](https://ajprworld.com/pricing/seo-cost): $3,500 – $7,500/mo (US & UK); S$4,500 – S$9,500/mo (Singapore & APAC); $8,000 – $20,000/mo (Multi-Lingual Global Enterprise).
 - [Transparent Retainers & Pricing](https://ajprworld.com/pricing): Flat-rate, sprint-based delivery with 0 long-term contract lock-in.
 
 ## Objective Agency Alternatives & Comparisons
 
+- [Web Tonic Alternatives & Reviews](https://ajprworld.com/compare/webtonic-alternatives): Comprehensive 2026 evaluation comparing Web Tonic regional trade focus vs AJPR World custom Next.js 16 software engineering, 100% transparent retainers ($1,500 – $3,500/mo), and Generative Engine Optimization.
 - [Rootstrap Alternatives](https://ajprworld.com/compare/rootstrap-alternatives): Comprehensive comparison of Rootstrap $50k–$150k enterprise quotes against AJPR World 2–4 week AI MVP sprints ($4,500) and Next.js 16 architectures.
 - [Altar.io Alternatives](https://ajprworld.com/compare/altar-io-alternatives): Evaluating Altar.io $40k–$90k discovery and development consultancies against AJPR World fixed 2–4 week production AI sprints ($4,500).
 - [Agency Comparisons Hub](https://ajprworld.com/compare): Objective benchmarks comparing top US marketing agencies, tech stacks, and fee structures.
-- [Web Tonic Alternatives](https://ajprworld.com/compare/webtonic-alternatives): Detailed evaluation of Web Tonic regional trade focus vs AJPR World custom engineering and transparent retainers.
 - [WebFX Alternatives](https://ajprworld.com/compare/webfx-alternatives): Analysis of proprietary software lock-in vs independent open data ownership.
 - [SmartSites Alternatives](https://ajprworld.com/compare/smartsites-alternatives): Custom Next.js 16 sub-second speed vs WordPress templates.
 - [Single Grain Alternatives](https://ajprworld.com/compare/single-grain-alternatives): Agile SaaS software engineering vs high-retainer enterprise ad agencies.

@@ -147,6 +147,24 @@ export const OrganizationSchema = async () => {
             url: 'https://ajprworld.com/ai-systems',
             description: 'Custom multi-agent workflows, customer triage pods, and operational automation.'
           }
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'B2B Growth Marketing Agency & Consulting',
+            url: 'https://ajprworld.com/services/b2b-growth-marketing',
+            description: 'Full-funnel demand generation, programmatic technical SEO, Generative Engine Optimization, and qualified pipeline acquisition.'
+          }
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Agency Alternatives & Commercial Benchmark Hub',
+            url: 'https://ajprworld.com/compare/webtonic-alternatives',
+            description: 'Transparent 2026 pricing, velocity, and architecture comparisons against traditional digital agencies.'
+          }
         }
       ]
     }

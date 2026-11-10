@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useId } from 'react';
+import React, { useState, useId, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   CheckCircle2, XCircle, ArrowRight, ShieldCheck, DollarSign, 
@@ -42,6 +42,19 @@ export default function WebTonicComparisonClient({
 
   // Interactive Architecture Tab
   const [archTab, setArchTab] = useState<'ajpr' | 'webtonic'>('ajpr');
+  const [showStickyDock, setShowStickyDock] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 450) {
+        setShowStickyDock(true);
+      } else {
+        setShowStickyDock(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Conversion rates:
   // Standard template site (Web Tonic): ~1.6% conversion rate
@@ -571,6 +584,31 @@ export default function WebTonicComparisonClient({
           </Link>
         </div>
       </section>
+
+      {/* Floating Sticky Conversion Bar */}
+      {showStickyDock && (
+        <aside
+          aria-label="Sticky Quote Audit Offer"
+          className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-xl p-3 sm:p-4 rounded-2xl bg-slate-900/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-700/80 text-white shadow-2xl flex items-center justify-between gap-3 animate-fade-up"
+        >
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-xl bg-blue-600/30 border border-blue-500/40 flex items-center justify-center shrink-0">
+              <Sparkles className="w-4 h-4 text-blue-400" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-bold truncate text-white">Evaluating a Web Tonic proposal?</div>
+              <div className="text-[11px] text-slate-300 truncate">Free 48-hr scope, tech stack & fee audit.</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Button size="sm" className="bg-[#E05A36] hover:bg-orange-600 text-white font-bold text-xs h-9 px-4 rounded-xl shadow-md cursor-pointer shrink-0" asChild>
+              <Link href="/free-audit?source=webtonic-sticky">
+                Audit Quote Free &rarr;
+              </Link>
+            </Button>
+          </div>
+        </aside>
+      )}
     </div>
   );
 }

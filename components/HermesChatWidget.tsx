@@ -4,11 +4,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useChat, UIMessage } from '@ai-sdk/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, X, Send, Loader2, Network, UserCheck, MessageCircle, Calendar, Phone, Mail } from 'lucide-react';
+import { Bot, X, Send, Loader2, Network, UserCheck, MessageCircle, Calendar, Phone, Mail, ArrowRight } from 'lucide-react';
 import { useCart } from '@/components/providers/CartProvider';
+import { useRegion } from '@/components/providers/RegionProvider';
 
-function RealAgentCard({ leadName, leadEmail }: { leadName?: string; leadEmail?: string }) {
-  const whatsappUrl = `https://wa.me/919997205257?text=${encodeURIComponent(
+function RealAgentCard({ leadName, leadEmail, isIndia }: { leadName?: string; leadEmail?: string; isIndia?: boolean }) {
+  const whatsappUrl = `https://wa.me/919997424915?text=${encodeURIComponent(
     `Hi Aman! I was chatting with Agent Hermes on AJPR World and want to connect directly about our project. (Name: ${leadName || 'Visitor'}, Email: ${leadEmail || 'N/A'})`
   )}`;
 
@@ -25,54 +26,85 @@ function RealAgentCard({ leadName, leadEmail }: { leadName?: string; leadEmail?:
           </p>
         </div>
         <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
-          Founder Online
+          Architect Online
         </span>
       </div>
       <p className="text-[11px] text-gray-600 dark:text-gray-300 leading-relaxed">
-        Prefer speaking to a real person? Connect with our Lead Systems Architect right now:
+        Prefer speaking to our Lead Systems Architect directly? Connect right now:
       </p>
       <div className="space-y-1.5 pt-0.5">
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-between w-full px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold shadow-sm transition-all transform active:scale-95"
-        >
-          <span className="flex items-center gap-2">
-            <MessageCircle className="w-3.5 h-3.5" />
-            Chat Instantly on WhatsApp
-          </span>
-          <span className="text-[10px] bg-emerald-700/60 px-1.5 py-0.5 rounded font-normal">Direct</span>
-        </a>
+        {isIndia ? (
+          <>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between w-full px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold shadow-sm transition-all transform active:scale-95"
+            >
+              <span className="flex items-center gap-2">
+                <MessageCircle className="w-3.5 h-3.5" />
+                Chat Instantly on WhatsApp
+              </span>
+              <span className="text-[10px] bg-emerald-700/60 px-1.5 py-0.5 rounded font-normal">Direct</span>
+            </a>
 
-        <a
-          href="/book-call"
-          className="flex items-center justify-between w-full px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold shadow-sm transition-all transform active:scale-95"
-        >
-          <span className="flex items-center gap-2">
-            <Calendar className="w-3.5 h-3.5" />
-            Schedule 15-Min Scoping Call
-          </span>
-          <span className="text-[10px] bg-indigo-700/60 px-1.5 py-0.5 rounded font-normal">Calendar</span>
-        </a>
+            <a
+              href="/book-call"
+              className="flex items-center justify-between w-full px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold shadow-sm transition-all transform active:scale-95"
+            >
+              <span className="flex items-center gap-2">
+                <Calendar className="w-3.5 h-3.5" />
+                Schedule 15-Min Architecture Call (IST)
+              </span>
+              <span className="text-[10px] bg-indigo-700/60 px-1.5 py-0.5 rounded font-normal">Calendar</span>
+            </a>
 
-        <div className="grid grid-cols-2 gap-1.5">
-          <a
-            href="tel:+919997205257"
-            className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-[#202124] hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium transition-colors"
-          >
-            <Phone className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
-            <span>Call Directly</span>
-          </a>
-          <a
-            href="mailto:hello@ajprworld.com?subject=Direct%20Inquiry%20via%20Website%20Chat"
-            className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-[#202124] hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium transition-colors"
-          >
-            <Mail className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
-            <span>Email Founder</span>
-          </a>
-        </div>
+            <div className="grid grid-cols-2 gap-1.5">
+              <a
+                href="tel:+919997424915"
+                className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-[#202124] hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium transition-colors"
+              >
+                <Phone className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                <span>Call Direct</span>
+              </a>
+              <a
+                href="mailto:hello@ajprworld.com?subject=Direct%20Inquiry%20via%20Website%20Chat"
+                className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-[#202124] hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium transition-colors"
+              >
+                <Mail className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                <span>Email Architect</span>
+              </a>
+            </div>
+          </>
+        ) : (
+          <>
+            <a
+              href="/book-call"
+              className="flex items-center justify-between w-full px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold shadow-sm transition-all transform active:scale-95"
+            >
+              <span className="flex items-center gap-2">
+                <Calendar className="w-3.5 h-3.5" />
+                Schedule 15-Min Scoping Call (US Hours)
+              </span>
+              <span className="text-[10px] bg-indigo-700/60 px-1.5 py-0.5 rounded font-normal">Calendar</span>
+            </a>
+
+            <a
+              href="mailto:hello@ajprworld.com?subject=US%20Inquiry%20via%20Website%20Chat"
+              className="flex items-center justify-between w-full px-3 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl text-xs font-semibold shadow-sm transition-all transform active:scale-95"
+            >
+              <span className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-blue-400 dark:text-blue-600" />
+                Email Lead Architect Directly
+              </span>
+              <span className="text-[10px] bg-slate-800 dark:bg-slate-200 px-1.5 py-0.5 rounded font-mono">hello@ajprworld.com</span>
+            </a>
+          </>
+        )}
       </div>
+    </div>
+  );
+}
     </div>
   );
 }
@@ -80,6 +112,7 @@ function RealAgentCard({ leadName, leadEmail }: { leadName?: string; leadEmail?:
 export default function HermesChatWidget() {
   const pathname = usePathname();
   const { isCartOpen } = useCart();
+  const { isIndia } = useRegion();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [forceShowHandoff, setForceShowHandoff] = useState(false);
@@ -311,7 +344,7 @@ export default function HermesChatWidget() {
                         </div>
                         {hasHandoffAction && (
                           <div className="w-full max-w-[95%]">
-                            <RealAgentCard leadName={leadName} leadEmail={leadEmail} />
+                            <RealAgentCard leadName={leadName} leadEmail={leadEmail} isIndia={isIndia} />
                           </div>
                         )}
                       </div>
@@ -319,7 +352,7 @@ export default function HermesChatWidget() {
                   })}
                   {forceShowHandoff && (
                     <div className="w-full max-w-[95%]">
-                      <RealAgentCard leadName={leadName} leadEmail={leadEmail} />
+                      <RealAgentCard leadName={leadName} leadEmail={leadEmail} isIndia={isIndia} />
                     </div>
                   )}
 
@@ -336,7 +369,7 @@ export default function HermesChatWidget() {
                         Agent Hermes is momentarily unavailable. You can connect with our team directly below:
                       </div>
                       <div className="w-full max-w-[95%]">
-                        <RealAgentCard leadName={leadName} leadEmail={leadEmail} />
+                        <RealAgentCard leadName={leadName} leadEmail={leadEmail} isIndia={isIndia} />
                       </div>
                     </div>
                   )}

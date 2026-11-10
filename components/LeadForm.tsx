@@ -17,14 +17,17 @@ import {
   User,
   Cpu,
   DollarSign,
+  Receipt,
   Globe
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
+import { useRegion } from '@/components/providers/RegionProvider';
 
 export default function LeadForm() {
+  const { isIndia } = useRegion();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -201,7 +204,7 @@ export default function LeadForm() {
             onClick={() => window.location.href = '/book-call'} 
             className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30"
           >
-            Want Immediate Review? Book Strategy Call <ArrowRight className="w-4 h-4 ml-2" />
+            {isIndia ? 'Want Immediate Review? Book Architecture Call (IST)' : 'Want Immediate Review? Book Strategy Call'} <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
 
           <button
@@ -404,7 +407,7 @@ export default function LeadForm() {
               <div className="space-y-4">
                 <div>
                   <Label htmlFor="budget" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-                    <DollarSign className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> Estimated Project Budget
+                    {isIndia ? <Receipt className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" /> : <DollarSign className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />} Estimated Project Budget
                   </Label>
                   <select 
                     id="budget"
@@ -414,11 +417,23 @@ export default function LeadForm() {
                     className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-12 rounded-xl px-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select budget range...</option>
-                    <option value="<5k">Under $5,000 (Rapid MVP / Starter Sprint)</option>
-                    <option value="5k-15k">$5,000 – $15,000 (Production Web App / AI Workflow)</option>
-                    <option value="15k-35k">$15,000 – $35,000 (Custom Multi-Agent Architecture)</option>
-                    <option value="35k+">$35,000+ (Enterprise Scale & Infrastructure)</option>
-                    <option value="flexible">Flexible / Need Technical Scope First</option>
+                    {isIndia ? (
+                      <>
+                        <option value="<1.5L">Under ₹1,50,000 (Rapid MVP / Starter Sprint)</option>
+                        <option value="1.5L-4L">₹1,50,000 – ₹4,00,000 (Production Web App / AI Workflow)</option>
+                        <option value="4L-10L">₹4,00,000 – ₹10,00,000 (Custom Multi-Agent Architecture)</option>
+                        <option value="10L+">₹10,00,000+ (Enterprise Scale & Infrastructure)</option>
+                        <option value="flexible">Flexible / Need Technical Scope First</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="<5k">Under $5,000 (Rapid MVP / Starter Sprint)</option>
+                        <option value="5k-15k">$5,000 – $15,000 (Production Web App / AI Workflow)</option>
+                        <option value="15k-35k">$15,000 – $35,000 (Custom Multi-Agent Architecture)</option>
+                        <option value="35k+">$35,000+ (Enterprise Scale & Infrastructure)</option>
+                        <option value="flexible">Flexible / Need Technical Scope First</option>
+                      </>
+                    )}
                   </select>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">
                     We tailor our sprint recommendations directly to your financial constraints.

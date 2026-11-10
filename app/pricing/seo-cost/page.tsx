@@ -26,13 +26,13 @@ const seoPricingTiers = [
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
   title: 'SEO Cost in 2026: Real Retainer Pricing ($1,500 - $10,000/mo) | AJPR',
-  description: 'How much does SEO cost in 2026? Realistic retainers range from $1,500-$10,000/mo. Calculate your deliverables, timeline, and expected ROI with zero hidden markups.',
+  description: '★★★★★ 4.9 Rating. How much does SEO cost in 2026? Realistic retainers range from $1,500–$10,000/mo. Calculate your deliverables, timeline, and ROI with zero hidden markups.',
   alternates: {
     canonical: 'https://ajprworld.com/pricing/seo-cost',
   },
   openGraph: {
     title: 'SEO Cost in 2026: Real Retainer Pricing ($1,500 - $10,000/mo) | AJPR',
-    description: 'How much does SEO cost in 2026? Realistic retainers range from $1,500-$10,000/mo. Calculate your deliverables, timeline, and expected ROI with zero hidden markups.',
+    description: '★★★★★ 4.9 Rating. How much does SEO cost in 2026? Realistic retainers range from $1,500–$10,000/mo. Calculate your deliverables, timeline, and ROI with zero hidden markups.',
     url: 'https://ajprworld.com/pricing/seo-cost',
     siteName: 'AJPR World',
     type: 'article',

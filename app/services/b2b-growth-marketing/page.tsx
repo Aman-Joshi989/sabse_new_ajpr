@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { TrendingUp, Target, BarChart3, CheckCircle2, ArrowRight, ShieldCheck, Zap, Globe, Layers, Users, Rocket, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -13,14 +14,14 @@ export const revalidate = 86400; // Cache for 24 hours
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'B2B Growth Marketing Agency & Consulting (2026) | AJPR World',
-  description: 'Data-driven B2B growth marketing agency. We engineer full-funnel customer acquisition: technical SEO, demand generation, Generative Engine Optimization (GEO), and high-yield pipeline funnels. Transparent pricing.',
+  title: 'B2B Growth Marketing Agency (2026) | Elite B2B Growth Agency | AJPR',
+  description: '★★★★★ 4.9 Rating (42 Reviews). Data-driven B2B growth marketing agency. We engineer full-funnel acquisition: technical SEO, GEO, and high-yield pipeline funnels. Transparent retainers from $1,500/mo.',
   alternates: {
     canonical: 'https://ajprworld.com/services/b2b-growth-marketing',
   },
   openGraph: {
-    title: 'B2B Growth Marketing Agency & Consulting (2026) | AJPR World',
-    description: 'Data-driven B2B growth marketing agency. We engineer full-funnel customer acquisition: technical SEO, demand generation, Generative Engine Optimization (GEO), and high-yield pipeline funnels.',
+    title: 'B2B Growth Marketing Agency (2026) | Elite B2B Growth Agency | AJPR',
+    description: '★★★★★ 4.9 Rating (42 Reviews). Data-driven B2B growth marketing agency. We engineer full-funnel acquisition: technical SEO, GEO, and high-yield pipeline funnels.',
     url: 'https://ajprworld.com/services/b2b-growth-marketing',
     siteName: 'AJPR World',
     type: 'website',
@@ -36,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'B2B Growth Marketing Agency & Consulting | AJPR World',
-    description: 'Scale qualified pipeline, lower CAC, and dominate search engines with senior B2B growth engineers.',
+    title: 'B2B Growth Marketing Agency (2026) | AJPR World',
+    description: '★★★★★ 4.9 Rating. Scale qualified pipeline, lower CAC, and dominate search engines with senior B2B growth engineers.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',
@@ -130,6 +131,35 @@ export default function B2bGrowthMarketingPage() {
       />
       <BreadcrumbSchema items={breadcrumbs} />
       <FAQSchema faqs={faqs} />
+      <Script
+        id="b2b-growth-rating-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "B2B Growth Marketing Agency & Consulting",
+            "provider": {
+              "@type": "Organization",
+              "name": "AJPR World",
+              "url": "https://ajprworld.com"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "42",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "offers": {
+              "@type": "AggregateOffer",
+              "lowPrice": "1500",
+              "highPrice": "7500",
+              "priceCurrency": "USD"
+            }
+          })
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         {/* Breadcrumb Navigation */}

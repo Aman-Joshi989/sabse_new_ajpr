@@ -162,11 +162,11 @@ export default function Header({ services }: { services?: any[] }) {
         >
             <div className={`container mx-auto px-4 lg:px-8 max-w-7xl flex h-16 items-center justify-between transition-all duration-300`}>
                 {/* Logo */}
-                <Link href="/" className="flex items-center space-x-3 group shrink-0">
+                <Link href="/" className="flex items-center space-x-3 group shrink-0" title="AJPR World - Senior Software Engineering & AI Studio" aria-label="AJPR World - Senior Software Engineering & AI Studio">
                     <div className="group-hover:opacity-90 transition-opacity duration-300">
                         <Image
                             src={logoSrc}
-                            alt="AJPR World Logo"
+                            alt="AJPR World - Senior Software Engineering & AI Studio"
                             width={112}
                             height={40}
                             className="object-contain"

@@ -65,7 +65,7 @@ const jsonLd = {
           name: 'AJPR LeadOS / SupportOS',
           price: '3500',
           priceCurrency: 'USD',
-          description: 'Complete production-grade AI Operating System with custom dashboard, vector RAG knowledge base, and deterministic guardrails.'
+          description: 'Complete production-grade AI Operating System with custom dashboard, vector RAG knowledge base, and human-in-the-loop approvals.'
         },
         {
           '@type': 'Offer',
@@ -85,7 +85,7 @@ const jsonLd = {
           name: 'How is an AI Operating System different from standard Zapier or n8n workflows?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Standard workflows are brittle if-this-then-that scripts that crash when messy inputs arrive. An AJPR AI Operating System integrates autonomous reasoning, contextual memory (RAG), self-healing error catchers, and deterministic human-in-the-loop guardrails for mission-critical operations.'
+            text: 'Standard workflows are brittle if-this-then-that scripts that crash when messy inputs arrive. An AJPR AI Operating System integrates autonomous reasoning, contextual memory (RAG), self-healing error catchers, and strict human-in-the-loop checkpoints for mission-critical operations.'
           }
         },
         {
@@ -93,7 +93,7 @@ const jsonLd = {
           name: 'What happens if an AI agent makes a mistake or hallucinates?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'We enforce strict deterministic guardrails. Any high-risk operation—such as sending contractual commitments, processing financial transactions, or mass database modifications—requires a human approval checkpoint via Slack or WhatsApp before execution.'
+            text: 'We enforce strict safety guardrails. Any high-risk operation—such as sending contractual commitments, processing financial transactions, or mass database modifications—requires a human approval checkpoint via Slack or WhatsApp before execution.'
           }
         },
         {

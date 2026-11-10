@@ -106,8 +106,8 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                         </Link>
                         <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                             {isIndia
-                                ? 'Boutique full-stack web engineering & AI systems studio. We deliver enterprise-grade Next.js software and business automation with 100% code ownership for Indian founders and scaling companies.'
-                                : 'Boutique full-stack web engineering & autonomous AI systems studio. Direct senior software development and 100% IP transfer for ambitious US founders and scaling companies.'}
+                                ? 'Senior software engineering & AI studio. We deliver production Next.js platforms and business automation with 100% code ownership for Indian founders and teams.'
+                                : 'Senior software engineering & AI studio. Direct production development and 100% code ownership for founders and ambitious teams.'}
                         </p>
                         <div className="text-xs text-slate-600 dark:text-slate-300 font-medium space-y-1 pt-1">
                             <div>Direct: <a href="mailto:hello@ajprworld.com" className="text-blue-600 dark:text-blue-400 hover:underline">hello@ajprworld.com</a></div>

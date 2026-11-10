@@ -5,13 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   CheckCircle2, Clock, Shield, Zap, Star, Sparkles, 
   MessageSquare, ArrowRight, Calendar as CalendarIcon, User, 
-  Globe, ChevronLeft, ChevronRight, Video, ArrowLeft, ArrowUpRight
+  Globe, ChevronLeft, ChevronRight, Video, ArrowLeft, ArrowUpRight,
+  MessageCircle, Receipt
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import Script from 'next/script'
+import { useRegion } from '@/components/providers/RegionProvider'
 import { createRazorpayOrder } from '@/app/actions'
 
 
@@ -24,6 +26,7 @@ const timeSlots = [
 ]
 
 export default function BookCallPage() {
+    const { isIndia } = useRegion()
     const [currentDate, setCurrentDate] = useState(new Date())
     const [selectedDate, setSelectedDate] = useState<Date | null>(null)
     const [activeTimeSlot, setActiveTimeSlot] = useState<string | null>(null)
@@ -201,18 +204,20 @@ export default function BookCallPage() {
                         </div>
                         
                         <div className="space-y-2">
-                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Aman Joshi</p>
-                            <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight">30-Minute Strategy Session</h1>
+                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Aman Joshi &bull; Lead Systems Architect</p>
+                            <h1 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                                {isIndia ? '30-Minute Architecture Call (IST)' : '30-Minute Architecture & Scoping Call'}
+                            </h1>
                         </div>
 
                         <div className="space-y-3.5 text-sm text-slate-600 dark:text-slate-400 font-medium">
                             <div className="flex items-center gap-2.5">
                                 <Clock className="w-4.5 h-4.5 text-slate-400" />
-                                <span>30 min</span>
+                                <span>30 min &bull; {isIndia ? 'Indian Standard Time (IST)' : 'EST / PST Working Hours Overlap'}</span>
                             </div>
                             <div className="flex items-center gap-2.5">
                                 <Video className="w-4.5 h-4.5 text-slate-400" />
-                                <span>Web conferencing details provided upon confirmation.</span>
+                                <span>Google Meet conferencing details sent instantly.</span>
                             </div>
                             {selectedDate && activeTimeSlot && (
                                 <motion.div 
@@ -222,15 +227,33 @@ export default function BookCallPage() {
                                 >
                                     <CalendarIcon className="w-4.5 h-4.5 mt-0.5 shrink-0" />
                                     <span>
-                                        {activeTimeSlot}, {selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
+                                        {activeTimeSlot} {isIndia ? '(IST)' : '(US Friendly)'}, {selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
                                     </span>
                                 </motion.div>
                             )}
                         </div>
 
                         <p className="text-xs md:text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-                            Book a direct 1-on-1 strategy call with senior systems architect Aman Joshi to map your software MVP, AI automation, or high-converting web architecture.
+                            {isIndia
+                                ? 'Direct 1-on-1 strategy call with senior architect Aman Joshi to map your software MVP, AI automation, or high-performance web platform. Fixed INR pricing & GST invoicing.'
+                                : 'Direct 1-on-1 architecture call with senior engineer Aman Joshi to review your system requirements, technical scope, and 14–30 day delivery roadmap.'}
                         </p>
+
+                        {/* WhatsApp Fast-Track for India */}
+                        {isIndia && (
+                            <a
+                                href="https://wa.me/919997424915?text=Hi%20Aman,%20I'd%20like%20to%20discuss%20a%20software%20project%20for%20my%20business."
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-100 transition-colors shadow-2xs"
+                            >
+                                <span className="flex items-center gap-2">
+                                    <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                                    <span>Prefer instant WhatsApp? Chat directly</span>
+                                </span>
+                                <span className="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded font-bold">Fast-Track</span>
+                            </a>
+                        )}
 
                         {/* Competitor Contrast Trust Points */}
                         <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-white/10">
@@ -244,11 +267,11 @@ export default function BookCallPage() {
                             </div>
                             <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
                                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                                <span>100% code & IP ownership &bull; Zero lock-in</span>
+                                <span>100% code & IP ownership &bull; Full GitHub transfer</span>
                             </div>
                             <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
                                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                                <span>Month-to-month or flat sprints &bull; No lock-in</span>
+                                <span>{isIndia ? 'GST compliant invoicing & Pan-India delivery' : 'Delaware-friendly contracts & Wire/Card checkout'}</span>
                             </div>
                         </div>
                     </div>
@@ -444,7 +467,7 @@ export default function BookCallPage() {
                                     <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-semibold">
                                         <CalendarIcon className="w-4 h-4" />
                                         <span>
-                                            {activeTimeSlot}, {selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} (IST)
+                                            {activeTimeSlot}, {selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} {isIndia ? '(IST)' : '(US Timezone)'}
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-semibold">

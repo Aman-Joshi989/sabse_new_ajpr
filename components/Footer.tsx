@@ -6,10 +6,13 @@ import { Linkedin, Twitter, Instagram, Facebook, Youtube } from 'lucide-react';
 import { useTheme } from 'next-themes'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
+import { useRegion } from '@/components/providers/RegionProvider'
+import RegionSelector from '@/components/RegionSelector'
 
 export default function Footer({ services, blogs }: { services?: any[]; blogs?: any[] }) {
     const pathname = usePathname()
     const { resolvedTheme } = useTheme()
+    const { isIndia, isUS } = useRegion()
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
@@ -102,11 +105,16 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             />
                         </Link>
                         <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                            Boutique full-stack web engineering & autonomous AI systems pod. We assume 100% responsibility for your software stability, delivery timelines, and intellectual property.
+                            {isIndia
+                                ? 'Boutique full-stack web engineering & AI systems studio. We deliver enterprise-grade Next.js software and business automation with 100% code ownership for Indian founders and scaling companies.'
+                                : 'Boutique full-stack web engineering & autonomous AI systems studio. Direct senior software development and 100% IP transfer for ambitious US founders and scaling companies.'}
                         </p>
                         <div className="text-xs text-slate-600 dark:text-slate-300 font-medium space-y-1 pt-1">
                             <div>Direct: <a href="mailto:hello@ajprworld.com" className="text-blue-600 dark:text-blue-400 hover:underline">hello@ajprworld.com</a></div>
                             <div>Scoping: <Link href="/book-call" className="text-emerald-600 dark:text-emerald-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
+                            {isIndia && (
+                                <div className="text-slate-500">Regional Hub: Nainital Road, Haldwani, Uttarakhand</div>
+                            )}
                         </div>
                     </div>
 
@@ -178,20 +186,17 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                 {/* Bottom Bar */}
                 <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 gap-4">
 
-                    {/* Left Side: Copyright & Country */}
+                    {/* Left Side: Copyright & Region Switcher */}
                     <div className="flex flex-wrap items-center gap-3">
                         <span>© {new Date().getFullYear()} AJPR World. All rights reserved.</span>
                         <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
-                        <div className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300">
-                            <Image
-                                src="https://flagcdn.com/in.svg"
-                                alt="India"
-                                width={16}
-                                height={12}
-                                className="object-cover rounded-[2px]"
-                            />
-                            <span>India</span>
-                        </div>
+                        <RegionSelector variant="footer" />
+                        <span className="hidden md:inline text-slate-300 dark:text-slate-700">•</span>
+                        <span className="text-[11px] text-slate-400">
+                            {isIndia 
+                                ? 'GST Invoicing • Pan-India Delivery • Haldwani & Delhi NCR' 
+                                : 'US Wire & Cards • Delaware-Friendly Contracts • EST/PST Overlap'}
+                        </span>
                     </div>
 
                     {/* Center: Legal */}

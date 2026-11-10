@@ -16,6 +16,7 @@ import CoreValuesSection from '@/components/sections/CoreValuesSection'
 import AccountabilityPledgeSection from '@/components/sections/AccountabilityPledgeSection'
 import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
 import { trackBookCall } from '@/lib/analytics'
+import { useRegion } from '@/components/providers/RegionProvider'
 import {
   Accordion,
   AccordionContent,
@@ -110,30 +111,43 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
   ];
 
   const displayServices = services.length > 0 ? services : defaultServices;
+  const { isIndia, isUS, currencySymbol } = useRegion();
 
   const [activeScope, setActiveScope] = useState<'web' | 'ai' | 'saas' | 'growth'>('web');
 
   const scopeConfigs = {
     web: {
       title: "Custom Web Application",
-      tagline: "Ultra-fast Next.js platform, bespoke UI & edge API architecture",
+      tagline: isIndia
+        ? "High-speed Next.js platform, bespoke UI & scalable backend architecture"
+        : "Ultra-fast Next.js platform, bespoke UI & edge API architecture",
       timeline: "2–3 Weeks",
-      priceRange: "$4,500 – $7,500",
+      priceRange: isIndia ? "₹1,49,000 – ₹2,99,000" : "$4,500 – $7,500",
       stack: ["Next.js 15 (App Router)", "TypeScript", "Tailwind CSS", "PostgreSQL", "Vercel Edge"],
-      features: [
+      features: isIndia ? [
+        "100% Code & GitHub Repository Transfer",
+        "Sub-150ms TTFB & 99+ Core Web Vitals",
+        "Custom API Integrations & Database Schema",
+        "GST-Compliant Commercial Invoice",
+        "30-Day Post-Launch Technical Warranty"
+      ] : [
         "100% Code & GitHub Repository Ownership",
         "Sub-150ms TTFB & 99+ Core Web Vitals",
         "Custom API Integrations & Database Schema",
         "SEO-Engineered OpenGraph & Structured Schema",
         "30-Day Post-Launch Technical Warranty"
       ],
-      idealFor: "Ambitious companies requiring a lightning-fast, high-converting digital platform."
+      idealFor: isIndia
+        ? "Indian startups and scaling brands requiring an enterprise-grade digital platform."
+        : "Ambitious companies requiring a lightning-fast, high-converting digital platform."
     },
     ai: {
-      title: "Custom AI MVP & Agents",
-      tagline: "Autonomous multi-agent workflows, vector search & tool calling",
+      title: isIndia ? "Custom AI MVP & Automation" : "Custom AI MVP & Agents",
+      tagline: isIndia
+        ? "Intelligent AI workflows, WhatsApp/CRM bots & custom internal tooling"
+        : "Autonomous multi-agent workflows, vector search & tool calling",
       timeline: "2–4 Weeks",
-      priceRange: "$5,500 – $9,500",
+      priceRange: isIndia ? "₹1,85,000 – ₹3,49,000" : "$5,500 – $9,500",
       stack: ["OpenAI / Claude / Groq", "LangChain & LangGraph", "Pinecone / pgvector", "Next.js", "Python FastAPI"],
       features: [
         "Custom Contextual Agent Workflows",
@@ -142,15 +156,23 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         "API Guardrails & Cost-Limiting Governance",
         "Admin Monitoring & Prompt Evaluation Dashboard"
       ],
-      idealFor: "Founders seeking to validate an AI product idea or automate repetitive internal operations."
+      idealFor: isIndia
+        ? "Founders seeking to validate an AI product idea or automate repetitive business operations."
+        : "Founders seeking to validate an AI product idea or automate repetitive internal operations."
     },
     saas: {
       title: "Full-Stack SaaS Platform",
       tagline: "Multi-tenant software with auth, subscriptions & billing portals",
       timeline: "3–4 Weeks",
-      priceRange: "$7,500 – $14,000",
-      stack: ["Next.js", "Supabase / PostgreSQL", "Stripe Billing", "Tailwind UI", "Docker"],
-      features: [
+      priceRange: isIndia ? "₹2,49,000 – ₹4,99,000" : "$7,500 – $14,000",
+      stack: ["Next.js", "Supabase / PostgreSQL", isIndia ? "Stripe / Razorpay Billing" : "Stripe Billing", "Tailwind UI", "Docker"],
+      features: isIndia ? [
+        "Multi-Tenant User & Role Architecture",
+        "Stripe / Razorpay Subscriptions & Invoicing",
+        "Real-Time Database & Analytics Tables",
+        "Secure Session Management & 2FA Ready",
+        "Clean Modular Code Base Ready for Scale"
+      ] : [
         "Multi-Tenant User & Role Architecture",
         "Stripe Subscriptions & Customer Portal",
         "Real-Time Database & Analytics Tables",
@@ -160,10 +182,10 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
       idealFor: "SaaS startups ready to ship an MVP and charge monthly recurring subscriptions."
     },
     growth: {
-      title: "Digital Growth & GEO Engine",
+      title: "Digital Growth & Search Engine",
       tagline: "Generative Engine Optimization & technical SEO for high organic reach",
       timeline: "1–2 Weeks Setup",
-      priceRange: "$2,500 / month",
+      priceRange: isIndia ? "₹24,999 – ₹49,999 / month" : "$2,500 / month",
       stack: ["Dynamic SEO Routes", "JSON-LD Rich Schema", "IndexNow Fast Indexing", "Ahrefs & Search Console"],
       features: [
         "Ranking Optimization for ChatGPT, Perplexity & Google",
@@ -418,10 +440,16 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 Engineering Outcomes
               </Badge>
               <h2 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
-                The 5 Operational Bottlenecks <br className="hidden md:block" />We Eliminate for US Businesses.
+                {isIndia ? (
+                  <>The 5 Operational Bottlenecks <br className="hidden md:block" />We Eliminate for Indian Businesses.</>
+                ) : (
+                  <>The 5 Operational Bottlenecks <br className="hidden md:block" />We Eliminate for US Businesses.</>
+                )}
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
-                Most founders, agency owners, and growing companies lose 20–40% of their operational velocity to administrative drag, SaaS clutter, and delayed software execution. Here is how our engineering eliminates each bottleneck.
+                {isIndia
+                  ? "Most Indian founders, agency owners, and growing companies lose 20–40% of their operational velocity to administrative drag, fragmented software, and unreliable agencies. Here is how our engineering eliminates each bottleneck."
+                  : "Most founders, agency owners, and growing companies lose 20–40% of their operational velocity to administrative drag, SaaS clutter, and delayed software execution. Here is how our engineering eliminates each bottleneck."}
               </p>
             </div>
 
@@ -430,8 +458,10 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 {
                   number: "01",
                   title: "The Email & Admin Black Hole",
-                  stat: "120 emails/day • 11+ hrs/wk lost",
-                  problem: "US professionals lose over 28% of their entire workweek triaging inboxes, chasing late invoices, and answering repetitive client queries.",
+                  stat: isIndia ? "100+ messages/day • 10+ hrs/wk lost" : "120 emails/day • 11+ hrs/wk lost",
+                  problem: isIndia
+                    ? "Founders and professionals lose over 25% of their entire workweek triaging inboxes, chasing unpaid invoices, and answering repetitive WhatsApp queries."
+                    : "US professionals lose over 28% of their entire workweek triaging inboxes, chasing late invoices, and answering repetitive client queries.",
                   solution: "We build custom autonomous triage agents and AI inboxes that handle repetitive communication in your exact brand tone.",
                   link: "/tools/client-response-generator",
                   linkText: "Try Free Email Drafter",
@@ -450,7 +480,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 {
                   number: "03",
                   title: "SaaS Bloat & Broken Integrations",
-                  stat: "51% unused software • $500-$2,500/mo waste",
+                  stat: isIndia ? "51% unused software • ₹40,000–₹1,50,000/mo waste" : "51% unused software • $500-$2,500/mo waste",
                   problem: "Paying for 10+ subscriptions (HubSpot, Zapier, Calendly, Airtable) where data gets siloed and connections constantly break.",
                   solution: "We consolidate your tech stack into a single, high-speed Next.js + PostgreSQL portal with zero per-seat licensing fees.",
                   link: "/tools/saas-bloat-audit",
@@ -459,12 +489,16 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 },
                 {
                   number: "04",
-                  title: "Prohibitive US Labor Costs",
-                  stat: "$150k-$220k/yr + 28% overhead per dev",
-                  problem: "US in-house engineering and domestic agencies charging $200/hr burn through startup runway in just 3 to 6 months.",
-                  solution: "Direct senior systems architecture (Aman Joshi & core engineers) delivering production-grade MVPs in 14–30 days at 70% lower cost.",
+                  title: isIndia ? "High Tech Hiring Friction & Agency Overheads" : "Prohibitive US Labor Costs",
+                  stat: isIndia ? "₹18L–₹35L/yr CTC + high attrition" : "$150k-$220k/yr + 28% overhead per dev",
+                  problem: isIndia
+                    ? "Hiring senior full-stack developers in Bengaluru, Mumbai, or Delhi costs ₹18L–₹35L CTC with 60-day notice periods, while standard agencies deliver slow, buggy WordPress templates."
+                    : "US in-house engineering and domestic agencies charging $200/hr burn through startup runway in just 3 to 6 months.",
+                  solution: isIndia
+                    ? "Direct senior systems architecture (Aman Joshi & core engineers) delivering production Next.js apps & AI systems in 2–4 weeks at predictable flat INR sprint fees."
+                    : "Direct senior systems architecture (Aman Joshi & core engineers) delivering production-grade MVPs in 14–30 days at 70% lower cost.",
                   link: "/book-call",
-                  linkText: "Book Architecture Call",
+                  linkText: isIndia ? "Book Architecture Call (IST)" : "Book Architecture Call",
                   icon: DollarSign
                 },
                 {
@@ -528,7 +562,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     Free Toolkit
                   </span>
                   <h3 className="text-2xl font-black tracking-tight leading-tight">
-                    Explore Our Free US Productivity Suite
+                    {isIndia ? "Explore Our Free Business Productivity Suite" : "Explore Our Free US Productivity Suite"}
                   </h3>
                   <p className="text-xs text-blue-100 leading-relaxed">
                     Interactive calculators, audit tools, and template generators designed to eliminate operational friction and save you hours every week.
@@ -721,8 +755,11 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">For founders & teams needing a launch-ready product shipped fast.</p>
                   </div>
                   <div className="pb-4 border-b border-slate-200 dark:border-slate-800">
-                    <span className="text-4xl font-black text-slate-900 dark:text-white">$4,500</span>
+                    <span className="text-4xl font-black text-slate-900 dark:text-white">
+                      {isIndia ? "₹1,49,000" : "$4,500"}
+                    </span>
                     <span className="text-xs text-slate-500 font-semibold ml-2">/ one-off sprint</span>
+                    {isIndia && <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1">GST Tax Invoicing Included</div>}
                   </div>
                   <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
                     <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Guaranteed 2–4 Week Delivery</li>
@@ -748,10 +785,16 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                   <div>
                     <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Continuous Velocity</span>
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">Dedicated Engineering</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Replaces full-time US hires & $20k/mo bloated agency retainers.</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+                      {isIndia
+                        ? "Replaces full-time tech hiring & ₹10L+ unpredictable agency billing."
+                        : "Replaces full-time US hires & $20k/mo bloated agency retainers."}
+                    </p>
                   </div>
                   <div className="pb-4 border-b border-blue-200 dark:border-blue-900/60">
-                    <span className="text-4xl font-black text-slate-900 dark:text-white">$5,500</span>
+                    <span className="text-4xl font-black text-slate-900 dark:text-white">
+                      {isIndia ? "₹1,85,000" : "$5,500"}
+                    </span>
                     <span className="text-xs text-slate-500 font-semibold ml-2">/ month</span>
                   </div>
                   <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
@@ -778,7 +821,9 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Engineered search dominance across Perplexity, ChatGPT & Google.</p>
                   </div>
                   <div className="pb-4 border-b border-slate-200 dark:border-slate-800">
-                    <span className="text-4xl font-black text-slate-900 dark:text-white">$2,500</span>
+                    <span className="text-4xl font-black text-slate-900 dark:text-white">
+                      {isIndia ? "₹49,999" : "$2,500"}
+                    </span>
                     <span className="text-xs text-slate-500 font-semibold ml-2">/ month</span>
                   </div>
                   <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
@@ -875,7 +920,9 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                   <tr className="border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider font-bold">
                     <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">Evaluation Metric</th>
                     <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">Legacy Agencies (e.g., WebFX)</th>
-                    <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">In-House US Developer</th>
+                    <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">
+                      {isIndia ? "In-House Senior Dev (India)" : "In-House US Developer"}
+                    </th>
                     <th className="p-5 bg-blue-600/10 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 w-1/4 border-l border-blue-200 dark:border-blue-800 font-extrabold">
                       AJPR World
                     </th>
@@ -924,11 +971,15 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                   </tr>
                   <tr>
                     <td className="p-5 font-bold text-slate-900 dark:text-white">Total Investment</td>
-                    <td className="p-5 text-slate-600 dark:text-slate-400">$5,000–$15,000/mo + software upsell fees</td>
-                    <td className="p-5 text-slate-600 dark:text-slate-400">$180,000–$240,000/yr + 28% overhead</td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">
+                      {isIndia ? "₹45,000–₹1,50,000/mo + hidden scope creep" : "$5,000–$15,000/mo + software upsell fees"}
+                    </td>
+                    <td className="p-5 text-slate-600 dark:text-slate-400">
+                      {isIndia ? "₹18,00,000–₹32,00,000/yr CTC + hiring recruiter fees" : "$180,000–$240,000/yr + 28% overhead"}
+                    </td>
                     <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
                       <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-                        <CheckCircle2 className="w-4 h-4 shrink-0" /> $4,500 sprint or $5,500/mo pod (70% savings)
+                        <CheckCircle2 className="w-4 h-4 shrink-0" /> {isIndia ? "₹1,49,000 sprint or ₹1,85,000/mo pod (Flat fee)" : "$4,500 sprint or $5,500/mo pod (70% savings)"}
                       </span>
                     </td>
                   </tr>

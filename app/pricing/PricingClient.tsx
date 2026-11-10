@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/components/providers/CartProvider';
+import { useRegion } from '@/components/providers/RegionProvider';
 
 interface Product {
   id: number;
@@ -86,15 +87,18 @@ const DEFAULT_PRODUCTS: Product[] = [
 export default function PricingClient({ products = [] }: { products?: Product[] }) {
   const activeProducts = products && products.length > 0 ? products : DEFAULT_PRODUCTS;
   const { addToCart, setIsCartOpen } = useCart();
+  const { isIndia } = useRegion();
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   const handleAddToCart = (product: Product) => {
+    const finalPrice = isIndia ? Math.round(Number(product.price) * 85) : Number(product.price);
     addToCart({
       type: 'package',
       name: product.name,
-      price: Number(product.price),
+      price: finalPrice,
       details: product.description,
-      quantity: 1
+      quantity: 1,
+      currency: isIndia ? 'INR' : 'USD'
     });
     setIsCartOpen(true);
   };
@@ -226,9 +230,15 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
                   <p className="text-slate-600 dark:text-slate-400 text-xs mb-6 min-h-[48px] leading-relaxed">{product.description}</p>
                   
                   <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
-                    <span className="text-4xl font-extrabold text-slate-900 dark:text-white">${Number(product.price).toLocaleString()}</span>
-                    <span className="text-slate-500 ml-2 text-xs uppercase font-medium">{product.currency || 'USD'}</span>
-                    <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">One-time implementation</div>
+                    <span className="text-4xl font-extrabold text-slate-900 dark:text-white">
+                      {isIndia 
+                        ? `₹${Math.round(Number(product.price) * 85).toLocaleString('en-IN')}`
+                        : `$${Number(product.price).toLocaleString('en-US')}`}
+                    </span>
+                    <span className="text-slate-500 ml-2 text-xs uppercase font-medium">{isIndia ? 'INR' : (product.currency || 'USD')}</span>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                      {isIndia ? 'One-time sprint • GST invoice included' : 'One-time implementation'}
+                    </div>
                   </div>
 
                   <div className="space-y-3 mb-8">
@@ -333,11 +343,16 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
               <div className="p-6 rounded-2xl bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 shadow-sm dark:shadow-none flex flex-col justify-between">
                 <div>
                   <div className="text-xs font-semibold text-purple-600 dark:text-purple-400 mb-1">Dedicated AI Pod</div>
-                  <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">$999<span className="text-xs text-slate-500 font-normal">/mo</span></div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">Fractional Head of AI & Automation with private Slack channel & 2h SLA.</p>
+                  <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
+                    {isIndia ? '₹49,999' : '$999'}
+                    <span className="text-xs text-slate-500 font-normal">/mo</span>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
+                    {isIndia ? 'Fractional Head of AI & Automation with direct WhatsApp/Slack channel & 2h SLA.' : 'Fractional Head of AI & Automation with private Slack channel & 2h SLA.'}
+                  </p>
                   <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300 mb-6">
                     <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-blue-500 dark:text-blue-400" /> Unlimited Workflow Optimizations</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-blue-500 dark:text-blue-400" /> Dedicated Private Slack Channel</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-blue-500 dark:text-blue-400" /> {isIndia ? 'Dedicated WhatsApp & Slack Channel' : 'Dedicated Private Slack Channel'}</li>
                     <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-blue-500 dark:text-blue-400" /> 2-Hour Critical Response SLA</li>
                     <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-blue-500 dark:text-blue-400" /> Executive Monthly Analytics Briefing</li>
                   </ul>
@@ -347,16 +362,17 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
                     addToCart({
                       type: 'package',
                       name: 'Dedicated AI Engineering Pod',
-                      price: 999,
-                      details: 'Fractional Head of AI, private Slack channel, 2-hour SLA',
-                      quantity: 1
+                      price: isIndia ? 49999 : 999,
+                      details: isIndia ? 'Fractional Head of AI, private WhatsApp/Slack channel, 2h SLA' : 'Fractional Head of AI, private Slack channel, 2-hour SLA',
+                      quantity: 1,
+                      currency: isIndia ? 'INR' : 'USD'
                     });
                     setIsCartOpen(true);
                   }}
                   variant="outline" 
                   className="w-full border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-800"
                 >
-                  Add Dedicated Pod ($999/mo)
+                  {isIndia ? 'Add Dedicated Pod (₹49,999/mo)' : 'Add Dedicated Pod ($999/mo)'}
                 </Button>
               </div>
             </div>
@@ -384,7 +400,9 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
                 How Much Does SEO Cost? (2026 Guide) →
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Realistic retainers range from $1,500 to $10,000/mo. Compare hourly vs project vs ongoing performance tiers.
+                {isIndia 
+                  ? 'Realistic retainers range from ₹24,999 to ₹1,49,000/mo. Compare hourly vs project vs ongoing performance tiers.'
+                  : 'Realistic retainers range from $1,500 to $10,000/mo. Compare hourly vs project vs ongoing performance tiers.'}
               </p>
             </a>
 
@@ -397,7 +415,9 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
                 PPC Management Cost Breakdown →
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Discover standard flat fees ($1,500–$5,000/mo) vs % of ad spend (10-20%) with zero media markups.
+                {isIndia
+                  ? 'Discover standard flat fees (₹24,999–₹75,000/mo) vs % of ad spend (10-20%) with zero media markups.'
+                  : 'Discover standard flat fees ($1,500–$5,000/mo) vs % of ad spend (10-20%) with zero media markups.'}
               </p>
             </a>
 
@@ -410,7 +430,9 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
                 Custom Website Cost Guide (2026) →
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                From $3,500 startup sites to $25,000+ custom Next.js platforms. See exact scope and timeline deliverables.
+                {isIndia
+                  ? 'From ₹1,49,000 startup sites to ₹5,00,000+ custom Next.js platforms. See exact scope and timeline deliverables.'
+                  : 'From $3,500 startup sites to $25,000+ custom Next.js platforms. See exact scope and timeline deliverables.'}
               </p>
             </a>
           </div>

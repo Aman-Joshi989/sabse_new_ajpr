@@ -112,6 +112,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import { CartProvider } from '@/components/providers/CartProvider'
+import { RegionProvider } from '@/components/providers/RegionProvider'
 import dynamic from 'next/dynamic'
 const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'))
 const HermesChatWidget = dynamic(() => import('@/components/HermesChatWidget'))
@@ -188,31 +189,33 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <CartProvider>
-              <LayoutClientEffect />
-              <Header services={services} />
-              <main className='min-h-screen pb-16 md:pb-0'>
-                {children}
-              </main>
-              <MobileActionDock />
-              <ExitIntentPopup />
-              <Footer services={services} blogs={blogs} />
-              <Toaster />
-              <Analytics />
-              <SpeedInsights />
-              <OrganizationSchema />
-              <LocalBusinessSchema />
-              <HermesChatWidget />
-              <Script
-                id="ahrefs-analytics"
-                src="/analytics/ahrefs.js"
-                data-key="NBGEPf0K5JrRzkOhDpu04A"
-                data-api="https://analytics.ahrefs.com/api/event"
-                data-error="https://analytics.ahrefs.com/api/error"
-                strategy="lazyOnload"
-                async
-              />
-            </CartProvider>
+            <RegionProvider>
+              <CartProvider>
+                <LayoutClientEffect />
+                <Header services={services} />
+                <main className='min-h-screen pb-16 md:pb-0'>
+                  {children}
+                </main>
+                <MobileActionDock />
+                <ExitIntentPopup />
+                <Footer services={services} blogs={blogs} />
+                <Toaster />
+                <Analytics />
+                <SpeedInsights />
+                <OrganizationSchema />
+                <LocalBusinessSchema />
+                <HermesChatWidget />
+                <Script
+                  id="ahrefs-analytics"
+                  src="/analytics/ahrefs.js"
+                  data-key="NBGEPf0K5JrRzkOhDpu04A"
+                  data-api="https://analytics.ahrefs.com/api/event"
+                  data-error="https://analytics.ahrefs.com/api/error"
+                  strategy="lazyOnload"
+                  async
+                />
+              </CartProvider>
+            </RegionProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

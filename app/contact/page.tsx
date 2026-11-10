@@ -1,12 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, Globe, Linkedin, CheckCircle2, Calendar, MessageCircle, RotateCcw, Clock, ShieldCheck, Mail } from 'lucide-react'
+import { ArrowRight, Globe, Linkedin, CheckCircle2, Calendar, MessageCircle, RotateCcw, Clock, ShieldCheck, Mail, Send } from 'lucide-react'
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import EmailLink from '@/components/EmailLink';
+import { useRegion } from '@/components/providers/RegionProvider';
 
 interface SubmittedInfo {
     name: string;
@@ -20,6 +21,7 @@ interface SubmittedInfo {
 }
 
 export default function ApplicationPage() {
+    const { isIndia } = useRegion()
     const [form, setForm] = useState({
         fullName: '',
         workEmail: '',
@@ -135,7 +137,9 @@ ${form.blockersText}
                                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">What's Next.</span>
                                 </h1>
                                 <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-lg animate-fade-up">
-                                    We partner with ambitious founders and growth-focused businesses to build scalable digital systems and product-driven infrastructure.
+                                    {isIndia
+                                        ? 'We partner with Indian founders and ambitious companies to engineer scalable Next.js platforms, AI systems, and custom software. Fast sprint delivery with GST invoicing.'
+                                        : 'We partner with ambitious founders and growth-focused businesses to engineer scalable digital systems, Next.js web applications, and custom AI infrastructure.'}
                                 </p>
                                 <div className="animate-fade-up">
                                     <Button onClick={scrollToForm} size="lg" className="h-12 px-8 text-sm md:text-base rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold transition-all shadow-md">
@@ -253,25 +257,38 @@ ${form.blockersText}
                                                 >
                                                     <span className="flex items-center gap-2">
                                                         <Calendar className="w-4 h-4" />
-                                                        Schedule 15-Minute Scoping Call
+                                                        {isIndia ? 'Schedule 15-Minute Scoping Call (IST)' : 'Schedule 15-Minute Scoping Call (US Hours)'}
                                                     </span>
                                                     <span className="text-xs bg-blue-700/60 px-2 py-0.5 rounded font-normal">Calendar</span>
                                                 </a>
 
-                                                <a
-                                                    href={`https://wa.me/919997205257?text=${encodeURIComponent(
-                                                        `Hi Aman, I just submitted an application on AJPR World (Ref: ${submittedInfo.referenceId}) for ${submittedInfo.companyName || submittedInfo.name} and would like to connect directly.`
-                                                    )}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center justify-between w-full px-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-md transition-all active:scale-[0.99]"
-                                                >
-                                                    <span className="flex items-center gap-2">
-                                                        <MessageCircle className="w-4 h-4" />
-                                                        Chat Directly on WhatsApp
-                                                    </span>
-                                                    <span className="text-xs bg-emerald-700/60 px-2 py-0.5 rounded font-normal">+91 9997205257</span>
-                                                </a>
+                                                {isIndia ? (
+                                                    <a
+                                                        href={`https://wa.me/919997424915?text=${encodeURIComponent(
+                                                            `Hi Aman, I just submitted an application on AJPR World (Ref: ${submittedInfo.referenceId}) for ${submittedInfo.companyName || submittedInfo.name} and would like to connect directly.`
+                                                        )}`}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center justify-between w-full px-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold shadow-md transition-all active:scale-[0.99]"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <MessageCircle className="w-4 h-4" />
+                                                            Chat Directly on WhatsApp
+                                                        </span>
+                                                        <span className="text-xs bg-emerald-700/60 px-2 py-0.5 rounded font-normal">+91 99974 24915</span>
+                                                    </a>
+                                                ) : (
+                                                    <a
+                                                        href={`mailto:hello@ajprworld.com?subject=Application%20Ref:%20${submittedInfo.referenceId}%20-%20${encodeURIComponent(submittedInfo.companyName || submittedInfo.name)}`}
+                                                        className="flex items-center justify-between w-full px-4 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-sm font-bold shadow-md transition-all active:scale-[0.99]"
+                                                    >
+                                                        <span className="flex items-center gap-2">
+                                                            <Send className="w-4 h-4 text-blue-400" />
+                                                            Email Lead Architect Directly
+                                                        </span>
+                                                        <span className="text-xs bg-slate-700 px-2 py-0.5 rounded font-mono text-slate-300">hello@ajprworld.com</span>
+                                                    </a>
+                                                )}
                                             </div>
                                         </div>
 
@@ -323,20 +340,42 @@ ${form.blockersText}
                                                     <select id="monthlyRevenue" name="monthlyRevenue" value={form.monthlyRevenue} onChange={handleChange} required className="h-14 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
                                                         <option value="" disabled>Select Revenue Level</option>
                                                         <option value="Pre-revenue">Pre-revenue / Seed</option>
-                                                        <option value="$0 - $10k">$0 - $10k / mo</option>
-                                                        <option value="$10k - $50k">$10k - $50k / mo</option>
-                                                        <option value="$50k - $100k">$50k - $100k / mo</option>
-                                                        <option value="$100k+">$100k+ / mo</option>
+                                                        {isIndia ? (
+                                                            <>
+                                                                <option value="₹0 - ₹5 Lakhs">₹0 – ₹5 Lakhs / mo</option>
+                                                                <option value="₹5L - ₹20 Lakhs">₹5 Lakhs – ₹20 Lakhs / mo</option>
+                                                                <option value="₹20L - ₹50 Lakhs">₹20 Lakhs – ₹50 Lakhs / mo</option>
+                                                                <option value="₹50 Lakhs+">₹50 Lakhs+ / mo</option>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <option value="$0 - $10k">$0 – $10k / mo</option>
+                                                                <option value="$10k - $50k">$10k – $50k / mo</option>
+                                                                <option value="$50k - $100k">$50k – $100k / mo</option>
+                                                                <option value="$100k+">$100k+ / mo</option>
+                                                            </>
+                                                        )}
                                                     </select>
                                                 </div>
                                                 <div className="space-y-3 flex flex-col">
                                                     <Label htmlFor="budgetRange" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Project Budget Range</Label>
                                                     <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={handleChange} required className="h-14 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
                                                         <option value="" disabled>Select a range</option>
-                                                        <option value="$5k - $10k">$5,000 - $10,000</option>
-                                                        <option value="$10k - $25k">$10,000 - $25,000</option>
-                                                        <option value="$25k - $50k">$25,000 - $50,000</option>
-                                                        <option value="$50k+">$50,000+</option>
+                                                        {isIndia ? (
+                                                            <>
+                                                                <option value="₹1.5L - ₹3L">₹1,49,000 – ₹2,99,000 (Sprint MVP)</option>
+                                                                <option value="₹3L - ₹6L">₹2,99,000 – ₹5,99,000 (Full Platform)</option>
+                                                                <option value="₹6L - ₹15L">₹5,99,000 – ₹15,00,000 (Custom / AI)</option>
+                                                                <option value="₹15L+">₹15,00,000+</option>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <option value="$4.5k - $7.5k">$4,500 – $7,500 (Sprint MVP)</option>
+                                                                <option value="$7.5k - $15k">$7,500 – $15,000 (Full Platform)</option>
+                                                                <option value="$15k - $35k">$15,000 – $35,000 (Custom / AI)</option>
+                                                                <option value="$35k+">$35,000+</option>
+                                                            </>
+                                                        )}
                                                     </select>
                                                 </div>
                                             </div>
@@ -395,7 +434,11 @@ ${form.blockersText}
                     {/* 6. Authority Strip */}
                     <div className="mt-32 pt-8 border-t border-slate-200 dark:border-white/10 flex flex-col md:flex-row items-center justify-between text-slate-500 font-bold text-sm tracking-widest uppercase gap-4">
                         <div className="flex items-center gap-2">
-                            Built in India. <Globe className="w-4 h-4 ml-2 mr-2 opacity-50 text-blue-500" /> Partnering Globally.
+                            {isIndia ? (
+                                <>Pan-India Delivery <Globe className="w-4 h-4 ml-2 mr-2 opacity-50 text-blue-500" /> Haldwani, Nainital &amp; Delhi NCR &bull; GST Invoicing</>
+                            ) : (
+                                <>Senior US Engineering Pods <Globe className="w-4 h-4 ml-2 mr-2 opacity-50 text-blue-500" /> Delaware-Friendly Contracts &bull; Wire &amp; Cards</>
+                            )}
                         </div>
                         <div className="flex items-center gap-6">
                             <EmailLink className="hover:text-blue-400 transition-colors text-slate-500 font-bold" />

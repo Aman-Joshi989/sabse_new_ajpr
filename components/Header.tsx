@@ -52,6 +52,8 @@ const iconRegistry: Record<string, any> = {
 }
 
 import { ModeToggle } from '@/components/mode-toggle'
+import RegionSelector from '@/components/RegionSelector'
+import { useRegion } from '@/components/providers/RegionProvider'
 import { useTheme } from 'next-themes'
 import { useCart } from '@/components/providers/CartProvider'
 import CartDrawer from '@/components/CartDrawer'
@@ -235,7 +237,8 @@ export default function Header({ services }: { services?: any[] }) {
                 </nav>
 
                 {/* Right Side Actions */}
-                <div className="hidden lg:flex items-center space-x-3">
+                <div className="hidden lg:flex items-center space-x-2.5">
+                    <RegionSelector />
                     <ModeToggle />
 
                     <Button
@@ -312,7 +315,8 @@ export default function Header({ services }: { services?: any[] }) {
                 </div>
 
                 {/* Mobile Navigation */}
-                <div className="lg:hidden flex items-center space-x-2">
+                <div className="lg:hidden flex items-center space-x-1.5">
+                    <RegionSelector />
                     <ModeToggle />
 
                     <Button

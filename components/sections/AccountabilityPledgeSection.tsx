@@ -19,39 +19,43 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-
-const RESPONSIBILITY_PILLARS = [
-  {
-    icon: ShieldCheck,
-    title: "30-Day Zero-Excuses Bug & Stability Warranty",
-    promise: "Every sprint deliverable is covered by our 30-day post-launch warranty. If an edge case, latency bottleneck, or bug arises in our code, we fix it immediately on our own time.",
-    legacyAgency: "Bills $150–$250/hr to fix their own oversights or claims it was 'out of scope.'",
-    color: "emerald"
-  },
-  {
-    icon: DollarSign,
-    title: "Milestone-Locked Pricing (Zero Surprise Invoices)",
-    promise: "The fixed milestone quote we agree on is the exact price you pay. Zero hidden change orders, zero billing for discovery decks, and zero monthly retainer traps.",
-    legacyAgency: "Quotes low to win the bid, then floods you with unexpected scope change fees.",
-    color: "blue"
-  },
-  {
-    icon: Lock,
-    title: "100% Private GitHub & Code IP Ownership",
-    promise: "Every commit is pushed directly to your private company GitHub. You own 100% of the repository, database schemas, and documentation. Zero proprietary vendor lock-in.",
-    legacyAgency: "Holds custom code hostage in closed hosting accounts to force indefinite lock-in.",
-    color: "indigo"
-  },
-  {
-    icon: Clock,
-    title: "On-Time Sprint SLA (14 to 30 Days)",
-    promise: "We ship functional, test-covered software in 2 to 4 week sprints. If we miss an agreed launch milestone due to our execution, we work without charge until it is live.",
-    legacyAgency: "Endless 6-to-9 month timelines that burn startup runway before real users see software.",
-    color: "purple"
-  }
-]
+import { useRegion } from '@/components/providers/RegionProvider'
 
 export default function AccountabilityPledgeSection() {
+  const { isIndia } = useRegion()
+
+  const RESPONSIBILITY_PILLARS = [
+    {
+      icon: ShieldCheck,
+      title: "30-Day Zero-Excuses Bug & Stability Warranty",
+      promise: "Every sprint deliverable is covered by our 30-day post-launch warranty. If an edge case, latency bottleneck, or bug arises in our code, we fix it immediately on our own time.",
+      legacyAgency: isIndia 
+        ? "Bills ₹2,500–₹5,000/hr to fix their own oversights or claims it was 'out of scope.'" 
+        : "Bills $150–$250/hr to fix their own oversights or claims it was 'out of scope.'",
+      color: "emerald"
+    },
+    {
+      icon: DollarSign,
+      title: "Milestone-Locked Pricing (Zero Surprise Invoices)",
+      promise: "The fixed milestone quote we agree on is the exact price you pay. Zero hidden change orders, zero billing for discovery decks, and zero monthly retainer traps.",
+      legacyAgency: "Quotes low to win the bid, then floods you with unexpected scope change fees.",
+      color: "blue"
+    },
+    {
+      icon: Lock,
+      title: "100% Private GitHub & Code IP Ownership",
+      promise: "Every commit is pushed directly to your private company GitHub. You own 100% of the repository, database schemas, and documentation. Zero proprietary vendor lock-in.",
+      legacyAgency: "Holds custom code hostage in closed hosting accounts to force indefinite lock-in.",
+      color: "indigo"
+    },
+    {
+      icon: Clock,
+      title: "On-Time Sprint SLA (14 to 30 Days)",
+      promise: "We ship functional, test-covered software in 2 to 4 week sprints. If we miss an agreed launch milestone due to our execution, we work without charge until it is live.",
+      legacyAgency: "Endless 6-to-9 month timelines that burn startup runway before real users see software.",
+      color: "purple"
+    }
+  ]
   return (
     <section 
       aria-labelledby="accountability-heading"
@@ -193,7 +197,7 @@ export default function AccountabilityPledgeSection() {
                 className="h-12 rounded-2xl border-slate-700 bg-slate-800/70 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-semibold transition-colors"
               >
                 <Link href="/pricing">
-                  Review Transparent Sprint Pricing ($4,500+)
+                  {isIndia ? 'Review Transparent Sprint Pricing (₹1,49,000+)' : 'Review Transparent Sprint Pricing ($4,500+)'}
                 </Link>
               </Button>
 

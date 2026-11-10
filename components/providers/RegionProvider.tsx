@@ -17,51 +17,92 @@ interface RegionContextType {
 
 const RegionContext = createContext<RegionContextType | undefined>(undefined);
 
-export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
-  const [region, setRegionState] = useState<Region>('US');
+export const RegionProvider = ({ 
+  children,
+  initialRegion = 'US'
+}: { 
+  children: React.ReactNode;
+  initialRegion?: Region;
+}) => {
+  const getInitialRegion = (): Region => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('ajpr_region');
+        if (saved === 'IN' || saved === 'US') return saved as Region;
+        const cookieMatch = document.cookie.match(/ajpr_region=(US|IN)/);
+        if (cookieMatch) return cookieMatch[1] as Region;
+        const tz = (Intl && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions().timeZone) || '';
+        const offset = new Date().getTimezoneOffset();
+        const lang = navigator.language || '';
+        if (
+          tz.includes('Calcutta') ||
+          tz.includes('Kolkata') ||
+          tz.includes('India') ||
+          offset === -330 ||
+          lang.endsWith('-IN') ||
+          lang === 'hi'
+        ) {
+          return 'IN';
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+    return initialRegion;
+  };
+
+  const [region, setRegionState] = useState<Region>(getInitialRegion);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // 1. Check localStorage
+    // 1. Check explicit localStorage
     const saved = localStorage.getItem('ajpr_region');
     if (saved === 'US' || saved === 'IN') {
-      setRegionState(saved);
+      if (saved !== region) setRegionState(saved);
       return;
     }
 
     // 2. Check Cookie
     const cookieMatch = document.cookie.match(/ajpr_region=(US|IN)/);
     if (cookieMatch) {
-      setRegionState(cookieMatch[1] as Region);
+      const cRegion = cookieMatch[1] as Region;
+      if (cRegion !== region) setRegionState(cRegion);
       return;
     }
 
-    // 3. Client Timezone & Locale auto-detection
+    // 3. Client Timezone, UTC Offset & Locale automatic trigger
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-      if (tz.includes('Calcutta') || tz.includes('Kolkata') || tz.includes('India')) {
-        setRegionState('IN');
-        localStorage.setItem('ajpr_region', 'IN');
-        localStorage.setItem('ajpr_currency', 'INR');
-        document.cookie = 'ajpr_region=IN; path=/; max-age=31536000';
+      const offset = new Date().getTimezoneOffset(); // -330 for IST (UTC+5:30)
+      const lang = navigator.language || '';
+      const isIndianSystem = 
+        tz.includes('Calcutta') || 
+        tz.includes('Kolkata') || 
+        tz.includes('India') || 
+        offset === -330 || 
+        lang.endsWith('-IN') ||
+        lang === 'hi';
+
+      if (isIndianSystem) {
+        setRegion('IN');
         return;
       }
 
-      const lang = navigator.language || '';
-      if (lang.endsWith('-IN')) {
-        setRegionState('IN');
-        localStorage.setItem('ajpr_region', 'IN');
-        localStorage.setItem('ajpr_currency', 'INR');
-        document.cookie = 'ajpr_region=IN; path=/; max-age=31536000';
-        return;
-      }
+      // 4. Background edge IP verification via /api/geo
+      fetch('/api/geo')
+        .then(res => res.json())
+        .then(data => {
+          if (data?.region && (data.region === 'IN' || data.region === 'US')) {
+            if (data.region !== region) {
+              setRegion(data.region);
+            }
+          }
+        })
+        .catch(() => {});
     } catch (e) {
       // Ignore detection errors
     }
-
-    // Default to US
-    setRegionState('US');
   }, []);
 
   const setRegion = (newRegion: Region) => {
@@ -126,3 +167,4 @@ export const useRegion = () => {
   }
   return context;
 };
+

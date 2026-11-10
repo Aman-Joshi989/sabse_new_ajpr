@@ -172,6 +172,37 @@ export default async function RootLayout({
             `,
           }}
         />
+        {/* Instant Synchronous Regional & Currency Auto-Detector */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('ajpr_region');
+                  if (!saved) {
+                    var cookieMatch = document.cookie.match(/ajpr_region=(US|IN)/);
+                    if (cookieMatch) {
+                      saved = cookieMatch[1];
+                      localStorage.setItem('ajpr_region', saved);
+                    }
+                  }
+                  if (!saved) {
+                    var tz = (Intl && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions().timeZone) || '';
+                    var offset = new Date().getTimezoneOffset();
+                    var lang = navigator.language || '';
+                    var isIndia = tz.indexOf('Calcutta') !== -1 || tz.indexOf('Kolkata') !== -1 || tz.indexOf('India') !== -1 || offset === -330 || lang.indexOf('-IN') !== -1 || lang === 'hi';
+                    var reg = isIndia ? 'IN' : 'US';
+                    var cur = isIndia ? 'INR' : 'USD';
+                    localStorage.setItem('ajpr_region', reg);
+                    localStorage.setItem('ajpr_currency', cur);
+                    document.cookie = 'ajpr_region=' + reg + '; path=/; max-age=31536000; SameSite=Lax';
+                    document.cookie = 'ajpr_currency=' + cur + '; path=/; max-age=31536000; SameSite=Lax';
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
       </head>
       <body className={`${inter.variable} ${manrope.variable} font-sans`} suppressHydrationWarning>
         <noscript>

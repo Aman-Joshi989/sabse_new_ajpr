@@ -38,6 +38,38 @@ export async function proxy(request: NextRequest) {
         });
     }
 
+    // 1.5. Automatic Edge Geolocation & Region Detection
+    const existingRegionCookie = request.cookies.get('ajpr_region')?.value;
+    let activeRegion = existingRegionCookie;
+
+    if (!activeRegion || (activeRegion !== 'IN' && activeRegion !== 'US')) {
+        const geoCountry = (
+            request.headers.get('x-vercel-ip-country') ||
+            request.headers.get('cf-ipcountry') ||
+            request.headers.get('x-country-code') ||
+            (request as any).geo?.country ||
+            ''
+        ).toUpperCase();
+
+        const acceptLang = request.headers.get('accept-language') || '';
+        const isIndiaLang = acceptLang.includes('en-IN') || acceptLang.includes('hi-IN') || acceptLang.includes('hi');
+
+        activeRegion = (geoCountry === 'IN' || isIndiaLang) ? 'IN' : 'US';
+
+        nextResponse.cookies.set('ajpr_region', activeRegion, {
+            path: '/',
+            maxAge: 31536000,
+            sameSite: 'lax',
+        });
+        nextResponse.cookies.set('ajpr_currency', activeRegion === 'IN' ? 'INR' : 'USD', {
+            path: '/',
+            maxAge: 31536000,
+            sameSite: 'lax',
+        });
+    }
+
+    requestHeaders.set('x-user-region', activeRegion);
+
     // 2. Check Authentication for Dashboard Routes
     if (request.nextUrl.pathname.startsWith('/dashboard')) {
         const sessionCookie = request.cookies.get('session')?.value;

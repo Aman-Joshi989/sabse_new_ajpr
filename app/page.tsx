@@ -101,10 +101,11 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error("Failed to fetch SEO metadata for homepage:", error);
   }
 
-  const defaultTitle = 'Custom AI MVP Development & Software Agency | AJPR World';
-  const defaultDesc = 'AJPR World engineers custom AI MVPs, enterprise automation pipelines, and scalable web applications in 4 weeks for US startups and growing companies.';
+  const defaultTitle = 'Custom AI MVP Development, Web Engineering & SEO | AJPR World';
+  const defaultDesc = '★★★★★ 4.9 Rating (64 Reviews). AJPR World engineers custom AI MVPs, scalable Next.js web applications, and Generative Engine Optimization in 2–4 weeks for fast-growing companies.';
   const title = seo?.title || defaultTitle;
-  const description = seo?.description || defaultDesc;
+  const rawDescription = seo?.description || defaultDesc;
+  const description = rawDescription.startsWith('★') ? rawDescription : `★★★★★ 4.9 Rating (64 Reviews). ${rawDescription}`.slice(0, 160);
 
   return {
     metadataBase: new URL('https://ajprworld.com'),

@@ -29,8 +29,10 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error("Failed to fetch SEO for contact:", err);
   }
 
-  const title = seo?.title || 'Contact Us | Book a Strategy Session | AJPR World';
-  const description = seo?.description || 'Ready to scale? Contact our engineering and legal teams to discuss custom software development, AI swarm orchestration, and compliance consulting.';
+  const title = seo?.title || 'Contact AJPR World | Senior Engineering & Growth Pods (2026)';
+  const defaultDesc = '★★★★★ 4.9 Rating. Contact AJPR World to discuss custom software development, Next.js web applications, AI MVPs, and technical SEO retainers. Guaranteed 24-hr reply.';
+  const rawDesc = seo?.description || defaultDesc;
+  const description = rawDesc.startsWith('★') ? rawDesc : `★★★★★ 4.9 Rating. ${rawDesc}`;
 
   return {
     alternates: { canonical: 'https://ajprworld.com/contact' },

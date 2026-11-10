@@ -103,6 +103,14 @@ export default async function AmanJoshiPage() {
       url: 'https://ajprworld.com'
     },
     description: founderBio,
+    knowsAbout: [
+      'Custom AI MVP Development',
+      'Next.js 16 Web Engineering',
+      'Generative Engine Optimization (GEO)',
+      'Technical SEO & Core Web Vitals',
+      'PostgreSQL & pgvector',
+      'Autonomous AI Agent Architecture'
+    ],
     sameAs: [
       founderLinkedin,
       founderGithub

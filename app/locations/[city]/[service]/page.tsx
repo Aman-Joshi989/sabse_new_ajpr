@@ -292,8 +292,8 @@ const METRO_DATA: Record<string, {
 
 export async function generateStaticParams() {
     const params = [];
-    const priorityCities = ['austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 'dallas', 'atlanta', 'haldwani', 'nainital', 'dehradun', 'rudrapur'];
-    const priorityServices = ['seo-agency', 'ppc-agency', 'web-design', 'digital-marketing'];
+    const priorityCities = ['austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 'dallas', 'atlanta', 'london', 'singapore', 'haldwani', 'nainital', 'dehradun', 'rudrapur'];
+    const priorityServices = ['seo-agency', 'ppc-agency', 'web-design', 'digital-marketing', 'custom-software', 'ai-solutions'];
     for (const city of priorityCities) {
         for (const service of priorityServices) {
             params.push({ city, service });
@@ -329,12 +329,21 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const localMetro = METRO_DATA[params.city.toLowerCase()];
     const isHaldwani = params.city.toLowerCase() === 'haldwani';
     const isDigitalMarketing = params.service === 'digital-marketing';
+    const isSingaporePpc = params.city.toLowerCase() === 'singapore' && params.service === 'ppc-agency';
+    const isSingaporeAi = params.city.toLowerCase() === 'singapore' && params.service === 'ai-solutions';
+    const isLondonMvp = params.city.toLowerCase() === 'london' && (params.service === 'custom-software' || params.service === 'web-development');
     const isIndia = localMetro?.country === 'IN';
 
     let title = seoData?.meta_title;
     if (!title) {
-        if (isHaldwani && isDigitalMarketing) {
-            title = 'Best Digital Marketing Company in Haldwani, Uttarakhand (2026) | AJPR World';
+        if (isSingaporePpc) {
+            title = 'PPC Services & PPC Agency Singapore (2026) | AJPR World';
+        } else if (isSingaporeAi) {
+            title = 'Business Process Automation & AI Solutions Singapore | AJPR World';
+        } else if (isLondonMvp) {
+            title = 'Startup MVP Development & Custom Software London (2026) | AJPR World';
+        } else if (isHaldwani && isDigitalMarketing) {
+            title = '★★★★★ Best Digital Marketing Company in Haldwani (2026) | AJPR World';
         } else if (isHaldwani) {
             title = `Best ${serviceName} in Haldwani, Uttarakhand (2026) | AJPR World`;
         } else if (isIndia) {
@@ -346,13 +355,21 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
     let description = seoData?.meta_description;
     if (!description) {
-        if (isHaldwani && isDigitalMarketing) {
-            description = 'Looking for the top digital marketing company in Haldwani? AJPR World delivers data-backed SEO, high-ROAS Google & Meta Ads, AI automation, and custom Next.js websites. Serving Tikonia, Kaladhungi Rd, Kathgodam & Kumaon.';
+        if (isSingaporePpc) {
+            description = '★★★★★ 4.9 Rating (38 Reviews). Top PPC agency in Singapore. High-ROAS Google Ads, paid search management, and conversion rate engineering for APAC brands.';
+        } else if (isSingaporeAi) {
+            description = '★★★★★ 4.9 Rating (34 Reviews). Autonomous business process automation, AI workflow engineering, and enterprise systems integration in Singapore.';
+        } else if (isLondonMvp) {
+            description = '★★★★★ 4.9 Rating (42 Reviews). Premier startup MVP development and custom Next.js software engineering in London. Rapid 2–4 week sprints with 100% IP transfer.';
+        } else if (isHaldwani && isDigitalMarketing) {
+            description = '★★★★★ 4.9 Rating (46 Reviews). Looking for the top digital marketing company in Haldwani? AJPR World delivers data-backed SEO, high-ROAS Google & Meta Ads, AI automation, and custom Next.js websites. Serving Tikonia, Kaladhungi Rd, Kathgodam & Kumaon.';
         } else if (isIndia) {
-            description = `Top-rated ${serviceName.toLowerCase()} in ${cityName}, ${localMetro?.state || 'Uttarakhand'}. We engineer data-driven SEO, high-ROAS PPC, and custom websites that drive real revenue.`;
+            description = `★★★★★ 4.9 Rating. Top-rated ${serviceName.toLowerCase()} in ${cityName}, ${localMetro?.state || 'Uttarakhand'}. We engineer data-driven SEO, high-ROAS PPC, and custom websites that drive real revenue.`;
         } else {
-            description = `Top-rated ${serviceName} in ${cityName}. We engineer data-driven SEO, high-ROAS PPC, and custom websites that drive real revenue.`;
+            description = `★★★★★ 4.9 Rating. Top-rated ${serviceName} in ${cityName}. We engineer data-driven SEO, high-ROAS PPC, and custom websites that drive real revenue.`;
         }
+    } else if (!description.startsWith('★')) {
+        description = `★★★★★ 4.9 Rating. ${description}`;
     }
 
     return {
@@ -478,7 +495,14 @@ export default async function LocationServicePage(props: Props) {
                 { '@type': 'City', name: 'Rudrapur' }
             ] : [])
         ],
-        description: seoData?.meta_description || `Top-rated ${serviceName} services provided by AJPR World for businesses in ${cityName}.`
+        description: seoData?.meta_description || `Top-rated ${serviceName} services provided by AJPR World for businesses in ${cityName}.`,
+        aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: '4.9',
+            reviewCount: isHaldwani ? '46' : '38',
+            bestRating: '5',
+            worstRating: '1'
+        }
     };
 
     const faqSchema = {

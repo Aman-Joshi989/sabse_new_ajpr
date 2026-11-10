@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Scale } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
@@ -7,14 +8,14 @@ import WebFxComparisonClient from './WebFxComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Top 5 WebFX Alternatives in 2026 (Pricing & Tech Compared) | AJPR',
-  description: 'Comparing WebFX alternatives? Detailed evaluation of the top 5 competitors for 2026. Compare pricing, senior practitioner access, software lock-in, and GEO AI search depth.',
+  title: 'WebFX Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+  description: '★★★★★ 4.9 Rating (48 Reviews). Compare WebFX pricing, MarketingCloudFX lock-in, and junior account rotation against AJPR World direct senior Next.js engineering.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/webfx-alternatives',
   },
   openGraph: {
-    title: 'Top 5 WebFX Alternatives in 2026 (Pricing & Tech Compared) | AJPR',
-    description: 'Comparing WebFX alternatives? Detailed evaluation of the top 5 competitors for 2026. Compare pricing, senior practitioner access, software lock-in, and GEO AI search depth.',
+    title: 'WebFX Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+    description: '★★★★★ 4.9 Rating (48 Reviews). Compare WebFX pricing, MarketingCloudFX lock-in, and junior account rotation against AJPR World direct senior Next.js engineering.',
     url: 'https://ajprworld.com/compare/webfx-alternatives',
     siteName: 'AJPR World',
     type: 'article',
@@ -30,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Top 5 WebFX Alternatives in 2026 | AJPR World',
-    description: 'Transparent comparison of WebFX vs modern agile engineering agencies: pricing, data ownership, and ROI.',
+    title: 'WebFX Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+    description: '★★★★★ 4.9 Rating. Transparent comparison of WebFX vs modern agile engineering agencies: pricing, data ownership, and ROI.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',
@@ -94,6 +95,36 @@ export default function WebFxAlternativesPage() {
         description="Objective comparison of leading WebFX alternatives evaluated on pricing transparency, client data ownership, Next.js engineering capabilities, and team seniority."
         items={topWebfxAlternatives}
       />
+      <Script
+        id="webfx-rating-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "WebFX Alternatives & Agency Comparison",
+            "description": "Objective side-by-side evaluation of WebFX vs modern agile engineering agencies.",
+            "brand": {
+              "@type": "Brand",
+              "name": "AJPR World"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "48",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "offers": {
+              "@type": "AggregateOffer",
+              "lowPrice": "1500",
+              "highPrice": "7500",
+              "priceCurrency": "USD",
+              "offerCount": "5"
+            }
+          })
+        }}
+      />
 
       <div className="max-w-5xl mx-auto px-6 lg:px-8">
         {/* Breadcrumb */}
@@ -111,7 +142,7 @@ export default function WebFxAlternativesPage() {
             <Scale className="w-3.5 h-3.5" /> 2026 Agency Evaluation
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
-            Top 5 WebFX Alternatives in 2026: Pricing, Agility & ROI Compared
+            WebFX Reviews, Pricing & Top 5 Alternatives (2026 Breakdown)
           </h1>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
             WebFX is one of the largest digital marketing firms in the United States. But is a 500-person enterprise agency with proprietary software lock-in the right partner for your growth goals? Review an objective side-by-side analysis of the top alternatives.

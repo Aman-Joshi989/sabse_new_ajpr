@@ -27,6 +27,13 @@ export const OrganizationSchema = async () => {
     description: settings?.seo_description || 'AJPR World is a premier technology and software engineering firm delivering custom AI MVPs, enterprise workflow automation, full-stack Next.js web applications, and Generative Engine Optimization (GEO) for fast-growing US companies.',
     slogan: 'Custom AI MVPs, Scalable Web Systems & Enterprise Automation in 4 Weeks',
     foundingDate: '2024',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '64',
+      bestRating: '5',
+      worstRating: '1'
+    },
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Nainital Road / Kaladhungi Road',

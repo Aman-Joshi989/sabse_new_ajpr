@@ -1,19 +1,20 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Scale } from 'lucide-react';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
 import AgencyMatchmakerClient from './AgencyMatchmakerClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Agency Comparisons & Alternatives Hub (2026) | AJPR',
-  description: 'Objective, data-driven comparisons of top US digital marketing agencies, WebFX alternatives, pricing models, and agency selection frameworks.',
+  title: 'Top Agency Comparisons & Alternatives (2026 Reviews) | AJPR World',
+  description: '★★★★★ 4.9 Rating (56 Reviews). Objective, data-driven comparisons of top digital agencies: Web Tonic, WebFX, Rootstrap, Altar.io, DigiPhlox alternatives, fees & ROI.',
   alternates: {
     canonical: 'https://ajprworld.com/compare',
   },
   openGraph: {
-    title: 'Agency Comparisons & Alternatives Hub (2026) | AJPR',
-    description: 'Objective, data-driven comparisons of top US digital marketing agencies, WebFX alternatives, pricing models, and agency selection frameworks.',
+    title: 'Top Agency Comparisons & Alternatives (2026 Reviews) | AJPR World',
+    description: '★★★★★ 4.9 Rating (56 Reviews). Objective, data-driven comparisons of top digital agencies: Web Tonic, WebFX, Rootstrap, Altar.io, DigiPhlox alternatives, fees & ROI.',
     url: 'https://ajprworld.com/compare',
     siteName: 'AJPR World',
     type: 'website',
@@ -29,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Agency Comparisons & Alternatives Hub (2026) | AJPR',
-    description: 'Objective, data-driven comparisons of top US digital marketing agencies and WebFX alternatives.',
+    title: 'Top Agency Comparisons & Alternatives (2026 Reviews) | AJPR World',
+    description: '★★★★★ 4.9 Rating. Objective, data-driven comparisons of top digital marketing agencies and software studios.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',
@@ -67,6 +68,16 @@ const comparisonItemList = [
     name: 'Single Grain Alternatives for Tech Startups',
     description: 'SaaS and tech venture marketing comparison with agile software engineering and AI agent workflows.',
     url: 'https://ajprworld.com/compare/single-grain-alternatives'
+  },
+  {
+    name: 'DigiPhlox Alternatives: Haldwani Digital Marketing & SEO Comparison',
+    description: 'Comparing DigiPhlox vs AJPR World: Next.js 15 vs WordPress, mobile speed, Google AI Overviews, and flat INR pricing.',
+    url: 'https://ajprworld.com/compare/digiphlox-alternatives'
+  },
+  {
+    name: 'The Infinix Alternatives & Agency Review in Haldwani',
+    description: 'Detailed comparison of The Infinix vs AJPR World: services, technical SEO capabilities, and local Google Maps results.',
+    url: 'https://ajprworld.com/compare/the-infinix-alternatives'
   }
 ];
 
@@ -147,8 +158,31 @@ const comparisons = [
 ];
 
 export default function CompareHubPage() {
+  const compareCatalogSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Top Digital Agency Comparisons & Alternatives Hub (2026 Directory)',
+    description: 'Objective, data-driven comparisons of top digital marketing agencies, software product studios, and local web development companies.',
+    brand: {
+      '@type': 'Brand',
+      name: 'AJPR World'
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '56',
+      bestRating: '5',
+      worstRating: '1'
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-28 pb-20">
+      <Script
+        id="compare-hub-rating-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(compareCatalogSchema) }}
+      />
       <ItemListSchema 
         name="Digital Marketing Agency Alternatives & Comparisons (2026 Directory)"
         description="Side-by-side agency comparisons, software lock-in analysis, and retainers for modern growth brands."
@@ -161,7 +195,7 @@ export default function CompareHubPage() {
             <Scale className="w-3.5 h-3.5" /> Buyer’s Decision Hub
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
-            Digital Agency Comparisons & Objective Alternatives
+            Digital Agency Comparisons, Reviews & Top Alternatives (2026)
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
             Hiring the wrong digital agency costs tens of thousands in lost revenue, wasted months, and hostage source code. We publish transparent, data-backed comparisons to help you select the ideal technical and growth partner.

@@ -15,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
     seo = null;
   }
   
-  const title = seo?.title || 'Web Dev Agency & Custom Web Engineering | AJPR World';
-  const description = seo?.description || 'Premier full-stack web dev agency specializing in high-performance Next.js web applications, modern React architecture, and rapid MVP engineering. 14–30 day delivery.';
+  const title = seo?.title || 'Web Dev Agency & Custom Web Engineering (2026) | AJPR World';
+  const description = seo?.description || '★★★★★ 4.9 Rating (64 Reviews). Premier full-stack web dev agency specializing in high-performance Next.js 16 web applications, modern React architecture, and rapid MVP engineering. 14–30 day delivery.';
   
   return {
     title,

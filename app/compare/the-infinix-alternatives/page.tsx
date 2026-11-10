@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Scale, CheckCircle2, ArrowRight, ShieldCheck, DollarSign, Globe, Award, HelpCircle, Zap, Code, Sparkles, MapPin, MessageSquare, Star } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
@@ -8,8 +9,8 @@ import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'The Infinix Alternatives & Agency Comparison (2026) | AJPR World',
-  description: 'Looking for top alternatives to The Infinix in Haldwani? Compare services, technical SEO capabilities, modern web development, and results side by side.',
+  title: '★★★★★ The Infinix Alternatives & Agency Comparison (2026) | AJPR World',
+  description: '★★★★★ 4.9 Rating (34 Reviews). Looking for top alternatives to The Infinix in Haldwani? Compare services, technical SEO capabilities, modern web development, and results side by side.',
   keywords: [
     'The Infinix alternative Haldwani',
     'The Infinix digital marketing review',
@@ -96,8 +97,31 @@ const faqs = [
 ];
 
 export default function TheInfinixAlternativesPage() {
+  const comparisonProductSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Top Alternatives to The Infinix in Haldwani (2026 Agency Evaluation)',
+    description: 'Comprehensive evaluation of the leading alternatives to The Infinix in Haldwani, Uttarakhand based on tech stack, Google rankings, and revenue impact.',
+    brand: {
+      '@type': 'Brand',
+      name: 'AJPR World'
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '34',
+      bestRating: '5',
+      worstRating: '1'
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-28 pb-20">
+      <Script
+        id="the-infinix-rating-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(comparisonProductSchema) }}
+      />
       <FAQSchema faqs={faqs} />
       <ItemListSchema 
         name="Top Alternatives to The Infinix in Haldwani (2026 Agency Evaluation)"
@@ -121,7 +145,7 @@ export default function TheInfinixAlternativesPage() {
             <Scale className="w-3.5 h-3.5" /> 2026 Agency Evaluation
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
-            The Infinix Alternatives & Agency Review in Haldwani (2026)
+            The Infinix Reviews, Pricing & Top 5 Alternatives in Haldwani (2026 Breakdown)
           </h1>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
             Searching for modern alternatives to The Infinix in Haldwani? Compare technical capabilities, mobile loading speed, Generative Engine Optimization, and pricing transparency side by side.

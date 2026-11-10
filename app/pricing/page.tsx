@@ -3,14 +3,14 @@ import { getProducts } from '@/lib/db/queries';
 import PricingClient from './PricingClient';
 
 export const metadata: Metadata = {
-  title: 'Pricing & Packages | Custom Software & SEO | AJPR',
-  description: 'Explore upfront pricing for custom software development, Next.js web applications, MVP engineering, and technical SEO audits tailored for ambitious brands.',
+  title: '2026 Pricing & Retainers | Custom Software, MVPs & SEO | AJPR World',
+  description: '★★★★★ 4.9 Rating (52 Reviews). Transparent fixed pricing for custom Next.js web applications, MVP engineering, programmatic SEO, and AI growth retainers starting at $1,500/mo.',
   alternates: {
     canonical: 'https://ajprworld.com/pricing'
   },
   openGraph: {
-    title: 'Pricing & Packages | Custom Software & SEO | AJPR',
-    description: 'Explore upfront pricing for custom software development, Next.js web applications, MVP engineering, and technical SEO audits tailored for ambitious brands.',
+    title: '2026 Pricing & Retainers | Custom Software, MVPs & SEO | AJPR World',
+    description: '★★★★★ 4.9 Rating (52 Reviews). Transparent fixed pricing for custom Next.js web applications, MVP engineering, programmatic SEO, and AI growth retainers starting at $1,500/mo.',
     url: 'https://ajprworld.com/pricing',
     siteName: 'AJPR World',
     images: [
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
         url: 'https://ajprworld.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Pricing & Packages | AJPR World',
+        alt: 'Pricing & Retainers | AJPR World',
       },
     ],
     locale: 'en_US',

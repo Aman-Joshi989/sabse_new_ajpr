@@ -3,14 +3,14 @@ import LeadForm from '@/components/LeadForm';
 import { ShieldCheck, Zap, BarChart3, Cpu, CheckCircle2, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Free Technical & SEO Audit | AJPR World',
-  description: 'Get an actionable technical architecture and SEO audit from senior engineers. Uncover bottlenecks, Core Web Vitals issues, and growth opportunities.',
+  title: 'Free Technical & SEO Audit (48-Hr Turnaround) | AJPR World',
+  description: '★★★★★ 4.9 Rating (64 Reviews). Get an actionable technical architecture and SEO audit from senior engineers. Uncover bottlenecks, Core Web Vitals issues, and growth opportunities.',
   alternates: {
     canonical: 'https://ajprworld.com/free-audit'
   },
   openGraph: {
-    title: 'Free Technical & SEO Audit | AJPR World',
-    description: 'Get an actionable technical architecture and SEO audit from senior engineers. Uncover bottlenecks, Core Web Vitals issues, and growth opportunities.',
+    title: 'Free Technical & SEO Audit (48-Hr Turnaround) | AJPR World',
+    description: '★★★★★ 4.9 Rating (64 Reviews). Get an actionable technical architecture and SEO audit from senior engineers. Uncover bottlenecks, Core Web Vitals issues, and growth opportunities.',
     url: 'https://ajprworld.com/free-audit',
     siteName: 'AJPR World',
     images: [

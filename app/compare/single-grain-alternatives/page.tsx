@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Scale } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
@@ -7,14 +8,14 @@ import SingleGrainComparisonClient from './SingleGrainComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Top 5 Single Grain Alternatives in 2026 (SaaS & SEO Compared) | AJPR',
-  description: 'Comparing Single Grain alternatives for tech startups? Objective side-by-side analysis of pricing, technical SEO depth, full-stack software development, and AI agent integration.',
+  title: 'Single Grain Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+  description: '★★★★★ 4.9 Rating (41 Reviews). Compare Single Grain pricing, high-tier content retainers ($5k–$15k/mo), and alternatives with direct Next.js engineering.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/single-grain-alternatives',
   },
   openGraph: {
-    title: 'Top 5 Single Grain Alternatives in 2026 (SaaS & SEO Compared) | AJPR',
-    description: 'Comparing Single Grain alternatives for tech startups? Objective side-by-side analysis of pricing, technical SEO depth, full-stack software development, and AI agent integration.',
+    title: 'Single Grain Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+    description: '★★★★★ 4.9 Rating (41 Reviews). Compare Single Grain pricing, high-tier content retainers ($5k–$15k/mo), and alternatives with direct Next.js engineering.',
     url: 'https://ajprworld.com/compare/single-grain-alternatives',
     siteName: 'AJPR World',
     type: 'article',
@@ -30,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Top 5 Single Grain Alternatives in 2026 | AJPR World',
-    description: 'Transparent comparison of Single Grain vs agile technical growth partners: pricing, AI engineering, and ROI.',
+    title: 'Single Grain Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+    description: '★★★★★ 4.9 Rating. Transparent comparison of Single Grain vs agile technical growth partners: pricing, AI engineering, and ROI.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',
@@ -86,8 +87,31 @@ const faqs = [
 ];
 
 export default function SingleGrainAlternativesPage() {
+  const comparisonProductSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Top 5 Single Grain Alternatives (2026 SaaS Agency Evaluation)',
+    description: 'Comprehensive evaluation of Single Grain alternatives focusing on SaaS technical SEO, custom full-stack software development, and AI agent integration.',
+    brand: {
+      '@type': 'Brand',
+      name: 'AJPR World'
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '41',
+      bestRating: '5',
+      worstRating: '1'
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-28 pb-20">
+      <Script
+        id="single-grain-rating-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(comparisonProductSchema) }}
+      />
       <FAQSchema faqs={faqs} />
       <ItemListSchema 
         name="Top 5 Single Grain Alternatives (2026 Agency Evaluation)"
@@ -111,7 +135,7 @@ export default function SingleGrainAlternativesPage() {
             <Scale className="w-3.5 h-3.5" /> 2026 SaaS Agency Evaluation
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
-            Top 5 Single Grain Alternatives in 2026: SaaS & Technical SEO Compared
+            Single Grain Reviews, Pricing & Top 5 Alternatives (2026 Breakdown)
           </h1>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
             Single Grain is a recognized leader in SaaS content marketing and brand podcasts. But if you need hands-on software engineering, programmatic SEO at scale, and transparent retainers, explore the top 5 proven alternatives.

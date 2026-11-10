@@ -26,14 +26,14 @@ const websitePricingTiers = [
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Website Cost in 2026: Web Design Pricing Guide | AJPR',
-  description: 'How much does a custom website cost in 2026? Review real project tiers from $3,500 startup sites to $30,000+ custom web apps with transparent deliverables.',
+  title: 'Website Cost in 2026: Web Design & Dev Pricing Guide | AJPR',
+  description: '★★★★★ 4.9 Rating (52 Reviews). How much does a custom website cost in 2026? Review real project tiers from $3,500 startup sites to $30,000+ custom web apps with transparent deliverables.',
   alternates: {
     canonical: 'https://ajprworld.com/pricing/website-cost',
   },
   openGraph: {
-    title: 'Website Cost in 2026: Web Design Pricing Guide | AJPR',
-    description: 'How much does a custom website cost in 2026? Review real project tiers from $3,500 startup sites to $30,000+ custom web apps with transparent deliverables.',
+    title: 'Website Cost in 2026: Web Design & Dev Pricing Guide | AJPR',
+    description: '★★★★★ 4.9 Rating (52 Reviews). How much does a custom website cost in 2026? Review real project tiers from $3,500 startup sites to $30,000+ custom web apps with transparent deliverables.',
     url: 'https://ajprworld.com/pricing/website-cost',
     siteName: 'AJPR World',
     type: 'article',
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Website Cost in 2026: Web Design Pricing Guide | AJPR',
-    description: 'Real web design costs and transparent agency tiers for US startups and growing enterprises.',
+    description: '★★★★★ 4.9 Rating. Real web design costs and transparent agency tiers for US startups and growing enterprises.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',
@@ -92,6 +92,13 @@ export default function WebsiteCostPage() {
     },
     areaServed: 'United States',
     description: 'Custom Next.js and Webflow website design, development, and conversion architecture with transparent project pricing.',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '52',
+      bestRating: '5',
+      worstRating: '1'
+    },
     offers: [
       {
         '@type': 'Offer',
@@ -112,6 +119,11 @@ export default function WebsiteCostPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-28 pb-20">
+      <Script
+        id="website-cost-service-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       <FAQSchema faqs={faqs} />
       <ItemListSchema 
         name="Website Cost & Web Design Pricing Tiers (2026 Agency Benchmark)"

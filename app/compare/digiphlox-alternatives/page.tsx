@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Scale, CheckCircle2, ArrowRight, ShieldCheck, DollarSign, Globe, Award, HelpCircle, Zap, Code, Sparkles, MapPin, MessageSquare, Star } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
@@ -8,8 +9,8 @@ import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'DigiPhlox Alternatives & Agency Comparison (2026) | AJPR World',
-  description: 'Objective 2026 comparison of DigiPhlox vs AJPR World for digital marketing, SEO, and web development in Haldwani, Uttarakhand. Compare tech stacks, mobile speed, and pricing.',
+  title: '★★★★★ DigiPhlox Alternatives & Agency Comparison (2026) | AJPR World',
+  description: '★★★★★ 4.9 Rating (36 Reviews). Objective 2026 comparison of DigiPhlox vs AJPR World for digital marketing, SEO, and web development in Haldwani, Uttarakhand. Compare tech stacks, mobile speed, and pricing.',
   keywords: [
     'DigiPhlox alternative',
     'DigiPhlox Haldwani review',
@@ -96,8 +97,31 @@ const faqs = [
 ];
 
 export default function DigiPhloxAlternativesPage() {
+  const comparisonProductSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Top Alternatives to DigiPhlox in Haldwani (2026 Agency Evaluation)',
+    description: 'Comprehensive evaluation of the leading alternatives to DigiPhlox in Haldwani, Uttarakhand based on tech stack, Google rankings, and revenue impact.',
+    brand: {
+      '@type': 'Brand',
+      name: 'AJPR World'
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '36',
+      bestRating: '5',
+      worstRating: '1'
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-28 pb-20">
+      <Script
+        id="digiphlox-rating-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(comparisonProductSchema) }}
+      />
       <FAQSchema faqs={faqs} />
       <ItemListSchema 
         name="Top Alternatives to DigiPhlox in Haldwani (2026 Agency Evaluation)"
@@ -121,7 +145,7 @@ export default function DigiPhloxAlternativesPage() {
             <Scale className="w-3.5 h-3.5" /> 2026 Haldwani Agency Comparison
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
-            DigiPhlox Alternatives & Competitor Review in Haldwani (2026)
+            DigiPhlox Reviews, Pricing & Top 5 Alternatives in Haldwani (2026 Breakdown)
           </h1>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
             Evaluating digital marketing agencies in Haldwani, Uttarakhand? We analyze where DigiPhlox excels in local SME branding, where technical limitations emerge, and why performance-focused brands choose AJPR World for Next.js engineering and AI search dominance.

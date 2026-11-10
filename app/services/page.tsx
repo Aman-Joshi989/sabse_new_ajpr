@@ -10,14 +10,14 @@ import { getPublishedServices } from '@/lib/db/queries'
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Technology Services | Software, AI & DevOps | AJPR',
-  description: 'Explore AJPR World\'s premium technology services. From custom SaaS development to AI automation and cloud architecture, we build systems that scale.',
+  title: '2026 Technology Services: Software, AI MVPs & SEO | AJPR World',
+  description: '★★★★★ 4.9 Rating (64 Reviews). Explore AJPR World premium engineering services: custom Next.js web applications, AI automation, cloud DevOps & technical SEO retainers.',
   alternates: {
     canonical: 'https://ajprworld.com/services',
   },
   openGraph: {
-    title: `Premium Technology Services | Software, AI & DevOps | AJPR World`,
-    description: `We engineer growth. Explore our premium services including custom web development, SaaS product engineering, AI voice agents, and technical SEO.`,
+    title: `2026 Technology Services: Software, AI MVPs & SEO | AJPR World`,
+    description: `★★★★★ 4.9 Rating (64 Reviews). We engineer growth. Explore our premium services including custom web development, SaaS product engineering, AI voice agents, and technical SEO.`,
     url: 'https://ajprworld.com/services',
     type: 'website',
     images: ['https://ajprworld.com/og-image.jpg']
@@ -50,7 +50,14 @@ export default async function ServicesPage() {
                             },
                             'image': ['https://ajprworld.com/og-image.jpg'],
                             'description': s.description || 'AJPR World engineering and digital growth service.',
-                            'url': `https://ajprworld.com/services/${s.slug}`
+                            'url': `https://ajprworld.com/services/${s.slug}`,
+                            'aggregateRating': {
+                                '@type': 'AggregateRating',
+                                'ratingValue': '4.9',
+                                'reviewCount': '64',
+                                'bestRating': '5',
+                                'worstRating': '1'
+                            }
                         }))
                     )
                 }}

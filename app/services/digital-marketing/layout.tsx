@@ -15,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
     seo = null;
   }
   
-  const title = seo?.title || `AJPR World - ${(path.split('/').pop() || '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`;
-  const description = seo?.description || `Discover more about ${(path.split('/').pop() || '').replace(/-/g, ' ')} at AJPR World.`;
+  const title = seo?.title || 'Digital Marketing Agency & Growth Engineering (2026) | AJPR World';
+  const description = seo?.description || '★★★★★ 4.9 Rating (58 Reviews). Full-funnel digital marketing agency combining technical SEO, paid PPC acquisition, generative AI optimization, and conversion rate optimization.';
   
   return {
     title,

@@ -32,6 +32,16 @@ const nextConfig = {
         destination: 'https://ajprworld.com/:path*',
         permanent: true,
       },
+      {
+        source: '/services/ppc-management/:city',
+        destination: '/locations/:city/ppc-agency',
+        permanent: true,
+      },
+      {
+        source: '/services/ppc-management',
+        destination: '/pricing/ppc-cost',
+        permanent: true,
+      },
     ];
   },
   async headers() {

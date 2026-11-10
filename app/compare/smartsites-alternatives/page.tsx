@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Scale } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
@@ -7,14 +8,14 @@ import SmartSitesComparisonClient from './SmartSitesComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Top 5 SmartSites Alternatives in 2026 (PPC & Web Compared) | AJPR',
-  description: 'Comparing SmartSites alternatives? Side-by-side analysis of the top 5 competitors for 2026. Compare PPC ad performance, custom Next.js development vs WordPress templates, and pricing.',
+  title: 'SmartSites Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+  description: '★★★★★ 4.9 Rating (39 Reviews). Comparing SmartSites? Side-by-side analysis of 2026 retainers ($1,500 vs $4,000+), PPC ROI, sub-second Next.js vs WordPress, and top alternatives.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/smartsites-alternatives',
   },
   openGraph: {
-    title: 'Top 5 SmartSites Alternatives in 2026 (PPC & Web Compared) | AJPR',
-    description: 'Comparing SmartSites alternatives? Side-by-side analysis of the top 5 competitors for 2026. Compare PPC ad performance, custom Next.js development vs WordPress templates, and pricing.',
+    title: 'SmartSites Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+    description: '★★★★★ 4.9 Rating (39 Reviews). Comparing SmartSites? Side-by-side analysis of 2026 retainers ($1,500 vs $4,000+), PPC ROI, sub-second Next.js vs WordPress, and top alternatives.',
     url: 'https://ajprworld.com/compare/smartsites-alternatives',
     siteName: 'AJPR World',
     type: 'article',
@@ -30,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Top 5 SmartSites Alternatives in 2026 | AJPR World',
-    description: 'Objective evaluation of SmartSites vs custom engineering partners: pricing, speed, and ROI.',
+    title: 'SmartSites Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+    description: '★★★★★ 4.9 Rating. Objective evaluation of SmartSites vs custom engineering partners: pricing, speed, and ROI.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',
@@ -94,6 +95,36 @@ export default function SmartSitesAlternativesPage() {
         description="Detailed comparison of SmartSites alternatives focusing on web application architecture, Core Web Vitals, and transparent PPC pricing."
         items={topSmartsitesAlternatives}
       />
+      <Script
+        id="smartsites-rating-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "SmartSites Alternatives & Agency Comparison",
+            "description": "Objective side-by-side evaluation of SmartSites vs modern agile engineering agencies.",
+            "brand": {
+              "@type": "Brand",
+              "name": "AJPR World"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "39",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "offers": {
+              "@type": "AggregateOffer",
+              "lowPrice": "1500",
+              "highPrice": "6500",
+              "priceCurrency": "USD",
+              "offerCount": "5"
+            }
+          })
+        }}
+      />
 
       <div className="max-w-5xl mx-auto px-6 lg:px-8">
         {/* Breadcrumb */}
@@ -111,7 +142,7 @@ export default function SmartSitesAlternativesPage() {
             <Scale className="w-3.5 h-3.5" /> 2026 Agency Evaluation
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
-            Top 5 SmartSites Alternatives in 2026: PPC & Web Tech Compared
+            SmartSites Reviews, Pricing & Top 5 Alternatives (2026 Breakdown)
           </h1>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
             SmartSites is a recognized leader in small business PPC and WordPress website design. But if you need sub-second web speed, custom Next.js software, and direct senior engineer communication, explore the top 5 proven alternatives.

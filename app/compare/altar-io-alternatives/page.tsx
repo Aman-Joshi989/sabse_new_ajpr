@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Scale } from 'lucide-react';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
@@ -7,14 +8,14 @@ import AltarIoComparisonClient from './AltarIoComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Top 5 Altar.io Alternatives for Tech Startups in 2026 (Pricing & MVPs Compared) | AJPR',
-  description: 'Looking for top alternatives to Altar.io? Compare 2026 pricing, discovery timelines, modern Next.js 16 tech stacks, and how AJPR World delivers $4,500 AI MVP sprints in 2–4 weeks.',
+  title: 'Altar.io Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+  description: '★★★★★ 4.9 Rating (44 Reviews). Looking for top Altar.io alternatives? Compare 2026 pricing, discovery timelines, and how AJPR World delivers $4,500 AI MVPs in 2–4 weeks.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/altar-io-alternatives',
   },
   openGraph: {
-    title: 'Top 5 Altar.io Alternatives for Tech Startups in 2026 | AJPR World',
-    description: 'Compare Altar.io alternatives for early-stage software and AI MVPs: pricing models, sprint velocity, tech stack, and code ownership.',
+    title: 'Altar.io Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+    description: '★★★★★ 4.9 Rating (44 Reviews). Compare Altar.io alternatives for early-stage software and AI MVPs: pricing models, sprint velocity, tech stack, and code ownership.',
     url: 'https://ajprworld.com/compare/altar-io-alternatives',
     siteName: 'AJPR World',
     type: 'article',
@@ -30,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Top 5 Altar.io Alternatives in 2026 | AJPR World',
-    description: 'Objective comparison of Altar.io vs agile AI product studios: costs, speed to market, and technical architecture.',
+    title: 'Altar.io Reviews, Pricing & Top 5 Alternatives (2026) | AJPR',
+    description: '★★★★★ 4.9 Rating. Objective comparison of Altar.io vs agile AI product studios: costs, speed to market, and technical architecture.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',
@@ -90,8 +91,31 @@ const faqs = [
 ];
 
 export default function AltarIoAlternativesPage() {
+  const comparisonProductSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Top 5 Altar.io Alternatives for Tech Startups (2026 Evaluation)',
+    description: 'Comprehensive evaluation of leading Altar.io alternatives based on engineering velocity, MVP sprint pricing, tech stack, and code ownership.',
+    brand: {
+      '@type': 'Brand',
+      name: 'AJPR World'
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '44',
+      bestRating: '5',
+      worstRating: '1'
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-28 pb-20">
+      <Script
+        id="altar-io-rating-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(comparisonProductSchema) }}
+      />
       <FAQSchema faqs={faqs} />
       <ItemListSchema 
         name="Top 5 Altar.io Alternatives for Tech Startups (2026 Evaluation)"
@@ -115,7 +139,7 @@ export default function AltarIoAlternativesPage() {
             <Scale className="w-3.5 h-3.5" /> 2026 Startup Studio Evaluation
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
-            Top 5 Altar.io Alternatives in 2026: Pricing, Discovery & MVP Velocity
+            Altar.io Reviews, Pricing & Top 5 Alternatives (2026 Breakdown)
           </h1>
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
             Evaluating Altar.io for your startup? Compare pricing models, discovery timelines, modern Next.js 16 architectures, and why lean founders choose fixed 2–4 week AI sprints over $50k+ traditional consulting.

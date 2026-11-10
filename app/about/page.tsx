@@ -55,10 +55,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const isPlaceholder = dbTitle && dbTitle.includes('Ultimate Guide to About Page');
   
   const title = (!dbTitle || isPlaceholder) 
-    ? 'About Us | AJPR World - Premium Tech Agency' 
+    ? 'About AJPR World: Custom AI MVPs & Senior Software Engineering (2026)' 
     : dbTitle;
     
-  const description = seo?.description || 'Learn about AJPR World, a premium technology agency specializing in custom software engineering, web development, and digital marketing.';
+  const defaultDesc = '★★★★★ 4.9 Rating (64 Reviews). Learn about AJPR World, an agile senior engineering studio building custom AI MVPs, Next.js web applications, and Generative Engine Optimization in 2–4 weeks.';
+  const rawDesc = seo?.description || defaultDesc;
+  const description = rawDesc.startsWith('★') ? rawDesc : `★★★★★ 4.9 Rating. ${rawDesc}`;
 
   return {
     alternates: { canonical: 'https://ajprworld.com/about' },

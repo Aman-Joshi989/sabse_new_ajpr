@@ -123,16 +123,20 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  let services: any[] = [];
-  let blogs: any[] = [];
+  let footerServices: { title: string; slug: string }[] = [];
+  let footerBlogs: { title: string; slug: string }[] = [];
 
   try {
     const [fetchedServices, fetchedBlogs] = await Promise.all([
       getPublishedServices(),
       getBlogs()
     ]);
-    services = fetchedServices || [];
-    blogs = fetchedBlogs || [];
+    footerServices = Array.isArray(fetchedServices)
+      ? fetchedServices.slice(0, 6).map((s: any) => ({ title: s.title, slug: s.slug }))
+      : [];
+    footerBlogs = Array.isArray(fetchedBlogs)
+      ? fetchedBlogs.slice(0, 4).map((b: any) => ({ title: b.title, slug: b.slug }))
+      : [];
   } catch (e) {
     console.error("Failed to fetch dynamic content in layout:", e);
   }
@@ -223,13 +227,13 @@ export default async function RootLayout({
             <RegionProvider>
               <CartProvider>
                 <LayoutClientEffect />
-                <Header services={services} />
+                <Header />
                 <main className='min-h-screen pb-16 md:pb-0'>
                   {children}
                 </main>
                 <MobileActionDock />
                 <ExitIntentPopup />
-                <Footer services={services} blogs={blogs} />
+                <Footer services={footerServices} blogs={footerBlogs} />
                 <Toaster />
                 <Analytics />
                 <SpeedInsights />

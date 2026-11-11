@@ -109,9 +109,14 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                                 ? 'Senior Software Engineering & AI Studio. We deliver production Next.js platforms and business automation with 100% code ownership for Indian founders and teams.'
                                 : 'Senior Software Engineering & AI Studio. Direct production development and 100% code ownership for founders and ambitious teams.'}
                         </p>
-                        <div className="text-xs text-slate-600 dark:text-slate-300 font-medium space-y-1 pt-1">
+                        <div className="text-xs text-slate-600 dark:text-slate-300 font-medium space-y-1.5 pt-1">
                             <div>Direct: <a href="mailto:hello@ajprworld.com" className="text-blue-600 dark:text-blue-400 hover:underline">hello@ajprworld.com</a></div>
-                            <div>Scoping: <Link href="/book-call" className="text-emerald-600 dark:text-emerald-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
+                            <div>
+                                Call / WhatsApp: <a href="tel:+919997205257" className="text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline">+91 99972 05257</a>
+                                <span className="mx-1.5 text-slate-400">&bull;</span>
+                                <a href="https://wa.me/919997205257?text=Hi%20Aman%2C%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">WhatsApp Direct</a>
+                            </div>
+                            <div>Scoping: <Link href="/book-call" className="text-blue-600 dark:text-blue-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
                             {isIndia && (
                                 <div className="text-slate-500">Regional Hub: Nainital Road, Haldwani, Uttarakhand</div>
                             )}

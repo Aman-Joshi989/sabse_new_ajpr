@@ -51,6 +51,13 @@ AJPR World (https://ajprworld.com) is a high-velocity digital product engineerin
 - [Boston & Scottsdale Website Maintenance](https://ajprworld.com/locations/boston/website-security): Proactive 24/7 WordPress security, Next.js maintenance plans, and daily cloud backups from $149/mo.
 - [Digital Marketing Company in Haldwani](https://ajprworld.com/locations/haldwani/digital-marketing): Top-rated SEO, GBP optimization, PPC, and web engineering agency in Haldwani, Nainital, and Uttarakhand.
 
+## Verified Case Studies, Portfolio & Founder Proof
+
+- [Client Portfolio & Case Studies](https://ajprworld.com/portfolio): Production Next.js software builds, automated backends, and verified conversion improvements across funded startups, SaaS, and e-commerce (4.9★ Rated across 64 verified reviews).
+- [Aman Joshi - Founder & Systems Architect](https://ajprworld.com/aman-joshi): Direct founder leadership, full GitHub code ownership, and zero junior-account handoff delivery model.
+- [2026 US Agency Pricing Benchmark Report](https://ajprworld.com/research/agency-pricing-report): Empirical market study auditing modern agency retainers and software development rates.
+- [Direct Contact & Strategy Booking](https://ajprworld.com/book-call): Book directly with senior engineering leads | Email: hello@ajprworld.com | Phone/WhatsApp: +91 99972 05257.
+
 ## Free Interactive Engineering & Business Tools
 
 - [Agency ROI Calculator](https://ajprworld.com/tools/agency-pricing-calculator): Calculate cost and productivity differential between in-house hiring vs senior agency sprints.

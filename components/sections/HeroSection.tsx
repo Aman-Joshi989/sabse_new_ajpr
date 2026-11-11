@@ -12,7 +12,10 @@ import {
     Zap, 
     Lock, 
     DollarSign,
-    Receipt
+    Receipt,
+    Phone,
+    MessageSquare,
+    Star
 } from 'lucide-react';
 
 interface HeroSectionProps {
@@ -95,6 +98,35 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                                 {isIndia ? 'View INR Pricing & Sprints' : 'View Pricing & Sprints'}
                             </Link>
                         </Button>
+                    </div>
+
+                    {/* Instant Human Contact & Verified Proof Bar (SSR) */}
+                    <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-600 dark:text-slate-400">
+                        <Link
+                            href="/portfolio"
+                            className="inline-flex items-center gap-1.5 font-semibold text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        >
+                            <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                            <span>4.9/5 Rated (64 Verified Reviews) &bull; View Case Studies</span>
+                        </Link>
+                        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
+                        <a
+                            href="tel:+919997205257"
+                            className="inline-flex items-center gap-1.5 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        >
+                            <Phone className="w-3.5 h-3.5 text-blue-500" />
+                            <span>+91 99972 05257</span>
+                        </a>
+                        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
+                        <a
+                            href="https://wa.me/919997205257?text=Hi%20Aman%2C%20I%27d%20like%20to%20discuss%20a%20project%20with%20AJPR%20World."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+                        >
+                            <MessageSquare className="w-3.5 h-3.5" />
+                            <span>WhatsApp Architect Direct</span>
+                        </a>
                     </div>
 
                     {/* Trust & Guarantee Strip */}

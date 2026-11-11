@@ -36,22 +36,12 @@ const audiences = [
 
 export default function PortfolioClient({ initialProjects }: PortfolioClientProps) {
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   })
-
-  // Mouse tracking for parallax
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-    window.addEventListener('mousemove', handleMouseMove, { passive: true })
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
 
   const projects = initialProjects;
   const categories = ['All', ...Array.from(new Set(projects.map((p: any) => p.category))) as string[]]
@@ -162,8 +152,8 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${selectedCategory === cat
-                    ? 'bg-blue-600 text-slate-900 dark:text-white shadow-lg shadow-blue-900/40'
-                    : 'text-slate-500 dark:text-slate-400 hover:text-white bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-sm'
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-sm'
                     }`}
                 >
                   {cat}

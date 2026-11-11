@@ -1,5 +1,5 @@
 import HomeClient from './HomeClient'
-import { getPublishedServices, getBlogs, getSiteSettings, getSeoMetadata } from '@/lib/db/queries'
+import { getPublishedServices, getSeoMetadata } from '@/lib/db/queries'
 import { FAQSchema } from '@/components/schema/FAQSchema'
 import { ItemListSchema } from '@/components/schema/ItemListSchema'
 import { WebSiteSchema } from '@/components/schema/WebSiteSchema'
@@ -10,20 +10,19 @@ export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel f
 
 export default async function HomePage() {
   let services: any[] = []
-  let blogs: any[] = []
-  let settings: any = null
 
   try {
-    // Fetch all required data dynamically from Neon database
-    const [fetchedServices, fetchedBlogs, fetchedSettings] = await Promise.all([
-      getPublishedServices(),
-      getBlogs(),
-      getSiteSettings()
-    ])
-    
-    services = fetchedServices || []
-    blogs = fetchedBlogs || []
-    settings = fetchedSettings || null
+    // Only project minimal card fields to keep RSC payload lightweight (<150 KB target)
+    const fetchedServices = await getPublishedServices()
+    services = Array.isArray(fetchedServices)
+      ? fetchedServices.slice(0, 3).map((s: any) => ({
+          title: s.title,
+          description: s.description,
+          slug: s.slug,
+          category: s.category,
+          keywords: Array.isArray(s.keywords) ? s.keywords.slice(0, 4) : [],
+        }))
+      : []
   } catch (err) {
     console.error("Failed to fetch dynamic data for homepage:", err)
   }
@@ -88,8 +87,6 @@ export default async function HomePage() {
       />
       <HomeClient 
         services={services} 
-        blogs={blogs} 
-        settings={settings} 
       />
     </>
   )
@@ -103,7 +100,7 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error("Failed to fetch SEO metadata for homepage:", error);
   }
 
-  const defaultTitle = 'AJPR World (AJPR) – Senior Software Engineering, Next.js & AI Systems';
+  const defaultTitle = 'AJPR World (AJPR) – Software, Next.js & AI Studio (4.9★ Rated)';
   const defaultDesc = 'AJPR World (AJPR) is a senior software engineering and AI systems studio led by Aman Joshi. We build production Next.js web applications, custom SaaS products, and AI workflows in 2–4 weeks with 100% code ownership.';
   const title = seo?.title || defaultTitle;
   const description = seo?.description || defaultDesc;

@@ -39,6 +39,21 @@ const nextConfig = {
         destination: '/pricing/ppc-cost',
         permanent: true,
       },
+      {
+        source: '/pricing/website-maintenance',
+        destination: '/services/website-maintenance-cost',
+        permanent: true,
+      },
+      {
+        source: '/pricing/website-maintenance-cost',
+        destination: '/services/website-maintenance-cost',
+        permanent: true,
+      },
+      {
+        source: '/services/website-maintenance',
+        destination: '/services/website-maintenance-cost',
+        permanent: true,
+      },
     ];
   },
   async headers() {

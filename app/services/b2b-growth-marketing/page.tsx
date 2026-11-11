@@ -14,14 +14,14 @@ export const revalidate = 86400; // Cache for 24 hours
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'B2B Growth Marketing & Pipeline Engineering | AJPR World',
-  description: 'Data-driven B2B growth marketing services. We engineer full-funnel acquisition, technical SEO infrastructure, and high-yield pipeline funnels with transparent retainers.',
+  title: 'B2B Growth Marketing Agency & Consultants (2026 Strategy) | AJPR World',
+  description: 'Leading B2B growth marketing agency & consultants. We engineer high-intent pipeline acquisition, technical SEO, and Generative Engine Optimization ($1,500/mo).',
   alternates: {
     canonical: 'https://ajprworld.com/services/b2b-growth-marketing',
   },
   openGraph: {
-    title: 'B2B Growth Marketing & Pipeline Engineering | AJPR World',
-    description: 'Data-driven B2B growth marketing. We engineer full-funnel acquisition, technical SEO infrastructure, and high-yield customer acquisition funnels.',
+    title: 'B2B Growth Marketing Agency & Consultants (2026 Strategy) | AJPR World',
+    description: 'Leading B2B growth marketing agency & consultants. We engineer high-intent pipeline acquisition, technical SEO, and Generative Engine Optimization ($1,500/mo).',
     url: 'https://ajprworld.com/services/b2b-growth-marketing',
     siteName: 'AJPR World',
     type: 'website',
@@ -30,14 +30,14 @@ export const metadata: Metadata = {
         url: 'https://ajprworld.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'B2B Growth Marketing Agency - AJPR World',
+        alt: 'B2B Growth Marketing Agency & Consultants - AJPR World',
       },
     ],
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'B2B Growth Marketing & Pipeline Engineering | AJPR World',
+    title: 'B2B Growth Marketing Agency & Consultants (2026 Strategy) | AJPR World',
     description: 'Scale qualified pipeline, lower CAC, and drive high-intent search acquisition with senior growth engineers.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
@@ -51,8 +51,16 @@ const faqs = [
     answer: 'A B2B growth marketing agency designs and executes full-funnel customer acquisition systems specifically for business-to-business brands. Unlike traditional agencies that focus merely on vanity impressions or blog volume, AJPR World engineers technical programmatic SEO, high-intent Google and LinkedIn ad funnels, Generative Engine Optimization (GEO) for AI citations, and high-converting landing page architectures tied directly to pipeline revenue and qualified sales meetings.'
   },
   {
+    question: 'What is the difference between B2B marketing consultants and a growth agency?',
+    answer: 'Traditional B2B marketing consultants deliver PDF slide decks, audit reports, and theoretical advice, leaving execution to internal staff. AJPR World operates as full-stack growth engineers: we provide strategic growth architecture while directly executing technical SEO fixes, landing page development in Next.js, ad campaign management, and CRM attribution pipelines.'
+  },
+  {
     question: 'How much do B2B growth marketing services and retainers cost in 2026?',
     answer: 'Most reputable US B2B growth marketing agencies charge between $3,500 and $15,000 per month. AJPR World provides 100% transparent flat retainers: Foundation Sprint at $1,500/month, Growth Scale at $3,500/month, and Enterprise Pipeline at $7,500/month, with zero long-term lock-in and direct access to senior technical practitioners.'
+  },
+  {
+    question: 'How do you structure B2B growth marketing for industrial firms and SaaS companies?',
+    answer: 'For industrial and technical B2B firms, we focus on bottom-of-funnel technical search terms, RFQ (Request for Quote) funnel conversion optimization, and detailed comparison matrices. For B2B SaaS firms, we deploy programmatic SEO clusters, competitor alternative hubs (e.g. WebFX or SmartSites alternatives), and Generative Engine Optimization to capture software buyers searching inside ChatGPT and Perplexity.'
   },
   {
     question: 'What is the difference between lead generation and B2B growth marketing?',

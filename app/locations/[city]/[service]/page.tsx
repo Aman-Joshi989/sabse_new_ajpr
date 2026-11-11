@@ -332,20 +332,26 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const isSingaporePpc = params.city.toLowerCase() === 'singapore' && params.service === 'ppc-agency';
     const isSingaporeAi = params.city.toLowerCase() === 'singapore' && params.service === 'ai-solutions';
     const isLondonMvp = params.city.toLowerCase() === 'london' && (params.service === 'custom-software' || params.service === 'web-development');
+    const isLondonDigitalPr = params.city.toLowerCase() === 'london' && (params.service === 'digital-marketing' || params.service === 'seo-agency');
     const isDallasSoftware = params.city.toLowerCase() === 'dallas' && (params.service === 'custom-software' || params.service === 'web-development');
     const isTampaPpc = params.city.toLowerCase() === 'tampa' && params.service === 'ppc-agency';
     const isPhoenixPpc = params.city.toLowerCase() === 'phoenix' && params.service === 'ppc-agency';
     const isMiamiPpc = params.city.toLowerCase() === 'miami' && params.service === 'ppc-agency';
+    const isDenverApp = params.city.toLowerCase() === 'denver' && params.service === 'app-development';
+    const isMiamiApp = params.city.toLowerCase() === 'miami' && params.service === 'app-development';
+    const isWebsiteMaintenance = params.service === 'website-security';
     const isIndia = localMetro?.country === 'IN';
 
     let title = seoData?.meta_title;
     if (!title) {
         if (isSingaporePpc) {
-            title = 'PPC Agency & Paid Search Management Singapore | AJPR World';
+            title = 'Top PPC Agency & Services Singapore | AJPR World';
         } else if (isSingaporeAi) {
             title = 'Business Process Automation & AI Systems Singapore | AJPR World';
         } else if (isLondonMvp) {
             title = 'Startup MVP Development & Custom Next.js Software London | AJPR World';
+        } else if (isLondonDigitalPr) {
+            title = 'Digital PR & Growth Marketing Agency London | AJPR World';
         } else if (isDallasSoftware) {
             title = 'Custom Software Development in Dallas, TX | AJPR World';
         } else if (isTampaPpc) {
@@ -354,6 +360,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             title = 'PPC Agency in Phoenix, AZ (High-ROAS Paid Search) | AJPR World';
         } else if (isMiamiPpc) {
             title = 'Top PPC Agency in Miami, FL (Google Ads & Paid Social) | AJPR World';
+        } else if (isDenverApp) {
+            title = 'Mobile App Development Company in Denver, CO | AJPR World';
+        } else if (isMiamiApp) {
+            title = 'Mobile App Development in Miami, FL (iOS & Android) | AJPR World';
+        } else if (isWebsiteMaintenance) {
+            title = `Website Maintenance & Security in ${cityName} | AJPR World`;
         } else if (isHaldwani && isDigitalMarketing) {
             title = 'Best Digital Marketing & SEO Company in Haldwani | AJPR World';
         } else if (isHaldwani) {
@@ -368,11 +380,13 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     let description = seoData?.meta_description;
     if (!description) {
         if (isSingaporePpc) {
-            description = 'Top PPC management in Singapore. High-ROAS Google Ads, paid search architecture, and conversion rate engineering for growing APAC brands.';
+            description = 'Top PPC agency and Google Ads management company in Singapore. High-ROAS paid search, landing page optimization, and transparent reporting.';
         } else if (isSingaporeAi) {
             description = 'Business process automation, AI workflow engineering, and custom systems integration for companies in Singapore.';
         } else if (isLondonMvp) {
             description = 'Startup MVP development and custom Next.js software engineering in London. Rapid 2–4 week sprints with 100% code ownership.';
+        } else if (isLondonDigitalPr) {
+            description = 'Leading digital PR agency and growth marketing in London. Tier-1 media editorial coverage, authoritative UK backlinks, and technical SEO.';
         } else if (isDallasSoftware) {
             description = 'Direct senior software engineering and Next.js full-stack development in Dallas-Fort Worth. Rapid 2–4 week MVP sprints, custom databases, and 100% code ownership.';
         } else if (isTampaPpc) {
@@ -381,6 +395,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             description = 'Data-driven PPC management and Google Ads optimization in Phoenix & Scottsdale. Lower customer acquisition costs with dedicated senior strategists.';
         } else if (isMiamiPpc) {
             description = 'High-converting PPC management in Miami. Omnichannel Google Ads, Meta Ads, and performance tracking for fast-growing businesses.';
+        } else if (isDenverApp) {
+            description = 'Custom iOS, Android, and React Native mobile app development in Denver. Senior software engineering pods building production mobile applications.';
+        } else if (isMiamiApp) {
+            description = 'Leading mobile app development in Miami. Custom iOS (iPhone), Android, and cross-platform React Native apps engineered for scale and speed.';
+        } else if (isWebsiteMaintenance) {
+            description = `Professional monthly website maintenance plans, security hardening, and 24/7 uptime monitoring in ${cityName}. Plans start from $149/mo.`;
         } else if (isHaldwani && isDigitalMarketing) {
             description = 'Looking for the best digital marketing company in Haldwani? AJPR World delivers data-backed SEO, high-ROAS Google Ads, and custom Next.js websites for local businesses in Nainital & Kumaon.';
         } else if (isIndia) {

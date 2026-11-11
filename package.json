@@ -2,11 +2,13 @@
   "name": "ajprworld",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "npm@11.4.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node scripts/test-regionalization.js && node scripts/content-audit-test.js"
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.31",
@@ -84,6 +86,7 @@
     "tailwindcss": "^3.4.6",
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.23.1",
+    "turbo": "^2.11.10",
     "typescript": "^5.5.3"
   },
   "overrides": {

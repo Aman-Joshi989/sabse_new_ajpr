@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge'
 import HeroSection from '@/components/sections/HeroSection'
 import CoreValuesSection from '@/components/sections/CoreValuesSection'
 import AccountabilityPledgeSection from '@/components/sections/AccountabilityPledgeSection'
+import AuthorityNetworkSection from '@/components/sections/AuthorityNetworkSection'
 import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
 import { trackBookCall } from '@/lib/analytics'
 import { useRegion } from '@/components/providers/RegionProvider'
@@ -1163,6 +1164,9 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             </div>
           </div>
         </section>
+
+        {/* 8.8 THE AUTHORITY & INTERNAL BACKLINK NETWORK */}
+        <AuthorityNetworkSection />
 
         {/* 9. FINAL CTA SECTION */}
         <section className="py-24 relative text-center overflow-hidden bg-white dark:bg-[#030712]">

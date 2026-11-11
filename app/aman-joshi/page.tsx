@@ -245,6 +245,80 @@ export default async function AmanJoshiPage() {
           </section>
         )}
 
+        {/* Core Systems & Engineering Pillars */}
+        <section className="mt-16 pt-16 border-t border-slate-200 dark:border-slate-800">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+                Core Deliverables
+              </span>
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                Architectural Domains & Services
+              </h2>
+            </div>
+            <Link 
+              href="/book-call" 
+              className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 self-start"
+            >
+              Book 1-on-1 Scoping Call with Aman &rarr;
+            </Link>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              {
+                title: "Custom Next.js Web Systems",
+                desc: "Enterprise Next.js 16 platforms with sub-100ms TTFB, PostgreSQL schemas, and full source code ownership.",
+                href: "/services/web-development"
+              },
+              {
+                title: "Autonomous AI MVPs & Agents",
+                desc: "Functional LLM workflows, LangGraph triage pods, and custom vector search applications delivered in 2–4 weeks.",
+                href: "/ai-systems"
+              },
+              {
+                title: "Website Security & Maintenance",
+                desc: "24/7 uptime monitoring, automated zero-day vulnerability patching, and encrypted backup recovery.",
+                href: "/services/website-security-maintenance"
+              },
+              {
+                title: "2026 Website Cost Calculator",
+                desc: "Transparent financial model comparing SMB websites against high-concurrency SaaS applications.",
+                href: "/pricing/website-cost"
+              },
+              {
+                title: "Predictable Flat Sprints",
+                desc: "Transparent fixed-scope sprints and dedicated senior pods with zero hourly billing creep.",
+                href: "/pricing"
+              },
+              {
+                title: "Free Architecture Audit",
+                desc: "Receive a comprehensive code, security, and Core Web Vitals diagnostic within 48 hours.",
+                href: "/free-audit"
+              }
+            ].map((pillar, idx) => (
+              <Link 
+                key={idx} 
+                href={pillar.href}
+                className="group p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/60 dark:hover:border-blue-500/60 transition-all flex flex-col justify-between shadow-xs hover:shadow-md"
+              >
+                <div>
+                  <h3 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors flex items-center justify-between">
+                    <span>{pillar.title}</span>
+                    <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-blue-500" />
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                    {pillar.desc}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] font-semibold text-blue-600 dark:text-blue-400">
+                  Explore architecture &rarr;
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
       </div>
     </div>
   )

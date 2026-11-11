@@ -2,6 +2,7 @@ import HomeClient from './HomeClient'
 import { getPublishedServices, getBlogs, getSiteSettings, getSeoMetadata } from '@/lib/db/queries'
 import { FAQSchema } from '@/components/schema/FAQSchema'
 import { ItemListSchema } from '@/components/schema/ItemListSchema'
+import { WebSiteSchema } from '@/components/schema/WebSiteSchema'
 import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
 import type { Metadata } from 'next'
 
@@ -29,6 +30,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <WebSiteSchema />
       <FAQSchema faqs={HOMEPAGE_FAQS} />
       <ItemListSchema
         name="AJPR World Commercial Engineering Capabilities & Investment Benchmarks"

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useRegion } from '@/components/providers/RegionProvider';
@@ -32,15 +33,30 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
             <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
                     
-                    {/* Studio Badge */}
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/70 text-xs font-semibold text-slate-800 dark:text-slate-200 mb-6 shadow-xs animate-fade-up">
-                        <span className="flex h-2 w-2 rounded-full bg-emerald-500"></span>
-                        <span>
-                            {isIndia 
-                                ? 'Senior Software Engineering & AI Studio • India & Global Delivery' 
-                                : 'Senior Software Engineering & AI Studio'}
+                    {/* Humanized Architect Trust Badge */}
+                    <Link
+                        href="/aman-joshi"
+                        className="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 hover:bg-slate-200/90 dark:hover:bg-slate-700/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/70 text-xs font-medium text-slate-800 dark:text-slate-200 mb-6 shadow-xs animate-fade-up transition-all group"
+                        title="Meet Lead Systems Architect Aman Joshi"
+                    >
+                        <div className="relative shrink-0">
+                            <Image 
+                                src="/images/aman-joshi-profile.png" 
+                                alt="Aman Joshi" 
+                                width={24} 
+                                height={24} 
+                                className="w-6 h-6 rounded-full object-cover ring-1 ring-blue-500/40" 
+                                priority
+                            />
+                            <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white dark:ring-slate-900" title="Available for Sprints"></span>
+                        </div>
+                        <span className="font-bold text-slate-900 dark:text-white">Aman Joshi</span>
+                        <span className="text-slate-300 dark:text-slate-600">&bull;</span>
+                        <span className="text-slate-600 dark:text-slate-300">
+                            {isIndia ? 'Direct 1-on-1 Engineering • Q1/Q2 Sprints Open' : 'Direct 1-on-1 Engineering • Q1/Q2 Sprints Open'}
                         </span>
-                    </div>
+                        <ArrowRight className="w-3.5 h-3.5 text-blue-500 group-hover:translate-x-0.5 transition-transform ml-0.5" />
+                    </Link>
 
                     {/* Main Heading */}
                     <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.08] mb-6">
@@ -51,8 +67,8 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     {/* Subtitle */}
                     <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal mb-10 animate-fade-up">
                         {isIndia
-                            ? 'Direct engineering for Indian founders and ambitious teams. We take your product from architecture to production in weeks—with transparent INR pricing, GST invoicing, and 100% code ownership.'
-                            : 'Direct engineering for founders and ambitious teams. We take your product from architecture to production in weeks—with transparent pricing and 100% code ownership.'}
+                            ? 'A senior software engineering studio providing direct systems architecture for Indian founders and teams. We take your product from concept to production in weeks—with transparent INR pricing, GST invoicing, and 100% code ownership.'
+                            : 'A senior software engineering studio providing direct systems architecture for founders and ambitious teams. We take your product from architecture to production in weeks—with transparent pricing and 100% code ownership.'}
                     </p>
 
                     {/* Dual Action Primary CTAs */}

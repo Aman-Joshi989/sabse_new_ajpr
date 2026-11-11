@@ -259,7 +259,6 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
                   </div>
                 </div>
               </div>
-              </div>
             </div>
           </div>
         </section>

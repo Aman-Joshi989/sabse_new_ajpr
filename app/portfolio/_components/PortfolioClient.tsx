@@ -67,21 +67,15 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white selection:bg-blue-500/30 selection:text-white font-sans transition-colors duration-300">
       <div ref={containerRef} className="w-full relative">
-        {/* Custom Cursor Trailing Effect */}
-        <motion.div
-          className="fixed top-0 left-0 w-8 h-8 rounded-full border border-blue-500/50 pointer-events-none z-[100] mix-blend-difference hidden md:block"
-          animate={{ x: mousePosition.x - 16, y: mousePosition.y - 16 }}
-          transition={{ type: 'spring', damping: 20, stiffness: 250, mass: 0.5 }}
-        />
 
-        {/* Premium Dark Hero Section */}
-        <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden pt-32 pb-24 bg-slate-50 dark:bg-slate-950">
+        {/* Premium Hero Section */}
+        <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden pt-32 pb-24 bg-slate-50 dark:bg-slate-950">
           <div className="absolute top-0 right-0 w-[80%] h-[150%] bg-[radial-gradient(circle_at_70%_0%,rgba(59,130,246,0.15)_0%,transparent_50%)] pointer-events-none"></div>
           <div className="absolute top-40 -left-20 w-[60%] h-[120%] bg-[radial-gradient(circle_at_30%_80%,rgba(139,92,246,0.1)_0%,transparent_50%)] pointer-events-none"></div>
           <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/djp3uolnn/image/upload/v1723528256/grid-pattern_qayf0d.png')] opacity-20 bg-[length:32px_32px] pointer-events-none mix-blend-overlay"></div>
           <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent pointer-events-none"></div>
 
-          <div className="container mx-auto px-4 relative z-10 w-[80%]">
+          <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-6xl">
             <motion.div style={{ y: heroY, opacity: heroOpacity }} className="text-center max-w-5xl mx-auto mb-16">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}

@@ -126,17 +126,17 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white selection:bg-blue-500/30 font-sans transition-colors duration-300">
-      <div className="w-[80%] mx-auto min-h-screen">
+      <div className="w-full min-h-screen">
 
         {/* 1. HERO SECTION */}
-        <section className="relative pt-40 pb-32 overflow-hidden flex items-center min-h-[90vh]">
+        <section className="relative pt-36 pb-28 overflow-hidden flex items-center min-h-[85vh]">
           {/* Premium Dark Hero Background */}
           <div className="absolute top-0 right-0 w-[80%] h-[150%] bg-[radial-gradient(circle_at_70%_0%,rgba(59,130,246,0.15)_0%,transparent_50%)] pointer-events-none"></div>
           <div className="absolute top-40 -left-20 w-[60%] h-[120%] bg-[radial-gradient(circle_at_30%_80%,rgba(139,92,246,0.1)_0%,transparent_50%)] pointer-events-none"></div>
           <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/djp3uolnn/image/upload/v1723528256/grid-pattern_qayf0d.png')] opacity-20 bg-[length:32px_32px] pointer-events-none mix-blend-overlay"></div>
           <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent pointer-events-none"></div>
 
-          <div className="container mx-auto px-4 relative z-10 w-[80%]">
+          <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}

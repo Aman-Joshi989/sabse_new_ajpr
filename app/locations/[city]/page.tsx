@@ -27,6 +27,87 @@ const SERVICES = [
 ];
 
 const METRO_INFO: Record<string, { state: string; region: string; context: string; proof: string; proofMetric: string; country?: string; coordinates?: string }> = {
+    singapore: {
+        state: 'Central Region',
+        region: 'Marina Bay & One-North Innovation Hub',
+        context: 'Singapore enterprises and high-growth APAC startups require proactive website security hardening, rapid malware decontamination, autonomous AI voice workflows, and automated PPC lead generation.',
+        proof: 'Neutralized critical website vulnerabilities and restored 99.99% uptime for a Singapore cross-border e-commerce brand.',
+        proofMetric: '<15-Min P0 Response',
+        country: 'SG',
+        coordinates: '1.3521;103.8198'
+    },
+    london: {
+        state: 'Greater London',
+        region: 'Tech City & Silicon Roundabout',
+        context: 'London fintechs, high-growth scaleups, and professional service practices partner with AJPR World for rapid Next.js 16 platforms, headless architectures, and Generative Engine Optimization (GEO).',
+        proof: 'Delivered a headless fintech platform sprint in 21 days with 99.9% uptime SLA and 100% code transfer.',
+        proofMetric: '21-Day MVP Delivery',
+        country: 'GB',
+        coordinates: '51.5074;-0.1278'
+    },
+    dubai: {
+        state: 'Emirate of Dubai',
+        region: 'DIFC & Dubai Internet City',
+        context: 'Dubai’s rapid digital transformation mandates enterprise-grade website hardening, immediate malware extraction, and precision multi-channel PPC campaigns across UAE and GCC markets.',
+        proof: 'Architected high-ROAS acquisition funnels generating $340k+ in qualified pipeline for UAE enterprise B2B services.',
+        proofMetric: '$340k B2B Pipeline',
+        country: 'AE',
+        coordinates: '25.2048;55.2708'
+    },
+    austin: {
+        state: 'Texas',
+        region: 'Central Texas / Silicon Hills',
+        context: 'Austin’s competitive tech and startup ecosystem demands aggressive bottom-of-funnel customer acquisition, Next.js web platforms, and automated business workflows.',
+        proof: 'Scaled an Austin B2B SaaS startup organic pipeline from $22k to $148k MRR in 7 months.',
+        proofMetric: '+570% Inbound Pipeline',
+        country: 'US',
+        coordinates: '30.2672;-97.7431'
+    },
+    denver: {
+        state: 'Colorado',
+        region: 'Front Range Urban Corridor',
+        context: 'Denver businesses compete across booming outdoor, B2B technology, and home contracting verticals where local search intent is paramount.',
+        proof: 'Delivered +184% increase in booked high-ticket service jobs for a Denver regional HVAC contractor.',
+        proofMetric: '+184% Booked Jobs',
+        country: 'US',
+        coordinates: '39.7392;-104.9903'
+    },
+    'new-york': {
+        state: 'New York',
+        region: 'Silicon Alley & Manhattan Financial District',
+        context: 'New York venture-backed startups and established financial institutions require bulletproof Next.js web applications, sub-50ms TTFB, and technical SEO architecture.',
+        proof: 'Engineered a real-time analytics dashboard delivering 98+ Google Lighthouse scores and zero downtime.',
+        proofMetric: '98+ Lighthouse Score',
+        country: 'US',
+        coordinates: '40.7128;-74.0060'
+    },
+    'san-francisco': {
+        state: 'California',
+        region: 'Bay Area / Silicon Valley',
+        context: 'Silicon Valley AI labs and SaaS platforms partner with AJPR World for rapid prototype-to-production engineering sprints and autonomous AI agent integrations.',
+        proof: 'Shipped a multi-tenant AI workflow product in 28 days with complete repository transfer and AWS deployment.',
+        proofMetric: '28-Day Full Delivery',
+        country: 'US',
+        coordinates: '37.7749;-122.4194'
+    },
+    toronto: {
+        state: 'Ontario',
+        region: 'Downtown Toronto & Kitchener-Waterloo Corridor',
+        context: 'Canadian tech innovators and B2B enterprises leverage AJPR World for high-performance software engineering, cross-border SEO, and automated ops systems.',
+        proof: 'Reduced customer churn by 42% through self-healing webhook architectures and automated notification routing.',
+        proofMetric: '-42% Customer Churn',
+        country: 'CA',
+        coordinates: '43.6532;-79.3832'
+    },
+    sydney: {
+        state: 'New South Wales',
+        region: 'Sydney Tech Central & Barangaroo',
+        context: 'Australian e-commerce brands and APAC enterprises partner with AJPR World for Next.js store migrations, Core Web Vitals optimization, and 24/7 technical monitoring.',
+        proof: 'Doubled organic traffic across ANZ search queries within 90 days following platform architecture migration.',
+        proofMetric: '2x ANZ Organic Growth',
+        country: 'AU',
+        coordinates: '-33.8688;151.2093'
+    },
     haldwani: {
         state: 'Uttarakhand',
         region: 'Kumaon Commercial Gateway / Nainital District',
@@ -157,14 +238,14 @@ export default async function CityHubPage(props: Props) {
         description: isHaldwani 
             ? 'AJPR World provides world-class digital marketing, local SEO, custom Next.js web development, and AI solutions in Haldwani, Uttarakhand.'
             : `AJPR World delivers premium digital solutions and growth engineering in ${cityName}.`,
-        telephone: '+91-1234567890',
-        priceRange: isIndia ? '₹₹' : '$$$',
+        telephone: isIndia ? '+91-9997424915' : '+1-302-555-0190',
+        priceRange: isIndia ? '₹₹' : metro?.country === 'SG' ? 'S$$$' : '$$$',
         address: {
             '@type': 'PostalAddress',
             addressLocality: cityName,
-            addressRegion: metro?.state || (isIndia ? 'Uttarakhand' : 'US'),
+            addressRegion: metro?.state || (isIndia ? 'Uttarakhand' : metro?.country === 'SG' ? 'Central Region' : 'Global'),
             postalCode: isHaldwani ? '263139' : undefined,
-            addressCountry: isIndia ? 'IN' : 'US'
+            addressCountry: metro?.country || (isIndia ? 'IN' : 'US')
         },
         geo: {
             '@type': 'GeoCoordinates',
@@ -207,7 +288,7 @@ export default async function CityHubPage(props: Props) {
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-semibold text-sm mb-6 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
                         <MapPin className="w-4 h-4" />
-                        {cityName}, {metro?.state || (isIndia ? 'Uttarakhand' : 'US')} Operational Hub
+                        {cityName}, {metro?.state || (isIndia ? 'Uttarakhand' : metro?.country || 'Global')} Operational Hub
                     </div>
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
                         {isHaldwani ? (

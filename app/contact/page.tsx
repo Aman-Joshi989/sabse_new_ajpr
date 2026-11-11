@@ -148,13 +148,13 @@ ${form.blockersText}
                                 </div>
                             </div>
 
-                            {/* 2. Exclusivity Section */}
+                            {/* 2. Direct Senior Engineering Section */}
                             <div className="space-y-6 max-w-lg relative pl-8 border-l-2 border-blue-500/30 animate-fade-up">
-                                <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight animate-fade-up">We're Selective by Design.</h2>
+                                <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight animate-fade-up">Direct Senior Pod. Zero Middlemen.</h2>
                                 <div className="space-y-4 text-slate-500 dark:text-slate-400 text-base md:text-lg font-medium leading-relaxed animate-fade-up">
-                                    <p>AJPR WORLD works with a limited number of partners at a time.</p>
-                                    <p>We focus on long-term execution, scalable architecture, and measurable impact.</p>
-                                    <p className="text-blue-400 font-bold">If you're looking for quick fixes or low-cost builds — we're probably not the right fit.</p>
+                                    <p>At AJPR World, you collaborate directly with senior software architects and systems engineers—never junior account managers.</p>
+                                    <p>We architect your platform, commit to transparent sprint roadmaps, and transfer 100% code and IP ownership upon delivery.</p>
+                                    <p className="text-emerald-500 font-bold">Direct response within 24 hours &bull; Mutual NDA protected.</p>
                                 </div>
                             </div>
 
@@ -308,38 +308,38 @@ ${form.blockersText}
                                     </div>
                                 ) : (
                                     <>
-                                        <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Apply to Work With Us</h2>
-                                        <p className="text-slate-500 dark:text-slate-400 font-medium mb-12">All fields are required to help us prepare for our discussion.</p>
+                                        <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Let's Discuss Your Project</h2>
+                                        <p className="text-slate-500 dark:text-slate-400 font-medium mb-10 text-sm">Tell us about your roadmap, timeline, and goals. We review every inquiry and respond within 24 hours.</p>
 
-                                        <form onSubmit={handleSubmit} className="space-y-8">
-                                            <div className="grid md:grid-cols-2 gap-8">
-                                                <div className="space-y-3">
-                                                    <Label htmlFor="fullName" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Full Name</Label>
-                                                    <Input id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required className="h-14 bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. Aman Joshi" />
+                                        <form onSubmit={handleSubmit} className="space-y-6">
+                                            <div className="grid md:grid-cols-2 gap-6">
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="fullName" className="text-slate-600 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase">Full Name *</Label>
+                                                    <Input id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required className="h-12 bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 transition-colors" placeholder="e.g. Alex Morgan" />
                                                 </div>
-                                                <div className="space-y-3">
-                                                    <Label htmlFor="workEmail" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Work Email</Label>
-                                                    <Input id="workEmail" name="workEmail" type="email" value={form.workEmail} onChange={handleChange} required className="h-14 bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. you@ajprworld.com" />
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="workEmail" className="text-slate-600 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase">Work Email *</Label>
+                                                    <Input id="workEmail" name="workEmail" type="email" value={form.workEmail} onChange={handleChange} required className="h-12 bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 transition-colors" placeholder="e.g. alex@company.com" />
                                                 </div>
                                             </div>
 
-                                            <div className="grid md:grid-cols-2 gap-8">
-                                                <div className="space-y-3">
-                                                    <Label htmlFor="companyName" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Company Name</Label>
-                                                    <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} required className="h-14 bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. AJPR World" />
+                                            <div className="grid md:grid-cols-2 gap-6">
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="companyName" className="text-slate-600 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase">Company / Project Name</Label>
+                                                    <Input id="companyName" name="companyName" value={form.companyName} onChange={handleChange} className="h-12 bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 transition-colors" placeholder="e.g. Acme Labs or Stealth" />
                                                 </div>
-                                                <div className="space-y-3">
-                                                    <Label htmlFor="websiteUrl" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Website / Product URL</Label>
-                                                    <Input id="websiteUrl" name="websiteUrl" type="url" value={form.websiteUrl} onChange={handleChange} required className="h-14 bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors" placeholder="e.g. https://ajprworld.com" />
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="websiteUrl" className="text-slate-600 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase">Website URL (Optional)</Label>
+                                                    <Input id="websiteUrl" name="websiteUrl" type="url" value={form.websiteUrl} onChange={handleChange} className="h-12 bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 transition-colors" placeholder="https://yourwebsite.com (or leave empty)" />
                                                 </div>
                                             </div>
 
-                                            <div className="grid md:grid-cols-2 gap-8">
-                                                <div className="space-y-3 flex flex-col">
-                                                    <Label htmlFor="monthlyRevenue" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Current Monthly Revenue</Label>
-                                                    <select id="monthlyRevenue" name="monthlyRevenue" value={form.monthlyRevenue} onChange={handleChange} required className="h-14 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
-                                                        <option value="" disabled>Select Revenue Level</option>
-                                                        <option value="Pre-revenue">Pre-revenue / Seed</option>
+                                            <div className="grid md:grid-cols-2 gap-6">
+                                                <div className="space-y-2 flex flex-col">
+                                                    <Label htmlFor="monthlyRevenue" className="text-slate-600 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase">Stage / Revenue (Optional)</Label>
+                                                    <select id="monthlyRevenue" name="monthlyRevenue" value={form.monthlyRevenue} onChange={handleChange} className="h-12 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors text-xs sm:text-sm">
+                                                        <option value="">Select Stage (Optional)</option>
+                                                        <option value="Pre-revenue">Pre-revenue / Idea / MVP</option>
                                                         {isIndia ? (
                                                             <>
                                                                 <option value="₹0 - ₹5 Lakhs">₹0 – ₹5 Lakhs / mo</option>
@@ -357,44 +357,48 @@ ${form.blockersText}
                                                         )}
                                                     </select>
                                                 </div>
-                                                <div className="space-y-3 flex flex-col">
-                                                    <Label htmlFor="budgetRange" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">Project Budget Range</Label>
-                                                    <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={handleChange} required className="h-14 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none">
-                                                        <option value="" disabled>Select a range</option>
+                                                <div className="space-y-2 flex flex-col">
+                                                    <Label htmlFor="budgetRange" className="text-slate-600 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase">Estimated Budget Range</Label>
+                                                    <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={handleChange} className="h-12 px-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors text-xs sm:text-sm">
+                                                        <option value="">Select budget range...</option>
                                                         {isIndia ? (
                                                             <>
                                                                 <option value="₹1.5L - ₹3L">₹1,49,000 – ₹2,99,000 (Sprint MVP)</option>
-                                                                <option value="₹3L - ₹6L">₹2,99,000 – ₹5,99,000 (Full Platform)</option>
-                                                                <option value="₹6L - ₹15L">₹5,99,000 – ₹15,00,000 (Custom / AI)</option>
-                                                                <option value="₹15L+">₹15,00,000+</option>
+                                                                <option value="₹3L - ₹6L">₹2,99,000 – ₹5,99,000 (Full Web App / AI)</option>
+                                                                <option value="₹6L - ₹15L">₹5,99,000 – ₹15,00,000 (Custom Architecture)</option>
+                                                                <option value="₹15L+">₹15,00,000+ (Enterprise Multi-Tenant)</option>
+                                                                <option value="Flexible">Flexible / Need technical recommendation</option>
                                                             </>
                                                         ) : (
                                                             <>
                                                                 <option value="$4.5k - $7.5k">$4,500 – $7,500 (Sprint MVP)</option>
-                                                                <option value="$7.5k - $15k">$7,500 – $15,000 (Full Platform)</option>
-                                                                <option value="$15k - $35k">$15,000 – $35,000 (Custom / AI)</option>
-                                                                <option value="$35k+">$35,000+</option>
+                                                                <option value="$7.5k - $15k">$7,500 – $15,000 (Full Web App / AI)</option>
+                                                                <option value="$15k - $35k">$15,000 – $35,000 (Custom Architecture)</option>
+                                                                <option value="$35k+">$35,000+ (Enterprise SLA)</option>
+                                                                <option value="Flexible">Flexible / Need technical recommendation</option>
                                                             </>
                                                         )}
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div className="space-y-3 flex flex-col">
-                                                <Label htmlFor="buildingText" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What are you building?</Label>
-                                                <Textarea id="buildingText" name="buildingText" value={form.buildingText} onChange={handleChange} required placeholder="e.g. We want to design an AI-powered SaaS automation portal and connect it to AJPR World's custom API infrastructure..." rows={4} className="resize-none bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
+                                            <div className="space-y-2 flex flex-col">
+                                                <Label htmlFor="buildingText" className="text-slate-600 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase">What are you looking to build or solve? *</Label>
+                                                <Textarea id="buildingText" name="buildingText" value={form.buildingText} onChange={handleChange} required placeholder="e.g. We are building a Next.js SaaS MVP with AI workflows and need production architecture and delivery in 30 days..." rows={3} className="resize-none bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 transition-colors p-3.5 text-sm" />
                                             </div>
 
-                                            <div className="space-y-3 flex flex-col">
-                                                <Label htmlFor="blockersText" className="text-slate-600 dark:text-slate-300 font-medium text-sm tracking-wide uppercase">What's blocking your growth right now?</Label>
-                                                <Textarea id="blockersText" name="blockersText" value={form.blockersText} onChange={handleChange} required placeholder="e.g. Tech debt and outdated legacy databases are bottlenecking checkout transactions, and we need to scale our system using AJPR World's engineering services." rows={4} className="resize-none bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 transition-colors p-4" />
+                                            <div className="space-y-2 flex flex-col">
+                                                <Label htmlFor="blockersText" className="text-slate-600 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase">Timeline or Special Requirements (Optional)</Label>
+                                                <Textarea id="blockersText" name="blockersText" value={form.blockersText} onChange={handleChange} placeholder="e.g. Target launch in 4 weeks, requires Stripe billing and Supabase Postgres integration..." rows={2} className="resize-none bg-slate-100 dark:bg-slate-900/50 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl focus-visible:ring-1 focus-visible:ring-blue-500 transition-colors p-3.5 text-sm" />
                                             </div>
 
-                                            <div className="pt-6">
-                                                <Button type="submit" size="lg" disabled={submitting} className="w-full h-16 text-lg bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg hover:-translate-y-1">
-                                                    {submitting ? 'Submitting Application...' : 'Submit Application'}
+                                            <div className="pt-2">
+                                                <Button type="submit" size="lg" disabled={submitting} className="w-full h-14 text-base bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+                                                    {submitting ? 'Sending Inquiry...' : 'Send Project Inquiry'}
                                                 </Button>
-                                                <p className="text-sm font-medium text-slate-500 dark:text-slate-400 text-center mt-4">Applications are reviewed within 48 hours.</p>
+                                                <p className="text-xs font-medium text-slate-500 dark:text-slate-400 text-center mt-3">
+                                                    🔒 Confidential under mutual NDA &bull; Reviewed within 24 hours directly by Lead Architect Aman Joshi.
+                                                </p>
                                             </div>
 
                                             {status === 'error' && (

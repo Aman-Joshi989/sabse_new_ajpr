@@ -264,7 +264,7 @@ ${form.blockersText}
 
                                                 {isIndia ? (
                                                     <a
-                                                        href={`https://wa.me/919997424915?text=${encodeURIComponent(
+                                                        href={`https://wa.me/919997205257?text=${encodeURIComponent(
                                                             `Hi Aman, I just submitted an application on AJPR World (Ref: ${submittedInfo.referenceId}) for ${submittedInfo.companyName || submittedInfo.name} and would like to connect directly.`
                                                         )}`}
                                                         target="_blank"
@@ -275,7 +275,7 @@ ${form.blockersText}
                                                             <MessageCircle className="w-4 h-4" />
                                                             Chat Directly on WhatsApp
                                                         </span>
-                                                        <span className="text-xs bg-emerald-700/60 px-2 py-0.5 rounded font-normal">+91 99974 24915</span>
+                                                        <span className="text-xs bg-emerald-700/60 px-2 py-0.5 rounded font-normal">+91 99972 05257</span>
                                                     </a>
                                                 ) : (
                                                     <a

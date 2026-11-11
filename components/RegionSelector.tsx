@@ -104,3 +104,4 @@ export default function RegionSelector({ variant = 'compact', className = '' }: 
     </div>
   );
 }
+

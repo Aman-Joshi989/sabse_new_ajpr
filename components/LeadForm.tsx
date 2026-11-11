@@ -23,6 +23,7 @@ import {
   Calendar
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -208,12 +209,12 @@ export default function LeadForm() {
 
           {isIndia && (
             <a
-              href="https://wa.me/919997424915?text=Hi%20Aman,%20I%20just%20submitted%20a%20project%20scope%20request%20on%20AJPR%20World%20and%20would%20like%20to%20connect."
+              href="https://wa.me/919997205257?text=Hi%20Aman,%20I%20just%20submitted%20a%20project%20scope%20request%20on%20AJPR%20World%20and%20would%20like%20to%20connect."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 w-full h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition-all shadow-md"
             >
-              <MessageCircle className="w-4 h-4" /> Chat on WhatsApp Now (+91 99974 24915)
+              <MessageCircle className="w-4 h-4" /> Chat on WhatsApp Now (+91 99972 05257)
             </a>
           )}
 
@@ -250,9 +251,13 @@ export default function LeadForm() {
       {/* Real Architect Persona Header */}
       <div className="flex items-center gap-3.5 pb-6 border-b border-slate-200/80 dark:border-slate-800/80 mb-6">
         <div className="relative">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-base shadow-md ring-2 ring-blue-500/20">
-            AJ
-          </div>
+          <Image
+            src="/images/aman-joshi-profile.png"
+            alt="Aman Joshi"
+            width={48}
+            height={48}
+            className="w-12 h-12 rounded-full object-cover shadow-md ring-2 ring-blue-500/20"
+          />
           <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full" title="Online & Available"></span>
         </div>
         <div className="flex-1 min-w-0">
@@ -330,7 +335,7 @@ export default function LeadForm() {
             name="phone" 
             value={formData.phone} 
             onChange={handleChange} 
-            placeholder={isIndia ? '+91 98765 43210' : '+1 (555) 000-0000'}
+            placeholder={isIndia ? '+91 98765 43210' : '+1 (415) 800-2490'}
             className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -438,13 +443,13 @@ export default function LeadForm() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           {isIndia ? (
             <a
-              href="https://wa.me/919997424915?text=Hi%20Aman,%20I'd%20like%20to%20discuss%20a%20project%20for%20my%20business."
+              href="https://wa.me/919997205257?text=Hi%20Aman,%20I'd%20like%20to%20discuss%20a%20project%20for%20my%20business."
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-100 transition-colors"
             >
               <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>WhatsApp: +91 99974 24915</span>
+              <span>WhatsApp: +91 99972 05257</span>
             </a>
           ) : (
             <a

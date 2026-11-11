@@ -467,7 +467,7 @@ export default async function LocationServicePage(props: Props) {
             : (seoData?.h1_title || `${serviceName} in ${cityName}`),
         image: 'https://ajprworld.com/logo.png',
         url: `https://ajprworld.com/locations/${params.city}/${params.service}`,
-        telephone: '+91-1234567890',
+        telephone: '+91-9997205257',
         priceRange: localMetro?.priceRange || (isIndia ? '₹₹' : '$$$'),
         address: {
             '@type': 'PostalAddress',

@@ -45,7 +45,7 @@ const DEFAULT_PRODUCTS: Product[] = [
       "Custom Automated Workflow Pipelines",
       "Automated Inbound Lead Qualification",
       "CRM & Slack / WhatsApp Integration",
-      "Deterministic Business Logic & Guardrails",
+      "Human-in-the-Loop Logic & Safety Checkpoints",
       "API Rate-Limiting & Cost Governance",
       "Production Deployment & Monitoring"
     ]

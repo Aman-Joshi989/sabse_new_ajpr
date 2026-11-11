@@ -71,7 +71,7 @@ export default async function AmanJoshiPage() {
     console.error("Failed to load projects/settings for Aman Joshi profile:", e)
   }
 
-  const contactEmail = settings?.contact_email || 'amanjoshi254@gmail.com'
+  const contactEmail = settings?.contact_email || 'hello@ajprworld.com'
   const contactPhone = settings?.contact_phone || '+91 9997205257'
   const founderName = settings?.founder_name || 'Aman Joshi'
   const founderTitle = settings?.founder_title || 'Founder & Systems Architect'
@@ -124,7 +124,7 @@ export default async function AmanJoshiPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
 
-      <div className="w-[80%] mx-auto min-h-screen pt-32 pb-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen pt-32 pb-24">
         
         {/* Hero Section */}
         <section className="grid lg:grid-cols-12 gap-12 items-center mb-24 relative">
@@ -147,7 +147,10 @@ export default async function AmanJoshiPage() {
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <Button size="lg" className="rounded-full bg-blue-600 text-white hover:bg-blue-500 font-bold" asChild>
-                <Link href="/contact">Book Strategy Session</Link>
+                <Link href="/book-call">Book 30-Min Strategy Call</Link>
+              </Button>
+              <Button size="lg" variant="outline" className="rounded-full border-slate-300 dark:border-slate-700 font-bold" asChild>
+                <Link href="/contact">Direct Message</Link>
               </Button>
               <div className="flex gap-2">
                 <a href={founderLinkedin} target="_blank" rel="noopener noreferrer" className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">

@@ -233,7 +233,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <div className="mb-20 max-w-3xl">
               <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">Built for scale, <br className="hidden md:block"/>not just presence.</h2>
-              <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed">We do not build static brochure sites. We architect high-performance digital systems designed to compound your growth and handle immense scale.</p>
+              <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed">As a Senior Software Engineering & AI Studio, we do not build static brochure sites. We architect high-concurrency digital platforms, automated backend workflows, and AI systems designed to compound revenue and scale without operational chaos.</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 lg:gap-8">

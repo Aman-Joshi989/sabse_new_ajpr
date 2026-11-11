@@ -236,9 +236,19 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                         ))}
                       </div>
 
-                      <Button className="bg-white text-slate-950 hover:bg-slate-200 h-14 px-8 rounded-xl font-bold text-lg w-full sm:w-auto shadow-xl" asChild>
-                        <Link href={project.url || "#"} target="_blank">View Live Infrastructure <ArrowUpRight className="ml-2 w-5 h-5" /></Link>
-                      </Button>
+                      {project.url ? (
+                        <Button className="bg-blue-600 hover:bg-blue-500 text-white h-12 px-6 rounded-xl font-bold text-sm w-full sm:w-auto shadow-md" asChild>
+                          <a href={project.url} target="_blank" rel="noopener noreferrer">
+                            Visit Live Production Site <ArrowUpRight className="ml-2 w-4 h-4" />
+                          </a>
+                        </Button>
+                      ) : (
+                        <Button variant="outline" className="h-12 px-6 rounded-xl font-semibold text-xs sm:text-sm border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800" asChild>
+                          <Link href="/book-call">
+                            Request Architecture Walkthrough (NDA Protected) <ArrowRight className="ml-1.5 w-4 h-4" />
+                          </Link>
+                        </Button>
+                      )}
                     </div>
                   </motion.div>
                 ))}

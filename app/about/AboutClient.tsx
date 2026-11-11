@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -17,7 +18,12 @@ import {
   Store,
   Users,
   UserCircle,
-  Building2
+  Building2,
+  CheckCircle2,
+  Calendar,
+  MessageCircle,
+  Mail,
+  ShieldCheck
 } from 'lucide-react'
 import CoreValuesSection from '@/components/sections/CoreValuesSection'
 import AccountabilityPledgeSection from '@/components/sections/AccountabilityPledgeSection'
@@ -196,12 +202,63 @@ export default function AboutClient({ services = [], settings }: AboutClientProp
                 <p>
                   We don't believe in vanity metrics or generic templates. Driven by an execution-first mindset, we engineer custom solutions that bridge the gap between complex technology and tangible business ROI.
                 </p>
-                <p className="text-blue-400 font-bold">
-                  We are your long-term execution machine.
+                <p className="text-blue-600 dark:text-blue-400 font-bold">
+                  We are your direct execution machine.
                 </p>
-                <div className="pt-4 text-sm text-slate-500 dark:text-slate-400 font-bold">
-                  Led by <Link href="/aman-joshi" className="text-blue-400 underline hover:text-blue-300 hover:scale-[1.01] inline-block transition-all">{settings?.founder_name || 'Aman Joshi'}, {settings?.founder_title || 'Founder & Systems Architect'}</Link>.
+              </div>
+
+              {/* Founder Spotlight Card */}
+              <div className="mt-12 text-left bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-white/10 rounded-3xl p-6 sm:p-8 max-w-3xl mx-auto shadow-xl">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                  <div className="relative shrink-0">
+                    <Image
+                      src="/images/aman-joshi-profile.png"
+                      alt="Aman Joshi"
+                      width={96}
+                      height={96}
+                      className="w-24 h-24 rounded-2xl object-cover object-top shadow-lg ring-2 ring-blue-500/20"
+                      priority
+                    />
+                    <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full" title="Active"></span>
+                  </div>
+                  <div className="flex-1 space-y-3 text-center sm:text-left">
+                    <div>
+                      <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Aman Joshi</h3>
+                        <span className="text-[11px] font-bold bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                          Founder & Systems Architect
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                        Direct 1-on-1 Architecture Pod &bull; Zero Middlemen &bull; 100% Code Ownership
+                      </p>
+                    </div>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                      &ldquo;When you partner with AJPR World, you get senior engineering craftsmanship from day one. We take your idea from system architecture to a scalable, production-ready MVP in weeks.&rdquo;
+                    </p>
+                    <div className="pt-2 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                      <Button size="sm" className="rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold" asChild>
+                        <Link href="/book-call">
+                          <Calendar className="w-3.5 h-3.5 mr-1.5" /> Book 30-Min Strategy Call
+                        </Link>
+                      </Button>
+                      <Button size="sm" variant="outline" className="rounded-xl border-slate-300 dark:border-slate-700 font-bold" asChild>
+                        <Link href="/aman-joshi">
+                          Read Architect Story <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                        </Link>
+                      </Button>
+                      <a
+                        href="https://wa.me/919997205257?text=Hi%20Aman,%20I'd%20like%20to%20discuss%20a%20project."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 px-2 py-1"
+                      >
+                        <MessageCircle className="w-3.5 h-3.5" /> WhatsApp (+91 99972 05257)
+                      </a>
+                    </div>
+                  </div>
                 </div>
+              </div>
               </div>
             </div>
           </div>

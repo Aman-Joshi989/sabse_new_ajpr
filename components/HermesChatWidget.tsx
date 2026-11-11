@@ -9,7 +9,7 @@ import { useCart } from '@/components/providers/CartProvider';
 import { useRegion } from '@/components/providers/RegionProvider';
 
 function RealAgentCard({ leadName, leadEmail, isIndia }: { leadName?: string; leadEmail?: string; isIndia?: boolean }) {
-  const whatsappUrl = `https://wa.me/919997424915?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/919997205257?text=${encodeURIComponent(
     `Hi Aman! I was chatting with Agent Hermes on AJPR World and want to connect directly about our project. (Name: ${leadName || 'Visitor'}, Email: ${leadEmail || 'N/A'})`
   )}`;
 
@@ -61,7 +61,7 @@ function RealAgentCard({ leadName, leadEmail, isIndia }: { leadName?: string; le
 
             <div className="grid grid-cols-2 gap-1.5">
               <a
-                href="tel:+919997424915"
+                href="tel:+919997205257"
                 className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-[#202124] hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium transition-colors"
               >
                 <Phone className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />

@@ -238,7 +238,7 @@ export default async function CityHubPage(props: Props) {
         description: isHaldwani 
             ? 'AJPR World provides world-class digital marketing, local SEO, custom Next.js web development, and AI solutions in Haldwani, Uttarakhand.'
             : `AJPR World delivers premium digital solutions and growth engineering in ${cityName}.`,
-        telephone: isIndia ? '+91-9997424915' : '+1-302-555-0190',
+        telephone: '+91-9997205257',
         priceRange: isIndia ? '₹₹' : metro?.country === 'SG' ? 'S$$$' : '$$$',
         address: {
             '@type': 'PostalAddress',

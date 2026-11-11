@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import Image from 'next/image'
 import { useRegion } from '@/components/providers/RegionProvider'
 
 const timeSlots = [
@@ -215,9 +216,14 @@ export default function BookCallPage() {
                         {/* Profile Persona */}
                         <div className="flex items-center gap-3.5">
                             <div className="relative">
-                                <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-lg shadow-md ring-2 ring-blue-500/20">
-                                    AJ
-                                </div>
+                                <Image
+                                    src="/images/aman-joshi-profile.png"
+                                    alt="Aman Joshi"
+                                    width={56}
+                                    height={56}
+                                    className="w-14 h-14 rounded-full object-cover shadow-md ring-2 ring-blue-500/20"
+                                    priority
+                                />
                                 <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full" title="Active"></span>
                             </div>
                             <div>
@@ -266,14 +272,14 @@ export default function BookCallPage() {
 
                             {isIndia ? (
                                 <a
-                                    href="https://wa.me/919997424915?text=Hi%20Aman,%20I'd%20like%20to%20discuss%20a%20software%20project%20for%20my%20business."
+                                    href="https://wa.me/919997205257?text=Hi%20Aman,%20I'd%20like%20to%20discuss%20a%20software%20project%20for%20my%20business."
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-100 transition-colors shadow-2xs"
                                 >
                                     <span className="flex items-center gap-2">
                                         <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                                        <span>Chat on WhatsApp (+91 99974 24915)</span>
+                                        <span>Chat on WhatsApp (+91 99972 05257)</span>
                                     </span>
                                     <span className="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded font-bold">Fast</span>
                                 </a>
@@ -459,7 +465,7 @@ export default function BookCallPage() {
                                                 <Label htmlFor="phone" className="text-xs uppercase tracking-wide font-bold text-slate-500 dark:text-slate-400">
                                                     {isIndia ? 'WhatsApp / Phone Number' : 'Phone Number (Optional)'}
                                                 </Label>
-                                                <Input id="phone" name="phone" value={form.phone} onChange={handleChange} className="h-10 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-xl text-xs sm:text-sm" placeholder={isIndia ? '+91 98765 43210' : '+1 (555) 000-0000'} />
+                                                <Input id="phone" name="phone" value={form.phone} onChange={handleChange} className="h-10 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-xl text-xs sm:text-sm" placeholder={isIndia ? '+91 98765 43210' : '+1 (415) 800-2490'} />
                                             </div>
                                             <div className="space-y-1">
                                                 <Label htmlFor="companyName" className="text-xs uppercase tracking-wide font-bold text-slate-500 dark:text-slate-400">Company or Website</Label>

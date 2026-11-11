@@ -332,6 +332,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const isSingaporePpc = params.city.toLowerCase() === 'singapore' && params.service === 'ppc-agency';
     const isSingaporeAi = params.city.toLowerCase() === 'singapore' && params.service === 'ai-solutions';
     const isLondonMvp = params.city.toLowerCase() === 'london' && (params.service === 'custom-software' || params.service === 'web-development');
+    const isDallasSoftware = params.city.toLowerCase() === 'dallas' && (params.service === 'custom-software' || params.service === 'web-development');
+    const isTampaPpc = params.city.toLowerCase() === 'tampa' && params.service === 'ppc-agency';
+    const isPhoenixPpc = params.city.toLowerCase() === 'phoenix' && params.service === 'ppc-agency';
+    const isMiamiPpc = params.city.toLowerCase() === 'miami' && params.service === 'ppc-agency';
     const isIndia = localMetro?.country === 'IN';
 
     let title = seoData?.meta_title;
@@ -342,6 +346,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             title = 'Business Process Automation & AI Systems Singapore | AJPR World';
         } else if (isLondonMvp) {
             title = 'Startup MVP Development & Custom Next.js Software London | AJPR World';
+        } else if (isDallasSoftware) {
+            title = 'Custom Software Development in Dallas, TX | AJPR World';
+        } else if (isTampaPpc) {
+            title = 'Top PPC Agency in Tampa, FL (Google & Meta Ads) | AJPR World';
+        } else if (isPhoenixPpc) {
+            title = 'PPC Agency in Phoenix, AZ (High-ROAS Paid Search) | AJPR World';
+        } else if (isMiamiPpc) {
+            title = 'Top PPC Agency in Miami, FL (Google Ads & Paid Social) | AJPR World';
         } else if (isHaldwani && isDigitalMarketing) {
             title = 'Best Digital Marketing & SEO Company in Haldwani | AJPR World';
         } else if (isHaldwani) {
@@ -361,6 +373,14 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             description = 'Business process automation, AI workflow engineering, and custom systems integration for companies in Singapore.';
         } else if (isLondonMvp) {
             description = 'Startup MVP development and custom Next.js software engineering in London. Rapid 2–4 week sprints with 100% code ownership.';
+        } else if (isDallasSoftware) {
+            description = 'Direct senior software engineering and Next.js full-stack development in Dallas-Fort Worth. Rapid 2–4 week MVP sprints, custom databases, and 100% code ownership.';
+        } else if (isTampaPpc) {
+            description = 'High-ROAS Google Ads and paid media management in Tampa Bay. Conversion-rate optimized Next.js landing pages and transparent performance reporting.';
+        } else if (isPhoenixPpc) {
+            description = 'Data-driven PPC management and Google Ads optimization in Phoenix & Scottsdale. Lower customer acquisition costs with dedicated senior strategists.';
+        } else if (isMiamiPpc) {
+            description = 'High-converting PPC management in Miami. Omnichannel Google Ads, Meta Ads, and performance tracking for fast-growing businesses.';
         } else if (isHaldwani && isDigitalMarketing) {
             description = 'Looking for the best digital marketing company in Haldwani? AJPR World delivers data-backed SEO, high-ROAS Google Ads, and custom Next.js websites for local businesses in Nainital & Kumaon.';
         } else if (isIndia) {
@@ -1020,8 +1040,20 @@ export default async function LocationServicePage(props: Props) {
                             <Link href="/tools/agency-pricing-calculator" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
                                 Agency ROI & Pricing Calculator →
                             </Link>
+                            <Link href="/compare/webtonic-alternatives" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                Web Tonic Alternatives & Pricing →
+                            </Link>
+                            <Link href="/compare/smartsites-alternatives" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                SmartSites Alternatives & Review →
+                            </Link>
                             <Link href="/compare/webfx-alternatives" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
                                 WebFX Alternatives & Comparison →
+                            </Link>
+                            <Link href="/pricing/website-cost" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                Website Development Cost (2026) →
+                            </Link>
+                            <Link href="/ai-systems" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                Custom AI MVP Systems →
                             </Link>
                             <Link href="/research/agency-pricing-report" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
                                 2026 US Agency Pricing Report →

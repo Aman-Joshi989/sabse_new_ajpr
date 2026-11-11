@@ -40,8 +40,8 @@ export const metadata: Metadata = {
 
 const comparisonItemList = [
   {
-    name: 'Web Tonic Reviews & Alternatives (2026 Breakdown)',
-    description: 'Detailed analysis of Web Tonic pricing, retainer costs, client reviews, and the 5 best alternatives for high-velocity software engineering.',
+    name: '7 Best Web Tonic Alternatives in 2026 (Reviews & Pricing Breakdown)',
+    description: 'Detailed analysis of Web Tonic pricing, retainer costs, client reviews, and the 7 best alternatives for high-velocity software engineering.',
     url: 'https://ajprworld.com/compare/webtonic-alternatives'
   },
   {
@@ -55,12 +55,12 @@ const comparisonItemList = [
     url: 'https://ajprworld.com/compare/altar-io-alternatives'
   },
   {
-    name: 'SmartSites Alternatives & Agency Review',
+    name: '7 Best SmartSites Alternatives in 2026 (PPC & Web Studios Compared)',
     description: 'Comparing SmartSites PPC management and WordPress builds against custom Next.js 16 architectures with sub-second Core Web Vitals.',
     url: 'https://ajprworld.com/compare/smartsites-alternatives'
   },
   {
-    name: 'WebFX Alternatives & Competitor Review',
+    name: 'Top 6 WebFX Alternatives & Competitors in 2026 (Pricing & Tech Stack)',
     description: 'Breakdown of WebFX pricing, MarketingCloudFX lock-in, and independent agile agency alternatives.',
     url: 'https://ajprworld.com/compare/webfx-alternatives'
   },
@@ -83,7 +83,7 @@ const comparisonItemList = [
 
 const comparisons = [
   {
-    title: 'Web Tonic Reviews, Pricing & Top 5 Alternatives',
+    title: '7 Best Web Tonic Alternatives in 2026 (Reviews & Pricing Breakdown)',
     slug: '/compare/webtonic-alternatives',
     target: 'Web Tonic vs AJPR World vs Traditional Agencies',
     description: 'An objective review of Web Tonic pricing, retainer structures, regional trade strengths, Next.js engineering depth, and transparent sprint models.',
@@ -110,7 +110,7 @@ const comparisons = [
     highlights: ['2–4 Week Build', '$4,500 Fixed Sprints', 'Next.js 16 + React 19', 'Full Code Ownership']
   },
   {
-    title: 'SmartSites Alternatives & Agency Review',
+    title: '7 Best SmartSites Alternatives in 2026 (PPC & Web Studios)',
     slug: '/compare/smartsites-alternatives',
     target: 'SmartSites vs AJPR World',
     description: 'Compare SmartSites PPC management and WordPress builds against custom Next.js 16 architectures with sub-second Core Web Vitals and flat retainers.',
@@ -119,7 +119,7 @@ const comparisons = [
     highlights: ['Sub-1s Core Web Vitals', 'Custom Next.js vs WordPress', 'Transparent Ad Management', 'No Long Contracts']
   },
   {
-    title: 'WebFX Alternatives & Competitor Review',
+    title: 'Top 6 WebFX Alternatives & Competitors in 2026',
     slug: '/compare/webfx-alternatives',
     target: 'WebFX vs AJPR World vs Traditional Agencies',
     description: 'A fair, comprehensive analysis of WebFX pricing, MarketingCloudFX software lock-in, junior account rotation, and why modern brands choose agile specialist partners.',

@@ -572,6 +572,130 @@ Source Article: ${post.title} (${articleUrl})`,
             </div>
           </section>
         )}
+
+        {/* Topical Cluster Knowledge Mesh */}
+        <section className="mt-16 pt-12 border-t border-slate-200 dark:border-slate-800">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-widest text-[#E05A36]">Topical Authority Hub</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                Explore Engineering Blueprints, Pricing & Alternatives
+              </h2>
+            </div>
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#E05A36] hover:underline"
+            >
+              Browse All Capabilities &rarr;
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Link
+              href="/compare/webtonic-alternatives"
+              className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-[#E05A36] hover:shadow-md transition-all group"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Ranked Comparison</span>
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#E05A36] transition-colors">
+                7 Best Web Tonic Alternatives (2026)
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+                Objective breakdown of Web Tonic pricing, retainers, and Next.js modern engineering alternatives.
+              </p>
+            </Link>
+
+            <Link
+              href="/compare/smartsites-alternatives"
+              className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-[#E05A36] hover:shadow-md transition-all group"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">PPC & Web Studios</span>
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#E05A36] transition-colors">
+                SmartSites Alternatives & Review
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+                Comparing SmartSites PPC and WordPress builds with sub-second Next.js web application architecture.
+              </p>
+            </Link>
+
+            <Link
+              href="/pricing/seo-cost"
+              className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-[#E05A36] hover:shadow-md transition-all group"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Retainer Benchmarks</span>
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#E05A36] transition-colors">
+                SEO Retainer Cost in 2026
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+                Real data on monthly retainers ($1,500–$8,500/mo), B2B SaaS pricing, and deliverables with zero markup.
+              </p>
+            </Link>
+
+            <Link
+              href="/pricing/website-cost"
+              className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-[#E05A36] hover:shadow-md transition-all group"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Transparent Pricing</span>
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#E05A36] transition-colors">
+                Website Development Cost Guide
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+                Comparing $3,500 SMB platforms against $20,000+ custom enterprise web applications in 2026.
+              </p>
+            </Link>
+
+            <Link
+              href="/services/web-development"
+              className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-[#E05A36] hover:shadow-md transition-all group"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Core Architecture</span>
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#E05A36] transition-colors">
+                Full-Stack Next.js Engineering
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+                Sub-second page speeds, custom PostgreSQL architectures, and 99+ Core Web Vitals performance.
+              </p>
+            </Link>
+
+            <Link
+              href="/ai-systems"
+              className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-[#E05A36] hover:shadow-md transition-all group"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">AI MVPs</span>
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#E05A36] transition-colors">
+                Autonomous AI Systems & Sprints
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+                2–4 week AI product sprints with complete GitHub repository transfer and 100% intellectual property ownership.
+              </p>
+            </Link>
+
+            <Link
+              href="/services/b2b-growth-marketing"
+              className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-[#E05A36] hover:shadow-md transition-all group"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">B2B Demand Gen</span>
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#E05A36] transition-colors">
+                B2B Growth Marketing Agency
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+                Account-based marketing, programmatic search expansion, and high-converting demand generation.
+              </p>
+            </Link>
+
+            <Link
+              href="/compare"
+              className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-[#E05A36] hover:shadow-md transition-all group"
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">Agency Directory</span>
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-[#E05A36] transition-colors">
+                All Agency Comparisons Hub
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+                Transparent side-by-side matrices evaluating US agencies, local studios, and engineering pods.
+              </p>
+            </Link>
+          </div>
+        </section>
       </div>
 
       {/* Editorial Policy Modal */}

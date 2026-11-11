@@ -7,6 +7,7 @@ export const WebSiteSchema = () => {
         '@id': 'https://ajprworld.com/#website',
         url: 'https://ajprworld.com',
         name: 'AJPR World',
+        alternateName: ['AJPR', 'AJPR World', 'AJPR Tech', 'AJPR Software'],
         description: 'AJPR World is a senior software engineering studio building custom AI MVPs, scalable web platforms, and automated business systems with 100% code ownership.',
         publisher: {
           '@id': 'https://ajprworld.com/#organization'

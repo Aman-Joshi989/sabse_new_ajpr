@@ -13,7 +13,7 @@ export const OrganizationSchema = async () => {
     '@type': 'Organization',
     '@id': 'https://ajprworld.com/#organization',
     name: 'AJPR World',
-    alternateName: ['AJPR Tech', 'AJPR World LLC', 'AJPR Software'],
+    alternateName: ['AJPR', 'AJPR World', 'AJPR Tech', 'AJPR Software', 'AJPR World LLC'],
     legalName: 'AJPR World',
     url: 'https://ajprworld.com',
     logo: {

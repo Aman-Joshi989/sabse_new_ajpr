@@ -67,12 +67,12 @@ export async function generateMetadata(): Promise<Metadata> {
       alternates: {
         canonical: 'https://ajprworld.com',
       },
-      title: cleanMetaTitle(settings?.seo_title || 'Custom AI MVP Development & Software Engineering | AJPR World'),
+      title: cleanMetaTitle(settings?.seo_title || 'AJPR World (AJPR) – Custom AI MVP Development & Software Engineering'),
       description: seoDesc,
       keywords: settings?.seo_keywords || 'Custom AI MVP, AI software development, US startup engineering, workflow automation, Next.js developer, B2B software agency',
       openGraph: {
         type: 'website',
-        title: cleanMetaTitle(settings?.seo_title || 'Custom AI MVP Development & Software Engineering | AJPR World'),
+        title: cleanMetaTitle(settings?.seo_title || 'AJPR World (AJPR) – Custom AI MVP Development & Software Engineering'),
         description: ogDesc,
         url: 'https://ajprworld.com',
         siteName: 'AJPR World',
@@ -103,7 +103,7 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch (error) {
     console.error("Failed to generate metadata dynamically:", error);
     return {
-      title: 'AJPR World – Custom Software & AI Engineering',
+      title: 'AJPR World (AJPR) – Custom Software & AI Engineering',
       description: 'AJPR World engineers custom web development, software solutions, UI/UX design, and AI systems built for fast-growing businesses.',
     };
   }

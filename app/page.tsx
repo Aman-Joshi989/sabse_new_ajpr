@@ -103,8 +103,8 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error("Failed to fetch SEO metadata for homepage:", error);
   }
 
-  const defaultTitle = 'Senior Software Engineering, Next.js Platforms & AI Systems | AJPR World';
-  const defaultDesc = 'AJPR World is a senior software engineering studio led by Aman Joshi. We build production Next.js web applications, custom SaaS products, and AI systems in 2–4 weeks with 100% code ownership.';
+  const defaultTitle = 'AJPR World (AJPR) – Senior Software Engineering, Next.js & AI Systems';
+  const defaultDesc = 'AJPR World (AJPR) is a senior software engineering and AI systems studio led by Aman Joshi. We build production Next.js web applications, custom SaaS products, and AI workflows in 2–4 weeks with 100% code ownership.';
   const title = seo?.title || defaultTitle;
   const description = seo?.description || defaultDesc;
 

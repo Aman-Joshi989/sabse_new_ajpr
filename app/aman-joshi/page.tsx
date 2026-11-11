@@ -42,13 +42,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = cleanMetaDescription(rawDescription, 155);
   
   return {
-    title: `${founderName} - ${founderTitle} of AJPR World`,
+    title: `${founderName} - ${founderTitle} | AJPR World (AJPR)`,
     description,
     alternates: {
       canonical: 'https://ajprworld.com/aman-joshi',
     },
     openGraph: {
-      title: `${founderName} - ${founderTitle} of AJPR World`,
+      title: `${founderName} - ${founderTitle} | AJPR World (AJPR)`,
       description,
       url: 'https://ajprworld.com/aman-joshi',
       type: 'profile',

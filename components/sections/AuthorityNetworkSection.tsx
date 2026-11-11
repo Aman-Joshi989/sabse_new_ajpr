@@ -35,11 +35,11 @@ export default function AuthorityNetworkSection() {
       accent: "text-blue-500 bg-blue-500/10 border-blue-500/20",
       links: [
         { title: "Custom Web Development", href: "/services/web-development", note: "Next.js, Tailwind, APIs" },
-        { title: "AI MVP & Autonomous Systems", href: "/ai-systems", note: "LangGraph, RAG, agents" },
+        { title: "AI MVP & Autonomous Systems", href: "/ai-systems", note: "LangGraph, RAG, vector DBs" },
+        { title: "B2B Growth Marketing Agency", href: "/services/b2b-growth-marketing", note: "Consultants, GEO & pipeline" },
+        { title: "Website Maintenance Cost Guide", href: "/services/website-maintenance-cost", note: "$149–$899/mo retainers & SLA" },
         { title: "Website Security & Maintenance", href: "/services/website-security-maintenance", note: "24/7 SLA, zero-day patching" },
-        { title: "Technical SEO & GEO Optimization", href: "/services/technical-seo", note: "Core Web Vitals, entity graphs" },
-        { title: "SaaS Product Architecture", href: "/services/saas-product-development", note: "Multi-tenant, Stripe billing" },
-        { title: "Cloud DevOps & Infrastructure", href: "/services/cloud-solutions", note: "AWS, GCP, 99.99% uptime" },
+        { title: "Technical SEO & GEO Optimization", href: "/services/technical-seo", note: "Core Web Vitals, GBP, entity graphs" },
       ]
     },
     {
@@ -49,10 +49,10 @@ export default function AuthorityNetworkSection() {
       accent: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20",
       links: [
         { title: "Website Cost Calculator 2026", href: "/pricing/website-cost", note: "SMB vs. Enterprise scope" },
-        { title: "SEO & AI Search Retainer Guide", href: "/pricing/seo-cost", note: isIndia ? "₹49,999/mo benchmarks" : "$1,500/mo benchmarks" },
+        { title: "SEO & AI Search Retainer Guide", href: "/pricing/seo-cost", note: isIndia ? "₹49,999/mo benchmarks" : "$1,500/mo & international SEO" },
+        { title: "PPC Management Cost Guide", href: "/pricing/ppc-cost", note: "Flat retainers vs. % ad spend" },
         { title: "Agency vs. In-House Estimator", href: "/tools/agency-pricing-calculator", note: "Compare real payroll tax" },
         { title: "Hidden Admin Drag Calculator", href: "/tools/admin-cost-calculator", note: "Audit lost founder hours" },
-        { title: "SaaS Bloat Diagnostic", href: "/tools/saas-bloat-audit", note: "Eliminate unused seats" },
         { title: "Free 48-Hour Architecture Audit", href: "/free-audit", note: "Codebase & schema review" },
       ]
     },
@@ -62,12 +62,12 @@ export default function AuthorityNetworkSection() {
       icon: Globe,
       accent: "text-purple-500 bg-purple-500/10 border-purple-500/20",
       links: [
-        { title: "Singapore Technology Hub", href: "/locations/singapore/ppc-agency", note: "Marina Bay & One-North" },
-        { title: "London Software Studio", href: "/locations/london/custom-software", note: "UK & European sprints" },
+        { title: "Dallas Custom Software Studio", href: "/locations/dallas/custom-software", note: "DFW enterprise Next.js pods" },
+        { title: "London MVP & Digital PR Hub", href: "/locations/london/custom-software", note: "UK startups & digital PR" },
+        { title: "Singapore PPC & AI Automation", href: "/locations/singapore/ppc-agency", note: "Marina Bay & APAC growth" },
+        { title: "Boston & US Web Maintenance", href: "/locations/boston/website-security", note: "24/7 SLA & WordPress care" },
+        { title: "Denver & Miami Mobile Apps", href: "/locations/denver/app-development", note: "iOS, Android & React Native" },
         { title: "Haldwani Regional Center", href: "/locations/haldwani/digital-marketing", note: "Uttarakhand & North India" },
-        { title: "New York & Austin Hubs", href: "/locations/new-york/web-development", note: "US EST/CST overlap" },
-        { title: "San Francisco Engineering", href: "/locations/san-francisco/custom-software", note: "PST compatible sprints" },
-        { title: "Explore All Metro Locations", href: "/locations", note: "10+ global tech hubs" },
       ]
     },
     {
@@ -76,12 +76,12 @@ export default function AuthorityNetworkSection() {
       icon: Scale,
       accent: "text-amber-500 bg-amber-500/10 border-amber-500/20",
       links: [
+        { title: "Web Tonic Alternatives Audit", href: "/compare/webtonic-alternatives", note: "Top 7 compared (2026 pricing)" },
+        { title: "SmartSites Alternatives Review", href: "/compare/smartsites-alternatives", note: "PPC & Next.js vs. WordPress" },
         { title: "WebFX Alternatives Comparison", href: "/compare/webfx-alternatives", note: "Pricing & code ownership" },
         { title: "Rootstrap Alternatives Review", href: "/compare/rootstrap-alternatives", note: "MVP sprint velocity" },
-        { title: "Web Tonic Alternatives Audit", href: "/compare/webtonic-alternatives", note: "Next.js vs. WordPress" },
         { title: "Agency Comparisons Directory", href: "/compare", note: "Objective 2026 reports" },
         { title: "Full Transparent Pricing", href: "/pricing", note: "Fixed sprints & retainers" },
-        { title: "Client Delivery Portfolio", href: "/portfolio", note: "Case studies & repos" },
       ]
     }
   ];

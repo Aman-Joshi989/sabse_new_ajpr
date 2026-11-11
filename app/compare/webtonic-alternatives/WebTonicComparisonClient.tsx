@@ -119,7 +119,7 @@ export default function WebTonicComparisonClient({
         </h2>
         <div className="space-y-4 text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed">
           <p>
-            While <strong>Web Tonic</strong> serves local trade businesses with standard website templates, companies seeking <strong>sub-second Next.js engineering</strong>, <strong>nationwide organic search scale</strong>, and <strong>Generative Engine Optimization (GEO)</strong> partner with AJPR World for senior technical execution.
+            While <strong>Web Tonic</strong> serves local trade businesses with standard website templates, companies seeking <Link href="/services/web-development" className="text-blue-600 dark:text-blue-400 font-bold underline decoration-blue-500/40 hover:decoration-blue-500">sub-second Next.js engineering</Link>, <Link href="/services/b2b-growth-marketing" className="text-blue-600 dark:text-blue-400 font-bold underline decoration-blue-500/40 hover:decoration-blue-500">B2B growth marketing &amp; organic scale</Link>, and <Link href="/services/geo-optimization" className="text-blue-600 dark:text-blue-400 font-bold underline decoration-blue-500/40 hover:decoration-blue-500">Generative Engine Optimization (GEO)</Link> partner with AJPR World for direct senior execution.
           </p>
 
           {/* Editorial Comparison: Objective Evaluation */}
@@ -128,10 +128,10 @@ export default function WebTonicComparisonClient({
               The Strategic Difference: Local Web Agency vs. Senior Software Engineering Studio
             </div>
             <p className="text-slate-600 dark:text-slate-300">
-              <strong>When Web Tonic makes sense:</strong> If your business needs a standard regional website built on WordPress or Shopify with ongoing maintenance, Web Tonic is an established, dependable regional option.
+              <strong>When Web Tonic makes sense:</strong> If your business needs a standard regional website built on WordPress or Shopify with <Link href="/services/website-maintenance-cost" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">ongoing website maintenance</Link>, Web Tonic is an established regional option.
             </p>
             <p className="text-slate-600 dark:text-slate-300">
-              <strong>When AJPR World makes sense:</strong> If you need custom Next.js software architecture, web application development, custom API integrations, or complete codebase ownership delivered in fixed 2–4 week sprints, AJPR World provides senior direct software engineering with zero agency fluff.
+              <strong>When AJPR World makes sense:</strong> If you need custom Next.js software architecture, full-stack web application development with transparent <Link href="/pricing/website-cost" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">2026 website pricing</Link> and <Link href="/pricing/seo-cost" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">B2B SaaS SEO retainer benchmarks</Link>, or complete codebase ownership delivered in fixed 2–4 week sprints, AJPR World provides senior direct software engineering with zero agency fluff.
             </p>
           </div>
 

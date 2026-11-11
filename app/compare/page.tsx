@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Script from 'next/script';
 import { Scale } from 'lucide-react';
+import { FAQSchema } from '@/components/schema/FAQSchema';
 import { ItemListSchema } from '@/components/schema/ItemListSchema';
 import AgencyMatchmakerClient from './AgencyMatchmakerClient';
 
@@ -158,6 +159,25 @@ const comparisons = [
 ];
 
 export default function CompareHubPage() {
+  const compareFaqs = [
+    {
+      question: 'What are the best ColorWhistle and Smart WebTech alternatives in 2026?',
+      answer: 'For founders moving beyond standard WordPress builds from ColorWhistle or Smart WebTech, the top alternatives are AJPR World (for custom Next.js 16 applications, 2–4 week AI MVP sprints, and 100% code ownership from $1,500/mo), WebFX (for enterprise marketing automation), and Rootstrap (for venture-backed mobile builds).'
+    },
+    {
+      question: 'How does SmartSites vs Scorpion compare for digital marketing agencies?',
+      answer: 'Scorpion specializes in legal, medical, and home-service franchises with proprietary CMS lock-in, whereas SmartSites centers on SMB WordPress sites and paid search. Founders wanting sub-second Next.js web platforms with zero contract lock-in and full GitHub ownership choose AJPR World over both.'
+    },
+    {
+      question: "How does ZealousWeb's pricing compare to other web agencies?",
+      answer: 'Traditional offshore/hybrid agencies like ZealousWeb typically bid custom project scopes ($5,000–$25,000+) or hourly buckets ($25–$75/hr) that vary by team seniority. Modern engineering studios like AJPR World publish flat sprint rates ($1,500–$3,500/mo retainers or $4,500 fixed MVPs) directly upfront.'
+    },
+    {
+      question: 'Which agency is best for measurable PR and B2B SaaS growth: Gabriel Marketing Group, Merritt Group, or AJPR World?',
+      answer: 'Gabriel Marketing Group and Merritt Group are traditional B2B tech PR firms suited for venture-backed companies running analyst briefings and earned media retainers ($8,000–$20,000/mo). Growth-stage SaaS teams seeking measurable pipeline via technical SEO, Digital PR backlinks, and Generative Engine Optimization (GEO) for ChatGPT/Perplexity citations partner with AJPR World starting at $1,500–$3,500/mo.'
+    }
+  ];
+
   const compareCatalogSchema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -178,6 +198,7 @@ export default function CompareHubPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-28 pb-20">
+      <FAQSchema faqs={compareFaqs} />
       <Script
         id="compare-hub-rating-schema"
         type="application/ld+json"
@@ -198,7 +219,7 @@ export default function CompareHubPage() {
             Digital Agency Comparisons, Reviews & Top Alternatives (2026)
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-            Hiring the wrong digital agency costs tens of thousands in lost revenue, wasted months, and hostage source code. We publish transparent, data-backed comparisons to help you select the ideal technical and growth partner.
+            Hiring the wrong digital agency costs tens of thousands in lost revenue, wasted months, and hostage source code. We publish transparent, data-backed comparisons across <Link href="/pricing/seo-cost" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">2026 SEO retainer costs</Link>, <Link href="/pricing/website-cost" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">website pricing</Link>, and <Link href="/services/b2b-growth-marketing" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">B2B growth capabilities</Link>.
           </p>
         </div>
 
@@ -206,6 +227,25 @@ export default function CompareHubPage() {
         <AgencyMatchmakerClient
           comparisons={comparisons}
         />
+
+        {/* Quick Alternative & Pricing FAQ Directory */}
+        <section className="mt-16 pt-12 border-t border-slate-200 dark:border-slate-800">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6">
+            Agency Alternative &amp; Pricing Questions (2026)
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {compareFaqs.map((faq, idx) => (
+              <div key={idx} className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+                <h3 className="font-bold text-base text-slate-900 dark:text-white mb-2">
+                  {faq.question}
+                </h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -41,10 +41,15 @@ AJPR World (https://ajprworld.com) is a high-velocity digital product engineerin
 
 ## Regional Engineering & Local Hubs
 
+- [Dallas Custom Software Development](https://ajprworld.com/locations/dallas/custom-software): Senior Next.js software engineering and MVP sprints for DFW enterprise companies.
 - [PPC Agency Singapore](https://ajprworld.com/locations/singapore/ppc-agency): High-ROAS Google Ads, paid search management, and conversion rate optimization for Singapore & APAC.
 - [Business Process Automation Singapore](https://ajprworld.com/locations/singapore/ai-solutions): Autonomous AI workflows, systems integration, and business process automation in Singapore.
 - [Startup MVP Development London](https://ajprworld.com/locations/london/custom-software): Rapid 2–4 week MVP sprints, full-stack Next.js 16 engineering, and complete IP transfer for UK startups.
-- [Digital Marketing Company in Haldwani](https://ajprworld.com/locations/haldwani/digital-marketing): Top-rated SEO, PPC, and web engineering agency in Haldwani, Nainital, and Uttarakhand.
+- [Digital PR Agency London](https://ajprworld.com/locations/london/digital-marketing): High-authority UK digital PR editorial placements, link building, and B2B growth marketing.
+- [Denver Mobile App Development](https://ajprworld.com/locations/denver/app-development): Custom iOS, Android, and React Native mobile app engineering in Denver, Colorado.
+- [Miami Mobile App & Landing Page Design](https://ajprworld.com/locations/miami/app-development): High-converting iOS/Android mobile apps and Next.js landing pages in Miami, Florida.
+- [Boston & Scottsdale Website Maintenance](https://ajprworld.com/locations/boston/website-security): Proactive 24/7 WordPress security, Next.js maintenance plans, and daily cloud backups from $149/mo.
+- [Digital Marketing Company in Haldwani](https://ajprworld.com/locations/haldwani/digital-marketing): Top-rated SEO, GBP optimization, PPC, and web engineering agency in Haldwani, Nainital, and Uttarakhand.
 
 ## Free Interactive Engineering & Business Tools
 

@@ -892,6 +892,20 @@ export default function AiSystemsClient() {
                 AI Starter workflows are deployed in 3–5 business days. AI Growth and LeadOS implementations typically take 10–14 business days, including prompt tuning, testing, and team onboarding.
               </p>
             </div>
+
+            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">How do open source vector databases compare for RAG startups (pgvector vs Qdrant vs Milvus)?</h4>
+              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                For startups under 10 million embeddings, <strong className="text-slate-900 dark:text-white">pgvector</strong> on PostgreSQL offers the highest ROI and ACID joins with zero extra DB servers. <strong className="text-slate-900 dark:text-white">Qdrant</strong> wins on ultra-low latency filtered hybrid search, while <strong className="text-slate-900 dark:text-white">Milvus</strong> scales to billion-vector distributed clusters.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <h4 className="text-base font-bold text-slate-900 dark:text-white mb-2">What is Retrieval-Augmented Generation (RAG) for startups &amp; how does FastAPI + HAProxy scale it?</h4>
+              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                RAG grounds LLM responses in your private docs and SQL data to prevent hallucinations. In high-concurrency stacks, <strong className="text-slate-900 dark:text-white">HAProxy</strong> handles L4/L7 reverse proxying and rate limits while <strong className="text-slate-900 dark:text-white">FastAPI</strong> runs async LLM orchestration and streaming SSE endpoints.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -918,14 +932,23 @@ export default function AiSystemsClient() {
         {/* Cross-linking to Ecosystem */}
         <div className="mt-16 pt-10 border-t border-slate-200 dark:border-slate-800 text-center">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-4">
-            Explore AI Architecture & Developer Tools
+            Explore AI Architecture &amp; Developer Tools
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
             <Link href="/tools/ai-cost-estimator" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800 shadow-sm">
-              AI Architecture & Cost Estimator →
+              AI Architecture &amp; Cost Estimator →
             </Link>
             <Link href="/tools/admin-cost-calculator" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800 shadow-sm">
               Admin Labor Drag Calculator →
+            </Link>
+            <Link href="/locations/singapore/ai-solutions" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800 shadow-sm">
+              Business Process Automation Singapore →
+            </Link>
+            <Link href="/locations/london/custom-software" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800 shadow-sm">
+              Startup MVP Development London →
+            </Link>
+            <Link href="/services/web-development" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800 shadow-sm">
+              Full-Stack Next.js Web Engineering →
             </Link>
             <Link href="/chat-agents" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800 shadow-sm">
               Interactive AI Agent Playground →
@@ -934,7 +957,7 @@ export default function AiSystemsClient() {
               Swarm Orchestration Simulator →
             </Link>
             <Link href="/services/cloud-solutions" className="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors border border-slate-200 dark:border-slate-800 shadow-sm">
-              Cloud Infrastructure & DevOps →
+              Cloud Infrastructure &amp; DevOps →
             </Link>
           </div>
         </div>

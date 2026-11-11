@@ -102,6 +102,10 @@ const faqs = [
     answer: 'Senior US SEO consultants charge $150 to $350 per hour, which quickly scales to $3,000–$7,000/month with variable invoices and unpredictable hours. Flat monthly retainers provide predictable billing, continuous execution, bundled developer implementation, and guaranteed deliverables.'
   },
   {
+    question: 'What is included in a mid-tier SEO retainer for recruiters and staffing agencies?',
+    answer: 'A mid-tier SEO retainer for recruiters ($2,500–$4,500/mo) includes programmatic JobPosting schema markup so open roles appear directly in Google for Jobs, specialty industry practice pages (e.g., IT, Finance, Healthcare staffing), Google Business Profile (GBP) optimization for regional offices, technical speed tuning, and authority backlinks to boost candidate and client lead flow.'
+  },
+  {
     question: 'What should a business budget for SEO in 2026?',
     answer: 'In 2026, businesses should budget between $1,500 and $6,000 per month for organic search and Generative Engine Optimization (GEO). Annual budgets of $18,000 to $50,000 enable scaling companies to build durable topical authority, capture Google AI Overview citation cards, and lower long-term paid acquisition costs.'
   }
@@ -387,7 +391,7 @@ export default function SeoCostPage() {
             International SEO Price & Retainers by Region (2026)
           </h2>
           <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-            International SEO prices vary depending on whether your business targets single-language multi-country markets (e.g. US + UK + Singapore) or complex multi-lingual architectures requiring localized translation, ccTLD routing, and hreflang tag configuration:
+            International SEO prices vary depending on whether your business targets single-language multi-country markets (such as our <Link href="/locations/london/digital-marketing" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">London Digital PR &amp; UK SEO hub</Link> or <Link href="/locations/singapore/ppc-agency" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Singapore &amp; APAC markets</Link>) or complex multi-lingual architectures requiring localized translation, ccTLD routing, and hreflang tag configuration. Compare these ranges with our <Link href="/services/b2b-growth-marketing" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">B2B growth retainers</Link> or <Link href="/free-audit" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">request a 48-hour diagnostic audit</Link>:
           </p>
 
           <div className="overflow-x-auto">

@@ -290,20 +290,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${baseUrl}/compare/webfx-alternatives`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
+      changeFrequency: 'daily',
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/compare/webtonic-alternatives`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.95,
+      changeFrequency: 'daily',
+      priority: 1.0,
     },
     {
       url: `${baseUrl}/compare/smartsites-alternatives`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
+      changeFrequency: 'daily',
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/compare/single-grain-alternatives`,
@@ -386,8 +386,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${baseUrl}/services/website-maintenance-cost`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
+      changeFrequency: 'daily',
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/services/technical-seo`,
@@ -399,7 +399,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Programmatic local SEO pages for US Metros, Global Hubs, and Regional Hubs
   const targetCities = [
-    'austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 
+    'austin', 'denver', 'phoenix', 'scottsdale', 'charlotte', 'tampa', 'nashville', 
     'dallas', 'atlanta', 'miami', 'chicago', 'boston', 'seattle',
     'new-york', 'san-francisco', 'london', 'toronto', 'sydney', 'dubai', 'singapore',
     'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 
@@ -407,7 +407,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
   const targetServices = [
     'seo-agency', 'ppc-agency', 'web-design', 'digital-marketing', 'social-media-marketing',
-    'custom-software', 'web-development', 'app-development', 'ai-solutions', 'cloud-architecture'
+    'custom-software', 'web-development', 'app-development', 'ai-solutions', 'cloud-architecture', 'website-security'
   ];
   
   const localServices: MetadataRoute.Sitemap = [];

@@ -314,6 +314,51 @@ export default function WebsiteMaintenanceCostPage() {
         </div>
       </section>
 
+      {/* Regional Website Maintenance & WordPress Support Hubs */}
+      <section className="py-12 px-4 max-w-5xl mx-auto">
+        <div className="p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 shadow-xs">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-5 border-b border-slate-200 dark:border-slate-800">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                Local Maintenance &amp; Security Delivery
+              </span>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
+                Regional Website Maintenance &amp; WordPress Care Hubs
+              </h2>
+            </div>
+            <Link href="/locations" className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+              View All Locations <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { city: 'Boston', slug: 'boston', tag: 'Massachusetts' },
+              { city: 'Charlotte', slug: 'charlotte', tag: 'North Carolina' },
+              { city: 'Atlanta', slug: 'atlanta', tag: 'Georgia' },
+              { city: 'Scottsdale', slug: 'scottsdale', tag: 'Arizona' },
+              { city: 'Austin', slug: 'austin', tag: 'Texas' },
+              { city: 'Denver', slug: 'denver', tag: 'Colorado' },
+              { city: 'Phoenix', slug: 'phoenix', tag: 'WordPress Security' },
+              { city: 'Dallas', slug: 'dallas', tag: 'DFW Metroplex' },
+            ].map((metro) => (
+              <Link
+                key={metro.slug}
+                href={`/locations/${metro.slug}/website-security`}
+                className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950 hover:border-blue-500 hover:shadow-sm transition-all group"
+              >
+                <span className="block text-[10px] font-semibold text-slate-400 group-hover:text-blue-500 uppercase tracking-wider">
+                  {metro.tag}
+                </span>
+                <span className="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {metro.city} Maintenance &rarr;
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Cluster Linking */}
       <div className="container mx-auto px-4 max-w-5xl">
         <TopicalClusterWidget
@@ -328,10 +373,10 @@ export default function WebsiteMaintenanceCostPage() {
               description: "24/7 uptime monitoring, zero-day CVE patching, automated backups & SLAs."
             },
             {
-              badge: "Web Dev Agency",
-              title: "Full-Stack Web Dev Agency",
-              href: "/services/web-development",
-              description: "Custom web applications, MVP engineering, and performance development."
+              badge: "Build Cost",
+              title: "Website Development Cost in 2026",
+              href: "/pricing/website-cost",
+              description: "Compare $3,500 SMB builds vs $20,000+ custom Next.js web applications."
             },
             {
               badge: "Free Diagnostic",

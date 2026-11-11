@@ -2,12 +2,12 @@ import { Metadata } from 'next';
 import Script from 'next/script';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { MapPin, ArrowRight, CheckCircle2, Star, Zap, Target, Search, BarChart3, LayoutDashboard, Smartphone, Code, Cpu, Cloud, HelpCircle, MessageSquare } from 'lucide-react';
+import { MapPin, ArrowRight, CheckCircle2, Star, Zap, Target, Search, BarChart3, LayoutDashboard, Smartphone, Code, Cpu, Cloud, HelpCircle, MessageSquare, ShieldCheck } from 'lucide-react';
 
 export const revalidate = 86400; // Cache for 24 hours
 
 const CITIES = [
-    'austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 
+    'austin', 'denver', 'phoenix', 'scottsdale', 'charlotte', 'tampa', 'nashville', 
     'dallas', 'atlanta', 'miami', 'chicago', 'boston', 'seattle',
     'new-york', 'san-francisco', 'london', 'toronto', 'sydney', 'dubai', 'singapore',
     'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
@@ -23,7 +23,8 @@ const SERVICES = [
     { slug: 'custom-software', name: 'Custom Software Development', desc: 'Bespoke web applications, SaaS platforms, and internal operational workflows.', icon: Code },
     { slug: 'app-development', name: 'Mobile App Development', desc: 'Native and cross-platform iOS and Android applications with offline-first speed.', icon: Smartphone },
     { slug: 'ai-solutions', name: 'AI & Chatbot Automation', desc: 'RAG knowledge bases, automated AI sales agents, and real-time WhatsApp routing.', icon: Cpu },
-    { slug: 'cloud-architecture', name: 'Cloud Architecture & DevOps', desc: 'Scalable AWS, GCP, and Vercel cloud deployments with enterprise redundancy.', icon: Cloud }
+    { slug: 'cloud-architecture', name: 'Cloud Architecture & DevOps', desc: 'Scalable AWS, GCP, and Vercel cloud deployments with enterprise redundancy.', icon: Cloud },
+    { slug: 'website-security', name: 'Website Security & Maintenance', desc: '24/7 uptime monitoring, WordPress security hardening, daily cloud backups, and emergency SLAs.', icon: ShieldCheck }
 ];
 
 const METRO_INFO: Record<string, { state: string; region: string; context: string; proof: string; proofMetric: string; country?: string; coordinates?: string }> = {
@@ -143,6 +144,15 @@ const METRO_INFO: Record<string, { state: string; region: string; context: strin
         proofMetric: '₹1.8 Cr B2B RFQs',
         country: 'IN',
         coordinates: '28.9800;79.4000'
+    },
+    scottsdale: {
+        state: 'Arizona',
+        region: 'Scottsdale & East Valley Tech Corridor',
+        context: 'Scottsdale businesses, luxury clinics, and B2B companies require 24/7 website maintenance, zero-downtime security hardening, and high-ROAS Google Ads.',
+        proof: 'Eliminated recurring downtime and scaled organic conversions by +215% for a Scottsdale multi-clinic healthcare group.',
+        proofMetric: '99.99% Uptime SLA',
+        country: 'US',
+        coordinates: '33.4942;-111.9261'
     }
 };
 

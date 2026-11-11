@@ -6,13 +6,14 @@ import { Badge } from '@/components/ui/badge';
 import { ServiceSchema } from '@/components/schema/ServiceSchema';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import { FAQSchema } from '@/components/schema/FAQSchema';
+import { TopicalClusterWidget } from '@/components/seo/TopicalClusterWidget';
 
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Technical SEO Services & Core Web Vitals Optimization | AJPR World',
-  description: 'Technical SEO engineering: Core Web Vitals optimization, semantic JSON-LD schema architecture, crawl efficiency, and Next.js server-side indexing.',
+  title: 'Technical SEO Services, GBP Optimization & Core Web Vitals | AJPR World',
+  description: 'Technical SEO engineering: Core Web Vitals, Google Business Profile (GBP) optimization, Digital PR SEO backlinks, semantic JSON-LD schema, and Next.js indexing.',
   alternates: {
     canonical: 'https://ajprworld.com/services/technical-seo',
   },
@@ -54,6 +55,18 @@ const faqs = [
   {
     question: 'Does technical SEO help with AI search visibility (GEO)?',
     answer: 'Yes, absolutely. LLMs and Generative AI engines (ChatGPT, Perplexity, Gemini) rely on dense factual information architecture, clean semantic entity graphs (schema.org), and crawlable markdown/HTML to discover, summarize, and cite your brand.'
+  },
+  {
+    question: 'What is Google Business Profile (GBP) optimization and why does it drive local traffic?',
+    answer: 'Google Business Profile (GBP) optimization combines primary/secondary category engineering, LocalBusiness schema synchronization, geo-tagged service photos, and localized landing page NAP consistency to secure Google Maps 3-Pack rankings.'
+  },
+  {
+    question: 'How do PR SEO services and Digital PR boost organic rankings?',
+    answer: 'PR SEO services combine data-driven industry research and reactive journalism to earn high-DR editorial backlinks from authoritative publications, accelerating domain rating and entity trust across London, US, and global markets.'
+  },
+  {
+    question: 'How do SEO platforms compare for agency use in terms of pricing and features?',
+    answer: 'Ahrefs ($129–$449/mo) and Semrush ($139–$499/mo) lead in backlink and keyword intelligence, while Screaming Frog ($259/yr) handles deep technical crawl diagnostics. Pairing enterprise diagnostics with AJPR World technical execution eliminates SaaS bloat.'
   },
   {
     question: 'How quickly do Core Web Vitals improvements reflect in Google Search Console?',
@@ -163,6 +176,59 @@ export default function TechnicalSeoPage() {
           </div>
         </div>
       </section>
+
+      {/* Technical SEO, GBP & PR FAQ Section */}
+      <section className="container mx-auto px-4 max-w-4xl py-12">
+        <div className="text-center mb-10">
+          <Badge className="mb-3 bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 text-xs font-bold uppercase tracking-wider">
+            Technical Engineering &amp; Local SEO
+          </Badge>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Technical SEO, GBP Optimization &amp; Digital PR FAQs
+          </h2>
+        </div>
+        <div className="space-y-4">
+          {faqs.map((faq, idx) => (
+            <div key={idx} className="p-6 rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 shadow-xs">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">
+                {faq.question}
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                {faq.answer}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Cluster Interlink Widget */}
+      <div className="container mx-auto px-4 max-w-5xl">
+        <TopicalClusterWidget
+          currentSiloTitle="Technical SEO, GBP Optimization & AI Citations Silo"
+          pillarHref="/services/b2b-growth-marketing"
+          pillarAnchor="B2B Growth Marketing Agency & Retainers"
+          relatedLinks={[
+            {
+              badge: "AI Citations",
+              title: "Generative Engine Optimization (GEO)",
+              href: "/services/geo-optimization",
+              description: "Rank inside ChatGPT, Perplexity, and Google AI Overviews with entity graphs."
+            },
+            {
+              badge: "Pricing Guide",
+              title: "SEO Retainer Cost in 2026",
+              href: "/pricing/seo-cost",
+              description: "Compare transparent monthly SEO retainers ($1,500–$8,500/mo) and international SEO."
+            },
+            {
+              badge: "London PR & Local HQ",
+              title: "Digital PR Agency London & Haldwani GBP",
+              href: "/locations/london/digital-marketing",
+              description: "High-authority UK digital PR backlinks and Google Business Profile local pack dominance."
+            }
+          ]}
+        />
+      </div>
 
       {/* Conversion Section */}
       <section className="container mx-auto px-4 max-w-4xl pt-6">

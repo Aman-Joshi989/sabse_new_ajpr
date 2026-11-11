@@ -111,6 +111,30 @@ const jsonLd = {
             '@type': 'Answer',
             text: 'Our AI Starter sprints launch in 5 to 7 business days. Full LeadOS, SupportOS, or OpsOS deployments typically take 14 to 21 business days including integration testing, team training, and guardrail validation.'
           }
+        },
+        {
+          '@type': 'Question',
+          name: 'How do open source vector databases compare for RAG startups (pgvector vs Qdrant vs Milvus)?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'For startups under 10 million embeddings, pgvector on PostgreSQL offers the best cost efficiency and ACID compliance with zero extra infrastructure. Qdrant excels at high-speed filtered Rust-based hybrid search, while Milvus handles massive distributed billion-scale vector clusters.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'What is Retrieval-Augmented Generation (RAG) for startups and how fast does AJPR World build it?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Retrieval-Augmented Generation (RAG) connects private company PDFs, SQL databases, and CRM history directly to LLMs with cited sources to prevent hallucinations. AJPR World deploys production RAG knowledge systems using Next.js 16, FastAPI, and pgvector in 2 to 4 week fixed sprints.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'How do FastAPI and HAProxy work together in production AI backends?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'HAProxy serves as a high-throughput Layer 4/7 reverse proxy handling SSL termination, connection pooling, and rate-limiting, while FastAPI executes async Python LLM tool calls, Pydantic validation, and streaming SSE responses.'
+          }
         }
       ]
     }

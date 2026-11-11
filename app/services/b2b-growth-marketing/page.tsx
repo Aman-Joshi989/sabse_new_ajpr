@@ -190,7 +190,7 @@ export default function B2bGrowthMarketingPage() {
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mb-8">
-            Stop burning marketing budget on vanity impressions and disconnected agencies. We engineer data-backed B2B customer acquisition pipelines: combining high-intent technical SEO, Generative Engine Optimization (GEO) for AI search, and high-converting modern web systems.
+            Stop burning marketing budget on vanity impressions and disconnected agencies. We partner with B2B founders as senior growth consultants and execution engineers: combining <Link href="/services/technical-seo" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">high-intent technical SEO</Link>, <Link href="/services/geo-optimization" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Generative Engine Optimization (GEO)</Link> for AI search, <Link href="/locations/london/digital-marketing" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">digital PR agency in London</Link> &amp; US coverage, and <Link href="/services/web-development" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">custom Next.js web systems</Link>.
           </p>
 
           {/* Quick Verdict AI Direct Extract Box */}
@@ -199,7 +199,7 @@ export default function B2bGrowthMarketingPage() {
               <Zap className="w-4 h-4" /> Quick Summary: The AJPR Growth Advantage
             </div>
             <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
-              <strong>AJPR World</strong> is a full-funnel B2B growth marketing firm that replaces bloated agency retainers with transparent, engineering-led execution. We specialize in scaling high-intent organic search pipelines, capturing ChatGPT & Perplexity conversational buyer citations, and developing high-converting custom Next.js web applications—with published pricing starting from <strong>$1,500/month</strong> and zero long-term contract lock-in.
+              <strong>AJPR World</strong> is a full-funnel B2B growth marketing firm that replaces bloated agency retainers with transparent, engineering-led execution. We specialize in scaling high-intent organic search pipelines, capturing ChatGPT &amp; Perplexity conversational buyer citations, and delivering <Link href="/pricing/seo-cost" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">transparent B2B SaaS SEO retainer pricing</Link> starting from <strong>$1,500/month</strong> with zero long-term contract lock-in. Need an objective vendor comparison? Explore our <Link href="/compare/webfx-alternatives" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">WebFX alternatives</Link> or <Link href="/free-audit" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">run a free site diagnostic audit</Link>.
             </p>
           </div>
 

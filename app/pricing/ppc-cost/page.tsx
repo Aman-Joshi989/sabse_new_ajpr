@@ -343,16 +343,25 @@ export default function PpcCostPage() {
           </h3>
           <div className="flex flex-wrap gap-3">
             <Link href="/pricing/seo-cost" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-              SEO Cost Guide (2026) →
+              SEO Retainer Cost Guide (2026) →
             </Link>
             <Link href="/pricing/website-cost" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-              Website Cost Guide →
+              Website Development Cost Guide →
+            </Link>
+            <Link href="/services/website-maintenance-cost" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              Website Maintenance Cost ($149–$899/mo) →
+            </Link>
+            <Link href="/compare/smartsites-alternatives" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              SmartSites Alternatives &amp; PPC Review →
+            </Link>
+            <Link href="/compare/webtonic-alternatives" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+              7 Best Web Tonic Alternatives →
             </Link>
             <Link href="/compare/webfx-alternatives" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-              WebFX Alternatives & Pricing Review →
+              WebFX Alternatives &amp; Pricing Review →
             </Link>
             <Link href="/services/b2b-growth-marketing" className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
-              B2B Growth Marketing Agency →
+              B2B Growth Marketing Agency &amp; Consultants →
             </Link>
           </div>
         </div>

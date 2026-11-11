@@ -9,7 +9,7 @@ export const revalidate = 86400; // ISR: Cache for 24 hours
 
 // List of targeted cities including US Priority Metros
 const CITIES = [
-    'austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 
+    'austin', 'denver', 'phoenix', 'scottsdale', 'charlotte', 'tampa', 'nashville', 
     'dallas', 'atlanta', 'miami', 'chicago', 'boston', 'seattle',
     'new-york', 'san-francisco', 'london', 'toronto', 'sydney', 'dubai', 'singapore',
     'haldwani', 'nainital', 'dehradun', 'roorkee', 'haridwar', 'rudrapur', 'kashipur', 'pantnagar', 'uttarakhand'
@@ -140,6 +140,18 @@ const METRO_DATA: Record<string, {
         proof: 'Outranked national competitors for commercial manufacturing queries, generating $850k in qualified RFQs.',
         proofMetric: '$850k in B2B RFQs',
         country: 'US',
+        currency: '$',
+        priceRange: '$$$'
+    },
+    scottsdale: {
+        state: 'Arizona',
+        region: 'Scottsdale & East Valley Tech Corridor',
+        context: 'Scottsdale’s luxury hospitality, B2B tech, and medical practices require 24/7 website maintenance, zero-downtime security hardening, and high-ROAS organic & paid visibility.',
+        proof: 'Eliminated recurring downtime and scaled organic conversions by +215% for a Scottsdale multi-clinic healthcare group.',
+        proofMetric: '99.99% Uptime SLA',
+        country: 'US',
+        postalCode: '85251',
+        coordinates: '33.4942;-111.9261',
         currency: '$',
         priceRange: '$$$'
     },
@@ -292,8 +304,8 @@ const METRO_DATA: Record<string, {
 
 export async function generateStaticParams() {
     const params = [];
-    const priorityCities = ['austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 'dallas', 'atlanta', 'london', 'singapore', 'haldwani', 'nainital', 'dehradun', 'rudrapur'];
-    const priorityServices = ['seo-agency', 'ppc-agency', 'web-design', 'digital-marketing', 'custom-software', 'ai-solutions'];
+    const priorityCities = ['austin', 'denver', 'phoenix', 'scottsdale', 'charlotte', 'tampa', 'nashville', 'dallas', 'atlanta', 'miami', 'boston', 'seattle', 'new-york', 'san-francisco', 'toronto', 'london', 'singapore', 'haldwani', 'nainital', 'dehradun', 'rudrapur'];
+    const priorityServices = ['seo-agency', 'ppc-agency', 'web-design', 'web-development', 'app-development', 'digital-marketing', 'custom-software', 'ai-solutions', 'website-security'];
     for (const city of priorityCities) {
         for (const service of priorityServices) {
             params.push({ city, service });
@@ -339,6 +351,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     const isMiamiPpc = params.city.toLowerCase() === 'miami' && params.service === 'ppc-agency';
     const isDenverApp = params.city.toLowerCase() === 'denver' && params.service === 'app-development';
     const isMiamiApp = params.city.toLowerCase() === 'miami' && params.service === 'app-development';
+    const isMiamiLanding = params.city.toLowerCase() === 'miami' && params.service === 'web-design';
+    const isTorontoLanding = params.city.toLowerCase() === 'toronto' && params.service === 'web-design';
+    const isPhoenixSecurity = params.city.toLowerCase() === 'phoenix' && params.service === 'website-security';
+    const isNashvilleSecurity = params.city.toLowerCase() === 'nashville' && params.service === 'website-security';
+    const isAtlantaReporting = params.city.toLowerCase() === 'atlanta' && (params.service === 'seo-agency' || params.service === 'digital-marketing');
     const isWebsiteMaintenance = params.service === 'website-security';
     const isIndia = localMetro?.country === 'IN';
 
@@ -364,8 +381,18 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             title = 'Mobile App Development Company in Denver, CO | AJPR World';
         } else if (isMiamiApp) {
             title = 'Mobile App Development in Miami, FL (iOS & Android) | AJPR World';
+        } else if (isMiamiLanding) {
+            title = 'Landing Page & Web Design Cost in Miami, FL | AJPR World';
+        } else if (isTorontoLanding) {
+            title = 'Landing Page Optimization & Web Design Toronto | AJPR World';
+        } else if (isPhoenixSecurity) {
+            title = 'WordPress Security, Malware Protection & SEO Phoenix | AJPR World';
+        } else if (isNashvilleSecurity) {
+            title = 'Website Security, Firewalls & Maintenance Nashville | AJPR World';
+        } else if (isAtlantaReporting) {
+            title = 'Website Analysis, Reporting & SEO Agency Atlanta, GA | AJPR World';
         } else if (isWebsiteMaintenance) {
-            title = `Website Maintenance & Security in ${cityName} | AJPR World`;
+            title = `Website Maintenance & WordPress Support in ${cityName} | AJPR World`;
         } else if (isHaldwani && isDigitalMarketing) {
             title = 'Best Digital Marketing & SEO Company in Haldwani | AJPR World';
         } else if (isHaldwani) {
@@ -399,8 +426,18 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             description = 'Custom iOS, Android, and React Native mobile app development in Denver. Senior software engineering pods building production mobile applications.';
         } else if (isMiamiApp) {
             description = 'Leading mobile app development in Miami. Custom iOS (iPhone), Android, and cross-platform React Native apps engineered for scale and speed.';
+        } else if (isMiamiLanding) {
+            description = 'High-converting landing page design cost & custom web engineering in Miami. Transparent pricing from $1,500–$3,500 for sub-second Next.js conversion funnels.';
+        } else if (isTorontoLanding) {
+            description = 'Data-driven landing page optimization, CRO experiments, and Next.js web design in Toronto. Increase ad conversion rates and pipeline revenue.';
+        } else if (isPhoenixSecurity) {
+            description = 'Proactive WordPress security services, virus & malware protection, WAF firewalls, and technical SEO solutions in Phoenix & Scottsdale from $149/mo.';
+        } else if (isNashvilleSecurity) {
+            description = 'Managed website firewalls, 24/7 security hardening, malware prevention, and monthly maintenance retainers for Nashville companies from $149/mo.';
+        } else if (isAtlantaReporting) {
+            description = 'Actionable website analysis services, GA4 attribution reporting, and technical SEO growth for Atlanta B2B & WordPress businesses.';
         } else if (isWebsiteMaintenance) {
-            description = `Professional monthly website maintenance plans, security hardening, and 24/7 uptime monitoring in ${cityName}. Plans start from $149/mo.`;
+            description = `Monthly website maintenance plans, WordPress support, security hardening, and 24/7 uptime monitoring in ${cityName}. Transparent retainers starting at $149/mo.`;
         } else if (isHaldwani && isDigitalMarketing) {
             description = 'Looking for the best digital marketing company in Haldwani? AJPR World delivers data-backed SEO, high-ROAS Google Ads, and custom Next.js websites for local businesses in Nainital & Kumaon.';
         } else if (isIndia) {
@@ -1012,7 +1049,7 @@ export default async function LocationServicePage(props: Props) {
                             {serviceName} Across Other Priority Hubs
                         </h3>
                         <div className="flex flex-wrap gap-2.5">
-                            {CITIES.filter(c => c !== params.city.toLowerCase()).slice(0, 12).map(c => (
+                            {CITIES.filter(c => c !== params.city.toLowerCase()).slice(0, 16).map(c => (
                                 <Link
                                     key={c}
                                     href={`/locations/${c}/${params.service}`}
@@ -1071,6 +1108,12 @@ export default async function LocationServicePage(props: Props) {
                             </Link>
                             <Link href="/pricing/website-cost" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
                                 Website Development Cost (2026) →
+                            </Link>
+                            <Link href="/services/website-maintenance-cost" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                Monthly Website Maintenance Cost →
+                            </Link>
+                            <Link href="/services/website-security-maintenance" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
+                                24/7 Website Security &amp; Hardening →
                             </Link>
                             <Link href="/ai-systems" className="px-3.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors border border-slate-200 dark:border-slate-800">
                                 Custom AI MVP Systems →

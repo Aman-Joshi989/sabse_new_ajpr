@@ -115,7 +115,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             <div>
                                 Call / WhatsApp: <a href="tel:+919997205257" className="text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline">+91 99972 05257</a>
                                 <span className="mx-1.5 text-slate-400">&bull;</span>
-                                <a href="https://wa.me/919997205257?text=Hi%20Aman%2C%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">WhatsApp Direct</a>
+                                <a href="https://wa.me/919997205257?text=Hi%20Aman%2C%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" className="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline">WhatsApp Direct</a>
                             </div>
                             <div>Scoping: <Link href="/book-call" className="text-blue-600 dark:text-blue-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
                             {isIndia && (
@@ -198,7 +198,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                         <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
                         <RegionSelector variant="footer" />
                         <span className="hidden md:inline text-slate-300 dark:text-slate-700">•</span>
-                        <span className="text-[11px] text-slate-400">
+                        <span className="text-[11px] text-slate-600 dark:text-slate-400">
                             {isIndia 
                                 ? 'GST Invoicing • Pan-India Delivery • Haldwani & Delhi NCR' 
                                 : 'US Wire & Cards • Delaware-Friendly Contracts • EST/PST Overlap'}

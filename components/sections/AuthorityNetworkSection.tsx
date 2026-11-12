@@ -92,7 +92,7 @@ export default function AuthorityNetworkSection() {
         
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
-          <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+          <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
             Engineering & Architecture Graph
           </Badge>
           <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-4">
@@ -137,7 +137,7 @@ export default function AuthorityNetworkSection() {
                           <span className="block text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                             {link.title}
                           </span>
-                          <span className="block text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
+                          <span className="block text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">
                             {link.note}
                           </span>
                         </Link>
@@ -146,9 +146,9 @@ export default function AuthorityNetworkSection() {
                   </ul>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-slate-200/80 dark:border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
+                <div className="mt-6 pt-4 border-t border-slate-200/80 dark:border-slate-800/80 text-[11px] text-slate-600 dark:text-slate-400 flex items-center justify-between">
                   <span>Verified 2026 Spec</span>
-                  <Link href={cluster.links[0].href} className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
+                  <Link href={cluster.links[0].href} className="text-blue-700 dark:text-blue-400 font-semibold hover:underline">
                     View cluster &rarr;
                   </Link>
                 </div>

@@ -167,7 +167,7 @@ export default function CoreValuesSection({
                       </span>
                     </div>
 
-                    <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
+                    <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-300 transition-colors">
                       0{idx + 1}
                     </span>
                   </li>
@@ -176,7 +176,7 @@ export default function CoreValuesSection({
 
               {/* Trust Subtext */}
               <div className="mt-6 pt-5 border-t border-slate-100 dark:divide-slate-800 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
-                <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <Shield className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
                 <span>Verified standard across all client contracts and engineering sprints.</span>
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function CoreValuesSection({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-200/80 dark:border-slate-800">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
                     <Zap className="w-4 h-4" />
                   </div>
                   <div>
@@ -273,7 +273,7 @@ export default function CoreValuesSection({
                       <h4 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-rose-400 transition-colors">
                         {val.name}
                       </h4>
-                      <p className="text-xs font-semibold text-red-600/90 dark:text-rose-400/90 mt-1 mb-3">
+                      <p className="text-xs font-semibold text-red-700 dark:text-rose-400 mt-1 mb-3">
                         {val.tagline}
                       </p>
 
@@ -284,7 +284,7 @@ export default function CoreValuesSection({
 
                     <div className="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
                       <span>Strict Standard</span>
-                      <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                      <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
                         Active in every sprint <CheckCircle2 className="w-3.5 h-3.5" />
                       </span>
                     </div>

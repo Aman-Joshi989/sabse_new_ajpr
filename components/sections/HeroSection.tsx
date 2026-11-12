@@ -129,7 +129,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             href="https://wa.me/919997205257?text=Hi%20Aman%2C%20I%27d%20like%20to%20discuss%20a%20project%20with%20AJPR%20World."
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+                            className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 dark:text-emerald-400 hover:underline"
                         >
                             <MessageSquare className="w-3.5 h-3.5" />
                             <span>WhatsApp Architect Direct</span>

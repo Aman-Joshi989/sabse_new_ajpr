@@ -249,7 +249,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         <section className="py-16 md:py-20 bg-slate-50/70 dark:bg-[#070c18] border-y border-slate-200/80 dark:border-slate-800/80 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
             <div className="max-w-3xl mb-12">
-              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Interactive Sprint Planner
               </Badge>
               <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
@@ -288,7 +288,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                         <Icon className="w-5 h-5" />
                       </div>
                       <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                        isSelected ? 'bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                        isSelected ? 'bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
                       }`}>
                         {tab.badge}
                       </span>
@@ -325,7 +325,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
 
                   {/* Architecture Stack */}
                   <div>
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2.5">
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2.5">
                       Production Architecture Stack:
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -342,7 +342,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
 
                   {/* Deliverables Checklist */}
                   <div>
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2.5">
+                    <div className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2.5">
                       Guaranteed Inclusions & Deliverables:
                     </div>
                     <ul className="grid sm:grid-cols-2 gap-2.5">
@@ -361,7 +361,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                   <div className="space-y-3 pb-6 border-b border-slate-200 dark:border-slate-800">
                     <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-500">
                       <span>Delivery Target</span>
-                      <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                      <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400">
                         <Clock className="w-3.5 h-3.5" /> Guaranteed
                       </span>
                     </div>
@@ -409,7 +409,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
             <div className="max-w-3xl mb-16">
-              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Engineering Outcomes
               </Badge>
               <h2 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
@@ -503,7 +503,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                         {item.title}
                       </h3>
 
-                      <div className="inline-block px-3 py-1 rounded-md bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400 text-xs font-bold font-mono">
+                      <div className="inline-block px-3 py-1 rounded-md bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-300 text-xs font-bold font-mono">
                         {item.stat}
                       </div>
 
@@ -606,7 +606,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                           {service.keywords && service.keywords.length > 0 && (
                             <div className="flex flex-wrap gap-2 mt-5">
                               {service.keywords.map((keyword: string, idx: number) => (
-                                <span key={idx} className="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 dark:bg-slate-800/50 px-2.5 py-1 rounded-md transition-colors group-hover/link:bg-blue-50 dark:group-hover/link:bg-blue-900/20 group-hover/link:text-blue-600 dark:group-hover/link:text-blue-400">
+                                <span key={idx} className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/70 px-2.5 py-1 rounded-md transition-colors group-hover/link:bg-blue-50 dark:group-hover/link:bg-blue-900/20 group-hover/link:text-blue-600 dark:group-hover/link:text-blue-400">
                                   {keyword}
                                 </span>
                               ))}
@@ -693,7 +693,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <p className="text-slate-600 dark:text-slate-400 font-medium">{study.impact}</p>
                     <div className="flex flex-wrap gap-2 pt-2">
                       {study.tags.map(tag => (
-                        <span key={tag} className="text-xs font-bold text-slate-500 bg-slate-200/50 dark:bg-slate-800/50 px-2.5 py-1 rounded-md">{tag}</span>
+                        <span key={tag} className="text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-200/70 dark:bg-slate-800/70 px-2.5 py-1 rounded-md">{tag}</span>
                       ))}
                     </div>
                   </div>
@@ -707,7 +707,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         <section className="py-20 bg-white dark:bg-[#030712] relative border-b border-slate-200 dark:border-slate-800">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <div className="max-w-3xl mb-16">
-              <Badge variant="outline" className="mb-4 border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+              <Badge variant="outline" className="mb-4 border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Transparent Pricing
               </Badge>
               <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
@@ -732,7 +732,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                       {isIndia ? "₹1,49,000" : "$4,500"}
                     </span>
                     <span className="text-xs text-slate-500 font-semibold ml-2">/ one-off sprint</span>
-                    {isIndia && <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium mt-1">GST Tax Invoicing Included</div>}
+                    {isIndia && <div className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium mt-1">GST Tax Invoicing Included</div>}
                   </div>
                   <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
                     <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Guaranteed 2–4 Week Delivery</li>
@@ -875,7 +875,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         <section className="py-20 bg-slate-50/70 dark:bg-[#070c18] border-b border-slate-200 dark:border-slate-800 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <div className="max-w-3xl mb-12">
-              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
+              <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Competitive Breakdown
               </Badge>
               <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
@@ -896,7 +896,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">
                       {isIndia ? "In-House Senior Dev (India)" : "In-House US Developer"}
                     </th>
-                    <th className="p-5 bg-blue-600/10 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 w-1/4 border-l border-blue-200 dark:border-blue-800 font-extrabold">
+                    <th className="p-5 bg-blue-600/10 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 w-1/4 border-l border-blue-200 dark:border-blue-800 font-extrabold">
                       AJPR World
                     </th>
                   </tr>
@@ -907,7 +907,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <td className="p-5 text-slate-600 dark:text-slate-400">3 to 6 months of scope creep & delays</td>
                     <td className="p-5 text-slate-600 dark:text-slate-400">3+ months hiring + 2 months onboarding</td>
                     <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
-                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                      <span className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400">
                         <CheckCircle2 className="w-4 h-4 shrink-0" /> 14 to 30 Days Guaranteed
                       </span>
                     </td>
@@ -927,7 +927,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <td className="p-5 text-slate-600 dark:text-slate-400">6 to 12-month non-cancellable lock-in</td>
                     <td className="p-5 text-slate-600 dark:text-slate-400">Full-time salary + benefits + severance liability</td>
                     <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
-                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                      <span className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400">
                         <CheckCircle2 className="w-4 h-4 shrink-0" /> Fixed Sprints or Month-to-Month
                       </span>
                     </td>
@@ -937,7 +937,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <td className="p-5 text-slate-600 dark:text-slate-400">Proprietary platform lock-in (e.g., MarketingCloudFX)</td>
                     <td className="p-5 text-slate-600 dark:text-slate-400">Company owns code</td>
                     <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
-                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                      <span className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400">
                         <CheckCircle2 className="w-4 h-4 shrink-0" /> 100% Client-Owned (Full Repo Transfer)
                       </span>
                     </td>
@@ -951,7 +951,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                       {isIndia ? "₹18,00,000–₹32,00,000/yr CTC + hiring recruiter fees" : "$180,000–$240,000/yr + 28% overhead"}
                     </td>
                     <td className="p-5 bg-blue-50/50 dark:bg-blue-950/20 font-bold text-slate-900 dark:text-white border-l border-blue-200 dark:border-blue-800">
-                      <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                      <span className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400">
                         <CheckCircle2 className="w-4 h-4 shrink-0" /> {isIndia ? "₹1,49,000 sprint or ₹1,85,000/mo pod (Flat fee)" : "$4,500 sprint or $5,500/mo pod (70% savings)"}
                       </span>
                     </td>
@@ -974,9 +974,9 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             <div className="mt-8 p-6 rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 space-y-4 shadow-sm">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-                    Objective Agency Alternatives & Architecture Audits
-                  </h4>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                    Objective Agency Alternatives &amp; Architecture Audits
+                  </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                     Independent breakdowns of trade agencies, legacy retainers, and proprietary software lock-in:
                   </p>

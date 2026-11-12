@@ -68,7 +68,7 @@ export default function AccountabilityPledgeSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/70 dark:border-emerald-900/60 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-wide uppercase mb-5">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <ShieldCheck className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             <span>The AJPR World Total Accountability Pledge</span>
           </div>
 
@@ -98,7 +98,7 @@ export default function AccountabilityPledgeSection() {
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-900/40 flex items-center justify-center shrink-0 shadow-sm">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-900/40 flex items-center justify-center shrink-0 shadow-sm">
                       <Icon className="w-6 h-6" />
                     </div>
                     <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-100/70 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/40">
@@ -113,7 +113,7 @@ export default function AccountabilityPledgeSection() {
                   <div className="space-y-2.5 pt-1">
                     <div className="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-900/30">
                       <span className="text-xs font-bold text-emerald-900 dark:text-emerald-300 uppercase tracking-wider flex items-center gap-1.5 mb-1">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
                         AJPR World Guarantee
                       </span>
                       <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
@@ -121,7 +121,7 @@ export default function AccountabilityPledgeSection() {
                       </p>
                     </div>
 
-                    <p className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-500 dark:text-slate-400">
+                    <p className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-600 dark:text-slate-400">
                       <strong className="text-rose-600 dark:text-rose-400">Conventional Agency:</strong> {pillar.legacyAgency}
                     </p>
                   </div>
@@ -129,7 +129,7 @@ export default function AccountabilityPledgeSection() {
 
                 <div className="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
                   <span>Enforced in Sprint Agreement</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                  <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
                     Non-Negotiable Standard <CheckCircle2 className="w-3.5 h-3.5" />
                   </span>
                 </div>

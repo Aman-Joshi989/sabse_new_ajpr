@@ -123,9 +123,7 @@ export async function generateMetadata(): Promise<Metadata> {
 import { AuthProvider } from '@/components/providers/AuthProvider'
 import { CartProvider } from '@/components/providers/CartProvider'
 import { RegionProvider } from '@/components/providers/RegionProvider'
-import dynamic from 'next/dynamic'
-const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'))
-const HermesChatWidget = dynamic(() => import('@/components/HermesChatWidget'))
+import DeferredLayoutWidgets from '@/components/DeferredLayoutWidgets'
 
 export default async function RootLayout({
   children,
@@ -241,14 +239,13 @@ export default async function RootLayout({
                   {children}
                 </main>
                 <MobileActionDock />
-                <ExitIntentPopup />
                 <Footer services={footerServices} blogs={footerBlogs} />
                 <Toaster />
                 <Analytics />
                 <SpeedInsights />
                 <OrganizationSchema />
                 <LocalBusinessSchema />
-                <HermesChatWidget />
+                <DeferredLayoutWidgets />
                 <Script
                   id="ahrefs-analytics"
                   src="/analytics/ahrefs.js"

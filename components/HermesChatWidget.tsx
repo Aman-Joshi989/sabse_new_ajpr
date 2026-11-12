@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useChat, UIMessage } from '@ai-sdk/react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, X, Send, Loader2, Network, UserCheck, MessageCircle, Calendar, Phone, Mail, ArrowRight } from 'lucide-react';
 import { useCart } from '@/components/providers/CartProvider';
 import { useRegion } from '@/components/providers/RegionProvider';
@@ -180,30 +179,25 @@ export default function HermesChatWidget() {
   return (
     <>
       {/* Floating Action Button */}
-      <motion.button
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+      <button
+        type="button"
+        aria-label="Open Agent Hermes AI Chat"
+        title="Open Agent Hermes AI Chat"
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-20 right-4 md:bottom-6 md:right-6 z-[60] p-3.5 md:p-4 bg-indigo-600 text-white rounded-full shadow-2xl hover:bg-indigo-700 transition-colors ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
+        className={`fixed bottom-20 right-4 md:bottom-6 md:right-6 z-[60] p-3.5 md:p-4 bg-indigo-600 text-white rounded-full shadow-2xl hover:bg-indigo-700 hover:scale-105 active:scale-95 transition-all ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
       >
         <Bot className="w-6 h-6" />
         <span className="absolute -top-2 -right-2 flex h-4 w-4">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-white"></span>
         </span>
-      </motion.button>
+      </button>
 
       {/* Chat Window */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-[60] w-full max-w-sm sm:w-[410px] h-[580px] max-h-[85vh] flex flex-col bg-white dark:bg-[#202124] rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden"
-          >
+      {isOpen && (
+        <div
+          className="fixed bottom-6 right-6 z-[60] w-full max-w-sm sm:w-[410px] h-[580px] max-h-[85vh] flex flex-col bg-white dark:bg-[#202124] rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden animate-fade-up"
+        >
             {/* Header */}
             <div className="flex items-center justify-between p-3.5 bg-indigo-600 text-white">
               <div className="flex items-center gap-2.5">
@@ -228,6 +222,8 @@ export default function HermesChatWidget() {
                   <span>Talk to Human</span>
                 </button>
                 <button
+                  type="button"
+                  aria-label="Close Agent Hermes AI Chat"
                   onClick={() => setIsOpen(false)}
                   className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
                 >
@@ -385,6 +381,7 @@ export default function HermesChatWidget() {
                     />
                     <button
                       type="submit"
+                      aria-label="Send message"
                       disabled={isLoading || !input.trim()}
                       className="absolute right-1.5 p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:hover:bg-indigo-600"
                     >
@@ -404,9 +401,8 @@ export default function HermesChatWidget() {
                 </form>
               </>
             )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </>
   );
 }

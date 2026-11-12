@@ -12,6 +12,14 @@ const nextConfig = {
       '@radix-ui/react-scroll-area',
     ],
   },
+  turbopack: {
+    resolveAlias: {
+      '../build/polyfills/polyfill-module': './lib/empty-polyfill.js',
+      '../build/polyfills/polyfill-module.js': './lib/empty-polyfill.js',
+      'next/dist/build/polyfills/polyfill-module': './lib/empty-polyfill.js',
+      'next/dist/build/polyfills/polyfill-module.js': './lib/empty-polyfill.js',
+    },
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

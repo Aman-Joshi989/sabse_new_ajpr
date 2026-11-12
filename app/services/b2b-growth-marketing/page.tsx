@@ -14,14 +14,14 @@ export const revalidate = 86400; // Cache for 24 hours
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'B2B Growth Marketing Agency & Consultants (2026 Strategy) | AJPR World',
-  description: 'Leading B2B growth marketing agency & consultants. We engineer high-intent pipeline acquisition, technical SEO, and Generative Engine Optimization ($1,500/mo).',
+  title: 'B2B Growth Marketing Agency & Consultants (2026) | AJPR',
+  description: 'B2B growth marketing agency & consultants ($1,500/mo+). We engineer pipeline demand, technical SEO, PPC & Generative Engine Optimization for high growth.',
   alternates: {
     canonical: 'https://ajprworld.com/services/b2b-growth-marketing',
   },
   openGraph: {
-    title: 'B2B Growth Marketing Agency & Consultants (2026 Strategy) | AJPR World',
-    description: 'Leading B2B growth marketing agency & consultants. We engineer high-intent pipeline acquisition, technical SEO, and Generative Engine Optimization ($1,500/mo).',
+    title: 'B2B Growth Marketing Agency & Consultants (2026) | AJPR',
+    description: 'B2B growth marketing agency & consultants ($1,500/mo+). We engineer pipeline demand, technical SEO, PPC & Generative Engine Optimization for high growth.',
     url: 'https://ajprworld.com/services/b2b-growth-marketing',
     siteName: 'AJPR World',
     type: 'website',
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'B2B Growth Marketing Agency & Consultants (2026 Strategy) | AJPR World',
-    description: 'Scale qualified pipeline, lower CAC, and drive high-intent search acquisition with senior growth engineers.',
+    title: 'B2B Growth Marketing Agency & Consultants (2026) | AJPR',
+    description: 'B2B growth marketing agency & consultants ($1,500/mo+). Engineer pipeline demand, technical SEO, PPC & GEO optimization.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',

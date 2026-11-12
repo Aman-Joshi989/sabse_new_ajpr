@@ -1,27 +1,12 @@
 import { NextResponse } from 'next/server';
-import { sql } from '@/lib/db/queries';
 import { dispatchReviewEmails, generateReferenceId } from '@/lib/email/contact-mailer';
+import {
+  ensureClientReviewsTable,
+  getPublicApprovedReviews,
+  insertClientReview,
+} from '@/lib/db/reviews';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-async function ensureClientReviewsTable() {
-  await sql`
-    CREATE TABLE IF NOT EXISTS client_reviews (
-      id SERIAL PRIMARY KEY,
-      reference_id VARCHAR(64) UNIQUE,
-      client_name VARCHAR(255) NOT NULL,
-      client_email VARCHAR(255) NOT NULL,
-      company_name VARCHAR(255),
-      role_title VARCHAR(255),
-      project_type VARCHAR(255) NOT NULL,
-      rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
-      review_text TEXT NOT NULL,
-      external_platform VARCHAR(100),
-      status VARCHAR(50) NOT NULL DEFAULT 'pending_verification',
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-  `;
-}
 
 /**
  * GET /api/reviews
@@ -30,27 +15,11 @@ async function ensureClientReviewsTable() {
 export async function GET() {
   try {
     await ensureClientReviewsTable();
-    const rows = await sql`
-      SELECT
-        id,
-        reference_id,
-        client_name,
-        company_name,
-        role_title,
-        project_type,
-        rating,
-        review_text,
-        external_platform,
-        created_at
-      FROM client_reviews
-      WHERE status = 'approved'
-      ORDER BY created_at DESC
-      LIMIT 50;
-    `;
+    const reviews = await getPublicApprovedReviews(50);
 
     return NextResponse.json({
       success: true,
-      reviews: Array.isArray(rows) ? rows : [],
+      reviews,
     });
   } catch (error: any) {
     console.error('[Reviews API GET] Error:', error?.message || error);
@@ -94,32 +63,17 @@ export async function POST(req: Request) {
 
     const referenceId = generateReferenceId('AJPR-REV');
 
-    await ensureClientReviewsTable();
-    await sql`
-      INSERT INTO client_reviews (
-        reference_id,
-        client_name,
-        client_email,
-        company_name,
-        role_title,
-        project_type,
-        rating,
-        review_text,
-        external_platform,
-        status
-      ) VALUES (
-        ${referenceId},
-        ${clientName},
-        ${email},
-        ${companyName || null},
-        ${roleTitle || null},
-        ${projectType},
-        ${ratingNum},
-        ${reviewText},
-        ${externalPlatform || null},
-        'pending_verification'
-      );
-    `;
+    await insertClientReview({
+      referenceId,
+      clientName,
+      email,
+      companyName,
+      roleTitle,
+      projectType,
+      rating: ratingNum,
+      reviewText,
+      externalPlatform,
+    });
 
     let emailResult = { customerSent: false, adminSent: false };
     try {

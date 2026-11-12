@@ -11,7 +11,8 @@ import {
   Building2,
   FolderGit2,
 } from 'lucide-react';
-import { sql, getPortfolioItems } from '@/lib/db/queries';
+import { getPortfolioItems } from '@/lib/db/queries';
+import { getPublicApprovedReviews } from '@/lib/db/reviews';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import ReviewSubmissionClient from '@/components/reviews/ReviewSubmissionClient';
 
@@ -39,18 +40,6 @@ export const metadata: Metadata = {
     ],
   },
 };
-
-interface PublicReviewRow {
-  id: number;
-  client_name: string;
-  company_name: string | null;
-  role_title: string | null;
-  project_type: string;
-  rating: number;
-  review_text: string;
-  external_platform: string | null;
-  created_at: string;
-}
 
 const REVIEW_PORTALS = [
   {
@@ -87,33 +76,9 @@ const REVIEW_PORTALS = [
   },
 ];
 
-async function getApprovedClientReviews(): Promise<PublicReviewRow[]> {
-  try {
-    const rows = await sql`
-      SELECT
-        id,
-        client_name,
-        company_name,
-        role_title,
-        project_type,
-        rating,
-        review_text,
-        external_platform,
-        created_at
-      FROM client_reviews
-      WHERE status = 'approved'
-      ORDER BY created_at DESC
-      LIMIT 30;
-    `;
-    return Array.isArray(rows) ? rows : [];
-  } catch {
-    return [];
-  }
-}
-
 export default async function ReviewsPage() {
   const [approvedReviews, portfolioProjects] = await Promise.all([
-    getApprovedClientReviews(),
+    getPublicApprovedReviews(30),
     getPortfolioItems().catch(() => []),
   ]);
 
@@ -349,3 +314,4 @@ export default async function ReviewsPage() {
     </main>
   );
 }
+

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { Sparkles, Zap, Monitor, Star, Menu, X, ArrowUpRight, Github, Globe, Layout, Layers, ShieldCheck, CheckCircle2 } from 'lucide-react'
+import { Sparkles, Zap, Monitor, Star, Menu, X, ArrowRight, ArrowUpRight, Github, Globe, Layout, Layers, ShieldCheck, CheckCircle2 } from 'lucide-react'
 import { PortfolioCard } from './PortfolioCard'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'

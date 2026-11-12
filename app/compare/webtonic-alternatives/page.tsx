@@ -8,14 +8,14 @@ import WebTonicComparisonClient from './WebTonicComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: '7 Best Web Tonic Alternatives (2026 Reviews & Pricing Compared) | AJPR World',
-  description: 'Looking for a Web Tonic alternative? We ranked the top 7 web development and marketing studios in 2026 by transparent pricing ($1,500/mo), Next.js speed, and code ownership.',
+  title: 'Web Tonic Alternatives (2026): 7 Faster Agencies | AJPR',
+  description: 'Compare Web Tonic vs 7 alternatives in 2026. Transparent retainers from $1,500/mo, Next.js speed (0.2s TTFB) & 100% code ownership. See full pricing.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/webtonic-alternatives',
   },
   openGraph: {
-    title: '7 Best Web Tonic Alternatives (2026 Reviews & Pricing Compared) | AJPR World',
-    description: 'Looking for a Web Tonic alternative? We ranked the top 7 web development and marketing studios in 2026 by transparent pricing ($1,500/mo), Next.js speed, and code ownership.',
+    title: 'Web Tonic Alternatives (2026): 7 Faster Agencies | AJPR',
+    description: 'Compare Web Tonic vs 7 alternatives in 2026. Transparent retainers from $1,500/mo, Next.js speed (0.2s TTFB) & 100% code ownership. See full pricing.',
     url: 'https://ajprworld.com/compare/webtonic-alternatives',
     siteName: 'AJPR World',
     type: 'article',
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '7 Best Web Tonic Alternatives (2026 Reviews & Pricing Compared) | AJPR World',
-    description: 'Looking for a Web Tonic alternative? We ranked the top 7 web development and marketing studios in 2026 by transparent pricing ($1,500/mo), Next.js speed, and code ownership.',
+    title: 'Web Tonic Alternatives (2026): 7 Faster Agencies | AJPR',
+    description: 'Compare Web Tonic vs 7 alternatives in 2026. Transparent retainers from $1,500/mo, Next.js speed (0.2s TTFB) & 100% code ownership. See full pricing.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',

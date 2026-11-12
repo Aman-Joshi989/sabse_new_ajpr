@@ -12,8 +12,8 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Website Maintenance Cost (2026): Monthly Plans & Rates | AJPR World',
-  description: 'How much does website maintenance cost? Realistic monthly plans range from $149–$899/mo ($75–$175/hr). Compare small business packages, WordPress vs Next.js, and SLAs.',
+  title: 'Website Maintenance Cost (2026): $149–$899/mo Plans',
+  description: 'How much does website maintenance cost? Realistic plans run $149–$899/mo ($75–$175/hr). Compare monthly website packages, WordPress vs Next.js & SLAs.',
   keywords: [
     'website maintenance cost',
     'monthly website maintenance',
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
     canonical: 'https://ajprworld.com/services/website-maintenance-cost',
   },
   openGraph: {
-    title: 'Website Maintenance Cost (2026): Monthly Plans & Rates | AJPR World',
-    description: 'How much does website maintenance cost? Realistic monthly plans range from $149–$899/mo ($75–$175/hr). Compare small business packages, WordPress vs Next.js, and SLAs.',
+    title: 'Website Maintenance Cost (2026): $149–$899/mo Plans',
+    description: 'How much does website maintenance cost? Realistic plans run $149–$899/mo ($75–$175/hr). Compare monthly website packages, WordPress vs Next.js & SLAs.',
     url: 'https://ajprworld.com/services/website-maintenance-cost',
     siteName: 'AJPR World',
     type: 'article',

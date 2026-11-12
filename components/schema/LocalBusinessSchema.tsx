@@ -82,13 +82,12 @@ export async function LocalBusinessSchema() {
       'https://www.instagram.com/ajprworld/',
       'https://www.youtube.com/@AJPRWorld',
       'https://github.com/Aman-Joshi989',
+      'https://github.com/Aman-Joshi989/Aman-Joshi989',
+      'https://github.com/Aman-Joshi989/sabse_new_ajpr',
       'https://clutch.co/profile/ajpr-world',
       'https://www.goodfirms.co/company/ajpr-world',
-      'https://www.producthunt.com/@ajprworld',
       'https://peerlist.io/company/ajprworld',
-      'https://sourceforge.net/p/ajprworld/',
-      'https://wellfound.com/company/ajpr-world',
-      'https://dev.to/ajprworld'
+      'https://sourceforge.net/p/ajprworld/'
     ]
   };
 

@@ -8,14 +8,14 @@ import SmartSitesComparisonClient from './SmartSitesComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: '7 Best SmartSites Alternatives in 2026 (PPC & Web Studios Compared) | AJPR World',
-  description: 'Compare the top SmartSites alternatives in 2026. Review honest retainer pricing, Next.js vs WordPress performance, and transparent ad management without contracts.',
+  title: 'SmartSites Alternatives (2026): PPC & Web Pricing | AJPR',
+  description: 'Compare top SmartSites alternatives in 2026. Honest PPC & web retainer pricing, Next.js vs WordPress speed benchmarks, and zero long-term contracts.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/smartsites-alternatives',
   },
   openGraph: {
-    title: '7 Best SmartSites Alternatives in 2026 (PPC & Web Studios Compared) | AJPR World',
-    description: 'Compare the top SmartSites alternatives in 2026. Review honest retainer pricing, Next.js vs WordPress performance, and transparent ad management without contracts.',
+    title: 'SmartSites Alternatives (2026): PPC & Web Pricing | AJPR',
+    description: 'Compare top SmartSites alternatives in 2026. Honest PPC & web retainer pricing, Next.js vs WordPress speed benchmarks, and zero long-term contracts.',
     url: 'https://ajprworld.com/compare/smartsites-alternatives',
     siteName: 'AJPR World',
     type: 'article',
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '7 Best SmartSites Alternatives in 2026 (PPC & Web Studios Compared) | AJPR World',
-    description: 'Compare the top SmartSites alternatives in 2026. Review honest retainer pricing, Next.js vs WordPress performance, and transparent ad management without contracts.',
+    title: 'SmartSites Alternatives (2026): PPC & Web Pricing | AJPR',
+    description: 'Compare top SmartSites alternatives in 2026. Honest PPC & web retainer pricing, Next.js vs WordPress speed benchmarks, and zero long-term contracts.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',
     site: '@ajprworld',

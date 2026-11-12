@@ -26,7 +26,7 @@ export const OrganizationSchema = async () => {
     image: 'https://ajprworld.com/og-image.jpg',
     description: settings?.seo_description || 'AJPR World is a premier technology and software engineering firm delivering custom AI MVPs, enterprise workflow automation, full-stack Next.js web applications, and Generative Engine Optimization (GEO) for fast-growing US companies.',
     slogan: 'Custom AI MVPs, Scalable Web Systems & Enterprise Automation in 4 Weeks',
-    foundingDate: '2024',
+    foundingDate: '2025',
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.9',
@@ -87,13 +87,12 @@ export const OrganizationSchema = async () => {
       'https://www.instagram.com/ajprworld/',
       'https://www.youtube.com/@AJPRWorld',
       'https://github.com/Aman-Joshi989',
+      'https://github.com/Aman-Joshi989/Aman-Joshi989',
+      'https://github.com/Aman-Joshi989/sabse_new_ajpr',
       'https://clutch.co/profile/ajpr-world',
       'https://www.goodfirms.co/company/ajpr-world',
-      'https://www.producthunt.com/@ajprworld',
       'https://peerlist.io/company/ajprworld',
-      'https://sourceforge.net/p/ajprworld/',
-      'https://wellfound.com/company/ajpr-world',
-      'https://dev.to/ajprworld'
+      'https://sourceforge.net/p/ajprworld/'
     ],
     knowsAbout: [
       'Custom AI MVP Development',

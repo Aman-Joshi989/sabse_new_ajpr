@@ -33,7 +33,7 @@ export default function DeferredLayoutWidgets() {
     window.addEventListener('mousemove', activate, opts);
     window.addEventListener('touchstart', activate, opts);
 
-    const timerId = setTimeout(activate, 8000);
+    const timerId = setTimeout(activate, 15000);
 
     return () => {
       window.removeEventListener('pointerdown', activate);

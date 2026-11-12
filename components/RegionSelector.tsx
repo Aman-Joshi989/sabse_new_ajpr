@@ -54,8 +54,8 @@ export default function RegionSelector({ variant = 'compact', className = '' }: 
       >
         <span className="text-sm leading-none">{current.flag}</span>
         <span className="font-bold">{current.code}</span>
-        <span className="text-slate-400 dark:text-slate-500 font-normal">({current.code === 'IN' ? '₹' : '$'})</span>
-        <ChevronDown className={`w-3 h-3 text-slate-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="text-slate-600 dark:text-slate-300 font-normal">({current.code === 'IN' ? '₹' : '$'})</span>
+        <ChevronDown className={`w-3 h-3 text-slate-600 dark:text-slate-300 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (

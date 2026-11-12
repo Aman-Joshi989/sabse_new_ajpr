@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
   CheckCircle2, 
@@ -150,10 +149,8 @@ export default function LeadForm() {
 
   if (isSuccess) {
     return (
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.96 }} 
-        animate={{ opacity: 1, scale: 1 }}
-        className="text-center p-8 sm:p-10 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl space-y-6"
+      <div 
+        className="text-center p-8 sm:p-10 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl space-y-6 animate-in fade-in zoom-in-95 duration-300"
       >
         <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
           <CheckCircle2 className="w-8 h-8" />
@@ -241,7 +238,7 @@ export default function LeadForm() {
             Submit another project inquiry
           </button>
         </div>
-      </motion.div>
+      </div>
     );
   }
 

@@ -59,9 +59,9 @@ export default function AccountabilityPledgeSection() {
       aria-labelledby="accountability-heading"
       className="py-20 md:py-28 relative overflow-hidden bg-slate-50/70 dark:bg-[#060a14] border-y border-slate-200/80 dark:border-slate-800/80"
     >
-      {/* Background Soft Lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-600/5 dark:bg-blue-600/10 blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-emerald-600/5 blur-[120px] rounded-full pointer-events-none" />
+      {/* Background Soft Lighting (zero GPU blur filter) */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.06),transparent_70%)] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(5,150,105,0.05),transparent_70%)] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         
@@ -140,7 +140,7 @@ export default function AccountabilityPledgeSection() {
 
         {/* The Authentic Leadership Commitment Card */}
         <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 text-white p-8 sm:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-red-600/10 blur-[130px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(220,38,38,0.12),transparent_70%)] rounded-full pointer-events-none" />
 
           <div className="grid lg:grid-cols-12 gap-8 items-center relative z-10">
             <div className="lg:col-span-8 space-y-4">

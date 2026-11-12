@@ -101,9 +101,9 @@ export default function CoreValuesSection({
       aria-labelledby="core-values-heading"
       className={`relative py-20 md:py-28 overflow-hidden bg-slate-50/60 dark:bg-[#070b14] border-y border-slate-200/80 dark:border-slate-800/80 ${className}`}
     >
-      {/* Background Ambient Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-red-600/10 dark:bg-rose-600/10 blur-[130px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-blue-600/5 blur-[100px] rounded-full pointer-events-none" />
+      {/* Background Ambient Glows (zero GPU blur filter) */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.08),transparent_70%)] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-[radial-gradient(circle,rgba(37,99,235,0.05),transparent_70%)] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         
@@ -134,7 +134,7 @@ export default function CoreValuesSection({
           
           {/* Left Column: Signature Authentic Core Values Card (matching the brand graphic) */}
           <div className="lg:col-span-5 w-full">
-            <div className="relative rounded-3xl bg-white dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-200/40 dark:shadow-black/40 p-8 sm:p-10 backdrop-blur-xl">
+            <div className="relative rounded-3xl bg-white dark:bg-slate-900/95 border border-slate-200/90 dark:border-slate-800 shadow-xl shadow-slate-200/40 dark:shadow-black/40 p-8 sm:p-10">
               
               {/* Header with Crimson Sprout Icon */}
               <div className="flex items-center gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">

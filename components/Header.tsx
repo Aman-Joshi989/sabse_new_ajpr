@@ -247,7 +247,8 @@ export default function Header({ services }: { services?: any[] }) {
                         onClick={() => setIsCartOpen(true)}
                         aria-label="Open Shopping Cart"
                     >
-                        <ShoppingCart className="h-4 w-4" />
+                        <ShoppingCart className="h-4 w-4" aria-hidden="true" />
+                        <span className="sr-only">Open Shopping Cart</span>
                         {cart.length > 0 && (
                             <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                                 {cart.length}
@@ -259,7 +260,8 @@ export default function Header({ services }: { services?: any[] }) {
                         <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
                     ) : user ? (
                         <div className="relative group">
-                            <button className="flex items-center space-x-2 focus:outline-none" aria-label="User Account Menu">
+                            <button type="button" className="flex items-center space-x-2 focus:outline-none" aria-label="User Account Menu">
+                                <span className="sr-only">User Account Menu</span>
                                 <div className="w-9 h-9 rounded-full bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 overflow-hidden">
                                     {user.avatar_url ? (
                                         <Image
@@ -275,7 +277,7 @@ export default function Header({ services }: { services?: any[] }) {
                                         </div>
                                     )}
                                 </div>
-                                <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                                <ChevronDown className="w-3.5 h-3.5 text-slate-500" aria-hidden="true" />
                             </button>
                             {/* Dropdown Menu */}
                             <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-[#0a0f1c] rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 py-2 animate-fade-down hidden group-hover:block z-50">
@@ -325,7 +327,8 @@ export default function Header({ services }: { services?: any[] }) {
                         onClick={() => setIsCartOpen(true)}
                         aria-label="Open Shopping Cart"
                     >
-                        <ShoppingCart className="h-5 w-5" />
+                        <ShoppingCart className="h-5 w-5" aria-hidden="true" />
+                        <span className="sr-only">Open Shopping Cart</span>
                         {cart.length > 0 && (
                             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                                 {cart.length}
@@ -335,7 +338,8 @@ export default function Header({ services }: { services?: any[] }) {
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="outline" size="icon" aria-label="Open Mobile Menu">
-                                <Menu className="h-5 w-5" />
+                                <Menu className="h-5 w-5" aria-hidden="true" />
+                                <span className="sr-only">Open Mobile Menu</span>
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="right" className="w-80 p-6 overflow-y-auto">

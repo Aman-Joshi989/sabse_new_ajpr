@@ -186,8 +186,9 @@ export default function HermesChatWidget() {
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-20 right-4 md:bottom-6 md:right-6 z-[60] p-3.5 md:p-4 bg-indigo-600 text-white rounded-full shadow-2xl hover:bg-indigo-700 hover:scale-105 active:scale-95 transition-all ${isOpen ? 'hidden' : 'flex'} items-center justify-center`}
       >
-        <Bot className="w-6 h-6" />
-        <span className="absolute -top-2 -right-2 flex h-4 w-4">
+        <Bot className="w-6 h-6" aria-hidden="true" />
+        <span className="sr-only">Open Agent Hermes AI Chat</span>
+        <span aria-hidden="true" className="absolute -top-2 -right-2 flex h-4 w-4">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-white"></span>
         </span>
@@ -227,7 +228,8 @@ export default function HermesChatWidget() {
                   onClick={() => setIsOpen(false)}
                   className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5" aria-hidden="true" />
+                  <span className="sr-only">Close Agent Hermes AI Chat</span>
                 </button>
               </div>
             </div>
@@ -385,7 +387,8 @@ export default function HermesChatWidget() {
                       disabled={isLoading || !input.trim()}
                       className="absolute right-1.5 p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:hover:bg-indigo-600"
                     >
-                      <Send className="w-3.5 h-3.5" />
+                      <Send className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span className="sr-only">Send message</span>
                     </button>
                   </div>
                   <div className="flex items-center justify-between text-[10px] text-gray-400 mt-2 px-1">

@@ -101,10 +101,14 @@ export default function ExitIntentPopup() {
         <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-teal-500/20 rounded-full blur-[80px] pointer-events-none"></div>
 
         <button 
+          type="button"
           onClick={handleClose}
-          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-900 rounded-full transition-colors z-[60] cursor-pointer"
+          aria-label="Close Growth Checklist Popup"
+          title="Close"
+          className="absolute top-4 right-4 p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-slate-100 dark:bg-slate-900 rounded-full transition-colors z-[60] cursor-pointer"
         >
-          <X className="w-5 h-5" />
+          <X className="w-5 h-5" aria-hidden="true" />
+          <span className="sr-only">Close Growth Checklist Popup</span>
         </button>
 
         <div className="p-8 md:p-10 relative z-10 text-center">

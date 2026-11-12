@@ -14,7 +14,8 @@ export const OrganizationSchema = async () => {
     '@id': 'https://ajprworld.com/#organization',
     name: 'AJPR World',
     alternateName: ['AJPR', 'AJPR World', 'AJPR Tech', 'AJPR Software', 'AJPR World LLC'],
-    legalName: 'AJPR World',
+    legalName: 'AJPR World Private Limited',
+    taxID: 'U47912UT2025PTC019416',
     url: 'https://ajprworld.com',
     logo: {
       '@type': 'ImageObject',
@@ -26,7 +27,7 @@ export const OrganizationSchema = async () => {
     image: 'https://ajprworld.com/og-image.jpg',
     description: settings?.seo_description || 'AJPR World is a premier technology and software engineering firm delivering custom AI MVPs, enterprise workflow automation, full-stack Next.js web applications, and Generative Engine Optimization (GEO) for fast-growing US companies.',
     slogan: 'Custom AI MVPs, Scalable Web Systems & Enterprise Automation in 4 Weeks',
-    foundingDate: '2025',
+    foundingDate: '2025-06-17',
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.9',
@@ -36,7 +37,7 @@ export const OrganizationSchema = async () => {
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Nainital Road / Kaladhungi Road',
+      streetAddress: '161, Indraprastha Colony, Phase 3, Dahariya',
       addressLocality: 'Haldwani',
       addressRegion: 'Uttarakhand',
       postalCode: '263139',
@@ -89,6 +90,10 @@ export const OrganizationSchema = async () => {
       'https://github.com/Aman-Joshi989',
       'https://github.com/Aman-Joshi989/Aman-Joshi989',
       'https://github.com/Aman-Joshi989/sabse_new_ajpr',
+      'https://github.com/Aman-Joshi989/ajpr-seo-geo-audit',
+      'https://tracxn.com/d/legal-entities/india/ajpr-world-private-limited/__meKOAfEBmf3LZImI0ObzovQFsTLUkTkYlbJeOsWCTX8',
+      'https://www.falconebiz.com/company/AJPR-WORLD-PRIVATE-LIMITED-U47912UT2025PTC019416',
+      'https://magicpin.in/Haldwani/Dahariya/Other/Ajpr-World-Private-Limited/store/417b411',
       'https://clutch.co/profile/ajpr-world',
       'https://www.goodfirms.co/company/ajpr-world',
       'https://peerlist.io/company/ajprworld',

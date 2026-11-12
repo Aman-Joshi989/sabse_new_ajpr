@@ -119,7 +119,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             </div>
                             <div>Scoping: <Link href="/book-call" className="text-blue-600 dark:text-blue-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
                             {isIndia && (
-                                <div className="text-slate-500">Regional Hub: Nainital Road, Haldwani, Uttarakhand</div>
+                                <div className="text-slate-500">Registered HQ: Indraprastha Colony, Dahariya, Haldwani, Uttarakhand 263139</div>
                             )}
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Inter, Manrope } from 'next/font/google'
 import { Toaster } from 'sonner'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
@@ -11,16 +12,25 @@ import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { LocalBusinessSchema } from '@/components/schema/LocalBusinessSchema';
 import { getSiteSettings, getPublishedServices, getBlogs } from '@/lib/db/queries';
 import LayoutClientEffect from '@/components/LayoutClientEffect';
-import FontLoader from '@/components/FontLoader';
 import MobileActionDock from '@/components/MobileActionDock';
 
 // Enable ISR: cache layout data for 24h to prevent Vercel ISR Write limits
 export const revalidate = 86400;
 
 
-// Standard high-performance system/web font configuration
-const inter = { variable: '--font-inter' }
-const manrope = { variable: '--font-manrope' }
+// Self-hosted Google Fonts via next/font (zero render-blocking network CSS requests)
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+const manrope = Manrope({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  variable: '--font-manrope',
+  display: 'swap',
+})
 
 export function cleanMetaTitle(title: string, maxLen = 60): string {
   if (!title) return '';
@@ -144,7 +154,6 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <FontLoader />
         <Script
           id="gtm-script"
           strategy="afterInteractive"

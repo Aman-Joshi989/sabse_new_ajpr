@@ -127,20 +127,19 @@ export default function AuthorityNetworkSection() {
                   </p>
 
                   {/* Contextual Deep Links */}
-                  <ul className="space-y-2.5">
+                  <ul className="space-y-2">
                     {cluster.links.map((link, lIdx) => (
                       <li key={lIdx}>
-                        <Link 
+                        <Link
                           href={link.href}
                           className="group block p-2.5 rounded-xl hover:bg-white dark:hover:bg-slate-800/60 border border-transparent hover:border-slate-200 dark:hover:border-slate-700/80 transition-all"
                         >
-                          <div className="flex items-center justify-between text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                            <span>{link.title}</span>
-                            <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all text-blue-500" />
-                          </div>
-                          <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
+                          <span className="block text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            {link.title}
+                          </span>
+                          <span className="block text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
                             {link.note}
-                          </div>
+                          </span>
                         </Link>
                       </li>
                     ))}

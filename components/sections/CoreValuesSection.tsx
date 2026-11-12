@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
 import { 
   Sprout, 
   Check, 
@@ -257,11 +256,9 @@ export default function CoreValuesSection({
               {CORE_VALUES.map((val) => {
                 const Icon = val.icon
                 return (
-                  <motion.div
+                  <div
                     key={val.id}
-                    whileHover={{ y: -4 }}
-                    transition={{ duration: 0.2 }}
-                    className="p-7 rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 hover:border-red-500/40 dark:hover:border-rose-500/40 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group"
+                    className="p-7 rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 hover:-translate-y-1 hover:border-red-500/40 dark:hover:border-rose-500/40 shadow-sm hover:shadow-xl transition-all duration-200 flex flex-col justify-between group"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-5">
@@ -291,7 +288,7 @@ export default function CoreValuesSection({
                         Active in every sprint <CheckCircle2 className="w-3.5 h-3.5" />
                       </span>
                     </div>
-                  </motion.div>
+                  </div>
                 )
               })}
             </div>

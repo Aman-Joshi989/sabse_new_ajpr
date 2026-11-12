@@ -3,6 +3,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    inlineCss: true,
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
+import FontLoader from '@/components/FontLoader'
 
 export const metadata: Metadata = {
   robots: {
@@ -14,6 +15,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="font-display">
+      <FontLoader />
       {children}
     </div>
   )

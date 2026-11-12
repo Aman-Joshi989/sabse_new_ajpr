@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import React, { useState } from 'react'
 import { 
   ArrowRight, Database, Code2, Cpu, GitMerge, Layout, Layers, ShieldCheck, 
   CheckCircle, CheckCircle2, Terminal, Globe, Smartphone, Lock, Cloud, Sparkles, 
@@ -25,38 +24,11 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
-const MouseGlowCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const [position, setPosition] = useState({ x: 0, y: 0 })
-  const [opacity, setOpacity] = useState(0)
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
-    const rect = ref.current.getBoundingClientRect()
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top })
-  }
-
-  return (
-    <div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setOpacity(1)}
-      onMouseLeave={() => setOpacity(0)}
-      className={`relative overflow-hidden group ${className}`}
-    >
-      <div
-        className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
-        style={{
-          opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(148, 163, 184, 0.1), transparent 40%)`
-        }}
-      />
-      <div className="relative z-10 w-full h-full">
-        {children}
-      </div>
-    </div>
-  )
-}
+const MouseGlowCard = ({ children, className }: { children: React.ReactNode, className?: string }) => (
+  <div className={`relative overflow-hidden transition-colors ${className || ''}`}>
+    {children}
+  </div>
+)
 
 interface HomeClientProps {
   services?: any[];
@@ -212,8 +184,8 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white dark:from-[#030712] to-transparent z-10 pointer-events-none"></div>
           <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white dark:from-[#030712] to-transparent z-10 pointer-events-none"></div>
           <div className="flex animate-marquee whitespace-nowrap items-center">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="flex items-center gap-12 mx-6 text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+            {[...Array(2)].map((_, i) => (
+              <div key={i} aria-hidden={i > 0} className="flex items-center gap-12 px-6 text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                 <span className="flex items-center gap-2"><Code2 className="w-4 h-4" /> React & Next.js</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700" />
                 <span className="flex items-center gap-2"><Database className="w-4 h-4" /> PostgreSQL</span>
@@ -1191,17 +1163,6 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           </div>
         </section>
       </div>
-
-      <style jsx global>{`
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(calc(-50% - 3rem)); }
-        }
-        .animate-marquee {
-          animation: marquee 35s linear infinite;
-          width: fit-content;
-        }
-      `}</style>
     </div>
   )
 }

@@ -94,11 +94,10 @@
     "react-dom": "$react-dom"
   },
   "browserslist": [
-    "chrome >= 94",
-    "safari >= 15.4",
-    "firefox >= 93",
-    "edge >= 94",
-    "ios >= 15.4",
-    "not ie 11"
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 111",
+    "safari >= 16.4",
+    "ios >= 16.4"
   ]
 }

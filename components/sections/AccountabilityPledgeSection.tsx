@@ -4,7 +4,6 @@ import React from 'react'
 import { 
   ShieldCheck, 
   CheckCircle2, 
-  XCircle, 
   Lock, 
   Clock, 
   DollarSign, 
@@ -111,27 +110,20 @@ export default function AccountabilityPledgeSection() {
                     {pillar.title}
                   </h3>
 
-                  <div className="space-y-3 pt-1">
+                  <div className="space-y-2.5 pt-1">
                     <div className="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-900/30">
-                      <div className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="text-xs font-bold text-emerald-900 dark:text-emerald-300 uppercase tracking-wider block mb-0.5">
-                            AJPR World Guarantee
-                          </span>
-                          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
-                            {pillar.promise}
-                          </p>
-                        </div>
-                      </div>
+                      <span className="text-xs font-bold text-emerald-900 dark:text-emerald-300 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                        AJPR World Guarantee
+                      </span>
+                      <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+                        {pillar.promise}
+                      </p>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-500 dark:text-slate-400">
-                      <div className="flex items-start gap-2">
-                        <XCircle className="w-3.5 h-3.5 text-rose-500 shrink-0 mt-0.5" />
-                        <span><strong className="text-slate-700 dark:text-slate-300">Conventional Agency:</strong> {pillar.legacyAgency}</span>
-                      </div>
-                    </div>
+                    <p className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-500 dark:text-slate-400">
+                      <strong className="text-rose-600 dark:text-rose-400">Conventional Agency:</strong> {pillar.legacyAgency}
+                    </p>
                   </div>
                 </div>
 

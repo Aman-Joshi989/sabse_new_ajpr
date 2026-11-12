@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { GOOGLE_REVIEW_URL, CLUTCH_PROFILE_URL } from '@/lib/constants/reviews';
 
 const PROJECT_TYPES = [
   'Custom Software / AI MVP',
@@ -92,7 +93,7 @@ export default function ReviewSubmissionClient() {
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
           <a
-            href="https://www.google.com/search?q=AJPR+World+Haldwani+reviews"
+            href={GOOGLE_REVIEW_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold hover:opacity-90 transition-opacity"
@@ -100,7 +101,7 @@ export default function ReviewSubmissionClient() {
             Also Share on Google <ExternalLink className="w-3.5 h-3.5" />
           </a>
           <a
-            href="https://clutch.co/profile/ajpr-world"
+            href={CLUTCH_PROFILE_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
@@ -271,3 +272,4 @@ export default function ReviewSubmissionClient() {
     </form>
   );
 }
+

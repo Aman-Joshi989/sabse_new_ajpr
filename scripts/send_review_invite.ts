@@ -30,11 +30,12 @@ async function main() {
     process.exit(1);
   }
 
+  const { GOOGLE_REVIEW_URL, DIRECT_REVIEWS_URL } = await import('../lib/constants/reviews');
   const whatsappText = [
     `Hi ${clientName}! Hope business is going great${companyName ? ` at ${companyName}` : ''}.`,
     `If you have 60 seconds, could you drop an honest review of our work${projectType ? ` on ${projectType}` : ''}?`,
-    `Google Search: https://www.google.com/search?q=AJPR+World+Haldwani+reviews`,
-    `Direct Feedback Hub: https://ajprworld.com/reviews`,
+    `Google Search: ${GOOGLE_REVIEW_URL}`,
+    `Direct Feedback Hub: ${DIRECT_REVIEWS_URL}`,
     `Appreciate it! — Aman Joshi, AJPR World`,
   ].join('\n');
 

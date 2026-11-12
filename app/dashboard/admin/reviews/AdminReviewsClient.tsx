@@ -13,6 +13,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import type { AdminClientReview, ReviewStatus } from '@/lib/db/reviews';
+import { GOOGLE_REVIEW_URL, CLUTCH_PROFILE_URL, DIRECT_REVIEWS_URL } from '@/lib/constants/reviews';
 
 interface PortfolioClientOption {
   id: number;
@@ -43,9 +44,9 @@ export default function AdminReviewsClient({
   const whatsappMessage = [
     `Hi ${inviteName || '[Name]'}! Hope business is scaling well${inviteCompany ? ` at ${inviteCompany}` : ''}.`,
     `If you have 60 seconds, could you share an honest review of our work together on ${inviteProject}?`,
-    `- Google Review (fastest): https://www.google.com/search?q=AJPR+World+Haldwani+reviews`,
-    `- Direct Verified Hub: https://ajprworld.com/reviews`,
-    `- Clutch (B2B): https://clutch.co/profile/ajpr-world`,
+    `- Google Review (fastest): ${GOOGLE_REVIEW_URL}`,
+    `- Direct Verified Hub: ${DIRECT_REVIEWS_URL}`,
+    `- Clutch (B2B): ${CLUTCH_PROFILE_URL}`,
     `Appreciate it! — Aman Joshi, AJPR World`,
   ].join('\n');
 

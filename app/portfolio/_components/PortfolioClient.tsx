@@ -316,6 +316,9 @@ export default function PortfolioClient({ initialProjects }: PortfolioClientProp
                 <Button size="lg" variant="outline" className="h-16 px-10 rounded-xl text-lg font-bold bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white hover:text-slate-900 dark:hover:text-white backdrop-blur-md transition-all hover:-translate-y-1" asChild>
                   <Link href="/book-call">Schedule Strategy Call</Link>
                 </Button>
+                <Button size="lg" variant="outline" className="h-16 px-10 rounded-xl text-lg font-bold bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white hover:text-slate-900 dark:hover:text-white backdrop-blur-md transition-all hover:-translate-y-1" asChild>
+                  <Link href="/reviews">Verified Client Reviews</Link>
+                </Button>
               </div>
             </div>
           </div>

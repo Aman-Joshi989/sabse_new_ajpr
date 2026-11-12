@@ -13,6 +13,12 @@ import {
 } from 'lucide-react';
 import { getPortfolioItems } from '@/lib/db/queries';
 import { getPublicApprovedReviews } from '@/lib/db/reviews';
+import {
+  GOOGLE_REVIEW_URL,
+  CLUTCH_PROFILE_URL,
+  GOODFIRMS_PROFILE_URL,
+  SOURCEFORGE_PROFILE_URL,
+} from '@/lib/constants/reviews';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
 import ReviewSubmissionClient from '@/components/reviews/ReviewSubmissionClient';
 
@@ -47,7 +53,7 @@ const REVIEW_PORTALS = [
     badge: 'Primary Search & Local Maps',
     description:
       'Share an independent public review on our Haldwani, Uttarakhand studio listing to help local and global buyers evaluate response speed and delivery.',
-    href: 'https://www.google.com/search?q=AJPR+World+Haldwani+reviews',
+    href: GOOGLE_REVIEW_URL,
     cta: 'Leave or Read Google Reviews',
   },
   {
@@ -55,7 +61,7 @@ const REVIEW_PORTALS = [
     badge: 'B2B Verified Analyst Platform',
     description:
       'Independent analyst-verified B2B software and digital growth reviews covering budget accuracy, sprint velocity, and post-launch support.',
-    href: 'https://clutch.co/profile/ajpr-world',
+    href: CLUTCH_PROFILE_URL,
     cta: 'Review on Clutch',
   },
   {
@@ -63,7 +69,7 @@ const REVIEW_PORTALS = [
     badge: 'Engineering & Growth Directory',
     description:
       'Evaluate AJPR World ratings for custom Next.js development, website security maintenance, and technical SEO execution.',
-    href: 'https://www.goodfirms.co/company/ajpr-world',
+    href: GOODFIRMS_PROFILE_URL,
     cta: 'Review on GoodFirms',
   },
   {
@@ -71,7 +77,7 @@ const REVIEW_PORTALS = [
     badge: 'Open Engineering & Benchmark Proof',
     description:
       'Inspect open technical benchmarks, repository deliverables, and independent developer community feedback.',
-    href: 'https://sourceforge.net/p/ajprworld/',
+    href: SOURCEFORGE_PROFILE_URL,
     cta: 'View Developer Profile',
   },
 ];

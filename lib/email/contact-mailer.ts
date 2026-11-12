@@ -1,6 +1,12 @@
 import nodemailer from 'nodemailer';
 import { sendEmail as sendZeptoEmail } from '@/lib/zeptomail';
 import { sql } from '@/lib/db/queries';
+import {
+  GOOGLE_REVIEW_URL,
+  CLUTCH_PROFILE_URL,
+  GOODFIRMS_PROFILE_URL,
+  DIRECT_REVIEWS_URL,
+} from '@/lib/constants/reviews';
 
 export interface ContactEmailData {
   referenceId?: string;
@@ -936,9 +942,9 @@ export async function dispatchReviewEmails(
     <div style="background-color: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; margin: 18px 0;">
       <p style="margin: 0 0 8px 0; color: #f8fafc; font-size: 13px; font-weight: 700;">Optional: Cross-post your feedback in 30 seconds</p>
       <p style="margin: 0 0 12px 0; color: #94a3b8; font-size: 13px;">Independent third-party reviews help founders evaluate engineering teams with confidence:</p>
-      <a href="https://www.google.com/search?q=AJPR+World+Haldwani+reviews" style="display: inline-block; margin: 4px 8px 4px 0; padding: 8px 14px; background: #2563eb; color: #ffffff; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">Google Review</a>
-      <a href="https://clutch.co/profile/ajpr-world" style="display: inline-block; margin: 4px 8px 4px 0; padding: 8px 14px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">Clutch</a>
-      <a href="https://www.goodfirms.co/company/ajpr-world" style="display: inline-block; margin: 4px 0; padding: 8px 14px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">GoodFirms</a>
+      <a href="${GOOGLE_REVIEW_URL}" style="display: inline-block; margin: 4px 8px 4px 0; padding: 8px 14px; background: #2563eb; color: #ffffff; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">Google Review</a>
+      <a href="${CLUTCH_PROFILE_URL}" style="display: inline-block; margin: 4px 8px 4px 0; padding: 8px 14px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">Clutch</a>
+      <a href="${GOODFIRMS_PROFILE_URL}" style="display: inline-block; margin: 4px 0; padding: 8px 14px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">GoodFirms</a>
     </div>
     <p style="color: #6b7280; font-size: 13px; margin-top: 20px;">
       Aman Joshi &amp; AJPR World Engineering<br>
@@ -1024,9 +1030,9 @@ export async function sendClientReviewInviteEmail(params: {
       If you have 60 seconds, could you share an honest review on whichever platform is easiest for you?
     </p>
     <div style="margin: 24px 0;">
-      <a href="https://www.google.com/search?q=AJPR+World+Haldwani+reviews" style="display: inline-block; margin: 6px 8px 6px 0; padding: 12px 18px; background-color: #0f172a; color: #ffffff; border-radius: 9999px; text-decoration: none; font-size: 13px; font-weight: 700;">Leave Google Review</a>
-      <a href="https://ajprworld.com/reviews" style="display: inline-block; margin: 6px 8px 6px 0; padding: 12px 18px; background-color: #2563eb; color: #ffffff; border-radius: 9999px; text-decoration: none; font-size: 13px; font-weight: 700;">Submit Direct Review</a>
-      <a href="https://clutch.co/profile/ajpr-world" style="display: inline-block; margin: 6px 0; padding: 12px 18px; background-color: #f1f5f9; color: #0f172a; border-radius: 9999px; text-decoration: none; font-size: 13px; font-weight: 700;">Review on Clutch</a>
+      <a href="${GOOGLE_REVIEW_URL}" style="display: inline-block; margin: 6px 8px 6px 0; padding: 12px 18px; background-color: #0f172a; color: #ffffff; border-radius: 9999px; text-decoration: none; font-size: 13px; font-weight: 700;">Leave Google Review</a>
+      <a href="${DIRECT_REVIEWS_URL}" style="display: inline-block; margin: 6px 8px 6px 0; padding: 12px 18px; background-color: #2563eb; color: #ffffff; border-radius: 9999px; text-decoration: none; font-size: 13px; font-weight: 700;">Submit Direct Review</a>
+      <a href="${CLUTCH_PROFILE_URL}" style="display: inline-block; margin: 6px 0; padding: 12px 18px; background-color: #f1f5f9; color: #0f172a; border-radius: 9999px; text-decoration: none; font-size: 13px; font-weight: 700;">Review on Clutch</a>
     </div>
     <p style="font-size: 14px; line-height: 1.6; color: #475569;">
       Thanks again,<br>

@@ -133,13 +133,24 @@ export default function DigitalMarketingPage() {
                     ))}
                 </div>
 
-                <div className="text-center">
+                <div className="text-center space-y-6">
                     <Button size="lg" className="bg-gradient-to-r from-pink-600 to-purple-600" asChild>
                         <Link href="/contact">
                             Start Your Marketing Campaign
                             <ArrowRight className="w-5 h-5 ml-2" />
                         </Link>
                     </Button>
+                    <div className="flex flex-wrap justify-center gap-3 pt-4 text-xs font-semibold">
+                        <Link href="/services/b2b-growth-marketing" className="text-blue-600 dark:text-blue-400 hover:underline">B2B Growth Marketing &amp; Consultants</Link>
+                        <span className="text-slate-400">&bull;</span>
+                        <Link href="/services/website-maintenance-cost" className="text-blue-600 dark:text-blue-400 hover:underline">Website Maintenance Cost Guide</Link>
+                        <span className="text-slate-400">&bull;</span>
+                        <Link href="/locations/haldwani/digital-marketing" className="text-blue-600 dark:text-blue-400 hover:underline">Digital Marketing Haldwani</Link>
+                        <span className="text-slate-400">&bull;</span>
+                        <Link href="/locations/london/digital-marketing" className="text-blue-600 dark:text-blue-400 hover:underline">Digital PR Agency London</Link>
+                        <span className="text-slate-400">&bull;</span>
+                        <Link href="/reviews" className="text-blue-600 dark:text-blue-400 hover:underline">Client Reviews</Link>
+                    </div>
                 </div>
             </div>
         </section>

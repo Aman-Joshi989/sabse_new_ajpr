@@ -59,7 +59,8 @@ export async function generateMetadata(): Promise<Metadata> {
     : dbTitle;
     
   const defaultDesc = 'AJPR World is a senior software engineering studio founded by Aman Joshi. We build production Next.js platforms, custom AI systems, and high-performance digital products.';
-  const description = seo?.description || defaultDesc;
+  const isDescPlaceholder = seo?.description && seo.description.includes('Unlock the secrets to optimizing your About page');
+  const description = (!seo?.description || isDescPlaceholder) ? defaultDesc : seo.description;
 
   return {
     alternates: { canonical: 'https://ajprworld.com/about' },

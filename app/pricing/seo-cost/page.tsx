@@ -25,14 +25,14 @@ const seoPricingTiers = [
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'SEO Retainer Cost in 2026: Real Agency Pricing Guide ($1,500–$8,500/mo) | AJPR World',
-  description: 'How much does an SEO retainer cost in 2026? Realistic agency retainers range from $1,500–$8,500/mo. Review real deliverables, B2B SaaS retainers, hourly rates, and ROI timelines.',
+  title: 'SEO & International SEO Cost (2026): $1,500–$8,500/mo',
+  description: 'SEO retainer & international SEO pricing in 2026 ($1,500–$8,500/mo). Compare US, UK & Singapore retainers, B2B SaaS deliverables, hourly rates & ROI.',
   alternates: {
     canonical: 'https://ajprworld.com/pricing/seo-cost',
   },
   openGraph: {
-    title: 'SEO Retainer Cost in 2026: Real Agency Pricing Guide ($1,500–$8,500/mo) | AJPR World',
-    description: 'How much does an SEO retainer cost in 2026? Realistic agency retainers range from $1,500–$8,500/mo. Review real deliverables, B2B SaaS retainers, hourly rates, and ROI timelines.',
+    title: 'SEO & International SEO Cost (2026): $1,500–$8,500/mo',
+    description: 'SEO retainer & international SEO pricing in 2026 ($1,500–$8,500/mo). Compare US, UK & Singapore retainers, B2B SaaS deliverables, hourly rates & ROI.',
     url: 'https://ajprworld.com/pricing/seo-cost',
     siteName: 'AJPR World',
     type: 'article',

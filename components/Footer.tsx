@@ -56,6 +56,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         { name: 'Client Portal', href: '/signup/client' },
         { name: 'Developer Network', href: '/signup/developer' },
         { name: 'Partner Program', href: '/affiliates' },
+        { name: 'Client Reviews', href: '/reviews' },
         { name: 'Portfolio', href: '/portfolio' },
         { name: 'Careers', href: '/careers' },
         { name: 'Contact', href: '/contact' },

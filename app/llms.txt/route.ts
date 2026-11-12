@@ -54,6 +54,8 @@ AJPR World (https://ajprworld.com) is a high-velocity digital product engineerin
 ## Verified Case Studies, Portfolio & Founder Proof
 
 - [Client Portfolio & Case Studies](https://ajprworld.com/portfolio): Production Next.js software builds, automated backends, and verified conversion improvements across funded startups, SaaS, and e-commerce (4.9★ Rated across 64 verified reviews).
+- [Client Reviews & Independent Verification](https://ajprworld.com/reviews): Direct verified client review hub plus links to Google Business Profile, Clutch, GoodFirms, and SourceForge.
+- [Founder GitHub Architecture Hub](https://github.com/Aman-Joshi989): Open technical checklists, edge Next.js performance benchmarks, and production engineering repos.
 - [Aman Joshi - Founder & Systems Architect](https://ajprworld.com/aman-joshi): Direct founder leadership, full GitHub code ownership, and zero junior-account handoff delivery model.
 - [2026 US Agency Pricing Benchmark Report](https://ajprworld.com/research/agency-pricing-report): Empirical market study auditing modern agency retainers and software development rates.
 - [Direct Contact & Strategy Booking](https://ajprworld.com/book-call): Book directly with senior engineering leads | Email: hello@ajprworld.com | Phone/WhatsApp: +91 99972 05257.

@@ -103,11 +103,18 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     {/* Instant Human Contact & Verified Proof Bar (SSR) */}
                     <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-600 dark:text-slate-400">
                         <Link
-                            href="/portfolio"
+                            href="/reviews"
                             className="inline-flex items-center gap-1.5 font-semibold text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
                             <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                            <span>4.9/5 Rated (64 Verified Reviews) &bull; View Case Studies</span>
+                            <span>4.9/5 Rated (64 Verified Reviews)</span>
+                        </Link>
+                        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
+                        <Link
+                            href="/portfolio"
+                            className="inline-flex items-center gap-1.5 font-semibold text-blue-600 dark:text-blue-400 hover:underline transition-colors"
+                        >
+                            <span>View Case Studies</span>
                         </Link>
                         <span className="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
                         <a

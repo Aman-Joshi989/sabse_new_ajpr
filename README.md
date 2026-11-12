@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AJPR World — Production Web Platform & Technical Growth Architecture
 
-## Getting Started
+**[https://ajprworld.com](https://ajprworld.com)** is a senior software engineering, Next.js web architecture, AI automation, and technical B2B growth studio led by **[Aman Joshi](https://ajprworld.com/aman-joshi)**.
 
-First, run the development server:
+## Priority Engineering & Search Research Hubs
+
+- **[B2B Growth Marketing & GEO Consulting](https://ajprworld.com/services/b2b-growth-marketing)** — Full-funnel demand generation, programmatic technical SEO, JSON-LD knowledge graphs, and Generative Engine Optimization for ChatGPT, Perplexity, and Google AI Overviews.
+- **[Website Maintenance Cost & Security SLA Guide](https://ajprworld.com/services/website-maintenance-cost)** — Transparent monthly retainer tiers (`$149–$899+/mo`), emergency support rates, automated backups, and zero-day CVE patching.
+- **[2026 Agency Benchmark: Web Tonic Alternatives](https://ajprworld.com/compare/webtonic-alternatives)** — Side-by-side live HTTP TTFB, HTML payload weight, JSON-LD schema coverage, AI crawler permissions, and pricing transparency comparison across competing agencies.
+- **[Verified Portfolio & Case Studies](https://ajprworld.com/portfolio)** — Shipped client production builds with 100% client repository and IP ownership.
+- **[Client Reviews & Verification Hub](https://ajprworld.com/reviews)** — Submit verified feedback or inspect independent directory profiles across Google Business Profile, Clutch, and GoodFirms.
+
+## Technical Architecture Highlights
+
+- **Framework:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS
+- **Edge Speed & Payload Hygiene:** Sub-200ms warm Edge TTFB with projected PostgreSQL queries at Server Component boundaries (`app/page.tsx` RSC payload optimization)
+- **Structured Data & AI Crawler Support:** Coordinated `Organization`, `ProfessionalService`, `ItemList`, `FAQPage`, and `BreadcrumbList` JSON-LD plus explicit `robots.txt` rules and `/llms.txt`
+- **Database & Resilient Messaging:** PostgreSQL (`pg`), transactional email cascade (`Resend`, Gmail SMTP, Custom SMTP, `ZeptoMail`) with persistent `email_outbox` audit trail
+
+## Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Verify SEO content & localization guardrails before pushing:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm test
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Studio Contact:** [hello@ajprworld.com](mailto:hello@ajprworld.com) · **Book Strategy Call:** [ajprworld.com/book-call](https://ajprworld.com/book-call)

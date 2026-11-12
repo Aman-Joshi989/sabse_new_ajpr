@@ -881,3 +881,175 @@ export async function dispatchCareerApplicationEmails(
     referenceId,
   };
 }
+
+export interface ReviewEmailData {
+  referenceId?: string;
+  clientName: string;
+  email: string;
+  companyName?: string;
+  roleTitle?: string;
+  projectType: string;
+  rating: number;
+  reviewText: string;
+  externalPlatform?: string;
+}
+
+function escapeHtml(raw: string): string {
+  return raw
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
+ * Dispatch thank-you email to client and verification alert to admin when a review is submitted.
+ */
+export async function dispatchReviewEmails(
+  data: ReviewEmailData
+): Promise<{ customerSent: boolean; adminSent: boolean; referenceId: string }> {
+  const referenceId = data.referenceId || generateReferenceId('AJPR-REV');
+  const adminEmail = process.env.GMAIL_USER ? process.env.GMAIL_USER.replace(/['"]/g, '').trim() : 'hello@ajprworld.com';
+  const safeName = escapeHtml(data.clientName);
+  const safeCompany = data.companyName ? escapeHtml(data.companyName) : '';
+  const safeRole = data.roleTitle ? escapeHtml(data.roleTitle) : '';
+  const safeProject = escapeHtml(data.projectType);
+  const safeReview = escapeHtml(data.reviewText);
+  const safePlatform = data.externalPlatform ? escapeHtml(data.externalPlatform) : '';
+
+  const customerSubject = `Thank You for Reviewing AJPR World (#${referenceId})`;
+  const customerHtml = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0b0f19; padding: 32px 16px; color: #e2e8f0;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #111827; border: 1px solid #1f2937; border-radius: 16px; padding: 32px;">
+    <div style="font-size: 20px; font-weight: 900; color: #ffffff; margin-bottom: 16px;">AJPR WORLD</div>
+    <div style="display: inline-block; background-color: #1e3a8a; color: #93c5fd; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 9999px; margin-bottom: 16px;">
+      Reference: #${referenceId} &bull; ${data.rating}/5 Rating
+    </div>
+    <h2 style="color: #ffffff; font-size: 20px; margin: 0 0 12px 0;">Thank you, ${safeName}!</h2>
+    <p style="color: #9ca3af; font-size: 14px; line-height: 1.6;">
+      We appreciate you taking a moment to share feedback on <strong>${safeProject}</strong>. Our engineering team reviews every submission for verification before publishing it on <a href="https://ajprworld.com/reviews" style="color: #60a5fa;">ajprworld.com/reviews</a>.
+    </p>
+    <div style="background-color: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; margin: 18px 0;">
+      <p style="margin: 0 0 8px 0; color: #f8fafc; font-size: 13px; font-weight: 700;">Optional: Cross-post your feedback in 30 seconds</p>
+      <p style="margin: 0 0 12px 0; color: #94a3b8; font-size: 13px;">Independent third-party reviews help founders evaluate engineering teams with confidence:</p>
+      <a href="https://www.google.com/search?q=AJPR+World+Haldwani+reviews" style="display: inline-block; margin: 4px 8px 4px 0; padding: 8px 14px; background: #2563eb; color: #ffffff; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">Google Review</a>
+      <a href="https://clutch.co/profile/ajpr-world" style="display: inline-block; margin: 4px 8px 4px 0; padding: 8px 14px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">Clutch</a>
+      <a href="https://www.goodfirms.co/company/ajpr-world" style="display: inline-block; margin: 4px 0; padding: 8px 14px; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">GoodFirms</a>
+    </div>
+    <p style="color: #6b7280; font-size: 13px; margin-top: 20px;">
+      Aman Joshi &amp; AJPR World Engineering<br>
+      <a href="https://ajprworld.com" style="color: #3b82f6;">ajprworld.com</a>
+    </p>
+  </div>
+</body>
+</html>
+  `.trim();
+
+  const adminSubject = `⭐ New Client Review Submitted (${data.rating}/5): ${safeName} (#${referenceId})`;
+  const adminHtml = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0f172a; padding: 24px; color: #e2e8f0;">
+  <div style="max-width: 600px; margin: 0 auto; background: #1e293b; border-radius: 12px; padding: 24px; border: 1px solid #334155;">
+    <h3 style="color: #ffffff; margin: 0 0 12px 0;">New Verified Client Review Pending Approval</h3>
+    <p><strong>Reference:</strong> ${referenceId}</p>
+    <p><strong>Client:</strong> ${safeName}${safeRole ? ` (${safeRole})` : ''}${safeCompany ? ` — ${safeCompany}` : ''}</p>
+    <p><strong>Email:</strong> <a href="mailto:${escapeHtml(data.email)}" style="color: #38bdf8;">${escapeHtml(data.email)}</a></p>
+    <p><strong>Project Type:</strong> ${safeProject}</p>
+    <p><strong>Rating:</strong> ${data.rating} / 5</p>
+    ${safePlatform ? `<p><strong>Also Reviewed On:</strong> ${safePlatform}</p>` : ''}
+    <div style="background: #0f172a; padding: 14px; border-radius: 8px; margin-top: 12px; white-space: pre-wrap;">${safeReview}</div>
+    <p style="color: #94a3b8; font-size: 12px; margin-top: 16px;">Approve in PostgreSQL table <code>client_reviews</code> (SET status = 'approved' WHERE reference_id = '${referenceId}').</p>
+  </div>
+</body>
+</html>
+  `.trim();
+
+  const customerRes = await sendRawEmail({
+    to: data.email,
+    subject: customerSubject,
+    html: customerHtml,
+    category: 'review_confirmation',
+    referenceId,
+  });
+
+  const adminRes = await sendRawEmail({
+    to: adminEmail,
+    subject: adminSubject,
+    html: adminHtml,
+    replyTo: data.email,
+    category: 'review_admin_alert',
+    referenceId,
+  });
+
+  return {
+    customerSent: customerRes.delivered,
+    adminSent: adminRes.delivered,
+    referenceId,
+  };
+}
+
+/**
+ * Send a direct review invitation email to an explicit verified client email address.
+ */
+export async function sendClientReviewInviteEmail(params: {
+  to: string;
+  clientName: string;
+  companyName?: string;
+  projectType?: string;
+}): Promise<{ delivered: boolean; provider: string; referenceId: string }> {
+  const referenceId = generateReferenceId('AJPR-INV');
+  const safeName = escapeHtml(params.clientName);
+  const projectLabel = params.projectType ? escapeHtml(params.projectType) : 'our recent software & growth sprint';
+  const companySuffix = params.companyName ? ` for ${escapeHtml(params.companyName)}` : '';
+
+  const subject = `Quick request, ${params.clientName}: 60-second feedback on ${params.projectType || 'our work together'}`;
+  const html = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f8fafc; padding: 32px 16px; color: #0f172a;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 32px;">
+    <div style="font-size: 18px; font-weight: 900; color: #0f172a; margin-bottom: 16px;">AJPR World</div>
+    <p style="font-size: 15px; line-height: 1.6; color: #334155;">Hi ${safeName},</p>
+    <p style="font-size: 15px; line-height: 1.6; color: #334155;">
+      Thank you again for trusting AJPR World with <strong>${projectLabel}${companySuffix}</strong>. Honest client feedback helps independent founders decide whether we are the right engineering partner for their build.
+    </p>
+    <p style="font-size: 15px; line-height: 1.6; color: #334155;">
+      If you have 60 seconds, could you share an honest review on whichever platform is easiest for you?
+    </p>
+    <div style="margin: 24px 0;">
+      <a href="https://www.google.com/search?q=AJPR+World+Haldwani+reviews" style="display: inline-block; margin: 6px 8px 6px 0; padding: 12px 18px; background-color: #0f172a; color: #ffffff; border-radius: 9999px; text-decoration: none; font-size: 13px; font-weight: 700;">Leave Google Review</a>
+      <a href="https://ajprworld.com/reviews" style="display: inline-block; margin: 6px 8px 6px 0; padding: 12px 18px; background-color: #2563eb; color: #ffffff; border-radius: 9999px; text-decoration: none; font-size: 13px; font-weight: 700;">Submit Direct Review</a>
+      <a href="https://clutch.co/profile/ajpr-world" style="display: inline-block; margin: 6px 0; padding: 12px 18px; background-color: #f1f5f9; color: #0f172a; border-radius: 9999px; text-decoration: none; font-size: 13px; font-weight: 700;">Review on Clutch</a>
+    </div>
+    <p style="font-size: 14px; line-height: 1.6; color: #475569;">
+      Thanks again,<br>
+      <strong>Aman Joshi</strong><br>
+      Founder &amp; Lead Systems Architect, AJPR World<br>
+      <a href="https://ajprworld.com" style="color: #2563eb;">https://ajprworld.com</a> &bull; +91 99972 05257
+    </p>
+  </div>
+</body>
+</html>
+  `.trim();
+
+  const res = await sendRawEmail({
+    to: params.to,
+    subject,
+    html,
+    category: 'review_invite',
+    referenceId,
+  });
+
+  return {
+    delivered: res.delivered,
+    provider: res.provider,
+    referenceId,
+  };
+}

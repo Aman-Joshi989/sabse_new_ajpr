@@ -5,14 +5,7 @@ export default function robots(): MetadataRoute.Robots {
   const disallowedPaths = [
     '/dashboard/',
     '/api/',
-    '/_next/',
-    '/login',
-    '/careers/apply',
     '/admin/',
-    '/book-call?*',
-    '/contact?*',
-    '/*?topic=*',
-    '/*?type=*',
   ]
 
   // Standard search engine crawlers (Googlebot, Bingbot, Applebot, DuckDuckGo)

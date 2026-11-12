@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { Toaster } from 'sonner';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'), { ssr: false });
 const HermesChatWidget = dynamic(() => import('@/components/HermesChatWidget'), { ssr: false });
@@ -50,6 +52,8 @@ export default function DeferredLayoutWidgets() {
       <ExitIntentPopup />
       <HermesChatWidget />
       <Toaster />
+      <Analytics />
+      <SpeedInsights />
       <Script
         id="gtm-script"
         strategy="afterInteractive"

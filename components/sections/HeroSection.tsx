@@ -39,7 +39,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     {/* Humanized Architect Trust Badge */}
                     <Link
                         href="/aman-joshi"
-                        className="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 hover:bg-slate-200/90 dark:hover:bg-slate-700/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/70 text-xs font-medium text-slate-800 dark:text-slate-200 mb-6 shadow-xs animate-fade-up transition-all group"
+                        className="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 hover:bg-slate-200/90 dark:hover:bg-slate-700/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/70 text-xs font-medium text-slate-800 dark:text-slate-200 mb-6 shadow-xs transition-colors group"
                         title="Meet Lead Systems Architect Aman Joshi"
                     >
                         <div className="relative shrink-0">
@@ -68,14 +68,14 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     </h1>
 
                     {/* Subtitle */}
-                    <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal mb-10 animate-fade-up">
+                    <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal mb-10">
                         {isIndia
                             ? 'A senior software engineering studio providing direct systems architecture for Indian founders and teams. We take your product from concept to production in weeks—with transparent INR pricing, GST invoicing, and 100% code ownership.'
                             : 'A senior software engineering studio providing direct systems architecture for founders and ambitious teams. We take your product from architecture to production in weeks—with transparent pricing and 100% code ownership.'}
                     </p>
 
                     {/* Dual Action Primary CTAs */}
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 animate-fade-up">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5">
                         <Button 
                             size="lg" 
                             className="h-12 px-8 text-sm md:text-base rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto gap-2"

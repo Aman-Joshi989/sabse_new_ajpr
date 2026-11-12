@@ -51,9 +51,32 @@ export const AuthProvider = ({
         }
       }
     }
-    loadUser();
 
-    return () => { isMounted = false; };
+    const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+    const needsImmediateAuth =
+      pathname.startsWith('/dashboard') || pathname.startsWith('/admin') || pathname === '/login';
+
+    if (needsImmediateAuth) {
+      loadUser();
+      return () => { isMounted = false; };
+    }
+
+    // On public pages, defer session lookup until idle so it doesn't contend with LCP/hydration.
+    let idleId: number | undefined;
+    let timerId: ReturnType<typeof setTimeout> | undefined;
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      idleId = (window as any).requestIdleCallback(() => loadUser(), { timeout: 3500 });
+    } else {
+      timerId = setTimeout(loadUser, 2500);
+    }
+
+    return () => {
+      isMounted = false;
+      if (idleId !== undefined && 'cancelIdleCallback' in window) {
+        (window as any).cancelIdleCallback(idleId);
+      }
+      if (timerId !== undefined) clearTimeout(timerId);
+    };
   }, [initialUser]);
 
   return (

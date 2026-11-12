@@ -24,34 +24,8 @@ export const RegionProvider = ({
   children: React.ReactNode;
   initialRegion?: Region;
 }) => {
-  const getInitialRegion = (): Region => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('ajpr_region');
-        if (saved === 'IN' || saved === 'US') return saved as Region;
-        const cookieMatch = document.cookie.match(/ajpr_region=(US|IN)/);
-        if (cookieMatch) return cookieMatch[1] as Region;
-        const tz = (Intl && Intl.DateTimeFormat && Intl.DateTimeFormat().resolvedOptions().timeZone) || '';
-        const offset = new Date().getTimezoneOffset();
-        const lang = navigator.language || '';
-        if (
-          tz.includes('Calcutta') ||
-          tz.includes('Kolkata') ||
-          tz.includes('India') ||
-          offset === -330 ||
-          lang.endsWith('-IN') ||
-          lang === 'hi'
-        ) {
-          return 'IN';
-        }
-      } catch (e) {
-        // ignore
-      }
-    }
-    return initialRegion;
-  };
-
-  const [region, setRegionState] = useState<Region>(getInitialRegion);
+  // Keep initial SSR & first client hydration pass identical to avoid hydration reflows.
+  const [region, setRegionState] = useState<Region>(initialRegion);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -72,6 +46,7 @@ export const RegionProvider = ({
     }
 
     // 3. Client Timezone, UTC Offset & Locale automatic trigger
+    let geoTimer: ReturnType<typeof setTimeout> | undefined;
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
       const offset = new Date().getTimezoneOffset(); // -330 for IST (UTC+5:30)
@@ -89,20 +64,25 @@ export const RegionProvider = ({
         return;
       }
 
-      // 4. Background edge IP verification via /api/geo
-      fetch('/api/geo')
-        .then(res => res.json())
-        .then(data => {
-          if (data?.region && (data.region === 'IN' || data.region === 'US')) {
-            if (data.region !== region) {
-              setRegion(data.region);
+      // 4. Defer edge IP verification so it does not trigger network/reflow during initial LCP.
+      geoTimer = setTimeout(() => {
+        fetch('/api/geo')
+          .then(res => res.json())
+          .then(data => {
+            if (data?.region && (data.region === 'IN' || data.region === 'US')) {
+              if (data.region !== region) {
+                setRegion(data.region);
+              }
             }
-          }
-        })
-        .catch(() => {});
+          })
+          .catch(() => {});
+      }, 2500);
     } catch (e) {
       // Ignore detection errors
     }
+    return () => {
+      if (geoTimer) clearTimeout(geoTimer);
+    };
   }, []);
 
   const setRegion = (newRegion: Region) => {

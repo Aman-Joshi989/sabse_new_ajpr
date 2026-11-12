@@ -78,7 +78,7 @@ export default function Header({ services }: { services?: any[] }) {
             setHasOpenedCart(true)
         }
     }, [isCartOpen])
-    const { user, isLoading } = useAuth()
+    const { user } = useAuth()
     const lastScrollY = useRef(0)
 
     // Map dynamic services to dropdown items with clear, customer-friendly titles
@@ -163,12 +163,12 @@ export default function Header({ services }: { services?: any[] }) {
 
     return (
         <header
-            className={`sticky top-0 z-50 w-full transition-all duration-300 ease-in-out ${scrolled
+            className={`sticky top-0 z-50 w-full transition-colors duration-200 ${scrolled
                 ? 'bg-white/90 dark:bg-[#030712]/90 backdrop-blur-xl shadow-sm border-b border-slate-200/80 dark:border-slate-800/80'
                 : 'bg-transparent backdrop-blur-none border-b border-transparent'
                 }`}
         >
-            <div className={`container mx-auto px-4 lg:px-8 max-w-7xl flex h-16 items-center justify-between transition-all duration-300`}>
+            <div className="container mx-auto px-4 lg:px-8 max-w-7xl flex h-16 items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center space-x-3 group shrink-0" title="AJPR World - Senior Software Engineering & AI Studio" aria-label="AJPR World - Senior Software Engineering & AI Studio">
                     <div className="group-hover:opacity-90 transition-opacity duration-300">
@@ -265,9 +265,7 @@ export default function Header({ services }: { services?: any[] }) {
                         )}
                     </Button>
 
-                    {isLoading ? (
-                        <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
-                    ) : user ? (
+                    {user ? (
                         <div className="relative group">
                             <button type="button" className="flex items-center space-x-2 focus:outline-none" aria-label="User Account Menu">
                                 <span className="sr-only">User Account Menu</span>
@@ -418,15 +416,7 @@ export default function Header({ services }: { services?: any[] }) {
                                 )}
 
                                 <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
-                                    {isLoading ? (
-                                        <div className="flex items-center space-x-3 px-2 py-2">
-                                            <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse" />
-                                            <div className="space-y-2">
-                                                <div className="h-4 w-24 bg-slate-200 dark:bg-slate-800 animate-pulse rounded" />
-                                                <div className="h-3 w-16 bg-slate-200 dark:bg-slate-800 animate-pulse rounded" />
-                                            </div>
-                                        </div>
-                                    ) : user ? (
+                                    {user ? (
                                         <>
                                             <div className="flex items-center space-x-3 px-2 py-2">
                                                 <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border overflow-hidden">

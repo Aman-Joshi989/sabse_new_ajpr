@@ -4,8 +4,6 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { LocalBusinessSchema } from '@/components/schema/LocalBusinessSchema';
 import { getSiteSettings, getPublishedServices, getBlogs } from '@/lib/db/queries';
@@ -207,8 +205,6 @@ export default async function RootLayout({
                 </main>
                 <MobileActionDock />
                 <Footer services={footerServices} blogs={footerBlogs} />
-                <Analytics />
-                <SpeedInsights />
                 <OrganizationSchema />
                 <LocalBusinessSchema />
                 <DeferredLayoutWidgets />

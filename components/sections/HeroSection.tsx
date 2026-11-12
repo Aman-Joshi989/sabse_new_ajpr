@@ -30,8 +30,8 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
             {/* Subtle Grid Background */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] pointer-events-none"></div>
             
-            {/* Ambient Dual Orbs */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[380px] bg-gradient-to-b from-blue-600/15 via-indigo-600/10 to-transparent blur-[140px] rounded-full pointer-events-none"></div>
+            {/* Ambient Dual Orbs (pure radial gradient without heavy Gaussian blur filter) */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[380px] bg-[radial-gradient(ellipse_at_top,rgba(37,99,235,0.14),rgba(79,70,229,0.06),transparent_70%)] pointer-events-none"></div>
 
             <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
@@ -39,7 +39,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     {/* Humanized Architect Trust Badge */}
                     <Link
                         href="/aman-joshi"
-                        className="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 hover:bg-slate-200/90 dark:hover:bg-slate-700/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/70 text-xs font-medium text-slate-800 dark:text-slate-200 mb-6 shadow-xs transition-colors group"
+                        className="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-slate-100/95 dark:bg-slate-800/95 hover:bg-slate-200/95 dark:hover:bg-slate-700/90 border border-slate-200/80 dark:border-slate-700/70 text-xs font-medium text-slate-800 dark:text-slate-200 mb-6 shadow-xs transition-colors group"
                         title="Meet Lead Systems Architect Aman Joshi"
                     >
                         <div className="relative shrink-0">

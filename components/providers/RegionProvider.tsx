@@ -26,10 +26,8 @@ export const RegionProvider = ({
 }) => {
   // Keep initial SSR & first client hydration pass identical to avoid hydration reflows.
   const [region, setRegionState] = useState<Region>(initialRegion);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     // 1. Check explicit localStorage
     const saved = localStorage.getItem('ajpr_region');
     if (saved === 'US' || saved === 'IN') {

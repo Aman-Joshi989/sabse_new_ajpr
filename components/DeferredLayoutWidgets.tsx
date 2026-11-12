@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
-import { Toaster } from 'sonner';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'), { ssr: false });
 const HermesChatWidget = dynamic(() => import('@/components/HermesChatWidget'), { ssr: false });
+const Toaster = dynamic(() => import('sonner').then((m) => m.Toaster), { ssr: false });
 
 /**
  * Defers heavy interactive floating widgets (AI chat SDK, exit-intent dialog, toaster)

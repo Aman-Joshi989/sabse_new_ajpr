@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { 
   ArrowRight, Database, Code2, Cpu, GitMerge, Layout, Layers, ShieldCheck, 
   CheckCircle, CheckCircle2, Terminal, Globe, Smartphone, Lock, Cloud, Sparkles, 
-  Mail, DollarSign, Zap, AlertCircle, Calculator, Bot, HelpCircle, Check, Calendar, ArrowUpRight, Clock
+  Mail, DollarSign, Zap, AlertCircle, Calculator, Bot, HelpCircle, Check, Calendar, ArrowUpRight, Clock, ChevronDown
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -17,12 +17,6 @@ import AuthorityNetworkSection from '@/components/sections/AuthorityNetworkSecti
 import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
 import { trackBookCall } from '@/lib/analytics'
 import { useRegion } from '@/components/providers/RegionProvider'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
 
 const MouseGlowCard = ({ children, className }: { children: React.ReactNode, className?: string }) => (
   <div className={`relative overflow-hidden transition-colors ${className || ''}`}>
@@ -1106,22 +1100,22 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               </p>
             </div>
 
-            <Accordion type="single" collapsible className="space-y-4">
+            <div className="space-y-4">
               {HOMEPAGE_FAQS.map((faq, idx) => (
-                <AccordionItem
+                <details
                   key={idx}
-                  value={`item-${idx}`}
-                  className="bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-2 shadow-xs"
+                  className="group bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-2 shadow-xs"
                 >
-                  <AccordionTrigger className="text-left font-bold text-slate-900 dark:text-white text-base hover:no-underline py-4">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed pb-4">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left font-bold text-slate-900 dark:text-white text-base py-4 [&::-webkit-details-marker]:hidden">
+                    <span>{faq.question}</span>
+                    <ChevronDown className="w-4 h-4 shrink-0 text-slate-600 dark:text-slate-400 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+                  </summary>
+                  <div className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed pb-4">
                     {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
+                  </div>
+                </details>
               ))}
-            </Accordion>
+            </div>
 
             <div className="mt-12 text-center p-6 rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 max-w-xl mx-auto">
               <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">

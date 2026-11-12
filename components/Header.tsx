@@ -7,15 +7,6 @@ import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import {
-    Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger
-} from '@/components/ui/sheet'
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from '@/components/ui/accordion'
-import {
   Briefcase,
   Code2,
   Cloud,
@@ -61,6 +52,7 @@ import { logout } from '@/app/actions'
 import { trackBookCall } from '@/lib/analytics'
 
 const CartDrawer = dynamic(() => import('@/components/CartDrawer'), { ssr: false })
+const MobileNavDrawer = dynamic(() => import('@/components/MobileNavDrawer'), { ssr: false })
 
 export default function Header({ services }: { services?: any[] }) {
     const [scrolled, setScrolled] = useState(false)
@@ -68,6 +60,8 @@ export default function Header({ services }: { services?: any[] }) {
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
     const [mounted, setMounted] = useState(false)
     const [hasOpenedCart, setHasOpenedCart] = useState(false)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [hasOpenedMobileMenu, setHasOpenedMobileMenu] = useState(false)
     const pathname = usePathname()
 
     const { resolvedTheme } = useTheme()
@@ -342,141 +336,31 @@ export default function Header({ services }: { services?: any[] }) {
                             </span>
                         )}
                     </Button>
-                    <Sheet>
-                        <SheetTrigger asChild>
-                            <Button variant="outline" size="icon" aria-label="Open Mobile Menu">
-                                <Menu className="h-5 w-5" aria-hidden="true" />
-                                <span className="sr-only">Open Mobile Menu</span>
-                            </Button>
-                        </SheetTrigger>
-                        <SheetContent side="right" className="w-80 p-6 overflow-y-auto">
-                            <SheetHeader>
-                                <SheetTitle className="flex items-center space-x-2">
-                                    <Image
-                                        src={logoSrc}
-                                        alt="AJPR World"
-                                        width={120}
-                                        height={40}
-                                        className="object-contain"
-                                        key={logoSrc + "-mobile"}
-                                    />
-                                </SheetTitle>
-                            </SheetHeader>
-
-                            {/* Mobile Nav with Accordion */}
-                            <div className="flex flex-col mt-8 space-y-4">
-                                {navigation.map((item) =>
-                                    item.dropdown ? (
-                                        <Accordion type="single" collapsible key={item.name} className="w-full">
-                                            <AccordionItem value={item.name}>
-                                                <AccordionTrigger
-                                                    className={`text-lg font-medium ${isActive(item.href)
-                                                        ? 'text-blue-600 dark:text-blue-400'
-                                                        : 'hover:text-blue-600'
-                                                        }`}
-                                                >
-                                                    {item.name}
-                                                </AccordionTrigger>
-                                                <AccordionContent>
-                                                    <div className="ml-2 space-y-2">
-                                                        {item.dropdown.map((subItem) => {
-                                                            const IconComponent = subItem.icon_name 
-                                                                ? iconRegistry[subItem.icon_name] || Briefcase 
-                                                                : (subItem as any).icon || Briefcase
-                                                            return (
-                                                                <Link
-                                                                    key={subItem.name}
-                                                                    href={subItem.href}
-                                                                    className={`flex items-center py-2 transition-colors ${isActive(subItem.href)
-                                                                        ? 'text-blue-600 dark:text-blue-400 font-medium'
-                                                                        : 'text-gray-600 dark:text-gray-400 hover:text-blue-600'
-                                                                        }`}
-                                                                >
-                                                                    <IconComponent className="w-4 h-4 mr-2 text-blue-500" />
-                                                                    {subItem.name}
-                                                                </Link>
-                                                            )
-                                                        })}
-                                                    </div>
-                                                </AccordionContent>
-                                            </AccordionItem>
-                                        </Accordion>
-                                    ) : (
-                                        <Link
-                                            key={item.name}
-                                            href={item.href}
-                                            className={`text-lg font-medium transition-colors ${isActive(item.href)
-                                                ? 'text-blue-600 dark:text-blue-400'
-                                                : 'hover:text-blue-600'
-                                                }`}
-                                        >
-                                            {item.name}
-                                        </Link>
-                                    )
-                                )}
-
-                                <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
-                                    {user ? (
-                                        <>
-                                            <div className="flex items-center space-x-3 px-2 py-2">
-                                                <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 border overflow-hidden">
-                                                    {user.avatar_url ? (
-                                                        <Image
-                                                            src={user.avatar_url}
-                                                            alt={user.name}
-                                                            width={40}
-                                                            height={40}
-                                                            className="object-cover"
-                                                        />
-                                                    ) : (
-                                                        <div className="w-full h-full flex items-center justify-center text-slate-500 font-bold text-lg">
-                                                            {user.name.charAt(0)}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-bold text-slate-900 dark:text-white truncate max-w-[150px]">{user.name}</p>
-                                                    <p className="text-xs text-slate-500 capitalize">{user.role}</p>
-                                                </div>
-                                            </div>
-
-                                            <Link
-                                                href={user.role === 'admin' ? '/dashboard/admin' : user.role === 'client' ? '/dashboard/client' : '/dashboard/developer'}
-                                                className="flex items-center text-lg font-medium transition-colors hover:text-blue-600"
-                                            >
-                                                Dashboard
-                                            </Link>
-
-                                            <form action={logout}>
-                                                <button className="w-full flex items-center text-lg font-medium text-red-600 hover:text-red-700 text-left">
-                                                    Sign Out
-                                                </button>
-                                            </form>
-                                        </>
-                                    ) : (
-                                        <Link
-                                            href="/login"
-                                            className="flex items-center text-lg font-medium transition-colors hover:text-blue-600"
-                                        >
-                                            Log In
-                                        </Link>
-                                    )}
-                                </div>
-
-                                {/* Mobile CTAs */}
-                                <div className="pt-2 space-y-2.5">
-                                    <Button className="w-full h-11 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-md transition-all text-sm" asChild>
-                                        <Link href="/book-call" onClick={() => trackBookCall('header_mobile')}>Book Strategy Call</Link>
-                                    </Button>
-                                    <Button variant="outline" className="w-full h-11 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white text-sm" asChild>
-                                        <Link href="/contact">Contact & Inquiry</Link>
-                                    </Button>
-                                </div>
-                            </div>
-                        </SheetContent>
-                    </Sheet>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        aria-label="Open Mobile Menu"
+                        onClick={() => {
+                            setHasOpenedMobileMenu(true)
+                            setMobileMenuOpen(true)
+                        }}
+                    >
+                        <Menu className="h-5 w-5" aria-hidden="true" />
+                        <span className="sr-only">Open Mobile Menu</span>
+                    </Button>
                 </div>
             </div>
+            {hasOpenedMobileMenu && (
+                <MobileNavDrawer
+                    open={mobileMenuOpen}
+                    onOpenChange={setMobileMenuOpen}
+                    logoSrc={logoSrc}
+                    navigation={navigation}
+                    iconRegistry={iconRegistry}
+                    isActive={isActive}
+                    user={user}
+                />
+            )}
             {hasOpenedCart && <CartDrawer />}
         </header>
     )

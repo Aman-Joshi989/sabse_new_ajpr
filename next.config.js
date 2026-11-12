@@ -4,8 +4,13 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   experimental: {
-    optimizeCss: true,
-    optimizePackageImports: ['lucide-react'],
+    inlineCss: true,
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-accordion',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-scroll-area',
+    ],
   },
   images: {
     formats: ['image/avif', 'image/webp'],

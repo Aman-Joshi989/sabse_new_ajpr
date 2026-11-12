@@ -54,7 +54,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white dark:ring-slate-900" title="Available for Sprints"></span>
                         </div>
                         <span className="font-bold text-slate-900 dark:text-white">Aman Joshi</span>
-                        <span className="text-slate-300 dark:text-slate-600">&bull;</span>
+                        <span aria-hidden="true" className="text-slate-400 dark:text-slate-600">&bull;</span>
                         <span className="text-slate-600 dark:text-slate-300">
                             {isIndia ? 'Direct 1-on-1 Engineering • Q1/Q2 Sprints Open' : 'Direct 1-on-1 Engineering • Q1/Q2 Sprints Open'}
                         </span>
@@ -109,22 +109,22 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
                             <span>4.9/5 Rated (64 Verified Reviews)</span>
                         </Link>
-                        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
+                        <span aria-hidden="true" className="hidden sm:inline text-slate-400 dark:text-slate-700">|</span>
                         <Link
                             href="/portfolio"
-                            className="inline-flex items-center gap-1.5 font-semibold text-blue-600 dark:text-blue-400 hover:underline transition-colors"
+                            className="inline-flex items-center gap-1.5 font-semibold text-blue-700 dark:text-blue-400 hover:underline transition-colors"
                         >
                             <span>View Case Studies</span>
                         </Link>
-                        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
+                        <span aria-hidden="true" className="hidden sm:inline text-slate-400 dark:text-slate-700">|</span>
                         <a
                             href="tel:+919997205257"
-                            className="inline-flex items-center gap-1.5 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                            className="inline-flex items-center gap-1.5 font-medium hover:text-blue-700 dark:hover:text-blue-400 transition-colors"
                         >
-                            <Phone className="w-3.5 h-3.5 text-blue-500" />
+                            <Phone className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" aria-hidden="true" />
                             <span>+91 99972 05257</span>
                         </a>
-                        <span className="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
+                        <span aria-hidden="true" className="hidden sm:inline text-slate-400 dark:text-slate-700">|</span>
                         <a
                             href="https://wa.me/919997205257?text=Hi%20Aman%2C%20I%27d%20like%20to%20discuss%20a%20project%20with%20AJPR%20World."
                             target="_blank"
@@ -139,44 +139,44 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     {/* Trust & Guarantee Strip */}
                     <div className="mt-12 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
                         <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800/60 shadow-2xs">
-                            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950/70 flex items-center justify-center text-blue-600 shrink-0">
+                            <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950/70 flex items-center justify-center text-blue-700 dark:text-blue-400 shrink-0">
                                 <Zap className="w-4 h-4" />
                             </div>
                             <div>
                                 <div className="text-xs font-bold text-slate-900 dark:text-white">2–4 Week Delivery</div>
-                                <div className="text-[11px] text-slate-500 dark:text-slate-400">Guaranteed MVP sprint</div>
+                                <div className="text-[11px] text-slate-600 dark:text-slate-400">Guaranteed MVP sprint</div>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800/60 shadow-2xs">
-                            <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/70 flex items-center justify-center text-emerald-600 shrink-0">
+                            <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/70 flex items-center justify-center text-emerald-700 dark:text-emerald-400 shrink-0">
                                 <Lock className="w-4 h-4" />
                             </div>
                             <div>
                                 <div className="text-xs font-bold text-slate-900 dark:text-white">100% Code Ownership</div>
-                                <div className="text-[11px] text-slate-500 dark:text-slate-400">Full repo & IP transfer</div>
+                                <div className="text-[11px] text-slate-600 dark:text-slate-400">Full repo & IP transfer</div>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800/60 shadow-2xs">
-                            <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950/70 flex items-center justify-center text-purple-600 shrink-0">
+                            <div className="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950/70 flex items-center justify-center text-purple-700 dark:text-purple-400 shrink-0">
                                 <ShieldCheck className="w-4 h-4" />
                             </div>
                             <div>
                                 <div className="text-xs font-bold text-slate-900 dark:text-white">30-Day Bug Warranty</div>
-                                <div className="text-[11px] text-slate-500 dark:text-slate-400">Total stability guarantee</div>
+                                <div className="text-[11px] text-slate-600 dark:text-slate-400">Total stability guarantee</div>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/70 dark:border-slate-800/60 shadow-2xs">
-                            <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950/70 flex items-center justify-center text-amber-600 shrink-0">
+                            <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950/70 flex items-center justify-center text-amber-800 dark:text-amber-400 shrink-0">
                                 {isIndia ? <Receipt className="w-4 h-4" /> : <DollarSign className="w-4 h-4" />}
                             </div>
                             <div>
                                 <div className="text-xs font-bold text-slate-900 dark:text-white">
                                     {isIndia ? 'GST Tax Invoicing' : 'Fixed Flat Pricing (USD)'}
                                 </div>
-                                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                                <div className="text-[11px] text-slate-600 dark:text-slate-400">
                                     {isIndia ? '100% compliant INR billing' : 'Zero hourly creep'}
                                 </div>
                             </div>

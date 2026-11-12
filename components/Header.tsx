@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import {
@@ -55,20 +56,28 @@ import RegionSelector from '@/components/RegionSelector'
 import { useRegion } from '@/components/providers/RegionProvider'
 import { useTheme } from 'next-themes'
 import { useCart } from '@/components/providers/CartProvider'
-import CartDrawer from '@/components/CartDrawer'
 import { useAuth } from '@/components/providers/AuthProvider'
 import { logout } from '@/app/actions'
 import { trackBookCall } from '@/lib/analytics'
+
+const CartDrawer = dynamic(() => import('@/components/CartDrawer'), { ssr: false })
 
 export default function Header({ services }: { services?: any[] }) {
     const [scrolled, setScrolled] = useState(false)
     const [isVisible, setIsVisible] = useState(true)
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
     const [mounted, setMounted] = useState(false)
+    const [hasOpenedCart, setHasOpenedCart] = useState(false)
     const pathname = usePathname()
 
     const { resolvedTheme } = useTheme()
-    const { cart, setIsCartOpen } = useCart()
+    const { cart, isCartOpen, setIsCartOpen } = useCart()
+
+    useEffect(() => {
+        if (isCartOpen) {
+            setHasOpenedCart(true)
+        }
+    }, [isCartOpen])
     const { user, isLoading } = useAuth()
     const lastScrollY = useRef(0)
 
@@ -478,7 +487,7 @@ export default function Header({ services }: { services?: any[] }) {
                     </Sheet>
                 </div>
             </div>
-            <CartDrawer />
+            {hasOpenedCart && <CartDrawer />}
         </header>
     )
 }

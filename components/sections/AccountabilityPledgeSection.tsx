@@ -127,7 +127,7 @@ export default function AccountabilityPledgeSection() {
                   </div>
                 </div>
 
-                <div className="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <div className="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-600 dark:text-slate-400">
                   <span>Enforced in Sprint Agreement</span>
                   <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
                     Non-Negotiable Standard <CheckCircle2 className="w-3.5 h-3.5" />
@@ -156,7 +156,7 @@ export default function AccountabilityPledgeSection() {
                 When you partner with AJPR WORLD, your project is not passed down to interns or offshore subcontractors. You get a dedicated pod of senior full-stack and AI engineers with direct Slack/WhatsApp access and daily commits. If any deployment fails, our architects step in immediately until it’s resolved. That is our definition of authentic engineering.
               </p>
 
-              <div className="flex flex-wrap items-center gap-6 pt-2 text-xs sm:text-sm text-slate-400">
+              <div className="flex flex-wrap items-center gap-6 pt-2 text-xs sm:text-sm text-slate-300">
                 <div className="flex items-center gap-2">
                   <Users2 className="w-4 h-4 text-blue-400" />
                   <span>Direct Senior Pod Access</span>
@@ -175,7 +175,7 @@ export default function AccountabilityPledgeSection() {
             <div className="lg:col-span-4 flex flex-col gap-3.5">
               <Button 
                 asChild
-                className="h-13 py-3 px-6 rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-bold text-sm shadow-xl shadow-red-600/25"
+                className="h-13 py-3 px-6 rounded-2xl bg-gradient-to-r from-red-700 via-rose-700 to-red-700 hover:from-red-600 hover:to-rose-600 text-white font-bold text-sm shadow-xl shadow-red-600/25"
               >
                 <Link href="/book-call">
                   <PhoneCall className="w-4 h-4 mr-2" /> Book 15-Min Direct Discovery Call <ArrowRight className="w-4 h-4 ml-1.5" />
@@ -192,7 +192,7 @@ export default function AccountabilityPledgeSection() {
                 </Link>
               </Button>
 
-              <p className="text-[11px] text-center text-slate-500">
+              <p className="text-[11px] text-center text-slate-300">
                 🔒 Zero obligation • Confidential architecture scoping session
               </p>
             </div>

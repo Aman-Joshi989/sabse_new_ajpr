@@ -1,13 +1,11 @@
 import type { Metadata } from 'next'
 import { Inter, Manrope } from 'next/font/google'
-import { Toaster } from 'sonner'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import Script from 'next/script';
 import { OrganizationSchema } from '@/components/schema/OrganizationSchema';
 import { LocalBusinessSchema } from '@/components/schema/LocalBusinessSchema';
 import { getSiteSettings, getPublishedServices, getBlogs } from '@/lib/db/queries';
@@ -152,37 +150,6 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <Script
-          id="gtm-script"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-NCWB8DWL');
-            `,
-          }}
-        />
-        
-        {/* Google Analytics 4 (gtag.js) */}
-        <Script
-          strategy="lazyOnload"
-          src="https://www.googletagmanager.com/gtag/js?id=G-RQ61F2W65K"
-        />
-        <Script
-          id="ga4-script"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-RQ61F2W65K');
-            `,
-          }}
-        />
         {/* Instant Synchronous Regional & Currency Auto-Detector */}
         <script
           dangerouslySetInnerHTML={{
@@ -240,21 +207,11 @@ export default async function RootLayout({
                 </main>
                 <MobileActionDock />
                 <Footer services={footerServices} blogs={footerBlogs} />
-                <Toaster />
                 <Analytics />
                 <SpeedInsights />
                 <OrganizationSchema />
                 <LocalBusinessSchema />
                 <DeferredLayoutWidgets />
-                <Script
-                  id="ahrefs-analytics"
-                  src="/analytics/ahrefs.js"
-                  data-key="NBGEPf0K5JrRzkOhDpu04A"
-                  data-api="https://analytics.ahrefs.com/api/event"
-                  data-error="https://analytics.ahrefs.com/api/error"
-                  strategy="lazyOnload"
-                  async
-                />
               </CartProvider>
             </RegionProvider>
           </AuthProvider>

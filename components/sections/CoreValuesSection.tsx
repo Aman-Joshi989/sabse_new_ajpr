@@ -145,7 +145,7 @@ export default function CoreValuesSection({
                   <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-red-700 dark:text-red-500">
                     Core Values
                   </h3>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                     AJPR WORLD Operating Code
                   </p>
                 </div>
@@ -175,7 +175,7 @@ export default function CoreValuesSection({
               </ul>
 
               {/* Trust Subtext */}
-              <div className="mt-6 pt-5 border-t border-slate-100 dark:divide-slate-800 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
+              <div className="mt-6 pt-5 border-t border-slate-100 dark:divide-slate-800 flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
                 <Shield className="w-4 h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
                 <span>Verified standard across all client contracts and engineering sprints.</span>
               </div>
@@ -185,7 +185,7 @@ export default function CoreValuesSection({
           {/* Right Column: Execution Context (Why This Matters for Your Business) */}
           <div className="lg:col-span-7 space-y-6">
             <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-white via-white to-rose-50/30 dark:from-slate-900/90 dark:via-slate-900/80 dark:to-rose-950/20 border border-slate-200/90 dark:border-slate-800 shadow-lg shadow-slate-200/30 dark:shadow-black/30">
-              <span className="text-xs font-bold uppercase tracking-widest text-red-600 dark:text-rose-400">
+              <span className="text-xs font-bold uppercase tracking-widest text-red-700 dark:text-rose-400">
                 The Agency Paradigm Shift
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2 mb-4 tracking-tight">
@@ -205,17 +205,17 @@ export default function CoreValuesSection({
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-slate-900 dark:text-white">Sub-Second Execution</h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Optimized architectures built for speed and instant conversion.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Optimized architectures built for speed and instant conversion.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 flex items-center justify-center shrink-0">
                     <Eye className="w-4 h-4" />
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-slate-900 dark:text-white">Total IP Ownership</h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">You own 100% of the code, data schemas, and assets we build.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">You own 100% of the code, data schemas, and assets we build.</p>
                   </div>
                 </div>
               </div>
@@ -225,15 +225,15 @@ export default function CoreValuesSection({
             <div className="grid grid-cols-3 gap-4">
               <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-center">
                 <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">100%</div>
-                <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-1">Code Ownership</div>
+                <div className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mt-1">Code Ownership</div>
               </div>
               <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-center">
                 <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">&lt;0.5s</div>
-                <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-1">Global Latency</div>
+                <div className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mt-1">Global Latency</div>
               </div>
               <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-center">
                 <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">0</div>
-                <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-1">Vendor Lock-In</div>
+                <div className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mt-1">Vendor Lock-In</div>
               </div>
             </div>
           </div>
@@ -247,7 +247,7 @@ export default function CoreValuesSection({
               <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
                 How Each Value Translates Into Client Advantage
               </h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
                 Every principle directly improves code quality, reduces operational friction, and accelerates time-to-market.
               </p>
             </div>
@@ -282,7 +282,7 @@ export default function CoreValuesSection({
                       </p>
                     </div>
 
-                    <div className="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-500 dark:text-slate-400">
+                    <div className="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-slate-600 dark:text-slate-400">
                       <span>Strict Standard</span>
                       <span className="text-emerald-700 dark:text-emerald-400 font-bold flex items-center gap-1">
                         Active in every sprint <CheckCircle2 className="w-3.5 h-3.5" />

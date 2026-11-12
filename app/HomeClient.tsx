@@ -185,7 +185,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
           <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white dark:from-[#030712] to-transparent z-10 pointer-events-none"></div>
           <div className="flex animate-marquee whitespace-nowrap items-center">
             {[...Array(2)].map((_, i) => (
-              <div key={i} aria-hidden={i > 0} className="flex items-center gap-12 px-6 text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+              <div key={i} aria-hidden={i > 0} className="flex items-center gap-12 px-6 text-sm font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400">
                 <span className="flex items-center gap-2"><Code2 className="w-4 h-4" /> React & Next.js</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700" />
                 <span className="flex items-center gap-2"><Database className="w-4 h-4" /> PostgreSQL</span>
@@ -359,7 +359,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 {/* Right: Timeline, Investment & Direct Action */}
                 <div className="lg:col-span-5 p-6 md:p-8 rounded-2xl bg-slate-50 dark:bg-[#0d1424] border border-slate-200 dark:border-slate-800/80 space-y-6">
                   <div className="space-y-3 pb-6 border-b border-slate-200 dark:border-slate-800">
-                    <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-500">
+                    <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                       <span>Delivery Target</span>
                       <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400">
                         <Clock className="w-3.5 h-3.5" /> Guaranteed
@@ -368,7 +368,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <div className="text-3xl font-black text-slate-900 dark:text-white">
                       {currentScope.timeline}
                     </div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                    <p className="text-xs text-slate-600 dark:text-slate-400">
                       {currentScope.idealFor}
                     </p>
                   </div>
@@ -390,7 +390,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <div className="text-center">
                       <Link 
                         href="/pricing" 
-                        className="text-xs font-semibold text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1"
+                        className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1"
                       >
                         Explore detailed cost breakdowns &rarr;
                       </Link>
@@ -723,23 +723,23 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               <div className="p-8 rounded-3xl bg-slate-50 dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 flex flex-col justify-between hover:shadow-lg transition-all">
                 <div className="space-y-6">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Fixed-Scope Delivery</span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Fixed-Scope Delivery</span>
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">MVP Sprint</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">For founders & teams needing a launch-ready product shipped fast.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">For founders & teams needing a launch-ready product shipped fast.</p>
                   </div>
                   <div className="pb-4 border-b border-slate-200 dark:border-slate-800">
                     <span className="text-4xl font-black text-slate-900 dark:text-white">
                       {isIndia ? "₹1,49,000" : "$4,500"}
                     </span>
-                    <span className="text-xs text-slate-500 font-semibold ml-2">/ one-off sprint</span>
+                    <span className="text-xs text-slate-600 dark:text-slate-400 font-semibold ml-2">/ one-off sprint</span>
                     {isIndia && <div className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium mt-1">GST Tax Invoicing Included</div>}
                   </div>
                   <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Guaranteed 2–4 Week Delivery</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Full GitHub Repo & IP Transfer</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Next.js 15, PostgreSQL & API Backend</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> 99+ Core Web Vitals Guaranteed</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> 30-Day Post-Launch Warranty</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> Guaranteed 2–4 Week Delivery</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> Full GitHub Repo & IP Transfer</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> Next.js 15, PostgreSQL & API Backend</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> 99+ Core Web Vitals Guaranteed</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> 30-Day Post-Launch Warranty</li>
                   </ul>
                 </div>
                 <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
@@ -751,14 +751,14 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
 
               {/* Tier 2: Dedicated Engineering Pod */}
               <div className="p-8 rounded-3xl bg-blue-50/50 dark:bg-[#0c1424] border-2 border-blue-600 dark:border-blue-500 shadow-xl relative flex flex-col justify-between">
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest shadow-md">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest shadow-md">
                   Most Popular
                 </div>
                 <div className="space-y-6">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Continuous Velocity</span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400">Continuous Velocity</span>
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">Dedicated Engineering</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">
                       {isIndia
                         ? "Replaces full-time tech hiring & ₹10L+ unpredictable agency billing."
                         : "Replaces full-time US hires & $20k/mo bloated agency retainers."}
@@ -768,18 +768,18 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                     <span className="text-4xl font-black text-slate-900 dark:text-white">
                       {isIndia ? "₹1,85,000" : "$5,500"}
                     </span>
-                    <span className="text-xs text-slate-500 font-semibold ml-2">/ month</span>
+                    <span className="text-xs text-slate-600 dark:text-slate-400 font-semibold ml-2">/ month</span>
                   </div>
                   <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Senior Engineer + AI Architect Pod</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Unlimited Tasks & Rapid Sprints</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Direct Slack Channel & Daily Syncs</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Full-Stack, AI Models & DevOps</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600 shrink-0" /> Pause or Cancel Anytime (Zero Lock-In)</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-700 dark:text-blue-400 shrink-0" /> Senior Engineer + AI Architect Pod</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-700 dark:text-blue-400 shrink-0" /> Unlimited Tasks & Rapid Sprints</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-700 dark:text-blue-400 shrink-0" /> Direct Slack Channel & Daily Syncs</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-700 dark:text-blue-400 shrink-0" /> Full-Stack, AI Models & DevOps</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-700 dark:text-blue-400 shrink-0" /> Pause or Cancel Anytime (Zero Lock-In)</li>
                   </ul>
                 </div>
                 <div className="mt-8 pt-6 border-t border-blue-200 dark:border-blue-900/60">
-                  <Button className="w-full h-11 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md" asChild>
+                  <Button className="w-full h-11 rounded-xl bg-blue-700 hover:bg-blue-600 text-white font-bold text-xs shadow-md" asChild>
                     <Link href="/book-call?topic=Dedicated%20Engineering" onClick={() => trackBookCall('home_pricing_dedicated_pod')}>Start Dedicated Pod</Link>
                   </Button>
                 </div>
@@ -789,22 +789,22 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               <div className="p-8 rounded-3xl bg-slate-50 dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 flex flex-col justify-between hover:shadow-lg transition-all">
                 <div className="space-y-6">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Compounding Reach</span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Compounding Reach</span>
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mt-1">Growth & AI Retainer</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Engineered search dominance across Perplexity, ChatGPT & Google.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Engineered search dominance across Perplexity, ChatGPT & Google.</p>
                   </div>
                   <div className="pb-4 border-b border-slate-200 dark:border-slate-800">
                     <span className="text-4xl font-black text-slate-900 dark:text-white">
                       {isIndia ? "₹49,999" : "$2,500"}
                     </span>
-                    <span className="text-xs text-slate-500 font-semibold ml-2">/ month</span>
+                    <span className="text-xs text-slate-600 dark:text-slate-400 font-semibold ml-2">/ month</span>
                   </div>
                   <ul className="space-y-3 text-xs text-slate-700 dark:text-slate-300">
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Generative Engine Optimization (GEO)</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Technical SEO & Core Web Vitals Tuning</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Automated Multi-Platform Social Syndication</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Programmatic Content Architecture</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-500 shrink-0" /> Weekly Executive Lead & Rank Reporting</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> Generative Engine Optimization (GEO)</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> Technical SEO & Core Web Vitals Tuning</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> Automated Multi-Platform Social Syndication</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> Programmatic Content Architecture</li>
+                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" /> Weekly Executive Lead & Rank Reporting</li>
                   </ul>
                 </div>
                 <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
@@ -819,12 +819,12 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             <div className="pt-8 border-t border-slate-200 dark:border-slate-800 space-y-4">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
                 <div>
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Transparent Engineering Benchmarks</span>
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 font-bold">Transparent Engineering Benchmarks</span>
                   <p className="text-xs text-slate-600 dark:text-slate-400">Explore interactive calculators and 2026 pricing breakdowns:</p>
                 </div>
                 <Link 
                   href="/pricing" 
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline shrink-0"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 dark:text-blue-400 hover:underline shrink-0"
                 >
                   View Full Pricing & Retainers <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
@@ -891,9 +891,9 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               <table className="w-full text-left border-collapse min-w-[720px]">
                 <thead>
                   <tr className="border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider font-bold">
-                    <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">Evaluation Metric</th>
-                    <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">Legacy Agencies (e.g., WebFX)</th>
-                    <th className="p-5 text-slate-500 dark:text-slate-400 w-1/4">
+                    <th className="p-5 text-slate-600 dark:text-slate-400 w-1/4">Evaluation Metric</th>
+                    <th className="p-5 text-slate-600 dark:text-slate-400 w-1/4">Legacy Agencies (e.g., WebFX)</th>
+                    <th className="p-5 text-slate-600 dark:text-slate-400 w-1/4">
                       {isIndia ? "In-House Senior Dev (India)" : "In-House US Developer"}
                     </th>
                     <th className="p-5 bg-blue-600/10 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 w-1/4 border-l border-blue-200 dark:border-blue-800 font-extrabold">
@@ -977,13 +977,13 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                   <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                     Objective Agency Alternatives &amp; Architecture Audits
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                     Independent breakdowns of trade agencies, legacy retainers, and proprietary software lock-in:
                   </p>
                 </div>
                 <Link
                   href="/compare"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline shrink-0"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 dark:text-blue-400 hover:underline shrink-0"
                 >
                   View All Agency Comparisons <ArrowRight className="w-3.5 h-3.5" />
                 </Link>

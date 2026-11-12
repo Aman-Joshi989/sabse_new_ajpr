@@ -32,7 +32,7 @@ export default function AuthorityNetworkSection() {
       title: "Core Engineering Sprints",
       description: "Direct systems architecture, full-stack Next.js platforms, and production AI models with 100% code ownership.",
       icon: Code2,
-      accent: "text-blue-500 bg-blue-500/10 border-blue-500/20",
+      accent: "text-blue-700 dark:text-blue-400 bg-blue-500/10 border-blue-500/20",
       links: [
         { title: "Custom Web Development", href: "/services/web-development", note: "Next.js, Tailwind, APIs" },
         { title: "AI MVP & Autonomous Systems", href: "/ai-systems", note: "LangGraph, RAG, vector DBs" },
@@ -46,7 +46,7 @@ export default function AuthorityNetworkSection() {
       title: "Cost Calculators & Audits",
       description: "Objective financial models, ROI estimators, and interactive engineering tools built for founders.",
       icon: Calculator,
-      accent: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20",
+      accent: "text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
       links: [
         { title: "Website Cost Calculator 2026", href: "/pricing/website-cost", note: "SMB vs. Enterprise scope" },
         { title: "SEO & AI Search Retainer Guide", href: "/pricing/seo-cost", note: isIndia ? "₹49,999/mo benchmarks" : "$1,500/mo & international SEO" },
@@ -60,7 +60,7 @@ export default function AuthorityNetworkSection() {
       title: "Global Delivery & Metro Hubs",
       description: "On-the-ground regional engineering knowledge, local time-zone overlap, and verified business billing.",
       icon: Globe,
-      accent: "text-purple-500 bg-purple-500/10 border-purple-500/20",
+      accent: "text-purple-700 dark:text-purple-400 bg-purple-500/10 border-purple-500/20",
       links: [
         { title: "Dallas Custom Software Studio", href: "/locations/dallas/custom-software", note: "DFW enterprise Next.js pods" },
         { title: "London MVP & Digital PR Hub", href: "/locations/london/custom-software", note: "UK startups & digital PR" },
@@ -74,7 +74,7 @@ export default function AuthorityNetworkSection() {
       title: "Alternative Benchmarks",
       description: "Data-backed architectural comparisons against traditional legacy agencies and offshore shops.",
       icon: Scale,
-      accent: "text-amber-500 bg-amber-500/10 border-amber-500/20",
+      accent: "text-amber-800 dark:text-amber-400 bg-amber-500/10 border-amber-500/20",
       links: [
         { title: "Web Tonic Alternatives Audit", href: "/compare/webtonic-alternatives", note: "Top 7 compared (2026 pricing)" },
         { title: "SmartSites Alternatives Review", href: "/compare/smartsites-alternatives", note: "PPC & Next.js vs. WordPress" },
@@ -122,7 +122,7 @@ export default function AuthorityNetworkSection() {
                     </h3>
                   </div>
 
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                     {cluster.description}
                   </p>
 

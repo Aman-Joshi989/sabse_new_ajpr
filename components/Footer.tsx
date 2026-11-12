@@ -105,21 +105,21 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                                 className="object-contain"
                             />
                         </Link>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
                             {isIndia
                                 ? 'Senior Software Engineering & AI Studio. We deliver production Next.js platforms and business automation with 100% code ownership for Indian founders and teams.'
                                 : 'Senior Software Engineering & AI Studio. Direct production development and 100% code ownership for founders and ambitious teams.'}
                         </p>
                         <div className="text-xs text-slate-600 dark:text-slate-300 font-medium space-y-1.5 pt-1">
-                            <div>Direct: <a href="mailto:hello@ajprworld.com" className="text-blue-600 dark:text-blue-400 hover:underline">hello@ajprworld.com</a></div>
+                            <div>Direct: <a href="mailto:hello@ajprworld.com" className="text-blue-700 dark:text-blue-400 hover:underline">hello@ajprworld.com</a></div>
                             <div>
-                                Call / WhatsApp: <a href="tel:+919997205257" className="text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline">+91 99972 05257</a>
+                                Call / WhatsApp: <a href="tel:+919997205257" className="text-slate-800 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-400 hover:underline">+91 99972 05257</a>
                                 <span className="mx-1.5 text-slate-400">&bull;</span>
                                 <a href="https://wa.me/919997205257?text=Hi%20Aman%2C%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" className="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline">WhatsApp Direct</a>
                             </div>
-                            <div>Scoping: <Link href="/book-call" className="text-blue-600 dark:text-blue-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
+                            <div>Scoping: <Link href="/book-call" className="text-blue-700 dark:text-blue-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
                             {isIndia && (
-                                <div className="text-slate-500">Registered HQ: Indraprastha Colony, Dahariya, Haldwani, Uttarakhand 263139</div>
+                                <div className="text-slate-600 dark:text-slate-400">Registered HQ: Indraprastha Colony, Dahariya, Haldwani, Uttarakhand 263139</div>
                             )}
                         </div>
                     </div>
@@ -190,7 +190,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 gap-4">
+                <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 gap-4">
 
                     {/* Left Side: Copyright & Region Switcher */}
                     <div className="flex flex-wrap items-center gap-3">
@@ -207,12 +207,12 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                     {/* Center: Legal */}
                     <div className="flex items-center gap-6">
-                        <Link href="/privacy" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
-                        <Link href="/terms" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
+                        <Link href="/privacy" className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
                     </div>
 
                     {/* Right Side: Socials */}
-                    <div className="flex items-center gap-4 text-slate-400 dark:text-slate-500">
+                    <div className="flex items-center gap-4 text-slate-600 dark:text-slate-400">
                         <Link href="https://twitter.com/AjprWorld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-500 transition-colors p-1" title="X (Twitter)">
                             <Twitter className="w-4 h-4" />
                             <span className="sr-only">Twitter</span>

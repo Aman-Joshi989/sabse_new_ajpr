@@ -177,7 +177,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
         <HeroSection services={displayServices} />
 
         {/* 2. INFINITE TRUST MARQUEE */}
-        <section className="py-6 border-y border-slate-200 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/20 overflow-hidden relative flex" style={{ contentVisibility: 'auto', containIntrinsicSize: '1px 72px' }}>
+        <section className="py-6 border-y border-slate-200 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/20 overflow-hidden relative flex">
           <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white dark:from-[#030712] to-transparent z-10 pointer-events-none"></div>
           <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white dark:from-[#030712] to-transparent z-10 pointer-events-none"></div>
           <div className="flex animate-marquee whitespace-nowrap items-center">

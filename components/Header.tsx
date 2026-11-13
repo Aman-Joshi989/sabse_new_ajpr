@@ -167,13 +167,20 @@ export default function Header({ services }: { services?: any[] }) {
                 <Link href="/" className="flex items-center space-x-3 group shrink-0" title="AJPR World - Senior Software Engineering & AI Studio" aria-label="AJPR World - Senior Software Engineering & AI Studio">
                     <div className="group-hover:opacity-90 transition-opacity duration-300">
                         <Image
-                            src={logoSrc}
+                            src="/logo/ajpr-logo.png"
                             alt="AJPR World - Senior Software Engineering & AI Studio"
                             width={112}
                             height={40}
-                            className="object-contain"
+                            className="object-contain dark:hidden"
                             priority
-                            key={logoSrc}
+                        />
+                        <Image
+                            src="/logo/ajpr-logo-white.png"
+                            alt="AJPR World - Senior Software Engineering & AI Studio"
+                            width={112}
+                            height={40}
+                            className="object-contain hidden dark:block"
+                            priority
                         />
                     </div>
                 </Link>

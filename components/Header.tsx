@@ -172,7 +172,6 @@ export default function Header({ services }: { services?: any[] }) {
                             width={112}
                             height={40}
                             className="object-contain dark:hidden"
-                            priority
                         />
                         <Image
                             src="/logo/ajpr-logo-white.png"
@@ -180,7 +179,6 @@ export default function Header({ services }: { services?: any[] }) {
                             width={112}
                             height={40}
                             className="object-contain hidden dark:block"
-                            priority
                         />
                     </div>
                 </Link>

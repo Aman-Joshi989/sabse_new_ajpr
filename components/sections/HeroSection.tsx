@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useRegion } from '@/components/providers/RegionProvider';
@@ -35,29 +34,6 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
 
             <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
-                    
-                    {/* Humanized Architect Trust Badge */}
-                    <Link
-                        href="/aman-joshi"
-                        prefetch={false}
-                        className="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-slate-100/95 dark:bg-slate-800/95 hover:bg-slate-200/95 dark:hover:bg-slate-700/90 border border-slate-200/80 dark:border-slate-700/70 text-xs font-medium text-slate-800 dark:text-slate-200 mb-6 shadow-xs transition-colors group"
-                        title="Meet Lead Systems Architect Aman Joshi"
-                    >
-                        <div className="relative shrink-0">
-                            <Image 
-                                src="/images/aman-joshi-profile.png" 
-                                alt="Aman Joshi" 
-                                width={24} 
-                                height={24} 
-                                className="w-6 h-6 rounded-full object-cover ring-1 ring-blue-500/40" 
-                            />
-                            <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white dark:ring-slate-900" title="Available for Sprints"></span>
-                        </div>
-                        <span className="font-bold text-slate-900 dark:text-white">Aman Joshi</span>
-                        <span aria-hidden="true" className="text-slate-400 dark:text-slate-600">&bull;</span>
-                        <span className="text-slate-600 dark:text-slate-300">Direct 1-on-1 Engineering • Q1/Q2 Sprints Open</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-blue-500 group-hover:translate-x-0.5 transition-transform ml-0.5" />
-                    </Link>
 
                     {/* Main Heading */}
                     <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.08] mb-6">

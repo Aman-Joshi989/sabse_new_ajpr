@@ -189,6 +189,7 @@ export default function Header({ services }: { services?: any[] }) {
                         >
                             <Link
                                 href={item.href}
+                                prefetch={false}
                                 className={`flex items-center text-sm font-semibold px-3.5 py-1.5 rounded-full transition-all outline-none ${isActive(item.href)
                                     ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
                                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-800/40'
@@ -209,6 +210,7 @@ export default function Header({ services }: { services?: any[] }) {
                                                 <Link
                                                     key={subItem.name}
                                                     href={subItem.href}
+                                                    prefetch={false}
                                                     className={`flex items-start p-2.5 rounded-xl transition-all ${isActive(subItem.href)
                                                         ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'
                                                         : 'hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-800 dark:text-slate-200'
@@ -228,7 +230,7 @@ export default function Header({ services }: { services?: any[] }) {
                                         })}
                                     </div>
                                     <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800/60 px-2 py-1 flex items-center justify-between text-xs">
-                                        <Link href={item.href} className="font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                                        <Link href={item.href} prefetch={false} className="font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center">
                                             View all {item.name.toLowerCase()} &rarr;
                                         </Link>
                                     </div>
@@ -303,7 +305,7 @@ export default function Header({ services }: { services?: any[] }) {
                         </div>
                     ) : (
                         <div className="flex items-center gap-2.5">
-                            <Link href="/login" className="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2 py-1">
+                            <Link href="/login" prefetch={false} className="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2 py-1">
                                 Log In
                             </Link>
                             <Button

@@ -97,7 +97,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                     {/* Brand / Logo Section */}
                     <div className="md:w-1/4 space-y-4">
-                        <Link href="/" className="inline-block relative w-32 h-12">
+                        <Link href="/" prefetch={false} className="inline-block relative w-32 h-12">
                             <Image
                                 src={logoSrc}
                                 alt="AJPR World"
@@ -117,7 +117,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                                 <span className="mx-1.5 text-slate-400">&bull;</span>
                                 <a href="https://wa.me/919997205257?text=Hi%20Aman%2C%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" className="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline">WhatsApp Direct</a>
                             </div>
-                            <div>Scoping: <Link href="/book-call" className="text-blue-700 dark:text-blue-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
+                            <div>Scoping: <Link href="/book-call" prefetch={false} className="text-blue-700 dark:text-blue-400 hover:underline">Book 1-on-1 Architect Session</Link></div>
                             {isIndia && (
                                 <div className="text-slate-600 dark:text-slate-400">Registered HQ: Indraprastha Colony, Dahariya, Haldwani, Uttarakhand 263139</div>
                             )}
@@ -132,7 +132,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             <ul className="space-y-3 text-sm">
                                 {activeServices.map((link) => (
                                     <li key={link.name}>
-                                        <Link href={link.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                        <Link href={link.href} prefetch={false} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                             {link.name}
                                         </Link>
                                     </li>
@@ -146,7 +146,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             <ul className="space-y-3 text-sm">
                                 {companyLinks.map((link) => (
                                     <li key={link.name}>
-                                        <Link href={link.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                        <Link href={link.href} prefetch={false} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                             {link.name}
                                         </Link>
                                     </li>
@@ -160,7 +160,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             <ul className="space-y-3 text-sm">
                                 {resourceLinks.map((link) => (
                                     <li key={link.name}>
-                                        <Link href={link.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                        <Link href={link.href} prefetch={false} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                             {link.name}
                                         </Link>
                                     </li>
@@ -173,13 +173,13 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                             <h3 className="font-medium text-slate-900 dark:text-white">Trending Insights</h3>
                             <ul className="space-y-3 text-sm">
                                 <li>
-                                    <Link href="/blog" className="hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">
+                                    <Link href="/blog" prefetch={false} className="hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">
                                         Blog Archive
                                     </Link>
                                 </li>
                                 {activeBlogs.map((link) => (
                                     <li key={link.name}>
-                                        <Link href={link.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-2">
+                                        <Link href={link.href} prefetch={false} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-2">
                                             {link.name}
                                         </Link>
                                     </li>
@@ -207,8 +207,8 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                     {/* Center: Legal */}
                     <div className="flex items-center gap-6">
-                        <Link href="/privacy" className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
-                        <Link href="/terms" className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
+                        <Link href="/privacy" prefetch={false} className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
+                        <Link href="/terms" prefetch={false} className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
                     </div>
 
                     {/* Right Side: Socials */}

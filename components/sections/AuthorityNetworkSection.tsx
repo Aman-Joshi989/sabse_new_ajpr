@@ -183,6 +183,7 @@ export default function AuthorityNetworkSection() {
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <Link 
               href="/aman-joshi"
+              prefetch={false}
               className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
               Read Architect Bio

@@ -39,6 +39,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     {/* Humanized Architect Trust Badge */}
                     <Link
                         href="/aman-joshi"
+                        prefetch={false}
                         className="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full bg-slate-100/95 dark:bg-slate-800/95 hover:bg-slate-200/95 dark:hover:bg-slate-700/90 border border-slate-200/80 dark:border-slate-700/70 text-xs font-medium text-slate-800 dark:text-slate-200 mb-6 shadow-xs transition-colors group"
                         title="Meet Lead Systems Architect Aman Joshi"
                     >
@@ -93,7 +94,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             className="h-12 px-8 text-sm md:text-base rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold transition-all w-full sm:w-auto gap-2"
                             asChild
                         >
-                            <Link href="/pricing">
+                            <Link href="/pricing" prefetch={false}>
                                 <DollarSign className="w-4 h-4 text-slate-500" />
                                 {isIndia ? 'View INR Pricing & Sprints' : 'View Pricing & Sprints'}
                             </Link>
@@ -104,6 +105,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-600 dark:text-slate-400">
                         <Link
                             href="/reviews"
+                            prefetch={false}
                             className="inline-flex items-center gap-1.5 font-semibold text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
                             <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
@@ -112,6 +114,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                         <span aria-hidden="true" className="hidden sm:inline text-slate-400 dark:text-slate-700">|</span>
                         <Link
                             href="/portfolio"
+                            prefetch={false}
                             className="inline-flex items-center gap-1.5 font-semibold text-blue-700 dark:text-blue-400 hover:underline transition-colors"
                         >
                             <span>View Case Studies</span>

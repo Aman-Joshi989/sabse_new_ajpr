@@ -569,7 +569,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               </div>
               <div className="hidden md:block shrink-0">
                  <Button variant="outline" className="h-12 px-6 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0a0f1c] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold" asChild>
-                    <Link href="/services">View All Solutions</Link>
+                    <Link href="/services" prefetch={false}>View All Solutions</Link>
                  </Button>
               </div>
             </div>
@@ -627,7 +627,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             
             <div className="mt-12 text-center md:hidden">
                  <Button variant="outline" className="h-12 w-full px-6 rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0a0f1c] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold" asChild>
-                    <Link href="/services">View All Solutions</Link>
+                    <Link href="/services" prefetch={false}>View All Solutions</Link>
                  </Button>
             </div>
           </div>
@@ -641,7 +641,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6">Engineering Outcomes.</h2>
                 <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium">Real architectural challenges transformed into scalable digital systems.</p>
               </div>
-              <Link href="/portfolio" className="inline-flex items-center text-slate-900 dark:text-white font-bold hover:text-blue-600 transition-colors border-b border-slate-900 dark:border-white hover:border-blue-600 pb-1">
+              <Link href="/portfolio" prefetch={false} className="inline-flex items-center text-slate-900 dark:text-white font-bold hover:text-blue-600 transition-colors border-b border-slate-900 dark:border-white hover:border-blue-600 pb-1">
                 View Architecture Log <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </div>
@@ -1152,7 +1152,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                 <Link href="/book-call" prefetch={false} onClick={() => trackBookCall('home_bottom_cta')}>Book Free Strategy Call <ArrowRight className="w-5 h-5 ml-2"/></Link>
               </Button>
               <Button size="lg" variant="outline" className="h-14 px-8 text-base rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold w-full sm:w-auto" asChild>
-                <Link href="/pricing">Explore Pricing & Sprints</Link>
+                <Link href="/pricing" prefetch={false}>Explore Pricing & Sprints</Link>
               </Button>
             </div>
           </div>

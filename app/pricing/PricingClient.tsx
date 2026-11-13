@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { CheckCircle2, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/components/providers/CartProvider';
@@ -129,28 +128,21 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
     <div className="py-24 bg-slate-50 dark:bg-gradient-to-b dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen text-slate-900 dark:text-slate-100 transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-6 uppercase tracking-wider"
+          <div
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-6 uppercase tracking-wider animate-fade-up"
           >
             Fixed-Scope Implementation & Transparent Pricing
-          </motion.div>
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white tracking-tight"
+          </div>
+          <h1 
+            className="text-4xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white tracking-tight animate-fade-up"
           >
             High-Performance Systems, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">Upfront Investment.</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-slate-600 dark:text-slate-400"
+          </h1>
+          <p 
+            className="text-lg md:text-xl text-slate-600 dark:text-slate-400 animate-fade-up"
           >
             No hidden fees, no opaque hourly billing. Choose production-grade AI Agent systems or custom engineering.
-          </motion.p>
+          </p>
 
           {/* Category Switcher */}
           <div className="mt-10 inline-flex p-1.5 rounded-2xl bg-slate-200/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-800 shadow-xl backdrop-blur-md">
@@ -181,10 +173,8 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
 
         {/* AI Interactive Banner if AI selected */}
         {selectedCategory === 'ai' && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-7xl mx-auto mb-12 p-6 rounded-2xl bg-gradient-to-r from-blue-100/70 via-indigo-50/70 to-purple-100/70 dark:from-blue-950/40 dark:via-indigo-950/30 dark:to-purple-950/40 border border-blue-200 dark:border-blue-500/30 flex flex-col md:flex-row items-center justify-between gap-6"
+          <div
+            className="max-w-7xl mx-auto mb-12 p-6 rounded-2xl bg-gradient-to-r from-blue-100/70 via-indigo-50/70 to-purple-100/70 dark:from-blue-950/40 dark:via-indigo-950/30 dark:to-purple-950/40 border border-blue-200 dark:border-blue-500/30 flex flex-col md:flex-row items-center justify-between gap-6 animate-fade-up"
           >
             <div>
               <div className="text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-1">Live Interactive Demo</div>
@@ -197,7 +187,7 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
             >
               Launch Simulator Demo →
             </a>
-          </motion.div>
+          </div>
         )}
 
         <div className={`grid gap-8 max-w-7xl mx-auto ${displayedProducts.length === 4 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-3'}`}>
@@ -206,14 +196,11 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
             const isPopular = selectedCategory === 'ai' ? index === 2 : index === 1;
 
             return (
-              <motion.div
+              <div
                 key={product.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
                 onMouseEnter={() => setHoveredId(product.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className={`relative rounded-3xl p-7 backdrop-blur-sm border transition-all duration-300 flex flex-col justify-between ${
+                className={`relative rounded-3xl p-7 backdrop-blur-sm border transition-all duration-300 flex flex-col justify-between animate-fade-up ${
                   isPopular || hoveredId === product.id 
                     ? 'bg-white dark:bg-slate-800/90 border-blue-500 shadow-2xl shadow-blue-500/20 scale-[1.02]' 
                     : 'bg-white/90 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 shadow-md dark:shadow-none'
@@ -262,7 +249,7 @@ export default function PricingClient({ products = [] }: { products?: Product[] 
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   Select System
                 </Button>
-              </motion.div>
+              </div>
             );
           })}
         </div>

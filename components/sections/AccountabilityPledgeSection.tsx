@@ -187,7 +187,7 @@ export default function AccountabilityPledgeSection() {
                 variant="outline"
                 className="h-12 rounded-2xl border-slate-700 bg-slate-800/70 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-semibold transition-colors"
               >
-                <Link href="/pricing">
+                <Link href="/pricing" prefetch={false}>
                   {isIndia ? 'Review Transparent Sprint Pricing (₹1,49,000+)' : 'Review Transparent Sprint Pricing ($4,500+)'}
                 </Link>
               </Button>

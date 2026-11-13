@@ -62,8 +62,8 @@ export const RegionProvider = ({
         return;
       }
 
-      // 4. Defer edge IP verification so it does not trigger network/reflow during initial LCP.
-      geoTimer = setTimeout(() => {
+      // 4. Defer edge IP verification so it does not trigger network/reflow during initial LCP or Speed Index calculation.
+      const runGeo = () => {
         fetch('/api/geo')
           .then(res => res.json())
           .then(data => {
@@ -74,7 +74,13 @@ export const RegionProvider = ({
             }
           })
           .catch(() => {});
-      }, 2500);
+      };
+
+      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(runGeo, { timeout: 10000 });
+      } else {
+        geoTimer = setTimeout(runGeo, 10000);
+      }
     } catch (e) {
       // Ignore detection errors
     }

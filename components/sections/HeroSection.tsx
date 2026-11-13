@@ -50,15 +50,12 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                                 width={24} 
                                 height={24} 
                                 className="w-6 h-6 rounded-full object-cover ring-1 ring-blue-500/40" 
-                                priority
                             />
                             <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white dark:ring-slate-900" title="Available for Sprints"></span>
                         </div>
                         <span className="font-bold text-slate-900 dark:text-white">Aman Joshi</span>
                         <span aria-hidden="true" className="text-slate-400 dark:text-slate-600">&bull;</span>
-                        <span className="text-slate-600 dark:text-slate-300">
-                            {isIndia ? 'Direct 1-on-1 Engineering • Q1/Q2 Sprints Open' : 'Direct 1-on-1 Engineering • Q1/Q2 Sprints Open'}
-                        </span>
+                        <span className="text-slate-600 dark:text-slate-300">Direct 1-on-1 Engineering • Q1/Q2 Sprints Open</span>
                         <ArrowRight className="w-3.5 h-3.5 text-blue-500 group-hover:translate-x-0.5 transition-transform ml-0.5" />
                     </Link>
 
@@ -70,9 +67,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
 
                     {/* Subtitle */}
                     <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal mb-10">
-                        {isIndia
-                            ? 'A senior software engineering studio providing direct systems architecture for Indian founders and teams. We take your product from concept to production in weeks—with transparent INR pricing, GST invoicing, and 100% code ownership.'
-                            : 'A senior software engineering studio providing direct systems architecture for founders and ambitious teams. We take your product from architecture to production in weeks—with transparent pricing and 100% code ownership.'}
+                        A senior software engineering studio providing direct systems architecture for founders and ambitious teams. We take your product from architecture to production in weeks—with transparent pricing and 100% code ownership.
                     </p>
 
                     {/* Dual Action Primary CTAs */}

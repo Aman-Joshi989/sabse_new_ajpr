@@ -8,12 +8,15 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import HeroSection from '@/components/sections/HeroSection'
-import CoreValuesSection from '@/components/sections/CoreValuesSection'
-import AccountabilityPledgeSection from '@/components/sections/AccountabilityPledgeSection'
-import AuthorityNetworkSection from '@/components/sections/AuthorityNetworkSection'
+
+const CoreValuesSection = dynamic(() => import('@/components/sections/CoreValuesSection'))
+const AccountabilityPledgeSection = dynamic(() => import('@/components/sections/AccountabilityPledgeSection'))
+const AuthorityNetworkSection = dynamic(() => import('@/components/sections/AuthorityNetworkSection'))
+
 import { HOMEPAGE_FAQS } from '@/lib/homepage-faqs'
 import { trackBookCall } from '@/lib/analytics'
 import { useRegion } from '@/components/providers/RegionProvider'

@@ -211,7 +211,7 @@
   }
 
   .animate-marquee {
-    animation: marquee 30s linear infinite;
+    animation: marquee 30s linear 1.5s infinite;
     width: max-content;
     will-change: transform;
   }

@@ -2,10 +2,8 @@
 module.exports = {
     darkMode: ["class"],
     content: [
-        './pages/**/*.{ts,tsx}',
         './components/**/*.{ts,tsx}',
         './app/**/*.{ts,tsx}',
-        './src/**/*.{ts,tsx}',
     ],
     theme: {
         container: {
@@ -49,8 +47,8 @@ module.exports = {
                 },
             },
             fontFamily: {
-                "sans": ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
-                "display": ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+                "sans": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+                "display": ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
             },
             animation: {
                 "fade-up": "fadeUp 0.6s ease-out forwards",

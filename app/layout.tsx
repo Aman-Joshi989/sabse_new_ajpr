@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import Header from '@/components/Header'
@@ -14,12 +13,8 @@ import MobileActionDock from '@/components/MobileActionDock';
 export const revalidate = 86400;
 
 
-// Self-hosted Google Fonts via next/font (variable font reduces CSS chunk & avoids render-blocking)
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
+// High-performance system font stack (zero render-blocking network requests, zero woff2 chains)
+const inter = { variable: '--font-inter' }
 
 export function cleanMetaTitle(title: string, maxLen = 60): string {
   if (!title) return '';

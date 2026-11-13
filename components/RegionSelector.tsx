@@ -49,7 +49,7 @@ export default function RegionSelector({ variant = 'compact', className = '' }: 
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 transition-all cursor-pointer shadow-2xs"
-        aria-label="Select Region and Currency"
+        aria-label={`${current.code} (${current.code === 'IN' ? '₹' : '$'}) - Select Region and Currency`}
         aria-expanded={isOpen}
       >
         <span className="text-sm leading-none">{current.flag}</span>

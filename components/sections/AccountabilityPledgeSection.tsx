@@ -122,7 +122,7 @@ export default function AccountabilityPledgeSection() {
                     </div>
 
                     <p className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-600 dark:text-slate-400">
-                      <strong className="text-rose-600 dark:text-rose-400">Conventional Agency:</strong> {pillar.legacyAgency}
+                      <strong className="text-rose-700 dark:text-rose-400">Conventional Agency:</strong> {pillar.legacyAgency}
                     </p>
                   </div>
                 </div>
@@ -177,7 +177,7 @@ export default function AccountabilityPledgeSection() {
                 asChild
                 className="h-13 py-3 px-6 rounded-2xl bg-gradient-to-r from-red-700 via-rose-700 to-red-700 hover:from-red-600 hover:to-rose-600 text-white font-bold text-sm shadow-xl shadow-red-600/25"
               >
-                <Link href="/book-call">
+                <Link href="/book-call" prefetch={false}>
                   <PhoneCall className="w-4 h-4 mr-2" /> Book 15-Min Direct Discovery Call <ArrowRight className="w-4 h-4 ml-1.5" />
                 </Link>
               </Button>

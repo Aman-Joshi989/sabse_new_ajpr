@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Manrope } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import Header from '@/components/Header'
@@ -14,17 +14,10 @@ import MobileActionDock from '@/components/MobileActionDock';
 export const revalidate = 86400;
 
 
-// Self-hosted Google Fonts via next/font (zero render-blocking network CSS requests)
+// Self-hosted Google Fonts via next/font (variable font reduces CSS chunk & avoids render-blocking)
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
   variable: '--font-inter',
-  display: 'swap',
-})
-const manrope = Manrope({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  variable: '--font-manrope',
   display: 'swap',
 })
 
@@ -180,7 +173,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${manrope.variable} font-sans`} suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans`} suppressHydrationWarning>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NCWB8DWL"

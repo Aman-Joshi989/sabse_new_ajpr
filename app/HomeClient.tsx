@@ -1123,6 +1123,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
               </p>
               <Link 
                 href="/book-call" 
+                prefetch={false}
                 className="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline mt-2"
               >
                 Schedule a 15-minute quick discovery call &rarr;
@@ -1148,7 +1149,7 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" className="h-14 px-10 text-base rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold transition-all shadow-xl w-full sm:w-auto" asChild>
-                <Link href="/book-call" onClick={() => trackBookCall('home_bottom_cta')}>Book Free Strategy Call <ArrowRight className="w-5 h-5 ml-2"/></Link>
+                <Link href="/book-call" prefetch={false} onClick={() => trackBookCall('home_bottom_cta')}>Book Free Strategy Call <ArrowRight className="w-5 h-5 ml-2"/></Link>
               </Button>
               <Button size="lg" variant="outline" className="h-14 px-8 text-base rounded-full border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white font-semibold w-full sm:w-auto" asChild>
                 <Link href="/pricing">Explore Pricing & Sprints</Link>

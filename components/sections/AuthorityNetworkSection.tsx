@@ -189,6 +189,7 @@ export default function AuthorityNetworkSection() {
             </Link>
             <Link 
               href="/book-call"
+              prefetch={false}
               className="text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl shadow-md transition-all flex items-center gap-1.5"
             >
               Book 30-Min Strategy Call <ArrowRight className="w-3.5 h-3.5" />

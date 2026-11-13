@@ -310,7 +310,7 @@ export default function Header({ services }: { services?: any[] }) {
                                 className="h-9 px-4 text-xs font-bold rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 shadow-md hover:shadow-lg transition-all"
                                 asChild
                             >
-                                <Link href="/book-call" onClick={() => trackBookCall('header_desktop')}>Book Strategy Call</Link>
+                                <Link href="/book-call" prefetch={false} onClick={() => trackBookCall('header_desktop')}>Book Strategy Call</Link>
                             </Button>
                         </div>
                     )}

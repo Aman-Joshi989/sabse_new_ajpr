@@ -303,7 +303,7 @@ export default function CoreValuesSection({
                 Want to partner with an engineering pod that lives these values every day?
               </span>
               <Button asChild className="rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs px-6 py-2.5 shadow-md shadow-red-600/20">
-                <Link href="/book-call">
+                <Link href="/book-call" prefetch={false}>
                   Book a Strategy Call <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                 </Link>
               </Button>

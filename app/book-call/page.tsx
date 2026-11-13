@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { 
   CheckCircle2, Clock, Shield, Zap, Sparkles, 
   MessageSquare, ArrowRight, Calendar as CalendarIcon, User, 
@@ -319,17 +318,12 @@ export default function BookCallPage() {
 
                 {/* RIGHT PANE: Interactive Booking Calendar & Streamlined Form */}
                 <div className="w-full md:w-[62%] flex flex-col justify-center min-h-[500px]">
-                    <AnimatePresence mode="wait" initial={false}>
-                        
-                        {/* STEP 1: Interactive Date & Time Picker */}
-                        {step === 'datetime' && (
-                            <motion.div 
-                                key="step-datetime"
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                className="p-6 md:p-8 flex flex-col h-full justify-between"
-                            >
+                    {/* STEP 1: Interactive Date & Time Picker */}
+                    {step === 'datetime' && (
+                        <div 
+                            key="step-datetime"
+                            className="p-6 md:p-8 flex flex-col h-full justify-between animate-fade-up"
+                        >
                                 <div>
                                     <div className="flex items-center justify-between mb-4">
                                         <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">Select Date & Time</h3>
@@ -415,17 +409,14 @@ export default function BookCallPage() {
                                         Next: Enter Details <ArrowRight className="w-4 h-4" />
                                     </Button>
                                 </div>
-                            </motion.div>
+                            </div>
                         )}
 
                         {/* STEP 2: Streamlined Details Form */}
                         {step === 'form' && (
-                            <motion.div 
+                            <div 
                                 key="step-form"
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                className="p-6 md:p-8 flex flex-col h-full justify-between"
+                                className="p-6 md:p-8 flex flex-col h-full justify-between animate-fade-up"
                             >
                                 <div>
                                     <button 
@@ -493,16 +484,14 @@ export default function BookCallPage() {
                                 <p className="text-[11px] text-slate-400 text-center pt-3 border-t border-slate-200 dark:border-slate-800">
                                     🔒 Zero sales spam. You meet directly with Lead Architect Aman Joshi.
                                 </p>
-                            </motion.div>
+                            </div>
                         )}
 
                         {/* STEP 3: Success Confirmation */}
                         {step === 'success' && (
-                            <motion.div 
+                            <div 
                                 key="step-success"
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="p-6 md:p-8 flex flex-col items-center justify-center text-center space-y-6 flex-grow"
+                                className="p-6 md:p-8 flex flex-col items-center justify-center text-center space-y-6 flex-grow animate-fade-up"
                             >
                                 <div className="w-16 h-16 bg-emerald-500/15 border border-emerald-500/20 rounded-full flex items-center justify-center">
                                     <CheckCircle2 className="w-8 h-8 text-emerald-500" />
@@ -523,7 +512,7 @@ export default function BookCallPage() {
                                     <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 font-semibold">
                                         <CalendarIcon className="w-4 h-4 text-blue-500" />
                                         <span>
-                                            {activeTimeSlot}, {selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+                                             {activeTimeSlot}, {selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 font-semibold">
@@ -552,10 +541,8 @@ export default function BookCallPage() {
                                         Book Another Session
                                     </Button>
                                 </div>
-                            </motion.div>
+                            </div>
                         )}
-                        
-                    </AnimatePresence>
                 </div>
 
             </div>

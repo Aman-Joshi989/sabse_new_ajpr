@@ -49,23 +49,14 @@ module.exports = {
                 },
             },
             fontFamily: {
-                "display": ["var(--font-manrope)", "sans-serif"],
+                "sans": ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+                "display": ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
             },
             animation: {
                 "fade-up": "fadeUp 0.6s ease-out forwards",
                 "fade-down": "fadeDown 0.6s ease-out forwards",
-                "fade-left": "fadeLeft 0.6s ease-out forwards",
-                "fade-right": "fadeRight 0.6s ease-out forwards",
-                "scale-in": "scaleIn 0.5s ease-out forwards",
-                "bounce-gentle": "bounceGentle 2s ease-in-out infinite",
                 "float": "float 3s ease-in-out infinite",
                 "pulse-glow": "pulseGlow 2s ease-in-out infinite alternate",
-                "slide-up": "slideUp 0.8s ease-out forwards",
-                "gradient-shift": "gradientShift 3s ease-in-out infinite",
-                "typing": "typing 3.5s steps(40, end), blink-caret .75s step-end infinite",
-                "morphing": "morphing 8s ease-in-out infinite",
-                "particle-float": "particleFloat 6s ease-in-out infinite",
-                "reveal": "reveal 0.8s ease-out forwards",
                 "shimmer": "shimmer 2s linear infinite",
                 "meteor-effect": "meteor 5s linear infinite",
             },
@@ -86,22 +77,6 @@ module.exports = {
                     "0%": { opacity: "0", transform: "translateY(-30px)" },
                     "100%": { opacity: "1", transform: "translateY(0)" },
                 },
-                fadeLeft: {
-                    "0%": { opacity: "0", transform: "translateX(-30px)" },
-                    "100%": { opacity: "1", transform: "translateX(0)" },
-                },
-                fadeRight: {
-                    "0%": { opacity: "0", transform: "translateX(30px)" },
-                    "100%": { opacity: "1", transform: "translateX(0)" },
-                },
-                scaleIn: {
-                    "0%": { opacity: "0", transform: "scale(0.9)" },
-                    "100%": { opacity: "1", transform: "scale(1)" },
-                },
-                bounceGentle: {
-                    "0%, 100%": { transform: "translateY(0)" },
-                    "50%": { transform: "translateY(-10px)" },
-                },
                 float: {
                     "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
                     "33%": { transform: "translateY(-10px) rotate(1deg)" },
@@ -110,38 +85,6 @@ module.exports = {
                 pulseGlow: {
                     "0%": { boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)" },
                     "100%": { boxShadow: "0 0 40px rgba(59, 130, 246, 0.6)" },
-                },
-                slideUp: {
-                    "0%": { opacity: "0", transform: "translateY(100px)" },
-                    "100%": { opacity: "1", transform: "translateY(0)" },
-                },
-                gradientShift: {
-                    "0%, 100%": { backgroundPosition: "0% 50%" },
-                    "50%": { backgroundPosition: "100% 50%" },
-                },
-                typing: {
-                    "from": { width: "0" },
-                    "to": { width: "100%" },
-                },
-                "blink-caret": {
-                    "from, to": { borderColor: "transparent" },
-                    "50%": { borderColor: "rgb(59, 130, 246)" },
-                },
-                morphing: {
-                    "0%, 100%": { borderRadius: "20px" },
-                    "25%": { borderRadius: "50px 20px" },
-                    "50%": { borderRadius: "20px 50px" },
-                    "75%": { borderRadius: "50px" },
-                },
-                particleFloat: {
-                    "0%, 100%": { transform: "translateY(0px) translateX(0px)" },
-                    "25%": { transform: "translateY(-20px) translateX(10px)" },
-                    "50%": { transform: "translateY(-10px) translateX(-5px)" },
-                    "75%": { transform: "translateY(-30px) translateX(15px)" },
-                },
-                reveal: {
-                    "0%": { clipPath: "circle(0% at 50% 50%)" },
-                    "100%": { clipPath: "circle(100% at 50% 50%)" },
                 },
                 shimmer: {
                     "0%": { transform: "translateX(-100%)" },

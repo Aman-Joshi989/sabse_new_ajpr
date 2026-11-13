@@ -1,9 +1,12 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
   experimental: {
+    optimizeCss: true,
     optimizePackageImports: [
       'lucide-react',
       '@radix-ui/react-accordion',
@@ -18,6 +21,16 @@ const nextConfig = {
       'next/dist/build/polyfills/polyfill-module': './lib/empty-polyfill.js',
       'next/dist/build/polyfills/polyfill-module.js': './lib/empty-polyfill.js',
     },
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve = config.resolve || {};
+      config.resolve.alias = config.resolve.alias || {};
+      const emptyPolyfill = path.resolve(__dirname, './lib/empty-polyfill.js');
+      config.resolve.alias['next/dist/build/polyfills/polyfill-module'] = emptyPolyfill;
+      config.resolve.alias['../build/polyfills/polyfill-module'] = emptyPolyfill;
+    }
+    return config;
   },
   images: {
     formats: ['image/avif', 'image/webp'],

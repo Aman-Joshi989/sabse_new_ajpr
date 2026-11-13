@@ -81,7 +81,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             className="h-12 px-8 text-sm md:text-base rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-lg hover:shadow-xl transition-all w-full sm:w-auto gap-2"
                             asChild
                         >
-                            <Link href="/book-call">
+                            <Link href="/book-call" prefetch={false}>
                                 <Calendar className="w-4 h-4 text-blue-500" />
                                 {isIndia ? 'Book Architecture Call (IST)' : 'Book a Strategy Call'}
                                 <ArrowRight className="w-4 h-4 ml-1" />

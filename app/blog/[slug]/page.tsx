@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect, RedirectType } from 'next/navigation';
 import { Metadata } from 'next';
 import Script from 'next/script';
 import { getBlogBySlug, getBlogs } from '@/lib/db/queries';
@@ -133,13 +133,35 @@ async function getPost(slug: string) {
     return getCornerstonePost(slug) || null;
 }
 
+async function getCanonicalPostSlug(slug: string): Promise<string | null> {
+    if (!/-edition-\d+$/.test(slug) && !/^edition-\d+-/.test(slug)) {
+        return null;
+    }
+    const baseTopic = slug.replace(/-edition-\d+$/, '').replace(/^edition-\d+-/, '');
+    const all = await getBlogs().catch(() => []);
+    if (!Array.isArray(all) || all.length === 0) return null;
+    const matches = all.filter((b: any) => {
+        const topic = (b.slug || '').replace(/-edition-\d+$/, '').replace(/^edition-\d+-/, '');
+        return topic === baseTopic;
+    });
+    if (matches.length <= 1) return null;
+    matches.sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
+    const canonical = matches[0];
+    if (canonical && canonical.slug && canonical.slug !== slug) {
+        return canonical.slug;
+    }
+    return null;
+}
+
 type Props = {
     params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
     const params = await props.params;
-    const post = await getPost(params.slug);
+    const canonicalSlug = await getCanonicalPostSlug(params.slug);
+    const targetSlug = canonicalSlug || params.slug;
+    const post = await getPost(targetSlug);
 
     if (!post) {
         return constructEnterpriseMetadata({
@@ -155,7 +177,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
         : new Date().toISOString();
 
     return constructEnterpriseMetadata({
-        path: `/blog/${post.slug}`,
+        path: `/blog/${targetSlug}`,
         title: post.title ? `${post.title} | AJPR World` : 'Growth Insights | AJPR World',
         description: post.meta_description || post.excerpt,
         defaultTitle: `${post.title || 'Growth Strategy Guide'} | AJPR World`,
@@ -169,6 +191,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function BlogPost(props: Props) {
     const params = await props.params;
+    const canonicalSlug = await getCanonicalPostSlug(params.slug);
+    if (canonicalSlug && canonicalSlug !== params.slug) {
+        redirect(`/blog/${canonicalSlug}`, RedirectType.permanent);
+    }
+
     const [post, allBlogs] = await Promise.all([
         getPost(params.slug),
         getBlogs().catch(() => [])

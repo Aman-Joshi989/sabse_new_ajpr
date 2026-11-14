@@ -65,6 +65,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
     const resourceLinks = [
         { name: 'Free Technical Audit', href: '/free-audit' },
         { name: 'Agency ROI Calculator', href: '/tools/agency-pricing-calculator' },
+        { name: '2026 Agency Pricing Report', href: '/research/agency-pricing-report' },
         { name: 'Engineering Solutions', href: '/solutions' },
         { name: 'AI Automation & Workflows', href: '/ai-systems' },
         { name: 'SEO & Growth Retainers', href: '/pricing/seo-cost' },
@@ -205,8 +206,9 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                         </span>
                     </div>
 
-                    {/* Center: Legal */}
+                    {/* Center: Legal & Architecture Index */}
                     <div className="flex items-center gap-6">
+                        <Link href="/sitemap" prefetch={false} className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">Site Index</Link>
                         <Link href="/privacy" prefetch={false} className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">Privacy Policy</Link>
                         <Link href="/terms" prefetch={false} className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors">Terms of Service</Link>
                     </div>

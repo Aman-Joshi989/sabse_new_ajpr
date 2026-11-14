@@ -7,6 +7,7 @@ export const revalidate = 86400; // Cache for 24 hours to prevent SEO bots from 
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://ajprworld.com'
+  const staticReleaseDate = new Date('2026-11-14')
 
   // Define static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -420,14 +421,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const city of targetCities) {
     localServices.push({
       url: `${baseUrl}/locations/${city}`,
-      lastModified: new Date(),
+      lastModified: staticReleaseDate,
       changeFrequency: 'weekly',
       priority: city === 'haldwani' ? 0.95 : 0.85,
     });
     for (const service of targetServices) {
       localServices.push({
         url: `${baseUrl}/locations/${city}/${service}`,
-        lastModified: new Date(),
+        lastModified: staticReleaseDate,
         changeFrequency: 'weekly',
         priority: city === 'haldwani' && service === 'digital-marketing' ? 1.0 : 0.9,
       });
@@ -472,14 +473,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     // Fetch dynamic blogs from Neon database
     const blogs = await getBlogs()
-    const dbBlogPages: MetadataRoute.Sitemap = Array.isArray(blogs)
-      ? blogs.map((blog: any) => ({
-          url: `${baseUrl}/blog/${blog.slug}`,
-          lastModified: blog.created_at ? new Date(blog.created_at) : new Date(),
-          changeFrequency: 'weekly',
-          priority: 0.8,
-        }))
-      : [];
+    // Deduplicate DB blogs by base topic to prevent submitting duplicate editions to Google
+    const cleanDbBlogs: any[] = [];
+    if (Array.isArray(blogs)) {
+      const seenTopics = new Set<string>();
+      // Sort descending by ID so latest/freshest edition is chosen as canonical
+      const sorted = [...blogs].sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
+      for (const blog of sorted) {
+        const baseTopic = (blog.slug || '')
+          .replace(/-edition-\d+$/, '')
+          .replace(/^edition-\d+-/, '');
+        if (!seenTopics.has(baseTopic)) {
+          seenTopics.add(baseTopic);
+          cleanDbBlogs.push(blog);
+        }
+      }
+    }
+
+    const dbBlogPages: MetadataRoute.Sitemap = cleanDbBlogs.map((blog: any) => ({
+      url: `${baseUrl}/blog/${blog.slug}`,
+      lastModified: blog.created_at ? new Date(blog.created_at) : new Date('2026-11-14'),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    }));
 
     const cornerstonePages: MetadataRoute.Sitemap = CORNERSTONE_BLOG_POSTS.map(post => ({
       url: `${baseUrl}/blog/${post.slug}`,

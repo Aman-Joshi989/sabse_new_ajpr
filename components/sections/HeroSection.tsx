@@ -11,10 +11,7 @@ import {
     Zap, 
     Lock, 
     DollarSign,
-    Receipt,
-    Phone,
-    MessageSquare,
-    Star
+    Receipt
 } from 'lucide-react';
 
 interface HeroSectionProps {
@@ -72,43 +69,7 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                         </Button>
                     </div>
 
-                    {/* Instant Human Contact & Verified Proof Bar (SSR) */}
-                    <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-600 dark:text-slate-400">
-                        <Link
-                            href="/reviews"
-                            prefetch={false}
-                            className="inline-flex items-center gap-1.5 font-semibold text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                        >
-                            <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                            <span>4.9/5 Rated (64 Verified Reviews)</span>
-                        </Link>
-                        <span aria-hidden="true" className="hidden sm:inline text-slate-400 dark:text-slate-700">|</span>
-                        <Link
-                            href="/portfolio"
-                            prefetch={false}
-                            className="inline-flex items-center gap-1.5 font-semibold text-blue-700 dark:text-blue-400 hover:underline transition-colors"
-                        >
-                            <span>View Case Studies</span>
-                        </Link>
-                        <span aria-hidden="true" className="hidden sm:inline text-slate-400 dark:text-slate-700">|</span>
-                        <a
-                            href="tel:+919997205257"
-                            className="inline-flex items-center gap-1.5 font-medium hover:text-blue-700 dark:hover:text-blue-400 transition-colors"
-                        >
-                            <Phone className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" aria-hidden="true" />
-                            <span>+91 99972 05257</span>
-                        </a>
-                        <span aria-hidden="true" className="hidden sm:inline text-slate-400 dark:text-slate-700">|</span>
-                        <a
-                            href="https://wa.me/919997205257?text=Hi%20Aman%2C%20I%27d%20like%20to%20discuss%20a%20project%20with%20AJPR%20World."
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 dark:text-emerald-400 hover:underline"
-                        >
-                            <MessageSquare className="w-3.5 h-3.5" />
-                            <span>WhatsApp Architect Direct</span>
-                        </a>
-                    </div>
+
 
                     {/* Trust & Guarantee Strip */}
                     <div className="mt-12 pt-8 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-left">

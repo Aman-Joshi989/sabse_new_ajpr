@@ -69,6 +69,37 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                         </Button>
                     </div>
 
+                    {/* Low-Friction Exploration Links */}
+                    <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-500 dark:text-slate-400">
+                        <Link 
+                            href="/free-audit" 
+                            prefetch={false}
+                            className="inline-flex items-center gap-1.5 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        >
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                            <span>Request Free 48h Audit</span>
+                            <ArrowRight className="w-3 h-3 text-slate-400" />
+                        </Link>
+                        <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">•</span>
+                        <Link 
+                            href="/portfolio" 
+                            prefetch={false}
+                            className="inline-flex items-center gap-1.5 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        >
+                            <span>Client Architecture Log</span>
+                            <ArrowRight className="w-3 h-3 text-slate-400" />
+                        </Link>
+                        <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">•</span>
+                        <Link 
+                            href="/tools/agency-pricing-calculator" 
+                            prefetch={false}
+                            className="inline-flex items-center gap-1.5 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        >
+                            <span>ROI & Cost Calculator</span>
+                            <ArrowRight className="w-3 h-3 text-slate-400" />
+                        </Link>
+                    </div>
+
 
 
                     {/* Trust & Guarantee Strip */}

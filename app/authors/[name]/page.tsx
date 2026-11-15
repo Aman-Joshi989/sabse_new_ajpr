@@ -34,7 +34,7 @@ export default async function AuthorProfilePage({ params }: { params: Promise<{ 
   
   // Fetch all blogs and filter by author
   const allBlogs = await getBlogs();
-  const authorBlogs = allBlogs.filter((b: any) => b.author.toLowerCase() === decodedName.toLowerCase());
+  const authorBlogs = allBlogs.filter((b: any) => (b.author || '').toLowerCase() === decodedName.toLowerCase());
 
   if (authorBlogs.length === 0) {
     // If we have no blogs by this author, they probably don't exist as an author

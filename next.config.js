@@ -82,6 +82,11 @@ const nextConfig = {
         destination: '/services/website-maintenance-cost',
         permanent: true,
       },
+      {
+        source: '/blog/the-ultimate-guide-to-custom-software-development-with-ai-integration-for-startups',
+        destination: '/blog/the-ultimate-guide-to-custom-software-development-for-startups-with-ai-integration',
+        permanent: true,
+      },
     ];
   },
   async headers() {

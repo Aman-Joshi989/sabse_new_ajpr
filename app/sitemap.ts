@@ -480,6 +480,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       // Sort descending by ID so latest/freshest edition is chosen as canonical
       const sorted = [...blogs].sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
       for (const blog of sorted) {
+        if (blog.slug === 'the-ultimate-guide-to-custom-software-development-with-ai-integration-for-startups') {
+          continue;
+        }
         const baseTopic = (blog.slug || '')
           .replace(/-edition-\d+$/, '')
           .replace(/^edition-\d+-/, '');

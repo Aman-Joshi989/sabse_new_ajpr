@@ -42,6 +42,7 @@ export default function RegionSelector({ variant = 'compact', className = '' }: 
   ];
 
   const current = regions.find(r => r.code === region) || regions[0];
+  const isFooter = variant === 'footer';
 
   return (
     <div className={`relative inline-block text-left ${className}`} ref={dropdownRef}>
@@ -55,11 +56,17 @@ export default function RegionSelector({ variant = 'compact', className = '' }: 
         <span className="text-sm leading-none">{current.flag}</span>
         <span className="font-bold">{current.code}</span>
         <span className="text-slate-600 dark:text-slate-300 font-normal">({current.code === 'IN' ? '₹' : '$'})</span>
-        <ChevronDown className={`w-3 h-3 text-slate-600 dark:text-slate-300 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3 h-3 text-slate-600 dark:text-slate-300 transition-transform duration-200 ${isOpen ? (isFooter ? '-rotate-180' : 'rotate-180') : (isFooter ? 'rotate-180' : '')}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 bottom-full sm:bottom-auto sm:top-full mt-2 mb-2 sm:mb-0 w-64 rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 shadow-2xl p-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+        <div 
+          className={`absolute z-50 w-72 max-w-[calc(100vw-32px)] rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 shadow-2xl p-1.5 duration-150 ${
+            isFooter
+              ? 'bottom-full mb-2.5 left-0 origin-bottom-left animate-in fade-in slide-in-from-bottom-2 zoom-in-95'
+              : 'top-full mt-2 right-0 origin-top-right animate-in fade-in slide-in-from-top-2 zoom-in-95'
+          }`}
+        >
           <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800 mb-1">
             Choose Delivery Region
           </div>
@@ -89,7 +96,7 @@ export default function RegionSelector({ variant = 'compact', className = '' }: 
                       {item.currency}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 truncate">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">
                     {item.subtitle}
                   </p>
                 </div>

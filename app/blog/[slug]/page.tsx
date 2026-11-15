@@ -1,4 +1,4 @@
-import { notFound, redirect, RedirectType } from 'next/navigation';
+import { notFound, redirect, permanentRedirect } from 'next/navigation';
 import { Metadata } from 'next';
 import Script from 'next/script';
 import { getBlogBySlug, getBlogs } from '@/lib/db/queries';
@@ -193,7 +193,7 @@ export default async function BlogPost(props: Props) {
     const params = await props.params;
     const canonicalSlug = await getCanonicalPostSlug(params.slug);
     if (canonicalSlug && canonicalSlug !== params.slug) {
-        redirect(`/blog/${canonicalSlug}`, RedirectType.permanent);
+        permanentRedirect(`/blog/${canonicalSlug}`);
     }
 
     const [post, allBlogs] = await Promise.all([

@@ -105,9 +105,14 @@ export default async function CareersAdminPage() {
                     <div>
                       <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Resume / CV</h4>
                       {app.resume_url ? (
-                        <a href={`/api/admin/download-resume?url=${encodeURIComponent(app.resume_url)}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg transition-colors">
-                          View Resume Document <ExternalLink className="w-4 h-4 ml-2" />
-                        </a>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <a href={`/api/careers/resume/view?id=${app.id}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg transition-colors shadow-xs">
+                            View Resume Online <ExternalLink className="w-4 h-4 ml-2" />
+                          </a>
+                          <a href={`/api/careers/resume/view?id=${app.id}&download=1`} className="inline-flex items-center justify-center px-3 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-lg transition-colors">
+                            Direct Download
+                          </a>
+                        </div>
                       ) : (
                         <p className="text-sm text-slate-500 italic">No resume file uploaded</p>
                       )}

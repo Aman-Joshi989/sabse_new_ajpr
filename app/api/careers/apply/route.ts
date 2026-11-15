@@ -43,18 +43,21 @@ export async function POST(req: Request) {
       }
     }
 
-    // Insert into database
-    await sql`
+    // Insert into database and obtain the generated application ID
+    const insertResult = await sql`
       INSERT INTO job_applications (
         role_applied_for, name, email, phone, linkedin_url, resume_url, cover_letter, utm_source, utm_medium, utm_campaign
       ) VALUES (
         ${role_applied_for}, ${name}, ${email}, ${phone}, ${linkedin_url}, ${resume_url}, ${cover_letter}, ${utm_source}, ${utm_medium}, ${utm_campaign}
       )
+      RETURNING id;
     `;
+    const applicationId = insertResult && insertResult[0]?.id ? String(insertResult[0].id) : undefined;
 
     // Send notifications to both candidate and admin
     try {
       await dispatchCareerApplicationEmails({
+        applicationId,
         name,
         email,
         phone,

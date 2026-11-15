@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import { sendEmail as sendZeptoEmail } from '@/lib/zeptomail';
 import { sql } from '@/lib/db/queries';
+import { generateResumeViewToken } from '@/lib/resume/token';
 import {
   GOOGLE_REVIEW_URL,
   CLUTCH_PROFILE_URL,
@@ -45,6 +46,7 @@ export interface BookingEmailData {
 
 export interface CareerApplicationEmailData {
   referenceId?: string;
+  applicationId?: string;
   name: string;
   email: string;
   phone?: string;
@@ -845,6 +847,16 @@ export async function dispatchCareerApplicationEmails(
 </html>
   `.trim();
 
+  let viewResumeUrl = '';
+  if (data.resumeUrl) {
+    if (data.applicationId) {
+      viewResumeUrl = `https://ajprworld.com/api/careers/resume/view?id=${data.applicationId}`;
+    } else {
+      const token = generateResumeViewToken(data.resumeUrl);
+      viewResumeUrl = `https://ajprworld.com/api/careers/resume/view?url=${encodeURIComponent(data.resumeUrl)}&token=${token}`;
+    }
+  }
+
   const adminSubject = `💼 New Job Application: ${data.role} — ${data.name} (#${referenceId})`;
   const adminHtml = `
 <!DOCTYPE html>
@@ -857,7 +869,16 @@ export async function dispatchCareerApplicationEmails(
     <p><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #38bdf8;">${data.email}</a></p>
     ${data.phone ? `<p><strong>Phone:</strong> ${data.phone}</p>` : ''}
     ${data.linkedinUrl ? `<p><strong>LinkedIn:</strong> <a href="${data.linkedinUrl}" target="_blank" style="color: #38bdf8;">${data.linkedinUrl}</a></p>` : ''}
-    ${data.resumeUrl ? `<p><strong>Resume:</strong> <a href="${data.resumeUrl}" target="_blank" style="color: #34d399;">View Resume</a></p>` : ''}
+    ${viewResumeUrl ? `
+    <div style="margin: 16px 0; padding: 14px; background: #0f172a; border-radius: 8px; border: 1px solid #334155;">
+      <p style="margin: 0 0 10px 0; font-size: 13px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Candidate Resume / CV</p>
+      <a href="${viewResumeUrl}" target="_blank" style="display: inline-block; padding: 8px 16px; background: #2563eb; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 13px; margin-right: 8px;">
+        📄 View Resume Online
+      </a>
+      <a href="${viewResumeUrl}&download=1" target="_blank" style="display: inline-block; padding: 8px 16px; background: #334155; color: #e2e8f0; text-decoration: none; border-radius: 6px; font-weight: 500; font-size: 13px;">
+        ⬇️ Direct Download
+      </a>
+    </div>` : ''}
     ${data.coverLetter ? `<div style="background: #0f172a; padding: 12px; border-radius: 8px; margin-top: 12px; white-space: pre-wrap;">${data.coverLetter}</div>` : ''}
   </div>
 </body>

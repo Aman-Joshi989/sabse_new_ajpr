@@ -84,6 +84,36 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
   const { isIndia, isUS, currencySymbol } = useRegion();
 
   const [activeScope, setActiveScope] = useState<'web' | 'ai' | 'saas' | 'growth'>('web');
+  const [estimateEmail, setEstimateEmail] = useState('');
+  const [estimateLoading, setEstimateLoading] = useState(false);
+  const [estimateSent, setEstimateSent] = useState(false);
+
+  const handleRequestEstimate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!estimateEmail || !estimateEmail.includes('@')) return;
+    setEstimateLoading(true);
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: estimateEmail.split('@')[0],
+          email: estimateEmail,
+          projectGoal: `Interactive Sprint Scope: ${scopeConfigs[activeScope].title} (${scopeConfigs[activeScope].timeline})`,
+          utm_source: 'homepage',
+          utm_medium: 'interactive_sprint_planner',
+          company: `${scopeConfigs[activeScope].title} Scope Request`,
+        }),
+      });
+      if (res.ok) {
+        setEstimateSent(true);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setEstimateLoading(false);
+    }
+  };
 
   const scopeConfigs = {
     web: {
@@ -392,9 +422,70 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
                         Explore detailed cost breakdowns &rarr;
                       </Link>
                     </div>
+
+                    {/* Low-Friction Email Scope Capture */}
+                    <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">
+                        Or get the architecture blueprint emailed:
+                      </div>
+                      {estimateSent ? (
+                        <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                          <span>Blueprint dispatched! Check your inbox for the {currentScope.title} scope.</span>
+                        </div>
+                      ) : (
+                        <form onSubmit={handleRequestEstimate} className="flex gap-2">
+                          <input 
+                            type="email"
+                            required
+                            value={estimateEmail}
+                            onChange={(e) => setEstimateEmail(e.target.value)}
+                            placeholder="founder@company.com"
+                            className="flex-1 px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                          <button
+                            type="submit"
+                            disabled={estimateLoading}
+                            className="px-3.5 py-2 text-xs font-bold rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-colors cursor-pointer shrink-0 disabled:opacity-50"
+                          >
+                            {estimateLoading ? 'Sending...' : 'Email Blueprint'}
+                          </button>
+                        </form>
+                      )}
+                    </div>
                   </div>
                 </div>
 
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3.6 FREE 48-HOUR SYSTEMS & CODE ARCHITECTURE AUDIT */}
+        <section className="py-12 bg-gradient-to-r from-blue-900/10 via-indigo-900/10 to-transparent border-b border-slate-200 dark:border-slate-800 relative">
+          <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+            <div className="p-8 md:p-10 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="max-w-2xl space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold tracking-wide uppercase">
+                  <Zap className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Zero-Cost Engineering Teardown</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight">
+                  Is slow architecture or technical debt hurting your conversion?
+                </h3>
+                <p className="text-slate-300 text-sm md:text-base leading-relaxed">
+                  Submit your staging URL or GitHub repo. Founder & Lead Architect Aman Joshi will record a 5-minute personalized Loom teardown identifying your 3 biggest performance bottlenecks, query flaws, and bundle bloat—100% free with 48h turnaround.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto shrink-0">
+                <Button size="lg" className="h-12 px-8 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg gap-2" asChild>
+                  <Link href="/free-audit" prefetch={false}>
+                    Claim Free 48h Audit <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+                <div className="text-center text-xs text-slate-400">
+                  Zero credit card required • Senior code-level review
+                </div>
               </div>
             </div>
           </div>
@@ -652,32 +743,32 @@ export default function HomeClient({ services = [], blogs = [], settings }: Home
             <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
               {[
                 {
-                  title: "Project Fintech Schema",
-                  category: "Backend Architecture",
-                  impact: "Supported 100k+ concurrent users and reduced API latency by 45%.",
-                  tags: ["Node.js", "PostgreSQL", "Microservices"],
+                  title: "Kumaun University Examination Platform",
+                  category: "Enterprise Next.js & PostgreSQL",
+                  impact: "Scaled university examination platform to 50,000+ peak concurrent students with 99.99% uptime and zero server stockouts.",
+                  tags: ["Next.js", "PostgreSQL", "Redis Caching", "Edge CDN"],
+                  image: "/images/visuals/system_scaling.png"
+                },
+                {
+                  title: "JNP's Classes Live EdTech Engine",
+                  category: "Full-Stack Web Platform",
+                  impact: "Architected interactive student testing and course delivery platform with sub-200ms latency across India.",
+                  tags: ["React", "Node.js", "PostgreSQL", "Razorpay"],
                   image: "/images/visuals/fintech_backend.png"
                 },
                 {
-                  title: "Logistics Routing Intelligence",
-                  category: "AI Algorithms",
-                  impact: "Automated routing logic, cutting manual operational costs significantly.",
-                  tags: ["Python", "TensorFlow", "React"],
+                  title: "Autonomous CRM & Triage AI Pipeline",
+                  category: "Multi-Agent AI Systems",
+                  impact: "Automated multi-channel CRM lead qualification, cutting manual sales triage response time from 4 hours to 45 seconds.",
+                  tags: ["Python", "FastAPI", "Vector RAG", "pgvector"],
                   image: "/images/visuals/ai_logistics.png"
                 },
                 {
-                  title: "Scalable Cloud Pipeline",
-                  category: "Cloud Infrastructure",
-                  impact: "Distributed high-availability deployments for a global scale.",
-                  tags: ["AWS", "Docker", "Kubernetes"],
+                  title: "Sub-Second Enterprise Performance Overhaul",
+                  category: "Next.js 16 Edge Architecture",
+                  impact: "Engineered sub-second performance overhaul: verified 100/100 Lighthouse score, 0ms Total Blocking Time, and 1.1s Mobile LCP.",
+                  tags: ["Next.js 16", "Turbopack", "Tailwind CSS", "Vercel Edge"],
                   image: "/images/visuals/cloud_infrastructure.png"
-                },
-                {
-                  title: "High-Performance Scaling Core",
-                  category: "System Strategy",
-                  impact: "Architected aggressive growth structure supporting massive surges.",
-                  tags: ["Redis", "Load Balancing", "Golang"],
-                  image: "/images/visuals/system_scaling.png"
                 }
               ].map((study, i) => (
                 <div key={i} className="group cursor-pointer">

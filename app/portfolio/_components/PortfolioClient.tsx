@@ -14,10 +14,10 @@ interface PortfolioClientProps {
 
 // Data sets matched to requested structure
 const impactMetrics = [
-  { value: "20%+", label: "Engagement Growth" },
-  { value: "2x", label: "Backend Performance Boost" },
-  { value: "70%", label: "Automation Implementation" },
-  { value: "10+", label: "Multi-Industry Expertise" },
+  { value: "50k+", label: "Peak Concurrent Users Scaled" },
+  { value: "100", label: "Mobile Lighthouse Score" },
+  { value: "<200ms", label: "Global P95 API Latency" },
+  { value: "99.99%", label: "Production System Uptime" },
 ]
 
 const executionPhases = [

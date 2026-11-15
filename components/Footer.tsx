@@ -30,6 +30,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
             { name: 'Shopify SEO Agency', href: '/platforms/shopify-seo' },
             { name: 'Webflow Development & SEO', href: '/platforms/webflow-agency' },
             { name: 'Custom Web Dev', href: '/services/web-development' },
+            { name: 'Brand & Graphic Design', href: '/services/graphics-branding' },
             { name: 'Website Maintenance Cost', href: '/services/website-maintenance-cost' },
             { name: 'Digital Marketing', href: '/services/digital-marketing' },
         ];

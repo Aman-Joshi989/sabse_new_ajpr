@@ -87,12 +87,6 @@ export async function generateMetadata(): Promise<Metadata> {
         images: ['https://ajprworld.com/og-image.jpg'],
         creator: '@ajprworld',
       },
-      other: {
-        'geo.region': settings?.geo_region || 'IN-UT',
-        'geo.placename': settings?.geo_placename || 'Haldwani',
-        'geo.position': settings?.geo_position || '29.2183;79.5126',
-        'ICBM': settings?.geo_icbm || '29.2183, 79.5126'
-      }
     };
   } catch (error) {
     console.error("Failed to generate metadata dynamically:", error);

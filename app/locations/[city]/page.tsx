@@ -203,7 +203,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
             'AJPR World'
         ] : undefined,
         other: {
-            'geo.region': isIndia ? 'IN-UT' : 'US',
+            'geo.region': isIndia ? 'IN-UT' : (metro?.country || 'US'),
             'geo.placename': `${cityName}, ${metro?.state || (isIndia ? 'Uttarakhand' : '')}`,
             'geo.position': metro?.coordinates || (isIndia ? '29.2183;79.5126' : '30.2672;-97.7431'),
             'ICBM': metro?.coordinates ? metro.coordinates.replace(';', ', ') : (isIndia ? '29.2183, 79.5126' : '30.2672, -97.7431')

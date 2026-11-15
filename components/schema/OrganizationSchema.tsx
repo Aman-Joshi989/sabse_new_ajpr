@@ -154,6 +154,15 @@ export const OrganizationSchema = async () => {
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
+            name: 'Graphics & Brand Identity Systems',
+            url: 'https://ajprworld.com/services/graphics-branding',
+            description: 'Custom digital branding kits, UI/UX design systems, vector identity kits, and marketing visual design.'
+          }
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
             name: 'Autonomous AI Workflows & Agent Systems',
             url: 'https://ajprworld.com/ai-systems',
             description: 'Custom multi-agent workflows, customer triage pods, and operational automation.'

@@ -483,18 +483,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         if (blog.slug === 'the-ultimate-guide-to-custom-software-development-with-ai-integration-for-startups') {
           continue;
         }
-        const baseTopic = (blog.slug || '')
-          .replace(/-edition-\d+$/, '')
-          .replace(/^edition-\d+-/, '');
-        if (!seenTopics.has(baseTopic)) {
-          seenTopics.add(baseTopic);
-          cleanDbBlogs.push(blog);
+        const cleanSlug = (blog.slug || '')
+          .replace(/-edition-\d+$/i, '')
+          .replace(/^edition-\d+-/i, '')
+          .replace(/-\d{3,4}$/, '');
+        if (cleanSlug && !seenTopics.has(cleanSlug)) {
+          seenTopics.add(cleanSlug);
+          cleanDbBlogs.push({
+            ...blog,
+            cleanSlug,
+          });
         }
       }
     }
 
     const dbBlogPages: MetadataRoute.Sitemap = cleanDbBlogs.map((blog: any) => ({
-      url: `${baseUrl}/blog/${blog.slug}`,
+      url: `${baseUrl}/blog/${blog.cleanSlug}`,
       lastModified: blog.created_at ? new Date(blog.created_at) : new Date('2026-11-14'),
       changeFrequency: 'weekly',
       priority: 0.8,

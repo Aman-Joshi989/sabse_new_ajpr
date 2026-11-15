@@ -46,6 +46,25 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
     console.error("Failed to load blogs:", err);
   }
 
+  // Deduplicate and canonicalize DB blogs by base topic so cards link to clean canonical URLs
+  const seenCanonicalSlugs = new Set<string>();
+  const cleanDbBlogs: BlogPost[] = [];
+  for (const b of allBlogs) {
+    const cleanSlug = (b.slug || '')
+      .replace(/-edition-\d+$/i, '')
+      .replace(/^edition-\d+-/i, '')
+      .replace(/-\d{3,4}$/, '');
+    if (cleanSlug && !seenCanonicalSlugs.has(cleanSlug)) {
+      seenCanonicalSlugs.add(cleanSlug);
+      cleanDbBlogs.push({
+        ...b,
+        slug: cleanSlug,
+        title: (b.title || '').replace(/\s*–\s*Edition\s*\d+/i, '').replace(/\s*-\s*Edition\s*\d+/i, '').trim(),
+      });
+    }
+  }
+  allBlogs = cleanDbBlogs;
+
   // Ensure high-priority cornerstone guides are featured, with the benchmark article pinned strictly on top
   for (const cp of [...CORNERSTONE_BLOG_POSTS].reverse()) {
     allBlogs = allBlogs.filter(b => b.slug !== cp.slug);

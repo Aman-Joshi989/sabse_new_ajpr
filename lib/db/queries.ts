@@ -776,7 +776,24 @@ export async function getBlogBySlug(slug: string) {
     SELECT * FROM blog_posts 
     WHERE slug = ${slug} AND published = true;
   `;
-  return result[0];
+  if (result && result.length > 0) {
+    return result[0];
+  }
+
+  // Fallback: If clean canonical slug requested, find latest edition matching this base topic
+  const editionMatch = await sql`
+    SELECT * FROM blog_posts 
+    WHERE (slug LIKE ${slug + '-edition-%'} OR slug LIKE ${slug + '-%'})
+      AND published = true
+    ORDER BY id DESC 
+    LIMIT 1;
+  `;
+  if (editionMatch && editionMatch.length > 0) {
+    const post = { ...editionMatch[0] };
+    post.title = (post.title || '').replace(/\s*–\s*Edition\s*\d+/i, '').replace(/\s*-\s*Edition\s*\d+/i, '').trim();
+    return post;
+  }
+  return null;
 }
 
 export async function createBlog(data: any) {

@@ -133,24 +133,16 @@ async function getPost(slug: string) {
     return getCornerstonePost(slug) || null;
 }
 
-async function getCanonicalPostSlug(slug: string): Promise<string | null> {
-    if (!/-edition-\d+$/.test(slug) && !/^edition-\d+-/.test(slug)) {
-        return null;
-    }
-    const baseTopic = slug.replace(/-edition-\d+$/, '').replace(/^edition-\d+-/, '');
-    const all = await getBlogs().catch(() => []);
-    if (!Array.isArray(all) || all.length === 0) return null;
-    const matches = all.filter((b: any) => {
-        const topic = (b.slug || '').replace(/-edition-\d+$/, '').replace(/^edition-\d+-/, '');
-        return topic === baseTopic;
-    });
-    if (matches.length <= 1) return null;
-    matches.sort((a: any, b: any) => (b.id || 0) - (a.id || 0));
-    const canonical = matches[0];
-    if (canonical && canonical.slug && canonical.slug !== slug) {
-        return canonical.slug;
-    }
-    return null;
+function getCleanCanonicalSlug(slug: string): string | null {
+    const isEdition = /-edition-\d+$/i.test(slug) || 
+                      /^edition-\d+-/i.test(slug) || 
+                      /-\d{3,4}$/.test(slug);
+    if (!isEdition) return null;
+    const clean = slug
+        .replace(/-edition-\d+$/i, '')
+        .replace(/^edition-\d+-/i, '')
+        .replace(/-\d{3,4}$/, '');
+    return clean && clean !== slug ? clean : null;
 }
 
 type Props = {
@@ -159,8 +151,8 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
     const params = await props.params;
-    const canonicalSlug = await getCanonicalPostSlug(params.slug);
-    const targetSlug = canonicalSlug || params.slug;
+    const cleanCanonicalSlug = getCleanCanonicalSlug(params.slug);
+    const targetSlug = cleanCanonicalSlug || params.slug;
     const post = await getPost(targetSlug);
 
     if (!post) {
@@ -191,9 +183,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function BlogPost(props: Props) {
     const params = await props.params;
-    const canonicalSlug = await getCanonicalPostSlug(params.slug);
-    if (canonicalSlug && canonicalSlug !== params.slug) {
-        permanentRedirect(`/blog/${canonicalSlug}`);
+    const cleanCanonicalSlug = getCleanCanonicalSlug(params.slug);
+    if (cleanCanonicalSlug) {
+        permanentRedirect(`/blog/${cleanCanonicalSlug}`);
     }
 
     const [post, allBlogs] = await Promise.all([

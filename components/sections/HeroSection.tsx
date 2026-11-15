@@ -11,7 +11,8 @@ import {
     Zap, 
     Lock, 
     DollarSign,
-    Receipt
+    Receipt,
+    Star
 } from 'lucide-react';
 
 interface HeroSectionProps {
@@ -31,6 +32,22 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
 
             <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
+
+                    {/* Social Proof & Rating Badge Strip */}
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 mb-6 shadow-2xs">
+                        <div className="flex items-center text-amber-500">
+                            <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                            <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                            <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                            <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                            <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                        </div>
+                        <span className="font-bold text-slate-900 dark:text-white">5.0 Star Rating</span>
+                        <span className="text-slate-300 dark:text-slate-700">•</span>
+                        <span>Shipped for 100k+ Users</span>
+                        <span className="text-slate-300 dark:text-slate-700">•</span>
+                        <span className="text-blue-600 dark:text-blue-400 font-bold">100 Mobile Lighthouse</span>
+                    </div>
 
                     {/* Main Heading */}
                     <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.08] mb-6">

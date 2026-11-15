@@ -35,15 +35,17 @@ export default function LeadForm() {
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [referenceId, setReferenceId] = useState('');
-  const [targetDomain, setTargetDomain] = useState('');
+  const [auditFocus, setAuditFocus] = useState<'speed' | 'security' | 'database' | 'ai'>('speed');
+  const [showBudgetPlanning, setShowBudgetPlanning] = useState(false);
   
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    website: '',
     phone: '',
     projectGoal: '',
     companySize: '2-10',
-    budget: '',
+    budget: 'Free 48h Audit',
     techStack: '',
     honeypot: '',
     utm_source: '',
@@ -56,11 +58,10 @@ export default function LeadForm() {
       const urlParams = new URLSearchParams(window.location.search);
       const domain = urlParams.get('domain') || urlParams.get('website') || '';
       if (domain) {
-        setTargetDomain(domain);
         setFormData(prev => ({
           ...prev,
+          website: domain,
           techStack: domain,
-          projectGoal: prev.projectGoal || `Technical audit for ${domain}`,
           utm_source: urlParams.get('utm_source') || 'quick_scan_hook',
           utm_medium: urlParams.get('utm_medium') || 'hero_scan',
           utm_campaign: urlParams.get('utm_campaign') || 'free_audit'
@@ -68,9 +69,9 @@ export default function LeadForm() {
       } else {
         setFormData(prev => ({
           ...prev,
-          utm_source: urlParams.get('utm_source') || '',
-          utm_medium: urlParams.get('utm_medium') || '',
-          utm_campaign: urlParams.get('utm_campaign') || ''
+          utm_source: urlParams.get('utm_source') || 'free_audit_page',
+          utm_medium: urlParams.get('utm_medium') || 'audit_form',
+          utm_campaign: urlParams.get('utm_campaign') || 'free_audit'
         }));
       }
     }
@@ -83,12 +84,12 @@ export default function LeadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name.trim()) {
-      toast.error('Please enter your full name');
+    if (!formData.website.trim()) {
+      toast.error('Please enter your website or GitHub repository URL');
       return;
     }
     if (!formData.email.trim()) {
-      toast.error('Please enter your work email');
+      toast.error('Please enter your work email to receive the video teardown');
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -100,17 +101,26 @@ export default function LeadForm() {
     setLoading(true);
     
     try {
+      const focusLabels = {
+        speed: 'Core Web Vitals & Speed Bottlenecks',
+        security: 'Security, Headers & Vulnerabilities',
+        database: 'Database Queries & Architecture Scaling',
+        ai: 'Next.js & AI Integration Readiness'
+      };
+
       const submissionPayload = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone || '',
+        name: formData.name.trim() || formData.email.split('@')[0],
+        email: formData.email.trim(),
+        phone: formData.phone.trim() || '',
+        company: formData.website.trim(),
         companySize: formData.companySize || '2-10',
-        budget: formData.budget || (isIndia ? '₹1.5L – ₹4L' : '$5k – $15k'),
-        techStack: formData.techStack ? `${formData.techStack} | Goal: ${formData.projectGoal}` : formData.projectGoal || 'Full-stack software scoping',
+        budget: 'Free 48h Audit',
+        techStack: formData.website.trim(),
+        projectGoal: `48-Hour Systems & Architecture Audit for: ${formData.website.trim()} [Focus: ${focusLabels[auditFocus]}] ${formData.projectGoal ? `Notes: ${formData.projectGoal}` : ''}`,
         honeypot: formData.honeypot,
-        utm_source: formData.utm_source,
-        utm_medium: formData.utm_medium,
-        utm_campaign: formData.utm_campaign
+        utm_source: formData.utm_source || 'free_audit_page',
+        utm_medium: formData.utm_medium || 'audit_form',
+        utm_campaign: formData.utm_campaign || 'free_audit'
       };
 
       const response = await fetch('/api/leads', {
@@ -129,15 +139,15 @@ export default function LeadForm() {
         setReferenceId(resData.referenceId);
       }
       setIsSuccess(true);
-      toast.success('Your audit & scoping request has been received!');
+      toast.success('Your audit request has been queued!');
       
       // Fire GTM / Analytics Event
       if (typeof window !== 'undefined' && (window as any).dataLayer) {
         (window as any).dataLayer.push({
           event: 'generate_lead',
           lead_type: 'free_audit',
-          budget: formData.budget,
-          company_size: formData.companySize
+          target_url: formData.website,
+          focus: auditFocus
         });
       }
     } catch (error: any) {
@@ -168,10 +178,10 @@ export default function LeadForm() {
             )}
           </div>
           <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            Scope Request Received!
+            Systems Audit Queued!
           </h3>
           <p className="text-sm text-slate-600 dark:text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
-            Thank you, <strong className="text-slate-900 dark:text-white font-semibold">{formData.name}</strong>. A confirmation has been dispatched to <span className="text-blue-600 dark:text-blue-400 font-medium">{formData.email}</span>. Lead Systems Architect Aman Joshi is reviewing your technical requirements.
+            Thank you, <strong className="text-slate-900 dark:text-white font-semibold">{formData.name}</strong>. Your audit for <strong className="text-blue-600 dark:text-blue-400 font-mono">{formData.website}</strong> has been received. Lead Systems Architect Aman Joshi is analyzing your architecture, Core Web Vitals, and backend queries.
           </p>
         </div>
 
@@ -181,15 +191,15 @@ export default function LeadForm() {
           <div className="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
             <div className="flex items-start gap-2.5">
               <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
-              <span><strong>Architect Review:</strong> We inspect your target stack, API requirements, and performance profile.</span>
+              <span><strong>Code & Network Inspection:</strong> We analyze your main thread, TBT, TTFB, database query indices, and bundle bloat.</span>
             </div>
             <div className="flex items-start gap-2.5">
               <span className="w-5 h-5 rounded-full bg-blue-600/20 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
-              <span><strong>Clear Sprint Scope:</strong> We author a concise roadmap with fixed sprint pricing and delivery dates.</span>
+              <span><strong>Personalized 5-Min Loom Teardown:</strong> Aman records a private video walking through your top 3 highest-leverage fixes.</span>
             </div>
             <div className="flex items-start gap-2.5">
               <span className="w-5 h-5 rounded-full bg-emerald-600/20 text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
-              <span><strong>Direct Delivery:</strong> Delivered to your inbox within 24 hours. Zero aggressive sales follow-ups.</span>
+              <span><strong>Inbox Delivery:</strong> Sent directly to <span className="font-semibold text-slate-900 dark:text-white">{formData.email}</span> within 48 hours. 100% free with zero sales reps.</span>
             </div>
           </div>
         </div>
@@ -269,14 +279,14 @@ export default function LeadForm() {
       </div>
 
       {/* Target Domain pill if scanned from hero */}
-      {targetDomain && (
+      {formData.website && (
         <div className="mb-5 p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-between text-xs font-semibold">
           <span className="flex items-center gap-1.5 truncate mr-2">
             <Globe className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-            Target Domain: <strong className="text-slate-900 dark:text-white truncate">{targetDomain}</strong>
+            Target URL / System: <strong className="text-slate-900 dark:text-white truncate">{formData.website}</strong>
           </span>
           <span className="bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full text-[10px] uppercase font-bold shrink-0">
-            Audit Queued
+            Ready for Audit
           </span>
         </div>
       )}
@@ -284,26 +294,30 @@ export default function LeadForm() {
       {/* Single Streamlined High-Velocity Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         
-        {/* Row 1: Name and Email */}
+        {/* Field 1: Target Website or Repo URL */}
+        <div>
+          <Label htmlFor="lead-website" className="text-slate-700 dark:text-slate-300 flex items-center justify-between text-xs font-bold uppercase tracking-wider mb-1.5">
+            <span className="flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5 text-blue-500" /> Website or GitHub Repository to Audit *
+            </span>
+            <span className="text-[10px] font-normal text-slate-400 lowercase">staging, live, or repo URL</span>
+          </Label>
+          <Input 
+            id="lead-website"
+            name="website" 
+            value={formData.website} 
+            onChange={handleChange} 
+            placeholder="https://yourcompany.com or github.com/org/repo" 
+            required
+            className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500 font-mono text-xs sm:text-sm"
+          />
+        </div>
+
+        {/* Row 2: Name and Email */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="lead-name" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-              <User className="w-3.5 h-3.5 text-blue-500" /> Full Name *
-            </Label>
-            <Input 
-              id="lead-name"
-              name="name" 
-              value={formData.name} 
-              onChange={handleChange} 
-              placeholder="Alex Morgan" 
-              required
-              className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
             <Label htmlFor="lead-email" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-              <Mail className="w-3.5 h-3.5 text-blue-500" /> Work Email *
+              <Mail className="w-3.5 h-3.5 text-blue-500" /> Work Email (for Teardown) *
             </Label>
             <Input 
               id="lead-email"
@@ -313,19 +327,62 @@ export default function LeadForm() {
               onChange={handleChange} 
               placeholder="alex@company.com" 
               required
-              className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500"
+              className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="lead-name" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
+              <User className="w-3.5 h-3.5 text-blue-500" /> Your Name *
+            </Label>
+            <Input 
+              id="lead-name"
+              name="name" 
+              value={formData.name} 
+              onChange={handleChange} 
+              placeholder="Alex Morgan" 
+              required
+              className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm"
             />
           </div>
         </div>
 
-        {/* Row 2: Phone / WhatsApp (Optional but high intent) */}
+        {/* Field 3: Audit Focus Pills */}
+        <div>
+          <Label className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-2">
+            <Cpu className="w-3.5 h-3.5 text-blue-500" /> Primary Teardown Focus
+          </Label>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            {[
+              { id: 'speed', label: '⚡ Speed & Core Web Vitals' },
+              { id: 'security', label: '🔒 Security & Headers' },
+              { id: 'database', label: '🏗️ Database & Scaling' },
+              { id: 'ai', label: '🤖 Next.js & AI Systems' },
+            ].map((pill) => (
+              <button
+                key={pill.id}
+                type="button"
+                onClick={() => setAuditFocus(pill.id as any)}
+                className={`p-2.5 rounded-xl border text-left font-semibold transition-all cursor-pointer ${
+                  auditFocus === pill.id
+                    ? 'bg-blue-50 dark:bg-blue-950/60 border-blue-500 text-blue-700 dark:text-blue-300 shadow-2xs'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
+              >
+                {pill.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Row 4: Phone / WhatsApp (Optional but high intent) */}
         <div>
           <Label htmlFor="lead-phone" className="text-slate-700 dark:text-slate-300 flex items-center justify-between text-xs font-bold uppercase tracking-wider mb-1.5">
             <span className="flex items-center gap-1.5">
               {isIndia ? <MessageCircle className="w-3.5 h-3.5 text-emerald-500" /> : <Phone className="w-3.5 h-3.5 text-blue-500" />}
-              {isIndia ? 'WhatsApp / Phone Number' : 'Phone / WhatsApp (Optional)'}
+              {isIndia ? 'WhatsApp / Phone Number' : 'Phone / WhatsApp'}
             </span>
-            <span className="text-[10px] font-normal text-slate-400 lowercase">{isIndia ? 'for instant WhatsApp reply' : 'optional'}</span>
+            <span className="text-[10px] font-normal text-slate-400 lowercase">optional (for instant WhatsApp delivery link)</span>
           </Label>
           <Input 
             id="lead-phone"
@@ -333,60 +390,51 @@ export default function LeadForm() {
             value={formData.phone} 
             onChange={handleChange} 
             placeholder={isIndia ? '+91 98765 43210' : '+1 (415) 800-2490'}
-            className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500"
+            className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm"
           />
         </div>
 
-        {/* Row 3: Project Goal / Scope */}
-        <div>
-          <Label htmlFor="lead-goal" className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1.5">
-            <Cpu className="w-3.5 h-3.5 text-blue-500" /> What do you need built or reviewed? *
-          </Label>
-          <Textarea 
-            id="lead-goal"
-            name="projectGoal" 
-            value={formData.projectGoal} 
-            onChange={handleChange} 
-            rows={3}
-            placeholder={isIndia ? "e.g. Next.js web application, WhatsApp AI concierge, or website audit..." : "e.g. Next.js SaaS MVP, automated AI agent workflows, or custom web platform..."}
-            className="bg-slate-50 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 resize-none text-sm"
-          />
-        </div>
-
-        {/* Row 4: Budget Range */}
-        <div>
-          <Label htmlFor="lead-budget" className="text-slate-700 dark:text-slate-300 flex items-center justify-between text-xs font-bold uppercase tracking-wider mb-1.5">
-            <span className="flex items-center gap-1.5">
-              {isIndia ? <Receipt className="w-3.5 h-3.5 text-blue-500" /> : <DollarSign className="w-3.5 h-3.5 text-blue-500" />} Estimated Budget
-            </span>
-            <span className="text-[10px] font-normal text-slate-400 lowercase">helps scope sprint</span>
-          </Label>
-          <select 
-            id="lead-budget"
-            name="budget" 
-            value={formData.budget} 
-            onChange={handleChange}
-            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-11 rounded-xl px-3 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500"
+        {/* Optional: Future Sprint Scope / Budget Planning */}
+        <div className="pt-1">
+          <button
+            type="button"
+            onClick={() => setShowBudgetPlanning(!showBudgetPlanning)}
+            className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-1 cursor-pointer transition-colors"
           >
-            <option value="">Select an estimated budget range...</option>
-            {isIndia ? (
-              <>
-                <option value="<1.5L">Under ₹1,50,000 (Rapid MVP / Starter Sprint)</option>
-                <option value="1.5L-4L">₹1,50,000 – ₹4,00,000 (Production Web App / AI System)</option>
-                <option value="4L-10L">₹4,00,000 – ₹10,00,000 (Custom Multi-Agent Architecture)</option>
-                <option value="10L+">₹10,00,000+ (Enterprise Multi-Tenant Infrastructure)</option>
-                <option value="Flexible">Flexible / Need technical recommendation first</option>
-              </>
-            ) : (
-              <>
-                <option value="<5k">Under $5,000 (Rapid MVP / Starter Sprint)</option>
-                <option value="5k-15k">$5,000 – $15,000 (Production Web App / AI System)</option>
-                <option value="15k-35k">$15,000 – $35,000 (Custom Multi-Agent Architecture)</option>
-                <option value="35k+">$35,000+ (Enterprise Scale & SLA)</option>
-                <option value="Flexible">Flexible / Need technical recommendation first</option>
-              </>
-            )}
-          </select>
+            {showBudgetPlanning ? '− Hide sprint budget planning' : '+ Also estimating budget for a full engineering sprint? (Optional)'}
+          </button>
+
+          {showBudgetPlanning && (
+            <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <Label htmlFor="lead-budget" className="text-slate-700 dark:text-slate-300 block text-xs font-bold uppercase tracking-wider mb-1.5">
+                Estimated Sprint Budget (Optional)
+              </Label>
+              <select
+                id="lead-budget"
+                name="budget"
+                value={formData.budget}
+                onChange={handleChange}
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white h-10 px-3 rounded-xl focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm"
+              >
+                <option value="Free 48h Audit">Free 48h Teardown (No Budget Required)</option>
+                {isIndia ? (
+                  <>
+                    <option value="<1.5L">Under ₹1,50,000 (Rapid MVP / Starter Sprint)</option>
+                    <option value="1.5L-4L">₹1,50,000 – ₹4,00,000 (Production Web App / AI System)</option>
+                    <option value="4L-10L">₹4,00,000 – ₹10,00,000 (Custom Multi-Agent Architecture)</option>
+                    <option value="10L+">₹10,00,000+ (Enterprise Scale & SLA)</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="<5k">Under $5,000 (Rapid MVP / Starter Sprint)</option>
+                    <option value="5k-15k">$5,000 – $15,000 (Production Web App / AI System)</option>
+                    <option value="15k-35k">$15,00,000 – $35,000 (Custom Multi-Agent Architecture)</option>
+                    <option value="35k+">$35,000+ (Enterprise Scale & SLA)</option>
+                  </>
+                )}
+              </select>
+            </div>
+          )}
         </div>
 
         {/* Honeypot field (hidden from humans, filled by bots) */}
@@ -402,14 +450,14 @@ export default function LeadForm() {
           />
         </div>
 
-        {/* Guarantee Banner */}
-        <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 text-xs text-slate-700 dark:text-slate-300 flex items-center justify-between">
-          <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold text-[11px]">
-            <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-            100% Confidential &bull; Mutual NDA
+        {/* 100% Free Guarantee Banner */}
+        <div className="p-3.5 rounded-xl bg-emerald-50/90 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-xs text-emerald-800 dark:text-emerald-300 flex items-center justify-between">
+          <span className="flex items-center gap-1.5 font-bold">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            100% Free • No Sales Pitch • Video Teardown
           </span>
-          <span className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
-            <Clock className="w-3 h-3 text-amber-500" /> ~24h Response
+          <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
+            <Clock className="w-3 h-3" /> 48h Delivery
           </span>
         </div>
 
@@ -417,15 +465,15 @@ export default function LeadForm() {
         <Button 
           type="submit" 
           disabled={loading}
-          className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/25 transition-all text-sm gap-2"
+          className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/25 transition-all text-sm gap-2 cursor-pointer"
         >
           {loading ? (
             <span className="flex items-center gap-2">
-              <Loader2 className="w-4 h-4 animate-spin" /> Submitting Request...
+              <Loader2 className="w-4 h-4 animate-spin" /> Queuing 48h Systems Audit...
             </span>
           ) : (
             <span className="flex items-center gap-2">
-              Get Fixed-Scope Architecture Review <ArrowRight className="w-4 h-4" />
+              Claim Free 48-Hour Systems Teardown <ArrowRight className="w-4 h-4" />
             </span>
           )}
         </Button>

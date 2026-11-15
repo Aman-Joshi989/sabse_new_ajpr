@@ -1,5 +1,6 @@
 import HomeClient from './HomeClient'
 import { getPublishedServices, getSeoMetadata } from '@/lib/db/queries'
+import { getPublicApprovedReviews } from '@/lib/db/reviews'
 import { FAQSchema } from '@/components/schema/FAQSchema'
 import { ItemListSchema } from '@/components/schema/ItemListSchema'
 import { WebSiteSchema } from '@/components/schema/WebSiteSchema'
@@ -10,10 +11,15 @@ export const revalidate = 86400; // Cache for 24 hours (ISR) to protect Vercel f
 
 export default async function HomePage() {
   let services: any[] = []
+  let reviews: any[] = []
 
   try {
+    const [fetchedServices, fetchedReviews] = await Promise.all([
+      getPublishedServices().catch(() => []),
+      getPublicApprovedReviews(6).catch(() => [])
+    ])
+
     // Only project minimal card fields to keep RSC payload lightweight (<150 KB target)
-    const fetchedServices = await getPublishedServices()
     services = Array.isArray(fetchedServices)
       ? fetchedServices.slice(0, 3).map((s: any) => ({
           title: s.title,
@@ -23,6 +29,8 @@ export default async function HomePage() {
           keywords: Array.isArray(s.keywords) ? s.keywords.slice(0, 4) : [],
         }))
       : []
+
+    reviews = Array.isArray(fetchedReviews) ? fetchedReviews : []
   } catch (err) {
     console.error("Failed to fetch dynamic data for homepage:", err)
   }
@@ -87,6 +95,7 @@ export default async function HomePage() {
       />
       <HomeClient 
         services={services} 
+        reviews={reviews}
       />
     </>
   )

@@ -13,7 +13,8 @@ import { motion } from 'framer-motion'
 
 function ApplicationForm() {
   const searchParams = useSearchParams()
-  const role = searchParams?.get('role') || 'Open Application'
+  const initialRole = searchParams?.get('role') || 'Open Application'
+  const [role, setRole] = useState(initialRole)
   
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -124,6 +125,24 @@ function ApplicationForm() {
             
             <form onSubmit={handleSubmit} className="space-y-6">
               
+              <div className="space-y-2">
+                <Label htmlFor="role" className="text-slate-700 dark:text-slate-300 font-bold">
+                  Role Applied For <span className="text-red-500">*</span>
+                </Label>
+                <select
+                  id="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-full h-12 px-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 font-semibold text-sm focus:ring-2 focus:ring-blue-600 outline-none cursor-pointer"
+                >
+                  <option value="Senior Full Stack Engineer">Senior Full Stack Engineer (Next.js 16 + React 19 + TypeScript)</option>
+                  <option value="Autonomous AI & Workflow Systems Engineer">Autonomous AI & Workflow Systems Engineer (Python, LLMs, Agents)</option>
+                  <option value="Technical SEO & Generative Search Architect">Technical SEO & Generative Search Architect (Programmatic SEO, GEO)</option>
+                  <option value="Frontend UI/UX Product Engineer">Frontend UI/UX Product Engineer (React 19, Tailwind, Motion)</option>
+                  <option value="Open Application">Open Application / Specialized Builder</option>
+                </select>
+              </div>
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-slate-700 dark:text-slate-300 font-bold">Full Name <span className="text-red-500">*</span></Label>

@@ -1,240 +1,832 @@
 'use client'
 
-import React, { Suspense } from 'react'
+import React, { useState, Suspense } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { 
-  Briefcase, MapPin, Clock, ArrowRight, Sparkles, 
-  Users, Target, Trophy, Laptop, ShieldCheck, Heart,
-  Sprout, Scale, Eye, Compass, TrendingUp
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import {
+  Briefcase, MapPin, Clock, ArrowRight, Sparkles,
+  Code2, Cpu, Zap, Globe, ShieldCheck, CheckCircle2,
+  DollarSign, Terminal, ExternalLink, HelpCircle,
+  Layers, Rocket, Laptop, Flame, Github, Linkedin, Eye
 } from 'lucide-react'
 
-const openings = [
+interface JobOpening {
+  id: string
+  title: string
+  department: 'Engineering' | 'AI Systems' | 'Growth & SEO' | 'Developer Network'
+  type: string
+  location: string
+  experience: string
+  compensation: string
+  shortSummary: string
+  skills: string[]
+  responsibilities: string[]
+  mustHaves: string[]
+  niceToHaves: string[]
+  highlights: string[]
+}
+
+const REAL_OPENINGS: JobOpening[] = [
   {
-    title: 'Full Stack Engineer',
-    department: 'Technology',
-    type: 'Full-time',
-    location: 'Faridabad, HR / Hybrid',
-    experience: '2-4 years',
-    skills: ['React', 'Next.js', 'Node.js', 'PostgreSQL', 'AWS']
+    id: 'senior-fullstack-engineer',
+    title: 'Senior Full Stack Engineer',
+    department: 'Engineering',
+    type: 'Full-time / High-Yield Sprint',
+    location: 'Remote (India / Global) • Hybrid (Haldwani / Delhi NCR)',
+    experience: '2–5+ years',
+    compensation: '₹10,00,000 – ₹20,00,000 / $24k – $48k + Sprint Bonuses',
+    shortSummary: 'Architect and deploy sub-200ms edge web platforms and MVPs for US, UK, and global tech clients using Next.js 16 and PostgreSQL.',
+    skills: ['Next.js 16', 'React 19', 'TypeScript', 'PostgreSQL', 'Tailwind CSS', 'Turbopack'],
+    responsibilities: [
+      'Architect, develop, and deploy production-grade Next.js App Router applications with sub-200ms TTFB.',
+      'Design clean relational database schemas, migrations, and query indexes on PostgreSQL / Supabase / Neon.',
+      'Ship clean server actions, optimistic UI states, and robust error-handling boundaries.',
+      'Participate in high-speed PR reviews with 100% type safety and zero tolerance for bundle bloat.'
+    ],
+    mustHaves: [
+      'Strong practical experience shipping Next.js App Router in production (Server Components, Suspense, Streaming).',
+      'High proficiency in TypeScript, relational SQL queries, and REST/GraphQL API construction.',
+      'Obsessive care for Core Web Vitals (LCP < 1.2s, 0 CLS, high Lighthouse scores).'
+    ],
+    niceToHaves: [
+      'Experience with Redis caching, Docker containerization, or vector databases (pgvector).',
+      'Previous background at a high-velocity startup or digital agency shipping fixed-scope sprints.'
+    ],
+    highlights: ['Direct collaboration with Lead Architect Aman Joshi', 'Zero corporate bureaucracy — code ships daily', '100% remote flexibility with modern tooling']
   },
   {
-    title: 'Legal Associate',
-    department: 'Legal Services',
-    type: 'Full-time',
-    location: 'Faridabad, HR / On-site',
-    experience: '1-3 years',
-    skills: ['LLB', 'Corporate Law', 'Documentation', 'Research']
-  },
-  {
-    title: 'Data Analyst & Automation Specialist',
-    department: 'Operations',
-    type: 'Full-time',
-    location: 'Remote (India)',
+    id: 'ai-automation-engineer',
+    title: 'Autonomous AI & Workflow Systems Engineer',
+    department: 'AI Systems',
+    type: 'Full-time / High-Yield Sprint',
+    location: 'Remote (Worldwide)',
     experience: '2+ years',
-    skills: ['Python', 'SQL', 'FastAPI', 'Workflow Orchestration', 'n8n']
+    compensation: '₹8,00,000 – ₹18,00,000 / $20k – $40k + Milestone Share',
+    shortSummary: 'Construct autonomous multi-agent pipelines, CRM auto-triaging swarms, and RAG architectures powered by frontier LLMs and Python.',
+    skills: ['Python', 'FastAPI', 'LangChain / LlamaIndex', 'OpenAI & Gemini APIs', 'pgvector', 'n8n', 'Webhooks'],
+    responsibilities: [
+      'Build and maintain autonomous multi-agent systems that automate candidate screening, CRM dispatch, and lead triage.',
+      'Develop retrieval-augmented generation (RAG) pipelines with hybrid search, semantic chunking, and pgvector embeddings.',
+      'Implement resilient webhook listeners, background job queues, and automated retry mechanisms.',
+      'Fine-tune system prompts, evaluate synthetic outputs, and enforce reliable execution boundaries and response schemas.'
+    ],
+    mustHaves: [
+      'Demonstrated experience building real-world AI applications using OpenAI, Anthropic, or Gemini APIs.',
+      'Strong Python and FastAPI or Node.js backend engineering foundations.',
+      'Familiarity with webhook architectures, asynchronous job queues, and structured JSON outputs.'
+    ],
+    niceToHaves: [
+      'Experience building autonomous agent swarms or complex n8n / LangGraph workflows.',
+      'Knowledge of vector indexing algorithms (HNSW, IVFFlat) and rerankers.'
+    ],
+    highlights: ['Work with frontier AI models on real production workloads', 'High autonomy in choosing agent architecture and tooling', 'Direct impact on revenue-generating client pipelines']
+  },
+  {
+    id: 'technical-seo-growth-engineer',
+    title: 'Technical SEO & Generative Search Architect',
+    department: 'Growth & SEO',
+    type: 'Full-time / High-Yield Sprint',
+    location: 'Remote',
+    experience: '2–4+ years',
+    compensation: '₹7,00,000 – ₹15,00,000 / $18k – $36k + Revenue Performance Bonus',
+    shortSummary: 'Scale programmatic SEO platforms, coordinate 26+ JSON-LD schema graphs, and execute Generative Engine Optimization (GEO) for AI citations.',
+    skills: ['Programmatic SEO', 'JSON-LD Schema Graphs', 'Core Web Vitals', 'Ahrefs & GSC', 'IndexNow API', 'GEO'],
+    responsibilities: [
+      'Engineer scalable programmatic SEO systems generating high-intent landing pages with unique localized data.',
+      'Author complex JSON-LD knowledge graphs (ItemList, FAQPage, Organization, Service, Article) that search bots love.',
+      'Execute Generative Engine Optimization (GEO) ensuring clients win citations in ChatGPT, Perplexity, and Google AI Overviews.',
+      'Monitor and diagnose crawl anomalies, indexation drops, and server response TTFB in real time.'
+    ],
+    mustHaves: [
+      'Proven track record of measurably scaling organic search impressions and ranking in competitive commercial niches.',
+      'Deep technical mastery of schema markup, canonical logic, sitemap trees, and modern crawling protocols (IndexNow).',
+      'Ability to write clean semantic HTML/React components and analyze Google Search Console datasets.'
+    ],
+    niceToHaves: [
+      'Experience optimizing for AI search engines (SearchGPT, Perplexity AI, Claude artifacts).',
+      'Familiarity with Next.js ISR (Incremental Static Regeneration) and edge caching.'
+    ],
+    highlights: ['Dominate cutting-edge search engineering (GEO + SEO)', 'Generous upside on search revenue growth', 'Work with top-tier international SaaS and B2B clients']
+  },
+  {
+    id: 'frontend-ui-ux-engineer',
+    title: 'Frontend UI/UX Product Engineer',
+    department: 'Engineering',
+    type: 'Full-time / Contractor',
+    location: 'Remote • Hybrid (Haldwani / Delhi NCR)',
+    experience: '1–4 years',
+    compensation: '₹6,00,000 – ₹14,00,000 / $16k – $32k + Sprint Bonuses',
+    shortSummary: 'Translate high-fidelity product concepts into pixel-perfect React 19 / Tailwind interfaces with fluid 60fps micro-interactions.',
+    skills: ['React 19', 'Tailwind CSS', 'Framer Motion', 'Radix UI', 'TypeScript', 'Figma'],
+    responsibilities: [
+      'Convert intricate Figma designs into production React 19 components with spotless typography and spacing.',
+      'Craft fluid, performance-conscious micro-interactions and animations using Framer Motion.',
+      'Ensure 100% responsive execution across mobile (375px), tablet, and 4K desktop screens without layout shifts.',
+      'Build reusable design-system component libraries using Tailwind CSS and Radix UI primitives.'
+    ],
+    mustHaves: [
+      'A public portfolio or live GitHub repository demonstrating exceptional visual craft, spacing, and typography.',
+      'Deep fluency in Tailwind CSS, modern CSS layouts (CSS Grid, flexbox, clamp), and SVG animation.',
+      'Zero tolerance for sloppy UI alignment, poor color contrast, or sluggish mobile performance.'
+    ],
+    niceToHaves: [
+      'Experience building interactive data dashboards, scanners, or calculators.',
+      'Familiarity with Next.js App Router and Turbopack.'
+    ],
+    highlights: ['Build award-winning agency and product interfaces', 'Freedom to implement world-class visual styling and motion', 'Modern stack with zero legacy jQuery/Bootstrap tech debt']
+  },
+  {
+    id: 'open-application',
+    title: 'Open Engineering Application & Developer Network',
+    department: 'Developer Network',
+    type: 'Flexible Sprint Contracts / Pod Collaborator',
+    location: 'Worldwide Remote',
+    experience: 'All levels welcome (Demonstrated ability required)',
+    compensation: 'Fixed Sprint Rates ($1,500 – $4,500 per sprint or competitive hourly)',
+    shortSummary: 'Are you a high-caliber builder in Rust, Go, Python, Cloud Architecture, or DevOps? Join our specialized sprint pod roster.',
+    skills: ['Rust', 'Go', 'Python', 'DevOps / AWS / GCP', 'Flutter', 'Security Auditing'],
+    responsibilities: [
+      'Collaborate on client sprint deliverables requiring specialized domain architecture.',
+      'Deliver focused, production-ready modules with comprehensive tests and documentation.',
+      'Participate in architecture reviews and sprint milestone planning.'
+    ],
+    mustHaves: [
+      'Demonstrated track record of shipping software independently or in high-tempo teams.',
+      'Clear, transparent asynchronous communication skills.',
+      'Pride in code quality, security, and performance.'
+    ],
+    niceToHaves: [
+      'Open source contributions or active public repositories.',
+      'Experience building high-throughput or latency-critical backends.'
+    ],
+    highlights: ['Choose the client sprints that fit your availability', 'Competitive USD/INR payouts with 0 corporate politics', 'Collaborate with a vetted network of senior developers']
   }
 ]
 
-const values = [
+const STUDIO_METRICS = [
+  { value: '0.19s', label: 'Average Edge TTFB', detail: 'Sub-second speed across all live client platforms' },
+  { value: '14 Days', label: 'MVP Sprint Velocity', detail: 'From architecture blueprint to live production release' },
+  { value: '100%', label: 'Client IP Ownership', detail: 'Direct GitHub repository access with zero vendor lock-in' },
+  { value: '4 Timezones', label: 'Global Client Base', detail: 'Active product delivery across US, UK, SG, and India' },
+]
+
+const HIRING_STEPS = [
   {
-    icon: <Sparkles className="w-5 h-5 text-amber-500" />,
-    title: "Inspiration",
-    desc: "We bring fresh creative energy and frontier AI architectures, rejecting stale templates."
+    step: '01',
+    title: 'GitHub & Portfolio Review',
+    duration: 'Within 48 Hours',
+    description: 'Submit your profile with links to real projects, GitHub repos, or live apps. Founder Aman Joshi personally reviews your work — no automated ATS filters or rejection algorithms.'
   },
   {
-    icon: <ShieldCheck className="w-5 h-5 text-rose-500" />,
-    title: "Disciplined",
-    desc: "Zero tolerance for sloppy code. 100% type safety, rigorous tests, and on-time sprint delivery."
+    step: '02',
+    title: '30-Min Architecture Conversation',
+    duration: 'Video Call',
+    description: 'A focused, peer-to-peer technical dialogue with Lead Architect Aman Joshi. We discuss real systems you have built, trade-offs you have navigated, and your problem-solving process. Zero inverted-binary-tree puzzles.'
   },
   {
-    icon: <Scale className="w-5 h-5 text-purple-500" />,
-    title: "Accountability",
-    desc: "Complete end-to-end ownership. We stand behind everything we build without excuses."
+    step: '03',
+    title: 'Paid Trial Sprint or Direct Offer',
+    duration: 'Within 3–5 Days',
+    description: 'If there is mutual alignment, we test working together on a small paid trial milestone or extend a direct offer with transparent compensation, clear milestones, and immediate onboarding.'
+  }
+]
+
+const CULTURE_PILLARS = [
+  {
+    icon: Flame,
+    title: 'High Velocity, Zero Bureaucracy',
+    description: 'No 7-layer management approvals or endless sync meetings. PRs are reviewed within hours, CI/CD deploys to production, and you have the autonomy to make smart engineering calls.'
   },
   {
-    icon: <Eye className="w-5 h-5 text-blue-500" />,
-    title: "Transparency",
-    desc: "Open repositories, transparent milestone pricing, and unvarnished performance metrics."
+    icon: Terminal,
+    title: 'Modern Frontier Stack',
+    description: 'We build exclusively with Next.js 16, React 19, TypeScript, PostgreSQL, Python, and frontier AI models. You will never spend months wrestling with 8-year-old legacy PHP or jQuery monoliths.'
   },
   {
-    icon: <Compass className="w-5 h-5 text-emerald-500" />,
-    title: "Aligned",
-    desc: "Our technical execution is 100% locked to client business revenue and commercial targets."
+    icon: Globe,
+    title: 'Asynchronous & Remote-First',
+    description: 'We care about delivered output, code quality, and shipped velocity — not what time you sit at your desk or logged keystrokes. Work when you are in flow with flexible global hours.'
   },
   {
-    icon: <TrendingUp className="w-5 h-5 text-orange-500" />,
-    title: "Results Oriented",
-    desc: "Obsessed with real commercial impact: sub-second speeds, top SERPs, and pipeline conversion."
+    icon: DollarSign,
+    title: 'Transparent Compensation & Sprint Upside',
+    description: 'We believe elite engineering deserves fair, prompt compensation. Enjoy competitive monthly retainers, transparent milestone bonuses, and prompt payouts on completed sprints.'
+  }
+]
+
+const FAQS = [
+  {
+    q: 'How fast will I hear back after submitting my application?',
+    a: 'Every single application is reviewed personally by Founder & Lead Architect Aman Joshi within 48 business hours. You will receive a direct email response regardless of the outcome — no ghosting.'
+  },
+  {
+    q: 'Are these positions strictly remote or on-site?',
+    a: 'All engineering positions are remote-first, allowing you to work from anywhere across India or globally. For candidates in Uttarakhand or Delhi NCR who enjoy occasional in-person whiteboarding, we also support hybrid collaboration at our Haldwani studio hub.'
+  },
+  {
+    q: 'What is the interview process like?',
+    a: 'We respect your time. Our hiring process consists of 2 stages: a 48-hour GitHub/portfolio evaluation followed by a single 30-minute technical architecture conversation with Aman Joshi. We do not do 6-round corporate gauntlets.'
+  },
+  {
+    q: 'Can I apply for part-time or contract sprint work instead of full-time?',
+    a: 'Yes. Our Developer Network is designed specifically for talented engineers who want to take on fixed-scope 2–4 week client sprints while maintaining freelance independence or other commitments.'
   }
 ]
 
 function CareersContent() {
-  const searchParams = useSearchParams();
-  const utmParams = new URLSearchParams();
-  
+  const searchParams = useSearchParams()
+  const [selectedDept, setSelectedDept] = useState<string>('All')
+  const [activeModalJob, setActiveModalJob] = useState<JobOpening | null>(null)
+
+  const utmParams = new URLSearchParams()
   if (searchParams) {
     searchParams.forEach((value, key) => {
       if (key.startsWith('utm_')) {
-        utmParams.append(key, value);
+        utmParams.append(key, value)
       }
-    });
+    })
   }
 
-  const utmString = utmParams.toString();
+  const utmString = utmParams.toString()
   const getApplyLink = (role: string) => {
-    const roleParam = `role=${encodeURIComponent(role)}`;
-    return `/careers/apply?${roleParam}${utmString ? `&${utmString}` : ''}`;
+    const roleParam = `role=${encodeURIComponent(role)}`
+    return `/careers/apply?${roleParam}${utmString ? `&${utmString}` : ''}`
   }
+
+  const departments = ['All', 'Engineering', 'AI Systems', 'Growth & SEO', 'Developer Network']
+
+  const filteredJobs = selectedDept === 'All'
+    ? REAL_OPENINGS
+    : REAL_OPENINGS.filter(j => j.department === selectedDept)
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans selection:bg-blue-600/30">
       
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[140px] pointer-events-none" />
-        </div>
+      {/* Background ambient lighting */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-10 left-1/4 w-[600px] h-[500px] bg-blue-600/10 dark:bg-blue-600/5 blur-[160px] rounded-full" />
+        <div className="absolute top-1/3 right-10 w-[500px] h-[500px] bg-purple-600/10 dark:bg-purple-600/5 blur-[150px] rounded-full" />
+      </div>
 
-        <div className="w-[80%] mx-auto text-center relative z-10 space-y-6">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/20 bg-blue-100/60 dark:bg-blue-900/10 backdrop-blur-md"
-          >
-            <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-            <span className="text-xs uppercase tracking-[0.2em] font-bold text-blue-700 dark:text-blue-300">Join AJPR World</span>
-          </motion.div>
-          
-          <motion.h1
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-tight"
-          >
-            Build the Future of <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-indigo-500">
-              Autonomous Systems.
-            </span>
-          </motion.h1>
+      <div className="relative z-10">
 
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-slate-600 dark:text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-medium"
-          >
-            Work with a dynamic team delivering premium solutions in software engineering, legal compliance, and systems automation.
-          </motion.p>
-        </div>
-      </section>
+        {/* HERO SECTION */}
+        <section className="pt-28 pb-16 sm:pt-36 sm:pb-20">
+          <div className="container mx-auto px-4 max-w-5xl text-center space-y-6">
+            
+            {/* Pill Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold tracking-wide uppercase"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+              <span>Engineering & AI Studio &bull; Real Openings</span>
+            </motion.div>
 
-      {/* Core Values Strip */}
-      <section className="py-16 border-y border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/20 backdrop-blur-sm">
-        <div className="w-[85%] max-w-7xl mx-auto">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-red-600 to-rose-700 flex items-center justify-center text-white shadow-md">
-              <Sprout className="w-5 h-5" />
+            {/* Main Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.12]"
+            >
+              Build High-Velocity Software. <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400">
+                Zero Corporate Bureaucracy.
+              </span>
+            </motion.h1>
+
+            {/* Subheading */}
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto font-normal leading-relaxed"
+            >
+              AJPR World is a senior software engineering and autonomous AI studio. We build sub-200ms Next.js web applications, multi-agent swarms, and search architectures for high-growth clients across the US, UK, Singapore, and India.
+            </motion.p>
+
+            {/* CTA Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-wrap items-center justify-center gap-4 pt-4"
+            >
+              <Button asChild size="lg" className="rounded-2xl px-8 h-12 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-600/25 cursor-pointer">
+                <a href="#openings">
+                  View Active Openings ({REAL_OPENINGS.length}) <ArrowRight className="w-4 h-4 ml-2" />
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-2xl px-7 h-12 border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 font-bold text-sm cursor-pointer">
+                <Link href={getApplyLink("Open Application")}>
+                  Submit Open CV <ExternalLink className="w-3.5 h-3.5 ml-1.5 opacity-70" />
+                </Link>
+              </Button>
+            </motion.div>
+
+            {/* Trust Reassurance Strip */}
+            <div className="pt-6 flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> 48-Hour Application Review
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Direct Technical Founder Review
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> 100% Remote-First Team
+              </span>
             </div>
-            <div>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Our 6 Core Values</h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400">The non-negotiable principles guiding every engineer and team member.</p>
-            </div>
+
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {values.map((val, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-white dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 space-y-3 shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-700/60 flex items-center justify-center">
-                  {val.icon}
+        </section>
+
+        {/* STUDIO METRICS BANNER */}
+        <section className="py-8 border-y border-slate-200 dark:border-slate-800/80 bg-white/60 dark:bg-slate-900/40 backdrop-blur-md">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              {STUDIO_METRICS.map((metric, idx) => (
+                <div key={idx} className="space-y-1">
+                  <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight font-mono">
+                    {metric.value}
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400">
+                    {metric.label}
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">
+                    {metric.detail}
+                  </div>
                 </div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">{val.title}</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">{val.desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Open Positions Grid */}
-      <section className="py-24">
-        <div className="w-[80%] mx-auto space-y-12">
-          <div>
-            <h2 className="text-3xl font-black text-slate-900 dark:text-white">Active Openings</h2>
-            <p className="text-slate-500 mt-2 font-medium">Explore current opportunities to collaborate on complex projects.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {openings.map((job, idx) => (
-              <Card key={idx} className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-blue-500/40 hover:shadow-xl transition-all duration-350 flex flex-col justify-between overflow-hidden rounded-2xl group">
-                <CardHeader className="p-6">
-                  <div className="flex justify-between items-start gap-2 mb-4">
-                    <Badge variant="outline" className="bg-slate-50 dark:bg-slate-800 border-none font-bold uppercase tracking-wider text-[9px] text-slate-500">{job.department}</Badge>
-                    <Badge className="bg-blue-600/10 text-blue-600 hover:bg-blue-600/20 border-none font-bold text-[10px]">{job.type}</Badge>
-                  </div>
-                  <CardTitle className="text-xl font-bold text-slate-900 dark:text-white leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {job.title}
-                  </CardTitle>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500 mt-4 font-semibold">
-                    <span className="flex items-center"><MapPin className="w-3.5 h-3.5 mr-1 text-blue-500" /> {job.location}</span>
-                    <span className="flex items-center"><Clock className="w-3.5 h-3.5 mr-1 text-blue-500" /> {job.experience}</span>
-                  </div>
-                </CardHeader>
-                
-                <CardContent className="p-6 pt-0 space-y-6">
-                  <div className="space-y-2">
-                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest">Target Stack</h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {job.skills.map((skill, i) => (
-                        <Badge key={i} variant="secondary" className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold text-xs border-none text-slate-600 dark:text-slate-350">{skill}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <Button asChild className="w-full bg-slate-900 hover:bg-slate-850 text-white dark:bg-white dark:text-[#030712] dark:hover:bg-slate-200 rounded-xl font-bold h-11" size="sm">
-                    <Link href={getApplyLink(job.title)}>
-                      Apply Now <ArrowRight className="w-4 h-4 ml-2" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Submission Info & Developer Network */}
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 text-center shadow-sm flex flex-col justify-between">
-              <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Don’t see a matching position?</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium mb-6">
-                  We are always looking for ambitious developers, automation specialists, and domain experts. Send us your CV for future openings.
+        {/* ACTIVE OPENINGS SECTION */}
+        <section id="openings" className="py-20 sm:py-28">
+          <div className="container mx-auto px-4 max-w-6xl space-y-10">
+            
+            {/* Header & Filter Controls */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">
+                  <Briefcase className="w-3.5 h-3.5" />
+                  <span>Immediate Hiring Needs</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+                  Active Engineering & Growth Roles
+                </h2>
+                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl">
+                  Select a category or click any position to inspect full responsibilities, tech stack, and compensation details.
                 </p>
               </div>
-              <Button asChild variant="outline" className="rounded-xl font-bold px-8 h-12 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-colors w-full">
-                <Link href={getApplyLink("Open Application")}>Send Open Application</Link>
-              </Button>
+
+              {/* Department Filter Tabs */}
+              <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-slate-200/70 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800 self-start md:self-auto">
+                {departments.map((dept) => {
+                  const isActive = selectedDept === dept
+                  return (
+                    <button
+                      key={dept}
+                      onClick={() => setSelectedDept(dept)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isActive
+                          ? 'bg-white dark:bg-blue-600 text-slate-900 dark:text-white shadow-xs'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                    >
+                      {dept}
+                    </button>
+                  )
+                })}
+              </div>
             </div>
 
-            <div className="bg-gradient-to-br from-slate-900 to-blue-950 border border-slate-800 rounded-3xl p-8 text-center shadow-sm text-white flex flex-col justify-between">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full mb-3 inline-block">
-                  Freelance & Contractor Network
+            {/* Job Openings Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <AnimatePresence mode="popLayout">
+                {filteredJobs.map((job) => (
+                  <motion.div
+                    key={job.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Card className="h-full bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-xl dark:hover:shadow-blue-900/10 transition-all duration-300 rounded-3xl flex flex-col justify-between overflow-hidden group">
+                      
+                      <CardHeader className="p-6 pb-4 space-y-3">
+                        <div className="flex items-center justify-between gap-2">
+                          <Badge variant="outline" className="bg-slate-100 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 font-bold text-[10px] uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                            {job.department}
+                          </Badge>
+                          <Badge className="bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/60 font-semibold text-[10px]">
+                            {job.type}
+                          </Badge>
+                        </div>
+
+                        <CardTitle className="text-xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          {job.title}
+                        </CardTitle>
+
+                        <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                          {job.shortSummary}
+                        </p>
+
+                        <div className="pt-2 space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
+                          <div className="flex items-center gap-1.5 font-medium">
+                            <MapPin className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                            <span className="truncate">{job.location}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 font-medium">
+                            <Clock className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                            <span>{job.experience}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-slate-200">
+                            <DollarSign className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                            <span className="truncate">{job.compensation}</span>
+                          </div>
+                        </div>
+                      </CardHeader>
+
+                      <CardContent className="p-6 pt-0 space-y-5">
+                        {/* Skills preview */}
+                        <div>
+                          <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Core Stack</div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {job.skills.slice(0, 4).map((skill, i) => (
+                              <span key={i} className="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-semibold text-slate-700 dark:text-slate-300">
+                                {skill}
+                              </span>
+                            ))}
+                            {job.skills.length > 4 && (
+                              <span className="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-500">
+                                +{job.skills.length - 4}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Card CTA Actions */}
+                        <div className="pt-2 grid grid-cols-2 gap-2.5">
+                          <Button
+                            variant="outline"
+                            onClick={() => setActiveModalJob(job)}
+                            className="rounded-xl h-10 text-xs font-bold border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                          >
+                            <Eye className="w-3.5 h-3.5 mr-1.5" /> Details
+                          </Button>
+                          <Button
+                            asChild
+                            className="rounded-xl h-10 text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white cursor-pointer shadow-xs"
+                          >
+                            <Link href={getApplyLink(job.title)}>
+                              Apply Now <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                            </Link>
+                          </Button>
+                        </div>
+                      </CardContent>
+
+                    </Card>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {/* Custom Open Application Banner */}
+            <div className="p-8 rounded-3xl bg-gradient-to-r from-blue-900/30 via-indigo-900/20 to-purple-900/30 border border-blue-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="space-y-2 text-center md:text-left">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full inline-block">
+                  Freelance Pods & Custom Disciplines
                 </span>
-                <h3 className="text-xl font-bold text-white mb-2">Join the AJPR Developer Network</h3>
-                <p className="text-sm text-slate-300 leading-relaxed font-medium mb-6">
-                  Work on high-impact customer projects, take on paid sprint contracts, and collaborate with our engineering swarms.
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                  Don’t see an exact title matching your superpowers?
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+                  We are always eager to meet high-caliber engineers in Rust, Go, Python, cloud infrastructure, or security. Send us your GitHub profile and open CV.
                 </p>
               </div>
-              <Button asChild className="rounded-xl font-bold px-8 h-12 bg-blue-600 hover:bg-blue-500 text-white w-full">
-                <Link href="/signup/developer">Register as Developer &rarr;</Link>
+              <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                <Button asChild size="lg" className="rounded-2xl px-6 h-12 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-md cursor-pointer">
+                  <Link href={getApplyLink("Open Application")}>
+                    Send Open CV &rarr;
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="rounded-2xl px-6 h-12 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 font-bold text-sm cursor-pointer">
+                  <Link href="/signup/developer">
+                    Join Developer Network
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* WHY BUILD WITH AJPR (CULTURE & BENTO) */}
+        <section className="py-20 border-t border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/20">
+          <div className="container mx-auto px-4 max-w-6xl space-y-12">
+            
+            <div className="text-center max-w-2xl mx-auto space-y-3">
+              <div className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">
+                Our Engineering Philosophy
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+                Why Engineers Love Building Here
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
+                We designed our studio to be the exact working environment we wished existed when we worked at bloated agencies.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              {CULTURE_PILLARS.map((pillar, idx) => {
+                const Icon = pillar.icon
+                return (
+                  <div
+                    key={idx}
+                    className="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4 hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
+                  >
+                    <div className="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                      {pillar.title}
+                    </h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                      {pillar.description}
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+
+          </div>
+        </section>
+
+        {/* TRANSPARENT 3-STEP HIRING PROCESS */}
+        <section className="py-20 border-t border-slate-200 dark:border-slate-800">
+          <div className="container mx-auto px-4 max-w-5xl space-y-12">
+            
+            <div className="text-center max-w-2xl mx-auto space-y-3">
+              <div className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">
+                Straightforward Hiring
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+                Our 3-Step Hiring Process
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
+                No 6-round ATS gauntlets or unpaid 40-hour take-home projects. We respect your craft and time.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {HIRING_STEPS.map((step, idx) => (
+                <div
+                  key={idx}
+                  className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between space-y-4 relative overflow-hidden"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-3xl font-black text-slate-300 dark:text-slate-800 font-mono">
+                        {step.step}
+                      </span>
+                      <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950 px-2.5 py-1 rounded-full border border-blue-200 dark:border-blue-800/50">
+                        {step.duration}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                      {step.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+
+        {/* NOTE FROM LEAD ARCHITECT AMAN JOSHI */}
+        <section className="py-16 border-t border-slate-200 dark:border-slate-800 bg-slate-100/60 dark:bg-slate-900/40">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md flex flex-col sm:flex-row items-center gap-8">
+              
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-blue-500/20 shrink-0 shadow-lg">
+                <Image
+                  src="/images/aman-joshi-profile.png"
+                  alt="Aman Joshi, Lead Architect & Founder"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              <div className="space-y-4 text-center sm:text-left">
+                <div className="space-y-1">
+                  <div className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">
+                    A Message from the Founder
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                    Aman Joshi &bull; Lead Systems Architect
+                  </h3>
+                </div>
+
+                <blockquote className="text-sm sm:text-base text-slate-700 dark:text-slate-300 italic leading-relaxed">
+                  &ldquo;I built AJPR World because I was frustrated with bloated digital consultancies that charge huge retainers, outsource to inexperienced freelancers, and deliver slow websites that break. Here, we operate like an elite engineering lab. Every line of code matters. If you take deep pride in craft and want to build systems that scale effortlessly, I would love to work with you.&rdquo;
+                </blockquote>
+
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 pt-1 text-xs">
+                  <a
+                    href="https://github.com/Aman-Joshi989"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-semibold transition-colors"
+                  >
+                    <Github className="w-4 h-4" /> GitHub: Aman-Joshi989
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/aman-joshi989"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:underline font-semibold"
+                  >
+                    <Linkedin className="w-4 h-4" /> LinkedIn Profile
+                  </a>
+                  <Link
+                    href="/aman-joshi"
+                    className="inline-flex items-center gap-1 text-slate-500 hover:text-blue-600 font-medium"
+                  >
+                    View Founder Profile &rarr;
+                  </Link>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* CANDIDATE FAQS */}
+        <section className="py-20 border-t border-slate-200 dark:border-slate-800">
+          <div className="container mx-auto px-4 max-w-4xl space-y-10">
+            <div className="text-center space-y-3">
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">
+                <HelpCircle className="w-4 h-4" />
+                <span>Frequently Asked Questions</span>
+              </div>
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                Everything You Need to Know
+              </h2>
+            </div>
+
+            <div className="grid gap-4">
+              {FAQS.map((faq, idx) => (
+                <div
+                  key={idx}
+                  className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2"
+                >
+                  <h3 className="font-bold text-slate-900 dark:text-white text-base">
+                    {faq.q}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center pt-6">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
+                Have a unique question about working with us? Reach out directly.
+              </p>
+              <Button asChild variant="outline" className="rounded-xl font-bold border-slate-300 dark:border-slate-800 text-xs">
+                <Link href="/contact">Contact Founder & Team &rarr;</Link>
               </Button>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+      </div>
+
+      {/* ROLE DETAILS DIALOG / MODAL */}
+      <Dialog open={!!activeModalJob} onOpenChange={(open) => !open && setActiveModalJob(null)}>
+        {activeModalJob && (
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl p-6 sm:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-sans">
+            <DialogHeader className="space-y-3 pb-4 border-b border-slate-200 dark:border-slate-800">
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant="outline" className="text-[10px] uppercase font-bold text-slate-600 dark:text-slate-400">
+                  {activeModalJob.department}
+                </Badge>
+                <Badge className="bg-blue-600/10 text-blue-600 border border-blue-500/20 text-[10px] font-bold">
+                  {activeModalJob.type}
+                </Badge>
+              </div>
+              <DialogTitle className="text-2xl font-black text-slate-900 dark:text-white leading-tight">
+                {activeModalJob.title}
+              </DialogTitle>
+              <DialogDescription className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                {activeModalJob.shortSummary}
+              </DialogDescription>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
+                <div><strong>Location:</strong> {activeModalJob.location}</div>
+                <div><strong>Experience:</strong> {activeModalJob.experience}</div>
+                <div className="sm:col-span-2 text-blue-600 dark:text-blue-400 font-bold">
+                  <strong>Compensation:</strong> {activeModalJob.compensation}
+                </div>
+              </div>
+            </DialogHeader>
+
+            <div className="space-y-6 py-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+              {/* Responsibilities */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wide">
+                  What You Will Own & Build
+                </h4>
+                <ul className="space-y-1.5 list-disc list-inside">
+                  {activeModalJob.responsibilities.map((r, i) => (
+                    <li key={i} className="leading-relaxed">{r}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Must-Haves */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wide">
+                  Must-Have Foundations
+                </h4>
+                <ul className="space-y-1.5 list-disc list-inside">
+                  {activeModalJob.mustHaves.map((m, i) => (
+                    <li key={i} className="leading-relaxed">{m}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Target Tech Stack */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-slate-900 dark:text-white text-sm uppercase tracking-wide">
+                  Target Tech Stack
+                </h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {activeModalJob.skills.map((s, i) => (
+                    <span key={i} className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Highlights */}
+              <div className="p-4 rounded-2xl bg-blue-50/60 dark:bg-blue-950/40 border border-blue-200/60 dark:border-blue-900/40 space-y-2">
+                <h5 className="font-bold text-blue-900 dark:text-blue-300 text-xs uppercase tracking-wide">
+                  Role Highlights & Studio Perks
+                </h5>
+                <ul className="space-y-1 text-xs text-blue-800 dark:text-blue-300">
+                  {activeModalJob.highlights.map((h, i) => (
+                    <li key={i} className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-end gap-3">
+              <Button
+                variant="ghost"
+                onClick={() => setActiveModalJob(null)}
+                className="w-full sm:w-auto text-xs font-semibold"
+              >
+                Close
+              </Button>
+              <Button
+                asChild
+                className="w-full sm:w-auto rounded-xl px-6 h-11 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md cursor-pointer"
+              >
+                <Link href={getApplyLink(activeModalJob.title)}>
+                  Apply for this Position <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                </Link>
+              </Button>
+            </div>
+          </DialogContent>
+        )}
+      </Dialog>
 
     </div>
   )
@@ -242,7 +834,7 @@ function CareersContent() {
 
 export default function CareersPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center font-bold text-slate-500">Loading careers...</div>}>
       <CareersContent />
     </Suspense>
   )

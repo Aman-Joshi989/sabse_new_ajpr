@@ -1305,18 +1305,32 @@ export async function getProductBySlug(slug: string) {
 }
 
 export async function saveSalesLead(data: any) {
-  const { name, email, companySize, budget, techStack, utm_source, utm_medium, utm_campaign, reference_id } = data;
+  const { 
+    name, 
+    email, 
+    company, 
+    companySize, 
+    budget, 
+    techStack, 
+    utm_source, 
+    utm_medium, 
+    utm_campaign, 
+    reference_id 
+  } = data;
+  const companyValue = company || data.domain || companySize || 'Not Specified';
+
   try {
     const result = await sql`
-      INSERT INTO sales_leads (name, email, company_size, budget, tech_stack, status, utm_source, utm_medium, utm_campaign, reference_id)
-      VALUES (${name}, ${email}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new', ${utm_source || null}, ${utm_medium || null}, ${utm_campaign || null}, ${reference_id || null})
+      INSERT INTO sales_leads (name, email, company, company_size, budget, tech_stack, status, utm_source, utm_medium, utm_campaign, reference_id)
+      VALUES (${name}, ${email}, ${companyValue}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new', ${utm_source || null}, ${utm_medium || null}, ${utm_campaign || null}, ${reference_id || null})
       RETURNING *;
     `;
     return result[0];
-  } catch {
+  } catch (err: any) {
+    console.warn('[saveSalesLead] Error with reference_id insert, falling back:', err?.message || err);
     const result = await sql`
-      INSERT INTO sales_leads (name, email, company_size, budget, tech_stack, status, utm_source, utm_medium, utm_campaign)
-      VALUES (${name}, ${email}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new', ${utm_source || null}, ${utm_medium || null}, ${utm_campaign || null})
+      INSERT INTO sales_leads (name, email, company, company_size, budget, tech_stack, status, utm_source, utm_medium, utm_campaign)
+      VALUES (${name}, ${email}, ${companyValue}, ${companySize || null}, ${budget || null}, ${techStack || null}, 'new', ${utm_source || null}, ${utm_medium || null}, ${utm_campaign || null})
       RETURNING *;
     `;
     return result[0];

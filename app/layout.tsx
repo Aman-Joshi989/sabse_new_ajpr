@@ -156,6 +156,17 @@ export default async function RootLayout({
                     document.cookie = 'ajpr_region=' + reg + '; path=/; max-age=31536000; SameSite=Lax';
                     document.cookie = 'ajpr_currency=' + cur + '; path=/; max-age=31536000; SameSite=Lax';
                   }
+                  // Self-heal from Next.js deployment version skew (stale chunk errors)
+                  window.addEventListener('error', function(err) {
+                    if (err && err.message && (err.message.indexOf('Loading chunk') !== -1 || err.message.indexOf('Failed to fetch dynamically imported module') !== -1)) {
+                      var lastReload = sessionStorage.getItem('ajpr_chunk_reload');
+                      var now = Date.now();
+                      if (!lastReload || (now - parseInt(lastReload, 10) > 10000)) {
+                        sessionStorage.setItem('ajpr_chunk_reload', now.toString());
+                        window.location.reload();
+                      }
+                    }
+                  });
                 } catch(e) {}
               })();
             `,

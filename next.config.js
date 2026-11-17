@@ -44,6 +44,16 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return {
+      fallback: [
+        {
+          source: '/_next/static/chunks/:path*.js',
+          destination: '/api/static-fallback',
+        },
+      ],
+    };
+  },
   async redirects() {
     return [
       {

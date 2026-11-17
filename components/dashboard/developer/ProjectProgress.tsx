@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
+import { X } from "lucide-react";
 import { logHoursAction } from "@/app/actions";
 
 export default function ProjectProgress({ percent, hoursUsed, totalHours, deadline }: { percent: number, hoursUsed: number, totalHours: number, deadline: string }) {
@@ -121,9 +122,10 @@ export default function ProjectProgress({ percent, hoursUsed, totalHours, deadli
                 </button>
                 <button 
                     onClick={() => setLogging(false)}
-                    className="px-3 py-2 text-slate-400 hover:text-slate-600"
+                    className="px-3 py-2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                    aria-label="Close"
                 >
-                    <span className="material-symbols-outlined text-lg">close</span>
+                    <X className="w-4 h-4" />
                 </button>
             </div>
         )}

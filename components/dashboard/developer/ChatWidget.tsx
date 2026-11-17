@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { X, Plus, Send, MessageSquare } from "lucide-react";
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,11 +33,10 @@ export default function ChatWidget() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="size-12 rounded-2xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all border border-white/10 group"
+                className="size-12 rounded-2xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all border border-white/10 group cursor-pointer"
+                aria-label="Close Chat"
               >
-                <span className="material-symbols-outlined text-white transition-transform group-hover:rotate-90">
-                  close
-                </span>
+                <X className="w-5 h-5 text-white transition-transform group-hover:rotate-90" />
               </button>
             </div>
           </div>
@@ -73,8 +73,12 @@ export default function ChatWidget() {
           </div>
           <div className="p-8 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
             <div className="relative flex items-center gap-4">
-              <button className="size-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-all">
-                <span className="material-symbols-outlined">add</span>
+              <button 
+                type="button" 
+                aria-label="Add attachment"
+                className="size-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-all cursor-pointer"
+              >
+                <Plus className="w-5 h-5" />
               </button>
               <div className="relative flex-1">
                 <input
@@ -82,10 +86,12 @@ export default function ChatWidget() {
                   placeholder="Message Mark..."
                   type="text"
                 />
-                <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-black dark:bg-white text-white dark:text-black size-10 rounded-xl flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all">
-                  <span className="material-symbols-outlined font-black text-xl">
-                    send
-                  </span>
+                <button 
+                  type="button"
+                  aria-label="Send message"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black dark:bg-white text-white dark:text-black size-10 rounded-xl flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                >
+                  <Send className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -94,11 +100,10 @@ export default function ChatWidget() {
       )}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-vibrant-gradient size-24 rounded-full flex items-center justify-center text-white shadow-[0_25px_60px_rgba(59,130,246,0.45)] hover:scale-110 active:scale-95 transition-all group ring-[12px] ring-white/20 dark:ring-slate-900/40 relative"
+        aria-label="Open support chat"
+        className="bg-vibrant-gradient size-24 rounded-full flex items-center justify-center text-white shadow-[0_25px_60px_rgba(59,130,246,0.45)] hover:scale-110 active:scale-95 transition-all group ring-[12px] ring-white/20 dark:ring-slate-900/40 relative cursor-pointer"
       >
-        <span className="material-symbols-outlined text-5xl font-light">
-          chat_bubble
-        </span>
+        <MessageSquare className="w-8 h-8" />
         <div className="absolute -top-1 -right-1 size-8 bg-red-500 rounded-full border-4 border-white dark:border-slate-900 flex items-center justify-center text-xs font-black shadow-lg">
           3
         </div>

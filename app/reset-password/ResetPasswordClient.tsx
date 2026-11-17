@@ -1,9 +1,24 @@
 'use client';
 
-import { useActionState, useEffect, useState, useTransition } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { 
+  KeyRound, 
+  Unlink, 
+  ArrowRight, 
+  ArrowLeft, 
+  CheckCircle2, 
+  Circle, 
+  XCircle, 
+  LogIn, 
+  Eye, 
+  EyeOff, 
+  AlertCircle, 
+  Loader2,
+  ShieldCheck 
+} from 'lucide-react';
 import { resetPasswordAction, checkTokenValidAction, ResetPasswordState } from './actions';
 
 const initialState: ResetPasswordState = {};
@@ -69,14 +84,21 @@ export default function ResetPasswordClient() {
               src="/logo/ajpr-logo.png"
               alt="AJPR World"
               fill
-              className="object-contain"
+              className="object-contain block dark:hidden"
+              priority
+            />
+            <Image
+              src="/logo/ajpr-logo-white.png"
+              alt="AJPR World"
+              fill
+              className="object-contain hidden dark:block"
               priority
             />
           </Link>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-500 dark:text-blue-400 text-xs font-bold tracking-wider uppercase">
-            <span className="material-symbols-outlined text-xs">key</span>
-            Set New Password
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-600 dark:text-blue-400 text-xs font-bold tracking-wider uppercase">
+            <KeyRound className="w-3.5 h-3.5" />
+            <span>Set New Password</span>
           </div>
 
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
@@ -96,7 +118,7 @@ export default function ResetPasswordClient() {
         {/* Loading Token Validation State */}
         {isValidating && (
           <div className="py-12 flex flex-col items-center justify-center gap-3 text-slate-500">
-            <div className="w-8 h-8 border-3 border-blue-500 border-t-transparent rounded-full animate-spin" />
+            <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
             <p className="text-xs font-medium">Verifying reset token security...</p>
           </div>
         )}
@@ -105,7 +127,7 @@ export default function ResetPasswordClient() {
         {!isValidating && tokenValid === false && (
           <div className="space-y-6 text-center animate-in fade-in duration-200">
             <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-500 flex items-center justify-center mx-auto shadow-sm">
-              <span className="material-symbols-outlined text-3xl">link_off</span>
+              <Unlink className="w-8 h-8" />
             </div>
 
             <div className="space-y-2">
@@ -120,16 +142,17 @@ export default function ResetPasswordClient() {
             <div className="pt-2 flex flex-col gap-2.5">
               <Link
                 href="/forgot-password"
-                className="w-full inline-flex items-center justify-center gap-2 bg-black text-white dark:bg-white dark:text-black py-3.5 px-6 rounded-xl text-xs font-bold uppercase tracking-wider shadow-md hover:scale-[1.02] active:scale-95 transition-all"
+                className="w-full inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 py-3.5 px-6 rounded-xl text-xs font-bold uppercase tracking-wider shadow-md hover:scale-[1.01] active:scale-95 transition-all"
               >
-                Request Fresh Reset Link
-                <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                <span>Request Fresh Reset Link</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/login"
-                className="text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 py-2 transition-colors"
+                className="text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 py-2 transition-colors inline-flex items-center justify-center gap-1.5"
               >
-                Return to Sign In
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Return to Sign In</span>
               </Link>
             </div>
           </div>
@@ -139,7 +162,7 @@ export default function ResetPasswordClient() {
         {!isValidating && state?.success && (
           <div className="space-y-6 text-center animate-in fade-in zoom-in-95 duration-200">
             <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 flex items-center justify-center mx-auto shadow-sm">
-              <span className="material-symbols-outlined text-3xl">verified_user</span>
+              <ShieldCheck className="w-8 h-8" />
             </div>
 
             <div className="space-y-2">
@@ -154,10 +177,10 @@ export default function ResetPasswordClient() {
             <div className="pt-2">
               <Link
                 href="/login"
-                className="w-full inline-flex items-center justify-center gap-2 bg-black text-white dark:bg-white dark:text-black py-3.5 px-6 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
+                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-white dark:text-black py-3.5 px-6 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg hover:scale-[1.01] active:scale-95 transition-all"
               >
-                Sign In With New Password
-                <span className="material-symbols-outlined text-sm font-bold">login</span>
+                <span>Sign In With New Password</span>
+                <LogIn className="w-4 h-4" />
               </Link>
             </div>
           </div>
@@ -170,7 +193,7 @@ export default function ResetPasswordClient() {
 
             {/* New Password */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                 New Password
               </label>
               <div className="relative">
@@ -182,24 +205,27 @@ export default function ResetPasswordClient() {
                   placeholder="At least 8 characters"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-11 text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-400 dark:text-white"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-11 text-sm font-medium focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-400 dark:text-white"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors cursor-pointer"
                   tabIndex={-1}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  <span className="material-symbols-outlined text-lg">
-                    {showPassword ? 'visibility_off' : 'visibility'}
-                  </span>
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
 
             {/* Confirm Password */}
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                 Confirm New Password
               </label>
               <input
@@ -209,36 +235,42 @@ export default function ResetPasswordClient() {
                 placeholder="Re-enter password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-400 dark:text-white"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-400 dark:text-white"
               />
             </div>
 
             {/* Password Strength Checklist */}
-            <div className="p-3 bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl space-y-1.5 text-[11px]">
+            <div className="p-3 bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2 text-[11px]">
               <div className="font-semibold text-slate-600 dark:text-slate-300">
                 Security Requirements:
               </div>
               <div className="flex items-center gap-2">
-                <span className={`material-symbols-outlined text-xs font-bold ${hasMinLength ? 'text-emerald-500' : 'text-slate-400'}`}>
-                  {hasMinLength ? 'check_circle' : 'radio_button_unchecked'}
-                </span>
-                <span className={hasMinLength ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-400'}>
+                {hasMinLength ? (
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                ) : (
+                  <Circle className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                )}
+                <span className={hasMinLength ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-500 dark:text-slate-400'}>
                   At least 8 characters
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className={`material-symbols-outlined text-xs font-bold ${hasSpecialOrNumber ? 'text-emerald-500' : 'text-slate-400'}`}>
-                  {hasSpecialOrNumber ? 'check_circle' : 'radio_button_unchecked'}
-                </span>
-                <span className={hasSpecialOrNumber ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-400'}>
+                {hasSpecialOrNumber ? (
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                ) : (
+                  <Circle className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                )}
+                <span className={hasSpecialOrNumber ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-500 dark:text-slate-400'}>
                   Includes a number or special character
                 </span>
               </div>
               {confirmPassword.length > 0 && (
                 <div className="flex items-center gap-2">
-                  <span className={`material-symbols-outlined text-xs font-bold ${passwordsMatch ? 'text-emerald-500' : 'text-rose-500'}`}>
-                    {passwordsMatch ? 'check_circle' : 'cancel'}
-                  </span>
+                  {passwordsMatch ? (
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  ) : (
+                    <XCircle className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                  )}
                   <span className={passwordsMatch ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-rose-500 font-medium'}>
                     {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
                   </span>
@@ -248,25 +280,25 @@ export default function ResetPasswordClient() {
 
             {state?.error && (
               <div className="p-3 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 text-xs font-bold rounded-lg border border-red-100 dark:border-red-900/30 flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm">error</span>
-                {state.error}
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{state.error}</span>
               </div>
             )}
 
             <button
               type="submit"
               disabled={isPending || !hasMinLength || (confirmPassword.length > 0 && !passwordsMatch)}
-              className="mt-2 w-full bg-black text-white dark:bg-white dark:text-black py-3.5 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+              className="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white dark:bg-white dark:text-black dark:hover:bg-slate-100 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg hover:scale-[1.01] active:scale-95 transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2 cursor-pointer"
             >
               {isPending ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  Updating Password...
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Updating Password...</span>
                 </>
               ) : (
                 <>
-                  Save New Password
-                  <span className="material-symbols-outlined text-sm font-bold">check</span>
+                  <span>Save New Password</span>
+                  <CheckCircle2 className="w-4 h-4" />
                 </>
               )}
             </button>
@@ -276,8 +308,8 @@ export default function ResetPasswordClient() {
                 href="/login"
                 className="text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"
               >
-                <span className="material-symbols-outlined text-sm">arrow_back</span>
-                Cancel and Return to Sign In
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Cancel and Return to Sign In</span>
               </Link>
             </div>
           </form>

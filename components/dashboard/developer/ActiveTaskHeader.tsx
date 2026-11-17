@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { updateTaskStatusAction } from "@/app/actions";
+import { Loader2, StopCircle } from "lucide-react";
 
 export default function ActiveTaskHeader({ task }: { task?: any }) {
   const [loading, setLoading] = useState(false);
@@ -41,10 +42,12 @@ export default function ActiveTaskHeader({ task }: { task?: any }) {
             ? 'bg-red-500 text-white hover:bg-red-600 active:scale-95' 
             : 'bg-slate-200 text-slate-400 cursor-not-allowed'
         }`}>
-          <span className="material-symbols-outlined text-base">
-            {loading ? 'hourglass_empty' : 'stop_circle'}
-          </span>
-          {loading ? 'STOPPING...' : 'STOP TIMER'}
+          {loading ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <StopCircle className="w-4 h-4" />
+          )}
+          <span>{loading ? 'STOPPING...' : 'STOP TIMER'}</span>
         </button>
       </div>
     </div>

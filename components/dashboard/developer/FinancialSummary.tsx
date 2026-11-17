@@ -1,4 +1,5 @@
 import React from "react";
+import { CreditCard, ArrowRight } from "lucide-react";
 
 export default function FinancialSummary({ total, pending }: { total: number, pending: number }) {
   const paid = total - pending;
@@ -15,7 +16,7 @@ export default function FinancialSummary({ total, pending }: { total: number, pe
           Financial Summary
         </h4>
         <div className="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-full text-slate-400 group-hover:text-blue-600 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-colors">
-            <span className="material-symbols-outlined text-xl">payments</span>
+            <CreditCard className="w-5 h-5" />
         </div>
       </div>
 
@@ -62,9 +63,9 @@ export default function FinancialSummary({ total, pending }: { total: number, pe
         </div>
       </div>
 
-      <button className="w-full mt-10 py-4 bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-black rounded-xl hover:shadow-lg active:scale-[0.98] transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-2 group/btn">
+      <button className="w-full mt-10 py-4 bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-black rounded-xl hover:shadow-lg active:scale-[0.98] transition-all uppercase tracking-[0.15em] flex items-center justify-center gap-2 group/btn cursor-pointer">
         <span>Manage Payments</span>
-        <span className="material-symbols-outlined text-base group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
       </button>
     </div>
   );

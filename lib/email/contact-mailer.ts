@@ -1080,3 +1080,84 @@ export async function sendClientReviewInviteEmail(params: {
     referenceId,
   };
 }
+
+/**
+ * Send a secure, time-limited password reset email to a user or administrator.
+ */
+export async function sendPasswordResetEmail(params: {
+  to: string;
+  name?: string;
+  resetUrl: string;
+  expiresInMinutes?: number;
+}): Promise<{ delivered: boolean; provider: string; referenceId: string }> {
+  const referenceId = generateReferenceId('AJPR-RST');
+  const safeName = escapeHtml(params.name || 'User');
+  const expiresIn = params.expiresInMinutes || 60;
+  const subject = `Reset your AJPR World password`;
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0b0f19; padding: 40px 16px; color: #f8fafc;">
+  <div style="max-width: 560px; margin: 0 auto; background-color: #111827; border: 1px solid #1f2937; border-radius: 20px; padding: 40px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+    <div style="margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+      <div style="font-size: 20px; font-weight: 900; letter-spacing: -0.03em; color: #ffffff;">AJPR World</div>
+      <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; background-color: #1e293b; color: #60a5fa; padding: 4px 10px; border-radius: 9999px; border: 1px solid #3b82f6;">Security Notice</span>
+    </div>
+    
+    <h2 style="font-size: 22px; font-weight: 800; color: #ffffff; margin: 0 0 16px 0; letter-spacing: -0.02em;">
+      Password Reset Request
+    </h2>
+    
+    <p style="font-size: 14px; line-height: 1.6; color: #94a3b8; margin: 0 0 20px 0;">
+      Hello ${safeName},<br>
+      We received a request to reset the password associated with your account (<strong>${escapeHtml(params.to)}</strong>).
+    </p>
+
+    <div style="background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 24px;">
+      <p style="font-size: 13px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+        ⏳ This password reset link is strictly confidential and expires in <strong>${expiresIn} minutes</strong>.
+      </p>
+    </div>
+
+    <div style="text-align: center; margin: 32px 0;">
+      <a href="${params.resetUrl}" style="display: inline-block; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 14px 32px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);">
+        Reset My Password &rarr;
+      </a>
+    </div>
+
+    <p style="font-size: 12px; line-height: 1.6; color: #64748b; margin: 24px 0 8px 0;">
+      If the button above doesn't work, copy and paste this link into your browser:
+    </p>
+    <p style="font-size: 11px; word-break: break-all; color: #38bdf8; background-color: #0f172a; padding: 10px; border-radius: 8px; border: 1px solid #1e293b; margin: 0 0 24px 0;">
+      ${params.resetUrl}
+    </p>
+
+    <div style="border-top: 1px solid #1f2937; padding-top: 20px; font-size: 11px; color: #64748b; line-height: 1.6;">
+      <p style="margin: 0 0 8px 0;">
+        <strong>Didn't request this change?</strong> You can safely ignore this email; your existing password remains untouched.
+      </p>
+      <p style="margin: 0;">
+        AJPR World Security Team &bull; Ref: <code style="color: #94a3b8;">${referenceId}</code>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+  `.trim();
+
+  const res = await sendRawEmail({
+    to: params.to,
+    subject,
+    html,
+    category: 'password_reset',
+    referenceId,
+  });
+
+  return {
+    delivered: res.delivered,
+    provider: res.provider,
+    referenceId,
+  };
+}

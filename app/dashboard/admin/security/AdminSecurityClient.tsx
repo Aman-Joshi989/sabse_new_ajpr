@@ -11,6 +11,7 @@ import {
   createAdminUserAction,
   emergencyRevokeAllSessionsAction,
   exportAuditLogsAction,
+  changeAdminPasswordAction,
   SetupTwoFactorResult,
 } from './actions';
 import type { AdminAuditLogEntry, AdminUserRecord, ThreatTelemetry } from '@/lib/db/admin-queries';
@@ -75,6 +76,51 @@ export default function AdminSecurityClient({
   const [regenError, setRegenError] = useState('');
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [newBackupCodes, setNewBackupCodes] = useState<string[] | null>(null);
+
+  // Change Password State
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [showPassState, setShowPassState] = useState(false);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [changePasswordError, setChangePasswordError] = useState('');
+  const [changePasswordSuccess, setChangePasswordSuccess] = useState('');
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setChangePasswordError('');
+    setChangePasswordSuccess('');
+
+    if (newPassword.length < 8) {
+      setChangePasswordError('New password must be at least 8 characters long.');
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
+      setChangePasswordError('New passwords do not match.');
+      return;
+    }
+
+    setIsChangingPassword(true);
+    try {
+      const res = await changeAdminPasswordAction({
+        currentPassword,
+        newPassword,
+        confirmPassword: confirmNewPassword,
+      });
+      if (res.success) {
+        setChangePasswordSuccess('Password updated successfully! Credentials synchronized across security tables.');
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmNewPassword('');
+      } else {
+        setChangePasswordError(res.error || 'Failed to change password.');
+      }
+    } catch (err: any) {
+      setChangePasswordError(err.message || 'An unexpected error occurred.');
+    } finally {
+      setIsChangingPassword(false);
+    }
+  };
 
   // Start Enrollment
   const handleStartEnrollment = async () => {
@@ -587,6 +633,112 @@ export default function AdminSecurityClient({
             </form>
           </div>
         )}
+      </div>
+
+      {/* Change Password Card */}
+      <div className="bg-white dark:bg-[#292A2D] border border-slate-200 dark:border-[#3C4043] rounded-2xl p-6 shadow-sm space-y-4">
+        <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <div className="flex items-start gap-4">
+            <div className="p-3 rounded-xl bg-blue-500/10 text-blue-500">
+              <Key className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                Change Administrator Password
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                Update the security credentials for <strong className="text-slate-700 dark:text-slate-300 font-mono">{adminEmail}</strong>. Changes take effect instantly across all administrative portals.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowPassState(!showPassState)}
+            className="text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-medium px-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-lg transition-colors shrink-0"
+          >
+            {showPassState ? 'Hide Passwords' : 'Show Passwords'}
+          </button>
+        </div>
+
+        <form onSubmit={handleChangePassword} className="space-y-4 max-w-xl">
+          <div className="space-y-1.5">
+            <label className="text-[11px] font-mono uppercase text-slate-400">
+              Current Password
+            </label>
+            <input
+              type={showPassState ? 'text' : 'password'}
+              required
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Enter current password"
+              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-mono outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-3.5">
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-mono uppercase text-slate-400">
+                New Password (min 8 chars)
+              </label>
+              <input
+                type={showPassState ? 'text' : 'password'}
+                required
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="New strong password"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-mono outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-mono uppercase text-slate-400">
+                Confirm New Password
+              </label>
+              <input
+                type={showPassState ? 'text' : 'password'}
+                required
+                value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                placeholder="Re-enter new password"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs font-mono outline-none focus:border-blue-500"
+              />
+            </div>
+          </div>
+
+          {changePasswordError && (
+            <div className="p-3 bg-red-950/50 border border-red-500/30 text-red-400 text-xs font-mono rounded-xl flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0" />
+              <span>{changePasswordError}</span>
+            </div>
+          )}
+
+          {changePasswordSuccess && (
+            <div className="p-3 bg-emerald-950/50 border border-emerald-500/30 text-emerald-400 text-xs font-mono rounded-xl flex items-center gap-2">
+              <Check className="w-4 h-4 shrink-0" />
+              <span>{changePasswordSuccess}</span>
+            </div>
+          )}
+
+          <div className="pt-1">
+            <button
+              type="submit"
+              disabled={isChangingPassword || !currentPassword || !newPassword || !confirmNewPassword}
+              className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-medium text-xs rounded-xl transition-all shadow-sm flex items-center gap-2"
+            >
+              {isChangingPassword ? (
+                <>
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                  <span>Updating Password...</span>
+                </>
+              ) : (
+                <>
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>Update Password</span>
+                </>
+              )}
+            </button>
+          </div>
+        </form>
       </div>
 
       {/* Administrative Team & Role Hierarchy Card */}

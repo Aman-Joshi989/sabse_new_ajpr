@@ -46,7 +46,7 @@ export interface AdminSessionUser {
 export function isEmailAuthorizedAdmin(email: string | undefined | null): boolean {
   if (!email || typeof email !== 'string') return false;
   
-  const rawAdminEmails = process.env.ADMIN_EMAILS || 'admin@ajprworld.com,admin@ajpr.com';
+  const rawAdminEmails = process.env.ADMIN_EMAILS || 'admin@ajprworld.com,admin@ajpr.com,amanjoshi254@gmail.com,ajprworld@gmail.com';
   if (!rawAdminEmails || rawAdminEmails.trim().length === 0) {
     // Fail closed: No administrators configured
     return false;

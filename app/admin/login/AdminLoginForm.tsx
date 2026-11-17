@@ -203,6 +203,12 @@ export default function AdminLoginForm() {
                   >
                     Passkey Credential
                   </label>
+                  <Link
+                    href="/forgot-password"
+                    className="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 transition-colors"
+                  >
+                    Forgot password?
+                  </Link>
                 </div>
                 <div className="relative">
                   <input

@@ -477,3 +477,124 @@ export async function exportAuditLogsAction(
   }
 }
 
+/**
+ * Changes administrator password securely:
+ * 1. Requires valid authenticated admin session
+ * 2. Validates current password
+ * 3. Enforces min 8 chars
+ * 4. Hashes new password and updates both admin_users and users tables
+ * 5. Increments session_version and re-issues active session cookie to keep admin logged in
+ * 6. Emits ADMIN_PASSWORD_CHANGED audit log
+ */
+export async function changeAdminPasswordAction(params: {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}): Promise<{ success: boolean; error?: string }> {
+  try {
+    const admin = await requireAdminForAction();
+    const reqHeaders = await headers();
+    const forwarded = reqHeaders.get('x-forwarded-for');
+    const ipAddress = forwarded ? forwarded.split(',')[0].trim() : (reqHeaders.get('x-real-ip') || '127.0.0.1');
+    const userAgent = reqHeaders.get('user-agent') || 'unknown';
+
+    if (!params.currentPassword || !params.newPassword || !params.confirmPassword) {
+      return { success: false, error: 'All fields are required.' };
+    }
+
+    if (params.newPassword.length < 8) {
+      return { success: false, error: 'New password must be at least 8 characters long.' };
+    }
+
+    if (params.newPassword !== params.confirmPassword) {
+      return { success: false, error: 'New passwords do not match.' };
+    }
+
+    // 1. Fetch current hash from admin_users or users
+    let hash: string | null = null;
+    const adminRows = await sql`
+      SELECT password_hash FROM admin_users WHERE id = ${String(admin.id)} LIMIT 1;
+    `;
+    if (adminRows[0]?.password_hash) {
+      hash = adminRows[0].password_hash;
+    } else {
+      const userRows = await sql`
+        SELECT password FROM users WHERE LOWER(email) = ${admin.email.toLowerCase()} LIMIT 1;
+      `;
+      hash = userRows[0]?.password;
+    }
+
+    if (!hash || !(await bcrypt.compare(params.currentPassword.trim(), hash))) {
+      await createAdminAuditLog({
+        adminId: String(admin.id),
+        adminEmail: admin.email,
+        action: 'ADMIN_PASSWORD_CHANGE_FAILED',
+        ipAddress,
+        userAgent,
+        metadata: { reason: 'bad_current_password' },
+      });
+      return { success: false, error: 'Current password is incorrect.' };
+    }
+
+    // 2. Hash new password
+    const newHash = await bcrypt.hash(params.newPassword.trim(), 12);
+
+    // 3. Update admin_users
+    const nextSessionVersion = (admin.sessionVersion || 1) + 1;
+    await sql`
+      UPDATE admin_users 
+      SET password_hash = ${newHash}, 
+          session_version = ${nextSessionVersion}, 
+          updated_at = NOW() 
+      WHERE id = ${String(admin.id)} OR LOWER(email) = ${admin.email.toLowerCase()};
+    `;
+
+    // 4. Update users table
+    await sql`
+      UPDATE users 
+      SET password = ${newHash} 
+      WHERE LOWER(email) = ${admin.email.toLowerCase()};
+    `;
+
+    // 5. Update session cookie with new sessionVersion
+    const { cookies } = await import('next/headers');
+    const { SESSION_COOKIE_NAME } = await import('@/lib/admin/guard');
+    const { SESSION_COOKIE_OPTIONS } = await import('@/lib/auth');
+
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const newSessionToken = await encrypt({
+      user: {
+        id: admin.id,
+        email: admin.email,
+        role: 'admin',
+        name: admin.name,
+        roleSlug: admin.roleSlug || 'superadmin',
+        hierarchyTier: admin.hierarchyTier ?? 0,
+        sessionVersion: nextSessionVersion,
+      },
+      expires,
+    });
+
+    (await cookies()).set(SESSION_COOKIE_NAME, newSessionToken, {
+      expires,
+      ...SESSION_COOKIE_OPTIONS,
+    });
+
+    // 6. Audit log
+    await createAdminAuditLog({
+      adminId: String(admin.id),
+      adminEmail: admin.email,
+      action: 'ADMIN_PASSWORD_CHANGED',
+      ipAddress,
+      userAgent,
+      metadata: { role: admin.roleSlug },
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error('[ChangePassword] Error:', error);
+    return { success: false, error: error.message || 'Failed to update password.' };
+  }
+}
+
+

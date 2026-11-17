@@ -1,7 +1,7 @@
 'use client';
 
 import { login } from '@/app/actions';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,6 +11,7 @@ const initialState = {
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(login, initialState);
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-display flex items-center justify-center p-4 md:p-8">
@@ -89,8 +90,8 @@ export default function LoginPage() {
             <h1 className="text-2xl font-black text-slate-900 dark:text-white">
               Access Portal
             </h1>
-            <p className="text-sm text-slate-500 font-medium text-center">
-              Enter your credentials to access your secure client or developer workspace.
+            <p className="text-xs text-slate-500 font-medium text-center max-w-sm">
+              Enter your credentials to access your administrative console, client workspace, or developer portal.
             </p>
           </div>
 
@@ -107,17 +108,38 @@ export default function LoginPage() {
                 className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-300 dark:text-white"
               />
             </div>
+
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Password
-              </label>
-              <input
-                name="password"
-                type="password"
-                placeholder="••••••••"
-                required
-                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-300 dark:text-white"
-              />
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Password
+                </label>
+                <Link
+                  href="/forgot-password"
+                  className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+              <div className="relative">
+                <input
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  required
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 pr-11 text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-300 dark:text-white"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                  tabIndex={-1}
+                >
+                  <span className="material-symbols-outlined text-lg">
+                    {showPassword ? 'visibility_off' : 'visibility'}
+                  </span>
+                </button>
+              </div>
             </div>
 
             {state?.error && (
@@ -130,10 +152,25 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isPending}
-              className="mt-4 w-full bg-black text-white dark:bg-white dark:text-black py-4 rounded-xl text-sm font-black uppercase tracking-widest shadow-lg hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:hover:scale-100"
+              className="mt-2 w-full bg-black text-white dark:bg-white dark:text-black py-4 rounded-xl text-sm font-black uppercase tracking-widest shadow-lg hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
             >
-              {isPending ? 'Signing In...' : 'Sign In'}
+              {isPending ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  Signing In...
+                </>
+              ) : (
+                'Sign In'
+              )}
             </button>
+
+            <div className="flex items-center justify-center gap-1.5 pt-1 text-[11px] text-slate-500">
+              <span className="material-symbols-outlined text-xs text-blue-500">admin_panel_settings</span>
+              <span>Looking for Admin Console with 2FA?</span>
+              <Link href="/admin/login" className="font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                Admin Login &rarr;
+              </Link>
+            </div>
 
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">

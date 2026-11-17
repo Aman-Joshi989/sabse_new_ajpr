@@ -1,6 +1,7 @@
 'use server'
 
-import { sendMessage, getUserByEmail } from "@/lib/db/queries";
+import { sendMessage, getUserByEmail, sql } from "@/lib/db/queries";
+import { getAdminUserByEmail } from "@/lib/db/admin-queries";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 import { encrypt, getSession, SESSION_COOKIE_OPTIONS } from "@/lib/auth";
@@ -23,23 +24,80 @@ import Razorpay from 'razorpay';
 
 export async function login(prevState: any, formData: FormData) {
     try {
-        const email = formData.get("email") as string;
-        const password = formData.get("password") as string;
+        const email = (formData.get("email") as string || '').trim().toLowerCase();
+        const password = (formData.get("password") as string || '').trim();
 
         if (!email || !password) {
             return { error: "Please enter both email and password." };
         }
 
+        // 1. Check admin_users table for administrator credentials
+        const adminRecord = await getAdminUserByEmail(email);
+        if (adminRecord && adminRecord.is_active) {
+            const adminHashRows = await sql`
+                SELECT password_hash FROM admin_users WHERE id = ${adminRecord.id} LIMIT 1;
+            `;
+            const adminHash = adminHashRows[0]?.password_hash;
+            
+            let adminAuthenticated = false;
+            if (adminHash && (await bcrypt.compare(password, adminHash))) {
+                adminAuthenticated = true;
+            } else {
+                // Also check users table fallback
+                const user = await getUserByEmail(email);
+                if (user && (await bcrypt.compare(password, user.password))) {
+                    adminAuthenticated = true;
+                }
+            }
+
+            if (adminAuthenticated) {
+                // Update last login
+                await sql`
+                    UPDATE admin_users 
+                    SET last_login_at = NOW(), updated_at = NOW() 
+                    WHERE id = ${adminRecord.id};
+                `;
+
+                const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+                const session = await encrypt({
+                    user: {
+                        id: adminRecord.id,
+                        email: adminRecord.email,
+                        role: 'admin',
+                        name: adminRecord.full_name || 'Administrator',
+                        roleSlug: adminRecord.role_slug || 'superadmin',
+                        hierarchyTier: adminRecord.hierarchy_tier ?? 0,
+                        sessionVersion: adminRecord.session_version ?? 1,
+                    },
+                    expires,
+                });
+
+                (await cookies()).set("session", session, { expires, ...SESSION_COOKIE_OPTIONS });
+                redirect('/dashboard/admin');
+            }
+        }
+
+        // 2. Check users table (developers, clients, or fallback admins)
         const user = await getUserByEmail(email);
 
-        // If no user found or password doesn't match
         if (!user || !(await bcrypt.compare(password, user.password))) {
-            return { error: "Invalid credentials." };
+            return { error: "Invalid email or password. Please check your credentials." };
         }
 
         // Create Session
         const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
-        const session = await encrypt({ user: { id: user.id, email: user.email, role: user.role, name: user.name }, expires });
+        const session = await encrypt({
+            user: {
+                id: user.id,
+                email: user.email,
+                role: user.role,
+                name: user.name,
+                roleSlug: user.role === 'admin' ? 'superadmin' : undefined,
+                hierarchyTier: user.role === 'admin' ? 0 : undefined,
+                sessionVersion: 1,
+            },
+            expires,
+        });
 
         (await cookies()).set("session", session, { expires, ...SESSION_COOKIE_OPTIONS });
 
@@ -54,8 +112,8 @@ export async function login(prevState: any, formData: FormData) {
             redirect('/'); // Fallback
         }
     } catch (error: any) {
-        console.error("Login Error:", error);
         if (error?.message === "NEXT_REDIRECT" || error?.digest?.startsWith?.("NEXT_REDIRECT")) throw error; // Re-throw redirect
+        console.error("Login Error:", error);
         return { error: "Login failed: " + error.message };
     }
 }

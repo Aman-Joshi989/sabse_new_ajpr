@@ -232,6 +232,7 @@ export default function LeadForm() {
               setFormData({
                 name: '',
                 email: '',
+                website: '',
                 phone: '',
                 projectGoal: '',
                 companySize: '2-10',

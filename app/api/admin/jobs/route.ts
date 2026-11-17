@@ -22,8 +22,10 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const originError = assertSameOrigin(req);
-  if (originError) return originError;
+  const originCheck = assertSameOrigin(req);
+  if (!originCheck.valid) {
+    return NextResponse.json({ error: originCheck.error || 'Forbidden' }, { status: 403 });
+  }
 
   const adminCheck = await requireAdminApi(req);
   if (!adminCheck.authorized) {

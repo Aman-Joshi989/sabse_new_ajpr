@@ -72,7 +72,7 @@ test('Global session revocation logic increments session version', () => {
   assert.equal(revoked[1].session_version, 4);
 
   // A session with old session_version is rejected
-  const oldSessionVersion = 1;
+  const oldSessionVersion: number = 1;
   const isAuthorized = oldSessionVersion === revoked[0].session_version;
   assert.equal(isAuthorized, false, 'Old session must be rejected after revocation');
 });

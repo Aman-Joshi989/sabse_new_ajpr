@@ -41,6 +41,7 @@ export default function AdminLayoutClient({
     { name: 'AI SEO Manager', href: '/dashboard/admin/ai-seo', icon: Search },
     { name: 'Keyword Research', href: '/dashboard/admin/keyword-research', icon: Activity },
     { name: 'Backlink Research', href: '/dashboard/admin/backlink-research', icon: Search },
+    { name: 'Outreach Campaigns', href: '/dashboard/admin/outreach', icon: Bot },
     { name: '🔥 Outrank Competitor', href: '/dashboard/admin/outrank', icon: Zap },
     { name: '📱 Social Media & Leads', href: '/dashboard/admin/social-media', icon: Users },
   ]

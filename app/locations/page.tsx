@@ -1,21 +1,22 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { 
-    MapPin, 
-    Code, 
-    Cpu, 
-    Smartphone, 
-    LayoutDashboard, 
-    Cloud, 
-    ArrowRight, 
-    Search, 
-    Target, 
+import {
+    MapPin,
+    Code,
+    Cpu,
+    Smartphone,
+    LayoutDashboard,
+    Cloud,
+    ArrowRight,
+    Search,
+    Target,
     BarChart3,
     Globe,
     Building2,
     ShieldCheck
 } from 'lucide-react';
 import { BreadcrumbSchema } from '@/components/schema/BreadcrumbSchema';
+import { ItemListSchema } from '@/components/schema/ItemListSchema';
 
 export const revalidate = 86400; // Cache for 24 hours
 
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
 };
 
 const US_METROS = [
-    'austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville', 
+    'austin', 'denver', 'phoenix', 'charlotte', 'tampa', 'nashville',
     'dallas', 'atlanta', 'miami', 'chicago', 'boston', 'seattle',
     'new-york', 'san-francisco'
 ];
@@ -84,14 +85,40 @@ function formatName(slug: string) {
     return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
+const locationItemList = [
+    ...REGIONAL_METROS.map((city, idx) => ({
+        name: `${formatName(city)}, Uttarakhand`,
+        url: `https://ajprworld.com/locations/${city}`,
+        description: `Custom software engineering, local SEO, and AI growth solutions in ${formatName(city)}, Uttarakhand.`,
+        position: idx + 1
+    })),
+    ...US_METROS.map((city, idx) => ({
+        name: `${formatName(city)}, USA`,
+        url: `https://ajprworld.com/locations/${city}`,
+        description: `B2B software engineering, Next.js web applications, and GEO search marketing in ${formatName(city)}.`,
+        position: REGIONAL_METROS.length + idx + 1
+    })),
+    ...GLOBAL_HUBS.map((city, idx) => ({
+        name: `${formatName(city)}, Global Tech Corridor`,
+        url: `https://ajprworld.com/locations/${city}`,
+        description: `International enterprise engineering, AI systems, and search optimization in ${formatName(city)}.`,
+        position: REGIONAL_METROS.length + US_METROS.length + idx + 1
+    }))
+];
+
 export default function LocationsIndex() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#030712] font-sans selection:bg-blue-600/30">
-            <BreadcrumbSchema 
+            <BreadcrumbSchema
                 items={[
                     { name: 'Home', item: 'https://ajprworld.com' },
                     { name: 'Locations', item: 'https://ajprworld.com/locations' }
                 ]}
+            />
+            <ItemListSchema
+                name="AJPR World Regional Hubs & Metros Served"
+                description="Comprehensive directory of regional engineering hubs in Uttarakhand, major US metro tech centers, and global digital corridors served by AJPR World."
+                items={locationItemList}
             />
 
             {/* Header */}
@@ -113,7 +140,7 @@ export default function LocationsIndex() {
             </div>
 
             <div className="container mx-auto px-4 py-16 max-w-7xl space-y-24">
-                
+
                 {/* 1. Uttarakhand & Regional Engineering Hubs */}
                 <div>
                     <div className="mb-10 pb-4 border-b border-slate-200 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -129,18 +156,17 @@ export default function LocationsIndex() {
                             </p>
                         </div>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {REGIONAL_METROS.map((city) => {
                             const isHQ = city === 'haldwani';
                             return (
-                                <div 
-                                    key={city} 
-                                    className={`p-8 rounded-2xl border transition-all duration-300 group ${
-                                        isHQ 
-                                            ? 'bg-blue-50/50 dark:bg-blue-950/20 border-blue-500/40 shadow-lg ring-1 ring-blue-500/20' 
-                                            : 'bg-white dark:bg-[#0B0F19] border-slate-200 dark:border-white/10 hover:shadow-xl dark:hover:shadow-2xl'
-                                    }`}
+                                <div
+                                    key={city}
+                                    className={`p-8 rounded-2xl border transition-all duration-300 group ${isHQ
+                                        ? 'bg-blue-50/50 dark:bg-blue-950/20 border-blue-500/40 shadow-lg ring-1 ring-blue-500/20'
+                                        : 'bg-white dark:bg-[#0B0F19] border-slate-200 dark:border-white/10 hover:shadow-xl dark:hover:shadow-2xl'
+                                        }`}
                                 >
                                     <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100 dark:border-white/10">
                                         <h3 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
@@ -158,7 +184,7 @@ export default function LocationsIndex() {
                                     <ul className="space-y-2.5">
                                         {SERVICES.slice(0, 6).map((service) => (
                                             <li key={service.slug}>
-                                                <Link 
+                                                <Link
                                                     href={`/locations/${city}/${service.slug}`}
                                                     className="flex items-center justify-between text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium group/link transition-colors"
                                                 >
@@ -172,7 +198,7 @@ export default function LocationsIndex() {
                                         ))}
                                     </ul>
                                     <div className="mt-5 pt-3 border-t border-slate-100 dark:border-white/5">
-                                        <Link 
+                                        <Link
                                             href={`/locations/${city}`}
                                             className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                                         >
@@ -210,7 +236,7 @@ export default function LocationsIndex() {
                                 <ul className="space-y-2.5">
                                     {SERVICES.slice(0, 6).map((service) => (
                                         <li key={service.slug}>
-                                            <Link 
+                                            <Link
                                                 href={`/locations/${city}/${service.slug}`}
                                                 className="flex items-center justify-between text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium group/link transition-colors"
                                             >
@@ -224,7 +250,7 @@ export default function LocationsIndex() {
                                     ))}
                                 </ul>
                                 <div className="mt-5 pt-3 border-t border-slate-100 dark:border-white/5">
-                                    <Link 
+                                    <Link
                                         href={`/locations/${city}`}
                                         className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                                     >
@@ -261,7 +287,7 @@ export default function LocationsIndex() {
                                 <ul className="space-y-2.5">
                                     {SERVICES.slice(0, 6).map((service) => (
                                         <li key={service.slug}>
-                                            <Link 
+                                            <Link
                                                 href={`/locations/${city}/${service.slug}`}
                                                 className="flex items-center justify-between text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium group/link transition-colors"
                                             >
@@ -275,7 +301,7 @@ export default function LocationsIndex() {
                                     ))}
                                 </ul>
                                 <div className="mt-5 pt-3 border-t border-slate-100 dark:border-white/5">
-                                    <Link 
+                                    <Link
                                         href={`/locations/${city}`}
                                         className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                                     >

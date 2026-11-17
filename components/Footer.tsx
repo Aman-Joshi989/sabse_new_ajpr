@@ -60,15 +60,18 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
         { name: 'Client Reviews', href: '/reviews' },
         { name: 'Portfolio', href: '/portfolio' },
         { name: 'Careers', href: '/careers' },
+        { name: 'Apply for Roles', href: '/careers/apply' },
         { name: 'Contact', href: '/contact' },
     ];
 
     const resourceLinks = [
         { name: 'Free Technical Audit', href: '/free-audit' },
+        { name: 'Resources Hub', href: '/resources' },
         { name: 'Agency ROI Calculator', href: '/tools/agency-pricing-calculator' },
         { name: '2026 Agency Pricing Report', href: '/research/agency-pricing-report' },
         { name: 'Engineering Solutions', href: '/solutions' },
         { name: 'AI Automation & Workflows', href: '/ai-systems' },
+        { name: 'Roofing Marketing Agency', href: '/roofing-contractors' },
         { name: 'SEO & Growth Retainers', href: '/pricing/seo-cost' },
         { name: 'PPC Management Cost', href: '/pricing/ppc-cost' },
         { name: 'Website Cost Guide', href: '/pricing/website-cost' },
@@ -201,8 +204,8 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                         <RegionSelector variant="footer" />
                         <span className="hidden md:inline text-slate-300 dark:text-slate-700">•</span>
                         <span className="text-[11px] text-slate-600 dark:text-slate-400">
-                            {isIndia 
-                                ? 'GST Invoicing • Pan-India Delivery • Haldwani & Delhi NCR' 
+                            {isIndia
+                                ? 'GST Invoicing • Pan-India Delivery • Haldwani & Delhi NCR'
                                 : 'US Wire & Cards • Delaware-Friendly Contracts • EST/PST Overlap'}
                         </span>
                     </div>

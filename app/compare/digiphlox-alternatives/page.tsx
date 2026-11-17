@@ -123,7 +123,7 @@ export default function DigiPhloxAlternativesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(comparisonProductSchema) }}
       />
       <FAQSchema faqs={faqs} />
-      <ItemListSchema 
+      <ItemListSchema
         name="Top Alternatives to DigiPhlox in Haldwani (2026 Agency Evaluation)"
         description="Comprehensive evaluation of the leading alternatives to DigiPhlox in Haldwani, Uttarakhand based on tech stack, Google rankings, and revenue impact."
         items={topAlternatives}
@@ -333,7 +333,7 @@ export default function DigiPhloxAlternativesPage() {
 
         {/* Lead Capture Component */}
         <div className="mb-12">
-          <ToolLeadCapture 
+          <ToolLeadCapture
             title="Get a Free Haldwani Digital Audit for Your Business"
             subtitle="Compare your current search rankings, Google Maps visibility, and website speed against top competitors in Haldwani."
             badge="Free Haldwani Audit"

@@ -123,7 +123,7 @@ export default function TheInfinixAlternativesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(comparisonProductSchema) }}
       />
       <FAQSchema faqs={faqs} />
-      <ItemListSchema 
+      <ItemListSchema
         name="Top Alternatives to The Infinix in Haldwani (2026 Agency Evaluation)"
         description="Comprehensive evaluation of the leading alternatives to The Infinix in Haldwani, Uttarakhand based on tech stack, Google rankings, and revenue impact."
         items={topAlternatives}
@@ -300,7 +300,7 @@ export default function TheInfinixAlternativesPage() {
 
         {/* Lead Capture */}
         <div className="mb-12">
-          <ToolLeadCapture 
+          <ToolLeadCapture
             title="Request Your Free Haldwani Competitive SEO Audit"
             subtitle="Discover exactly where your competitors outrank you on Google Maps and search, and how to displace them."
             badge="Free Haldwani Audit"

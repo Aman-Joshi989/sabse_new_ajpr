@@ -1,6 +1,5 @@
 import { notFound, redirect, permanentRedirect } from 'next/navigation';
 import { Metadata } from 'next';
-import Script from 'next/script';
 import { getBlogBySlug, getBlogs } from '@/lib/db/queries';
 import { cleanMetaTitle, cleanMetaDescription } from '@/app/layout';
 import { constructEnterpriseMetadata } from '@/lib/seo';
@@ -266,7 +265,7 @@ export default async function BlogPost(props: Props) {
 
     return (
         <>
-            <Script
+            <script
                 id="article-schema"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

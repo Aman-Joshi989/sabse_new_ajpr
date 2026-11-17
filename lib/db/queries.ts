@@ -11,9 +11,9 @@ const getPool = () => {
   cachedPool = new Pool({
     connectionString: url,
     ssl: { rejectUnauthorized: false },
-    connectionTimeoutMillis: 5000,
-    idleTimeoutMillis: 10000,
-    max: 10
+    connectionTimeoutMillis: 15000,
+    idleTimeoutMillis: 30000,
+    max: 20
   });
   return cachedPool;
 };
@@ -40,10 +40,21 @@ export const sql = async (strings: TemplateStringsArray, ...values: any[]) => {
   try {
     const res = values.length > 0 
       ? await pool.query(text, values)
-      : await pool.query(text); // Simple query protocol allows multiple statements
+      : await pool.query(text);
     console.log(`[DB Query Done in ${Date.now() - startTime}ms]:`, text.replace(/\s+/g, ' ').trim().slice(0, 40));
     return res.rows || (Array.isArray(res) ? res[res.length-1]?.rows || [] : []);
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.message?.includes('timeout') || err?.message?.includes('Connection terminated')) {
+      console.warn(`[DB Query Retrying after error: ${err.message}]`);
+      await new Promise(r => setTimeout(r, 400));
+      try {
+        const retryRes = values.length > 0 ? await pool.query(text, values) : await pool.query(text);
+        return retryRes.rows || (Array.isArray(retryRes) ? retryRes[retryRes.length-1]?.rows || [] : []);
+      } catch (retryErr) {
+        console.error(`[DB Query Retry Failed]:`, retryErr);
+        throw retryErr;
+      }
+    }
     console.error(`[DB Query Failed in ${Date.now() - startTime}ms]:`, err);
     throw err;
   }
@@ -1468,5 +1479,164 @@ export async function insertLead(data: { name?: string; email: string; company?:
     `;
   } catch (err) {
     console.error("Failed to insert lead into sales_leads:", err);
+  }
+}
+
+// ----------------------------------------------------
+// DYNAMIC JOB POSTINGS CMS
+// ----------------------------------------------------
+
+export interface DbJobPosting {
+  id: string;
+  slug: string;
+  title: string;
+  department: string;
+  job_type: string;
+  location: string;
+  experience: string;
+  compensation: string;
+  short_summary: string;
+  skills: string[];
+  responsibilities: string[];
+  must_haves: string[];
+  nice_to_haves: string[];
+  highlights: string[];
+  published: boolean;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getPublishedJobPostings(): Promise<DbJobPosting[]> {
+  try {
+    const rows = await sql`
+      SELECT * FROM job_postings 
+      WHERE published = true 
+      ORDER BY display_order ASC, created_at DESC;
+    `;
+    return (rows as any[]) || [];
+  } catch (err) {
+    console.error("Failed to fetch published job postings:", err);
+    return [];
+  }
+}
+
+export async function getAllJobPostingsAdmin(): Promise<DbJobPosting[]> {
+  try {
+    const rows = await sql`
+      SELECT * FROM job_postings 
+      ORDER BY display_order ASC, created_at DESC;
+    `;
+    return (rows as any[]) || [];
+  } catch (err) {
+    console.error("Failed to fetch admin job postings:", err);
+    return [];
+  }
+}
+
+export async function getJobPostingById(id: string): Promise<DbJobPosting | null> {
+  try {
+    const rows = await sql`SELECT * FROM job_postings WHERE id = ${id} LIMIT 1;`;
+    return (rows as any[])[0] || null;
+  } catch (err) {
+    console.error("Failed to fetch job posting by id:", err);
+    return null;
+  }
+}
+
+export async function createJobPosting(data: Partial<DbJobPosting>) {
+  try {
+    const baseSlug = (data.title || 'job')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
+    const slug = data.slug || `${baseSlug}-${Math.random().toString(36).substring(2, 6)}`;
+
+    const rows = await sql`
+      INSERT INTO job_postings (
+        slug, title, department, job_type, location, experience, compensation,
+        short_summary, skills, responsibilities, must_haves, nice_to_haves, highlights,
+        published, display_order
+      ) VALUES (
+        ${slug},
+        ${data.title || 'Untitled Position'},
+        ${data.department || 'Engineering'},
+        ${data.job_type || 'Full-time'},
+        ${data.location || 'Remote'},
+        ${data.experience || '2+ years'},
+        ${data.compensation || 'Competitive'},
+        ${data.short_summary || ''},
+        ${data.skills || []},
+        ${data.responsibilities || []},
+        ${data.must_haves || []},
+        ${data.nice_to_haves || []},
+        ${data.highlights || []},
+        ${data.published ?? true},
+        ${data.display_order || 0}
+      )
+      RETURNING *;
+    `;
+    return (rows as any[])[0];
+  } catch (err) {
+    console.error("Failed to create job posting:", err);
+    throw err;
+  }
+}
+
+export async function updateJobPosting(id: string, data: Partial<DbJobPosting>) {
+  try {
+    const rows = await sql`
+      UPDATE job_postings SET
+        title = COALESCE(${data.title}, title),
+        department = COALESCE(${data.department}, department),
+        job_type = COALESCE(${data.job_type}, job_type),
+        location = COALESCE(${data.location}, location),
+        experience = COALESCE(${data.experience}, experience),
+        compensation = COALESCE(${data.compensation}, compensation),
+        short_summary = COALESCE(${data.short_summary}, short_summary),
+        skills = COALESCE(${data.skills}, skills),
+        responsibilities = COALESCE(${data.responsibilities}, responsibilities),
+        must_haves = COALESCE(${data.must_haves}, must_haves),
+        nice_to_haves = COALESCE(${data.nice_to_haves}, nice_to_haves),
+        highlights = COALESCE(${data.highlights}, highlights),
+        published = COALESCE(${data.published}, published),
+        display_order = COALESCE(${data.display_order}, display_order),
+        updated_at = CURRENT_TIMESTAMP
+      WHERE id = ${id}
+      RETURNING *;
+    `;
+    return (rows as any[])[0];
+  } catch (err) {
+    console.error("Failed to update job posting:", err);
+    throw err;
+  }
+}
+
+export async function toggleJobPostingPublish(id: string, published: boolean) {
+  try {
+    const rows = await sql`
+      UPDATE job_postings 
+      SET published = ${published}, updated_at = CURRENT_TIMESTAMP
+      WHERE id = ${id}
+      RETURNING id, title, published;
+    `;
+    return (rows as any[])[0];
+  } catch (err) {
+    console.error("Failed to toggle job posting publish:", err);
+    throw err;
+  }
+}
+
+export async function deleteJobPosting(id: string) {
+  try {
+    const rows = await sql`
+      DELETE FROM job_postings 
+      WHERE id = ${id}
+      RETURNING id, title;
+    `;
+    return (rows as any[])[0];
+  } catch (err) {
+    console.error("Failed to delete job posting:", err);
+    throw err;
   }
 }

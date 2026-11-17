@@ -9,6 +9,7 @@ import { Metadata } from 'next';
 import { getSeoMetadata } from "@/lib/db/queries";
 import { CORNERSTONE_BLOG_POSTS } from '@/lib/blog-data';
 import { constructEnterpriseMetadata } from '@/lib/seo';
+import { ItemListSchema } from '@/components/schema/ItemListSchema';
 
 export const revalidate = 3600; // Cache for 1 hour (ISR) to protect Vercel free limits
 type BlogPost = {
@@ -141,6 +142,16 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <ItemListSchema
+        name="AJPR World Growth & Engineering Blog Articles"
+        description="Actionable strategies on SEO, AI search discoverability, custom software engineering, and digital growth."
+        items={filteredBlogs.slice(0, 15).map((b, i) => ({
+          name: b.title,
+          description: b.excerpt || b.title,
+          url: `https://ajprworld.com/blog/${b.slug}`,
+          position: i + 1,
+        }))}
       />
       
       {/* Hero Section */}

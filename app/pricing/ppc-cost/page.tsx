@@ -6,14 +6,14 @@ import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'PPC Management Cost: 2026 Pricing & Retainer Guide | AJPR World',
-  description: 'Discover PPC management costs in 2026. Compare flat retainers ($1,500–$5,000/mo) vs % of ad spend, agency fee models, ROAS targets, and performance benchmarks.',
+  title: 'PPC Management Cost: 2026 Pricing & Retainers | AJPR World',
+  description: 'Discover PPC management costs in 2026: compare flat retainers ($1,500–$5,000/mo) vs % of ad spend, agency fee models, and ROAS performance targets.',
   alternates: {
     canonical: 'https://ajprworld.com/pricing/ppc-cost',
   },
   openGraph: {
-    title: 'PPC Management Cost: 2026 Pricing & Retainer Guide | AJPR World',
-    description: 'Discover PPC management costs in 2026. Compare flat retainers ($1,500–$5,000/mo) vs % of ad spend, agency fee models, ROAS targets, and performance benchmarks.',
+    title: 'PPC Management Cost: 2026 Pricing & Retainers | AJPR World',
+    description: 'Discover PPC management costs in 2026: compare flat retainers ($1,500–$5,000/mo) vs % of ad spend, agency fee models, and ROAS performance targets.',
     url: 'https://ajprworld.com/pricing/ppc-cost',
     siteName: 'AJPR World',
     type: 'article',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'PPC Management Cost: 2026 Pricing & Retainer Guide | AJPR',
+    title: 'PPC Management Cost: 2026 Pricing & Retainers | AJPR',
     description: 'Compare flat agency fees vs percentage-of-ad-spend pricing for Google Ads and paid media campaigns.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',

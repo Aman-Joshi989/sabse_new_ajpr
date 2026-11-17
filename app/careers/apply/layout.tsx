@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Apply for Career Opportunities | AJPR World',
-  description: 'Join the engineering and AI systems development team at AJPR World.',
+  description: 'Apply for high-impact software engineering, AI systems, and product design roles at AJPR World. Collaborate with senior engineering pods.',
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 };
 

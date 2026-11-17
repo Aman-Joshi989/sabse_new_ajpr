@@ -4,13 +4,13 @@ import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
   title: 'SaaS Bloat & Subscription Cost Audit Tool | AJPR World',
-  description: 'Calculate how much your business wastes on disconnected SaaS subscriptions like Zapier, HubSpot, and Airtable, and see how consolidation saves thousands annually.',
+  description: 'Calculate wasted spend on disconnected SaaS subscriptions like Zapier and HubSpot, and see how consolidation into custom tools saves thousands annually.',
   alternates: {
     canonical: 'https://ajprworld.com/tools/saas-bloat-audit',
   },
   openGraph: {
     title: 'SaaS Bloat & Subscription Cost Audit Tool | AJPR World',
-    description: 'Calculate how much your business wastes on disconnected SaaS subscriptions and discover consolidation savings.',
+    description: 'Calculate wasted spend on disconnected SaaS subscriptions and see how consolidation into custom tools saves thousands annually.',
     url: 'https://ajprworld.com/tools/saas-bloat-audit',
     siteName: 'AJPR World',
     type: 'website',

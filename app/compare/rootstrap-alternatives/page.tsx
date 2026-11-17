@@ -8,14 +8,14 @@ import RootstrapComparisonClient from './RootstrapComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Rootstrap Alternatives & Agency Comparison (2026 Guide) | AJPR World',
-  description: 'An objective 2026 comparison of Rootstrap enterprise development costs ($50k–$150k) vs. agile software studios. Compare delivery timelines, tech stacks, and code ownership.',
+  title: 'Rootstrap Alternatives & Agency Review (2026) | AJPR World',
+  description: 'Objective 2026 comparison of Rootstrap ($50k–$150k) vs agile studios. Compare delivery timelines, modern tech stacks, pricing, and 100% code ownership.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/rootstrap-alternatives',
   },
   openGraph: {
-    title: 'Rootstrap Alternatives & Agency Comparison (2026 Guide) | AJPR World',
-    description: 'An objective 2026 comparison of Rootstrap enterprise development costs vs. agile software studios.',
+    title: 'Rootstrap Alternatives & Agency Review (2026) | AJPR World',
+    description: 'Objective 2026 comparison of Rootstrap enterprise development costs vs. agile software studios.',
     url: 'https://ajprworld.com/compare/rootstrap-alternatives',
     siteName: 'AJPR World',
     type: 'article',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rootstrap Alternatives & Agency Comparison (2026 Guide) | AJPR World',
+    title: 'Rootstrap Alternatives & Agency Review (2026) | AJPR World',
     description: 'Objective comparison of Rootstrap vs agile software studios: pricing, sprint velocity, tech stack, and code ownership.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',

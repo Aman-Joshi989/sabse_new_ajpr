@@ -470,7 +470,7 @@ Source Article: ${post.title} (${articleUrl})`,
               Aman leads strategy and engineering at AJPR World, helping US startups, B2B enterprises, and high-growth brands scale organic pipeline through radical transparency, Generative Engine Optimization, and full-stack software architecture.
             </p>
             <div className="pt-2 flex items-center justify-center sm:justify-start gap-4 text-xs font-semibold text-blue-600 dark:text-blue-400">
-              <a href="https://www.linkedin.com/in/aman-joshi-/" target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center gap-1">
+              <a href="https://www.linkedin.com/in/aman-joshi989" target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center gap-1">
                 <Linkedin className="w-3.5 h-3.5" /> Connect on LinkedIn
               </a>
               <span>•</span>

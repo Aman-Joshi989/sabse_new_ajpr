@@ -8,13 +8,13 @@ import AltarIoComparisonClient from './AltarIoComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Altar.io Alternatives & Startup Studio Comparison (2026 Guide) | AJPR World',
+  title: 'Top Altar.io Alternatives & Studio Comparison | AJPR World',
   description: 'An objective 2026 comparison of Altar.io discovery workshops ($40k–$90k) vs. agile software studios. Compare sprint velocity, tech stack, and code ownership.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/altar-io-alternatives',
   },
   openGraph: {
-    title: 'Altar.io Alternatives & Startup Studio Comparison (2026 Guide) | AJPR World',
+    title: 'Top Altar.io Alternatives & Studio Comparison | AJPR World',
     description: 'An objective 2026 comparison of Altar.io discovery workshops vs. agile software studios.',
     url: 'https://ajprworld.com/compare/altar-io-alternatives',
     siteName: 'AJPR World',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Altar.io Alternatives & Startup Studio Comparison (2026 Guide) | AJPR World',
+    title: 'Top Altar.io Alternatives & Studio Comparison | AJPR World',
     description: 'Objective comparison of Altar.io vs agile software studios: costs, speed to market, and technical architecture.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',

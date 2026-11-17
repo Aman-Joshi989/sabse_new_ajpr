@@ -19,7 +19,7 @@ import {
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
   title: 'Site Directory & Architecture Index | AJPR World',
-  description: 'Explore the complete verified index of AJPR World: technology services, client comparisons, pricing benchmarks, research reports, and regional engineering hubs.',
+  description: 'Explore the complete index of AJPR World: engineering services, comparisons, pricing benchmarks, research reports, and regional technology hubs.',
   alternates: {
     canonical: 'https://ajprworld.com/sitemap'
   },

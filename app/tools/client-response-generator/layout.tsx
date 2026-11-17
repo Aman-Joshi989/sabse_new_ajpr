@@ -3,13 +3,13 @@ import Script from 'next/script';
 import { FAQSchema } from '@/components/schema/FAQSchema';
 
 export const metadata: Metadata = {
-  title: 'Agency & Consultant Client Email Response Generator | AJPR World',
+  title: 'Client Email Response Generator for Agencies | AJPR World',
   description: 'Generate professional, executive-grade responses for tough client situations: scope creep, overdue invoices, price objections, and project delays.',
   alternates: {
     canonical: 'https://ajprworld.com/tools/client-response-generator',
   },
   openGraph: {
-    title: 'Agency & Consultant Client Email Response Generator | AJPR World',
+    title: 'Client Email Response Generator for Agencies | AJPR World',
     description: 'Generate professional, executive-grade responses for tough client situations: scope creep, overdue invoices, price objections, and project delays.',
     url: 'https://ajprworld.com/tools/client-response-generator',
     siteName: 'AJPR World',

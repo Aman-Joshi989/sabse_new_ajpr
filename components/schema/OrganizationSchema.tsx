@@ -21,20 +21,13 @@ export const OrganizationSchema = async () => {
       '@type': 'ImageObject',
       url: 'https://ajprworld.com/logo/ajpr-logo.png',
       caption: 'AJPR World Logo',
-      width: '512',
-      height: '512'
+      width: 512,
+      height: 512
     },
     image: 'https://ajprworld.com/og-image.jpg',
     description: settings?.seo_description || 'AJPR World is a premier technology and software engineering firm delivering custom AI MVPs, enterprise workflow automation, full-stack Next.js web applications, and Generative Engine Optimization (GEO) for fast-growing US companies.',
     slogan: 'Custom AI MVPs, Scalable Web Systems & Enterprise Automation in 4 Weeks',
     foundingDate: '2025-06-17',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '64',
-      bestRating: '5',
-      worstRating: '1'
-    },
     address: {
       '@type': 'PostalAddress',
       streetAddress: '161, Indraprastha Colony, Phase 3, Dahariya',
@@ -66,17 +59,19 @@ export const OrganizationSchema = async () => {
       {
         '@type': 'ContactPoint',
         contactType: 'technical sales & support',
+        telephone: '+91-99972-05257',
         email: 'hello@ajprworld.com',
         url: 'https://ajprworld.com/contact',
-        areaServed: ['US', 'GB', 'CA', 'AU', 'IN', 'Worldwide'],
+        areaServed: ['US', 'GB', 'CA', 'AU', 'IN'],
         availableLanguage: ['en']
       },
       {
         '@type': 'ContactPoint',
         contactType: 'consulting & architecture',
+        telephone: '+91-99972-05257',
         email: 'hello@ajprworld.com',
         url: 'https://ajprworld.com/book-call',
-        areaServed: ['US', 'GB', 'CA', 'AU', 'IN', 'Worldwide'],
+        areaServed: ['US', 'GB', 'CA', 'AU', 'IN'],
         availableLanguage: ['en']
       }
     ],
@@ -116,6 +111,9 @@ export const OrganizationSchema = async () => {
       itemListElement: [
         {
           '@type': 'Offer',
+          price: '4500',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           itemOffered: {
             '@type': 'Service',
             name: 'Custom AI MVP Development in 4 Weeks',
@@ -125,6 +123,9 @@ export const OrganizationSchema = async () => {
         },
         {
           '@type': 'Offer',
+          price: '149',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           itemOffered: {
             '@type': 'Service',
             name: 'Website Security & Maintenance',
@@ -134,6 +135,9 @@ export const OrganizationSchema = async () => {
         },
         {
           '@type': 'Offer',
+          price: '2500',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           itemOffered: {
             '@type': 'Service',
             name: 'Cloud & DevOps Services',
@@ -143,6 +147,9 @@ export const OrganizationSchema = async () => {
         },
         {
           '@type': 'Offer',
+          price: '1500',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           itemOffered: {
             '@type': 'Service',
             name: 'Technical SEO & Generative Engine Optimization (GEO)',
@@ -152,6 +159,9 @@ export const OrganizationSchema = async () => {
         },
         {
           '@type': 'Offer',
+          price: '999',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           itemOffered: {
             '@type': 'Service',
             name: 'Graphics & Brand Identity Systems',
@@ -161,6 +171,9 @@ export const OrganizationSchema = async () => {
         },
         {
           '@type': 'Offer',
+          price: '5500',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           itemOffered: {
             '@type': 'Service',
             name: 'Autonomous AI Workflows & Agent Systems',
@@ -170,6 +183,9 @@ export const OrganizationSchema = async () => {
         },
         {
           '@type': 'Offer',
+          price: '2500',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           itemOffered: {
             '@type': 'Service',
             name: 'B2B Growth Marketing Agency & Consulting',
@@ -179,6 +195,9 @@ export const OrganizationSchema = async () => {
         },
         {
           '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
           itemOffered: {
             '@type': 'Service',
             name: 'Agency Alternatives & Commercial Benchmark Hub',

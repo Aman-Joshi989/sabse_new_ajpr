@@ -3,13 +3,13 @@ import { getProducts } from '@/lib/db/queries';
 import PricingClient from './PricingClient';
 
 export const metadata: Metadata = {
-  title: 'Pricing & Sprints | Custom Software, MVPs & Business Automation | AJPR World',
+  title: 'Transparent Software Pricing & Sprint Rates | AJPR World',
   description: 'Transparent fixed pricing for custom Next.js web applications, MVP engineering, and automated business systems starting from flat 2–4 week sprint rates.',
   alternates: {
     canonical: 'https://ajprworld.com/pricing'
   },
   openGraph: {
-    title: 'Pricing & Sprints | Custom Software, MVPs & Business Automation | AJPR World',
+    title: 'Transparent Software Pricing & Sprint Rates | AJPR World',
     description: 'Transparent fixed pricing for custom Next.js web applications, MVP engineering, and automated business systems starting from flat 2–4 week sprint rates.',
     url: 'https://ajprworld.com/pricing',
     siteName: 'AJPR World',

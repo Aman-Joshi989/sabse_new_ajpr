@@ -5,7 +5,7 @@ import FontLoader from '@/components/FontLoader'
 export const metadata: Metadata = {
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
 }
 export default function DashboardLayout({

@@ -6,12 +6,13 @@ import { ArrowRight, CheckCircle, Package } from 'lucide-react'
 import { ServiceIconMap } from '@/components/ui/ServiceIcons'
 import React from 'react'
 import { getPublishedServices } from '@/lib/db/queries'
+import { ItemListSchema } from '@/components/schema/ItemListSchema'
 
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Engineering & Technology Services | AJPR World',
-  description: 'Explore AJPR World engineering services: custom Next.js web applications, SaaS platform architecture, business automation, and high-performance software systems.',
+  description: 'Explore AJPR World engineering services: custom Next.js web apps, SaaS platform architecture, business automation, and high-performance software systems.',
   alternates: {
     canonical: 'https://ajprworld.com/services',
   },
@@ -34,12 +35,22 @@ export default async function ServicesPage() {
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-300 transition-colors duration-300 font-sans">
+            <ItemListSchema
+                name="AJPR World Engineering & Technology Services"
+                description="Core software engineering capabilities, custom Next.js web applications, and enterprise automation."
+                items={services.map((s: any, idx: number) => ({
+                    name: s.title,
+                    description: s.description || s.title,
+                    url: `https://ajprworld.com/services/${s.slug}`,
+                    position: idx + 1
+                }))}
+            />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(
-                        services.map((s: any) => ({
-                            '@context': 'https://schema.org',
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@graph': services.map((s: any) => ({
                             '@type': 'Service',
                             'serviceType': s.title,
                             'name': s.title,
@@ -53,13 +64,13 @@ export default async function ServicesPage() {
                             'url': `https://ajprworld.com/services/${s.slug}`,
                             'aggregateRating': {
                                 '@type': 'AggregateRating',
-                                'ratingValue': '4.9',
-                                'reviewCount': '64',
-                                'bestRating': '5',
-                                'worstRating': '1'
+                                'ratingValue': 4.9,
+                                'reviewCount': 64,
+                                'bestRating': 5,
+                                'worstRating': 1
                             }
                         }))
-                    )
+                    })
                 }}
             />
             {/* Premium Hero Section */}

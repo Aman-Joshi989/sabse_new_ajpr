@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
   
   const title = seo?.title || 'Custom Web Development & Next.js Engineering | AJPR World';
-  const description = seo?.description || 'Full-stack engineering specializing in high-performance Next.js web applications, scalable backend systems, and rapid MVP delivery in 2–4 weeks with 100% code ownership.';
+  const description = seo?.description || 'Full-stack Next.js web applications, scalable backend systems, and rapid MVP delivery in 2–4 weeks with transparent pricing and 100% code ownership.';
   
   return {
     title,

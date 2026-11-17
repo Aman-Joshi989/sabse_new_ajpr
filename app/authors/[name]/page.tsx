@@ -11,15 +11,17 @@ export async function generateMetadata({ params }: { params: Promise<{ name: str
   const resolvedParams = await params;
   const decodedName = decodeURIComponent(resolvedParams.name);
   
+  const description = `Explore technical insights, software engineering blueprints, and AI architecture guides written by ${decodedName} at AJPR World.`;
+  
   return {
     title: `${decodedName} - Author Profile | AJPR World`,
-    description: `Read articles by ${decodedName}, an expert at AJPR World.`,
+    description,
     alternates: {
       canonical: `https://ajprworld.com/authors/${resolvedParams.name}`,
     },
     openGraph: {
       title: `${decodedName} - Author Profile | AJPR World`,
-      description: `Read articles by ${decodedName}, an expert at AJPR World.`,
+      description,
       url: `https://ajprworld.com/authors/${resolvedParams.name}`,
       type: 'profile',
       siteName: 'AJPR World',
@@ -43,7 +45,7 @@ export default async function AuthorProfilePage({ params }: { params: Promise<{ 
 
   const breadcrumbs = [
     { name: 'Home', item: 'https://ajprworld.com' },
-    { name: 'Authors', item: 'https://ajprworld.com/authors' },
+    { name: 'About', item: 'https://ajprworld.com/about' },
     { name: decodedName, item: `https://ajprworld.com/authors/${resolvedParams.name}` }
   ];
 
@@ -117,25 +119,32 @@ export default async function AuthorProfilePage({ params }: { params: Promise<{ 
         </h2>
         
         <div className="space-y-6">
-          {authorBlogs.map((blog: any) => (
-            <Link 
-              key={blog.slug}
-              href={`/blog/${blog.slug}`}
-              className="block group bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 transition-colors"
-            >
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 mb-2">
-                    {blog.title}
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 line-clamp-2">
-                    {blog.excerpt}
-                  </p>
+          {authorBlogs.map((blog: any) => {
+            const cleanSlug = (blog.slug || '')
+              .replace(/-edition-\d+$/i, '')
+              .replace(/^edition-\d+-/i, '')
+              .replace(/-\d{3,4}$/, '');
+
+            return (
+              <Link 
+                key={blog.slug}
+                href={`/blog/${cleanSlug}`}
+                className="block group bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 transition-colors"
+              >
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 mb-2">
+                      {blog.title}
+                    </h3>
+                    <p className="text-slate-600 dark:text-slate-400 line-clamp-2">
+                      {blog.excerpt}
+                    </p>
+                  </div>
+                  <ArrowLeftIcon className="w-5 h-5 text-slate-400 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-4 mt-1" />
                 </div>
-                <ArrowLeftIcon className="w-5 h-5 text-slate-400 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-4 mt-1" />
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

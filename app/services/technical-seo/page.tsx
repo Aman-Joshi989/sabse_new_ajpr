@@ -12,13 +12,13 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Technical SEO Services, GBP Optimization & Core Web Vitals | AJPR World',
-  description: 'Technical SEO engineering: Core Web Vitals, Google Business Profile (GBP) optimization, Digital PR SEO backlinks, semantic JSON-LD schema, and Next.js indexing.',
+  title: 'Technical SEO Services & Core Web Vitals | AJPR World',
+  description: 'Technical SEO engineering: Core Web Vitals, Google Business Profile optimization, digital PR backlinks, semantic JSON-LD schema, and Next.js indexing.',
   alternates: {
     canonical: 'https://ajprworld.com/services/technical-seo',
   },
   openGraph: {
-    title: 'Technical SEO Services & Core Web Vitals Optimization | AJPR World',
+    title: 'Technical SEO Services & Core Web Vitals | AJPR World',
     description: 'Technical SEO engineering: Core Web Vitals optimization, semantic JSON-LD schema architecture, crawl efficiency, and Next.js server-side indexing.',
     url: 'https://ajprworld.com/services/technical-seo',
     siteName: 'AJPR World',

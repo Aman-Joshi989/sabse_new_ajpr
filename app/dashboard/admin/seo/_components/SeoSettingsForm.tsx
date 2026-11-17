@@ -28,7 +28,7 @@ export default function SeoSettingsForm({ initialSettings }: { initialSettings: 
         founder_title: initialSettings?.founder_title || 'Founder & Systems Architect',
         founder_bio: initialSettings?.founder_bio || 'I partner with high-growth startups and established brands to build robust digital infrastructures, automate complex backend workloads, and integrate secure enterprise-grade systems.',
         founder_badge: initialSettings?.founder_badge || 'Founder Profile',
-        founder_linkedin: initialSettings?.founder_linkedin || 'https://www.linkedin.com/in/aman-joshi-/',
+        founder_linkedin: initialSettings?.founder_linkedin || 'https://www.linkedin.com/in/aman-joshi989',
         founder_github: initialSettings?.founder_github || 'https://github.com/Aman-Joshi989',
         founder_exp1_title: initialSettings?.founder_exp1_title || 'Systems Architecting',
         founder_exp1_desc: initialSettings?.founder_exp1_desc || 'Designing scalable multi-tenant architectures, cloud database pipelines, and high-concurrency backend API interfaces built for scale.',

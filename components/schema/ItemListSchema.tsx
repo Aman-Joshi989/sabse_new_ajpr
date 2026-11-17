@@ -25,12 +25,6 @@ export const ItemListSchema = ({ name, description, items }: ItemListSchemaProps
       position: item.position ?? index + 1,
       name: item.name,
       url: item.url,
-      item: {
-        '@type': 'Thing',
-        name: item.name,
-        description: item.description,
-        url: item.url,
-      },
     })),
   };
 

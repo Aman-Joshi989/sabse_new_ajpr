@@ -5,14 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Free Technical & Architecture Audit (48-Hr Video Teardown) | AJPR World',
-  description: 'Submit your staging URL or GitHub repo. Lead Systems Architect Aman Joshi will record a 5-minute video teardown identifying your top 3 speed, query, and architecture bottlenecks.',
+  title: 'Free Technical & Architecture Audit (48-Hr) | AJPR World',
+  description: 'Submit your URL or GitHub repo. Lead Architect Aman Joshi records a 5-min teardown of your top 3 speed, query, and architecture bottlenecks in 48 hours.',
   alternates: {
     canonical: 'https://ajprworld.com/free-audit'
   },
   openGraph: {
-    title: 'Free Technical & Architecture Audit (48-Hr Video Teardown) | AJPR World',
-    description: 'Submit your staging URL or GitHub repo. Lead Systems Architect Aman Joshi will record a 5-minute video teardown identifying your top 3 speed, query, and architecture bottlenecks.',
+    title: 'Free Technical & Architecture Audit (48-Hr) | AJPR World',
+    description: 'Submit your URL or GitHub repo. Lead Architect Aman Joshi records a 5-min teardown of your top 3 speed, query, and architecture bottlenecks in 48 hours.',
     url: 'https://ajprworld.com/free-audit',
     siteName: 'AJPR World',
     images: [

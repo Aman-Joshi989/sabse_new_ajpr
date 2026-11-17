@@ -26,13 +26,13 @@ const websitePricingTiers = [
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Website Cost in 2026: Web Design & Development Pricing Guide | AJPR World',
-  description: 'How much does a custom website cost in 2026? A transparent pricing breakdown from $3,500 startup web builds to $20,000+ custom web apps with real deliverables.',
+  title: 'Website Cost in 2026: Web Design & Pricing | AJPR World',
+  description: 'How much does a custom website cost in 2026? Transparent breakdown from $3,500 startup builds to $20,000+ custom web apps with real deliverables.',
   alternates: {
     canonical: 'https://ajprworld.com/pricing/website-cost',
   },
   openGraph: {
-    title: 'Website Cost in 2026: Web Design & Development Pricing Guide | AJPR World',
+    title: 'Website Cost in 2026: Web Design & Pricing | AJPR World',
     description: 'How much does a custom website cost in 2026? A transparent pricing breakdown from $3,500 startup web builds to $20,000+ custom web apps with real deliverables.',
     url: 'https://ajprworld.com/pricing/website-cost',
     siteName: 'AJPR World',

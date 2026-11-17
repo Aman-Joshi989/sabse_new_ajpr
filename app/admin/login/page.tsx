@@ -6,10 +6,10 @@ import AdminLoginForm from './AdminLoginForm';
 
 export const metadata = {
   title: 'Central Command Login | AJPR World',
-  description: 'Authoritative authentication gateway for AJPR World central operations and systems management.',
+  description: 'Authoritative authentication gateway for AJPR World central operations, systems architecture, and engineering infrastructure.',
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
 };
 

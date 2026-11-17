@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Design and generate custom mint-in-box 3D action figures with blister packaging, collectible accessories, power stats, and AI generator prompts.',
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
   alternates: {
     canonical: 'https://ajprworld.com/tools/action-figure-generator',

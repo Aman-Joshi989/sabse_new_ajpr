@@ -77,7 +77,7 @@ export default async function AmanJoshiPage() {
   const founderTitle = settings?.founder_title || 'Founder & Systems Architect'
   const founderBio = settings?.founder_bio || 'I partner with high-growth startups and established brands to build robust digital infrastructures, automate complex backend workloads, and integrate secure enterprise-grade systems.'
   const founderBadge = settings?.founder_badge || 'Founder Profile'
-  const founderLinkedin = settings?.founder_linkedin || 'https://www.linkedin.com/in/aman-joshi-/'
+  const founderLinkedin = settings?.founder_linkedin || 'https://www.linkedin.com/in/aman-joshi989'
   const founderGithub = settings?.founder_github || 'https://github.com/Aman-Joshi989'
   
   const exp1Title = settings?.founder_exp1_title || 'Systems Architecting'

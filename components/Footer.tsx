@@ -216,26 +216,26 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                     {/* Right Side: Socials */}
                     <div className="flex items-center gap-4 text-slate-600 dark:text-slate-400">
-                        <Link href="https://twitter.com/AjprWorld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-500 transition-colors p-1" title="X (Twitter)">
+                        <a href="https://twitter.com/AjprWorld" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors p-1" title="X (Twitter)">
                             <Twitter className="w-4 h-4" />
                             <span className="sr-only">Twitter</span>
-                        </Link>
-                        <Link href="https://www.instagram.com/ajprworld/" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-pink-600 transition-colors p-1" title="Instagram">
+                        </a>
+                        <a href="https://www.instagram.com/ajprworld/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-600 transition-colors p-1" title="Instagram">
                             <Instagram className="w-4 h-4" />
                             <span className="sr-only">Instagram</span>
-                        </Link>
-                        <Link href="https://www.facebook.com/ajprworld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-700 transition-colors p-1" title="Facebook">
+                        </a>
+                        <a href="https://www.facebook.com/ajprworld" target="_blank" rel="noopener noreferrer" className="hover:text-blue-700 transition-colors p-1" title="Facebook">
                             <Facebook className="w-4 h-4" />
                             <span className="sr-only">Facebook</span>
-                        </Link>
-                        <Link href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-blue-600 transition-colors p-1" title="LinkedIn">
+                        </a>
+                        <a href="https://www.linkedin.com/company/ajpr-world" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 transition-colors p-1" title="LinkedIn">
                             <Linkedin className="w-4 h-4" />
                             <span className="sr-only">LinkedIn</span>
-                        </Link>
-                        <Link href="https://www.youtube.com/@AJPRWorld" target="_blank" rel="noopener noreferrer nofollow" className="hover:text-red-600 transition-colors p-1" title="YouTube">
+                        </a>
+                        <a href="https://www.youtube.com/@AJPRWorld" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition-colors p-1" title="YouTube">
                             <Youtube className="w-4 h-4" />
                             <span className="sr-only">YouTube</span>
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div>

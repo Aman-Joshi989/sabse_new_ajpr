@@ -349,30 +349,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.95,
     },
     {
-      url: `${baseUrl}/blog/marketing-strategy-consulting-how-to-choose-a-provider`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/marketing-strategy-consultant-cost-rates`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/b2b-marketing-strategy-in-house-vs-agency-vs-consultant`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/best-b2b-growth-marketing-agencies-us`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
       url: `${baseUrl}/sitemap`,
       lastModified: new Date(),
       changeFrequency: 'daily',
@@ -382,12 +358,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/solutions`,
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/services/website-security-maintenance`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
@@ -557,6 +527,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  // Combine all routes
-  return [...staticPages, ...servicePages, ...solutionPages, ...blogPages, ...glossaryPages, ...programmaticRoutes]
+  // Combine and strictly deduplicate all routes by canonical URL
+  const allRoutes = [...staticPages, ...servicePages, ...solutionPages, ...blogPages, ...glossaryPages, ...programmaticRoutes];
+  const uniqueSitemapMap = new Map<string, MetadataRoute.Sitemap[number]>();
+  for (const item of allRoutes) {
+    if (!uniqueSitemapMap.has(item.url)) {
+      uniqueSitemapMap.set(item.url, item);
+    }
+  }
+  return Array.from(uniqueSitemapMap.values());
 }

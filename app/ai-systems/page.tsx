@@ -3,7 +3,7 @@ import AiSystemsClient from '@/app/ai-systems/AiSystemsClient';
 
 export const metadata: Metadata = {
   title: 'AI Automation & Custom Business AI Systems | AJPR World',
-  description: 'Custom AI automation and intelligent workflows for business. We build practical AI customer support, lead routing, and internal tooling that save hours of manual work.',
+  description: 'Custom AI automation and intelligent workflows for business. We build practical AI support, lead routing, and tooling that saves hours of manual work.',
   keywords: 'AI automation agency, AI agent development, business automation, AI workflows, WhatsApp AI sales agent, AJPR World',
   alternates: {
     canonical: 'https://ajprworld.com/ai-systems',

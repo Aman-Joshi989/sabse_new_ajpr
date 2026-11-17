@@ -8,13 +8,13 @@ import SingleGrainComparisonClient from './SingleGrainComparisonClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Single Grain Alternatives & Growth Agency Comparison (2026 Guide) | AJPR World',
+  title: 'Single Grain Alternatives & Growth Review | AJPR World',
   description: 'An objective 2026 comparison of Single Grain content and paid media retainers ($5k–$15k/mo) vs. technical software and growth studios.',
   alternates: {
     canonical: 'https://ajprworld.com/compare/single-grain-alternatives',
   },
   openGraph: {
-    title: 'Single Grain Alternatives & Growth Agency Comparison (2026 Guide) | AJPR World',
+    title: 'Single Grain Alternatives & Growth Review | AJPR World',
     description: 'An objective 2026 comparison of Single Grain content and paid media retainers vs. technical software and growth studios.',
     url: 'https://ajprworld.com/compare/single-grain-alternatives',
     siteName: 'AJPR World',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Single Grain Alternatives & Growth Agency Comparison (2026 Guide) | AJPR World',
+    title: 'Single Grain Alternatives & Growth Review | AJPR World',
     description: 'Transparent comparison of Single Grain vs technical software and growth partners: pricing, engineering capabilities, and ROI.',
     images: ['https://ajprworld.com/og-image.jpg'],
     creator: '@ajprworld',

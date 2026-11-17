@@ -8,14 +8,14 @@ import AgencyMatchmakerClient from './AgencyMatchmakerClient';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'Agency Comparisons & Alternatives Hub (2026 Guide) | AJPR World',
-  description: 'Objective, transparent comparisons of digital agencies and software studios: Web Tonic, WebFX, Rootstrap, Altar.io, and regional alternatives, pricing & trade-offs.',
+  title: 'Agency Comparisons & Alternatives Hub (2026) | AJPR World',
+  description: 'Transparent comparisons of digital agencies: Web Tonic, WebFX, Rootstrap, Altar.io, and agile software studios. Compare tech stacks, pricing, and speed.',
   alternates: {
     canonical: 'https://ajprworld.com/compare',
   },
   openGraph: {
-    title: 'Agency Comparisons & Alternatives Hub (2026 Guide) | AJPR World',
-    description: 'Objective, transparent comparisons of digital agencies and software studios: Web Tonic, WebFX, Rootstrap, Altar.io, and regional alternatives, pricing & trade-offs.',
+    title: 'Agency Comparisons & Alternatives Hub (2026) | AJPR World',
+    description: 'Transparent comparisons of digital agencies: Web Tonic, WebFX, Rootstrap, Altar.io, and agile software studios. Compare tech stacks, pricing, and speed.',
     url: 'https://ajprworld.com/compare',
     siteName: 'AJPR World',
     type: 'website',

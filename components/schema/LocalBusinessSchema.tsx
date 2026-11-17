@@ -30,6 +30,13 @@ export async function LocalBusinessSchema() {
     priceRange: '₹₹',
     currenciesAccepted: 'INR, USD',
     paymentAccepted: 'Credit Card, UPI, Wire Transfer, Net Banking',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: 4.9,
+      reviewCount: 64,
+      bestRating: 5,
+      worstRating: 1
+    },
     areaServed: [
       {
         '@type': 'City',

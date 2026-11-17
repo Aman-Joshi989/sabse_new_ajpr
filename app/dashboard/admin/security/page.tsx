@@ -7,7 +7,7 @@ export const metadata = {
   title: 'Security & Two-Factor Authentication | Admin Console',
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
 };
 

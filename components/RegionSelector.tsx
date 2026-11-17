@@ -61,13 +61,13 @@ export default function RegionSelector({ variant = 'compact', className = '' }: 
 
       {isOpen && (
         <div 
-          className={`absolute z-50 w-72 max-w-[calc(100vw-32px)] rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 shadow-2xl p-1.5 duration-150 ${
+          className={`absolute z-50 w-80 max-w-[calc(100vw-32px)] rounded-2xl bg-white dark:bg-[#0a0f1c] border border-slate-200 dark:border-slate-800 shadow-2xl p-2 duration-150 ${
             isFooter
-              ? 'bottom-full mb-2.5 left-0 origin-bottom-left animate-in fade-in slide-in-from-bottom-2 zoom-in-95'
+              ? 'bottom-full mb-3 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 origin-bottom-left animate-in fade-in slide-in-from-bottom-2 zoom-in-95'
               : 'top-full mt-2 right-0 origin-top-right animate-in fade-in slide-in-from-top-2 zoom-in-95'
           }`}
         >
-          <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800 mb-1">
+          <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800 mb-1.5">
             Choose Delivery Region
           </div>
           {regions.map((item) => {
@@ -80,28 +80,28 @@ export default function RegionSelector({ variant = 'compact', className = '' }: 
                   setRegion(item.code);
                   setIsOpen(false);
                 }}
-                className={`w-full flex items-start gap-2.5 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
+                className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-colors cursor-pointer ${
                   isSelected
                     ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300'
                     : 'hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300'
                 }`}
               >
-                <span className="text-lg leading-none mt-0.5">{item.flag}</span>
+                <span className="text-xl leading-none shrink-0">{item.flag}</span>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-bold text-slate-900 dark:text-white">
                       {item.label}
                     </span>
-                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 shrink-0">
                       {item.currency}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-tight whitespace-normal">
                     {item.subtitle}
                   </p>
                 </div>
                 {isSelected && (
-                  <Check className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 mt-1 shrink-0" />
+                  <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                 )}
               </button>
             );

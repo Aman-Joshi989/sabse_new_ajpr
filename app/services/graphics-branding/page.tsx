@@ -3,13 +3,13 @@ import GraphicsBrandingClient from './GraphicsBrandingClient'
 
 export const metadata: Metadata = {
     title: 'Premium Graphics & Branding Services | AJPR World',
-    description: 'Transform your business with professional graphics, logo design, and digital branding. We create visual stories that connect with your audience and drive growth.',
+    description: 'Transform your brand with professional graphics, logo design, and digital branding. We create visual stories that connect with your audience and drive growth.',
     alternates: {
         canonical: 'https://ajprworld.com/services/graphics-branding',
     },
     openGraph: {
         title: 'Premium Graphics & Branding Services | AJPR World',
-        description: 'Transform your business with professional graphics, logo design, and digital branding. We create visual stories that connect with your audience and drive growth.',
+        description: 'Transform your brand with professional graphics, logo design, and digital branding. We create visual stories that connect with your audience and drive growth.',
         url: 'https://ajprworld.com/services/graphics-branding',
         images: [
             {

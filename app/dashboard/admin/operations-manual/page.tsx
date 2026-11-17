@@ -3,10 +3,10 @@ import OperationsManualClient from './OperationsManualClient';
 
 export const metadata: Metadata = {
   title: 'Staff Operations Manual & SOP Playbook | AJPR Admin',
-  description: 'Standard Operating Procedures for content publishing, lead handling, PR outreach, and cluster management.',
+  description: 'Comprehensive Standard Operating Procedures for content publishing, candidate lead handling, PR outreach, and cluster infrastructure management.',
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
 };
 

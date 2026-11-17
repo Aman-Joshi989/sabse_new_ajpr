@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: 'Contact AJPR World',
-    description: 'Contact AJPR World to discuss custom software development, web development, and digital marketing.',
+    description: 'Connect with AJPR World to discuss custom software development, Next.js web apps, SaaS MVPs, and AI automation. Direct response within 24 hours.',
     url: 'https://ajprworld.com/contact'
   };
 
@@ -29,8 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error("Failed to fetch SEO for contact:", err);
   }
 
-  const title = seo?.title || 'Contact AJPR World | Direct Senior Engineering & Strategy';
-  const defaultDesc = 'Get in touch with AJPR World to discuss custom software development, Next.js web applications, SaaS MVPs, and business automation. Direct reply within 24 hours.';
+  const title = seo?.title || 'Contact AJPR World | Senior Engineering & Strategy';
+  const defaultDesc = 'Connect with AJPR World to discuss custom software development, Next.js web apps, SaaS MVPs, and AI automation. Direct response within 24 hours.';
   const description = seo?.description || defaultDesc;
 
   return {

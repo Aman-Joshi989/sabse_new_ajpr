@@ -22,13 +22,13 @@ export const revalidate = 86400; // Cache for 24 hours
 export const metadata: Metadata = {
     metadataBase: new URL('https://ajprworld.com'),
     title: 'Areas We Serve | Regional Hubs & US Metros | AJPR World',
-    description: 'Explore US metros, regional Uttarakhand centers, and global tech corridors where AJPR World engineers custom software, AI solutions, SEO, and high-yield digital marketing.',
+    description: 'Explore US metros, Uttarakhand hubs, and global corridors where AJPR World engineers custom software, AI solutions, SEO, and high-yield digital marketing.',
     alternates: {
         canonical: 'https://ajprworld.com/locations'
     },
     openGraph: {
         title: 'Areas We Serve | Regional Hubs & US Metros | AJPR World',
-        description: 'Explore US metros, regional Uttarakhand centers, and global tech corridors where AJPR World engineers custom software, AI solutions, SEO, and high-yield digital marketing.',
+        description: 'Explore US metros, Uttarakhand hubs, and global corridors where AJPR World engineers custom software, AI solutions, SEO, and high-yield digital marketing.',
         url: 'https://ajprworld.com/locations',
         siteName: 'AJPR World',
         type: 'website',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     twitter: {
         card: 'summary_large_image',
         title: 'Areas We Serve | Regional Hubs & US Metros | AJPR World',
-        description: 'Explore US metros, regional Uttarakhand centers, and global tech corridors where AJPR World engineers custom software, AI solutions, SEO, and high-yield digital marketing.',
+        description: 'Explore US metros, Uttarakhand hubs, and global corridors where AJPR World engineers custom software, AI solutions, SEO, and high-yield digital marketing.',
         images: ['https://ajprworld.com/og-image.jpg'],
         creator: '@ajprworld',
         site: '@ajprworld',

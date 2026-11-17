@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'US Business Admin Cost & AI Automation ROI Calculator | AJPR World',
+  title: 'Admin Cost & AI Automation ROI Calculator | AJPR World',
   description: 'Calculate monthly burned payroll on repetitive administrative busywork and see your projected return on autonomous AI workflows and n8n systems.',
   alternates: {
     canonical: 'https://ajprworld.com/tools/admin-cost-calculator',
   },
   openGraph: {
-    title: 'US Business Admin Cost & AI Automation ROI Calculator | AJPR World',
+    title: 'Admin Cost & AI Automation ROI Calculator | AJPR World',
     description: 'Calculate monthly burned payroll on repetitive administrative busywork and see your projected return on autonomous AI workflows.',
     url: 'https://ajprworld.com/tools/admin-cost-calculator',
     siteName: 'AJPR World',

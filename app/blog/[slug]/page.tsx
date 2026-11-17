@@ -232,12 +232,14 @@ export default async function BlogPost(props: Props) {
 
     const articleUrl = `https://ajprworld.com/blog/${post.slug}`;
     const shareText = encodeURIComponent(`Read "${post.title}" by @ajprworld:`);
+    const articleImage = post.image_url || post.cover_image || 'https://ajprworld.com/blog/default-cover.jpg';
 
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Article',
         headline: post.title,
         description: post.meta_description || post.excerpt,
+        image: [articleImage.startsWith('http') ? articleImage : `https://ajprworld.com${articleImage}`],
         datePublished: new Date(publishedDate).toISOString(),
         dateModified: new Date(post.updated_at || publishedDate).toISOString(),
         author: {
@@ -245,17 +247,15 @@ export default async function BlogPost(props: Props) {
             name: post.author || 'Aman Joshi',
             url: 'https://ajprworld.com/aman-joshi'
         },
-        editor: {
-            '@type': 'Organization',
-            name: 'AJPR Engineering Board'
-        },
         publisher: {
             '@type': 'Organization',
             name: 'AJPR World',
             url: 'https://ajprworld.com',
             logo: {
                 '@type': 'ImageObject',
-                url: 'https://ajprworld.com/logo.png'
+                url: 'https://ajprworld.com/logo/ajpr-logo.png',
+                width: 512,
+                height: 512
             }
         },
         mainEntityOfPage: {

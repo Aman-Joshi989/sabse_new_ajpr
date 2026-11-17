@@ -2,16 +2,18 @@ import { Metadata } from 'next';
 import FontLoader from '@/components/FontLoader';
 
 export const metadata: Metadata = {
+  title: 'Client & Team Portal Login | AJPR World',
+  description: 'Access your AJPR World client dashboard, project milestones, real-time analytics, and engineering sprint deliverables.',
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
   alternates: {
     canonical: 'https://ajprworld.com/login'
   },
   openGraph: {
-    title: 'Client & Team Login | AJPR World',
-    description: 'Access your AJPR World client dashboard, project milestones, real-time analytics, and engineering progress.',
+    title: 'Client & Team Portal Login | AJPR World',
+    description: 'Access your AJPR World client dashboard, project milestones, real-time analytics, and engineering sprint deliverables.',
     url: 'https://ajprworld.com/login',
     siteName: 'AJPR World',
     images: [

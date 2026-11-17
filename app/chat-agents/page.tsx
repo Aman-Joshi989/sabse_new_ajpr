@@ -3,10 +3,10 @@ import ChatPlayground from './ChatPlayground'
 
 export const metadata: Metadata = {
   title: 'AI Chat Playground | AJPR World',
-  description: 'Internal interactive AI agent demonstration.',
+  description: 'Explore interactive AI agent demonstrations and autonomous swarm workflows engineered by AJPR World systems architects.',
   robots: {
     index: false,
-    follow: false,
+    follow: true,
   },
   alternates: {
     canonical: 'https://ajprworld.com/chat-agents',

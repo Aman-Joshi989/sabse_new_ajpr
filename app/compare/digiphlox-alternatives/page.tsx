@@ -9,8 +9,8 @@ import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'DigiPhlox Alternatives & Agency Comparison (2026 Guide) | AJPR World',
-  description: 'An objective 2026 comparison of DigiPhlox vs AJPR World for digital marketing, SEO, and web development in Haldwani, Uttarakhand. Compare tech stacks, performance, and transparent pricing.',
+  title: 'DigiPhlox Alternatives & Agency Review (2026) | AJPR World',
+  description: 'Compare DigiPhlox vs AJPR World for SEO, marketing, and web development in Haldwani. Review tech stacks, performance, and transparent pricing.',
   keywords: [
     'DigiPhlox alternative',
     'DigiPhlox Haldwani review',
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     canonical: 'https://ajprworld.com/compare/digiphlox-alternatives',
   },
   openGraph: {
-    title: 'DigiPhlox Alternatives & Agency Comparison (2026) | AJPR World',
-    description: 'Objective 2026 comparison of DigiPhlox vs AJPR World for digital marketing, SEO, and web development in Haldwani, Uttarakhand. Compare tech stacks, mobile speed, and pricing.',
+    title: 'DigiPhlox Alternatives & Agency Review (2026) | AJPR World',
+    description: 'Compare DigiPhlox vs AJPR World for SEO, marketing, and web development in Haldwani. Review tech stacks, performance, and transparent pricing.',
     url: 'https://ajprworld.com/compare/digiphlox-alternatives',
     siteName: 'AJPR World',
     type: 'article',

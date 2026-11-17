@@ -9,8 +9,8 @@ import ToolLeadCapture from '@/components/ToolLeadCapture';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ajprworld.com'),
-  title: 'The Infinix Alternatives & Agency Comparison (2026 Guide) | AJPR World',
-  description: 'An objective 2026 comparison of The Infinix vs modern alternatives in Haldwani, Uttarakhand. Compare web development capabilities, technical SEO, and pricing side by side.',
+  title: 'The Infinix Alternatives & Agency Review (2026) | AJPR World',
+  description: 'Compare The Infinix vs modern agencies in Haldwani, Uttarakhand. Review technical SEO capabilities, Next.js web development, and pricing side by side.',
   keywords: [
     'The Infinix alternative Haldwani',
     'The Infinix digital marketing review',
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     canonical: 'https://ajprworld.com/compare/the-infinix-alternatives',
   },
   openGraph: {
-    title: 'The Infinix Alternatives & Agency Comparison (2026) | AJPR World',
-    description: 'Looking for top alternatives to The Infinix in Haldwani? Compare services, technical SEO capabilities, modern web development, and results side by side.',
+    title: 'The Infinix Alternatives & Agency Review (2026) | AJPR World',
+    description: 'Compare The Infinix vs modern agencies in Haldwani, Uttarakhand. Review technical SEO capabilities, Next.js web development, and pricing side by side.',
     url: 'https://ajprworld.com/compare/the-infinix-alternatives',
     siteName: 'AJPR World',
     type: 'article',

@@ -50,13 +50,19 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                     </div>
 
                     {/* Main Heading */}
-                    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.08] mb-6">
+                    <h1 
+                        id="hero-heading"
+                        className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.08] mb-6"
+                    >
                         We build custom software, <br className="hidden sm:inline" />
                         web platforms, and AI systems.
                     </h1>
 
                     {/* Subtitle */}
-                    <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal mb-10">
+                    <p 
+                        id="hero-summary"
+                        className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal mb-10"
+                    >
                         A senior software engineering studio providing direct systems architecture for founders and ambitious teams. We take your product from architecture to production in weeks—with transparent pricing and 100% code ownership.
                     </p>
 

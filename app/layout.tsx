@@ -172,8 +172,15 @@ export default async function RootLayout({
             `,
           }}
         />
+        <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
       </head>
       <body className={`${inter.variable} font-sans`} suppressHydrationWarning>
+        <a 
+          href="#main-content" 
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:font-bold focus:rounded-lg focus:shadow-2xl focus:outline-none"
+        >
+          Skip to main content
+        </a>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NCWB8DWL"
@@ -193,7 +200,7 @@ export default async function RootLayout({
               <CartProvider>
                 <LayoutClientEffect />
                 <Header />
-                <main className='min-h-screen pb-16 md:pb-0'>
+                <main id="main-content" tabIndex={-1} className='min-h-screen pb-16 md:pb-0 outline-none'>
                   {children}
                 </main>
                 <MobileActionDock />

@@ -275,7 +275,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
         <section className="py-16 md:py-20 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <div className="mb-20 max-w-3xl">
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">Built for scale, <br className="hidden md:block"/>not just presence.</h2>
+              <h2 id="capabilities-heading" className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">Built for scale, <br className="hidden md:block"/>not just presence.</h2>
               <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed">As a Senior Software Engineering & AI Studio, we do not build static brochure sites. We architect high-concurrency digital platforms, automated backend workflows, and AI systems designed to compound revenue and scale without operational chaos.</p>
             </div>
 
@@ -309,6 +309,42 @@ export default function HomeClient({ services = [], blogs = [], settings, review
                 </MouseGlowCard>
               ))}
             </div>
+
+            {/* Semantic Definition List for AI & Search Engine Answer Extraction */}
+            <div className="mt-16 pt-10 border-t border-slate-200/80 dark:border-slate-800/80">
+              <div className="flex items-center gap-2 mb-6">
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                <h3 id="architectural-definitions-heading" className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">
+                  Engineering Standards &amp; Industry Terminology
+                </h3>
+              </div>
+              <dl className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-xs leading-relaxed">
+                <div className="space-y-1.5 p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 shadow-2xs">
+                  <dt className="font-bold text-slate-900 dark:text-white text-sm">Full Code Ownership</dt>
+                  <dd className="text-slate-600 dark:text-slate-400 mt-1">
+                    Full Code Ownership is a commercial software engineering standard where 100% of custom GitHub repositories, IP, and deployment credentials transfer completely to the client with zero vendor lock-in.
+                  </dd>
+                </div>
+                <div className="space-y-1.5 p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 shadow-2xs">
+                  <dt className="font-bold text-slate-900 dark:text-white text-sm">Autonomous AI MVP</dt>
+                  <dd className="text-slate-600 dark:text-slate-400 mt-1">
+                    An Autonomous AI MVP is a production software system integrating LLM agent swarms, vector retrieval (RAG), and transactional APIs shipped within a 2 to 4 week milestone sprint.
+                  </dd>
+                </div>
+                <div className="space-y-1.5 p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 shadow-2xs">
+                  <dt className="font-bold text-slate-900 dark:text-white text-sm">Generative Engine Optimization (GEO)</dt>
+                  <dd className="text-slate-600 dark:text-slate-400 mt-1">
+                    GEO refers to the engineering process of optimizing web architectures and structured schema graphs so AI models (ChatGPT, Gemini, Perplexity) accurately cite and summarize company services.
+                  </dd>
+                </div>
+                <div className="space-y-1.5 p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 shadow-2xs">
+                  <dt className="font-bold text-slate-900 dark:text-white text-sm">Core Web Vitals SLA</dt>
+                  <dd className="text-slate-600 dark:text-slate-400 mt-1">
+                    Core Web Vitals SLA is our performance guarantee delivering Largest Contentful Paint under 1.2s, zero layout shift (CLS), and sub-100ms interaction latency on mobile devices.
+                  </dd>
+                </div>
+              </dl>
+            </div>
           </div>
         </section>
 
@@ -322,7 +358,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
               <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Interactive Sprint Planner
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+              <h2 id="scope-estimator-heading" className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
                 What are you looking to build?
               </h2>
               <p className="text-base md:text-lg text-slate-600 dark:text-slate-400">
@@ -477,17 +513,32 @@ export default function HomeClient({ services = [], blogs = [], settings, review
                           <span>Blueprint dispatched! Check your inbox for the {currentScope.title} scope.</span>
                         </div>
                       ) : (
-                        <form onSubmit={handleRequestEstimate} className="flex gap-2">
+                        <form 
+                          id="blueprint-request-form"
+                          name="blueprint-request-form"
+                          onSubmit={handleRequestEstimate} 
+                          className="flex gap-2"
+                          data-toolname="requestArchitectureBlueprint"
+                          data-tooldescription="Email the custom architecture blueprint, tech stack breakdown, and budget scope to the founder or engineering team"
+                        >
+                          <label htmlFor="estimate-email" className="sr-only">
+                            Work Email Address for Architecture Blueprint
+                          </label>
                           <input 
+                            id="estimate-email"
+                            name="email"
                             type="email"
+                            autoComplete="email"
                             required
                             value={estimateEmail}
                             onChange={(e) => setEstimateEmail(e.target.value)}
                             placeholder="founder@company.com"
+                            data-toolparamdescription="Target email to deliver the architecture scope and budget estimate"
                             className="flex-1 px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                           <button
                             type="submit"
+                            name="submit-blueprint"
                             disabled={estimateLoading}
                             className="px-3.5 py-2 text-xs font-bold rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-colors cursor-pointer shrink-0 disabled:opacity-50"
                           >
@@ -513,7 +564,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
                   <Zap className="w-3.5 h-3.5 text-blue-400" />
                   <span>Zero-Cost Engineering Teardown</span>
                 </div>
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight">
+                <h3 id="instant-audit-heading" className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight">
                   Is slow architecture or technical debt hurting your conversion?
                 </h3>
                 <p className="text-slate-300 text-sm md:text-base leading-relaxed">
@@ -543,7 +594,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
               <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Engineering Outcomes
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
+              <h2 id="differentiation-heading" className="text-3xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
                 {isIndia ? (
                   <>The 5 Operational Bottlenecks <br className="hidden md:block" />We Eliminate for Indian Businesses.</>
                 ) : (
@@ -697,7 +748,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
                 <Badge variant="outline" className="mb-6 border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                   Our Expertise
                 </Badge>
-                <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6 leading-[1.1]">
+                <h2 id="solutions-grid-heading" className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6 leading-[1.1]">
                   Engineering Capabilities
                 </h2>
                 <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-2xl">
@@ -775,7 +826,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
           <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
               <div className="max-w-2xl">
-                <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6">Engineering Outcomes.</h2>
+                <h2 id="case-studies-heading" className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6">Engineering Outcomes.</h2>
                 <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium">Real architectural challenges transformed into scalable digital systems.</p>
               </div>
               <Link href="/portfolio" prefetch={false} className="inline-flex items-center text-slate-900 dark:text-white font-bold hover:text-blue-600 transition-colors border-b border-slate-900 dark:border-white hover:border-blue-600 pb-1">
@@ -843,7 +894,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
                   <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
                   Verified Client Reviews
                 </Badge>
-                <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                <h2 id="client-reviews-heading" className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                   Shipped Code. Real Results. Zero Agency Fluff.
                 </h2>
                 <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 mt-3 max-w-2xl">
@@ -929,7 +980,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
               <Badge variant="outline" className="mb-4 border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Transparent Pricing
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+              <h2 id="pricing-sprints-heading" className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
                 Predictable Sprints. Zero Agency Bloat.
               </h2>
               <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -1097,7 +1148,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
               <Badge variant="outline" className="mb-4 border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Competitive Breakdown
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+              <h2 id="comparison-table-heading" className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
                 Why Ambitious Brands Choose Us Over Legacy Agencies.
               </h2>
               <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -1267,7 +1318,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
         <section className="py-16 md:py-20 relative">
           <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
             <div className="text-center mb-24">
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6">The Deployment Framework</h2>
+              <h2 id="framework-heading" className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6">The Deployment Framework</h2>
               <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium">A predictable engineering process that removes guesswork from complex builds.</p>
             </div>
 
@@ -1317,7 +1368,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
               <Badge variant="outline" className="mb-4 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold uppercase tracking-widest text-xs px-4 py-1.5 rounded-full">
                 Clear Answers
               </Badge>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
+              <h2 id="faq-heading" className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
                 Frequently Asked Questions
               </h2>
               <p className="text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
@@ -1366,7 +1417,7 @@ export default function HomeClient({ services = [], blogs = [], settings, review
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-[radial-gradient(circle,rgba(59,130,246,0.03)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(59,130,246,0.05)_0%,transparent_70%)] rounded-full pointer-events-none"></div>
 
           <div className="container mx-auto px-4 relative z-10 max-w-3xl">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1]">
+            <h2 id="final-cta-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1]">
               Stop Managing Tech Debt. <br />Start Scaling.
             </h2>
             <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium mb-10 max-w-xl mx-auto">

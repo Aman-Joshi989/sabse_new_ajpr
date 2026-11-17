@@ -102,7 +102,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                     {/* Brand / Logo Section */}
                     <div className="md:w-1/4 space-y-4">
-                        <Link href="/" prefetch={false} className="inline-block relative w-32 h-12">
+                        <Link href="/" prefetch={false} className="inline-block relative w-32 h-12" aria-label="AJPR World - Senior Software Engineering & AI Studio">
                             <Image
                                 src={logoSrc}
                                 alt="AJPR World"
@@ -199,7 +199,7 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
 
                     {/* Left Side: Copyright & Region Switcher */}
                     <div className="flex flex-wrap items-center gap-3">
-                        <span>© {new Date().getFullYear()} AJPR World. All rights reserved.</span>
+                        <span>© {new Date().getFullYear()} AJPR World. All rights reserved • Updated <time dateTime="2026-11-17">November 2026</time>.</span>
                         <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
                         <RegionSelector variant="footer" />
                         <span className="hidden md:inline text-slate-300 dark:text-slate-700">•</span>

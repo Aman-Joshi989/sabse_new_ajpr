@@ -189,29 +189,50 @@ export function assertSameOrigin(request: Request | NextRequest): { valid: boole
   const isStateChanging = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method);
 
   const originHeader = request.headers.get('origin');
-  const configuredBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const secFetchSite = request.headers.get('sec-fetch-site');
+
+  // Modern browser metadata check
+  if (secFetchSite === 'same-origin') {
+    return { valid: true };
+  }
 
   if (!originHeader) {
     if (isStateChanging) {
-      const secFetchSite = request.headers.get('sec-fetch-site');
-      if (secFetchSite === 'same-origin') {
-        return { valid: true };
-      }
       return { valid: false, error: 'Forbidden' };
     }
     return { valid: true };
   }
 
-  if (!configuredBaseUrl) {
-    return { valid: false, error: 'Forbidden' };
-  }
-
   try {
-    const originUrl = new URL(originHeader).origin;
-    const expectedUrl = new URL(configuredBaseUrl).origin;
-    if (originUrl === expectedUrl) {
+    const originUrl = new URL(originHeader);
+    const originHostname = originUrl.hostname.toLowerCase();
+
+    // 1. Check configured base URL if set
+    const configuredBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    if (configuredBaseUrl) {
+      const expectedUrl = new URL(configuredBaseUrl);
+      if (originUrl.origin.toLowerCase() === expectedUrl.origin.toLowerCase()) {
+        return { valid: true };
+      }
+    }
+
+    // 2. Check trusted production domains & local development
+    const trustedHosts = [
+      'ajprworld.com',
+      'www.ajprworld.com',
+      'localhost',
+      '127.0.0.1',
+    ];
+    if (trustedHosts.includes(originHostname) || originHostname.endsWith('.vercel.app')) {
       return { valid: true };
     }
+
+    // 3. Fallback: Check against request host / forwarded-host headers
+    const hostHeader = (request.headers.get('x-forwarded-host') || request.headers.get('host') || '').toLowerCase().split(':')[0];
+    if (hostHeader && originHostname === hostHeader) {
+      return { valid: true };
+    }
+
     return { valid: false, error: 'Forbidden' };
   } catch {
     return { valid: false, error: 'Forbidden' };

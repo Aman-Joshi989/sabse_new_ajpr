@@ -11,7 +11,9 @@ import {
   Check,
   MessageSquare,
   ExternalLink,
+  Loader2,
 } from 'lucide-react';
+import { toast } from 'sonner';
 import type { AdminClientReview, ReviewStatus } from '@/lib/db/reviews';
 import { GOOGLE_REVIEW_URL, CLUTCH_PROFILE_URL, DIRECT_REVIEWS_URL } from '@/lib/constants/reviews';
 
@@ -58,9 +60,16 @@ export default function AdminReviewsClient({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status }),
       });
+      const data = await res.json().catch(() => ({}));
       if (res.ok) {
         setReviews((prev) => prev.map((r) => (r.id === id ? { ...r, status } : r)));
+        const label = status === 'approved' ? 'Approved' : status === 'rejected' ? 'Rejected' : 'Moved to Pending';
+        toast.success(`Review #${id} ${label}`);
+      } else {
+        toast.error(data.error || 'Failed to update review status.');
       }
+    } catch (err: any) {
+      toast.error(err?.message || 'Network error updating review status.');
     } finally {
       setUpdatingId(null);
     }
@@ -310,9 +319,14 @@ export default function AdminReviewsClient({
                       type="button"
                       disabled={updatingId === rev.id}
                       onClick={() => handleStatusUpdate(rev.id, 'approved')}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold cursor-pointer disabled:opacity-50 transition-all"
                     >
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Approve
+                      {updatingId === rev.id ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                      )}
+                      <span>Approve</span>
                     </button>
                   )}
                   {rev.status !== 'pending_verification' && (
@@ -320,9 +334,14 @@ export default function AdminReviewsClient({
                       type="button"
                       disabled={updatingId === rev.id}
                       onClick={() => handleStatusUpdate(rev.id, 'pending_verification')}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-800"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer disabled:opacity-50 transition-all text-slate-700 dark:text-slate-300"
                     >
-                      <RotateCcw className="w-3.5 h-3.5" /> Pending
+                      {updatingId === rev.id ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <RotateCcw className="w-3.5 h-3.5" />
+                      )}
+                      <span>Pending</span>
                     </button>
                   )}
                   {rev.status !== 'rejected' && (
@@ -330,9 +349,14 @@ export default function AdminReviewsClient({
                       type="button"
                       disabled={updatingId === rev.id}
                       onClick={() => handleStatusUpdate(rev.id, 'rejected')}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/40 text-xs font-semibold"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950/40 text-xs font-semibold cursor-pointer disabled:opacity-50 transition-all"
                     >
-                      <XCircle className="w-3.5 h-3.5" /> Reject
+                      {updatingId === rev.id ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <XCircle className="w-3.5 h-3.5" />
+                      )}
+                      <span>Reject</span>
                     </button>
                   )}
                 </div>

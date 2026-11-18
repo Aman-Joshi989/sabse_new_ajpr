@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node scripts/test-regionalization.js && node scripts/content-audit-test.js"
+    "test": "node scripts/security-audit-rls.js && node scripts/test-regionalization.js && node scripts/content-audit-test.js"
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.31",

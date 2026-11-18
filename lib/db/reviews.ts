@@ -39,6 +39,7 @@ export async function ensureClientReviewsTable(): Promise<void> {
       status VARCHAR(50) NOT NULL DEFAULT 'pending_verification',
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
+    ALTER TABLE client_reviews ENABLE ROW LEVEL SECURITY;
   `;
 }
 

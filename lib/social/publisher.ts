@@ -75,6 +75,7 @@ export async function ensureSocialPostsTable(): Promise<void> {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
+      ALTER TABLE social_posts ENABLE ROW LEVEL SECURITY;
       CREATE INDEX IF NOT EXISTS idx_social_posts_created_at ON social_posts(created_at DESC);
     `);
   } catch (err: any) {

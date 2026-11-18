@@ -17,6 +17,7 @@ export async function ensureResetTokensTable() {
         used BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMPTZ DEFAULT NOW()
       );
+      ALTER TABLE password_reset_tokens ENABLE ROW LEVEL SECURITY;
       CREATE INDEX IF NOT EXISTS idx_password_reset_token ON password_reset_tokens(token);
       CREATE INDEX IF NOT EXISTS idx_password_reset_email ON password_reset_tokens(email);
     `;

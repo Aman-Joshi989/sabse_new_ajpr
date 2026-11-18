@@ -133,7 +133,7 @@ async function recordOutboxEntry(params: {
   errorMessage?: string;
 }) {
   try {
-    // Ensure table exists safely
+    // Ensure table exists safely with strict Row-Level Security
     await sql`
       CREATE TABLE IF NOT EXISTS email_outbox (
         id SERIAL PRIMARY KEY,
@@ -147,6 +147,7 @@ async function recordOutboxEntry(params: {
         error_message TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+      ALTER TABLE email_outbox ENABLE ROW LEVEL SECURITY;
     `;
 
     const payloadJson = params.payload ? JSON.stringify(params.payload) : null;

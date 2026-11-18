@@ -277,6 +277,13 @@ export default function HomeClient({ services = [], blogs = [], settings, review
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold mr-1 shrink-0 hidden md:inline">
               Jump to:
             </span>
+            <Link 
+              href="/free-audit" 
+              className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-xs transition-colors whitespace-nowrap flex items-center gap-1.5"
+            >
+              <Zap className="w-3 h-3 text-amber-300 fill-amber-300" />
+              <span>Free 5s Audit</span>
+            </Link>
             <a 
               href="#solutions" 
               className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800/80 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors whitespace-nowrap border border-slate-200/60 dark:border-slate-700/60"

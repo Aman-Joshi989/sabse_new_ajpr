@@ -766,7 +766,7 @@ export async function deletePortfolioItem(id: number) {
 
 // --- Blogs ---
 
-export const getBlogs = unstable_cache(
+const getBlogsCached = unstable_cache(
   async () => {
     await ensureDbInitialized();
     const data = await sql`
@@ -780,6 +780,23 @@ export const getBlogs = unstable_cache(
   ['get-blogs'],
   { revalidate: 86400, tags: ['blogs'] }
 );
+
+export const getBlogs = async () => {
+  try {
+    return await getBlogsCached();
+  } catch (err: any) {
+    if (err?.message?.includes('incrementalCache') || err?.message?.includes('Invariant')) {
+      await ensureDbInitialized();
+      return await sql`
+        SELECT id, slug, title, excerpt, category, author, cover_image, created_at, published, affiliate_product_slug, amazon_asin 
+        FROM blog_posts 
+        WHERE published = true 
+        ORDER BY created_at DESC;
+      `;
+    }
+    throw err;
+  }
+};
 
 export async function getBlogBySlug(slug: string) {
   await ensureDbInitialized();
@@ -899,7 +916,7 @@ export async function getAllServices() {
   `;
 }
 
-export const getPublishedServices = unstable_cache(
+const getPublishedServicesCached = unstable_cache(
   async () => {
     const data = await sql`
       SELECT * FROM services 
@@ -911,6 +928,21 @@ export const getPublishedServices = unstable_cache(
   ['get-published-services'],
   { revalidate: 86400, tags: ['services'] }
 );
+
+export const getPublishedServices = async () => {
+  try {
+    return await getPublishedServicesCached();
+  } catch (err: any) {
+    if (err?.message?.includes('incrementalCache') || err?.message?.includes('Invariant')) {
+      return await sql`
+        SELECT * FROM services 
+        WHERE published = true
+        ORDER BY created_at DESC;
+      `;
+    }
+    throw err;
+  }
+};
 
 export async function getServiceBySlug(slug: string) {
   const result = await sql`

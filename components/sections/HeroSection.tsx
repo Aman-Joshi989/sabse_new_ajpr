@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useRegion } from '@/components/providers/RegionProvider';
@@ -12,7 +13,9 @@ import {
     Lock, 
     DollarSign,
     Receipt,
-    Star
+    Star,
+    Globe,
+    Sparkles
 } from 'lucide-react';
 
 interface HeroSectionProps {
@@ -21,6 +24,18 @@ interface HeroSectionProps {
 
 export default function HeroSection({ services = [] }: HeroSectionProps) {
     const { isIndia } = useRegion();
+    const router = useRouter();
+    const [quickDomain, setQuickDomain] = useState('');
+
+    const handleQuickScan = (e: React.FormEvent) => {
+        e.preventDefault();
+        const clean = quickDomain.trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '').toLowerCase();
+        if (clean) {
+            router.push(`/free-audit?domain=${encodeURIComponent(clean)}`);
+        } else {
+            router.push('/free-audit');
+        }
+    };
 
     return (
         <section className="relative min-h-[75vh] flex flex-col justify-center items-center overflow-hidden bg-white dark:bg-[#030712] pt-14 pb-16 md:pt-20 md:pb-24">
@@ -92,6 +107,54 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                         </Button>
                     </div>
 
+                    {/* Interactive Instant Diagnostic Bar (Zero Friction Engagement Hook) */}
+                    <div className="mt-8 max-w-xl mx-auto p-2 sm:p-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/40 dark:shadow-none text-left">
+                        <form onSubmit={handleQuickScan} className="flex flex-col sm:flex-row gap-2">
+                            <div className="relative flex-1">
+                                <Globe className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                                <input
+                                    type="text"
+                                    value={quickDomain}
+                                    onChange={(e) => setQuickDomain(e.target.value)}
+                                    placeholder="Enter your website URL (e.g. acme.com)"
+                                    className="w-full h-11 pl-10 pr-3 rounded-xl bg-slate-50 dark:bg-slate-950/80 text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                                />
+                            </div>
+                            <Button
+                                type="submit"
+                                className="h-11 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-500/25 gap-1.5 shrink-0 cursor-pointer"
+                            >
+                                <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+                                <span>Free 5s Audit</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                            </Button>
+                        </form>
+                        <div className="mt-2.5 px-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+                            <span className="flex items-center gap-1.5">
+                                <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                                <span>Inspects TTFB, SSL, Security & AI Citation Schema</span>
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                                <span className="text-slate-400">Try live:</span>
+                                <button
+                                    type="button"
+                                    onClick={() => router.push('/free-audit?domain=stripe.com')}
+                                    className="hover:text-blue-500 underline font-mono text-[10px] cursor-pointer"
+                                >
+                                    stripe.com
+                                </button>
+                                <span className="text-slate-300 dark:text-slate-700">•</span>
+                                <button
+                                    type="button"
+                                    onClick={() => router.push('/free-audit?domain=linear.app')}
+                                    className="hover:text-blue-500 underline font-mono text-[10px] cursor-pointer"
+                                >
+                                    linear.app
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Low-Friction Exploration Links */}
                     <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-500 dark:text-slate-400">
                         <Link 
@@ -99,8 +162,8 @@ export default function HeroSection({ services = [] }: HeroSectionProps) {
                             prefetch={false}
                             className="inline-flex items-center gap-1.5 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                            <span>Request Free 48h Audit</span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                            <span>Request 48-Hour Video Teardown</span>
                             <ArrowRight className="w-3 h-3 text-slate-400" />
                         </Link>
                         <span aria-hidden="true" className="text-slate-300 dark:text-slate-700">•</span>

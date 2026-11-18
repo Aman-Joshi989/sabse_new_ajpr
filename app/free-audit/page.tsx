@@ -239,6 +239,53 @@ export default function FreeAuditPage() {
               Prefer a live call? Book 15 mins &rarr;
             </Link>
           </div>
+
+          {/* Related Architecture Exploration (Pages/Session Multiplier) */}
+          <div className="pt-6 space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-center">
+              Explore Senior Engineering Sprints & Case Studies
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Link
+                href="/portfolio"
+                className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 dark:hover:border-blue-500 transition-all space-y-2 group shadow-2xs"
+              >
+                <div className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center justify-between">
+                  <span>🏆 Client Case Studies</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  See how we solved latency, database locking, and scaling bottlenecks for 50k+ active users.
+                </p>
+              </Link>
+
+              <Link
+                href="/pricing"
+                className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 dark:hover:border-blue-500 transition-all space-y-2 group shadow-2xs"
+              >
+                <div className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center justify-between">
+                  <span>💰 Transparent Sprints</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Fixed sprint pricing, zero hourly agency bloat, and 100% code ownership in your GitHub repo.
+                </p>
+              </Link>
+
+              <Link
+                href="/tools/agency-pricing-calculator"
+                className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500 dark:hover:border-blue-500 transition-all space-y-2 group shadow-2xs"
+              >
+                <div className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center justify-between">
+                  <span>🧮 Agency ROI Calculator</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Calculate savings and velocity comparing traditional agencies vs senior studio engineering.
+                </p>
+              </Link>
+            </div>
+          </div>
         </div>
 
       </div>

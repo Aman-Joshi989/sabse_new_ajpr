@@ -104,10 +104,16 @@ export default function Footer({ services, blogs }: { services?: any[]; blogs?: 
                     <div className="md:w-1/4 space-y-4">
                         <Link href="/" prefetch={false} className="inline-block relative w-32 h-12" aria-label="AJPR World - Senior Software Engineering & AI Studio">
                             <Image
-                                src={logoSrc}
+                                src="/logo/ajpr-logo.png"
                                 alt="AJPR World"
                                 fill
-                                className="object-contain"
+                                className="object-contain block dark:hidden"
+                            />
+                            <Image
+                                src="/logo/ajpr-logo-white.png"
+                                alt="AJPR World"
+                                fill
+                                className="object-contain hidden dark:block"
                             />
                         </Link>
                         <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">

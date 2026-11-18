@@ -42,19 +42,49 @@ export default function ExitIntentPopup() {
     // Check if we've already shown or dismissed it this session
     if (sessionStorage.getItem('exitIntentShown') || localStorage.getItem('exitIntentDismissed')) return
 
+    // 1. Desktop: Mouse leaves top of viewport toward tabs/address bar
     const handleMouseLeave = (e: MouseEvent) => {
-      // If mouse moves up towards the address bar or outside viewport
       if (e.clientY <= 10 || e.clientX <= 0 || (e.clientX >= window.innerWidth || e.clientY >= window.innerHeight)) {
         setIsVisible(true)
         sessionStorage.setItem('exitIntentShown', 'true')
-        document.removeEventListener('mouseleave', handleMouseLeave)
+        cleanupListeners()
       }
     }
 
+    // 2. Mobile & Touch: User scrolls down significantly then rapidly scrolls back up (intent to leave/close)
+    let maxScrollY = 0
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      if (currentScrollY > maxScrollY) {
+        maxScrollY = currentScrollY
+      }
+      if (maxScrollY > 500 && maxScrollY - currentScrollY > 220) {
+        setIsVisible(true)
+        sessionStorage.setItem('exitIntentShown', 'true')
+        cleanupListeners()
+      }
+    }
+
+    // 3. Dwell engagement: User spends 45s exploring without converting
+    const dwellTimer = setTimeout(() => {
+      if (!sessionStorage.getItem('exitIntentShown') && !localStorage.getItem('exitIntentDismissed')) {
+        setIsVisible(true)
+        sessionStorage.setItem('exitIntentShown', 'true')
+        cleanupListeners()
+      }
+    }, 45000)
+
+    const cleanupListeners = () => {
+      document.removeEventListener('mouseleave', handleMouseLeave)
+      window.removeEventListener('scroll', handleScroll)
+      clearTimeout(dwellTimer)
+    }
+
     document.addEventListener('mouseleave', handleMouseLeave)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     
     return () => {
-      document.removeEventListener('mouseleave', handleMouseLeave)
+      cleanupListeners()
     }
   }, [shouldDisable, user, pathname])
 
@@ -71,15 +101,19 @@ export default function ExitIntentPopup() {
     setErrorMessage('')
 
     try {
-      const res = await fetch('/api/contact', {
+      const cleanDomain = websiteUrl.replace(/^https?:\/\//i, '').split('/')[0]
+      const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: 'Free Teardown Lead',
+          name: email.split('@')[0],
           email: email.trim(),
-          websiteUrl: websiteUrl.trim(),
-          companyName: websiteUrl.replace(/^https?:\/\//i, '').split('/')[0],
-          message: `EXIT-INTENT TEARDOWN REQUEST: Target URL: ${websiteUrl.trim()}. Lead Email: ${email.trim()}. Requested free 48-hour video teardown & Core Web Vitals audit.`
+          company: cleanDomain,
+          budget: 'Free 48h Video Audit',
+          projectGoal: `EXIT-INTENT TEARDOWN: ${websiteUrl.trim()}. User requested 48-hour video teardown.`,
+          utm_source: 'exit_intent_modal',
+          utm_medium: 'modal_lead_capture',
+          utm_campaign: 'retention_bounce_reduction'
         })
       })
 
